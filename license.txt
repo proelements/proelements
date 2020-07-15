@@ -1,0 +1,12 @@
+Copyright (C) 2016-2020 Elementor Ltd. <https://elementor.com>.
+Modifications Copyright (C) 2020 PROElements.org <https://proelements.org>.
+
+The code in this folder is a derivative work of the code from the Elementor Pro by Elementor Ltd., which is licensed under GPLv3. This code, therefore, is also licensed under the terms of the GNU Public License, version 3.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+ADDITIONAL TERMS per GNU GPL Section 7. The origin of the program must not be misrepresented; you must not claim that you wrote the original program. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original program.

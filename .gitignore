@@ -1,0 +1,45 @@
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+ 
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Codekit #
+###########
+*.codekit
+
+# Node #
+########
+node_modules/*
+
+# Ide #
+#######
+.idea/*
+
+# Build #
+#########
+build/prod/*
+
+# Deploy #
+##########
+servers.yml
+
+# Vendor
+vendor/*
+
+# Project files #
+#################
+assets/css/*.min.css
+assets/js/*.min.js
+
+**/.env
