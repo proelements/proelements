@@ -1,0 +1,2 @@
+# Do not export git service files.
+.* export-ignore
