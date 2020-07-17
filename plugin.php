@@ -9,6 +9,7 @@ use Elementor\Utils;
 use ElementorPro\Core\Editor\Editor;
 use ElementorPro\Core\Modules_Manager;
 use ElementorPro\Core\Preview\Preview;
+use ElementorPro\Core\Updater\Updater;
 use ElementorPro\Core\Upgrade\Manager as UpgradeManager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -324,6 +325,24 @@ class Plugin {
 
 		if ( is_admin() ) {
 			$this->admin = new Admin();
+
+			require_once __DIR__ . '/updater/updater.php';
+			$config = array(
+				'slug' => ELEMENTOR_PRO__FILE__,
+				'plugin_basename' => ELEMENTOR_PRO_PLUGIN_BASE,
+				'proper_folder_name' => 'pro-elements',
+				'api_url' => 'https://api.github.com/repos/proelements/proelements',
+				'raw_url' => 'https://raw.githubusercontent.com/proelements/proelements/master',
+				'github_url' => 'https://github.com/proelements/proelements',
+				'zip_url' => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
+				'sslverify' => true,
+				'requires' => '5.0',
+				'tested' => '5.4.2',
+				'readme' => 'README.md',
+				'access_token' => '',
+			);
+
+			new Updater( $config );
 		}
 	}
 
