@@ -328,7 +328,7 @@ class Plugin {
 
 			require_once __DIR__ . '/updater/updater.php';
 			$config = array(
-				'slug' => ELEMENTOR_PRO__FILE__,
+				'slug' => 'pro-elements.php',
 				'plugin_basename' => ELEMENTOR_PRO_PLUGIN_BASE,
 				'proper_folder_name' => 'pro-elements',
 				'api_url' => 'https://api.github.com/repos/proelements/proelements',
