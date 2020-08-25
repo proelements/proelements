@@ -39,7 +39,5 @@ vendor/*
 
 # Project files #
 #################
-assets/css/*.min.css
-assets/js/*.min.js
 
 **/.env
