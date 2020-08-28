@@ -2,12 +2,13 @@
 namespace ElementorPro\Modules\Blockquote\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
+use ElementorPro\Plugin;
 use ElementorPro\Base\Base_Widget;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -244,9 +245,8 @@ class Blockquote extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-blockquote__content' => 'color: {{VALUE}}',
@@ -287,9 +287,8 @@ class Blockquote extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-blockquote__author' => 'color: {{VALUE}}',
@@ -485,12 +484,25 @@ class Blockquote extends Base_Widget {
 
 		$this->end_controls_tabs();
 
+		$default_fonts = Plugin::elementor()->kits_manager->get_current_settings( 'default_generic_fonts' );
+
+		if ( $default_fonts ) {
+			$default_fonts = ', ' . $default_fonts;
+		}
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
 				'selector' => '{{WRAPPER}} .elementor-blockquote__tweet-button span, {{WRAPPER}} .elementor-blockquote__tweet-button i',
 				'separator' => 'before',
+				'fields_options' => [
+					'font_family' => [
+						'selectors' => [
+							'{{WRAPPER}} .elementor-blockquote__tweet-button' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						],
+					],
+				],
 			]
 		);
 

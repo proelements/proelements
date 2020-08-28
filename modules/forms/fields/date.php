@@ -82,7 +82,7 @@ class Date extends Field_Base {
 				'inner_tab' => 'form_fields_content_tab',
 				'tabs_wrapper' => 'form_fields_tabs',
 			],
-			'use_native' => [
+			'use_native_date' => [
 				'name' => 'use_native_date',
 				'label' => __( 'Native HTML5', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,

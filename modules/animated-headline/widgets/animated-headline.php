@@ -2,7 +2,8 @@
 namespace ElementorPro\Modules\AnimatedHeadline\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use ElementorPro\Base\Base_Widget;
@@ -243,9 +244,8 @@ class Animated_Headline extends Base_Widget {
 			[
 				'label' => __( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_4,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke: {{VALUE}}',
@@ -308,9 +308,8 @@ class Animated_Headline extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-headline-plain-text' => 'color: {{VALUE}}',
@@ -323,7 +322,9 @@ class Animated_Headline extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 				'selector' => '{{WRAPPER}} .elementor-headline',
 			]
 		);
@@ -342,9 +343,8 @@ class Animated_Headline extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-headline-dynamic-text' => 'color: {{VALUE}}',
@@ -356,7 +356,9 @@ class Animated_Headline extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'words_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 				'selector' => '{{WRAPPER}} .elementor-headline-dynamic-text',
 				'exclude' => [ 'font_size' ],
 			]

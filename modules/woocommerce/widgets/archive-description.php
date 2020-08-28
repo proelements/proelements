@@ -86,7 +86,7 @@ class Archive_Description extends Base_Widget {
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'.woocommerce {{WRAPPER}} .woocommerce-product-details__short-description' => 'color: {{VALUE}}',
+					'.woocommerce {{WRAPPER}} .term-description' => 'color: {{VALUE}}',
 				],
 			]
 		);

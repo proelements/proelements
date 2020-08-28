@@ -2,7 +2,8 @@
 namespace ElementorPro\Modules\ThemeElements\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
@@ -348,10 +349,10 @@ class Author_Box extends Base {
 					],
 				],
 				'selectors' => [
-					'body.rtl {{WRAPPER}}.elementor-author-box--layout-image-left .elementor-author-box__avatar, 
+					'body.rtl {{WRAPPER}}.elementor-author-box--layout-image-left .elementor-author-box__avatar,
 					 body:not(.rtl) {{WRAPPER}}:not(.elementor-author-box--layout-image-above) .elementor-author-box__avatar' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
 
-					'body:not(.rtl) {{WRAPPER}}.elementor-author-box--layout-image-right .elementor-author-box__avatar, 
+					'body:not(.rtl) {{WRAPPER}}.elementor-author-box--layout-image-right .elementor-author-box__avatar,
 					 body.rtl {{WRAPPER}}:not(.elementor-author-box--layout-image-above) .elementor-author-box__avatar' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right:0;',
 
 					'{{WRAPPER}}.elementor-author-box--layout-image-above .elementor-author-box__avatar' => 'margin-bottom: {{SIZE}}{{UNIT}}',
@@ -453,9 +454,8 @@ class Author_Box extends Base {
 			[
 				'label' => __( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__name' => 'color: {{VALUE}}',
@@ -468,7 +468,9 @@ class Author_Box extends Base {
 			[
 				'name' => 'name_typography',
 				'selector' => '{{WRAPPER}} .elementor-author-box__name',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
@@ -503,9 +505,8 @@ class Author_Box extends Base {
 			[
 				'label' => __( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__bio' => 'color: {{VALUE}}',
@@ -518,7 +519,9 @@ class Author_Box extends Base {
 			[
 				'name' => 'bio_typography',
 				'selector' => '{{WRAPPER}} .elementor-author-box__bio',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 
@@ -563,9 +566,8 @@ class Author_Box extends Base {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'default' => '',
 				'selectors' => [
@@ -589,7 +591,9 @@ class Author_Box extends Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_4,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
 				'selector' => '{{WRAPPER}} .elementor-author-box__button',
 			]
 		);
@@ -608,9 +612,8 @@ class Author_Box extends Base {
 			[
 				'label' => __( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__button:hover' => 'border-color: {{VALUE}}; color: {{VALUE}};',

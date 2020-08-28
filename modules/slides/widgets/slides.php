@@ -2,7 +2,7 @@
 namespace ElementorPro\Modules\Slides\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
@@ -811,7 +811,9 @@ class Slides extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 				'selector' => '{{WRAPPER}} .elementor-slide-heading',
 			]
 		);
@@ -859,7 +861,9 @@ class Slides extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_2,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
 				'selector' => '{{WRAPPER}} .elementor-slide-description',
 			]
 		);
@@ -900,7 +904,9 @@ class Slides extends Base_Widget {
 			[
 				'name' => 'button_typography',
 				'selector' => '{{WRAPPER}} .elementor-slide-button',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_4,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
 			]
 		);
 

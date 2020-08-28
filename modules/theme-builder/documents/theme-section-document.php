@@ -15,6 +15,10 @@ abstract class Theme_Section_Document extends Theme_Document {
 		return $properties;
 	}
 
+	protected static function get_site_editor_layout() {
+		return 'strip';
+	}
+
 	public static function get_preview_as_default() {
 		return '';
 	}

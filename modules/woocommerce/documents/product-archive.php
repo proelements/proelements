@@ -19,12 +19,35 @@ class Product_Archive extends Archive {
 		return $properties;
 	}
 
-	public function get_name() {
+	protected static function get_site_editor_type() {
 		return 'product-archive';
 	}
 
 	public static function get_title() {
-		return __( 'Product Archive', 'elementor-pro' );
+		return __( 'Products Archive', 'elementor-pro' );
+	}
+
+	protected static function get_site_editor_icon() {
+		return 'eicon-products';
+	}
+
+	/**
+	 * Fix for thumbnail name that is different from editor type.
+	 *
+	 * @return string
+	 */
+	protected static function get_site_editor_thumbnail_url() {
+		return ELEMENTOR_ASSETS_URL . 'images/app/site-editor/products.svg';
+	}
+
+	protected static function get_site_editor_tooltip_data() {
+		return [
+			'title' => __( 'What is a Products Archive Template?', 'elementor-pro' ),
+			'content' => __( 'A products archive template allows you to easily design the layout and style of your WooCommerce shop page or other product archive pages - those pages that show a list of products, which may be filtered by terms such as categories, tags, etc.', 'elementor-pro' ),
+			'tip' => __( 'You can create multiple global archive product templates, and assign each to different categories of products. This gives you the freedom to customize the appearance for each type of product being shown.', 'elementor-pro' ),
+			'docs' => 'https://go.elementor.com/app-theme-builder-products-archive',
+			'video_url' => 'https://www.youtube.com/embed/F2gyAeZdU9s',
+		];
 	}
 
 	public function enqueue_scripts() {

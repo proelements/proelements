@@ -2,7 +2,8 @@
 namespace ElementorPro\Modules\Woocommerce\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Plugin;
 
@@ -121,9 +122,8 @@ class Archive_Products_Deprecated extends Products {
 			[
 				'label' => __( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-products-nothing-found' => 'color: {{VALUE}};',
@@ -135,7 +135,9 @@ class Archive_Products_Deprecated extends Products {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'nothing_found_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 				'selector' => '{{WRAPPER}} .elementor-products-nothing-found',
 			]
 		);

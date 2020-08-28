@@ -3,10 +3,8 @@ namespace ElementorPro\Modules\Social\Classes;
 
 use Elementor\Controls_Manager;
 use Elementor\Settings;
-use Elementor\Utils;
 use Elementor\Widget_Base;
 use ElementorPro\Modules\Social\Module;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

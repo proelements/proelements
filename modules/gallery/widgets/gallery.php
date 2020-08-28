@@ -3,7 +3,8 @@
 namespace ElementorPro\Modules\Gallery\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Image_Size;
@@ -891,7 +892,9 @@ class Gallery extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 				'selector' => '{{WRAPPER}} .elementor-gallery-item__title',
 				'condition' => [
 					'overlay_title!' => '',
@@ -944,7 +947,9 @@ class Gallery extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 				'selector' => '{{WRAPPER}} .elementor-gallery-item__description',
 				'condition' => [
 					'overlay_description!' => '',
@@ -1099,9 +1104,8 @@ class Gallery extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_1,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--galleries-title-color-normal: {{VALUE}}',
@@ -1114,7 +1118,9 @@ class Gallery extends Base_Widget {
 			[
 				'name' => 'galleries_titles_typography',
 				'selector' => '{{WRAPPER}} .elementor-gallery-title',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
@@ -1131,9 +1137,8 @@ class Gallery extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--galleries-title-color-hover: {{VALUE}}',
@@ -1168,9 +1173,8 @@ class Gallery extends Base_Widget {
 			[
 				'label' => __( 'Pointer Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_4,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--galleries-pointer-bg-color-hover: {{VALUE}}',
@@ -1194,9 +1198,8 @@ class Gallery extends Base_Widget {
 			[
 				'label' => __( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_2,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--gallery-title-color-active: {{VALUE}}',
@@ -1209,9 +1212,8 @@ class Gallery extends Base_Widget {
 			[
 				'label' => __( 'Pointer Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_4,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--galleries-pointer-bg-color-active: {{VALUE}}',

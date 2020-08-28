@@ -5,7 +5,6 @@ use Elementor\Controls_Manager;
 use ElementorPro\Modules\Forms\Classes\Action_Base;
 use ElementorPro\Modules\QueryControl\Module as QueryControlModule;
 use ElementorPro\Modules\Forms\Module as FormsModule;
-use Elementor\TemplateLibrary\Source_Local;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

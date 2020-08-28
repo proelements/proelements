@@ -494,7 +494,7 @@ class Locations_Manager {
 		}
 
 		if ( ! empty( $args['document'] ) ) {
-			$title[] = $args['document']->get_post()->post_title;
+			$title[] = esc_html( $args['document']->get_post()->post_title );
 			$url = $args['document']->get_edit_url();
 		}
 

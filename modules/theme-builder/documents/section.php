@@ -22,6 +22,7 @@ class Section extends Theme_Section_Document {
 		$properties = parent::get_properties();
 
 		$properties['admin_tab_group'] = 'library';
+		$properties['support_site_editor'] = false;
 
 		return $properties;
 	}

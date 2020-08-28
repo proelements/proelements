@@ -4,7 +4,6 @@ namespace ElementorPro\Modules\ThemeBuilder\ThemeSupport;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 use ElementorPro\Modules\ThemeBuilder\Module;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

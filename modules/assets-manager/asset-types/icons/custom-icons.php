@@ -5,7 +5,6 @@ use Elementor\Core\Utils\Exceptions;
 use ElementorPro\Modules\AssetsManager\Classes\Assets_Base;
 use ElementorPro\Modules\AssetsManager\AssetTypes\Icons_Manager;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
-use Elementor\Settings;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -2,7 +2,8 @@
 namespace ElementorPro\Modules\Countdown\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
@@ -328,9 +329,8 @@ class Countdown extends Base_Widget {
 			[
 				'label' => __( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_1,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-item' => 'background-color: {{VALUE}};',
@@ -428,7 +428,9 @@ class Countdown extends Base_Widget {
 			[
 				'name' => 'digits_typography',
 				'selector' => '{{WRAPPER}} .elementor-countdown-digits',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 
@@ -457,7 +459,9 @@ class Countdown extends Base_Widget {
 			[
 				'name' => 'label_typography',
 				'selector' => '{{WRAPPER}} .elementor-countdown-label',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_2,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
 			]
 		);
 
@@ -508,9 +512,8 @@ class Countdown extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-expire--message' => 'color: {{VALUE}};',
 				],
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 			]
 		);
@@ -519,7 +522,9 @@ class Countdown extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 				'selector' => '{{WRAPPER}} .elementor-countdown-expire--message',
 			]
 		);

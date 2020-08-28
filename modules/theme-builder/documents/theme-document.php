@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
 use Elementor\Controls_Manager;
 use Elementor\Modules\Library\Documents\Library_Document;
+use Elementor\TemplateLibrary\Source_Local;
 use Elementor\Utils;
 use ElementorPro\Modules\QueryControl\Module as QueryModule;
 use ElementorPro\Modules\ThemeBuilder\Module;
@@ -19,10 +20,123 @@ abstract class Theme_Document extends Library_Document {
 	public static function get_properties() {
 		$properties = parent::get_properties();
 
-		$properties['admin_tab_group'] = 'theme';
+		$properties['admin_tab_group'] = Module::ADMIN_LIBRARY_TAB_GROUP;
 		$properties['support_kit'] = true;
+		$properties['support_site_editor'] = true;
 
 		return $properties;
+	}
+
+	/**
+	 * Get document type for site editor with backwards compatibility.
+	 *
+	 * A temp function that checks if current document has it's own static method `get_site_editor_type`
+	 * Otherwise get the type from the non-static method `get_name`.
+	 *
+	 * @return mixed|string
+	 * @throws \ReflectionException
+	 */
+	protected static function get_site_editor_type_bc() {
+		static $types = [];
+
+		$class_name = static::get_class_full_name();
+
+		$reflection = new \ReflectionClass( $class_name );
+		$method = $reflection->getMethod( 'get_site_editor_type' );
+
+		// It's own method, use it.
+		if ( $class_name === $method->class ) {
+			return static::get_site_editor_type();
+		}
+
+		// _deprecated_function( 'get_name', '3.0.0', 'get_site_editor_type' );
+
+		// Fallback, get from class instance name (with caching).
+		if ( isset( $types[ $class_name ] ) ) {
+			return $types[ $class_name ];
+		}
+
+		$instance = new static();
+
+		$types[ $class_name ] = $instance->get_name();
+
+		return $types[ $class_name ];
+	}
+
+	protected static function get_site_editor_route() {
+		return '/site-editor/templates/' . static::get_site_editor_type_bc();
+	}
+
+	protected static function get_site_editor_icon() {
+		return 'eicon eicon-custom';
+	}
+
+	protected static function get_site_editor_layout() {
+		return 'grid';
+	}
+
+	protected static function get_site_editor_thumbnail_url() {
+		return ELEMENTOR_ASSETS_URL . 'images/app/site-editor/' . static::get_site_editor_type_bc() . '.svg';
+	}
+
+	public static function get_site_editor_config() {
+		return [
+			'type' => static::get_site_editor_type_bc(),
+			'icon' => static::get_site_editor_icon(),
+			'title' => static::get_title(),
+			'page_title' => static::get_title(),
+			'page_layout' => static::get_site_editor_layout(),
+
+			// Todo: Remove. Core plugin should use `urls.route`.
+			'url' => static::get_site_editor_route(),
+
+			'urls' => [
+				'route' => static::get_site_editor_route(),
+				'create' => static::get_create_url(),
+				'thumbnail' => static::get_site_editor_thumbnail_url(),
+			],
+			'tooltip_data' => static::get_site_editor_tooltip_data(),
+		];
+	}
+
+	public static function get_editor_panel_config() {
+		$panel_config = parent::get_editor_panel_config();
+		$document_config = static::get_properties();
+
+		if ( true === $document_config['support_site_editor'] ) {
+			$panel_config['messages']['publish_notification'] = __( 'Congrats! Your Global Site Part is Live', 'elementor-pro' );
+		}
+
+		return $panel_config;
+	}
+
+	protected function get_have_a_look_url() {
+		$document_config = static::get_properties();
+
+		if ( true === $document_config['support_site_editor'] ) {
+			return '';
+		}
+
+		return parent::get_have_a_look_url();
+	}
+
+	protected static function get_create_url() {
+		$base_create_url = Utils::get_create_new_post_url( Source_Local::CPT );
+
+		return add_query_arg( [ 'template_type' => static::get_site_editor_type_bc() ], $base_create_url );
+	}
+
+	protected static function get_site_editor_tooltip_data() {
+		return [
+			'title' => '',
+			'content' => '',
+			'tip' => '',
+			'video_url' => '',
+		];
+	}
+
+	public function get_name() {
+		return static::get_site_editor_type();
 	}
 
 	public function get_location_label() {
@@ -255,10 +369,8 @@ abstract class Theme_Document extends Library_Document {
 		}
 		?>
 		<<?php echo $wrapper_tag; ?> <?php echo Utils::render_html_attributes( $this->get_container_attributes() ); ?>>
-		<div class="elementor-inner">
-			<div class="elementor-section-wrap">
-				<?php $this->print_elements( $elements_data ); ?>
-			</div>
+		<div class="elementor-section-wrap">
+			<?php $this->print_elements( $elements_data ); ?>
 		</div>
 		</<?php echo $wrapper_tag; ?>>
 		<?php
@@ -503,5 +615,13 @@ abstract class Theme_Document extends Library_Document {
 		}
 
 		return $value;
+	}
+
+	public function get_initial_config() {
+		$config = parent::get_initial_config();
+
+		$config['support_site_editor'] = static::get_property( 'support_site_editor' );
+
+		return $config;
 	}
 }

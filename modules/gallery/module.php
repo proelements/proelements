@@ -2,12 +2,7 @@
 
 namespace ElementorPro\Modules\Gallery;
 
-use Elementor\Controls_Manager;
-use Elementor\Element_Base;
-use Elementor\Element_Column;
-use Elementor\Element_Section;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

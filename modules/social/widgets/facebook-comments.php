@@ -127,6 +127,7 @@ class Facebook_Comments extends Base_Widget {
 		$attributes = [
 			'class' => 'elementor-facebook-widget fb-comments',
 			'data-href' => $permalink,
+			'data-width' => '100%',
 			'data-numposts' => $settings['comments_number'],
 			'data-order-by' => $settings['order_by'],
 			// The style prevent's the `widget.handleEmptyWidget` to set it as an empty widget

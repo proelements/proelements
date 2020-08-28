@@ -1,4 +1,4 @@
-/*! pro-elements - v2.10.3 - 29-06-2020 */
+/*! pro-elements - v3.0.1 - 26-08-2020 */
 .wrap.elementor-admin-page-license form.elementor-license-box {
   max-width: 600px;
   background: white;
@@ -7,7 +7,21 @@
   .wrap.elementor-admin-page-license form.elementor-license-box h3 {
     border-bottom: 1px solid #eee;
     padding: 20px;
-    margin: -20px -20px 20px; }
+    margin: -20px -20px 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .wrap.elementor-admin-page-license form.elementor-license-box h3 span {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      padding-left: 5px; }
     .wrap.elementor-admin-page-license form.elementor-license-box h3 small {
       float: right;
       font-size: 13px;
@@ -19,7 +33,8 @@
     margin: 1em 0; }
   .wrap.elementor-admin-page-license form.elementor-license-box .button {
     height: 30px;
-    line-height: 28px; }
+    margin-left: 15px;
+    margin-bottom: 0; }
   .wrap.elementor-admin-page-license form.elementor-license-box p.description {
     margin: 10px 0; }
   .wrap.elementor-admin-page-license form.elementor-license-box .e-row-stretch {

@@ -2,7 +2,8 @@
 namespace ElementorPro\Modules\ThemeBuilder\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Modules\Posts\Widgets\Posts_Base;
 use ElementorPro\Modules\ThemeBuilder\Skins;
@@ -96,9 +97,8 @@ class Archive_Posts extends Posts_Base {
 			[
 				'label' => __( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-posts-nothing-found' => 'color: {{VALUE}};',
@@ -110,7 +110,9 @@ class Archive_Posts extends Posts_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'nothing_found_typography',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 				'selector' => '{{WRAPPER}} .elementor-posts-nothing-found',
 			]
 		);

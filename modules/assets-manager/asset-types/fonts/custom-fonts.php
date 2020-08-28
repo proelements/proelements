@@ -343,7 +343,7 @@ class Custom_Fonts extends Classes\Font_Base {
 			return;
 		}
 
-		printf( '<style>%s</style><span style="font-family: \'%s\';">%s</span>', $font_face, get_the_title( $post_id ), $this->font_preview_phrase );
+		printf( '<style>%s</style><span style="font-family: \'%s\';">%s</span>', $font_face, esc_html( get_the_title( $post_id ) ), $this->font_preview_phrase );
 	}
 
 	public function get_font_family_type( $post_id, $post_title ) {

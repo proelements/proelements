@@ -2,7 +2,6 @@
 namespace ElementorPro\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
-use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Controls\Fields_Map;
 use ElementorPro\Modules\Forms\Classes\Action_Base;

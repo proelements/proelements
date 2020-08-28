@@ -2,13 +2,7 @@
 
 namespace ElementorPro\Modules\Lottie;
 
-use Elementor\Controls_Manager;
-use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
-use Elementor\Element_Base;
-use Elementor\Element_Column;
-use Elementor\Element_Section;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

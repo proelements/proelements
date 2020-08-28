@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Archive extends Theme_Page_Document {
+class Archive extends Archive_Single_Base {
 
 	public static function get_properties() {
 		$properties = parent::get_properties();
@@ -18,12 +18,26 @@ class Archive extends Theme_Page_Document {
 		return $properties;
 	}
 
-	public function get_name() {
+	protected static function get_site_editor_type() {
 		return 'archive';
 	}
 
 	public static function get_title() {
 		return __( 'Archive', 'elementor-pro' );
+	}
+
+	protected static function get_site_editor_icon() {
+		return 'eicon-archive';
+	}
+
+	protected static function get_site_editor_tooltip_data() {
+		return [
+			'title' => __( 'What is an Archive Template?', 'elementor-pro' ),
+			'content' => __( 'An archive template allows you to easily design the layout and style of archive pages - those pages that show a list of posts (e.g. a blog’s list of recent posts), which may be filtered by terms such as authors, categories, tags, search results, etc.', 'elementor-pro' ),
+			'tip' => __( 'If you’d like a different style for a specific category, it’s easy to create a separate global archive template whose condition is to only display when users are viewing that category’s list of posts.', 'elementor-pro' ),
+			'docs' => 'https://go.elementor.com/app-theme-builder-archive',
+			'video_url' => 'https://www.youtube.com/embed/wxElpEh9bfA',
+		];
 	}
 
 	protected static function get_editor_panel_categories() {

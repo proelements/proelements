@@ -2,14 +2,14 @@
 namespace ElementorPro\Modules\Woocommerce\Documents;
 
 use Elementor\Controls_Manager;
-use ElementorPro\Modules\ThemeBuilder\Documents\Single;
+use ElementorPro\Modules\ThemeBuilder\Documents\Single_Base;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Product extends Single {
+class Product extends Single_Base {
 
 	public static function get_properties() {
 		$properties = parent::get_properties();
@@ -20,12 +20,26 @@ class Product extends Single {
 		return $properties;
 	}
 
-	public function get_name() {
+	protected static function get_site_editor_type() {
 		return 'product';
 	}
 
 	public static function get_title() {
 		return __( 'Single Product', 'elementor-pro' );
+	}
+
+	protected static function get_site_editor_icon() {
+		return 'eicon-single-product';
+	}
+
+	protected static function get_site_editor_tooltip_data() {
+		return [
+			'title' => __( 'What is a Global Product?', 'elementor-pro' ),
+			'content' => __( 'A global product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign.', 'elementor-pro' ),
+			'tip' => __( 'You can create multiple global product templates, and assign each to different types of products, enabling a custom design for each group of similar products.', 'elementor-pro' ),
+			'docs' => 'https://go.elementor.com/app-theme-builder-product',
+			'video_url' => 'https://www.youtube.com/embed/PjhoB1RWkBM',
+		];
 	}
 
 	public static function get_editor_panel_config() {

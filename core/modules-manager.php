@@ -25,6 +25,7 @@ final class Modules_Manager {
 			'popup',
 			'motion-fx',
 			'usage',
+			'screenshots',
 
 			// Modules with Widgets.
 			'theme-builder',

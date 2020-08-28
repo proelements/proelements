@@ -1,8 +1,6 @@
 <?php
 namespace ElementorPro\Modules\DynamicTags\ACF\Tags;
 
-use Elementor\Controls_Manager;
-use ElementorPro\Modules\DynamicTags\Tags\Base\Data_Tag;
 use ElementorPro\Modules\DynamicTags\ACF\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {

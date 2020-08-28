@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 abstract class Theme_Page_Document extends Theme_Document {
 
+	/**
+	 * Document sub type meta key.
+	 */
+	const REMOTE_CATEGORY_META_KEY = '_elementor_template_sub_type';
+
 	public function get_css_wrapper_selector() {
 		return 'body.elementor-page-' . $this->get_main_id();
 	}

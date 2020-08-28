@@ -1,4 +1,4 @@
-/*! pro-elements - v2.10.3 - 29-06-2020 */
+/*! pro-elements - v3.0.1 - 26-08-2020 */
 #elementor-panel-get-pro-elements {
   display: none; }
 
@@ -297,7 +297,8 @@
   #elementor-theme-builder-conditions .elementor-control-spinner {
     display: none; }
   #elementor-theme-builder-conditions .elementor-control-input-wrapper {
-    width: 100%; }
+    width: 100%;
+    max-width: initial; }
   #elementor-theme-builder-conditions .select2-selection {
     height: 40px;
     border: none;
@@ -356,6 +357,41 @@
   .elementor-conditions-select2-dropdown .select2-search--dropdown .select2-search__field {
     border-width: 0 0 1px;
     border-radius: 0; }
+
+#elementor-toast.e-theme-builder-save-toaster .dialog-buttons-wrapper {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+#elementor-toast.e-theme-builder-save-toaster .dialog-buttons-message {
+  text-align: center; }
+
+#elementor-toast.e-theme-builder-save-toaster .dialog-button {
+  border-radius: 3px;
+  text-align: center;
+  font-size: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 27px;
+  background-color: #6d7882;
+  margin: 0; }
+  #elementor-toast.e-theme-builder-save-toaster .dialog-button:hover {
+    background-color: #39b54a; }
+  #elementor-toast.e-theme-builder-save-toaster .dialog-button i {
+    margin-right: 5px; }
+
+#elementor-toast.e-theme-builder-save-toaster .dialog-open_site_editor {
+  margin-bottom: 10px; }
 
 .elementor-control.elementor-control-sitemap_items.elementor-control-type-repeater .elementor-repeater-row-tools .elementor-repeater-row-item-title span {
   text-transform: capitalize; }

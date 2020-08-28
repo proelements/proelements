@@ -101,7 +101,7 @@ class Module extends Module_Base {
 			if ( $document ) {
 				$results[] = [
 					'id' => $post->ID,
-					'text' => $post->post_title . ' (' . $document->get_post_type_title() . ')',
+					'text' => esc_html( $post->post_title ) . ' (' . $document->get_post_type_title() . ')',
 				];
 			}
 		}
@@ -130,7 +130,7 @@ class Module extends Module_Base {
 		foreach ( $query->posts as $post ) {
 			$document = Plugin::elementor()->documents->get( $post->ID );
 			if ( $document ) {
-				$results[ $post->ID ] = $post->post_title . ' (' . $document->get_post_type_title() . ')';
+				$results[ $post->ID ] = esc_html( $post->post_title ) . ' (' . $document->get_post_type_title() . ')';
 			}
 		}
 
@@ -145,11 +145,6 @@ class Module extends Module_Base {
 
 			return $black_list;
 		} );
-		/**
-		 * @deprecated 2.6.0 The following filters will be removed in Elementor Pro 2.9.0:
-		 */
-		add_filter( 'elementor_pro/query_control/get_autocomplete/library_widget_templates', [ $this, 'get_autocomplete_for_library_widget_templates' ], 10, 2 );
-		add_filter( 'elementor_pro/query_control/get_value_titles/library_widget_templates', [ $this, 'get_value_title_for_library_widget_templates' ], 10, 2 );
 	}
 
 	public static function get_templates() {

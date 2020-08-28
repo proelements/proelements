@@ -1,4 +1,50 @@
 # PRO Elements - by PROElements.org
 
+#### 3.0.1 - 2020-08-26
+* Tweak: Keep previous Theme Builder when accessing from the WP Dashboard for legacy support
+* Tweak: Updated video tutorials in Theme Builder
+* Tweak: Don't show auto-screenshots in the Media Library (Props [@black-eye](https://github.com/black-eye))
+* Fix: Repeater items throws `childView` is undefined message in Forms widget ([#12239](https://github.com/elementor/elementor/issues/12239), [#12221](https://github.com/elementor/elementor/issues/12221))
+* Fix: Misspelling of the word "occurred" in Form widget default error message ([#12137](https://github.com/elementor/elementor/issues/12137))
+* Fix: Facebook comments not showing up ([#12157](https://github.com/elementor/elementor/issues/12157))
+* Fix: Check for conflicts in Theme Builder doesn't work properly
+* Fix: Minor UI fixes in Theme Builder
+* Fix: Dark mode glitches in Theme Builder
+* Fix: Global Site Part toaster appears when you publish a Popup
+* Fix: Site Parts aren't in the correct order in Theme Builder
+* Fix: Date field caused forms to get corrupted in Forms widget
+* Fix: Theme Builder application page is forbidden
+
+#### 3.0.0 - 2020-08-23
+* New: Introducing the new and improved Theme Builder
+* Tweak: Removed `.elementor-inner` and `.elementor-column-wrap` from DOM output to improve performance ([#7351](https://github.com/elementor/elementor/issues/7351), [#7817](https://github.com/elementor/elementor/issues/7817), [Developers Blog Post](https://developers.elementor.com/dom-improvements-ahead-html-wrappers-removal-from-v3-0/))
+* Tweak: Added contextual anchors ID support to Table of Contents widgets ([#10052](https://github.com/elementor/elementor/issues/10052))
+* Tweak: Added WeChat and Weibo social networks to Share Buttons widget ([#11554](https://github.com/elementor/elementor/issues/11554))
+* Tweak: Added Dynamic capabilities for Redirect after Login/Logout in Login widget ([#11343](https://github.com/elementor/elementor/issues/11343))
+* Tweak: Added Blend Mode and CSS Filters controls to adjust the Background Overlay in Flipbox widget ([#11653](https://github.com/elementor/elementor/issues/11653))
+* Tweak: Added responsive capabilities to Toggle Button styling in Nav Menu widget ([#8269](https://github.com/elementor/elementor/issues/8269))
+* Tweak: Added responsive Text Alignment control in Call to Action widget ([#11968](https://github.com/elementor/elementor/issues/11968))
+* Tweak: Added dynamic content to Ribbon element in Call to Action widget ([#10364](https://github.com/elementor/elementor/issues/10364))
+* Tweak: Converted uses of Color and Typography Schemes to Global Colors and Fonts
+* Tweak: Separated Title and Description control fields labels in Call to Action widget
+* Tweak: Removed unnecessary style in WC Product with variations
+* Tweak: Converted Portfolio, Posts and Share Buttons widgets to use CSS Variable-based Elementor Grid ([Developers Blog Post](https://developers.elementor.com/elementor-dropping-support-ie/))
+* Tweak: Added Date Modified option to Posts widget metadata
+* Fix: PHP 7.4 compatibility to Media Carousel widget ([#11355](https://github.com/elementor/elementor/issues/11355))
+* Fix: Divider alignment issue in Post Info widget ([#11628](https://github.com/elementor/elementor/issues/11628))
+* Fix: Color doesn’t change in Products Archive Description widget
+* Fix: WC Product variations layout breaks when using Variation Swatches plugin
+* Fix: WC Product variations layout issue
+* Fix: WC Product variations mobile zoom-in glitch
+* Fix: Can't edit a Popup after accessing Theme Style
+* Fix: Twitter icon missing in Blockquote widget
+* Fix: Removed redundant default text color from Share Buttons minimal skin
+* Fix: UI glitch in Display Conditions modal
+* Fix: Insert template button UI glitch in Templates Library
+* Fix: Added sanitization to post titles in WordPress dashboard for better security
+* Fix: Show when arriving from search engines rule doesn't work in Popup
+* Fix: Child categories are shown with a different parent category in Query control
+* Deprecated: See all deprecations to this version in our [Developers Deprecations Post](https://developers.elementor.com/v3-0-planned-deprecations/)
+
 #### 2.10.3 - 2020-07-15
 * Initial release

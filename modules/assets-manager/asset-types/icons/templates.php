@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div><span class="elementor-icon-set-header-meta"><?php echo __( 'Name', 'elementor-pro' ); ?>: </span><span class="elementor-icon-set-header-meta-value">{{name}}</span></div>
 		<div><span class="elementor-icon-set-header-meta"><?php echo __( 'CSS Prefix', 'elementor-pro' ); ?>: </span><span class="elementor-icon-set-header-meta-value">{{prefix}}</span></div>
 		<div><span class="elementor-icon-set-header-meta"><?php echo __( 'Icons Count', 'elementor-pro' ); ?>: </span><span class="elementor-icon-set-header-meta-value">{{count}}</span></div>
-		<div class="elementor-icon-set-header-meta-remove"><div class="remove"><i class="eicon-trash"></i> <?php echo __( 'Remove', 'elementor-pro' ); ?></div></div>
 	</div>
 </script>
 

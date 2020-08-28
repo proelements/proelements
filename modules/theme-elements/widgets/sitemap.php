@@ -2,7 +2,8 @@
 namespace ElementorPro\Modules\ThemeElements\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use ElementorPro\Modules\QueryControl\Module as Query_Module;
 use Elementor\Repeater;
 use ElementorPro\Core\Utils;
@@ -399,9 +400,8 @@ class Sitemap extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-sitemap-title' => 'color: {{VALUE}};',
 				],
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_1,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 			]
 		);
@@ -411,7 +411,9 @@ class Sitemap extends Base {
 			[
 				'name' => 'sitemap_title_typography',
 				'selector' => '{{WRAPPER}} .elementor-sitemap-title',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_1,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
@@ -433,9 +435,8 @@ class Sitemap extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-sitemap-item, {{WRAPPER}} span.elementor-sitemap-list, {{WRAPPER}} .elementor-sitemap-item a' => 'color: {{VALUE}};',
 				],
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 			]
 		);
@@ -445,7 +446,9 @@ class Sitemap extends Base {
 			[
 				'name' => 'sitemap_list_item_typography',
 				'selector' => '{{WRAPPER}} .elementor-sitemap-item, {{WRAPPER}} span.elementor-sitemap-list, {{WRAPPER}} .elementor-sitemap-item a',
-				'scheme' => Schemes\Typography::TYPOGRAPHY_3,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 
@@ -467,9 +470,8 @@ class Sitemap extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-sitemap-item' => 'color: {{VALUE}};',
 				],
-				'scheme' => [
-					'type' => Schemes\Color::get_type(),
-					'value' => Schemes\Color::COLOR_3,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 			]
 		);

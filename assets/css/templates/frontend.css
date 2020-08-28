@@ -463,11 +463,6 @@ the source property is coming from element/dev/scss...
 .elementor-button.elementor-hidden {
   display: none; }
 
-/* Temporary Patch */
-.elementor-form-fields-wrapper.elementor-labels-above .elementor-field-group > input, .elementor-form-fields-wrapper.elementor-labels-above .elementor-field-group > textarea, .elementor-form-fields-wrapper.elementor-labels-above .elementor-field-group > .elementor-select-wrapper, .elementor-form-fields-wrapper.elementor-labels-above .elementor-field-group .elementor-field-subgroup {
-  flex-basis: 100%;
-  max-width: 100%; }
-
 .e-form__step {
   width: 100%; }
   .e-form__step:not(.elementor-hidden) {
@@ -1343,6 +1338,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_vk, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_vk {
   background-color: #45668e; }
 
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_weixin, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_weixin {
+  background-color: #31A918; }
+
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_weibo, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_weibo {
+  background-color: #DD2430; }
+
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_whatsapp, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_whatsapp {
   background-color: #25d366; }
 
@@ -1417,6 +1418,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_vk, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_vk {
   color: #45668e; }
+
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_weixin, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weixin {
+  color: #31A918; }
+
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_weibo, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weibo {
+  color: #DD2430; }
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_whatsapp, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_whatsapp {
   color: #25d366; }
@@ -1493,6 +1500,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_vk .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_vk .elementor-share-btn__icon {
   background-color: #45668e; }
 
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weixin .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_weixin .elementor-share-btn__icon {
+  background-color: #31A918; }
+
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weibo .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_weibo .elementor-share-btn__icon {
+  background-color: #DD2430; }
+
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_whatsapp .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_whatsapp .elementor-share-btn__icon {
   background-color: #25d366; }
 
@@ -1528,9 +1541,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 
 .elementor-share-buttons--skin-minimal.elementor-share-buttons--shape-circle .elementor-share-btn__icon {
   border-radius: 99.9em; }
-
-.elementor-share-buttons--skin-minimal .elementor-share-btn__text {
-  color: #222; }
 
 .elementor-share-buttons--view-text .elementor-share-btn__text {
   padding-left: 1em; }
@@ -1634,44 +1644,6 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   margin: 0;
   display: flex;
   flex-wrap: nowrap; }
-
-.woocommerce div.product.elementor form.cart table.variations {
-  --variation-select-width: 75%; }
-  .woocommerce div.product.elementor form.cart table.variations tbody {
-    display: block; }
-  .woocommerce div.product.elementor form.cart table.variations tr {
-    display: flex; }
-    .woocommerce div.product.elementor form.cart table.variations tr:not(:last-child) {
-      margin-bottom: 10px; }
-  .woocommerce div.product.elementor form.cart table.variations td {
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    padding: 0; }
-  .woocommerce div.product.elementor form.cart table.variations td.label {
-    width: 25%; }
-  .woocommerce div.product.elementor form.cart table.variations td.value {
-    position: relative;
-    width: 75%; }
-    .woocommerce div.product.elementor form.cart table.variations td.value select, .woocommerce div.product.elementor form.cart table.variations td.value:before {
-      display: block;
-      font-size: 1em;
-      height: 2em; }
-    .woocommerce div.product.elementor form.cart table.variations td.value:before {
-      content: '-';
-      color: transparent;
-      background-color: #fff;
-      position: relative;
-      max-width: 100%;
-      width: var(--variation-select-width);
-      margin-right: 1em; }
-    .woocommerce div.product.elementor form.cart table.variations td.value select {
-      border: 0;
-      position: absolute;
-      background: transparent;
-      top: 0;
-      padding: 0;
-      width: var(--variation-select-width); }
 
 .woocommerce div.product.elementor .quantity .qty {
   vertical-align: top;
@@ -2650,9 +2622,9 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-vk {
     color: #45668e; }
   .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-weibo {
-    color: #df2029; }
+    color: #DD2430; }
   .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-weixin {
-    color: #7bb32e; }
+    color: #31A918; }
   .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-whatsapp {
     color: #25d366; }
   .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-wordpress {
@@ -4142,6 +4114,9 @@ ul.elementor-nav-menu--dropdown a, ul.elementor-nav-menu--dropdown a:hover, ul.e
 .elementor-post-info .elementor-icon-list-icon .elementor-avatar {
   border-radius: 100%; }
 
+.elementor-widget-post-info.elementor-align-center .elementor-icon-list-item:after {
+  margin: initial; }
+
 .elementor-icon-list-items .elementor-icon-list-item .elementor-icon-list-text {
   display: inline-block; }
   .elementor-icon-list-items .elementor-icon-list-item .elementor-icon-list-text a, .elementor-icon-list-items .elementor-icon-list-item .elementor-icon-list-text span {
@@ -4159,7 +4134,7 @@ ul.elementor-nav-menu--dropdown a, ul.elementor-nav-menu--dropdown a:hover, ul.e
 .elementor-sticky--active {
   z-index: 99; }
 
-[data-elementor-type="popup"]:not(.elementor-edit-mode) {
+[data-elementor-type="popup"]:not(.elementor-edit-area) {
   display: none; }
 
 [data-elementor-type="popup"] .elementor-section-wrap:not(:empty) + #elementor-add-new-section {

@@ -1,0 +1,285 @@
+.e-site-editor__conditions {
+	font-family: $eps-font-family-base;
+
+	.save-button-wrapper {
+		display: flex;
+		justify-content: end;
+		position: absolute;
+		bottom: 20px;
+		@include end(20px);
+	}
+
+	.title {
+		text-align: center;
+		margin-top: 45px;
+
+		&__icon {
+			img {
+				width: 70px;
+			}
+
+			display: inline-block;
+		}
+
+		&__text {
+			margin-top: 40px;
+			font-weight: $eps-font-weight-normal;
+			color: $eps-dark-gray-400;
+		}
+
+		&__description {
+			margin-top: 10px;
+			color: $eps-dark-gray-200;
+		}
+	}
+
+	.conditions {
+		margin: 40px auto;
+		max-width: 700px;
+	}
+
+	.row {
+		font-size: 12px;
+		display: flex;
+		flex-grow: 1;
+		margin-top: 10px;
+
+		&-conflict-error {
+			margin-top: 5px;
+			font-size: 13px;
+			color: $color-red-tomato-frog;
+			text-align: getValueByDirection(left, right);
+		}
+
+		&-icon {
+			color: $eps-gray-400;
+			font-size: 18px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		&-controls {
+			overflow: hidden;
+			@include margin-end(10px);
+			background: #fff;
+			display: flex;
+			width: 100%;
+			box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+			border-radius: 3px;
+
+			&--error {
+				border: 1px solid $color-red-tomato-frog;
+			}
+
+			&-condition {
+				width: 100%;
+				display: flex;
+
+				div {
+					flex: 1
+				}
+			}
+		}
+	}
+
+	.elementor-control-input-wrapper {
+		position: relative;
+		@include border-start(1px solid $eps-gray-200);
+
+		&:first-child {
+			border: none;
+		}
+
+		select {
+			appearance: none;
+			-webkit-appearance: none;
+			font-size: 12px;
+			height: 40px;
+			border-width: 0;
+			padding: 0 14px;
+			width: 100%;
+			position: relative;
+			color: $eps-gray-700;
+			outline: none;
+			background: transparent;
+
+		}
+
+		&:after {
+			font-family: eicons;
+			content: '\e8ad';
+			font-size: 12px;
+			pointer-events: none;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			@include end(10px);
+		}
+
+		.select2-container--default .select2-selection--single {
+			border: none;
+			line-height: 40px;
+		}
+
+		.select2-container--default .select2-selection--single .select2-selection__rendered {
+			line-height: 40px;
+		}
+
+		.select2-selection {
+			outline: none;
+			background: transparent;
+			height: 40px;
+		}
+
+		.select2-selection__arrow {
+			display: none;
+		}
+	}
+
+	.condition-type-wrapper {
+		position: relative;
+
+		&:before {
+			font-family: eicons;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			@include start(13px);
+			font-size: 15px;
+			color: #fff;
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		&:after {
+			color: #fff;
+		}
+
+		select {
+			text-transform: uppercase;
+			@include padding-start(33px);
+			width: 120px;
+			font-size: 12px;
+			color: #fff;
+		}
+
+		&[data-elementor-condition-type="include"] {
+			&:before {
+				content: '\e8cc';
+			}
+
+			select {
+				background-color: $editor-light;
+			}
+		}
+
+		&[data-elementor-condition-type="exclude"] {
+			&:before {
+				content: '\e8cd';
+			}
+
+			select {
+				background-color: $editor-lighter;
+			}
+		}
+	}
+
+	.add-button-wrapper {
+		margin-top: 50px;
+		text-align: center;
+	}
+
+	.add-button {
+		font-size: 14px;
+		padding: 12px 26px;
+		background-color: $editor-light;
+		color: #fff;
+		font-weight: 500;
+		text-transform: uppercase;
+		outline: none;
+		border: none;
+		transition: background 200ms;
+
+		&:hover {
+			background-color: $editor-dark;
+		}
+	}
+
+	.select2-container {
+		z-index: 10000;
+	}
+
+	.select2-dropdown {
+		border: none;
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+		font-size: 12px;
+	}
+
+	.select2-results__option.select2-results__message {
+		display: none;
+	}
+
+	.select2-container--default .select2-search--dropdown .select2-search__field {
+		border: 1px solid $eps-gray-300;
+		outline: none;
+	}
+}
+
+.eps-theme-dark .e-site-editor__conditions {
+	.title {
+		&__text {
+			color: $eps-dark-gray-100;
+		}
+	}
+
+	.row {
+		&-icon {
+			color: $eps-gray-500;
+		}
+
+		&-controls {
+			background: $eps-dark-gray-500;
+		}
+	}
+
+	.elementor-control-input-wrapper {
+		@include border-start(1px solid $eps-dark-gray-600);
+
+		&:first-child {
+			border: none;
+		}
+
+		select {
+			color: $eps-gray-200;
+			background: $eps-dark-gray-600;
+		}
+
+		.select2-container--default .select2-selection--single .select2-selection__rendered {
+			color: $eps-gray-200;
+		}
+	}
+
+	.condition-type-wrapper {
+		&[data-elementor-condition-type="include"] {
+			select {
+				background-color: $eps-dark-gray-600;
+			}
+		}
+
+		&[data-elementor-condition-type="exclude"] {
+			select {
+				background-color: $eps-dark-gray-600;
+			}
+		}
+	}
+
+	.add-button {
+		background-color: $eps-dark-gray-500;
+		color: #fff;
+
+		&:hover {
+			background-color: $eps-dark-gray-600;
+		}
+	}
+}

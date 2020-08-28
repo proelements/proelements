@@ -210,15 +210,6 @@ class Utils {
 		return $title;
 	}
 
-	/**
-	 * @deprecated 2.0.0 Use `Utils::get_page_title()` instead
-	 */
-	public static function get_the_archive_title( $include_context = true ) {
-		_deprecated_function( __METHOD__, '2.0.0', __CLASS__ . '::get_page_title()' );
-
-		return self::get_page_title();
-	}
-
 	public static function set_global_authordata() {
 		global $authordata;
 		if ( ! isset( $authordata->ID ) ) {
