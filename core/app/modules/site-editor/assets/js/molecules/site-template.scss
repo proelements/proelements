@@ -85,6 +85,7 @@ $aspect-ratio-wide: calc(100% * 0.1235);
 		.#{$eps-prefix}icon {
 			margin-inline-end: spacing(5);
 			color: var(--eps-meta-icon-color);
+			font-size: type(text, sm)
 		}
 
 		&-list {

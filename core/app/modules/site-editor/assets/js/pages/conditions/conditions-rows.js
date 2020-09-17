@@ -19,17 +19,18 @@ export default function ConditionsRows() {
 
 	const rows = Object.values( conditions ).map( ( condition ) =>
 		<div key={ condition.id }>
-			<div className="row">
-				<div className={ `row-controls ${ condition.conflictErrors.length && 'row-controls--error' }` }>
+			<div className="e-site-editor-conditions__row">
+				<div
+					className={ `e-site-editor-conditions__row-controls ${ condition.conflictErrors.length && 'e-site-editor-conditions__row-controls--error' }` }>
 					<ConditionType { ...condition } updateConditions={ update }/>
-					<div className="row-controls-condition">
+					<div className="e-site-editor-conditions__row-controls-inner">
 						<ConditionName { ...condition } updateConditions={ update }/>
 						<ConditionSub { ...condition } updateConditions={ update }/>
 						<ConditionSubId { ...condition } updateConditions={ update }/>
 					</div>
 				</div>
 				<Button
-					className="row-icon"
+					className="e-site-editor-conditions__remove-condition"
 					text={ __( 'Delete', 'elementor-pro' ) }
 					icon="eicon-close"
 					hideText={ true }
@@ -40,33 +41,42 @@ export default function ConditionsRows() {
 		</div>
 	);
 
-	const savingIcon = action.current === ConditionsProvider.actions.SAVE && action.loading ? 'eicon-loading eicon-animation-spin' : '';
+	const isSaving = action.current === ConditionsProvider.actions.SAVE && action.loading;
 
 	return (
 		<>
 			{
 				action.error &&
-					<Dialog
-						text={ action.error }
-						dismissButtonText={ __( 'Go Back', 'elementor-pro' ) }
-						dismissButtonOnClick={ resetActionState }
-						approveButtonText={ __( 'Learn More', 'elementor-pro' ) }
-						approveButtonColor="link"
-						approveButtonUrl="https://go.elementor.com/app-theme-builder-conditions-load-issue"
-						approveButtonTarget="_target"
-					/>
+				<Dialog
+					text={ action.error }
+					dismissButtonText={ __( 'Go Back', 'elementor-pro' ) }
+					dismissButtonOnClick={ resetActionState }
+					approveButtonText={ __( 'Learn More', 'elementor-pro' ) }
+					approveButtonColor="link"
+					approveButtonUrl="https://go.elementor.com/app-theme-builder-conditions-load-issue"
+					approveButtonTarget="_target"
+				/>
 			}
-			{ rows }
-			<div className="add-button-wrapper">
-				<Button className="add-button" text={ __( 'Add Condition', 'elementor-pro' ) } onClick={ create }/>
-			</div>
+			<div className="e-site-editor-conditions__rows">
+				{ rows }
 
-			<div className="save-button-wrapper">
+				<div className="e-site-editor-conditions__add-button-container">
+					<Button
+						className="e-site-editor-conditions__add-button"
+						variant="contained"
+						size="lg"
+						text={ __( 'ADD CONDITION', 'elementor-pro' ) }
+						onClick={ create }port
+					/>
+				</div>
+			</div>
+			<div className="e-site-editor-conditions__save-button-container">
 				<Button
 					variant="contained"
 					color="primary"
-					size="sm"
-					icon={ savingIcon }
+					size="lg"
+					hideText={ isSaving }
+					icon={ isSaving ? 'eicon-loading eicon-animation-spin' : '' }
 					text={ __( 'Save & Close', 'elementor-pro' ) }
 					onClick={ () => save().then( () => history.back() ) }
 				/>

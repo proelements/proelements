@@ -1,4 +1,4 @@
-import { Select2 } from '../../form-elements/select2';
+import { Select2 } from '@elementor/app-ui';
 
 /**
  * Main component.
@@ -17,7 +17,7 @@ export default function ConditionSubId( props ) {
 	const onChange = ( e ) => props.updateConditions( props.id, { subId: e.target.value } );
 
 	return (
-		<div className="elementor-control-input-wrapper condition-sub-id-wrapper">
+		<div className="e-site-editor-conditions__input-wrapper">
 			<Select2
 				onChange={ onChange }
 				value={ props.subId }

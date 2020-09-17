@@ -1,91 +1,91 @@
-.e-site-editor__conditions {
-	font-family: $eps-font-family-base;
+@import "conditions-api";
 
-	.save-button-wrapper {
+.e-site-editor-conditions {
+	&__header {
+		text-align: center;
+	}
+
+	&__header-image {
+		display: block;
+		margin: 0 auto $e-site-editor-conditions-header-image-button-spacing;
+		width: $e-site-editor-conditions-header-image-width;
+	}
+
+	&__rows {
+		margin: $e-site-editor-conditions-rows-y-spacing auto;
+		max-width: $e-site-editor-conditions-rows-max-width;
+	}
+
+	&__row {
+		display: flex;
+		flex-grow: 1;
+		margin-top: $e-site-editor-conditions-row-top-spacing;
+	}
+
+	&__remove-condition {
+		color: $e-site-editor-conditions-remove-condition-color;
+		font-size: $e-site-editor-conditions-remove-condition-font-size;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__row-controls {
+		overflow: hidden;
+		@include margin-end($e-site-editor-conditions-row-controls-spacing-end);
+		background-color: var(--e-site-editor-conditions-row-controls-background);
+		display: flex;
+		width: 100%;
+		box-shadow: $e-site-editor-conditions-row-controls-shadow;
+		border-radius: $e-site-editor-conditions-row-controls-radius;
+
+		&--error {
+			border: $e-site-editor-conditions-row-controls-error-border;
+		}
+	}
+
+	&__conflict {
+		text-align: center;
+		margin-top: $e-site-editor-conditions-conflict-top-spacing;
+		color: $e-site-editor-conditions-conflict-color;
+	}
+
+	&__row-controls-inner {
+		width: 100%;
+		display: flex;
+
+		div {
+			flex: 1;
+		}
+	}
+
+	&__add-button-container {
+		text-align: center;
+	}
+
+	&__add-button {
+		margin-top: $e-site-editor-add-button-margin-top;
+		background-color: var(--e-site-editor-add-button-background-color);
+		color: $e-site-editor-add-button-color;
+
+		&:hover {
+			background-color: var(--e-site-editor-add-button-color-hover-background-color);
+			color: $e-site-editor-add-button-color-hover-color;
+		}
+	}
+
+	&__save-button-container {
 		display: flex;
 		justify-content: end;
 		position: absolute;
-		bottom: 20px;
-		@include end(20px);
+		bottom: $e-site-editor-save-button-container-spacing;
+		@include end($e-site-editor-save-button-container-spacing);
 	}
 
-	.title {
-		text-align: center;
-		margin-top: 45px;
-
-		&__icon {
-			img {
-				width: 70px;
-			}
-
-			display: inline-block;
-		}
-
-		&__text {
-			margin-top: 40px;
-			font-weight: $eps-font-weight-normal;
-			color: $eps-dark-gray-400;
-		}
-
-		&__description {
-			margin-top: 10px;
-			color: $eps-dark-gray-200;
-		}
-	}
-
-	.conditions {
-		margin: 40px auto;
-		max-width: 700px;
-	}
-
-	.row {
-		font-size: 12px;
-		display: flex;
-		flex-grow: 1;
-		margin-top: 10px;
-
-		&-conflict-error {
-			margin-top: 5px;
-			font-size: 13px;
-			color: $color-red-tomato-frog;
-			text-align: getValueByDirection(left, right);
-		}
-
-		&-icon {
-			color: $eps-gray-400;
-			font-size: 18px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		&-controls {
-			overflow: hidden;
-			@include margin-end(10px);
-			background: #fff;
-			display: flex;
-			width: 100%;
-			box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-			border-radius: 3px;
-
-			&--error {
-				border: 1px solid $color-red-tomato-frog;
-			}
-
-			&-condition {
-				width: 100%;
-				display: flex;
-
-				div {
-					flex: 1
-				}
-			}
-		}
-	}
-
-	.elementor-control-input-wrapper {
+	&__input-wrapper {
 		position: relative;
-		@include border-start(1px solid $eps-gray-200);
+		@include border-start($e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style);
+		border-color: var(--e-site-editor-input-wrapper-border-color);
 
 		&:first-child {
 			border: none;
@@ -94,42 +94,42 @@
 		select {
 			appearance: none;
 			-webkit-appearance: none;
-			font-size: 12px;
-			height: 40px;
+			font-size: $e-site-editor-input-wrapper-select-font-size;
+			height: $e-site-editor-input-wrapper-select-height;
 			border-width: 0;
-			padding: 0 14px;
+			padding: 0 $e-site-editor-input-wrapper-select-y-padding;
 			width: 100%;
 			position: relative;
-			color: $eps-gray-700;
+			color: var(--e-site-editor-input-wrapper-select-color);
 			outline: none;
 			background: transparent;
-
 		}
 
 		&:after {
 			font-family: eicons;
 			content: '\e8ad';
-			font-size: 12px;
+			font-size: $e-site-editor-input-wrapper-select-arrow-font-size;
 			pointer-events: none;
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
-			@include end(10px);
+			@include end($e-site-editor-input-wrapper-select-arrow-margin-end);
 		}
 
 		.select2-container--default .select2-selection--single {
 			border: none;
-			line-height: 40px;
+			line-height: $e-site-editor-input-wrapper-select-height;
 		}
 
 		.select2-container--default .select2-selection--single .select2-selection__rendered {
-			line-height: 40px;
+			line-height:  $e-site-editor-input-wrapper-select-height;
+			font-size: $e-site-editor-input-wrapper-select-font-size;
 		}
 
 		.select2-selection {
 			outline: none;
 			background: transparent;
-			height: 40px;
+			height: $e-site-editor-input-wrapper-select-height;
 		}
 
 		.select2-selection__arrow {
@@ -137,7 +137,7 @@
 		}
 	}
 
-	.condition-type-wrapper {
+	&__input-wrapper--condition-type {
 		position: relative;
 
 		&:before {
@@ -145,23 +145,23 @@
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
-			@include start(13px);
-			font-size: 15px;
-			color: #fff;
+			@include start($e-site-editor-input-wrapper-condition-type-icon-start-spacing);
+			font-size: $e-site-editor-input-wrapper-condition-type-icon-font-size;
+			color: $e-site-editor-input-wrapper-condition-type-icon-color;
 			pointer-events: none;
-			z-index: 1;
+			z-index: $e-site-editor-input-wrapper-condition-type-icon-z-index;
 		}
 
 		&:after {
-			color: #fff;
+			color: $e-site-editor-input-wrapper-condition-type-arrow-color;
 		}
 
 		select {
 			text-transform: uppercase;
-			@include padding-start(33px);
-			width: 120px;
-			font-size: 12px;
-			color: #fff;
+			@include padding-start($e-site-editor-input-wrapper-condition-type-start-padding);
+			width: $e-site-editor-input-wrapper-condition-type-width;
+			font-size: $e-site-editor-input-wrapper-condition-type-font-size;
+			color: $e-site-editor-input-wrapper-condition-type-color;
 		}
 
 		&[data-elementor-condition-type="include"] {
@@ -170,7 +170,7 @@
 			}
 
 			select {
-				background-color: $editor-light;
+				background-color: var(--e-site-editor-input-wrapper-condition-include-background-color);
 			}
 		}
 
@@ -180,106 +180,15 @@
 			}
 
 			select {
-				background-color: $editor-lighter;
+				background-color: var(--e-site-editor-input-wrapper-condition-exclude-background-color);
 			}
 		}
-	}
-
-	.add-button-wrapper {
-		margin-top: 50px;
-		text-align: center;
-	}
-
-	.add-button {
-		font-size: 14px;
-		padding: 12px 26px;
-		background-color: $editor-light;
-		color: #fff;
-		font-weight: 500;
-		text-transform: uppercase;
-		outline: none;
-		border: none;
-		transition: background 200ms;
-
-		&:hover {
-			background-color: $editor-dark;
-		}
-	}
-
-	.select2-container {
-		z-index: 10000;
-	}
-
-	.select2-dropdown {
-		border: none;
-		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-		font-size: 12px;
-	}
-
-	.select2-results__option.select2-results__message {
-		display: none;
-	}
-
-	.select2-container--default .select2-search--dropdown .select2-search__field {
-		border: 1px solid $eps-gray-300;
-		outline: none;
 	}
 }
 
-.eps-theme-dark .e-site-editor__conditions {
-	.title {
-		&__text {
-			color: $eps-dark-gray-100;
-		}
-	}
-
-	.row {
-		&-icon {
-			color: $eps-gray-500;
-		}
-
-		&-controls {
-			background: $eps-dark-gray-500;
-		}
-	}
-
-	.elementor-control-input-wrapper {
-		@include border-start(1px solid $eps-dark-gray-600);
-
-		&:first-child {
-			border: none;
-		}
-
-		select {
-			color: $eps-gray-200;
-			background: $eps-dark-gray-600;
-		}
-
-		.select2-container--default .select2-selection--single .select2-selection__rendered {
-			color: $eps-gray-200;
-		}
-	}
-
-	.condition-type-wrapper {
-		&[data-elementor-condition-type="include"] {
-			select {
-				background-color: $eps-dark-gray-600;
-			}
-		}
-
-		&[data-elementor-condition-type="exclude"] {
-			select {
-				background-color: $eps-dark-gray-600;
-			}
-		}
-	}
-
-	.add-button {
-		background-color: $eps-dark-gray-500;
-		color: #fff;
-
-		&:hover {
-			background-color: $eps-dark-gray-600;
-		}
-	}
+// This is a temporary fix that handles dark mode in select2.
+// TODO: Remove it if already handled by the Select2 component.
+.select2-search__field {
+	background-color: transparent;
+	color: var(--e-site-editor-input-select2-search-field-color);
 }

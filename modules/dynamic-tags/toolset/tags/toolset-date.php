@@ -98,7 +98,7 @@ class Toolset_Date extends Toolset_Base {
 			[
 				'label' => __( 'Custom Format', 'elementor-pro' ),
 				'default' => '',
-				'description' => sprintf( '<a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
+				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
 				'condition' => [
 					'format' => 'custom',
 				],

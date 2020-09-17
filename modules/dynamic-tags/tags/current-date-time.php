@@ -69,7 +69,7 @@ class Current_Date_Time extends Tag {
 			[
 				'label' => __( 'Custom Format', 'elementor-pro' ),
 				'default' => get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
-				'description' => sprintf( '<a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
+				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
 				'condition' => [
 					'date_format' => 'custom',
 				],

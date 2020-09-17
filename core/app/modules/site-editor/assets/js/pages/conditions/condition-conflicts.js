@@ -1,4 +1,4 @@
-import { Button } from '@elementor/app-ui';
+import { Button, Text } from '@elementor/app-ui';
 
 export default function ConditionConflicts( props ) {
 	if ( ! props.conflicts.length ) {
@@ -17,9 +17,9 @@ export default function ConditionConflicts( props ) {
 	} );
 
 	return (
-		<div className="row-conflict-error">
+		<Text className="e-site-editor-conditions__conflict" variant="sm">
 			{ __( 'Elementor recognized that you have set this location for other templates: ', 'elementor-pro' ) } { conflictLinks }
-		</div>
+		</Text>
 	);
 }
 

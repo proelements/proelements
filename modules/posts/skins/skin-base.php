@@ -1060,7 +1060,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 	/**
 	 * @deprecated since 3.0.0 Use `Skin_Base::render_date_by_type()` instead
-	 */ 
+	 */
 	protected function render_date() {
 		// _deprecated_function( __METHOD__, '3.0.0', 'Skin_Base::render_date_by_type()' );
 		$this->render_date_by_type();
@@ -1070,13 +1070,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		?>
 		<span class="elementor-post-date">
 			<?php
-			switch( $type ) {
+			switch ( $type ) :
 				case 'modified':
 					$date = get_the_modified_date();
-				break;
+					break;
 				default:
 					$date = get_the_date();
-			}
+			endswitch;
 			/** This filter is documented in wp-includes/general-template.php */
 			echo apply_filters( 'the_date', $date, get_option( 'date_format' ), '', '' );
 			?>

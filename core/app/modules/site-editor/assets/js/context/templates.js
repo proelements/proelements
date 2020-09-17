@@ -54,7 +54,7 @@ export class TemplatesProvider extends BaseContext {
 						...Object.values( response.data ).reduce(
 							( current, template ) => {
 								if ( ! template.supportsSiteEditor ) {
-									return;
+									return current;
 								}
 
 								return { ...current, [ template.id ]: template };

@@ -31,7 +31,7 @@ export default function Import() {
 					<Dialog
 						title={ __( 'Your templates was imported.', 'elementor-pro' ) }
 						approveButtonText={ __( 'Preview', 'elementor-pro' ) }
-						approveButtonUrl={ importedTemplate.previewUrl }
+						approveButtonUrl={ importedTemplate.url }
 						approveButtonTarget="_blank"
 						dismissButtonText={ __( 'Edit', 'elementor-pro' ) }
 						dismissButtonUrl={ importedTemplate.editURL }

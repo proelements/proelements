@@ -44,13 +44,6 @@ class App extends BaseApp {
 	}
 
 	private function enqueue_assets() {
-		wp_register_style(
-			'select2',
-			ELEMENTOR_ASSETS_URL . 'lib/e-select2/css/e-select2.css',
-			[],
-			'4.0.6-rc.1'
-		);
-
 		wp_enqueue_style(
 			'elementor-pro-app',
 			$this->get_css_assets_url( 'app', null, 'default', true ),
@@ -59,16 +52,6 @@ class App extends BaseApp {
 				'select2',
 			],
 			ELEMENTOR_VERSION
-		);
-
-		wp_register_script(
-			'select2',
-			ELEMENTOR_ASSETS_URL . 'lib/e-select2/js/e-select2.full.js',
-			[
-				'jquery',
-			],
-			'4.0.6-rc.1',
-			true
 		);
 
 		wp_enqueue_script(

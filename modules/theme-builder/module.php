@@ -173,6 +173,10 @@ class Module extends Module_Base {
 			if ( $instance instanceof Theme_Document && 'section' !== $type ) {
 				$types[ $type ] .= $instance->get_location_label();
 			}
+
+			if ( Single::class === $document_type ) {
+				unset( $types[ $type ] );
+			}
 		}
 
 		return $types;
@@ -311,7 +315,7 @@ class Module extends Module_Base {
 		$categories['general']['items']['theme-builder'] = [
 			'title' => __( 'Theme Builder', 'elementor-pro' ),
 			'icon' => 'library-save',
-			'url' => $this->get_admin_templates_url(),
+			'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
 			'keywords' => [ 'template', 'header', 'footer', 'single', 'archive', 'search', '404', 'library' ],
 		];
 
@@ -350,13 +354,13 @@ class Module extends Module_Base {
 			$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
 
 			$admin_notices->print_admin_notice( [
-				'title' => __( 'Meet the New Theme Builder: More Intuitive and Visual Than Ever', 'elementor' ),
-				'description' => __( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor' ),
+				'title' => __( 'Meet the New Theme Builder: More Intuitive and Visual Than Ever', 'elementor-pro' ),
+				'description' => __( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor-pro' ),
 				'button' => [
-					'text' => __( 'Try it Now', 'elementor' ),
+					'text' => __( 'Try it Now', 'elementor-pro' ),
 					'class' => 'elementor-button elementor-button-success',
 					'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
-				]
+				],
 			] );
 		}
 

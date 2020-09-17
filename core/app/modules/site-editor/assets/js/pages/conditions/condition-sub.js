@@ -1,4 +1,4 @@
-import Select from '../../form-elements/select.js';
+import { Select } from '@elementor/app-ui';
 
 export default function ConditionSub( props ) {
 	if ( 'general' === props.name || ! props.subOptions.length ) {
@@ -8,7 +8,7 @@ export default function ConditionSub( props ) {
 	const onChange = ( e ) => props.updateConditions( props.id, { sub: e.target.value, subId: '' } );
 
 	return (
-		<div className="elementor-control-input-wrapper condition-sub-wrapper">
+		<div className="e-site-editor-conditions__input-wrapper">
 			<Select options={ props.subOptions } value={ props.sub } onChange={ onChange } />
 		</div>
 	);

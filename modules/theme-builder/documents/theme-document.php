@@ -104,7 +104,7 @@ abstract class Theme_Document extends Library_Document {
 		$document_config = static::get_properties();
 
 		if ( true === $document_config['support_site_editor'] ) {
-			$panel_config['messages']['publish_notification'] = __( 'Congrats! Your Global Site Part is Live', 'elementor-pro' );
+			$panel_config['messages']['publish_notification'] = __( 'Congrats! Your Site Part is Live', 'elementor-pro' );
 		}
 
 		return $panel_config;

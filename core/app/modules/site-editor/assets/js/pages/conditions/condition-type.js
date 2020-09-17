@@ -1,4 +1,4 @@
-import Select from '../../form-elements/select.js';
+import { Select } from '@elementor/app-ui';
 
 export default function ConditionType( props ) {
 	const wrapperRef = React.createRef();
@@ -23,8 +23,8 @@ export default function ConditionType( props ) {
 	} );
 
 	return (
-		<div className="elementor-control-input-wrapper condition-type-wrapper" ref={ wrapperRef }>
-			<Select className="condition-type" options={ options } value={ props.type } onChange={ onChange } />
+		<div className="e-site-editor-conditions__input-wrapper e-site-editor-conditions__input-wrapper--condition-type" ref={ wrapperRef }>
+			<Select options={ options } value={ props.type } onChange={ onChange } />
 		</div>
 	);
 }

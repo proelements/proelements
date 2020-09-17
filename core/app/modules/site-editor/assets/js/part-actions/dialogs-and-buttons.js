@@ -43,7 +43,7 @@ export default function PartActionsButtons( props ) {
 					<Button
 						className="eps-popover__item eps-popover__item--danger"
 						icon="eicon-trash-o"
-						text={ __( 'Delete', 'elementor-pro' ) }
+						text={ __( 'Trash', 'elementor-pro' ) }
 						onClick={ () => handlers.delete( props.id ) }
 					/>
 				</li>

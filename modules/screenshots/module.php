@@ -160,6 +160,15 @@ class Module extends Module_Base {
 		];
 	}
 
+	public function filter_screenshots_from_ajax_attachments_query( $query ) {
+		$query['meta_query'][] = [
+			'key' => Screenshot::IS_SCREENSHOT_POST_META_KEY,
+			'compare' => 'NOT EXISTS',
+		];
+
+		return $query;
+	}
+
 	/**
 	 * Register screenshots action.
 	 *
@@ -222,6 +231,7 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/render_mode/register', [ $this, 'register_render_mode' ] );
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 		add_action( 'parse_query', [ $this, 'filter_screenshots_from_attachments_query' ] );
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_screenshots_from_ajax_attachments_query' ] );
 		add_filter( 'elementor-pro/site-editor/data/template', [ $this, 'extend_templates_json_structure' ] );
 	}
 }

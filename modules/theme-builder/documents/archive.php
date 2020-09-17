@@ -34,7 +34,7 @@ class Archive extends Archive_Single_Base {
 		return [
 			'title' => __( 'What is an Archive Template?', 'elementor-pro' ),
 			'content' => __( 'An archive template allows you to easily design the layout and style of archive pages - those pages that show a list of posts (e.g. a blog’s list of recent posts), which may be filtered by terms such as authors, categories, tags, search results, etc.', 'elementor-pro' ),
-			'tip' => __( 'If you’d like a different style for a specific category, it’s easy to create a separate global archive template whose condition is to only display when users are viewing that category’s list of posts.', 'elementor-pro' ),
+			'tip' => __( 'If you’d like a different style for a specific category, it’s easy to create a separate archive template whose condition is to only display when users are viewing that category’s list of posts.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-archive',
 			'video_url' => 'https://www.youtube.com/embed/wxElpEh9bfA',
 		];

@@ -27,7 +27,7 @@ export const SiteTemplateHeader = ( props ) => {
 	return (
 		<CardHeader>
 			<Indicator active={ props.isActive }/>
-			<Heading tag="h1" variant="text-sm" className="eps-card__headline">{ title }</Heading>
+			<Heading tag="h1" title={ title } variant="text-sm" className="eps-card__headline">{ title }</Heading>
 			{ props.extended && <MetaData/> }
 			{ props.extended && <ActionButtons/> }
 		</CardHeader>

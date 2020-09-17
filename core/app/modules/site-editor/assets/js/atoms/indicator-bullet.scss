@@ -19,6 +19,7 @@ $eps-indicator-bullet-spacing: spacing(10);
 
 .eps-indicator-bullet {
 	display: block;
+	flex-shrink: 0;
 	width: $eps-indicator-bullet-size;
 	height: $eps-indicator-bullet-size;
 	box-shadow: $eps-indicator-bullet-box-shadow;

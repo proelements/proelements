@@ -34,9 +34,9 @@ class Product extends Single_Base {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => __( 'What is a Global Product?', 'elementor-pro' ),
-			'content' => __( 'A global product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign.', 'elementor-pro' ),
-			'tip' => __( 'You can create multiple global product templates, and assign each to different types of products, enabling a custom design for each group of similar products.', 'elementor-pro' ),
+			'title' => __( 'What is a Single Product Template?', 'elementor-pro' ),
+			'content' => __( 'A single product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign.', 'elementor-pro' ),
+			'tip' => __( 'You can create multiple single product templates, and assign each to different types of products, enabling a custom design for each group of similar products.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-product',
 			'video_url' => 'https://www.youtube.com/embed/PjhoB1RWkBM',
 		];
