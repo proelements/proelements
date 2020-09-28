@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Error_404 extends Single {
+class Error_404 extends Single_Base {
 
 	protected static function get_site_editor_type() {
 		return 'error-404';

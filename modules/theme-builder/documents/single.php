@@ -35,4 +35,8 @@ class Single extends Single_Base {
 
 		return $config;
 	}
+
+	protected static function get_site_editor_thumbnail_url() {
+		return ELEMENTOR_ASSETS_URL . 'images/app/site-editor/single-post.svg';
+	}
 }

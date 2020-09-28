@@ -26,11 +26,17 @@ class Product_Image extends Base_Data_Tag {
 
 	public function get_value( array $options = [] ) {
 		$product = wc_get_product();
+
 		if ( ! $product ) {
 			return [];
 		}
 
 		$image_id = $product->get_image_id();
+
+		if ( ! $image_id ) {
+			return [];
+		}
+
 		$src = wp_get_attachment_image_src( $image_id, 'full' );
 
 		return [

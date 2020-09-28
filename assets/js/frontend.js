@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.4- 09-09-2020 */
+/*! pro-elements - v3.0.5 - 23-09-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -4821,7 +4821,7 @@ var StickyHandler = elementorModules.frontend.handlers.Base.extend({
   unbindEvents: function unbindEvents() {
     elementorFrontend.removeListeners(this.getUniqueHandlerID() + 'sticky', 'resize', this.run);
   },
-  isActive: function isActive() {
+  isStickyInstanceActive: function isStickyInstanceActive() {
     return undefined !== this.$element.data('sticky');
   },
   activate: function activate() {
@@ -4850,7 +4850,7 @@ var StickyHandler = elementorModules.frontend.handlers.Base.extend({
     this.$element.sticky(stickyOptions);
   },
   deactivate: function deactivate() {
-    if (!this.isActive()) {
+    if (!this.isStickyInstanceActive()) {
       return;
     }
 
@@ -4868,7 +4868,7 @@ var StickyHandler = elementorModules.frontend.handlers.Base.extend({
     if (-1 !== activeDevices.indexOf(currentDeviceMode)) {
       if (true === refresh) {
         this.reactivate();
-      } else if (!this.isActive()) {
+      } else if (!this.isStickyInstanceActive()) {
         this.activate();
       }
     } else {
@@ -10526,7 +10526,7 @@ var FormSteps = /*#__PURE__*/function (_elementorModules$fro) {
           return _this.resetForm();
         },
         keydown: function keydown(e) {
-          if (13 === e.keyCode && !_this.isLastStep()) {
+          if (13 === e.keyCode && !_this.isLastStep() && 'textarea' !== e.target.localName) {
             e.preventDefault();
 
             _this.applyStep('next');

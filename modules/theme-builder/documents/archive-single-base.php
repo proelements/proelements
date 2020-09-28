@@ -18,7 +18,7 @@ abstract class Archive_Single_Base extends Theme_Page_Document {
 		return '';
 	}
 
-	protected static function get_create_url() {
+	public static function get_create_url() {
 		$create_url = parent::get_create_url();
 
 		$sub_type = static::get_sub_type();

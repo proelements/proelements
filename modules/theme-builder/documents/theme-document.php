@@ -120,7 +120,7 @@ abstract class Theme_Document extends Library_Document {
 		return parent::get_have_a_look_url();
 	}
 
-	protected static function get_create_url() {
+	public static function get_create_url() {
 		$base_create_url = Utils::get_create_new_post_url( Source_Local::CPT );
 
 		return add_query_arg( [ 'template_type' => static::get_site_editor_type_bc() ], $base_create_url );

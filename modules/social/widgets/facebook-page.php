@@ -140,11 +140,11 @@ class Facebook_Page extends Base_Widget {
 			'data-href' => $settings['url'],
 			'data-tabs' => implode( ',', $settings['tabs'] ),
 			'data-height' => $height,
+			'data-width' => '500px', // Try the max possible width
 			'data-small-header' => $settings['small_header'] ? 'true' : 'false',
 			'data-hide-cover' => $settings['show_cover'] ? 'false' : 'true', // if `show` - don't hide.
 			'data-show-facepile' => $settings['show_facepile'] ? 'true' : 'false',
 			'data-hide-cta' => $settings['show_cta'] ? 'false' : 'true', // if `show` - don't hide.
-			'data-adapt-container-width' => 'true', // try to adapt width (min 180px max 500px)
 			// The style prevent's the `widget.handleEmptyWidget` to set it as an empty widget.
 			'style' => 'min-height: 1px;height:' . $height,
 		];

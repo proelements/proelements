@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.4- 09-09-2020 */
+/*! pro-elements - v3.0.5 - 23-09-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
