@@ -74,12 +74,15 @@
 		}
 	}
 
-	&__save-button-container {
+	&__footer {
 		display: flex;
-		justify-content: end;
+		justify-content: flex-end;
 		position: absolute;
-		bottom: $e-site-editor-save-button-container-spacing;
-		@include end($e-site-editor-save-button-container-spacing);
+		bottom: 0;
+		right: 0;
+		left: 0;
+		padding: $e-site-editor-save-button-container-spacing;
+		border-top: 1px solid var(--e-site-editor-input-wrapper-condition-include-background-color);
 	}
 
 	&__input-wrapper {

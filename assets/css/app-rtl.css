@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.5 - 23-09-2020 */
+/*! pro-elements - v3.0.6 - 04-11-2020 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05); }
 
@@ -227,16 +227,19 @@
     background-color: var(--e-site-editor-add-button-color-hover-background-color);
     color: #fff; }
 
-.e-site-editor-conditions__save-button-container {
+.e-site-editor-conditions__footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: end;
+          justify-content: flex-end;
   position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem; }
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 0.5rem;
+  border-top: 1px solid var(--e-site-editor-input-wrapper-condition-include-background-color); }
 
 .e-site-editor-conditions__input-wrapper {
   position: relative;

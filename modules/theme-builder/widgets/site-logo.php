@@ -75,10 +75,25 @@ class Site_Logo extends Widget_Image {
 			]
 		);
 
+		$this->update_control(
+			'caption_source',
+			[
+				'options' => $this->get_caption_source_options(),
+			]
+		);
+
 		$this->remove_control( 'caption' );
 	}
 
 	protected function get_html_wrapper_class() {
 		return parent::get_html_wrapper_class() . ' elementor-widget-' . parent::get_name();
+	}
+
+	private function get_caption_source_options() {
+		$caption_source_options = $this->get_controls( 'caption_source' )['options'];
+
+		unset( $caption_source_options['custom'] );
+
+		return $caption_source_options;
 	}
 }

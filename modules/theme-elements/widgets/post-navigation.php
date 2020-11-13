@@ -532,7 +532,7 @@ class Post_Navigation extends Base {
 			}
 		}
 		?>
-		<div class="elementor-post-navigation elementor-grid">
+		<div class="elementor-post-navigation">
 			<div class="elementor-post-navigation__prev elementor-post-navigation__link">
 				<?php previous_post_link( '%link', $prev_arrow . '<span class="elementor-post-navigation__link__prev">' . $prev_label . $prev_title . '</span>', $in_same_term, '', $taxonomy ); ?>
 			</div>

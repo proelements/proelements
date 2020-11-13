@@ -578,31 +578,39 @@ class Share_Buttons extends Base_Widget {
 		?>
 		<div class="elementor-grid">
 			<?php
+			$networks_data = Module::get_networks();
+
 			foreach ( $settings['share_buttons'] as $button ) {
 				$network_name = $button['button'];
 
-				$social_network_class = ' elementor-share-btn_' . $network_name;
+				// A deprecated network.
+				if ( ! isset( $networks_data[ $network_name ] ) ) {
+					continue;
+				}
 
+				$social_network_class = ' elementor-share-btn_' . $network_name;
 				?>
-				<div class="elementor-grid-item">
-					<div class="<?php echo esc_attr( $button_classes . $social_network_class ); ?>">
-						<?php if ( 'icon' === $settings['view'] || 'icon-text' === $settings['view'] ) : ?>
-							<span class="elementor-share-btn__icon">
-								<i class="<?php echo self::get_network_class( $network_name ); ?>" aria-hidden="true"></i>
-								<span class="elementor-screen-only"><?php echo sprintf( __( 'Share on %s', 'elementor-pro' ), $network_name ); ?></span>
+					<div class="elementor-grid-item">
+						<div class="<?php echo esc_attr( $button_classes . $social_network_class ); ?>">
+							<?php if ( 'icon' === $settings['view'] || 'icon-text' === $settings['view'] ) : ?>
+								<span class="elementor-share-btn__icon">
+								<i class="<?php echo self::get_network_class( $network_name ); ?>"
+								   aria-hidden="true"></i>
+								<span
+									class="elementor-screen-only"><?php echo sprintf( __( 'Share on %s', 'elementor-pro' ), $network_name ); ?></span>
 							</span>
-						<?php endif; ?>
-						<?php if ( $show_text ) : ?>
-							<div class="elementor-share-btn__text">
-								<?php if ( 'yes' === $settings['show_label'] || 'text' === $settings['view'] ) : ?>
-									<span class="elementor-share-btn__title">
-										<?php echo $button['text'] ? $button['text'] : Module::get_networks( $network_name )['title']; ?>
+							<?php endif; ?>
+							<?php if ( $show_text ) : ?>
+								<div class="elementor-share-btn__text">
+									<?php if ( 'yes' === $settings['show_label'] || 'text' === $settings['view'] ) : ?>
+										<span class="elementor-share-btn__title">
+										<?php echo $button['text'] ? $button['text'] : $networks_data[ $network_name ]['title']; ?>
 									</span>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
+									<?php endif; ?>
+								</div>
+							<?php endif; ?>
+						</div>
 					</div>
-				</div>
 				<?php
 			}
 			?>
@@ -629,6 +637,11 @@ class Share_Buttons extends Base_Widget {
 		<div class="elementor-grid">
 			<#
 				_.each( settings.share_buttons, function( button ) {
+					// A deprecated network.
+					if ( ! shareButtonsEditorModule.getNetworkData( button ) ) {
+						return;
+					}
+
 					var networkName = button.button,
 						socialNetworkClass = 'elementor-share-btn_' + networkName;
 					#>

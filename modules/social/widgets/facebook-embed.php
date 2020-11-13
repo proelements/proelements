@@ -59,7 +59,7 @@ class Facebook_Embed extends Base_Widget {
 			'post_url',
 			[
 				'label' => __( 'URL', 'elementor-pro' ),
-				'default' => 'https://www.facebook.com/elemntor/posts/1823653464612271',
+				'default' => 'https://www.facebook.com/elemntor/posts/2624214124556197',
 				'dynamic' => [
 					'active' => true,
 				],

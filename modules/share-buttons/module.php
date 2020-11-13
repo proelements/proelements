@@ -44,9 +44,6 @@ class Module extends Module_Base {
 		'tumblr' => [
 			'title' => 'Tumblr',
 		],
-		'delicious' => [
-			'title' => 'Delicious',
-		],
 		'digg' => [
 			'title' => 'Digg',
 		],
@@ -79,12 +76,6 @@ class Module extends Module_Base {
 		],
 		'print' => [
 			'title' => 'Print',
-		],
-		'weixin' => [
-			'title' => 'WeChat',
-		],
-		'weibo' => [
-			'title' => 'Weibo',
 		],
 	];
 

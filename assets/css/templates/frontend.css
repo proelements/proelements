@@ -388,65 +388,63 @@ body.elementor-editor-active .elementor-posts--skin-archive_full_content {
 body.elementor-editor-active .elementor-posts--show-thumbnail .elementor-post__thumbnail__link {
   display: block; }
 
-.elementor-portfolio {
+.elementor-portfolio__filters {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  align-content: flex-start;
-  flex-wrap: wrap; }
-  .elementor-portfolio__filters {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0;
-    margin: 0; }
-  .elementor-portfolio__filter {
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin: 0; }
+
+.elementor-portfolio__filter {
+  margin: 0;
+  cursor: pointer;
+  padding: 8px; }
+
+.elementor-portfolio-item {
+  align-self: flex-start;
+  transition-property: transform, opacity;
+  transition-timing-function: ease-in-out;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  margin: 0; }
+  .elementor-portfolio-item__title {
     margin: 0;
-    cursor: pointer;
-    padding: 8px; }
-  .elementor-portfolio-item {
-    align-self: flex-start;
-    transition-property: transform, opacity;
-    transition-timing-function: ease-in-out;
-    transform-style: preserve-3d;
+    padding: 0;
+    line-height: 1;
+    font-size: 18px;
+    color: #fff; }
+  .elementor-portfolio-item__tags__separator:before {
+    content: ', '; }
+  .elementor-portfolio-item__overlay {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+    transition: opacity 1s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
     overflow: hidden;
-    margin: 0; }
-    .elementor-portfolio-item__title {
-      margin: 0;
-      padding: 0;
-      line-height: 1;
-      font-size: 18px;
-      color: #fff; }
-    .elementor-portfolio-item__tags__separator:before {
-      content: ', '; }
-    .elementor-portfolio-item__overlay {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 15px;
-      transition: opacity 1s;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      background-color: rgba(129, 138, 145, 0.8); }
-      .elementor-portfolio-item__overlay:hover {
-        opacity: 1;
-        transition: opacity 0.5s; }
-    .elementor-portfolio-item__img img[src=""] {
-      background-color: rgba(0, 0, 0, 0.1);
-      height: 100%; }
-  .elementor-portfolio.elementor-has-item-ratio {
-    transition: height 0.5s; }
-    .elementor-portfolio.elementor-has-item-ratio .elementor-post__thumbnail {
-      position: absolute;
-      background-color: rgba(0, 0, 0, 0.1); }
-      .elementor-portfolio.elementor-has-item-ratio .elementor-post__thumbnail__link {
-        padding-bottom: 56.25%; }
+    background-color: rgba(129, 138, 145, 0.8); }
+    .elementor-portfolio-item__overlay:hover {
+      opacity: 1;
+      transition: opacity 0.5s; }
+  .elementor-portfolio-item__img img[src=""] {
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 100%; }
+
+.elementor-portfolio.elementor-has-item-ratio {
+  transition: height 0.5s; }
+  .elementor-portfolio.elementor-has-item-ratio .elementor-post__thumbnail {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.1); }
+    .elementor-portfolio.elementor-has-item-ratio .elementor-post__thumbnail__link {
+      padding-bottom: 56.25%; }
 
 .elementor ul li.elementor-portfolio__filter {
   list-style-type: none; }
@@ -1272,9 +1270,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official .elementor-share-btn:hover {
   filter: saturate(1.5) brightness(1.2); }
 
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_delicious, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_delicious {
-  background-color: #3399ff; }
-
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_digg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_digg {
   background-color: #005be2; }
 
@@ -1338,12 +1333,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_vk, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_vk {
   background-color: #45668e; }
 
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_weixin, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_weixin {
-  background-color: #31A918; }
-
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_weibo, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_weibo {
-  background-color: #DD2430; }
-
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_whatsapp, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_whatsapp {
   background-color: #25d366; }
 
@@ -1352,9 +1341,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_xing, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_xing {
   background-color: #026466; }
-
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_delicious, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_delicious {
-  color: #3399ff; }
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_digg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_digg {
   color: #005be2; }
@@ -1419,12 +1405,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_vk, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_vk {
   color: #45668e; }
 
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_weixin, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weixin {
-  color: #31A918; }
-
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_weibo, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weibo {
-  color: #DD2430; }
-
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_whatsapp, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_whatsapp {
   color: #25d366; }
 
@@ -1433,9 +1413,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_xing, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_xing {
   color: #026466; }
-
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_delicious .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_delicious .elementor-share-btn__icon {
-  background-color: #3399ff; }
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_digg .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_digg .elementor-share-btn__icon {
   background-color: #005be2; }
@@ -1499,12 +1476,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_vk .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_vk .elementor-share-btn__icon {
   background-color: #45668e; }
-
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weixin .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_weixin .elementor-share-btn__icon {
-  background-color: #31A918; }
-
-.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_weibo .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_weibo .elementor-share-btn__icon {
-  background-color: #DD2430; }
 
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_whatsapp .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_whatsapp .elementor-share-btn__icon {
   background-color: #25d366; }

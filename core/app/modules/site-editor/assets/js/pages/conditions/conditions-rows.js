@@ -70,7 +70,7 @@ export default function ConditionsRows() {
 					/>
 				</div>
 			</div>
-			<div className="e-site-editor-conditions__save-button-container">
+			<div className="e-site-editor-conditions__footer">
 				<Button
 					variant="contained"
 					color="primary"

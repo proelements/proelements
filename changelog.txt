@@ -1,5 +1,14 @@
 # PRO Elements - by PROElements.org
 
+#### 3.0.6 - 2020-11-04
+* Tweak: Updated the embedded post in Facebook Embed widget
+* Fix: Minor UI glitches in Theme Builder's conditions screen footer
+* Fix: Template type changes into Single Page after conditions change in Theme Builder
+* Fix: Redundant Custom Caption option in Site Logo widget
+* Fix: Removed unused code in Drip integration
+* Fix: Removed Weibo and WeChat social networks due to website and links inactivity from Share Buttons widget
+* Fix: Removed redundant code from Portfolio and Post Navigation widgets
+
 #### 3.0.5 - 2020-09-23
 * Fix: If the default page layout is set to "Canvas" Headers and Footers cannot be edited
 * Fix: Product Image Dynamic Tag throws an error when no image is set

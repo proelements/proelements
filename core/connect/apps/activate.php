@@ -121,7 +121,7 @@ class Activate extends Common_App {
 		return [
 			'license_data' => [
 				'label' => 'License Data',
-				'value' => get_option( 'elementor_pro_license_data' ),
+				'value' => get_option( '_elementor_pro_license_data' ),
 			],
 			'license_key' => [
 				'label' => 'License Key',
