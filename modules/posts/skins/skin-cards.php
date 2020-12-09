@@ -542,7 +542,7 @@ class Skin_Cards extends Skin_Base {
 
 	protected function render_badge() {
 		$taxonomy = $this->get_instance_value( 'badge_taxonomy' );
-		if ( empty( $taxonomy ) ) {
+		if ( empty( $taxonomy ) || ! taxonomy_exists( $taxonomy ) ) {
 			return;
 		}
 

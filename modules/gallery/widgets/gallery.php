@@ -1277,6 +1277,62 @@ class Gallery extends Base_Widget {
 		$this->end_controls_section(); // filter_bar_style
 	}
 
+	protected function render_static() {
+		$settings = $this->get_settings_for_display();
+
+		$is_multiple = 'multiple' === $settings['gallery_type'] && ! empty( $settings['galleries'] );
+
+		$is_single = 'single' === $settings['gallery_type'] && ! empty( $settings['gallery'] );
+
+		$gap = $settings['gap']['size'] . $settings['gap']['unit'];
+		$ratio_percentage = '75';
+		$columns = 4;
+
+		if ( $settings['columns'] ) {
+			$columns = $settings['columns'];
+		}
+
+		if ( $settings['aspect_ratio'] ) {
+			$ratio_array = explode( ':', $settings['aspect_ratio'] );
+
+			$ratio_percentage = ( $ratio_array[1] / $ratio_array[0] ) * 100;
+		}
+
+		$this->add_render_attribute(
+			'gallery_container',
+			[
+				'style' => "--columns: {$columns}; --aspect-ratio: {$ratio_percentage}%; --hgap: {$gap}; --vgap: {$gap};",
+				'class' => 'e-gallery-grid',
+			]
+		);
+
+		$galleries = [];
+
+		if ( $is_multiple ) {
+			foreach ( array_values( $settings['galleries'] ) as $multi_gallery ) {
+				if ( ! $multi_gallery['multiple_gallery'] ) {
+					continue;
+				}
+
+				$galleries[] = $multi_gallery['multiple_gallery'];
+			}
+		} elseif ( $is_single ) {
+			$galleries[0] = $settings['gallery'];
+		}
+
+		foreach ( $galleries as $gallery ) {
+			foreach ( $gallery as $item ) {
+				$image_src = wp_get_attachment_image_src( $item['id'] );
+
+				$this->add_render_attribute( 'gallery_item_image_' . $item['id'], [
+					'style' => "background-image: url('{$image_src[0]}');",
+				] );
+			}
+		}
+
+		$this->render();
+	}
+
 	/**
 	 *
 	 */

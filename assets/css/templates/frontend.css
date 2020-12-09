@@ -2666,30 +2666,56 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
     .swiper-slide a.elementor-button {
       display: inline-block; }
 
-.elementor-widget-testimonial-carousel .elementor-arrows-yes .elementor-main-swiper, .elementor-widget-reviews .elementor-arrows-yes .elementor-main-swiper {
+.elementor-widget-testimonial-carousel .elementor-arrows-yes .elementor-main-swiper,
+.elementor-widget-reviews .elementor-arrows-yes .elementor-main-swiper {
   width: calc( 95% - 40px); }
 
-.elementor-widget-testimonial-carousel .elementor-main-swiper, .elementor-widget-reviews .elementor-main-swiper {
+.elementor-widget-testimonial-carousel .elementor-main-swiper,
+.elementor-widget-reviews .elementor-main-swiper {
   width: 95%; }
 
-.elementor-widget-testimonial-carousel .swiper-wrapper, .elementor-widget-reviews .swiper-wrapper {
+.elementor-widget-testimonial-carousel .swiper-wrapper,
+.elementor-widget-reviews .swiper-wrapper {
   display: flex;
   align-items: stretch; }
 
-.elementor-widget-testimonial-carousel .swiper-slide, .elementor-widget-reviews .swiper-slide {
+.elementor-widget-testimonial-carousel .swiper-slide,
+.elementor-widget-reviews .swiper-slide {
   height: auto; }
 
-.elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper-container, .elementor-widget-testimonial-carousel.elementor-pagination-type-fraction .swiper-container, .elementor-widget-reviews.elementor-pagination-type-bullets .swiper-container, .elementor-widget-reviews.elementor-pagination-type-fraction .swiper-container {
+.elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper-container, .elementor-widget-testimonial-carousel.elementor-pagination-type-fraction .swiper-container,
+.elementor-widget-reviews.elementor-pagination-type-bullets .swiper-container,
+.elementor-widget-reviews.elementor-pagination-type-fraction .swiper-container {
   padding-bottom: 40px; }
 
-.elementor-widget-testimonial-carousel .elementor-main-swiper .elementor-swiper-button-prev, .elementor-widget-reviews .elementor-main-swiper .elementor-swiper-button-prev {
-  left: 0; }
+.elementor-widget-testimonial-carousel .elementor-swiper-button-prev,
+.elementor-widget-testimonial-carousel .swiper-container-rtl .elementor-swiper-button-next,
+.elementor-widget-reviews .elementor-swiper-button-prev,
+.elementor-widget-reviews .swiper-container-rtl .elementor-swiper-button-next {
+  left: 0;
+  right: unset; }
 
-.elementor-widget-testimonial-carousel .elementor-main-swiper .elementor-swiper-button-next, .elementor-widget-reviews .elementor-main-swiper .elementor-swiper-button-next {
-  right: 0; }
+.elementor-widget-testimonial-carousel .elementor-swiper-button-next,
+.elementor-widget-testimonial-carousel .swiper-container-rtl .elementor-swiper-button-prev,
+.elementor-widget-reviews .elementor-swiper-button-next,
+.elementor-widget-reviews .swiper-container-rtl .elementor-swiper-button-prev {
+  right: 0;
+  left: unset; }
 
-.elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-next, .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-prev, .elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-next, .elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-prev {
+.elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-next, .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-prev,
+.elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-next,
+.elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-prev {
   top: calc( 50% - ( 40px / 2 )); }
+
+.elementor-widget-media-carousel .elementor-swiper-button-prev,
+.elementor-widget-media-carousel .swiper-container-rtl .elementor-swiper-button-next {
+  left: 10px;
+  right: unset; }
+
+.elementor-widget-media-carousel .elementor-swiper-button-next,
+.elementor-widget-media-carousel .swiper-container-rtl .elementor-swiper-button-prev {
+  right: 10px;
+  left: unset; }
 
 .entry-content blockquote.elementor-blockquote:not(.alignright):not(.alignleft),
 .entry-summary blockquote.elementor-blockquote {

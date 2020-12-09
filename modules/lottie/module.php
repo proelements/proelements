@@ -12,8 +12,6 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
-		// TODO: Temp addition - needs to be removed before production.
-		add_filter( 'upload_mimes', [ $this, 'support_json_import' ] );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'handle_file_type' ], 10, 3 );
 
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localize_settings' ] );
@@ -39,13 +37,6 @@ class Module extends Module_Base {
 		return [
 			'lottie',
 		];
-	}
-
-	// TODO: Temp addition - needs to be removed before production.
-	public function support_json_import( $existing_mimes ) {
-		$existing_mimes['json'] = 'application/json';
-
-		return $existing_mimes;
 	}
 
 	// Fixing wordpress problem when `finfo_file()` returns wrong file type

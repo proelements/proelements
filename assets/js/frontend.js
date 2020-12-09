@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.6 - 04-11-2020 */
+/*! pro-elements - v3.0.8 - 26-11-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -4549,7 +4549,7 @@ module.exports = elementorModules.frontend.handlers.Base.extend({
   getDefaultSettings: function getDefaultSettings() {
     return {
       selectors: {
-        mainSwiper: '.elementor-main-swiper',
+        swiperContainer: '.elementor-main-swiper',
         swiperSlide: '.swiper-slide'
       },
       slidesPerView: {
@@ -4562,9 +4562,9 @@ module.exports = elementorModules.frontend.handlers.Base.extend({
   getDefaultElements: function getDefaultElements() {
     var selectors = this.getSettings('selectors');
     var elements = {
-      $mainSwiper: this.$element.find(selectors.mainSwiper)
+      $swiperContainer: this.$element.find(selectors.swiperContainer)
     };
-    elements.$mainSwiperSlides = elements.$mainSwiper.find(selectors.swiperSlide);
+    elements.$mainSwiperSlides = elements.$swiperContainer.find(selectors.swiperSlide);
     return elements;
   },
   getSlidesCount: function getSlidesCount() {
@@ -4717,17 +4717,17 @@ module.exports = elementorModules.frontend.handlers.Base.extend({
       return;
     }
 
-    this.swipers.main = new Swiper(this.elements.$mainSwiper, this.getSwiperOptions()); // Expose the swiper instance in the frontend
+    this.swiper = new Swiper(this.elements.$swiperContainer, this.getSwiperOptions()); // Expose the swiper instance in the frontend
 
-    this.elements.$mainSwiper.data('swiper', this.swipers.main);
+    this.elements.$swiperContainer.data('swiper', this.swiper);
 
     if (elementSettings.pause_on_hover) {
-      this.elements.$mainSwiper.on({
+      this.elements.$swiperContainer.on({
         mouseenter: function mouseenter() {
-          _this.swipers.main.autoplay.stop();
+          _this.swiper.autoplay.stop();
         },
         mouseleave: function mouseleave() {
-          _this.swipers.main.autoplay.start();
+          _this.swiper.autoplay.start();
         }
       });
     }
@@ -4738,11 +4738,11 @@ module.exports = elementorModules.frontend.handlers.Base.extend({
     }
 
     if (0 === propertyName.indexOf('width')) {
-      this.swipers.main.update();
+      this.swiper.update();
     }
 
     if (0 === propertyName.indexOf('space_between')) {
-      this.updateSpaceBetween(this.swipers.main, propertyName);
+      this.updateSpaceBetween(this.swiper, propertyName);
     }
   },
   onEditSettingsChange: function onEditSettingsChange(propertyName) {
@@ -4751,7 +4751,7 @@ module.exports = elementorModules.frontend.handlers.Base.extend({
     }
 
     if ('activeItemIndex' === propertyName) {
-      this.swipers.main.slideToLoop(this.getEditSettings('activeItemIndex') - 1);
+      this.swiper.slideToLoop(this.getEditSettings('activeItemIndex') - 1);
     }
   }
 });
@@ -10126,10 +10126,10 @@ MediaCarousel = Base.extend({
       breakpoints: breakpointsSettings,
       handleElementorBreakpoints: true
     };
-    this.swipers.main.controller.control = this.swipers.thumbs = new Swiper(this.elements.$thumbsSwiper, thumbsSliderOptions); // Expose the swiper instance in the frontend
+    this.swiper.controller.control = this.thumbsSwiper = new Swiper(this.elements.$thumbsSwiper, thumbsSliderOptions); // Expose the swiper instance in the frontend
 
-    this.elements.$thumbsSwiper.data('swiper', this.swipers.thumbs);
-    this.swipers.thumbs.controller.control = this.swipers.main;
+    this.elements.$thumbsSwiper.data('swiper', this.thumbsSwiper);
+    this.thumbsSwiper.controller.control = this.swiper;
   },
   onElementChange: function onElementChange(propertyName) {
     if (1 >= this.getSlidesCount()) {
@@ -10142,12 +10142,12 @@ MediaCarousel = Base.extend({
     }
 
     if (0 === propertyName.indexOf('width')) {
-      this.swipers.main.update();
-      this.swipers.thumbs.update();
+      this.swiper.update();
+      this.thumbsSwiper.update();
     }
 
     if (0 === propertyName.indexOf('space_between')) {
-      this.updateSpaceBetween(this.swipers.thumbs, propertyName);
+      this.updateSpaceBetween(this.thumbsSwiper, propertyName);
     }
   }
 });

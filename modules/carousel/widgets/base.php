@@ -483,6 +483,10 @@ abstract class Base extends Base_Widget {
 		$settings = array_merge( $default_settings, $settings );
 
 		$slides_count = count( $settings['slides'] );
+
+		$is_rtl = is_rtl();
+		$prev_arrow_direction = $is_rtl ? 'right' : 'left';
+		$next_arrow_direction = $is_rtl ? 'left' : 'right';
 		?>
 		<div class="elementor-swiper">
 			<div class="<?php echo esc_attr( $settings['container_class'] ); ?> swiper-container">
@@ -502,11 +506,11 @@ abstract class Base extends Base_Widget {
 					<?php endif; ?>
 					<?php if ( $settings['show_arrows'] ) : ?>
 						<div class="elementor-swiper-button elementor-swiper-button-prev">
-							<i class="eicon-chevron-left" aria-hidden="true"></i>
+							<i class="eicon-chevron-<?php echo $prev_arrow_direction; ?>" aria-hidden="true"></i>
 							<span class="elementor-screen-only"><?php _e( 'Previous', 'elementor-pro' ); ?></span>
 						</div>
 						<div class="elementor-swiper-button elementor-swiper-button-next">
-							<i class="eicon-chevron-right" aria-hidden="true"></i>
+							<i class="eicon-chevron-<?php echo $next_arrow_direction; ?>" aria-hidden="true"></i>
 							<span class="elementor-screen-only"><?php _e( 'Next', 'elementor-pro' ); ?></span>
 						</div>
 					<?php endif; ?>

@@ -1,4 +1,7 @@
-/*! pro-elements - v3.0.6 - 04-11-2020 */
+/*! pro-elements - v3.0.8 - 26-11-2020 */
+/*! pro-elements - v3.0.8 - 26-11-2020 */
+/*! elementor-pro - v3.0.7 - 25-11-2020 */
+/*! elementor-pro - v3.0.6 - 04-11-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
