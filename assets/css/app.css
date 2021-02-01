@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.8 - 26-11-2020 */
+/*! pro-elements - v3.0.10 - 20-01-2021 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05); }
 
@@ -239,7 +239,7 @@
   right: 0;
   left: 0;
   padding: 0.5rem;
-  border-top: 1px solid var(--e-site-editor-input-wrapper-condition-include-background-color); }
+  border-top: 1px solid var(--hr-color); }
 
 .e-site-editor-conditions__input-wrapper {
   position: relative;
