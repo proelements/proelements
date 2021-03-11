@@ -28,7 +28,7 @@ class Product_Related extends Products_Base {
 		return [ 'woocommerce', 'shop', 'store', 'related', 'similar', 'product' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_related_products_content',
 			[
@@ -95,7 +95,7 @@ class Product_Related extends Products_Base {
 
 		$this->end_controls_section();
 
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->start_injection( [
 			'at' => 'before',

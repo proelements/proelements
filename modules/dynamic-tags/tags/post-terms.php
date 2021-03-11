@@ -27,7 +27,7 @@ class Post_Terms extends Tag {
 		return [ Module::TEXT_CATEGORY ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$taxonomy_filter_args = [
 			'show_in_nav_menus' => true,
 			'object_type' => [ get_post_type() ],

@@ -41,7 +41,7 @@ class Blockquote extends Base_Widget {
 		return [ 'blockquote', 'quote', 'paragraph', 'testimonial', 'text', 'twitter', 'tweet' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_blockquote_content',
 			[

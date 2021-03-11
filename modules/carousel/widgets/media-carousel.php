@@ -60,8 +60,8 @@ class Media_Carousel extends Base {
 		$this->print_slider( $settings );
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->start_controls_section(
 			'section_lightbox_style',

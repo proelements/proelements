@@ -55,7 +55,7 @@ class Internal_URL extends Data_Tag {
 		return '';
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control( 'type', [
 			'label' => __( 'Type', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.10 - 20-01-2021 */
+/*! pro-elements - v3.1.1 - 23-02-2021 */
 #elementor-panel-get-pro-elements {
   display: none; }
 
@@ -488,6 +488,12 @@
 
 #elementor-popup__timing-controls-group--logged_in .elementor-control-logged_in_roles .elementor-control-input-wrapper {
   width: 195px; }
+
+#elementor-popup__timing-controls-group--browsers .elementor-control-browsers_browsers .elementor-control-input-wrapper {
+  width: 100px; }
+
+#elementor-popup__timing-controls-group--browsers .elementor-control-browsers_browsers_options .elementor-control-input-wrapper {
+  width: 200px; }
 
 #elementor-popup-settings-introduction {
   position: absolute;

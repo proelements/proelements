@@ -67,7 +67,7 @@ class Module extends Module_Base {
 	 * @param Widget_Base $widget
 	 */
 	public static function add_exclude_controls( $widget ) {
-		// TODO: _deprecated_function( __METHOD__, '2.5.0', 'class Group_Control_Query' );
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '2.5.0', 'class Group_Control_Query' );
 
 		$widget->add_control(
 			'exclude',
@@ -901,7 +901,7 @@ class Module extends Module_Base {
 	 * @return array
 	 */
 	public function get_query_args( $control_id, $settings ) {
-		// TODO: _deprecated_function( __METHOD__, '2.5.0', 'class Elementor_Post_Query' );
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '2.5.0', 'class Elementor_Post_Query' );
 
 		$controls_manager = Plugin::elementor()->controls_manager;
 

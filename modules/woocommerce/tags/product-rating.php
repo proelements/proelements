@@ -16,7 +16,7 @@ class Product_Rating extends Base_Tag {
 		return __( 'Product Rating', 'elementor-pro' );
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control( 'field', [
 			'label' => __( 'Format', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,

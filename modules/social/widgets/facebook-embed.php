@@ -31,7 +31,7 @@ class Facebook_Embed extends Base_Widget {
 		return [ 'facebook', 'social', 'embed', 'video', 'post', 'comment' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
 			[

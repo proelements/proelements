@@ -29,7 +29,7 @@ class Menu_Cart extends Base_Widget {
 		return [ 'theme-elements', 'woocommerce-elements' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_menu_icon_content',

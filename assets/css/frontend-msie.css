@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.10 - 20-01-2021 */
+/*! pro-elements - v3.1.1 - 23-02-2021 */
 @charset "UTF-8";
 .elementor-bg-transform .elementor-bg {
   will-change: transform; }
@@ -627,10 +627,13 @@ the source property is coming from element/dev/scss...
     -ms-flex-wrap: wrap;
         flex-wrap: wrap; }
 
-.e-form__buttons, .e-form__buttons__wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex; }
+.e-form__buttons {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .e-form__buttons, .e-form__buttons__wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
 
 .e-form__indicators {
   display: -webkit-box;
@@ -1974,62 +1977,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--shape-circle .elementor-share-btn {
   border-radius: 99.9em; }
 
-.elementor-share-buttons--align-right .elementor-grid {
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end; }
-
-.elementor-share-buttons--align-left .elementor-grid {
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start; }
-
-.elementor-share-buttons--align-center .elementor-grid {
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center; }
-
-.elementor-share-buttons--align-justify .elementor-grid {
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between; }
-
-@media (max-width: 1024px) {
-  .elementor-share-buttons-tablet--align-right .elementor-grid {
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end; }
-  .elementor-share-buttons-tablet--align-left .elementor-grid {
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start; }
-  .elementor-share-buttons-tablet--align-center .elementor-grid {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center; }
-  .elementor-share-buttons-tablet--align-justify .elementor-grid {
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between; } }
-
-@media (max-width: 767px) {
-  .elementor-share-buttons-mobile--align-right .elementor-grid {
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end; }
-  .elementor-share-buttons-mobile--align-left .elementor-grid {
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start; }
-  .elementor-share-buttons-mobile--align-center .elementor-grid {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center; }
-  .elementor-share-buttons-mobile--align-justify .elementor-grid {
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between; } }
-
 .elementor-share-btn {
   overflow: hidden;
   font-size: 10px;
@@ -2095,8 +2042,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
     -ms-flex-negative: 0;
         flex-shrink: 0; }
 
-.elementor-widget-share-buttons .elementor-widget-container {
-  overflow: hidden; }
+.elementor-widget-share-buttons {
+  text-align: var(--alignment, inherit);
+  -moz-text-align-last: var(--alignment, inherit);
+       text-align-last: var(--alignment, inherit); }
+  .elementor-widget-share-buttons.elementor-grid-0 .elementor-widget-container {
+    font-size: 0; }
 
 body.woocommerce #content div.product .elementor-widget-woocommerce-product-images div.images,
 body.woocommerce div.product .elementor-widget-woocommerce-product-images div.images, body.woocommerce-page #content div.product .elementor-widget-woocommerce-product-images div.images,
@@ -3587,9 +3538,10 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   font-size: 43px;
   line-height: 1.2;
   display: block; }
+  .elementor-headline-dynamic-text {
+    color: var(--dynamic-text-color, #aebcb9); }
   .elementor-headline--style-rotate .elementor-headline-dynamic-wrapper {
-    text-align: left;
-    overflow: hidden; }
+    text-align: left; }
   .elementor-headline--style-highlight .elementor-headline-dynamic-wrapper {
     overflow: visible;
     text-align: inherit; }
@@ -3612,40 +3564,62 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
       stroke: red;
       stroke-width: 9;
       fill: none;
-      stroke-dasharray: 1500;
-      -webkit-animation: elementor-headline-dash 10s infinite;
-              animation: elementor-headline-dash 10s infinite; }
-    .elementor-headline--style-highlight svg path:nth-of-type(2) {
-      -webkit-animation-delay: 0.6s;
-              animation-delay: 0.6s; }
+      opacity: 0;
+      stroke-dasharray: 0 1500;
+      -webkit-transition: 0.3s;
+      -o-transition: 0.3s;
+      transition: 0.3s; }
+  .elementor-headline.e-animated svg path {
+    -webkit-animation: elementor-headline-dash forwards;
+            animation: elementor-headline-dash forwards;
+    -webkit-animation-duration: var(--animation-duration, 1.2s);
+            animation-duration: var(--animation-duration, 1.2s);
+    -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1; }
+    .elementor-headline.e-animated svg path:nth-of-type(2) {
+      -webkit-animation-delay: calc(var(--animation-duration, 1.2s) / 2);
+              animation-delay: calc(var(--animation-duration, 1.2s) / 2); }
+  .elementor-headline.e-hide-highlight svg path {
+    opacity: 1;
+    stroke-dasharray: 1500 1500;
+    -webkit-animation: hide-highlight 0.4s forwards;
+            animation: hide-highlight 0.4s forwards;
+    -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1; }
 
 @-webkit-keyframes elementor-headline-dash {
-  0% {
-    stroke-dasharray: 0 1500; }
-  15% {
-    stroke-dasharray: 1500 1500; }
-  85% {
-    opacity: 1; }
-  90% {
-    stroke-dasharray: 1500 1500;
-    opacity: 0; }
-  100% {
+  from {
     stroke-dasharray: 0 1500;
-    opacity: 0; } }
+    opacity: 1; }
+  to {
+    stroke-dasharray: 1500 1500;
+    opacity: 1; } }
 
 @keyframes elementor-headline-dash {
-  0% {
-    stroke-dasharray: 0 1500; }
-  15% {
-    stroke-dasharray: 1500 1500; }
-  85% {
-    opacity: 1; }
-  90% {
-    stroke-dasharray: 1500 1500;
-    opacity: 0; }
-  100% {
+  from {
     stroke-dasharray: 0 1500;
-    opacity: 0; } }
+    opacity: 1; }
+  to {
+    stroke-dasharray: 1500 1500;
+    opacity: 1; } }
+
+@-webkit-keyframes hide-highlight {
+  from {
+    opacity: 1;
+    stroke-dasharray: 1500 1500; }
+  to {
+    opacity: 0;
+    -webkit-filter: blur(10px);
+            filter: blur(10px); } }
+
+@keyframes hide-highlight {
+  from {
+    opacity: 1;
+    stroke-dasharray: 1500 1500; }
+  to {
+    opacity: 0;
+    -webkit-filter: blur(10px);
+            filter: blur(10px); } }
 
 .elementor-headline-text-wrapper {
   vertical-align: bottom; }
@@ -3768,11 +3742,11 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
     -webkit-animation: elementor-headline-pulse 1s infinite;
             animation: elementor-headline-pulse 1s infinite; }
   .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper.elementor-headline-typing-selected {
-    background-color: #0d0d0d; }
+    background-color: var(--typing-selected-bg-color, #0d0d0d); }
     .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper.elementor-headline-typing-selected::after {
       visibility: hidden; }
     .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper.elementor-headline-typing-selected .elementor-headline-dynamic-text {
-      color: #aebcb9; }
+      color: var(--typing-selected-color, var(--dynamic-text-color), #aebcb9); }
 
 .elementor-headline-animation-type-typing .elementor-headline-dynamic-text:not(.elementor-headline-text-active) {
   visibility: hidden; }
@@ -4239,6 +4213,9 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   -webkit-transition: width 0.5s;
   -o-transition: width 0.5s;
   transition: width 0.5s; }
+
+.elementor-headline-animation-type-swirl .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-blinds .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-wave .elementor-headline-dynamic-wrapper {
+  overflow: hidden; }
 
 .elementor-headline-animation-type-swirl .elementor-headline-dynamic-text, .elementor-headline-animation-type-blinds .elementor-headline-dynamic-text, .elementor-headline-animation-type-wave .elementor-headline-dynamic-text {
   white-space: nowrap; }
@@ -5070,11 +5047,6 @@ ul.elementor-nav-menu--dropdown a, ul.elementor-nav-menu--dropdown a:hover, ul.e
   .elementor-post-navigation .elementor-post-navigation__next a {
     float: right; }
 
-.site-main .elementor-widget-post-navigation {
-  margin: 0; }
-  .site-main .elementor-widget-post-navigation [class*=navigation] {
-    margin: 0; }
-
 .elementor-search-form {
   display: block;
   -webkit-transition: 0.2s;
@@ -5631,7 +5603,14 @@ a.elementor-item.elementor-gallery-title {
   font-size: 2em; }
 
 .elementor-toc__body {
-  padding: var(--box-padding, 20px); }
+  padding: var(--box-padding, 20px);
+  max-height: var(--toc-body-max-height);
+  overflow-y: auto; }
+  .elementor-toc__body::-webkit-scrollbar {
+    width: 7px; }
+  .elementor-toc__body::-webkit-scrollbar-thumb {
+    background-color: #c2cbd2;
+    border-radius: 10px; }
 
 .elementor-toc__list-wrapper {
   list-style: none;

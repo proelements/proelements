@@ -19,7 +19,12 @@ class Templates_Conditions extends Base_Endpoint {
 	}
 
 	protected function register() {
+		$this->register_item_route();
 		$this->register_item_route( \WP_REST_Server::EDITABLE );
+	}
+
+	public function get_item( $template_id, $request ) {
+		return $this->get_conditions( $template_id );
 	}
 
 	public function update_item( $template_id, $request ) {
@@ -46,6 +51,17 @@ class Templates_Conditions extends Base_Endpoint {
 		}
 
 		return true;
+	}
+
+	protected function get_conditions( $post_id ) {
+		$document = \Elementor\Plugin::$instance->documents->get( $post_id );
+
+		/** @var Module $theme_builder */
+		$theme_builder = Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+
+		return $theme_builder
+			->get_conditions_manager()
+			->get_document_conditions( $document );
 	}
 
 	protected function save_conditions( $post_id, $conditions ) {

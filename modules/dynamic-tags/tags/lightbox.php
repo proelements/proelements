@@ -33,7 +33,7 @@ class Lightbox extends Tag {
 	// Keep Empty to avoid default advanced section
 	protected function register_advanced_section() {}
 
-	public function _register_controls() {
+	public function register_controls() {
 		$this->add_control(
 			'type',
 			[

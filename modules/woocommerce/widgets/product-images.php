@@ -26,7 +26,7 @@ class Product_Images extends Base_Widget {
 		return [ 'woocommerce', 'shop', 'store', 'image', 'product', 'gallery', 'lightbox' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_gallery_style',

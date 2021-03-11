@@ -612,6 +612,50 @@ class Upgrades {
 		return self::_update_widget_settings( 'form', $updater, $changes );
 	}
 
+	public static function _v_3_1_0_media_carousel( $updater ) {
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_progress_to_progressbar' ],
+				'control_ids' => [],
+			],
+		];
+
+		return self::_update_widget_settings( 'media-carousel', $updater, $changes );
+	}
+
+	public static function _v_3_1_0_reviews( $updater ) {
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_progress_to_progressbar' ],
+				'control_ids' => [],
+			],
+		];
+
+		return self::_update_widget_settings( 'reviews', $updater, $changes );
+	}
+
+	public static function _v_3_1_0_testimonial_carousel( $updater ) {
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_convert_progress_to_progressbar' ],
+				'control_ids' => [],
+			],
+		];
+
+		return self::_update_widget_settings( 'testimonial-carousel', $updater, $changes );
+	}
+
+	public static function _v_3_1_0_slides( $updater ) {
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_migrate_slides_button_color_settings' ],
+				'control_ids' => [],
+			],
+		];
+
+		return self::_update_widget_settings( 'slides', $updater, $changes );
+	}
+
 	/**
 	 * $changes is an array of arrays in the following format:
 	 * [
@@ -841,6 +885,66 @@ class Upgrades {
 		if ( empty( $diff ) ) { // Nothing was changed
 			$element['settings'][ $new_id . '_backup' ] = $element['settings'][ $new_id ];
 			$element['settings'][ $new_id ] = $term_taxonomy_ids;
+			$args['do_update'] = true;
+		}
+
+		return $element;
+	}
+
+	/**
+	 * Convert 'progress' to 'progressbar'
+	 *
+	 * Before Elementor 2.2.0, the progress bar option key was 'progress'. In Elementor 2.2.0,
+	 * it was changed to 'progressbar'. This upgrade script migrated the DB data for old websites using 'progress'.
+	 *
+	 * @param $element
+	 * @param $args
+	 * @return mixed
+	 */
+	public static function _convert_progress_to_progressbar( $element, $args ) {
+		$widget_id = $args['widget_id'];
+
+		if ( empty( $element['widgetType'] ) || $widget_id !== $element['widgetType'] ) {
+			return $element;
+		}
+
+		if ( 'progress' === $element['settings']['pagination'] ) {
+			$element['settings']['pagination'] = 'progressbar';
+			$args['do_update'] = true;
+		}
+
+		return $element;
+	}
+
+	/**
+	 * Migrate Slides Button Color Settings
+	 *
+	 * Move Slides Widget's 'button_color' settings to 'button_text_color' and 'button_border_color' as necessary,
+	 * to allow for removing the redundant control.
+	 *
+	 * @param $element
+	 * @param $args
+	 * @return mixed
+	 */
+	public static function _migrate_slides_button_color_settings( $element, $args ) {
+		if ( empty( $element['widgetType'] ) || $args['widget_id'] !== $element['widgetType'] ) {
+			return $element;
+		}
+
+		// If the element doesn't use the 'button_color' control, no need to do anything.
+		if ( ! isset( $element['settings']['button_color'] ) ) {
+			return $element;
+		}
+
+		// Check if button_text_color is set. If it is not set, transfer the value from button_color to button_text_color.
+		if ( ! isset( $element['settings']['button_text_color'] ) ) {
+			$element['settings']['button_text_color'] = $element['settings']['button_color'];
+			$args['do_update'] = true;
+		}
+
+		// Check if button_border_color is set. If it is not set, transfer the value from button_color to button_border_color.
+		if ( ! isset( $element['settings']['button_border_color'] ) ) {
+			$element['settings']['button_border_color'] = $element['settings']['button_color'];
 			$args['do_update'] = true;
 		}
 

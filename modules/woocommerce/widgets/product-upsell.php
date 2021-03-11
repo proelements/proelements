@@ -27,7 +27,7 @@ class Product_Upsell extends Products_Base {
 		return [ 'woocommerce', 'shop', 'store', 'upsell', 'product' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_upsell_content',
@@ -81,7 +81,7 @@ class Product_Upsell extends Products_Base {
 
 		$this->end_controls_section();
 
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->start_injection( [
 			'at' => 'before',

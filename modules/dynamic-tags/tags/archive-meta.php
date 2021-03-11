@@ -52,7 +52,7 @@ class Archive_Meta extends Tag {
 		return 'key';
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'key',
 			[

@@ -123,7 +123,7 @@ class Document extends Theme_Section_Document {
 		return $settings;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'popup_layout',
 			[
@@ -387,7 +387,7 @@ class Document extends Theme_Section_Document {
 
 		$this->end_controls_section();
 
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->start_controls_section(
 			'section_page_style',

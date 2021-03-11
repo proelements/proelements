@@ -25,8 +25,8 @@ abstract class Title_Widget_Base extends Widget_Heading {
 		return true;
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$dynamic_tag_name = $this->get_dynamic_tag_name();
 

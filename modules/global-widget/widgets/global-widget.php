@@ -128,8 +128,8 @@ class Global_Widget extends Base_Widget {
 		$this->get_original_element_instance()->render_plain_content();
 	}
 
-	protected function _add_render_attributes() {
-		parent::_add_render_attributes();
+	protected function add_render_attributes() {
+		parent::add_render_attributes();
 
 		$skin_type = $this->get_settings( '_skin' );
 

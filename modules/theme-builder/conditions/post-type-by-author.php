@@ -37,7 +37,7 @@ class Post_Type_By_Author extends Condition_Base {
 		return is_singular( $this->post_type->name ) && get_post_field( 'post_author' ) === $args['id'];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'author_id',
 			[

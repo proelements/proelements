@@ -35,7 +35,7 @@ class Post_Excerpt extends Base_Widget {
 		return [ 'post', 'excerpt', 'description' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
 			[
@@ -62,6 +62,35 @@ class Post_Excerpt extends Base_Widget {
 			[
 				'label' => __( 'Style', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'align',
+			[
+				'label' => __( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __( 'Left', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __( 'Right', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => __( 'Justified', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-widget-container' => 'text-align: {{VALUE}};',
+				],
 			]
 		);
 

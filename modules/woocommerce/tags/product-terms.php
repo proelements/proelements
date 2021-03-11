@@ -27,7 +27,7 @@ class Product_Terms extends Base_Tag {
 		);
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$taxonomy_filter_args = [
 			'show_in_nav_menus' => true,
 			'object_type' => [ 'product' ],

@@ -10,6 +10,11 @@ export class ConditionsProvider extends BaseContext {
 		children: PropTypes.any.isRequired,
 		currentTemplate: PropTypes.object.isRequired,
 		onConditionsSaved: PropTypes.func.isRequired,
+		validateConflicts: PropTypes.bool,
+	};
+
+	static defaultProps = {
+		validateConflicts: true,
 	};
 
 	static actions = {

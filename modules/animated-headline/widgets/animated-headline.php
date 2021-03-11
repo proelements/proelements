@@ -30,7 +30,7 @@ class Animated_Headline extends Base_Widget {
 		return [ 'headline', 'heading', 'animation', 'title', 'text' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'text_elements',
 			[
@@ -126,6 +126,12 @@ class Animated_Headline extends Base_Widget {
 			[
 				'label' => __( 'Highlighted Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+					'categories' => [
+						TagsModule::TEXT_CATEGORY,
+					],
+				],
 				'default' => __( 'Amazing', 'elementor-pro' ),
 				'label_block' => true,
 				'condition' => [
@@ -144,6 +150,12 @@ class Animated_Headline extends Base_Widget {
 				'placeholder' => __( 'Enter each word in a separate line', 'elementor-pro' ),
 				'separator' => 'none',
 				'default' => "Better\nBigger\nFaster",
+				'dynamic' => [
+					'active' => true,
+					'categories' => [
+						TagsModule::TEXT_CATEGORY,
+					],
+				],
 				'condition' => [
 					'headline_style' => 'rotate',
 				],
@@ -165,6 +177,67 @@ class Animated_Headline extends Base_Widget {
 				'placeholder' => __( 'Enter your headline', 'elementor-pro' ),
 				'label_block' => true,
 				'separator' => 'none',
+			]
+		);
+
+		$this->add_control(
+			'loop',
+			[
+				'label' => __( 'Infinite Loop', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}}' => '--iteration-count: infinite',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'highlight_animation_duration',
+			[
+				'label' => __( 'Duration', 'elementor-pro' ) . ' (ms)',
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1200,
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}}' => '--animation-duration: {{VALUE}}ms',
+				],
+				'condition' => [
+					'headline_style' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_control(
+			'highlight_iteration_delay',
+			[
+				'label' => __( 'Delay', 'elementor-pro' ) . ' (ms)',
+				'type' => Controls_Manager::NUMBER,
+				'default' => 8000,
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'condition' => [
+					'headline_style' => 'highlight',
+					'loop' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rotate_iteration_delay',
+			[
+				'label' => __( 'Duration', 'elementor-pro' ) . ' (ms)',
+				'type' => Controls_Manager::NUMBER,
+				'default' => 2500,
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'condition' => [
+					'headline_style' => 'rotate',
+				],
 			]
 		);
 
@@ -313,7 +386,6 @@ class Animated_Headline extends Base_Widget {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-headline-plain-text' => 'color: {{VALUE}}',
-
 				],
 			]
 		);
@@ -347,7 +419,7 @@ class Animated_Headline extends Base_Widget {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-headline-dynamic-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}}' => '--dynamic-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -361,6 +433,49 @@ class Animated_Headline extends Base_Widget {
 				],
 				'selector' => '{{WRAPPER}} .elementor-headline-dynamic-text',
 				'exclude' => [ 'font_size' ],
+			]
+		);
+
+		$this->add_control(
+			'typing_animation_highlight_colors',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => __( 'Selected Text', 'elementor-pro' ),
+				'separator' => 'before',
+				'condition' => [
+					'headline_style' => 'rotate',
+					'animation_type' => 'typing',
+				],
+			]
+		);
+
+		$this->add_control(
+			'highlighted_text_background_color',
+			[
+				'label' => __( 'Selection Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--typing-selected-bg-color: {{VALUE}}',
+				],
+				'condition' => [
+					'headline_style' => 'rotate',
+					'animation_type' => 'typing',
+				],
+			]
+		);
+
+		$this->add_control(
+			'highlighted_text_color',
+			[
+				'label' => __( 'Text Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--typing-selected-color: {{VALUE}}',
+				],
+				'condition' => [
+					'headline_style' => 'rotate',
+					'animation_type' => 'typing',
+				],
 			]
 		);
 
@@ -392,12 +507,24 @@ class Animated_Headline extends Base_Widget {
 
 		?>
 		<<?php echo $tag; ?> <?php echo $this->get_render_attribute_string( 'headline' ); ?>>
-			<?php if ( ! empty( $settings['before_text'] ) ) : ?>
-				<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo $settings['before_text']; ?></span>
-			<?php endif; ?>
-			<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper"></span>
-			<?php if ( ! empty( $settings['after_text'] ) ) : ?>
-				<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo $settings['after_text']; ?></span>
+		<?php if ( ! empty( $settings['before_text'] ) ) : ?>
+			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo $settings['before_text']; ?></span>
+		<?php endif; ?>
+		<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+		<?php if ( 'rotate' === $settings['headline_style'] && $settings['rotating_text'] ) :
+			$rotating_text = explode( "\n", $settings['rotating_text'] );
+			foreach ( $rotating_text as $key => $text ) :
+				$status_class = 1 > $key ? 'elementor-headline-text-active' : ''; ?>
+			<span class="elementor-headline-dynamic-text <?php echo $status_class; ?>">
+				<?php echo str_replace( ' ', '&nbsp;', $text ); ?>
+			</span>
+		<?php endforeach; ?>
+		<?php elseif ( 'highlight' === $settings['headline_style'] && ! empty( $settings['highlighted_text'] ) ) : ?>
+			<span class="elementor-headline-dynamic-text elementor-headline-text-active"><?php echo $settings['highlighted_text']; ?></span>
+		<?php endif ?>
+		</span>
+		<?php if ( ! empty( $settings['after_text'] ) ) : ?>
+			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo $settings['after_text']; ?></span>
 			<?php endif; ?>
 		</<?php echo $tag; ?>>
 		<?php
@@ -440,7 +567,21 @@ class Animated_Headline extends Base_Widget {
 					<# } #>
 
 					<# if ( settings.rotating_text ) { #>
-						<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper"></span>
+						<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
+						<# if ( 'rotate' === settings.headline_style && settings.rotating_text ) {
+							var rotatingText = ( settings.rotating_text || '' ).split( '\n' );
+							for ( var i = 0; i < rotatingText.length; i++ ) {
+								var statusClass = 0 === i ? 'elementor-headline-text-active' : ''; #>
+								<span class="elementor-headline-dynamic-text {{ statusClass }}">
+									{{{ rotatingText[ i ].replace( ' ', '&nbsp;' ) }}}
+								</span>
+							<# }
+						}
+
+						else if ( 'highlight' === settings.headline_style && settings.highlighted_text ) { #>
+							<span class="elementor-headline-dynamic-text elementor-headline-text-active">{{ settings.highlighted_text }}</span>
+						<# } #>
+						</span>
 					<# } #>
 
 					<# if ( settings.after_text ) { #>

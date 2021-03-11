@@ -24,7 +24,7 @@ class Triggers extends Base {
 		return 'popup_triggers';
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section( 'triggers' );
 
 		$this->start_settings_group( 'page_load', __( 'On Page Load', 'elementor-pro' ) );

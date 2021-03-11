@@ -24,7 +24,7 @@ abstract class Base extends Base_Widget {
 
 	abstract protected function print_slide( array $slide, array $settings, $element_key );
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_slides',
 			[
@@ -185,6 +185,7 @@ abstract class Base extends Base_Widget {
 				'label' => __( 'Transition Duration', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 500,
+				'render_type' => 'none',
 				'frontend_available' => true,
 			]
 		);
@@ -196,6 +197,7 @@ abstract class Base extends Base_Widget {
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'separator' => 'before',
+				'render_type' => 'none',
 				'frontend_available' => true,
 			]
 		);
@@ -209,6 +211,7 @@ abstract class Base extends Base_Widget {
 				'condition' => [
 					'autoplay' => 'yes',
 				],
+				'render_type' => 'none',
 				'frontend_available' => true,
 			]
 		);
@@ -232,6 +235,7 @@ abstract class Base extends Base_Widget {
 				'condition' => [
 					'autoplay' => 'yes',
 				],
+				'render_type' => 'none',
 				'frontend_available' => true,
 			]
 		);
@@ -245,6 +249,7 @@ abstract class Base extends Base_Widget {
 				'condition' => [
 					'autoplay' => 'yes',
 				],
+				'render_type' => 'none',
 				'frontend_available' => true,
 			]
 		);

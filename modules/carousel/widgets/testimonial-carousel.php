@@ -30,8 +30,8 @@ class Testimonial_Carousel extends Base {
 		return [ 'testimonial', 'carousel', 'image' ];
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->start_injection( [
 			'of' => 'slides',
@@ -504,6 +504,9 @@ class Testimonial_Carousel extends Base {
 			[
 				'label' => __( 'Content', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -512,6 +515,9 @@ class Testimonial_Carousel extends Base {
 			[
 				'label' => __( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -521,6 +527,9 @@ class Testimonial_Carousel extends Base {
 				'label' => __( 'Name', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => __( 'John Doe', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -530,6 +539,9 @@ class Testimonial_Carousel extends Base {
 				'label' => __( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => __( 'CEO', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 	}

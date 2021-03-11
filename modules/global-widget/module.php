@@ -138,8 +138,6 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * TODO: Remove. On Elementor 2.3.3 it's handled by the Documents Manager.
-	 *
 	 * Remove user edit capabilities.
 	 *
 	 * Filters the user capabilities to disable editing in admin.
@@ -149,43 +147,12 @@ class Module extends Module_Base {
 	 * @param array $args    Optional parameters passed to has_cap(), typically object ID.
 	 *
 	 * @return array
+	 * @deprecated 3.1.0
 	 */
 	public function remove_user_edit_cap( $allcaps, $caps, $args ) {
-		$capability = $args[0];
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0', 'Plugin::elementor()->documents->remove_user_edit_cap()' );
 
-		if ( empty( $args[2] ) ) {
-			return $allcaps;
-		}
-
-		global $pagenow;
-
-		if ( ! in_array( $pagenow, [ 'post.php', 'edit.php' ], true ) ) {
-			return $allcaps;
-		}
-
-		$post_id = $args[2];
-
-		if ( 'edit_post' !== $capability ) {
-			return $allcaps;
-		}
-
-		$post = get_post( $post_id );
-
-		if ( ! $post ) {
-			return $allcaps;
-		}
-
-		if ( Source_Local::CPT !== $post->post_type ) {
-			return $allcaps;
-		}
-
-		if ( ! $this->is_widget_template( $post_id ) ) {
-			return $allcaps;
-		}
-
-		$allcaps[ $caps[0] ] = false;
-
-		return $allcaps;
+		return Plugin::elementor()->documents->remove_user_edit_cap( $allcaps, $caps, $args );
 	}
 
 	public function is_widget_template( $template_id ) {
@@ -250,7 +217,6 @@ class Module extends Module_Base {
 		add_filter( 'elementor/template-library/get_template', [ $this, 'filter_template_data' ] );
 		add_filter( 'elementor/element/get_child_type', [ $this, 'get_element_child_type' ], 10, 2 );
 		add_filter( 'elementor/utils/is_post_support', [ $this, 'is_post_type_support_elementor' ], 10, 3 );
-		add_filter( 'user_has_cap', [ $this, 'remove_user_edit_cap' ], 10, 3 );
 
 		add_filter( 'elementor/template_library/is_template_supports_export', [ $this, 'is_template_supports_export' ], 10, 2 );
 	}

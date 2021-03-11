@@ -26,6 +26,7 @@ final class Modules_Manager {
 			'motion-fx',
 			'usage',
 			'screenshots',
+			'compatibility-tag',
 
 			// Modules with Widgets.
 			'theme-builder',
@@ -51,6 +52,8 @@ final class Modules_Manager {
 			'sticky',
 			//'wp-cli',
 			'lottie',
+			'code-highlight',
+			'custom-code',
 		];
 
 		foreach ( $modules as $module_name ) {

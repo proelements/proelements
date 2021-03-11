@@ -4,7 +4,6 @@ namespace ElementorPro\Modules\Forms\Actions;
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Classes\Integration_Base;
-use ElementorPro\Modules\Forms\Controls\Fields_Map;
 use ElementorPro\Modules\Forms\Classes\Getresponse_Handler;
 use ElementorPro\Core\Utils;
 use Elementor\Settings;
@@ -113,27 +112,7 @@ class Getresponse extends Integration_Base {
 			]
 		);
 
-		$widget->add_control(
-			'getresponse_fields_map',
-			[
-				'label' => __( 'Field Mapping', 'elementor-pro' ),
-				'type' => Fields_Map::CONTROL_TYPE,
-				'separator' => 'before',
-				'fields' => [
-					[
-						'name' => 'remote_id',
-						'type' => Controls_Manager::HIDDEN,
-					],
-					[
-						'name' => 'local_id',
-						'type' => Controls_Manager::SELECT,
-					],
-				],
-				'condition' => [
-					'getresponse_list!' => '',
-				],
-			]
-		);
+		$this->register_fields_map_control( $widget );
 
 		$widget->end_controls_section();
 	}
@@ -332,5 +311,13 @@ class Getresponse extends Integration_Base {
 			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_admin_fields' ], 15 );
 		}
 		add_action( 'wp_ajax_' . self::OPTION_NAME_API_KEY . '_validate', [ $this, 'ajax_validate_api_token' ] );
+	}
+
+	protected function get_fields_map_control_options() {
+		return [
+			'condition' => [
+				'getresponse_list!' => '',
+			],
+		];
 	}
 }

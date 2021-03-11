@@ -16,7 +16,7 @@ class Product_Price extends Base_Tag {
 		return __( 'Product Price', 'elementor-pro' );
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control( 'format', [
 			'label' => __( 'Format', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,

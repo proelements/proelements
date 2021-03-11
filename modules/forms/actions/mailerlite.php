@@ -5,7 +5,6 @@ use Elementor\Controls_Manager;
 use Elementor\Settings;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Classes\Mailerlite_Handler;
-use ElementorPro\Modules\Forms\Controls\Fields_Map;
 use ElementorPro\Modules\Forms\Classes\Integration_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -100,27 +99,7 @@ class Mailerlite extends Integration_Base {
 			]
 		);
 
-		$widget->add_control(
-			'mailerlite_fields_map',
-			[
-				'label' => __( 'Email Field Mapping', 'elementor-pro' ),
-				'type' => Fields_Map::CONTROL_TYPE,
-				'separator' => 'before',
-				'fields' => [
-					[
-						'name' => 'remote_id',
-						'type' => Controls_Manager::HIDDEN,
-					],
-					[
-						'name' => 'local_id',
-						'type' => Controls_Manager::SELECT,
-					],
-				],
-				'condition' => [
-					'mailerlite_group!' => '',
-				],
-			]
-		);
+		$this->register_fields_map_control( $widget );
 
 		$widget->add_control(
 			'allow_resubscribe',
@@ -303,5 +282,13 @@ class Mailerlite extends Integration_Base {
 			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_admin_fields' ], 15 );
 		}
 		add_action( 'wp_ajax_' . self::OPTION_NAME_API_KEY . '_validate', [ $this, 'ajax_validate_api_key' ] );
+	}
+
+	protected function get_fields_map_control_options() {
+		return [
+			'condition' => [
+				'mailerlite_group!' => '',
+			],
+		];
 	}
 }

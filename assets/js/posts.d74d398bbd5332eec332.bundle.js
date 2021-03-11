@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.10 - 20-01-2021 */
+/*! pro-elements - v3.1.1 - 23-02-2021 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["posts"],{
 
 /***/ "../modules/posts/assets/js/frontend/handlers/cards.js":

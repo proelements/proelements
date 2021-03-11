@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\CustomAttributes;
 use Elementor\Controls_Stack;
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
+use Elementor\Utils;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Plugin;
 
@@ -106,7 +107,7 @@ class Module extends Module_Base {
 		$settings = $element->get_settings_for_display();
 
 		if ( ! empty( $settings['_attributes'] ) ) {
-			$attributes = $this->parse_custom_attributes( $settings['_attributes'], "\n" );
+			$attributes = Utils::parse_custom_attributes( $settings['_attributes'], "\n" );
 
 			$black_list = $this->get_black_list_attributes();
 
@@ -116,44 +117,6 @@ class Module extends Module_Base {
 				}
 			}
 		}
-	}
-
-	/**
-	 * TODO: Remove, use \Elementor\Utils:parse_custom_attributes from Core >= 2.9.10.
-	 */
-	private function parse_custom_attributes( $attributes_string, $delimiter = ',' ) {
-		$attributes = explode( $delimiter, $attributes_string );
-		$result = [];
-
-		foreach ( $attributes as $attribute ) {
-			$attr_key_value = explode( '|', $attribute );
-
-			$attr_key = mb_strtolower( $attr_key_value[0] );
-
-			// Remove any not allowed characters.
-			preg_match( '/[-_a-z0-9]+/', $attr_key, $attr_key_matches );
-
-			if ( empty( $attr_key_matches[0] ) ) {
-				continue;
-			}
-
-			$attr_key = $attr_key_matches[0];
-
-			// Avoid Javascript events and unescaped href.
-			if ( 'href' === $attr_key || 'on' === substr( $attr_key, 0, 2 ) ) {
-				continue;
-			}
-
-			if ( isset( $attr_key_value[1] ) ) {
-				$attr_value = trim( $attr_key_value[1] );
-			} else {
-				$attr_value = '';
-			}
-
-			$result[ $attr_key ] = $attr_value;
-		}
-
-		return $result;
 	}
 
 	protected function add_actions() {

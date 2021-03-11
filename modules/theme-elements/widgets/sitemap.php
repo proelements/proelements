@@ -509,7 +509,7 @@ class Sitemap extends Base {
 		$this->end_controls_section();
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->register_sitemap_tab();
 		$this->register_style_tab();
 	}

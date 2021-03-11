@@ -5,7 +5,6 @@ use Elementor\Controls_Manager;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Classes\Integration_Base;
-use ElementorPro\Modules\Forms\Controls\Fields_Map;
 use ElementorPro\Modules\Forms\Classes\Mailchimp_Handler;
 use Elementor\Settings;
 
@@ -141,27 +140,7 @@ class Mailchimp extends Integration_Base {
 			]
 		);
 
-		$widget->add_control(
-			'mailchimp_fields_map',
-			[
-				'label' => __( 'Field Mapping', 'elementor-pro' ),
-				'type' => Fields_Map::CONTROL_TYPE,
-				'separator' => 'before',
-				'fields' => [
-					[
-						'name' => 'remote_id',
-						'type' => Controls_Manager::HIDDEN,
-					],
-					[
-						'name' => 'local_id',
-						'type' => Controls_Manager::SELECT,
-					],
-				],
-				'condition' => [
-					'mailchimp_list!' => '',
-				],
-			]
-		);
+		$this->register_fields_map_control( $widget );
 
 		$widget->end_controls_section();
 	}
@@ -315,5 +294,13 @@ class Mailchimp extends Integration_Base {
 			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_admin_fields' ], 14 );
 		}
 		add_action( 'wp_ajax_' . self::OPTION_NAME_API_KEY . '_validate', [ $this, 'ajax_validate_api_token' ] );
+	}
+
+	protected function get_fields_map_control_options() {
+		return [
+			'condition' => [
+				'mailchimp_list!' => '',
+			],
+		];
 	}
 }

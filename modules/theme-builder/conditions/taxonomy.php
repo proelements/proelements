@@ -48,7 +48,7 @@ class Taxonomy extends Condition_Base {
 		return is_tax( $taxonomy, $id );
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'taxonomy',
 			[

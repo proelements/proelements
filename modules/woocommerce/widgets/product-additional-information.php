@@ -22,7 +22,7 @@ class Product_Additional_Information extends Base_Widget {
 		return ' eicon-product-info';
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section( 'section_additional_info_style', [
 			'label' => __( 'General', 'elementor-pro' ),

@@ -236,14 +236,7 @@ class Module extends Module_Base {
 						$doc_type = Plugin::elementor()->documents->get_document_type( $post_type );
 						$doc_class = new $doc_type();
 
-						// New: Core >=2.7.0
-						$is_base_page = class_exists( '\Elementor\Core\DocumentTypes\PageBase' ) && $doc_class instanceof \Elementor\Core\DocumentTypes\PageBase;
-
-						// Old: Core < 2.7.0. TODO: Remove on 2.7.0.
-						if ( ! $is_base_page ) {
-							$doc_name = $doc_class->get_name();
-							$is_base_page = in_array( $doc_name, [ 'post', 'page', 'wp-post', 'wp-page' ] );
-						}
+						$is_base_page = $doc_class instanceof \Elementor\Core\DocumentTypes\PageBase;
 
 						if ( $is_base_page ) {
 							$post_type_object = get_post_type_object( $post_type );
@@ -312,13 +305,6 @@ class Module extends Module_Base {
 	}
 
 	public function add_finder_items( array $categories ) {
-		$categories['general']['items']['theme-builder'] = [
-			'title' => __( 'Theme Builder', 'elementor-pro' ),
-			'icon' => 'library-save',
-			'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
-			'keywords' => [ 'template', 'header', 'footer', 'single', 'archive', 'search', '404', 'library' ],
-		];
-
 		$categories['create']['items']['theme-template'] = [
 			'title' => __( 'Add New Theme Template', 'elementor-pro' ),
 			'icon' => 'plus-circle-o',

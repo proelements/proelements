@@ -30,7 +30,7 @@ class Flip_Box extends Base_Widget {
 		return 'eicon-flip-box';
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_side_a_content',

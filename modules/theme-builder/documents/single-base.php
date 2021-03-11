@@ -89,8 +89,8 @@ abstract class Single_Base extends Archive_Single_Base {
 		parent::print_content();
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$post_type = $this->get_main_meta( self::REMOTE_CATEGORY_META_KEY );
 

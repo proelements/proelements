@@ -34,8 +34,8 @@ class Site_Logo extends Widget_Image {
 		return [ 'site', 'logo', 'branding' ];
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->update_control(
 			'image',

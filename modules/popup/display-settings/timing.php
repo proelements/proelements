@@ -24,7 +24,7 @@ class Timing extends Base {
 		return 'popup_timing';
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section( 'timing' );
 
 		$this->start_settings_group( 'page_views', __( 'Show after X page views', 'elementor-pro' ) );
@@ -174,6 +174,41 @@ class Timing extends Base {
 					'desktop' => __( 'Desktop', 'elementor-pro' ),
 					'tablet' => __( 'Tablet', 'elementor-pro' ),
 					'mobile' => __( 'Mobile', 'elementor-pro' ),
+				],
+			]
+		);
+
+		$this->end_settings_group();
+
+		$this->start_settings_group( 'browsers', __( 'Show on browsers', 'elementor-pro' ) );
+
+		$this->add_settings_group_control(
+			'browsers',
+			[
+				'type' => Controls_Manager::SELECT,
+				'default' => 'all',
+				'options' => [
+					'all' => __( 'All Browsers', 'elementor-pro' ),
+					'custom' => __( 'Custom', 'elementor-pro' ),
+				],
+			]
+		);
+
+		$this->add_settings_group_control(
+			'browsers_options',
+			[
+				'type' => Controls_Manager::SELECT2,
+				'multiple' => true,
+				'default' => [],
+				'options' => [
+					'ie' => __( 'Internet Explorer', 'elementor-pro' ),
+					'chrome' => __( 'Chrome', 'elementor-pro' ),
+					'edge' => __( 'Edge', 'elementor-pro' ),
+					'firefox' => __( 'Firefox', 'elementor-pro' ),
+					'safari' => __( 'Safari', 'elementor-pro' ),
+				],
+				'condition' => [
+					'browsers' => 'custom',
 				],
 			]
 		);

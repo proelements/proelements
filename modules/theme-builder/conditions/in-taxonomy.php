@@ -42,7 +42,7 @@ class In_Taxonomy extends Condition_Base {
 		return is_singular() && has_term( (int) $args['id'], $this->taxonomy->name );
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'taxonomy',
 			[

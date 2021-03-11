@@ -27,7 +27,7 @@ class Product_Meta extends Base_Widget {
 		return [ 'woocommerce', 'shop', 'store', 'meta', 'data', 'product' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_meta_style',

@@ -3,8 +3,7 @@ namespace ElementorPro\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
-use ElementorPro\Modules\Forms\Controls\Fields_Map;
-use ElementorPro\Modules\Forms\Classes\Action_Base;
+use ElementorPro\Modules\Forms\Classes\Integration_Base;
 use MailPoet\API\API;
 use MailPoet\Models\Subscriber;
 
@@ -12,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 };
 
-class Mailpoet3 extends Action_Base {
+class Mailpoet3 extends Integration_Base {
 
 	public function get_name() {
 		return 'mailpoet3';
@@ -51,60 +50,7 @@ class Mailpoet3 extends Action_Base {
 			]
 		);
 
-		$mailpoet_fields = [
-			[
-				'remote_id' => 'first_name',
-				'remote_label' => __( 'First Name', 'elementor-pro' ),
-				'remote_type' => 'text',
-			],
-			[
-				'remote_id' => 'last_name',
-				'remote_label' => __( 'Last Name', 'elementor-pro' ),
-				'remote_type' => 'text',
-			],
-			[
-				'remote_id' => 'email',
-				'remote_label' => __( 'Email', 'elementor-pro' ),
-				'remote_type' => 'email',
-				'remote_required' => true,
-			],
-		];
-		$fields = API::MP( 'v1' )->getSubscriberFields();
-
-		if ( ! empty( $fields ) && is_array( $fields ) ) {
-			foreach ( $fields as $index => $remote ) {
-				if ( in_array( $remote['id'], [ 'first_name', 'last_name', 'email' ] ) ) {
-					continue;
-				}
-				$mailpoet_fields[] = [
-					'remote_id' => $remote['id'],
-					'remote_label' => $remote['name'],
-					'remote_type' => 'text',
-				];
-			}
-		}
-
-		$widget->add_control(
-			'mailpoet3_fields_map',
-			[
-				'label' => __( 'Field Mapping', 'elementor-pro' ),
-				'type' => Fields_Map::CONTROL_TYPE,
-				'default' => $mailpoet_fields,
-				'fields' => [
-					[
-						'name' => 'remote_id',
-						'type' => Controls_Manager::HIDDEN,
-					],
-					[
-						'name' => 'local_id',
-						'type' => Controls_Manager::SELECT,
-					],
-				],
-				'condition' => [
-					'mailpoet3_lists!' => '',
-				],
-			]
-		);
+		$this->register_fields_map_control( $widget );
 
 		$widget->end_controls_section();
 	}
@@ -163,5 +109,48 @@ class Mailpoet3 extends Action_Base {
 		}
 
 		return $subscriber;
+	}
+
+	protected function get_fields_map_control_options() {
+		$mailpoet_fields = [
+			[
+				'remote_id' => 'first_name',
+				'remote_label' => __( 'First Name', 'elementor-pro' ),
+				'remote_type' => 'text',
+			],
+			[
+				'remote_id' => 'last_name',
+				'remote_label' => __( 'Last Name', 'elementor-pro' ),
+				'remote_type' => 'text',
+			],
+			[
+				'remote_id' => 'email',
+				'remote_label' => __( 'Email', 'elementor-pro' ),
+				'remote_type' => 'email',
+				'remote_required' => true,
+			],
+		];
+
+		$fields = API::MP( 'v1' )->getSubscriberFields();
+
+		if ( ! empty( $fields ) && is_array( $fields ) ) {
+			foreach ( $fields as $index => $remote ) {
+				if ( in_array( $remote['id'], [ 'first_name', 'last_name', 'email' ] ) ) {
+					continue;
+				}
+				$mailpoet_fields[] = [
+					'remote_id' => $remote['id'],
+					'remote_label' => $remote['name'],
+					'remote_type' => 'text',
+				];
+			}
+		}
+
+		return [
+			'default' => $mailpoet_fields,
+			'condition' => [
+				'mailpoet3_lists!' => '',
+			],
+		];
 	}
 }

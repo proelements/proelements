@@ -29,8 +29,8 @@ abstract class Theme_Page_Document extends Theme_Document {
 		return $properties;
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->start_injection( [
 			'of' => 'post_status',

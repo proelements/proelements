@@ -181,6 +181,7 @@ class Plugin {
 			'elementor-pro-frontend',
 			ELEMENTOR_PRO_URL . 'assets/js/frontend' . $suffix . '.js',
 			[
+				'elementor-pro-webpack-runtime',
 				'elementor-frontend-modules',
 				'elementor-sticky',
 			],
@@ -188,9 +189,18 @@ class Plugin {
 			true
 		);
 
+		if ( self::elementor()->experiments->is_feature_active( 'e_optimized_assets_loading' ) ) {
+			wp_enqueue_script( 'pro-elements-handlers' );
+		} else {
+			wp_enqueue_script( 'pro-preloaded-elements-handlers' );
+		}
+
 		$locale_settings = [
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'elementor-pro-frontend' ),
+			'urls' => [
+				'assets' => ELEMENTOR_PRO_ASSETS_URL,
+			],
 		];
 
 		/**
@@ -213,6 +223,34 @@ class Plugin {
 
 	public function register_frontend_scripts() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_script(
+			'elementor-pro-webpack-runtime',
+			ELEMENTOR_PRO_URL . 'assets/js/webpack-pro.runtime' . $suffix . '.js',
+			[],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'pro-elements-handlers',
+			ELEMENTOR_PRO_URL . 'assets/js/elements-handlers' . $suffix . '.js',
+			[
+				'elementor-frontend',
+			],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'pro-preloaded-elements-handlers',
+			ELEMENTOR_PRO_URL . 'assets/js/preloaded-elements-handlers' . $suffix . '.js',
+			[
+				'elementor-frontend',
+			],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'smartmenus',

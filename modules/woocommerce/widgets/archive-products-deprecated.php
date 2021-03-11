@@ -36,10 +36,10 @@ class Archive_Products_Deprecated extends Products {
 		return false;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->deprecated_notice( Plugin::get_title(), '2.5.0', '', __( 'Archive Products', 'elementor-pro' ) );
 
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->start_injection( [
 			'at' => 'before',

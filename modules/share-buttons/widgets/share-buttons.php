@@ -68,7 +68,7 @@ class Share_Buttons extends Base_Widget {
 		return [ 'sharing', 'social', 'icon', 'button', 'like' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_buttons_content',
 			[
@@ -229,9 +229,18 @@ class Share_Buttons extends Base_Widget {
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
+				/* TODO: `prefix_class` is redundant since v3.1.0
+				 * It is only here for backwards compatibility reasons.
+				 * It should be removed in the future.
+				 */
 				'prefix_class' => 'elementor-share-buttons%s--align-',
+				/*---------------------------------------------------*/
 				'condition' => [
 					'columns' => '0',
+				],
+				/* `selectors` was added on v3.1.0 as a superior alternative to the previous `prefix_class` solution */
+				'selectors' => [
+					'{{WRAPPER}}' => '--alignment: {{VALUE}}',
 				],
 			]
 		);

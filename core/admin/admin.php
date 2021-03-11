@@ -114,7 +114,16 @@ class Admin extends App {
 					break;
 				}
 
-				if ( preg_match( '/(trunk|beta|rc)/i', strtolower( $version ) ) ) {
+				$lowercase_version = strtolower( $version );
+				$is_valid_rollback_version = ! preg_match( '/(trunk|beta|rc|dev)/i', $lowercase_version );
+
+				$is_valid_rollback_version = apply_filters(
+					'elementor-pro/settings/tools/rollback/is_valid_rollback_version',
+					$is_valid_rollback_version,
+					$lowercase_version
+				);
+
+				if ( ! $is_valid_rollback_version ) {
 					continue;
 				}
 

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.10 - 20-01-2021 */
+/*! pro-elements - v3.1.1 - 23-02-2021 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["vendors-node_modules_babel_runtime-corejs2_helpers_asyncToGenerator_js-node_modules_babel_run-fdf909"],{
 
 /***/ "../node_modules/@babel/runtime-corejs2/core-js/promise.js":

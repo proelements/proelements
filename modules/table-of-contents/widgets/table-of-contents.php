@@ -36,7 +36,7 @@ class Table_Of_Contents extends Base_Widget {
 		return [ 'toc' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'table_of_contents',
 			[
@@ -487,6 +487,24 @@ class Table_Of_Contents extends Base_Widget {
 			[
 				'label' => __( 'List', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'max_height',
+			[
+				'label' => __( 'Max Height', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'vh' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--toc-body-max-height: {{SIZE}}{{UNIT}}',
+				],
 			]
 		);
 

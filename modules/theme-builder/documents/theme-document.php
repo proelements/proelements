@@ -23,6 +23,7 @@ abstract class Theme_Document extends Library_Document {
 		$properties['admin_tab_group'] = Module::ADMIN_LIBRARY_TAB_GROUP;
 		$properties['support_kit'] = true;
 		$properties['support_site_editor'] = true;
+		$properties['support_conditions'] = true;
 
 		return $properties;
 	}
@@ -236,8 +237,8 @@ abstract class Theme_Document extends Library_Document {
 
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->start_controls_section(
 			'preview_settings',

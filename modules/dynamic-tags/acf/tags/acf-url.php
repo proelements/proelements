@@ -89,7 +89,7 @@ class ACF_URL extends Data_Tag {
 		return wp_kses_post( $value );
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		Module::add_key_control( $this );
 
 		$this->add_control(

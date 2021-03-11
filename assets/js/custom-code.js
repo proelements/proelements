@@ -1,4 +1,4 @@
-/*! pro-elements - v3.0.10 - 20-01-2021 */
+/*! pro-elements - v3.1.1 - 23-02-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6092,15 +6092,15 @@ function ConditionsRows(props) {
     approveButtonTarget: "_target"
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "e-site-editor-conditions__rows"
-  }, rows, /*#__PURE__*/_react.default.createElement("div", {
+  }, rows), /*#__PURE__*/_react.default.createElement("div", {
     className: "e-site-editor-conditions__add-button-container"
   }, /*#__PURE__*/_react.default.createElement(_appUi.Button, {
     className: "e-site-editor-conditions__add-button",
     variant: "contained",
     size: "lg",
-    text: __('ADD CONDITION', 'elementor-pro'),
+    text: __('Add Condition', 'elementor-pro'),
     onClick: create
-  }))), /*#__PURE__*/_react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: "e-site-editor-conditions__footer"
   }, /*#__PURE__*/_react.default.createElement(_appUi.Button, {
     variant: "contained",
@@ -6128,6 +6128,7 @@ ConditionsRows.propTypes = {
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
@@ -6145,6 +6146,8 @@ var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createClass */ "../node_modules/@babel/runtime-corejs2/helpers/createClass.js"));
+
+var _assertThisInitialized2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/assertThisInitialized */ "../node_modules/@babel/runtime-corejs2/helpers/assertThisInitialized.js"));
 
 var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/inherits.js"));
 
@@ -6164,7 +6167,7 @@ var CustomCode = /*#__PURE__*/function (_elementorModules$Mod) {
 
     (0, _classCallCheck2.default)(this, CustomCode);
     _this = _super.call(this);
-    jQuery(_this.initialize);
+    jQuery(_this.initialize.bind((0, _assertThisInitialized2.default)(_this)));
     return _this;
   }
 
@@ -6173,6 +6176,26 @@ var CustomCode = /*#__PURE__*/function (_elementorModules$Mod) {
     value: function initialize() {
       $e.components.register(new _component.default());
       ReactDOM.render( /*#__PURE__*/_react.default.createElement(_conditionsModal.default, null), document.querySelector('.post-conditions'));
+      this.addTipsyToFields();
+      this.addDescription();
+    }
+  }, {
+    key: "addTipsyToFields",
+    value: function addTipsyToFields() {
+      jQuery('.elementor-field-label i[data-info]').tipsy({
+        title: function title() {
+          return this.getAttribute('data-info');
+        },
+        gravity: function gravity() {
+          return 's';
+        }
+      });
+    }
+  }, {
+    key: "addDescription",
+    value: function addDescription() {
+      var description = '<p>' + __('Manage and create all of your custom code here.<br />Organize all of your custom code and incorporate code snippets in your site. Add tracking codes, meta titles, and other scripts. Set display conditions, locations, and priority all from one place.', 'elementor-pro') + '&nbsp;<a target="_blank" href="https://go.elementor.com/wp-dash-custom-code">' + __('Learn more', 'elementor-pro') + '</a>' + '</p>';
+      jQuery(description).insertBefore('.wp-header-end');
     }
   }]);
   return CustomCode;
@@ -6208,7 +6231,11 @@ var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 
 var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/extends */ "../node_modules/@babel/runtime-corejs2/helpers/extends.js"));
 
+var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/json/stringify */ "../node_modules/@babel/runtime-corejs2/core-js/json/stringify.js"));
+
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "../node_modules/@babel/runtime/regenerator/index.js"));
+
+__webpack_require__(/*! core-js/modules/es6.function.name */ "../node_modules/core-js/modules/es6.function.name.js");
 
 var _values = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/values */ "../node_modules/@babel/runtime-corejs2/core-js/object/values.js"));
 
@@ -6235,7 +6262,7 @@ var _conditions = _interopRequireDefault(__webpack_require__(/*! ./conditions */
 var _conditionsConfig = _interopRequireDefault(__webpack_require__(/*! elementor-pro-app-modules/site-editor/assets/js/context/services/conditions-config */ "../core/app/modules/site-editor/assets/js/context/services/conditions-config.js"));
 
 /**
- * @TODO: Remove - On release 3.1.0.
+ * @TODO: Remove - On release 3.2.0.
  */
 var Modal = /*#__PURE__*/function (_React$Component) {
   (0, _inherits2.default)(Modal, _React$Component);
@@ -6347,6 +6374,7 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
     _this2 = _super2.call(this, props);
     _this2.state.conditions = null;
     _this2.state.instances = null;
+    _this2.isSavedOnce = false;
     return _this2;
   }
 
@@ -6368,18 +6396,37 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
                 this.conditionsConfig = _context.sent;
                 $e.data.get('site-editor/templates-conditions', {
                   id: this.post.ID
+                }, {
+                  refresh: true
                 }).then(function (result) {
-                  var conditions = (0, _values.default)(result.data);
+                  // Since the 'state' format is different from db one.
+                  var conditions = (0, _values.default)(result.data).map(function (condition) {
+                    return {
+                      type: condition.type,
+                      name: condition.name,
+                      sub: condition.sub_name,
+                      subId: condition.sub_id
+                    };
+                  });
 
                   _this3.setState({
                     conditions: conditions,
                     instances: (0, _values.default)(_this3.conditionsConfig.calculateInstances(conditions)).join(',')
                   });
                 });
-                this.publishButtonEl = jQuery('#publish');
-                this.publishButtonEl.on('click', this.onPublishClick.bind(this));
+                this.elements = {
+                  $form: jQuery('#post'),
+                  $formConditions: jQuery('<input />'),
+                  $publishButton: jQuery('#publish'),
+                  title: {
+                    $label: jQuery('#title-prompt-text'),
+                    $input: jQuery('#title')
+                  }
+                };
+                this.elements.$publishButton.on('click', this.onPublishClick.bind(this));
+                this.elements.$form.submit(this.onPostSubmit.bind(this));
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -6394,9 +6441,19 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
       return componentDidMount;
     }()
   }, {
+    key: "onPostSubmit",
+    value: function onPostSubmit() {
+      var title = this.elements.title;
+
+      if (!title.$input.attr('value').length) {
+        title.$label.addClass('screen-reader-text');
+        title.$input.attr('value', __('Elementor Custom-Code #', 'elementor-pro') + elementorProAdmin.customCode.post.ID);
+      }
+    }
+  }, {
     key: "onPublishClick",
     value: function onPublishClick(e) {
-      if ('auto-draft' === this.post.post_status && !this.state.show && !this.state.conditions.length) {
+      if ('auto-draft' === this.post.post_status && !this.state.show && !this.isSavedOnce) {
         e.preventDefault(); // Set default condition for new post.
 
         this.setState({
@@ -6404,8 +6461,6 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
             name: 'general',
             sub: '',
             subId: '',
-            sub_id: '',
-            sub_name: '',
             type: 'include'
           }]
         });
@@ -6415,6 +6470,7 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
   }, {
     key: "onConditionsSaved",
     value: function onConditionsSaved(args) {
+      this.isSavedOnce = true;
       this.setState({
         instances: (0, _values.default)(args.instances).join(','),
         conditions: args.conditions
@@ -6423,7 +6479,16 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
   }, {
     key: "onAfterSave",
     value: function onAfterSave() {
-      this.publishButtonEl.click();
+      var _this$elements = this.elements,
+          $form = _this$elements.$form,
+          $formConditions = _this$elements.$formConditions,
+          $publishButton = _this$elements.$publishButton; // Temporary workaround for applying conditions for draft custom code post.
+
+      if ('auto-draft' === this.post.post_status || 'draft' === this.post.post_status) {
+        $formConditions.attr('type', 'hidden').attr('name', '_conditions').attr('value', (0, _stringify.default)(this.state.conditions)).appendTo($form);
+      }
+
+      $publishButton.click();
       this.hideModal();
     }
   }, {
@@ -6510,7 +6575,7 @@ function Conditions(props) {
     defaultCondition: 'general'
   }),
       onConditionsSaved = function onConditionsSaved(id, args) {
-    $e.data.updateCache($e.components.get('site-editor'), 'site-editor/templates-conditions', {
+    $e.data.setCache($e.components.get('site-editor'), 'site-editor/templates-conditions', {
       id: id
     }, args.conditions);
     props.onConditionsSaved(args);

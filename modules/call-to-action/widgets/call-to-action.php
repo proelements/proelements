@@ -35,7 +35,7 @@ class Call_To_Action extends Base_Widget {
 		return [ 'call to action', 'cta', 'button' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_main_image',
 			[

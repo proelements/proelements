@@ -45,7 +45,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		<?php
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_atc_button_style',

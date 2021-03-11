@@ -65,7 +65,7 @@ class Nav_Menu extends Base_Widget {
 		return $options;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_layout',

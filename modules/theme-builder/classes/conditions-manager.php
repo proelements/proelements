@@ -507,4 +507,8 @@ class Conditions_Manager {
 	public function get_cache() {
 		return $this->cache;
 	}
+
+	public function clear_location_cache() {
+		$this->location_cache = [];
+	}
 }

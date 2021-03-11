@@ -44,7 +44,7 @@ class Add_To_Cart extends Widget_Button {
 		return $text;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_product',
 			[
@@ -93,7 +93,7 @@ class Add_To_Cart extends Widget_Button {
 
 		$this->end_controls_section();
 
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->update_control(
 			'link',

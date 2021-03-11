@@ -37,7 +37,7 @@ class Form extends Form_Base {
 		return [ 'form', 'forms', 'field', 'button', 'mailchimp', 'drip', 'mailpoet', 'convertkit', 'getresponse', 'recaptcha', 'zapier', 'webhook', 'activecampaign', 'slack', 'discord', 'mailerlite' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$repeater = new Repeater();
 
 		$field_types = [
@@ -260,11 +260,13 @@ class Form extends Form_Base {
 					'100' => '100%',
 					'80' => '80%',
 					'75' => '75%',
+					'70' => '70%',
 					'66' => '66%',
 					'60' => '60%',
 					'50' => '50%',
 					'40' => '40%',
 					'33' => '33%',
+					'30' => '30%',
 					'25' => '25%',
 					'20' => '20%',
 				],
@@ -585,11 +587,13 @@ class Form extends Form_Base {
 					'100' => '100%',
 					'80' => '80%',
 					'75' => '75%',
+					'70' => '70%',
 					'66' => '66%',
 					'60' => '60%',
 					'50' => '50%',
 					'40' => '40%',
 					'33' => '33%',
+					'30' => '30%',
 					'25' => '25%',
 					'20' => '20%',
 				],

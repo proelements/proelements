@@ -33,8 +33,8 @@ class Category_Image extends Widget_Image {
 		return [ 'woocommerce', 'category', 'image', 'thumbnail' ];
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->update_control(
 			'image',

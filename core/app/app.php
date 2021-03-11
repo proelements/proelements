@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class App extends BaseApp {
-
 	/**
 	 * Get module name.
 	 *
@@ -68,6 +67,14 @@ class App extends BaseApp {
 		);
 
 		wp_set_script_translations( 'elementor-pro-app', 'elementor-pro', ELEMENTOR_PRO_PATH . 'languages' );
+	}
+
+	private function enqueue_config() {
+		// If script didn't loaded, config is still relevant, enqueue without a file.
+		if ( ! wp_script_is( 'elementor-pro-app' ) ) {
+			wp_register_script( 'elementor-pro-app', false, [], ELEMENTOR_PRO_VERSION );
+			wp_enqueue_script( 'elementor-pro-app' );
+		}
 
 		$this->print_config( 'elementor-pro-app' );
 	}
@@ -76,6 +83,10 @@ class App extends BaseApp {
 		$this->add_component( 'site-editor', new SiteEditor() );
 
 		add_action( 'elementor/app/init', [ $this, 'init' ] );
+
+		add_action( 'elementor/common/after_register_scripts', function () {
+			$this->enqueue_config();
+		} );
 
 		add_action( 'elementor/init', [ $this, 'set_menu_url' ] );
 	}

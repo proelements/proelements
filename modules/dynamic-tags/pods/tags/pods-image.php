@@ -60,7 +60,7 @@ class Pods_Image extends Data_Tag {
 		return $image_data;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'key',
 			[

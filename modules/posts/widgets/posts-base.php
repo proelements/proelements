@@ -360,7 +360,7 @@ abstract class Posts_Base extends Base_Widget {
 		return $return;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_layout',
 			[

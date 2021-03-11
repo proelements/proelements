@@ -47,7 +47,7 @@ class Portfolio extends Base_Widget {
 	}
 
 	public function on_import( $element ) {
-		if ( ! get_post_type_object( $element['settings']['posts_post_type'] ) ) {
+		if ( isset( $element['settings']['posts_post_type'] ) && ! get_post_type_object( $element['settings']['posts_post_type'] ) ) {
 			$element['settings']['posts_post_type'] = 'post';
 		}
 
@@ -58,7 +58,7 @@ class Portfolio extends Base_Widget {
 		return $this->_query;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->register_query_section_controls();
 	}
 

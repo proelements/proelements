@@ -467,8 +467,10 @@ the source property is coming from element/dev/scss...
     display: flex;
     flex-wrap: wrap; }
 
-.e-form__buttons, .e-form__buttons__wrapper {
-  display: flex; }
+.e-form__buttons {
+  flex-wrap: wrap; }
+  .e-form__buttons, .e-form__buttons__wrapper {
+    display: flex; }
 
 .e-form__indicators {
   display: flex;
@@ -1528,38 +1530,6 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--shape-circle .elementor-share-btn {
   border-radius: 99.9em; }
 
-.elementor-share-buttons--align-right .elementor-grid {
-  justify-content: flex-end; }
-
-.elementor-share-buttons--align-left .elementor-grid {
-  justify-content: flex-start; }
-
-.elementor-share-buttons--align-center .elementor-grid {
-  justify-content: center; }
-
-.elementor-share-buttons--align-justify .elementor-grid {
-  justify-content: space-between; }
-
-@media (max-width: ELEMENTOR_SCREEN_MD_MAX) {
-  .elementor-share-buttons-tablet--align-right .elementor-grid {
-    justify-content: flex-end; }
-  .elementor-share-buttons-tablet--align-left .elementor-grid {
-    justify-content: flex-start; }
-  .elementor-share-buttons-tablet--align-center .elementor-grid {
-    justify-content: center; }
-  .elementor-share-buttons-tablet--align-justify .elementor-grid {
-    justify-content: space-between; } }
-
-@media (max-width: ELEMENTOR_SCREEN_SM_MAX) {
-  .elementor-share-buttons-mobile--align-right .elementor-grid {
-    justify-content: flex-end; }
-  .elementor-share-buttons-mobile--align-left .elementor-grid {
-    justify-content: flex-start; }
-  .elementor-share-buttons-mobile--align-center .elementor-grid {
-    justify-content: center; }
-  .elementor-share-buttons-mobile--align-justify .elementor-grid {
-    justify-content: space-between; } }
-
 .elementor-share-btn {
   overflow: hidden;
   font-size: 10px;
@@ -1594,8 +1564,11 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
     font-weight: bold;
     flex-shrink: 0; }
 
-.elementor-widget-share-buttons .elementor-widget-container {
-  overflow: hidden; }
+.elementor-widget-share-buttons {
+  text-align: var(--alignment, inherit);
+  text-align-last: var(--alignment, inherit); }
+  .elementor-widget-share-buttons.elementor-grid-0 .elementor-widget-container {
+    font-size: 0; }
 
 body.woocommerce #content div.product .elementor-widget-woocommerce-product-images div.images,
 body.woocommerce div.product .elementor-widget-woocommerce-product-images div.images, body.woocommerce-page #content div.product .elementor-widget-woocommerce-product-images div.images,
@@ -2858,9 +2831,10 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   font-size: 43px;
   line-height: 1.2;
   display: block; }
+  .elementor-headline-dynamic-text {
+    color: var(--dynamic-text-color, #aebcb9); }
   .elementor-headline--style-rotate .elementor-headline-dynamic-wrapper {
-    text-align: left;
-    overflow: hidden; }
+    text-align: left; }
   .elementor-headline--style-highlight .elementor-headline-dynamic-wrapper {
     overflow: visible;
     text-align: inherit; }
@@ -2881,24 +2855,36 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
       stroke: red;
       stroke-width: 9;
       fill: none;
-      stroke-dasharray: 1500;
-      animation: elementor-headline-dash 10s infinite; }
-    .elementor-headline--style-highlight svg path:nth-of-type(2) {
-      animation-delay: 0.6s; }
+      opacity: 0;
+      stroke-dasharray: 0 1500;
+      transition: 0.3s; }
+  .elementor-headline.e-animated svg path {
+    animation: elementor-headline-dash forwards;
+    animation-duration: var(--animation-duration, 1.2s);
+    animation-iteration-count: 1; }
+    .elementor-headline.e-animated svg path:nth-of-type(2) {
+      animation-delay: calc(var(--animation-duration, 1.2s) / 2); }
+  .elementor-headline.e-hide-highlight svg path {
+    opacity: 1;
+    stroke-dasharray: 1500 1500;
+    animation: hide-highlight 0.4s forwards;
+    animation-iteration-count: 1; }
 
 @keyframes elementor-headline-dash {
-  0% {
-    stroke-dasharray: 0 1500; }
-  15% {
-    stroke-dasharray: 1500 1500; }
-  85% {
-    opacity: 1; }
-  90% {
-    stroke-dasharray: 1500 1500;
-    opacity: 0; }
-  100% {
+  from {
     stroke-dasharray: 0 1500;
-    opacity: 0; } }
+    opacity: 1; }
+  to {
+    stroke-dasharray: 1500 1500;
+    opacity: 1; } }
+
+@keyframes hide-highlight {
+  from {
+    opacity: 1;
+    stroke-dasharray: 1500 1500; }
+  to {
+    opacity: 0;
+    filter: blur(10px); } }
 
 .elementor-headline-text-wrapper {
   vertical-align: bottom; }
@@ -2972,11 +2958,11 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper:not(.elementor-headline-typing-selected):after {
     animation: elementor-headline-pulse 1s infinite; }
   .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper.elementor-headline-typing-selected {
-    background-color: #0d0d0d; }
+    background-color: var(--typing-selected-bg-color, #0d0d0d); }
     .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper.elementor-headline-typing-selected::after {
       visibility: hidden; }
     .elementor-headline-animation-type-typing .elementor-headline-dynamic-wrapper.elementor-headline-typing-selected .elementor-headline-dynamic-text {
-      color: #aebcb9; }
+      color: var(--typing-selected-color, var(--dynamic-text-color), #aebcb9); }
 
 .elementor-headline-animation-type-typing .elementor-headline-dynamic-text:not(.elementor-headline-text-active) {
   visibility: hidden; }
@@ -3224,6 +3210,9 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
 
 .elementor-headline-animation-type-swirl .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-blinds .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-wave .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-slide .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-drop-in .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-slide-down .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-flip .elementor-headline-dynamic-wrapper {
   transition: width 0.5s; }
+
+.elementor-headline-animation-type-swirl .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-blinds .elementor-headline-dynamic-wrapper, .elementor-headline-animation-type-wave .elementor-headline-dynamic-wrapper {
+  overflow: hidden; }
 
 .elementor-headline-animation-type-swirl .elementor-headline-dynamic-text, .elementor-headline-animation-type-blinds .elementor-headline-dynamic-text, .elementor-headline-animation-type-wave .elementor-headline-dynamic-text {
   white-space: nowrap; }
@@ -3916,11 +3905,6 @@ ul.elementor-nav-menu--dropdown a, ul.elementor-nav-menu--dropdown a:hover, ul.e
   .elementor-post-navigation .elementor-post-navigation__next a {
     float: right; }
 
-.site-main .elementor-widget-post-navigation {
-  margin: 0; }
-  .site-main .elementor-widget-post-navigation [class*=navigation] {
-    margin: 0; }
-
 .elementor-search-form {
   display: block;
   transition: 0.2s;
@@ -4357,7 +4341,14 @@ a.elementor-item.elementor-gallery-title {
   font-size: 2em; }
 
 .elementor-toc__body {
-  padding: var(--box-padding, 20px); }
+  padding: var(--box-padding, 20px);
+  max-height: var(--toc-body-max-height);
+  overflow-y: auto; }
+  .elementor-toc__body::-webkit-scrollbar {
+    width: 7px; }
+  .elementor-toc__body::-webkit-scrollbar-thumb {
+    background-color: #c2cbd2;
+    border-radius: 10px; }
 
 .elementor-toc__list-wrapper {
   list-style: none;

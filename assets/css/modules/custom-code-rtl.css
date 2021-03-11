@@ -1,3 +1,9 @@
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
 .wrap.elementor-admin-page-license form.elementor-license-box {
   max-width: 600px;
   background: white;
@@ -477,14 +483,6 @@ span.font-variations-count {
 .eps-theme-dark {
   --color-box-shadow-color: rgba(0, 0, 0, 0.1); }
 
-@keyframes eps-animation-pop {
-  from {
-    transform: scale(0.75);
-    opacity: 0; }
-  to {
-    transform: scale(1);
-    opacity: 1; } }
-
 .eps-grid {
   --grid-spacing-gutters: calc(2 * var(--grid-spacing-gutter));
   --grid-spacing-width: calc(100% + var(--grid-spacing-gutters)); }
@@ -863,7 +861,7 @@ span.font-variations-count {
   max-width: 43.75rem;
   background: var(--eps-modal-background-color);
   border-radius: 0.1875rem;
-  animation: eps-animation-pop 0.15s cubic-bezier(0.57, 0.53, 0.71, 1.47) forwards;
+  animation: fade-in 0.4s ease-in both;
   overflow: hidden; }
   .eps-modal__overlay {
     background: rgba(0, 0, 0, 0.5);
@@ -1084,7 +1082,8 @@ span.font-variations-count {
 .e-site-editor-conditions__add-button {
   margin-top: 2.75rem;
   background-color: var(--e-site-editor-add-button-background-color);
-  color: #fff; }
+  color: #fff;
+  text-transform: uppercase; }
   .e-site-editor-conditions__add-button:hover {
     background-color: var(--e-site-editor-add-button-color-hover-background-color);
     color: #fff; }
@@ -1172,83 +1171,150 @@ span.font-variations-count {
   background-color: transparent;
   color: var(--e-site-editor-input-select2-search-field-color); }
 
-.eps-modal__overlay, .select2-container {
-  z-index: 99999 !important; }
+.misc-pub-visibility {
+  display: none; }
 
-.post-conditions .eps-grid-container {
-  width: auto; }
+.eps-modal__overlay {
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  /* After '#adminmenuwrap' */ }
 
-.post-conditions .eps-modal {
-  background: #f1f3f5;
-  max-width: 100%;
-  width: 65%; }
-  .post-conditions .eps-modal .title {
-    text-transform: uppercase; }
-  .post-conditions .eps-modal .e-site-editor-conditions__rows {
-    overflow-y: scroll;
-    max-height: 45vh; }
-  .post-conditions .eps-modal .e-site-editor-conditions__footer {
-    /* Scroll get too long */
-    z-index: 1000; }
+.select2-container {
+  z-index: 9999;
+  /* After 'eps-modal__overlay'. */ }
 
-.post-conditions .eps-modal__header {
-  background: #ffffff;
-  color: #556068;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); }
-
-.post-conditions .e-site-editor-conditions__footer {
-  background: #ffffff;
-  border-top: 1px solid #d5dadf; }
-
-.post-conditions .eps-button--underlined {
-  /* No variable was used since this color comes from wordpress */
-  color: #0073aa; }
+.post-conditions-display {
+  margin: 0 2px; }
 
 .post-conditions .spinner {
   margin: 0 10px;
   float: none;
   visibility: visible; }
 
-.post-conditions .post-conditions-display {
-  margin: 0 2px; }
+.post-conditions .eps-button--underlined {
+  /* No variable was used since this color comes from wordpress */
+  color: #0073aa; }
 
-.post-conditions .eps-app__logo {
-  width: 1.75rem;
-  height: 1.75rem;
-  line-height: 1.75rem;
-  text-align: center;
-  font-size: calc(0.4 * 1.75rem);
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  color: #ffffff;
-  background-color: #93003F; }
+.post-conditions .eps-modal {
+  position: relative;
+  background: #f1f3f5;
+  max-width: 1200px;
+  max-height: 800px;
+  width: 90%;
+  height: 90%;
+  min-height: 800px;
+  min-width: 860px; }
+  .post-conditions .eps-modal .eps-h1 {
+    font-size: 30px;
+    font-weight: 300; }
+  .post-conditions .eps-modal .eps-text {
+    font-size: 18px;
+    line-height: 150%;
+    margin: 1em 0;
+    color: #a4afb7; }
+  .post-conditions .eps-modal .eps-grid-container {
+    width: auto; }
+  .post-conditions .eps-modal__header {
+    background: #ffffff;
+    color: #556068;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    padding: 2px 15px; }
+    .post-conditions .eps-modal__header .eps-app__logo {
+      width: 1.75rem;
+      height: 1.75rem;
+      line-height: 1.75rem;
+      text-align: center;
+      font-size: calc(0.4 * 1.75rem);
+      border-radius: 50%;
+      color: #ffffff;
+      background-color: #93003F; }
+    .post-conditions .eps-modal__header .eps-text {
+      /* Didn't find better solution */
+      position: relative;
+      top: 2px;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #6d7882; }
+    .post-conditions .eps-modal__header .eps-button {
+      font-size: 18px; }
+  .post-conditions .eps-modal .e-site-editor-conditions__header {
+    padding-top: 60px; }
+  .post-conditions .eps-modal .e-site-editor-conditions__rows {
+    overflow-y: auto;
+    max-height: 27vh;
+    margin: 0 auto; }
+    .post-conditions .eps-modal .e-site-editor-conditions__rows:empty {
+      margin-bottom: 30px; }
+    .post-conditions .eps-modal .e-site-editor-conditions__rows:not(:empty) {
+      margin-bottom: 20px; }
+    .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row {
+      margin-top: 15px; }
+      .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls {
+        border-radius: 0; }
+        .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select {
+          text-transform: none; }
+          .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select:focus {
+            box-shadow: none;
+            border: none;
+            color: inherit; }
+          .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select:hover {
+            color: inherit; }
+        .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls .e-site-editor-conditions__input-wrapper--condition-type select:hover, .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls .e-site-editor-conditions__input-wrapper--condition-type select:focus {
+          color: #ffffff; }
+  .post-conditions .eps-modal .e-site-editor-conditions__add-button {
+    margin-top: 0; }
+  .post-conditions .eps-modal .e-site-editor-conditions__footer {
+    z-index: 1000;
+    border-top: 1px solid #d5dadf; }
+
+#elementor-custom-code.postbox {
+  border: 0; }
+
+#elementor-custom-code .postbox-header {
+  display: none; }
 
 #elementor-custom-code .inside {
   padding: 0; }
   #elementor-custom-code .inside .elementor-custom-code-meta-box {
     margin: 0; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-custom-code-panel-placement {
-      padding: 0 15px; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel div {
-      display: flex; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field i {
-      color: #c2cbd2;
-      margin-left: 5px;
-      font-size: 15px; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field select {
-      height: 20px;
-      margin-top: 7px; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field.priority {
-      margin-right: auto; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label {
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 16px;
-      color: #6d7882;
-      margin-left: 20px; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-codemirror .CodeMirror.CodeMirror-wrap {
-      height: 100%; }
-    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-codemirror .CodeMirror-sizer {
-      min-height: 500px !important; }
+    #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel {
+      border: 1px solid #eceeef;
+      border-bottom: 1px solid #ccd0d4;
+      background: #ffffff; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-custom-code-panel-placement {
+        padding: 5px 40px;
+        margin: 10px 0; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel div {
+        display: flex; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field i {
+        color: #c2cbd2;
+        font-size: 15px; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field select {
+        height: 20px;
+        margin-top: 7px; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field.priority {
+        margin-right: auto; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #6d7882; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label:nth-child(even) {
+        margin-left: 20px; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label:nth-child(odd) {
+        margin-left: 5px; }
+  #elementor-custom-code .inside .elementor-custom-code-codemirror-holder {
+    border: 1px solid #eceeef;
+    background: #f7f7f7;
+    padding: 40px; }
+    #elementor-custom-code .inside .elementor-custom-code-codemirror-holder .elementor-field-label {
+      margin: 0; }
+    #elementor-custom-code .inside .elementor-custom-code-codemirror-holder .elementor-custom-code-codemirror {
+      border: 1px solid #ccd0d4; }
+      #elementor-custom-code .inside .elementor-custom-code-codemirror-holder .elementor-custom-code-codemirror .CodeMirror.CodeMirror-wrap {
+        height: 100%; }
+      #elementor-custom-code .inside .elementor-custom-code-codemirror-holder .elementor-custom-code-codemirror .CodeMirror-sizer {
+        min-height: 300px !important; }
 
 /*# sourceMappingURL=custom-code-rtl.css.map */

@@ -25,8 +25,8 @@ abstract class Header_Footer_Base extends Theme_Section_Document {
 		return $categories + parent::get_editor_panel_categories();
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		Post::register_style_controls( $this );
 

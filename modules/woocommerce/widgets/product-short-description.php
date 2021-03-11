@@ -26,7 +26,7 @@ class Product_Short_Description extends Base_Widget {
 		return [ 'woocommerce', 'shop', 'store', 'text', 'description', 'product' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_description_style',

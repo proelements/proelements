@@ -40,7 +40,7 @@ class Post_Custom_Field extends Tag {
 		return true;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'key',
 			[

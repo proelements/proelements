@@ -53,8 +53,8 @@ class Pods_Date extends Pods_Base {
 		return 'key';
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->add_control(
 			'format',

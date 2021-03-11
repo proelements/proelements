@@ -27,7 +27,7 @@ class Product_Data_Tabs extends Base_Widget {
 		return [ 'woocommerce', 'shop', 'store', 'data', 'product', 'tabs' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_tabs_style',

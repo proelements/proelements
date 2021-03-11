@@ -31,7 +31,7 @@ class Product_Stock extends Base_Tag {
 		echo $value;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'show_text',
 			[

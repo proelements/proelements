@@ -9,6 +9,9 @@ export class ConditionsConfig {
 		this.config = config;
 	}
 
+	/**
+	 * @returns {Promise<ConditionsConfig>}
+	 */
 	static create() {
 		if ( ConditionsConfig.instance ) {
 			return Promise.resolve( ConditionsConfig.instance );

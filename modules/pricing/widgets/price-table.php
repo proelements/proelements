@@ -33,7 +33,7 @@ class Price_Table extends Base_Widget {
 		return [ 'pricing', 'table', 'product', 'image', 'plan', 'button' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_header',
 			[
@@ -47,6 +47,9 @@ class Price_Table extends Base_Widget {
 				'label' => __( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => __( 'Enter your title', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -56,6 +59,9 @@ class Price_Table extends Base_Widget {
 				'label' => __( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => __( 'Enter your description', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -269,6 +275,9 @@ class Price_Table extends Base_Widget {
 				'label' => __( 'Button Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => __( 'Click Here', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -294,6 +303,9 @@ class Price_Table extends Base_Widget {
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => __( 'This is text element', 'elementor-pro' ),
 				'rows' => 3,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -324,6 +336,9 @@ class Price_Table extends Base_Widget {
 				'default' => __( 'Popular', 'elementor-pro' ),
 				'condition' => [
 					'show_ribbon' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);

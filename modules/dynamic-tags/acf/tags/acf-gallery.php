@@ -53,7 +53,7 @@ class ACF_Gallery extends Data_Tag {
 		return $images;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		Module::add_key_control( $this );
 	}
 

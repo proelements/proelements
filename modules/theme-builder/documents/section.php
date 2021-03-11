@@ -27,8 +27,8 @@ class Section extends Theme_Section_Document {
 		return $properties;
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		Module::instance()->get_locations_manager()->register_locations();
 

@@ -154,8 +154,8 @@ class Product extends Single_Base {
 		return $categories;
 	}
 
-	protected function _register_controls() {
-		parent::_register_controls();
+	protected function register_controls() {
+		parent::register_controls();
 
 		$this->update_control(
 			'preview_type',
