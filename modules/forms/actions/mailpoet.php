@@ -64,13 +64,9 @@ class Mailpoet extends Integration_Base {
 	public function run( $record, $ajax_handler ) {
 		$subscriber = $this->map_fields( $record );
 
-		try {
-			/** @var \WYSIJA_help_user $helper_user */
-			$helper_user = \WYSIJA::get( 'user', 'helper' );
-			$helper_user->addSubscriber( $subscriber );
-		} catch ( \Exception $exception ) {
-			$ajax_handler->add_admin_error_message( 'MailPoet ' . $exception->getMessage() );
-		}
+		/** @var \WYSIJA_help_user $helper_user */
+		$helper_user = \WYSIJA::get( 'user', 'helper' );
+		$helper_user->addSubscriber( $subscriber );
 	}
 
 	/**

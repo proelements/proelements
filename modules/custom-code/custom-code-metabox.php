@@ -304,6 +304,10 @@ class Custom_Code_Metabox extends Assets_Base {
 					$post_meta = wp_kses_post( $post_meta );
 				}
 				update_post_meta( $post->ID, "_elementor_$field", $post_meta );
+
+				/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder */
+				$theme_builder = Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+				$theme_builder->get_conditions_manager()->get_cache()->regenerate();
 			}
 		}
 

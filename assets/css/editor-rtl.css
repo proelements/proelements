@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 #elementor-panel-get-pro-elements {
   display: none; }
 
@@ -76,18 +76,16 @@
 #elementor-global-widget-locked-unlink {
   border-top: 1px solid #e6e9ec; }
 
-#elementor-global-templates {
-  padding: 0 5px; }
-  #elementor-global-templates .elementor-element {
-    position: relative; }
-    #elementor-global-templates .elementor-element:before {
-      position: absolute;
-      font-family: eicons;
-      content: '\e91f';
-      top: 5px;
-      left: 5px;
-      color: #fcb92c;
-      font-size: 10px; }
+#elementor-global-templates .elementor-element {
+  position: relative; }
+  #elementor-global-templates .elementor-element:before {
+    position: absolute;
+    font-family: eicons;
+    content: '\e91f';
+    top: 5px;
+    left: 5px;
+    color: #fcb92c;
+    font-size: 10px; }
 
 #elementor-global-widget-loading {
   position: absolute;

@@ -76,16 +76,12 @@ class Mailpoet3 extends Integration_Base {
 			if ( $error_string === $exception->getMessage() ) {
 				$existing_subscriber = true;
 			} else {
-				$ajax_handler->add_admin_error_message( 'MailPoet ' . $exception->getMessage() );
+				throw $exception;
 			}
 		}
 
 		if ( $existing_subscriber ) {
-			try {
-				API::MP( 'v1' )->subscribeToLists( $subscriber['email'], (array) $settings['mailpoet3_lists'] );
-			} catch ( \Exception $exception ) {
-				$ajax_handler->add_admin_error_message( 'MailPoet ' . $exception->getMessage() );
-			}
+			API::MP( 'v1' )->subscribeToLists( $subscriber['email'], (array) $settings['mailpoet3_lists'] );
 		}
 	}
 

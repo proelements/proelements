@@ -6,6 +6,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\QueryControl\Module as Module_Query;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Related;
 use Elementor\Controls_Manager;
@@ -589,7 +590,7 @@ class Portfolio extends Base_Widget {
 			return;
 		}
 
-		$tag = $this->get_settings( 'title_tag' );
+		$tag = Utils::validate_html_tag( $this->get_settings( 'title_tag' ) );
 		?>
 		<<?php echo $tag; ?> class="elementor-portfolio-item__title">
 		<?php the_title(); ?>

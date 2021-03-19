@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -485,7 +486,7 @@ class Animated_Headline extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$tag = $settings['tag'];
+		$tag = Utils::validate_html_tag( $settings['tag'] );
 
 		$this->add_render_attribute( 'headline', 'class', 'elementor-headline' );
 
@@ -546,7 +547,7 @@ class Animated_Headline extends Base_Widget {
 		?>
 		<#
 		var headlineClasses = 'elementor-headline',
-			tag = settings.tag;
+			tag = elementorPro.validateHTMLTag( settings.tag );
 
 		if ( 'rotate' === settings.headline_style ) {
 			headlineClasses += ' elementor-headline-animation-type-' + settings.animation_type;

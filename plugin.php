@@ -199,7 +199,7 @@ class Plugin {
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'elementor-pro-frontend' ),
 			'urls' => [
-				'assets' => ELEMENTOR_PRO_ASSETS_URL,
+				'assets' => apply_filters( 'elementor_pro/frontend/assets_url', ELEMENTOR_PRO_ASSETS_URL ),
 			],
 		];
 

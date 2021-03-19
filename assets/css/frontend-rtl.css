@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 @charset "UTF-8";
 .elementor-bg-transform .elementor-bg {
   will-change: transform; }
@@ -5706,4 +5706,7 @@ ol.elementor-toc__list-wrapper {
   color: var(--caption-color);
   margin-top: var(--caption-margin-top);
   text-align: var(--caption-text-align); }
+
+.elementor-payment-button {
+  border: none; }
 /*# sourceMappingURL=frontend-rtl.css.map */

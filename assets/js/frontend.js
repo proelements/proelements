@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../node_modules/@babel/runtime-corejs2/core-js/object/create.js":
@@ -2466,6 +2466,8 @@ var _frontend2 = _interopRequireDefault(__webpack_require__(/*! ../../../../modu
 
 var _frontend3 = _interopRequireDefault(__webpack_require__(/*! ../../../../modules/code-highlight/assets/js/frontend/frontend */ "../modules/code-highlight/assets/js/frontend/frontend.js"));
 
+var _frontend4 = _interopRequireDefault(__webpack_require__(/*! ../../../../modules/payments/assets/js/frontend/frontend */ "../modules/payments/assets/js/frontend/frontend.js"));
+
 var ElementorProFrontend = /*#__PURE__*/function (_elementorModules$Vie) {
   (0, _inherits2.default)(ElementorProFrontend, _elementorModules$Vie);
 
@@ -2497,7 +2499,8 @@ var ElementorProFrontend = /*#__PURE__*/function (_elementorModules$Vie) {
       var handlers = {
         motionFX: _frontend.default,
         sticky: _frontend2.default,
-        codeHighlight: _frontend3.default
+        codeHighlight: _frontend3.default,
+        payments: _frontend4.default
       }; // Keep this line before applying filter on the handlers.
 
       elementorProFrontend.trigger('elementor-pro/modules/init:before');
@@ -3791,6 +3794,54 @@ var _default = /*#__PURE__*/function (_elementorModules$Vie) {
   }]);
   return _default;
 }(elementorModules.ViewModule);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "../modules/payments/assets/js/frontend/frontend.js":
+/*!**********************************************************!*\
+  !*** ../modules/payments/assets/js/frontend/frontend.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/inherits.js"));
+
+var _createSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createSuper */ "../node_modules/@babel/runtime-corejs2/helpers/createSuper.js"));
+
+var _default = /*#__PURE__*/function (_elementorModules$Mod) {
+  (0, _inherits2.default)(_default, _elementorModules$Mod);
+
+  var _super = (0, _createSuper2.default)(_default);
+
+  function _default() {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, _default);
+    _this = _super.call(this);
+    elementorFrontend.elementsHandler.attachHandler('paypal-button', function () {
+      return __webpack_require__.e(/*! import() | paypal-button */ "paypal-button").then(__webpack_require__.t.bind(__webpack_require__, /*! ./handlers/paypal-button */ "../modules/payments/assets/js/frontend/handlers/paypal-button.js", 23));
+    });
+    return _this;
+  }
+
+  return _default;
+}(elementorModules.Module);
 
 exports.default = _default;
 

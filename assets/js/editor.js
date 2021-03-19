@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -4759,6 +4759,108 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "../modules/forms/assets/js/editor/hooks/data/form-sanitize-id.js":
+/*!************************************************************************!*\
+  !*** ../modules/forms/assets/js/editor/hooks/data/form-sanitize-id.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = exports.FormSanitizeId = void 0;
+
+__webpack_require__(/*! core-js/modules/es6.array.find */ "../node_modules/core-js/modules/es6.array.find.js");
+
+__webpack_require__(/*! core-js/modules/es6.regexp.match */ "../node_modules/core-js/modules/es6.regexp.match.js");
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createClass */ "../node_modules/@babel/runtime-corejs2/helpers/createClass.js"));
+
+var _assertThisInitialized2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/assertThisInitialized */ "../node_modules/@babel/runtime-corejs2/helpers/assertThisInitialized.js"));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/inherits.js"));
+
+var _createSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createSuper */ "../node_modules/@babel/runtime-corejs2/helpers/createSuper.js"));
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/defineProperty */ "../node_modules/@babel/runtime-corejs2/helpers/defineProperty.js"));
+
+var FormSanitizeId = /*#__PURE__*/function (_$e$modules$hookData$) {
+  (0, _inherits2.default)(FormSanitizeId, _$e$modules$hookData$);
+
+  var _super = (0, _createSuper2.default)(FormSanitizeId);
+
+  function FormSanitizeId() {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, FormSanitizeId);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "ID_SANITIZE_FILTER", /[^\w]/g);
+    return _this;
+  }
+
+  (0, _createClass2.default)(FormSanitizeId, [{
+    key: "getCommand",
+    value: function getCommand() {
+      return 'document/elements/settings';
+    }
+  }, {
+    key: "getId",
+    value: function getId() {
+      return 'elementor-pro-forms-sanitize-id';
+    }
+  }, {
+    key: "getContainerType",
+    value: function getContainerType() {
+      return 'widget';
+    }
+  }, {
+    key: "getConditions",
+    value: function getConditions(args) {
+      return undefined !== args.settings.form_id;
+    }
+  }, {
+    key: "apply",
+    value: function apply(args) {
+      var container = args.container,
+          settings = args.settings;
+      var form_id = settings.form_id; // eslint-disable-line camelcase
+      // Re-render with old settings.
+
+      if (form_id.match(this.ID_SANITIZE_FILTER)) {
+        var formIdView = container.panel.getControlView('form_id');
+        formIdView.render();
+        formIdView.$el.find('input').trigger('focus'); // Hook-Break.
+
+        return false;
+      }
+
+      return true;
+    }
+  }]);
+  return FormSanitizeId;
+}($e.modules.hookData.Dependency);
+
+exports.FormSanitizeId = FormSanitizeId;
+var _default = FormSanitizeId;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "../modules/forms/assets/js/editor/hooks/data/index.js":
 /*!*************************************************************!*\
   !*** ../modules/forms/assets/js/editor/hooks/data/index.js ***!
@@ -4795,11 +4897,20 @@ _Object$defineProperty(exports, "FormFieldsAddFirstStep", {
   }
 });
 
+_Object$defineProperty(exports, "FormSanitizeId", {
+  enumerable: true,
+  get: function get() {
+    return _formSanitizeId.FormSanitizeId;
+  }
+});
+
 var _formFieldsSanitizeCustomId = __webpack_require__(/*! ./form-fields-sanitize-custom-id */ "../modules/forms/assets/js/editor/hooks/data/form-fields-sanitize-custom-id.js");
 
 var _formFieldsSetCustomId = __webpack_require__(/*! ./form-fields-set-custom-id */ "../modules/forms/assets/js/editor/hooks/data/form-fields-set-custom-id.js");
 
 var _formFieldsStep = __webpack_require__(/*! ./form-fields-step */ "../modules/forms/assets/js/editor/hooks/data/form-fields-step.js");
+
+var _formSanitizeId = __webpack_require__(/*! ./form-sanitize-id */ "../modules/forms/assets/js/editor/hooks/data/form-sanitize-id.js");
 
 /***/ }),
 
@@ -12337,6 +12448,29 @@ __webpack_require__(/*! ./_fix-re-wks */ "../node_modules/core-js/modules/_fix-r
 
 /***/ }),
 
+/***/ "../node_modules/core-js/modules/es7.array.includes.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/core-js/modules/es7.array.includes.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+// https://github.com/tc39/Array.prototype.includes
+var $export = __webpack_require__(/*! ./_export */ "../node_modules/core-js/modules/_export.js");
+var $includes = __webpack_require__(/*! ./_array-includes */ "../node_modules/core-js/modules/_array-includes.js")(true);
+
+$export($export.P, 'Array', {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+__webpack_require__(/*! ./_add-to-unscopables */ "../node_modules/core-js/modules/_add-to-unscopables.js")('includes');
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/modules/web.dom.iterable.js":
 /*!***********************************************************!*\
   !*** ../node_modules/core-js/modules/web.dom.iterable.js ***!
@@ -12440,6 +12574,8 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
 
+__webpack_require__(/*! core-js/modules/es7.array.includes */ "../node_modules/core-js/modules/es7.array.includes.js");
+
 var _editor = _interopRequireDefault(__webpack_require__(/*! ../../../../modules/custom-css/assets/js/editor/editor */ "../modules/custom-css/assets/js/editor/editor.js"));
 
 var _editor2 = _interopRequireDefault(__webpack_require__(/*! ../../../../modules/motion-fx/assets/js/editor/editor */ "../modules/motion-fx/assets/js/editor/editor.js"));
@@ -12536,6 +12672,11 @@ var ElementorPro = Marionette.Application.extend({
     elementor.notifications.showToast({
       message: elementor.translate('connected_successfully')
     });
+  },
+  // TODO: Move to core
+  validateHTMLTag: function validateHTMLTag(tag) {
+    var validHTMLTags = ['article', 'aside', 'div', 'footer', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'main', 'nav', 'p', 'section', 'span'];
+    return validHTMLTags.includes(tag.toLowerCase()) ? tag : 'div';
   }
 });
 window.elementorPro = new ElementorPro();

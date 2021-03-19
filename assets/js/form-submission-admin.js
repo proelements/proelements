@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -159,6 +159,16 @@ module.exports = __webpack_require__(/*! core-js/library/fn/object/keys */ "../n
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! core-js/library/fn/object/set-prototype-of */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/fn/object/set-prototype-of.js");
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime-corejs2/core-js/object/values.js":
+/*!***********************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/core-js/object/values.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/object/values */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/fn/object/values.js");
 
 /***/ }),
 
@@ -1075,6 +1085,18 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ "../node_modules
 
 __webpack_require__(/*! ../../modules/es6.object.set-prototype-of */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/es6.object.set-prototype-of.js");
 module.exports = __webpack_require__(/*! ../../modules/_core */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/_core.js").Object.setPrototypeOf;
+
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/fn/object/values.js":
+/*!***********************************************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/fn/object/values.js ***!
+  \***********************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+__webpack_require__(/*! ../../modules/es7.object.values */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/es7.object.values.js");
+module.exports = __webpack_require__(/*! ../../modules/_core */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/_core.js").Object.values;
 
 
 /***/ }),
@@ -4430,6 +4452,25 @@ $export($export.S, 'Object', {
 
 /***/ }),
 
+/***/ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/es7.object.values.js":
+/*!********************************************************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/es7.object.values.js ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+// https://github.com/tc39/proposal-object-values-entries
+var $export = __webpack_require__(/*! ./_export */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/_export.js");
+var $values = __webpack_require__(/*! ./_object-to-array */ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/_object-to-array.js")(false);
+
+$export($export.S, 'Object', {
+  values: function values(it) {
+    return $values(it);
+  }
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/es7.promise.finally.js":
 /*!**********************************************************************************************************!*\
   !*** ../node_modules/@babel/runtime-corejs2/node_modules/core-js/library/modules/es7.promise.finally.js ***!
@@ -5826,6 +5867,8 @@ var _router = __webpack_require__(/*! @reach/router */ "../node_modules/@reach/r
 
 var _noticesContext = __webpack_require__(/*! ./context/notices-context */ "../modules/forms/submissions/assets/js/admin/context/notices-context.js");
 
+var _settingsContext = __webpack_require__(/*! ./context/settings-context */ "../modules/forms/submissions/assets/js/admin/context/settings-context.js");
+
 var _notices = _interopRequireDefault(__webpack_require__(/*! ./components/notices */ "../modules/forms/submissions/assets/js/admin/components/notices.js"));
 
 var _item = _interopRequireDefault(__webpack_require__(/*! ./pages/item */ "../modules/forms/submissions/assets/js/admin/pages/item.js"));
@@ -5842,13 +5885,15 @@ function App() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "wrap",
     id: "elementor-form-submissions"
-  }, /*#__PURE__*/_react.default.createElement(_pageTitle.default, null, __('Submissions', 'elementor-pro')), /*#__PURE__*/_react.default.createElement(_noticesContext.NoticesProvider, null, /*#__PURE__*/_react.default.createElement(_notices.default, null), /*#__PURE__*/_react.default.createElement(_router.LocationProvider, {
+  }, /*#__PURE__*/_react.default.createElement(_pageTitle.default, null, __('Submissions', 'elementor-pro')), /*#__PURE__*/_react.default.createElement(_settingsContext.SettingsProvider, {
+    value: window.elementorSubmissionsConfig
+  }, /*#__PURE__*/_react.default.createElement(_noticesContext.NoticesProvider, null, /*#__PURE__*/_react.default.createElement(_notices.default, null), /*#__PURE__*/_react.default.createElement(_router.LocationProvider, {
     history: history
   }, /*#__PURE__*/_react.default.createElement(_router.Router, null, /*#__PURE__*/_react.default.createElement(_pages.default, {
     path: "/"
   }), /*#__PURE__*/_react.default.createElement(_item.default, {
     path: "/:id"
-  })))));
+  }))))));
 }
 
 /***/ }),
@@ -6259,12 +6304,22 @@ exports.default = ExportButton;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/defineProperty */ "../node_modules/@babel/runtime-corejs2/helpers/defineProperty.js"));
+
+var _useExport = __webpack_require__(/*! modules/forms/submissions/assets/js/admin/hooks/use-export */ "../modules/forms/submissions/assets/js/admin/hooks/use-export.js");
+
+var _buttonContentOptions;
+
 var _React = _react.default,
     useMemo = _React.useMemo;
+var buttonContentOptions = (_buttonContentOptions = {}, (0, _defineProperty2.default)(_buttonContentOptions, _useExport.EXPORT_MODE_ALL, __('Export All to CSV', 'elementor-pro')), (0, _defineProperty2.default)(_buttonContentOptions, _useExport.EXPORT_MODE_FILTERED, __('Export Filtered to CSV', 'elementor-pro')), (0, _defineProperty2.default)(_buttonContentOptions, _useExport.EXPORT_MODE_SELECTED, __('Export Selected to CSV', 'elementor-pro')), _buttonContentOptions);
 
 function ExportButton(props) {
-  var buttonContent;
   var ProgressPercentage = useMemo(function () {
+    if (!props.progress) {
+      return 0;
+    }
+
     var _props$progress = props.progress,
         count = _props$progress.count,
         success = _props$progress.success;
@@ -6275,28 +6330,21 @@ function ExportButton(props) {
 
     return Math.round(success / count * 100);
   }, [props.progress]);
-
-  if (props.isLoading) {
-    buttonContent = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("i", {
-      className: "eicon-loading eicon-animation-spin"
-    }), " \xA0", /*#__PURE__*/_react.default.createElement("span", null, " ", ProgressPercentage, "% "), " \xA0", __('Click to Cancel', 'elementor-pro'));
-  } else {
-    buttonContent = props.hasSelected ? __('Export Selected to CSV', 'elementor-pro') : __('Export Filtered to CSV', 'elementor-pro');
-  }
-
   return /*#__PURE__*/_react.default.createElement("button", {
     className: "button button-primary e-export-button",
     onClick: function onClick() {
       return !props.disabled && props.onClick();
     },
     disabled: props.disabled
-  }, buttonContent);
+  }, props.isLoading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("i", {
+    className: "eicon-loading eicon-animation-spin"
+  }), " \xA0", /*#__PURE__*/_react.default.createElement("span", null, " ", ProgressPercentage, "% "), " \xA0", __('Click to Cancel', 'elementor-pro')) : buttonContentOptions[props.mode]);
 }
 
 ExportButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  hasSelected: PropTypes.bool,
+  mode: PropTypes.oneOf([_useExport.EXPORT_MODE_ALL, _useExport.EXPORT_MODE_SELECTED, _useExport.EXPORT_MODE_FILTERED]),
   disabled: PropTypes.bool,
   progress: PropTypes.shape({
     count: PropTypes.number,
@@ -6340,6 +6388,8 @@ var _postBox = _interopRequireDefault(__webpack_require__(/*! ./post-box */ "../
 
 var _date = __webpack_require__(/*! ../utils/date */ "../modules/forms/submissions/assets/js/admin/utils/date.js");
 
+var _noticeMessages = _interopRequireDefault(__webpack_require__(/*! ../notice-messages */ "../modules/forms/submissions/assets/js/admin/notice-messages.js"));
+
 function FormActionsLog(props) {
   return /*#__PURE__*/_react.default.createElement(_postBox.default, {
     header: /*#__PURE__*/_react.default.createElement("h2", null, __('Actions Log', 'elementor-pro'))
@@ -6359,9 +6409,9 @@ function FormActionsLog(props) {
       className: "".concat('success' === actionLog.status ? 'eicon-success eicon-check-circle-o' : 'eicon-error eicon-warning', " e-form-submissions-action-log__icon")
     }), /*#__PURE__*/_react.default.createElement("span", {
       className: "e-form-submissions-action-log__date"
-    }, " ", (0, _date.formatToLocalDateTime)(actionLog.created_at), " ")), actionLog.log && /*#__PURE__*/_react.default.createElement("p", {
+    }, " ", (0, _date.formatToLocalDateTime)(actionLog.created_at), " ")), /*#__PURE__*/_react.default.createElement("p", {
       className: "e-form-submissions-action-log__message"
-    }, actionLog.log));
+    }, actionLog.log || _noticeMessages.default.actionLogs[actionLog.status]()));
   }));
 }
 
@@ -6399,8 +6449,12 @@ exports.default = LinksFilter;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 
+var _React = _react.default,
+    useCallback = _React.useCallback,
+    useMemo = _React.useMemo;
+
 function LinksFilter(props) {
-  var onChange = _react.default.useCallback(function (e, value) {
+  var onChange = useCallback(function (e, value) {
     e.preventDefault();
 
     if (!props.onChange) {
@@ -6409,11 +6463,15 @@ function LinksFilter(props) {
 
     props.onChange(value);
   }, []);
-
+  var options = useMemo(function () {
+    return props.options.filter(function (option) {
+      return option.shouldShow;
+    });
+  }, [props.options]);
   return /*#__PURE__*/_react.default.createElement("ul", {
     className: "subsubsub"
-  }, props.options.map(function (option, index) {
-    var isLast = index + 1 === props.options.length;
+  }, options.map(function (option, index) {
+    var isLast = index + 1 === options.length;
     return /*#__PURE__*/_react.default.createElement("li", {
       key: option.value
     }, "\xA0", /*#__PURE__*/_react.default.createElement("a", {
@@ -6422,14 +6480,19 @@ function LinksFilter(props) {
       onClick: function onClick(e) {
         return onChange(e, option.value);
       }
-    }, option.label, option.count && /*#__PURE__*/_react.default.createElement("span", {
+    }, option.label, undefined !== option.count && /*#__PURE__*/_react.default.createElement("span", {
       className: "count"
     }, " (", option.count, ")")), "\xA0", isLast ? '' : '|');
   }));
 }
 
 LinksFilter.propTypes = {
-  options: PropTypes.array,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+    count: PropTypes.number,
+    shouldShow: PropTypes.bool
+  })),
   value: PropTypes.string,
   onChange: PropTypes.func
 };
@@ -6723,6 +6786,146 @@ PostBox.propTypes = {
 
 /***/ }),
 
+/***/ "../modules/forms/submissions/assets/js/admin/components/referer-filter.js":
+/*!*********************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/referer-filter.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = RefererFilter;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/toConsumableArray */ "../node_modules/@babel/runtime-corejs2/helpers/toConsumableArray.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+__webpack_require__(/*! core-js/modules/es6.regexp.search */ "../node_modules/core-js/modules/es6.regexp.search.js");
+
+var _React = _react.default,
+    useEffect = _React.useEffect,
+    useRef = _React.useRef,
+    useState = _React.useState;
+
+function renderSelect2(el, onChange) {
+  jQuery(el).select2({
+    allowClear: true,
+    placeholder: __('All Pages', 'elementor-pro'),
+    dir: elementorCommon.config.isRTL ? 'rtl' : 'ltr',
+    ajax: {
+      delay: 400,
+      transport: function transport(_ref, success, failure) {
+        var search = _ref.data.search;
+        return $e.data.get('form-submissions/referer', {
+          search: search
+        }, {
+          refresh: true
+        }).then(success).catch(failure);
+      },
+      data: function data(params) {
+        return {
+          search: params.term
+        };
+      },
+      processResults: function processResults(_ref2) {
+        var data = _ref2.data;
+        return {
+          results: data.data.map(function (_ref3) {
+            var value = _ref3.value,
+                label = _ref3.label;
+            return {
+              id: encodeURIComponent(value),
+              text: label
+            };
+          })
+        };
+      },
+      cache: true
+    },
+    minimumInputLength: 3
+  }).on('select2:select select2:unselect', function (e) {
+    onChange(e.target.value);
+  });
+}
+
+function RefererFilter(props) {
+  var _useState = useState([{
+    value: '',
+    label: __('All Pages', 'elementor-pro')
+  }]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      options = _useState2[0],
+      setOptions = _useState2[1];
+
+  var ref = useRef();
+  useEffect(function () {
+    var $select2 = null;
+
+    if (props.value) {
+      $e.data.get('form-submissions/referer', {
+        value: props.value
+      }, {
+        refresh: true
+      }).then(function (_ref4) {
+        var data = _ref4.data;
+        return setOptions(function (prev) {
+          return [].concat((0, _toConsumableArray2.default)(prev), (0, _toConsumableArray2.default)(data.data));
+        });
+      }).then(function () {
+        return $select2 = renderSelect2(ref.current, props.onChange);
+      });
+    } else {
+      $select2 = renderSelect2(ref.current, props.onChange);
+    }
+
+    return function () {
+      if (!$select2) {
+        return;
+      }
+
+      $select2.select2('destroy').off('select2:select select2:unselect');
+    };
+  }, []);
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "filter-by-referer",
+    className: "screen-reader-text"
+  }, __('Filter by Page', 'elementor-pro')), /*#__PURE__*/_react.default.createElement("select", {
+    ref: ref,
+    id: "filter-by-referer",
+    value: props.value
+  }, options.map(function (_ref5) {
+    var value = _ref5.value,
+        label = _ref5.label;
+    return /*#__PURE__*/_react.default.createElement("option", {
+      key: value,
+      value: encodeURIComponent(value)
+    }, " ", label, " ");
+  })));
+}
+
+RefererFilter.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired
+};
+RefererFilter.defaultProps = {
+  value: ''
+};
+
+/***/ }),
+
 /***/ "../modules/forms/submissions/assets/js/admin/components/resource-filter.js":
 /*!**********************************************************************************!*\
   !*** ../modules/forms/submissions/assets/js/admin/components/resource-filter.js ***!
@@ -6984,8 +7187,11 @@ function SubmissionRow(props) {
   }, /*#__PURE__*/_react.default.createElement("a", {
     href: props.item.referer,
     target: "_blank",
-    rel: "noreferrer"
-  }, __('Link to page', 'elementor-pro'))), /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, {
+    rel: "noreferrer",
+    title: props.item.referer_title
+  }, props.item.referer_title || /*#__PURE__*/_react.default.createElement("i", {
+    className: "eicon-editor-external-link e-form-submissions-referer-icon"
+  }))), /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, {
     className: "column-id",
     colName: props.tableTitles.id.label
   }, props.item.id), /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, {
@@ -7003,6 +7209,760 @@ SubmissionRow.propTypes = {
   rowActionComponent: PropTypes.node,
   checkBoxComponent: PropTypes.node
 };
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/acceptance.js":
+/*!**********************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/acceptance.js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Acceptance;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _React = _react.default,
+    useState = _React.useState;
+
+function Acceptance(props) {
+  var _useState = useState(props.value),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      localValue = _useState2[0],
+      setLocalValue = _useState2[1];
+
+  return /*#__PURE__*/_react.default.createElement("label", {
+    className: "e-form-submissions-value-label"
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    type: "checkbox",
+    value: "on",
+    checked: props.isEditMode ? 'on' === localValue : 'on' === props.value,
+    onChange: function onChange(e) {
+      var value = e.target.checked ? 'on' : '';
+      setLocalValue(value);
+      props.onChange(value);
+    },
+    disabled: !props.isEditMode
+  }));
+}
+
+Acceptance.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/checkbox.js":
+/*!********************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/checkbox.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Checkbox;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/toConsumableArray */ "../node_modules/@babel/runtime-corejs2/helpers/toConsumableArray.js"));
+
+__webpack_require__(/*! core-js/modules/es7.array.includes */ "../node_modules/core-js/modules/es7.array.includes.js");
+
+__webpack_require__(/*! core-js/modules/es6.string.includes */ "../node_modules/core-js/modules/es6.string.includes.js");
+
+__webpack_require__(/*! core-js/modules/es6.regexp.split */ "../node_modules/core-js/modules/es6.regexp.split.js");
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _useWatch = _interopRequireDefault(__webpack_require__(/*! ../../hooks/use-watch */ "../modules/forms/submissions/assets/js/admin/hooks/use-watch.js"));
+
+var _React = _react.default,
+    useState = _React.useState,
+    useMemo = _React.useMemo;
+
+function Checkbox(props) {
+  var value = useMemo(function () {
+    return props.value.split(', ');
+  }, [props.value]),
+      _useState = useState(value),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      localValue = _useState2[0],
+      setLocalValue = _useState2[1];
+
+  (0, _useWatch.default)(function () {
+    return props.onChange(localValue.join(', '));
+  }, [localValue]);
+  return props.field.options.map(function (option) {
+    return /*#__PURE__*/_react.default.createElement("label", {
+      className: "e-form-submissions-value-label",
+      key: option
+    }, /*#__PURE__*/_react.default.createElement("input", {
+      key: option,
+      type: "checkbox",
+      value: option,
+      checked: props.isEditMode ? localValue.includes(option) : value.includes(option),
+      onChange: function onChange(e) {
+        var checked = e.target.checked;
+        setLocalValue(function (prev) {
+          if (!checked) {
+            prev = prev.filter(function (item) {
+              return item !== option;
+            });
+          } else {
+            prev = [].concat((0, _toConsumableArray2.default)(prev), [option]);
+          }
+
+          return prev;
+        });
+      },
+      disabled: !props.isEditMode
+    }), option);
+  });
+}
+
+Checkbox.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/date.js":
+/*!****************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/date.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Date;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _text = _interopRequireDefault(__webpack_require__(/*! ./text */ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js"));
+
+var _date = __webpack_require__(/*! ../../utils/date */ "../modules/forms/submissions/assets/js/admin/utils/date.js");
+
+function Date(props) {
+  return /*#__PURE__*/_react.default.createElement(_text.default, {
+    value: props.value,
+    isEditMode: props.isEditMode,
+    onChange: props.onChange,
+    field: props.field
+  }, props.value && (0, _date.formatToLocalDate)(props.value));
+}
+
+Date.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/email.js":
+/*!*****************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/email.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Email;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _text = _interopRequireDefault(__webpack_require__(/*! ./text */ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js"));
+
+function Email(props) {
+  return /*#__PURE__*/_react.default.createElement(_text.default, {
+    value: props.value,
+    isEditMode: props.isEditMode,
+    onChange: props.onChange,
+    field: props.field
+  }, props.value && /*#__PURE__*/_react.default.createElement("a", {
+    href: "mailto:".concat(props.value)
+  }, props.value));
+}
+
+Email.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js":
+/*!*****************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/index.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = SubmissionValue;
+exports.basePropTypes = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/defineProperty */ "../node_modules/@babel/runtime-corejs2/helpers/defineProperty.js"));
+
+var _objectSpread3 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _entries = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/entries */ "../node_modules/@babel/runtime-corejs2/core-js/object/entries.js"));
+
+var _text = _interopRequireDefault(__webpack_require__(/*! ./text */ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js"));
+
+var _email = _interopRequireDefault(__webpack_require__(/*! ./email */ "../modules/forms/submissions/assets/js/admin/components/submission-value/email.js"));
+
+var _tel = _interopRequireDefault(__webpack_require__(/*! ./tel */ "../modules/forms/submissions/assets/js/admin/components/submission-value/tel.js"));
+
+var _url = _interopRequireDefault(__webpack_require__(/*! ./url */ "../modules/forms/submissions/assets/js/admin/components/submission-value/url.js"));
+
+var _radio = _interopRequireDefault(__webpack_require__(/*! ./radio */ "../modules/forms/submissions/assets/js/admin/components/submission-value/radio.js"));
+
+var _select = _interopRequireDefault(__webpack_require__(/*! ./select */ "../modules/forms/submissions/assets/js/admin/components/submission-value/select.js"));
+
+var _checkbox = _interopRequireDefault(__webpack_require__(/*! ./checkbox */ "../modules/forms/submissions/assets/js/admin/components/submission-value/checkbox.js"));
+
+var _acceptance = _interopRequireDefault(__webpack_require__(/*! ./acceptance */ "../modules/forms/submissions/assets/js/admin/components/submission-value/acceptance.js"));
+
+var _upload = _interopRequireDefault(__webpack_require__(/*! ./upload */ "../modules/forms/submissions/assets/js/admin/components/submission-value/upload.js"));
+
+var _date = _interopRequireDefault(__webpack_require__(/*! ./date */ "../modules/forms/submissions/assets/js/admin/components/submission-value/date.js"));
+
+var _time = _interopRequireDefault(__webpack_require__(/*! ./time */ "../modules/forms/submissions/assets/js/admin/components/submission-value/time.js"));
+
+var _textarea = _interopRequireDefault(__webpack_require__(/*! ./textarea */ "../modules/forms/submissions/assets/js/admin/components/submission-value/textarea.js"));
+
+var _React = _react.default,
+    useMemo = _React.useMemo;
+var defaultComponent = _text.default;
+var components = (0, _entries.default)({
+  Email: _email.default,
+  Tel: _tel.default,
+  Url: _url.default,
+  Radio: _radio.default,
+  Select: _select.default,
+  Checkbox: _checkbox.default,
+  Acceptance: _acceptance.default,
+  Upload: _upload.default,
+  Date: _date.default,
+  Time: _time.default,
+  Textarea: _textarea.default,
+  Text: _text.default
+}).reduce(function (current, _ref) {
+  var _ref2 = (0, _slicedToArray2.default)(_ref, 2),
+      key = _ref2[0],
+      component = _ref2[1];
+
+  return (0, _objectSpread3.default)((0, _objectSpread3.default)({}, current), {}, (0, _defineProperty2.default)({}, key.toLowerCase(), component));
+}, {});
+var basePropTypes = {
+  value: PropTypes.string,
+  isEditMode: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  field: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    options: PropTypes.arrayOf(PropTypes.string),
+    is_multiple: PropTypes.bool
+  })
+};
+exports.basePropTypes = basePropTypes;
+
+function SubmissionValue(props) {
+  var Component = useMemo(function () {
+    var _props$field;
+
+    var key = (_props$field = props.field) === null || _props$field === void 0 ? void 0 : _props$field.type;
+    return components.hasOwnProperty(key) ? components[key] : defaultComponent;
+  }, [props.field, props.value]);
+  return /*#__PURE__*/_react.default.createElement(Component, {
+    value: props.value,
+    field: props.field,
+    isEditMode: props.isEditMode,
+    onChange: function onChange(value) {
+      return props.onChange(props.field.id, value);
+    }
+  });
+}
+
+SubmissionValue.propTypes = (0, _objectSpread3.default)({}, basePropTypes);
+SubmissionValue.defaultProps = {
+  isEditMode: false
+};
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/radio.js":
+/*!*****************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/radio.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Radio;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _React = _react.default,
+    useState = _React.useState;
+
+function Radio(props) {
+  var _useState = useState(props.value),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      localValue = _useState2[0],
+      setLocalValue = _useState2[1];
+
+  return props.field.options.map(function (option) {
+    return /*#__PURE__*/_react.default.createElement("label", {
+      className: "e-form-submissions-value-label",
+      key: option
+    }, /*#__PURE__*/_react.default.createElement("input", {
+      type: "radio",
+      value: option,
+      checked: props.isEditMode ? option === localValue : option === props.value,
+      onChange: function onChange() {
+        setLocalValue(option);
+        props.onChange(option);
+      },
+      disabled: !props.isEditMode
+    }), option);
+  });
+}
+
+Radio.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/select.js":
+/*!******************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/select.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Select;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _from = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/array/from */ "../node_modules/@babel/runtime-corejs2/core-js/array/from.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+__webpack_require__(/*! core-js/modules/es6.regexp.split */ "../node_modules/core-js/modules/es6.regexp.split.js");
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _React = _react.default,
+    useState = _React.useState;
+
+function Select(props) {
+  var value = props.field.is_multiple ? props.value.split(', ') : props.value;
+
+  var _useState = useState(value),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      localValue = _useState2[0],
+      setLocalValue = _useState2[1];
+
+  return /*#__PURE__*/_react.default.createElement("select", {
+    value: props.isEditMode ? localValue : value,
+    multiple: props.field.is_multiple,
+    onChange: function onChange(e) {
+      var selectedValues = (0, _from.default)(e.target.selectedOptions, function (option) {
+        return option.value;
+      });
+      setLocalValue(props.field.is_multiple ? selectedValues : selectedValues[0]);
+      props.onChange(selectedValues.join(', '));
+    },
+    disabled: !props.isEditMode
+  }, props.field.options.map(function (option) {
+    return /*#__PURE__*/_react.default.createElement("option", {
+      value: option,
+      key: option
+    }, option);
+  }));
+}
+
+Select.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/tel.js":
+/*!***************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/tel.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Tel;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _text = _interopRequireDefault(__webpack_require__(/*! ./text */ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js"));
+
+function Tel(props) {
+  return /*#__PURE__*/_react.default.createElement(_text.default, {
+    value: props.value,
+    isEditMode: props.isEditMode,
+    onChange: props.onChange,
+    field: props.field
+  }, props.value && /*#__PURE__*/_react.default.createElement("a", {
+    href: "tel:".concat(props.value)
+  }, props.value));
+}
+
+Tel.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js":
+/*!****************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/text.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Text;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _React = _react.default,
+    useState = _React.useState,
+    useMemo = _React.useMemo;
+var availableInputTypes = {
+  email: 'email',
+  date: 'date',
+  time: 'time',
+  tel: 'tel',
+  url: 'url',
+  number: 'number',
+  text: 'text'
+};
+var defaultInputType = availableInputTypes.text;
+
+function Text(props) {
+  var _useState = useState(props.value),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      localValue = _useState2[0],
+      setLocalValue = _useState2[1];
+
+  var inputType = useMemo(function () {
+    var _props$field;
+
+    return availableInputTypes.hasOwnProperty((_props$field = props.field) === null || _props$field === void 0 ? void 0 : _props$field.type) ? availableInputTypes[props.field.type] : defaultInputType;
+  }, [props.field]);
+  return props.isEditMode ? /*#__PURE__*/_react.default.createElement("input", {
+    type: inputType,
+    value: localValue,
+    onChange: function onChange(_ref) {
+      var value = _ref.target.value;
+      setLocalValue(value);
+      props.onChange(value);
+    }
+  }) : props.children || props.value;
+}
+
+Text.propTypes = (0, _objectSpread2.default)({
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
+}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/textarea.js":
+/*!********************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/textarea.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Textarea;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _React = _react.default,
+    useState = _React.useState;
+
+function Textarea(props) {
+  var _useState = useState(props.value),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      localValue = _useState2[0],
+      setLocalValue = _useState2[1];
+
+  return props.isEditMode ? /*#__PURE__*/_react.default.createElement("textarea", {
+    value: props.isEditMode ? localValue : props.value,
+    rows: "4",
+    onChange: function onChange(e) {
+      var value = e.target.value;
+      setLocalValue(value);
+      props.onChange(value);
+    }
+  }) : props.value;
+}
+
+Textarea.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/time.js":
+/*!****************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/time.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Time;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _text = _interopRequireDefault(__webpack_require__(/*! ./text */ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js"));
+
+var _date = __webpack_require__(/*! ../../utils/date */ "../modules/forms/submissions/assets/js/admin/utils/date.js");
+
+function Time(props) {
+  return /*#__PURE__*/_react.default.createElement(_text.default, {
+    value: props.value,
+    isEditMode: props.isEditMode,
+    onChange: props.onChange,
+    field: props.field
+  }, props.value && (0, _date.formatToLocalTime)("2000-01-01 ".concat(props.value)));
+}
+
+Time.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/upload.js":
+/*!******************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/upload.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Upload;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+__webpack_require__(/*! core-js/modules/es6.regexp.split */ "../node_modules/core-js/modules/es6.regexp.split.js");
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+function Upload(props) {
+  var value = props.value.split(' , ');
+  return value.map(function (path) {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      key: path
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: path,
+      target: "_blank",
+      rel: "noreferrer"
+    }, path));
+  });
+}
+
+Upload.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/components/submission-value/url.js":
+/*!***************************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/submission-value/url.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Url;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _index = __webpack_require__(/*! ./index */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js");
+
+var _text = _interopRequireDefault(__webpack_require__(/*! ./text */ "../modules/forms/submissions/assets/js/admin/components/submission-value/text.js"));
+
+function Url(props) {
+  return /*#__PURE__*/_react.default.createElement(_text.default, {
+    value: props.value,
+    isEditMode: props.isEditMode,
+    onChange: props.onChange,
+    field: props.field
+  }, props.value && /*#__PURE__*/_react.default.createElement("a", {
+    href: props.value,
+    target: "_blank",
+    rel: "noreferrer"
+  }, props.value));
+}
+
+Url.propTypes = (0, _objectSpread2.default)({}, _index.basePropTypes);
 
 /***/ }),
 
@@ -7510,6 +8470,64 @@ NoticesProvider.defaultProps = {
 
 /***/ }),
 
+/***/ "../modules/forms/submissions/assets/js/admin/context/settings-context.js":
+/*!********************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/context/settings-context.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.useSettingsContext = useSettingsContext;
+exports.SettingsProvider = SettingsProvider;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _React = _react.default,
+    createContext = _React.createContext,
+    useContext = _React.useContext;
+var SettingsContext = createContext({});
+/**
+ * Consume the context
+ *
+ * @returns {{emptyTrashDays: number}}
+ */
+
+function useSettingsContext() {
+  return useContext(SettingsContext);
+}
+/**
+ * Settings Provider
+ *
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+
+
+function SettingsProvider(props) {
+  return /*#__PURE__*/_react.default.createElement(SettingsContext.Provider, {
+    value: props.value
+  }, props.children);
+}
+
+SettingsProvider.propTypes = {
+  children: PropTypes.any,
+  value: PropTypes.object.isRequired
+};
+
+/***/ }),
+
 /***/ "../modules/forms/submissions/assets/js/admin/data/commands/export.js":
 /*!****************************************************************************!*\
   !*** ../modules/forms/submissions/assets/js/admin/data/commands/export.js ***!
@@ -7645,6 +8663,13 @@ _Object$defineProperty(exports, "Export", {
   }
 });
 
+_Object$defineProperty(exports, "Referer", {
+  enumerable: true,
+  get: function get() {
+    return _referer.Referer;
+  }
+});
+
 exports.Index = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
@@ -7658,6 +8683,8 @@ var _createSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtim
 var _restore = __webpack_require__(/*! ./restore */ "../modules/forms/submissions/assets/js/admin/data/commands/restore.js");
 
 var _export = __webpack_require__(/*! ./export */ "../modules/forms/submissions/assets/js/admin/data/commands/export.js");
+
+var _referer = __webpack_require__(/*! ./referer */ "../modules/forms/submissions/assets/js/admin/data/commands/referer.js");
 
 var Index = /*#__PURE__*/function (_$e$modules$CommandDa) {
   (0, _inherits2.default)(Index, _$e$modules$CommandDa);
@@ -7679,6 +8706,56 @@ var Index = /*#__PURE__*/function (_$e$modules$CommandDa) {
 }($e.modules.CommandData);
 
 exports.Index = Index;
+
+/***/ }),
+
+/***/ "../modules/forms/submissions/assets/js/admin/data/commands/referer.js":
+/*!*****************************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/data/commands/referer.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.Referer = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createClass */ "../node_modules/@babel/runtime-corejs2/helpers/createClass.js"));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/inherits.js"));
+
+var _createSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createSuper */ "../node_modules/@babel/runtime-corejs2/helpers/createSuper.js"));
+
+var Referer = /*#__PURE__*/function (_$e$modules$CommandDa) {
+  (0, _inherits2.default)(Referer, _$e$modules$CommandDa);
+
+  var _super = (0, _createSuper2.default)(Referer);
+
+  function Referer() {
+    (0, _classCallCheck2.default)(this, Referer);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2.default)(Referer, null, [{
+    key: "getEndpointFormat",
+    value: function getEndpointFormat() {
+      return 'form-submissions/referer/{id}';
+    }
+  }]);
+  return Referer;
+}($e.modules.CommandData);
+
+exports.Referer = Referer;
 
 /***/ }),
 
@@ -7960,12 +9037,23 @@ _Object$defineProperty(exports, "__esModule", {
 });
 
 exports.useExport = useExport;
+exports.EXPORT_MODE_FILTERED = exports.EXPORT_MODE_SELECTED = exports.EXPORT_MODE_ALL = void 0;
 
-var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+__webpack_require__(/*! core-js/modules/es6.regexp.replace */ "../node_modules/core-js/modules/es6.regexp.replace.js");
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/defineProperty */ "../node_modules/@babel/runtime-corejs2/helpers/defineProperty.js"));
+
+var _values = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/values */ "../node_modules/@babel/runtime-corejs2/core-js/object/values.js"));
 
 var _promise = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/promise */ "../node_modules/@babel/runtime-corejs2/core-js/promise.js"));
 
+var _keys = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/keys */ "../node_modules/@babel/runtime-corejs2/core-js/object/keys.js"));
+
+var _entries = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/entries */ "../node_modules/@babel/runtime-corejs2/core-js/object/entries.js"));
+
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
+
+var _objectSpread3 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
 
 var _useDataAction3 = _interopRequireWildcard(__webpack_require__(/*! ./use-data-action */ "../modules/forms/submissions/assets/js/admin/hooks/use-data-action.js"));
 
@@ -7973,17 +9061,34 @@ var _downloadBlob = _interopRequireDefault(__webpack_require__(/*! ../utils/down
 
 var _noticesContext = __webpack_require__(/*! ../context/notices-context */ "../modules/forms/submissions/assets/js/admin/context/notices-context.js");
 
+var EXPORT_MODE_ALL = 'all';
+exports.EXPORT_MODE_ALL = EXPORT_MODE_ALL;
+var EXPORT_MODE_SELECTED = 'selected';
+exports.EXPORT_MODE_SELECTED = EXPORT_MODE_SELECTED;
+var EXPORT_MODE_FILTERED = 'filtered';
+exports.EXPORT_MODE_FILTERED = EXPORT_MODE_FILTERED;
 var _React = React,
-    useState = _React.useState;
+    useState = _React.useState,
+    useMemo = _React.useMemo;
+var ZIP_NAME_FORMAT = 'elementor-submissions-export-{DATE}';
+var EXPORT_FILE_NAME_FORMAT = 'elementor-submissions-export-{FORM_LABEL}-{DATE}';
+var DEFAULT_MAX_ROWS_PER_REQUEST = 10000;
+var defaultOptions = {
+  maxRowsPerRequest: DEFAULT_MAX_ROWS_PER_REQUEST,
+  checked: [],
+  filter: {}
+};
 /**
  * Export functionality
  *
- * @param maxRowsPerRequest
- * @returns {(*)[]}
+ * @param hookOptions
+ * @returns {(*|{mode: (string), progress: {success: number, count: number}, status: string})[]}
  */
 
-function useExport() {
-  var maxRowsPerRequest = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10000;
+function useExport(hookOptions) {
+  var options = useMemo(function () {
+    return (0, _objectSpread3.default)((0, _objectSpread3.default)({}, defaultOptions), hookOptions);
+  }, [hookOptions]);
 
   var _useNoticesContext = (0, _noticesContext.useNoticesContext)(),
       notifyError = _useNoticesContext.notifyError;
@@ -7996,21 +9101,42 @@ function useExport() {
       progress = _useState2[0],
       setProgress = _useState2[1];
 
-  var _useDataAction = (0, _useDataAction3.default)(function (_ref, _ref2) {
-    var _ref3 = (0, _slicedToArray2.default)(_ref, 2),
-        query = _ref3[0],
-        total = _ref3[1];
+  var mode = useMemo(function () {
+    if (options.checked.length > 0) {
+      return EXPORT_MODE_SELECTED;
+    }
 
-    var abortController = _ref2.abortController,
-        status = _ref2.status;
+    var filter = Object.fromEntries((0, _entries.default)(options.filter).filter(function (_ref) {
+      var _ref2 = (0, _slicedToArray2.default)(_ref, 2),
+          value = _ref2[1];
+
+      return value;
+    }));
+
+    if (1 === (0, _keys.default)(filter).length && 'all' === filter.status) {
+      return EXPORT_MODE_ALL;
+    }
+
+    return EXPORT_MODE_FILTERED;
+  }, [options.checked, options.filter]);
+
+  var _useDataAction = (0, _useDataAction3.default)(function (_ref3, _ref4) {
+    var _ref5 = (0, _slicedToArray2.default)(_ref3, 2),
+        query = _ref5[0],
+        total = _ref5[1];
+
+    var abortController = _ref4.abortController,
+        status = _ref4.status;
 
     if (status === _useDataAction3.STATUS_LOADING && abortController) {
       abortController.abort();
-      return _promise.default.reject('Aborted');
+      return _promise.default.reject({
+        message: 'Aborted'
+      });
     }
 
-    var numberOfRequests = Math.ceil(total / maxRowsPerRequest);
-    var results = [];
+    var numberOfRequests = Math.ceil(total / options.maxRowsPerRequest);
+    var exportDataByForm = {};
 
     var promise = _promise.default.resolve();
 
@@ -8021,21 +9147,21 @@ function useExport() {
 
     var _loop = function _loop(i) {
       promise = promise.then(function () {
-        return $e.data.get('form-submissions/export', (0, _objectSpread2.default)((0, _objectSpread2.default)({}, query), {}, {
-          per_page: maxRowsPerRequest,
+        return $e.data.get('form-submissions/export', (0, _objectSpread3.default)((0, _objectSpread3.default)({}, query), {}, {
+          per_page: options.maxRowsPerRequest,
           page: i
         }), {
           refresh: true,
           signal: abortController.signal
         });
       }).then(function (result) {
-        results.push(result);
+        var shouldSaveHeaders = 1 === i;
+        exportDataByForm = mergeFormExportData(result.data.data, exportDataByForm, shouldSaveHeaders);
         setProgress(function (prev) {
-          return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, prev), {}, {
+          return (0, _objectSpread3.default)((0, _objectSpread3.default)({}, prev), {}, {
             success: i
           });
         });
-        return results;
       });
     };
 
@@ -8043,18 +9169,47 @@ function useExport() {
       _loop(i);
     }
 
-    return promise.then(downloadExportsResults).catch(function (error) {
+    return promise.then(function () {
+      return downloadExportsResults((0, _values.default)(exportDataByForm));
+    }).catch(function (error) {
       return notifyError(error.message);
     });
-  }, [maxRowsPerRequest]),
+  }, [options.maxRowsPerRequest]),
       _useDataAction2 = (0, _slicedToArray2.default)(_useDataAction, 2),
       exportSubmissions = _useDataAction2[0],
       exportStatus = _useDataAction2[1].status;
 
   return [exportSubmissions, {
-    status: exportStatus,
-    progress: progress
+    mode: mode,
+    progress: progress,
+    status: exportStatus
   }];
+}
+/**
+ * Merge data from one response into the current data from all the other responses.
+ *
+ * @param response
+ * @param current
+ * @param shouldSaveHeaders
+ * @returns {*}
+ */
+
+
+function mergeFormExportData(response, current, shouldSaveHeaders) {
+  response.forEach(function (formResult) {
+    var _current$formResult$i;
+
+    // The first row of each csv response is the headers row. When it merges all csv responses, it deletes
+    // the headers for each response except from the first one, the result will be only one row headers in the final csv.
+    if (!shouldSaveHeaders) {
+      delete formResult.content[0];
+    }
+
+    current = (0, _objectSpread3.default)((0, _objectSpread3.default)({}, current), {}, (0, _defineProperty2.default)({}, formResult.id, (0, _objectSpread3.default)((0, _objectSpread3.default)({}, formResult), {}, {
+      content: (((_current$formResult$i = current[formResult.id]) === null || _current$formResult$i === void 0 ? void 0 : _current$formResult$i.content) || '') + formResult.content.join('\n')
+    })));
+  });
+  return current;
 }
 /**
  * Merge all the promises result into one csv and download it.
@@ -8064,21 +9219,47 @@ function useExport() {
 
 
 function downloadExportsResults(dataResults) {
-  var meta = dataResults[0].data.meta;
-  var content = dataResults.reduce(function (currentContent, dataResult, index) {
-    var data = dataResult.data.data; // The first row of each csv response is an headers row. When it merges all csv responses, it deletes
-    // the headers for each response except from the first one, the result will be only one row headers in the final csv.
+  var currentDate = wp.date.date('Y-m-d');
+  var files = dataResults.map(function (item) {
+    return transformFormResultIntoBlob(item, currentDate);
+  }); // If there is only one form file, just download it as csv instead of compressing it into a zip file.
 
-    if (index !== 0) {
-      delete data[0];
-    }
+  if (1 === files.length) {
+    (0, _downloadBlob.default)(files[0].blob, files[0].filename);
+    return;
+  }
 
-    return currentContent + dataResult.data.data.join('\n');
-  }, '');
-  var blob = new Blob([content], {
-    type: meta.mimetype
+  __webpack_require__.e(/*! import() | jszip.vendor */ "jszip.vendor").then(__webpack_require__.t.bind(__webpack_require__, /*! jszip */ "../node_modules/jszip/dist/jszip.min.js", 23)).then(function (_ref6) {
+    var JSZip = _ref6.default;
+    var zip = new JSZip();
+    files.forEach(function (_ref7) {
+      var filename = _ref7.filename,
+          blob = _ref7.blob;
+      return zip.file(filename, blob);
+    });
+    return zip.generateAsync({
+      type: 'blob'
+    });
+  }).then(function (zipBlob) {
+    (0, _downloadBlob.default)(zipBlob, ZIP_NAME_FORMAT.replace('{DATE}', currentDate));
   });
-  (0, _downloadBlob.default)(blob, meta.filename);
+}
+/**
+ * Transform the merged result from the server into a blob.
+ *
+ * @param formResult
+ * @param currentDate
+ * @returns {{filename: string, blob: Blob}}
+ */
+
+
+function transformFormResultIntoBlob(formResult, currentDate) {
+  return {
+    filename: EXPORT_FILE_NAME_FORMAT.replace('{FORM_LABEL}', formResult.form_label).replace('{DATE}', currentDate).concat(".".concat(formResult.extension)),
+    blob: new Blob([formResult.content], {
+      type: formResult.mimetype
+    })
+  };
 }
 
 /***/ }),
@@ -8559,6 +9740,41 @@ function useRouterQueryString() {
 
 /***/ }),
 
+/***/ "../modules/forms/submissions/assets/js/admin/hooks/use-watch.js":
+/*!***********************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/hooks/use-watch.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var React = __webpack_require__(/*! react */ "react");
+
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = useWatch;
+var _React = React,
+    useEffect = _React.useEffect,
+    useRef = _React.useRef;
+
+function useWatch(callback, deps) {
+  var isFirstRender = useRef(true);
+  useEffect(function () {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    callback();
+  }, deps);
+}
+
+/***/ }),
+
 /***/ "../modules/forms/submissions/assets/js/admin/notice-messages.js":
 /*!***********************************************************************!*\
   !*** ../modules/forms/submissions/assets/js/admin/notice-messages.js ***!
@@ -8623,6 +9839,14 @@ var _default = {
       return null;
     },
     error: generalError
+  },
+  actionLogs: {
+    success: function success() {
+      return __('Action completed successfully.', 'elementor-pro');
+    },
+    failed: function failed() {
+      return __('Action failed to run, please check your integration.', 'elementor-pro');
+    }
   }
 };
 exports.default = _default;
@@ -8699,9 +9923,13 @@ var _useDataAction7 = _interopRequireWildcard(__webpack_require__(/*! ../hooks/u
 
 var _noticeMessages = _interopRequireDefault(__webpack_require__(/*! ../notice-messages */ "../modules/forms/submissions/assets/js/admin/notice-messages.js"));
 
-var _submissionRow = _interopRequireDefault(__webpack_require__(/*! modules/forms/submissions/assets/js/admin/components/submission-row */ "../modules/forms/submissions/assets/js/admin/components/submission-row.js"));
+var _submissionRow = _interopRequireDefault(__webpack_require__(/*! ../components/submission-row */ "../modules/forms/submissions/assets/js/admin/components/submission-row.js"));
+
+var _settingsContext = __webpack_require__(/*! ../context/settings-context */ "../modules/forms/submissions/assets/js/admin/context/settings-context.js");
 
 var _useExport3 = __webpack_require__(/*! ../hooks/use-export */ "../modules/forms/submissions/assets/js/admin/hooks/use-export.js");
+
+var _refererFilter = _interopRequireDefault(__webpack_require__(/*! ../components/referer-filter */ "../modules/forms/submissions/assets/js/admin/components/referer-filter.js"));
 
 var _React = _react.default,
     useMemo = _React.useMemo,
@@ -8709,11 +9937,12 @@ var _React = _react.default,
 var SEARCH_FILTER_KEY = 'search';
 var STATUS_FILTER_KEY = 'status';
 var FORM_FILTER_KEY = 'form';
+var REFERER_FILTER_KEY = 'referer';
 var AFTER_FILTER_KEY = 'after';
 var BEFORE_FILTER_KEY = 'before';
 
 function Index() {
-  var _meta$pagination2, _fetchOptions$filter, _fetchOptions$filter2, _fetchOptions$filter3;
+  var _meta$pagination2, _fetchOptions$filter, _fetchOptions$filter2, _fetchOptions$filter3, _fetchOptions$filter4;
 
   var navigate = (0, _router.useNavigate)();
 
@@ -8721,13 +9950,16 @@ function Index() {
       notifyError = _useNoticesContext.notifyError,
       notifySuccess = _useNoticesContext.notifySuccess;
 
+  var _useSettingsContext = (0, _settingsContext.useSettingsContext)(),
+      isTrashEnabled = _useSettingsContext.isTrashEnabled;
+
   var _useState = useState([]),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       checked = _useState2[0],
       setChecked = _useState2[1];
 
   var _useRestDataList = (0, _useRestDataList2.default)('form-submissions/index', {
-    allowedFilters: [SEARCH_FILTER_KEY, STATUS_FILTER_KEY, FORM_FILTER_KEY, AFTER_FILTER_KEY, BEFORE_FILTER_KEY],
+    allowedFilters: [SEARCH_FILTER_KEY, STATUS_FILTER_KEY, FORM_FILTER_KEY, REFERER_FILTER_KEY, AFTER_FILTER_KEY, BEFORE_FILTER_KEY],
     useRouterQueryString: true,
     hooks: {
       afterFetch: function afterFetch() {
@@ -8755,7 +9987,10 @@ function Index() {
     return 'trash' === filter[STATUS_FILTER_KEY];
   }, [filter[STATUS_FILTER_KEY]]);
 
-  var _useExport = (0, _useExport3.useExport)(),
+  var _useExport = (0, _useExport3.useExport)({
+    checked: checked,
+    filter: filter
+  }),
       _useExport2 = (0, _slicedToArray2.default)(_useExport, 2),
       exportSubmissions = _useExport2[0],
       exportOptions = _useExport2[1];
@@ -8866,7 +10101,7 @@ function Index() {
         });
       },
       shouldShow: function shouldShow(item) {
-        return 'trash' !== item.status;
+        return 'trash' !== item.status && isTrashEnabled;
       },
       className: 'trash'
     }, {
@@ -8879,7 +10114,7 @@ function Index() {
         });
       },
       shouldShow: function shouldShow(item) {
-        return 'trash' === item.status;
+        return 'trash' === item.status || !isTrashEnabled;
       },
       className: 'trash'
     }, {
@@ -8938,7 +10173,7 @@ function Index() {
         });
       },
       shouldShow: function shouldShow() {
-        return !isTrashFilterOn;
+        return !isTrashFilterOn && isTrashEnabled;
       }
     }, {
       label: __('Delete Permanently', 'elementor-pro'),
@@ -8950,7 +10185,7 @@ function Index() {
         });
       },
       shouldShow: function shouldShow() {
-        return isTrashFilterOn;
+        return isTrashFilterOn || !isTrashEnabled;
       }
     }, {
       label: __('Restore', 'elementor-pro'),
@@ -9040,13 +10275,13 @@ function Index() {
     onClick: function onClick() {
       var _meta$pagination;
 
-      exportSubmissions(checked.length > 0 ? {
+      exportSubmissions(_useExport3.EXPORT_MODE_SELECTED === exportOptions.mode ? {
         ids: checked
       } : (0, _objectSpread2.default)({}, flatQuery), checked.length || ((_meta$pagination = meta.pagination) === null || _meta$pagination === void 0 ? void 0 : _meta$pagination.total));
     },
     isLoading: _useDataAction7.STATUS_LOADING === exportOptions.status,
     progress: exportOptions.progress,
-    hasSelected: checked.length > 0,
+    mode: exportOptions.mode,
     disabled: !((_meta$pagination2 = meta.pagination) === null || _meta$pagination2 === void 0 ? void 0 : _meta$pagination2.total) && _useDataAction7.STATUS_LOADING !== exportOptions.status
   }));
 
@@ -9073,12 +10308,13 @@ function Index() {
     isSearching: !!filter[SEARCH_FILTER_KEY] && fetchDataStatus === _useDataAction7.STATUS_LOADING
   }), ((_fetchOptions$filter2 = fetchOptions.filter) === null || _fetchOptions$filter2 === void 0 ? void 0 : _fetchOptions$filter2[STATUS_FILTER_KEY]) && /*#__PURE__*/_react.default.createElement(_linksFilter.default, {
     options: fetchOptions.filter[STATUS_FILTER_KEY].enum.map(function (value) {
-      var _meta$count;
+      var _meta$count, _meta$count2;
 
       return {
         value: value,
         label: fetchOptions.filter[STATUS_FILTER_KEY].additionalProperties.options.labels[value],
-        count: (_meta$count = meta.count) === null || _meta$count === void 0 ? void 0 : _meta$count[value]
+        count: (_meta$count = meta.count) === null || _meta$count === void 0 ? void 0 : _meta$count[value],
+        shouldShow: 'all' === value || ((_meta$count2 = meta.count) === null || _meta$count2 === void 0 ? void 0 : _meta$count2[value]) > 0
       };
     }),
     value: filter[STATUS_FILTER_KEY],
@@ -9094,14 +10330,19 @@ function Index() {
     className: "alignleft"
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "alignleft actions"
-  }, ((_fetchOptions$filter3 = fetchOptions.filter) === null || _fetchOptions$filter3 === void 0 ? void 0 : _fetchOptions$filter3[FORM_FILTER_KEY]) && /*#__PURE__*/_react.default.createElement(_resourceFilter.default, {
+  }, ((_fetchOptions$filter3 = fetchOptions.filter) === null || _fetchOptions$filter3 === void 0 ? void 0 : _fetchOptions$filter3[REFERER_FILTER_KEY]) && /*#__PURE__*/_react.default.createElement(_refererFilter.default, {
+    value: filter[REFERER_FILTER_KEY] || '',
+    onChange: function onChange(value) {
+      return setFilter((0, _defineProperty2.default)({}, REFERER_FILTER_KEY, value));
+    }
+  }), ((_fetchOptions$filter4 = fetchOptions.filter) === null || _fetchOptions$filter4 === void 0 ? void 0 : _fetchOptions$filter4[FORM_FILTER_KEY]) && /*#__PURE__*/_react.default.createElement(_resourceFilter.default, {
     value: filter[FORM_FILTER_KEY] || '',
     onChange: function onChange(value) {
       return setFilter((0, _defineProperty2.default)({}, FORM_FILTER_KEY, value));
     },
     options: [{
       value: '',
-      label: __('All', 'elementor-pro')
+      label: __('All Forms', 'elementor-pro')
     }],
     resourceOptions: fetchOptions.filter[FORM_FILTER_KEY].additionalProperties.options,
     name: FORM_FILTER_KEY,
@@ -9168,6 +10409,8 @@ function validateRestAction(query) {
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
 
 
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js");
+
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
 
 var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
@@ -9192,7 +10435,7 @@ var _keys = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs
 
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/defineProperty */ "../node_modules/@babel/runtime-corejs2/helpers/defineProperty.js"));
 
-var _objectSpread3 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+var _objectSpread4 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
 
@@ -9208,9 +10451,13 @@ var _formActionsLog = _interopRequireDefault(__webpack_require__(/*! ../componen
 
 var _noticeMessages = _interopRequireDefault(__webpack_require__(/*! ../notice-messages */ "../modules/forms/submissions/assets/js/admin/notice-messages.js"));
 
-var _useDataAction3 = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-data-action */ "../modules/forms/submissions/assets/js/admin/hooks/use-data-action.js"));
+var _useDataAction5 = _interopRequireWildcard(__webpack_require__(/*! ../hooks/use-data-action */ "../modules/forms/submissions/assets/js/admin/hooks/use-data-action.js"));
 
 var _date = __webpack_require__(/*! ../utils/date */ "../modules/forms/submissions/assets/js/admin/utils/date.js");
+
+var _submissionValue = _interopRequireDefault(__webpack_require__(/*! ../components/submission-value */ "../modules/forms/submissions/assets/js/admin/components/submission-value/index.js"));
+
+var _settingsContext = __webpack_require__(/*! ../context/settings-context */ "../modules/forms/submissions/assets/js/admin/context/settings-context.js");
 
 var _React = _react.default,
     useEffect = _React.useEffect,
@@ -9231,16 +10478,26 @@ function Item(props) {
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
       error = _useState4[0],
       setError = _useState4[1],
+      _useState5 = useState(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      isEditMode = _useState6[0],
+      setIsEditMode = _useState6[1],
+      _useState7 = useState({}),
+      _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
+      formData = _useState8[0],
+      setFormData = _useState8[1],
       navigate = (0, _router.useNavigate)(),
       _useNoticesContext = (0, _noticesContext.useNoticesContext)(),
       notifySuccess = _useNoticesContext.notifySuccess,
-      notifyError = _useNoticesContext.notifyError;
+      notifyError = _useNoticesContext.notifyError,
+      _useSettingsContext = (0, _settingsContext.useSettingsContext)(),
+      isTrashEnabled = _useSettingsContext.isTrashEnabled;
 
   var fields = useMemo(function () {
     var _data$form;
 
     return (_data$form = data.form) === null || _data$form === void 0 ? void 0 : _data$form.fields.reduce(function (current, field) {
-      return (0, _objectSpread3.default)((0, _objectSpread3.default)({}, current), {}, (0, _defineProperty2.default)({}, field.id, field));
+      return (0, _objectSpread4.default)((0, _objectSpread4.default)({}, current), {}, (0, _defineProperty2.default)({}, field.id, field));
     }, {});
   }, [(_data$form2 = data.form) === null || _data$form2 === void 0 ? void 0 : _data$form2.fields]); // Fetch a single submission on first render
 
@@ -9268,21 +10525,51 @@ function Item(props) {
     });
   }, []); // Move submission to trash
 
-  var _useDataAction = (0, _useDataAction3.default)(function (args, _ref) {
-    var abortController = _ref.abortController;
-    return $e.data.delete('form-submissions/index', {
-      id: props.id,
+  var _useDataAction = (0, _useDataAction5.default)(function (_ref, _ref2) {
+    var _ref3 = (0, _slicedToArray2.default)(_ref, 1),
+        _ref3$ = _ref3[0],
+        query = _ref3$ === void 0 ? {} : _ref3$;
+
+    var abortController = _ref2.abortController;
+    var messages = _noticeMessages.default[query.force ? 'deleted' : 'trashed'];
+    return $e.data.delete('form-submissions/index', (0, _objectSpread4.default)({
+      id: props.id
+    }, query), {
       signal: abortController.signal
     }).then(function () {
-      return notifySuccess(_noticeMessages.default.trashed.success(1));
+      return notifySuccess(messages.success(1));
     }).then(function () {
       return navigate('/');
     }).catch(function () {
-      return notifyError(_noticeMessages.default.trashed.error());
+      return notifyError(messages.error());
     });
   }, [props.id]),
       _useDataAction2 = (0, _slicedToArray2.default)(_useDataAction, 1),
-      trash = _useDataAction2[0];
+      deleteItem = _useDataAction2[0]; // Update field values.
+
+
+  var _useDataAction3 = (0, _useDataAction5.default)(function (_ref4) {
+    var _ref5 = (0, _slicedToArray2.default)(_ref4, 1),
+        values = _ref5[0];
+
+    return $e.data.update('form-submissions/index', {
+      values: values
+    }, {
+      id: props.id
+    }).then(function (result) {
+      return setFetchResult(result.data);
+    }).then(function () {
+      setIsEditMode(false);
+      setFormData({});
+    }).then(function () {
+      return notifySuccess(_noticeMessages.default.updated.success(1));
+    }).catch(function () {
+      return notifyError(_noticeMessages.default.updated.error());
+    });
+  }, [props.id]),
+      _useDataAction4 = (0, _slicedToArray2.default)(_useDataAction3, 2),
+      update = _useDataAction4[0],
+      updateStatus = _useDataAction4[1].status;
 
   if (!(0, _keys.default)(data).length) {
     if (error) {
@@ -9294,9 +10581,18 @@ function Item(props) {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     id: "poststuff"
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("form", {
     id: "post-body",
-    className: "metabox-holder columns-2"
+    className: "metabox-holder columns-2",
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+
+      if (!isEditMode || updateStatus === _useDataAction5.STATUS_LOADING) {
+        return;
+      }
+
+      update(formData);
+    }
   }, /*#__PURE__*/_react.default.createElement("div", {
     id: "post-body-content"
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -9304,7 +10600,22 @@ function Item(props) {
   }, /*#__PURE__*/_react.default.createElement(_postBox.default, {
     header: /*#__PURE__*/_react.default.createElement("div", {
       className: "e-form-submissions-main__header"
-    }, /*#__PURE__*/_react.default.createElement("h2", null, __('Submission', 'elementor-pro'), " #", data.id))
+    }, /*#__PURE__*/_react.default.createElement("h2", null, __('Submission', 'elementor-pro'), " #", data.id), /*#__PURE__*/_react.default.createElement("button", {
+      onClick: function onClick(e) {
+        e.preventDefault();
+
+        if (updateStatus === _useDataAction5.STATUS_LOADING) {
+          return;
+        }
+
+        setIsEditMode(function (prev) {
+          return !prev;
+        });
+      },
+      className: "button button-secondary",
+      type: "button",
+      disabled: updateStatus === _useDataAction5.STATUS_LOADING
+    }, isEditMode ? __('Cancel', 'elementor-pro') : __('Edit', 'elementor-pro')))
   }, /*#__PURE__*/_react.default.createElement(_wpTable.default, {
     className: "e-form-submissions-item-table"
   }, /*#__PURE__*/_react.default.createElement(_wpTable.default.Body, null, data.values.map(function (value) {
@@ -9312,7 +10623,19 @@ function Item(props) {
 
     return /*#__PURE__*/_react.default.createElement(_wpTable.default.Row, {
       key: value.id
-    }, /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, null, (fields === null || fields === void 0 ? void 0 : (_fields$value$key = fields[value.key]) === null || _fields$value$key === void 0 ? void 0 : _fields$value$key.label) || value.key), /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, null, value.value));
+    }, /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, null, (fields === null || fields === void 0 ? void 0 : (_fields$value$key = fields[value.key]) === null || _fields$value$key === void 0 ? void 0 : _fields$value$key.label) || value.key), /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, null, /*#__PURE__*/_react.default.createElement(_submissionValue.default, {
+      value: value.value,
+      field: (fields === null || fields === void 0 ? void 0 : fields[value.key]) || {
+        id: value.key,
+        type: 'text'
+      },
+      isEditMode: isEditMode,
+      onChange: function onChange(id, fieldValue) {
+        return setFormData(function (prev) {
+          return (0, _objectSpread4.default)((0, _objectSpread4.default)({}, prev), {}, (0, _defineProperty2.default)({}, id, fieldValue));
+        });
+      }
+    })));
   }))))), data.form_actions_log && /*#__PURE__*/_react.default.createElement(_formActionsLog.default, {
     actions: data.form_actions_log
   })), /*#__PURE__*/_react.default.createElement("div", {
@@ -9336,7 +10659,9 @@ function Item(props) {
     href: data.referer,
     target: "_blank",
     rel: "noreferrer"
-  }, " ", __('Link to page', 'elementor-pro'), " ")), /*#__PURE__*/_react.default.createElement("div", {
+  }, data.referer_title || /*#__PURE__*/_react.default.createElement("i", {
+    className: "eicon-editor-external-link e-form-submissions-referer-icon"
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     className: "misc-pub-section"
   }, __('Create Date:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, (0, _date.formatToLocalDateTime)(data.created_at))), /*#__PURE__*/_react.default.createElement("div", {
     className: "misc-pub-section"
@@ -9355,11 +10680,19 @@ function Item(props) {
     href: "#",
     onClick: function onClick(e) {
       e.preventDefault();
-      trash();
+      deleteItem({
+        force: isTrashEnabled ? 0 : 1
+      });
     }
-  }, __('Move to Trash', 'elementor-pro'))), /*#__PURE__*/_react.default.createElement("div", {
+  }, isTrashEnabled ? __('Move to Trash', 'elementor-pro') : __('Delete Permanently', 'elementor-pro'))), /*#__PURE__*/_react.default.createElement("div", {
     id: "publishing-action"
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit",
+    name: "save",
+    id: "publish",
+    className: "button button-primary button-large",
+    disabled: !isEditMode || updateStatus === _useDataAction5.STATUS_LOADING
+  }, __('Update', 'elementor-pro'))), /*#__PURE__*/_react.default.createElement("div", {
     className: "clear"
   })))))), /*#__PURE__*/_react.default.createElement("br", {
     className: "clear"
@@ -11028,6 +12361,135 @@ __webpack_require__(/*! ./_export */ "../node_modules/core-js/modules/_export.js
   forced: regexpExec !== /./.exec
 }, {
   exec: regexpExec
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/modules/es6.regexp.replace.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/core-js/modules/es6.regexp.replace.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var anObject = __webpack_require__(/*! ./_an-object */ "../node_modules/core-js/modules/_an-object.js");
+var toObject = __webpack_require__(/*! ./_to-object */ "../node_modules/core-js/modules/_to-object.js");
+var toLength = __webpack_require__(/*! ./_to-length */ "../node_modules/core-js/modules/_to-length.js");
+var toInteger = __webpack_require__(/*! ./_to-integer */ "../node_modules/core-js/modules/_to-integer.js");
+var advanceStringIndex = __webpack_require__(/*! ./_advance-string-index */ "../node_modules/core-js/modules/_advance-string-index.js");
+var regExpExec = __webpack_require__(/*! ./_regexp-exec-abstract */ "../node_modules/core-js/modules/_regexp-exec-abstract.js");
+var max = Math.max;
+var min = Math.min;
+var floor = Math.floor;
+var SUBSTITUTION_SYMBOLS = /\$([$&`']|\d\d?|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&`']|\d\d?)/g;
+
+var maybeToString = function (it) {
+  return it === undefined ? it : String(it);
+};
+
+// @@replace logic
+__webpack_require__(/*! ./_fix-re-wks */ "../node_modules/core-js/modules/_fix-re-wks.js")('replace', 2, function (defined, REPLACE, $replace, maybeCallNative) {
+  return [
+    // `String.prototype.replace` method
+    // https://tc39.github.io/ecma262/#sec-string.prototype.replace
+    function replace(searchValue, replaceValue) {
+      var O = defined(this);
+      var fn = searchValue == undefined ? undefined : searchValue[REPLACE];
+      return fn !== undefined
+        ? fn.call(searchValue, O, replaceValue)
+        : $replace.call(String(O), searchValue, replaceValue);
+    },
+    // `RegExp.prototype[@@replace]` method
+    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@replace
+    function (regexp, replaceValue) {
+      var res = maybeCallNative($replace, regexp, this, replaceValue);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+      var functionalReplace = typeof replaceValue === 'function';
+      if (!functionalReplace) replaceValue = String(replaceValue);
+      var global = rx.global;
+      if (global) {
+        var fullUnicode = rx.unicode;
+        rx.lastIndex = 0;
+      }
+      var results = [];
+      while (true) {
+        var result = regExpExec(rx, S);
+        if (result === null) break;
+        results.push(result);
+        if (!global) break;
+        var matchStr = String(result[0]);
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+      }
+      var accumulatedResult = '';
+      var nextSourcePosition = 0;
+      for (var i = 0; i < results.length; i++) {
+        result = results[i];
+        var matched = String(result[0]);
+        var position = max(min(toInteger(result.index), S.length), 0);
+        var captures = [];
+        // NOTE: This is equivalent to
+        //   captures = result.slice(1).map(maybeToString)
+        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+        for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
+        var namedCaptures = result.groups;
+        if (functionalReplace) {
+          var replacerArgs = [matched].concat(captures, position, S);
+          if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+          var replacement = String(replaceValue.apply(undefined, replacerArgs));
+        } else {
+          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+        }
+        if (position >= nextSourcePosition) {
+          accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+          nextSourcePosition = position + matched.length;
+        }
+      }
+      return accumulatedResult + S.slice(nextSourcePosition);
+    }
+  ];
+
+    // https://tc39.github.io/ecma262/#sec-getsubstitution
+  function getSubstitution(matched, str, position, captures, namedCaptures, replacement) {
+    var tailPos = position + matched.length;
+    var m = captures.length;
+    var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+    if (namedCaptures !== undefined) {
+      namedCaptures = toObject(namedCaptures);
+      symbols = SUBSTITUTION_SYMBOLS;
+    }
+    return $replace.call(replacement, symbols, function (match, ch) {
+      var capture;
+      switch (ch.charAt(0)) {
+        case '$': return '$';
+        case '&': return matched;
+        case '`': return str.slice(0, position);
+        case "'": return str.slice(tailPos);
+        case '<':
+          capture = namedCaptures[ch.slice(1, -1)];
+          break;
+        default: // \d\d?
+          var n = +ch;
+          if (n === 0) return match;
+          if (n > m) {
+            var f = floor(n / 10);
+            if (f === 0) return match;
+            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+            return match;
+          }
+          capture = captures[n - 1];
+      }
+      return capture === undefined ? '' : capture;
+    });
+  }
 });
 
 
@@ -13097,6 +14559,9 @@ module.exports = wp.i18n;
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -13110,6 +14575,36 @@ module.exports = wp.i18n;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/create fake namespace object */
+/******/ 	(() => {
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => Object.getPrototypeOf(obj) : (obj) => obj.__proto__;
+/******/ 		var leafPrototypes;
+/******/ 		// create a fake namespace object
+/******/ 		// mode & 1: value is a module id, require it
+/******/ 		// mode & 2: merge all properties of value into the ns
+/******/ 		// mode & 4: return value when already ns object
+/******/ 		// mode & 16: return value when it's Promise-like
+/******/ 		// mode & 8|1: behave like require
+/******/ 		__webpack_require__.t = function(value, mode) {
+/******/ 			if(mode & 1) value = this(value);
+/******/ 			if(mode & 8) return value;
+/******/ 			if(typeof value === 'object' && value) {
+/******/ 				if((mode & 4) && value.__esModule) return value;
+/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 			}
+/******/ 			var ns = Object.create(null);
+/******/ 			__webpack_require__.r(ns);
+/******/ 			var def = {};
+/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 				Object.getOwnPropertyNames(current).forEach(key => def[key] = () => value[key]);
+/******/ 			}
+/******/ 			def['default'] = () => value;
+/******/ 			__webpack_require__.d(ns, def);
+/******/ 			return ns;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -13119,6 +14614,30 @@ module.exports = wp.i18n;
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/ensure chunk */
+/******/ 	(() => {
+/******/ 		__webpack_require__.f = {};
+/******/ 		// This file contains only the entry chunk.
+/******/ 		// The chunk loading function for additional chunks
+/******/ 		__webpack_require__.e = (chunkId) => {
+/******/ 			return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
+/******/ 				__webpack_require__.f[key](chunkId, promises);
+/******/ 				return promises;
+/******/ 			}, []));
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/get javascript chunk filename */
+/******/ 	(() => {
+/******/ 		// This function allow to reference async chunks
+/******/ 		__webpack_require__.u = (chunkId) => {
+/******/ 			// return url for filenames not based on template
+/******/ 			if (chunkId === "jszip.vendor") return "" + chunkId + ".a954fe8948bbfe21cab3.bundle.js";
+/******/ 			// return url for filenames based on template
+/******/ 			return undefined;
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -13139,6 +14658,52 @@ module.exports = wp.i18n;
 /******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/load script */
+/******/ 	(() => {
+/******/ 		var inProgress = {};
+/******/ 		var dataWebpackPrefix = "elementor-pro:";
+/******/ 		// loadScript function to load a script via script tag
+/******/ 		__webpack_require__.l = (url, done, key) => {
+/******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
+/******/ 			var script, needAttach;
+/******/ 			if(key !== undefined) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				for(var i = 0; i < scripts.length; i++) {
+/******/ 					var s = scripts[i];
+/******/ 					if(s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) { script = s; break; }
+/******/ 				}
+/******/ 			}
+/******/ 			if(!script) {
+/******/ 				needAttach = true;
+/******/ 				script = document.createElement('script');
+/******/ 		
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
+/******/ 				script.src = url;
+/******/ 			}
+/******/ 			inProgress[url] = [done];
+/******/ 			var onScriptComplete = (prev, event) => {
+/******/ 				// avoid mem leaks in IE.
+/******/ 				script.onerror = script.onload = null;
+/******/ 				clearTimeout(timeout);
+/******/ 				var doneFns = inProgress[url];
+/******/ 				delete inProgress[url];
+/******/ 				script.parentNode && script.parentNode.removeChild(script);
+/******/ 				doneFns && doneFns.forEach((fn) => fn(event));
+/******/ 				if(prev) return prev(event);
+/******/ 			}
+/******/ 			;
+/******/ 			var timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
+/******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
+/******/ 			script.onload = onScriptComplete.bind(null, script.onload);
+/******/ 			needAttach && document.head.appendChild(script);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -13148,6 +14713,122 @@ module.exports = wp.i18n;
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// Promise = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"form-submission-admin": 0
+/******/ 		};
+/******/ 		
+/******/ 		
+/******/ 		__webpack_require__.f.j = (chunkId, promises) => {
+/******/ 				// JSONP chunk loading for javascript
+/******/ 				var installedChunkData = __webpack_require__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
+/******/ 				if(installedChunkData !== 0) { // 0 means "already installed".
+/******/ 		
+/******/ 					// a Promise means "currently loading".
+/******/ 					if(installedChunkData) {
+/******/ 						promises.push(installedChunkData[2]);
+/******/ 					} else {
+/******/ 						if(true) { // all chunks have JS
+/******/ 							// setup Promise in chunk cache
+/******/ 							var promise = new Promise((resolve, reject) => {
+/******/ 								installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 							});
+/******/ 							promises.push(installedChunkData[2] = promise);
+/******/ 		
+/******/ 							// start chunk loading
+/******/ 							var url = __webpack_require__.p + __webpack_require__.u(chunkId);
+/******/ 							// create error before stack unwound to get useful stacktrace later
+/******/ 							var error = new Error();
+/******/ 							var loadingEnded = (event) => {
+/******/ 								if(__webpack_require__.o(installedChunks, chunkId)) {
+/******/ 									installedChunkData = installedChunks[chunkId];
+/******/ 									if(installedChunkData !== 0) installedChunks[chunkId] = undefined;
+/******/ 									if(installedChunkData) {
+/******/ 										var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 										var realSrc = event && event.target && event.target.src;
+/******/ 										error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 										error.name = 'ChunkLoadError';
+/******/ 										error.type = errorType;
+/******/ 										error.request = realSrc;
+/******/ 										installedChunkData[1](error);
+/******/ 									}
+/******/ 								}
+/******/ 							};
+/******/ 							__webpack_require__.l(url, loadingEnded, "chunk-" + chunkId);
+/******/ 						} else installedChunks[chunkId] = 0;
+/******/ 					}
+/******/ 				}
+/******/ 		};
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no deferred startup
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0, resolves = [];
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					resolves.push(installedChunks[chunkId][0]);
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			for(moduleId in moreModules) {
+/******/ 				if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 				}
+/******/ 			}
+/******/ 			if(runtime) runtime(__webpack_require__);
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			while(resolves.length) {
+/******/ 				resolves.shift()();
+/******/ 			}
+/******/ 		
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 		
+/******/ 		// no deferred startup
 /******/ 	})();
 /******/ 	
 /************************************************************************/

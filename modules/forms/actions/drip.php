@@ -159,9 +159,7 @@ class Drip extends Integration_Base {
 		$subscriber = $this->create_subscriber_object( $record );
 
 		if ( ! $subscriber ) {
-			$ajax_handler->add_admin_error_message( __( 'Drip Integration requires an email field', 'elementor-pro' ) );
-
-			return;
+			throw new \Exception( __( 'Integration requires an email field', 'elementor-pro' ) );
 		}
 
 		if ( 'default' === $form_settings['drip_api_token_source'] ) {
@@ -170,12 +168,8 @@ class Drip extends Integration_Base {
 			$api_key = $form_settings['drip_custom_api_token'];
 		}
 
-		try {
-			$handler = new Drip_Handler( $api_key );
-			$handler->create_subscriber( $form_settings['drip_account'], $subscriber );
-		} catch ( \Exception $exception ) {
-			$ajax_handler->add_admin_error_message( 'Drip ' . $exception->getMessage() );
-		}
+		$handler = new Drip_Handler( $api_key );
+		$handler->create_subscriber( $form_settings['drip_account'], $subscriber );
 	}
 
 	/**

@@ -54,6 +54,7 @@ final class Modules_Manager {
 			'lottie',
 			'code-highlight',
 			'custom-code',
+			'payments',
 		];
 
 		foreach ( $modules as $module_name ) {

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6512,7 +6512,7 @@ var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
       };
       return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("span", {
         className: "post-conditions-display"
-      }, /*#__PURE__*/_react.default.createElement("b", null, this.state.instances)), /*#__PURE__*/_react.default.createElement(_appUi.Button, (0, _extends2.default)({}, toggleButtonProps, {
+      }, /*#__PURE__*/_react.default.createElement("b", null, this.state.instances)), "\xA0", /*#__PURE__*/_react.default.createElement(_appUi.Button, (0, _extends2.default)({}, toggleButtonProps, {
         onClick: this.state.showModal
       })), /*#__PURE__*/_react.default.createElement(Modal, (0, _extends2.default)({
         modalProps: this.state

@@ -74,18 +74,22 @@ class Ajax_Handler {
 
 		$elementor = Plugin::elementor();
 		$document = $elementor->documents->get( $post_id );
+		$form = null;
+		$template_id = null;
 
 		if ( $document ) {
 			$form = Module::find_element_recursive( $document->get_elements_data(), $form_id );
 		}
 
 		if ( ! empty( $form['templateID'] ) ) {
-			$template = $elementor->documents->get( $form['templateID'] );
+			$template = Plugin::elementor()->documents->get( $form['templateID'] );
 
-			if ( $template ) {
-				$global_meta = $template->get_elements_data();
-				$form = $global_meta[0];
+			if ( ! $template ) {
+				return false;
 			}
+
+			$template_id = $template->get_id();
+			$form = $template->get_elements_data()[0];
 		}
 
 		if ( empty( $form ) ) {
@@ -98,6 +102,10 @@ class Ajax_Handler {
 		$widget = $elementor->elements_manager->create_element_instance( $form );
 		$form['settings'] = $widget->get_settings_for_display();
 		$form['settings']['id'] = $form_id;
+		$form['settings']['form_post_id'] = $template_id ? $template_id : $post_id;
+
+		// TODO: Should be removed if there is an ability to edit "global widgets"
+		$form['settings']['edit_post_id'] = $post_id;
 
 		$this->current_form = $form;
 
@@ -125,11 +133,30 @@ class Ajax_Handler {
 		$module = Module::instance();
 
 		$actions = $module->get_form_actions();
+		$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
 
 		foreach ( $actions as $action ) {
-			if ( in_array( $action->get_name(), $form['settings']['submit_actions'] ) ) {
-				$action->run( $record, $this );
+			if ( ! in_array( $action->get_name(), $form['settings']['submit_actions'], true ) ) {
+				continue;
 			}
+
+			$exception = null;
+
+			try {
+				$action->run( $record, $this );
+
+				$this->handle_bc_errors( $errors );
+			} catch ( \Exception $e ) {
+				$exception = $e;
+
+				if ( ! in_array( $exception->getMessage(), $this->messages['admin_error'], true ) ) {
+					$this->add_admin_error_message( "{$action->get_label()} {$exception->getMessage()}" );
+				}
+			}
+
+			$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
+
+			do_action( 'elementor_pro/forms/actions/after_run', $action, $exception );
 		}
 
 		$activity_log = $module->get_component( 'activity_log' );
@@ -224,6 +251,27 @@ class Ajax_Handler {
 			'errors' => $this->errors,
 			'data' => $this->data,
 		] );
+	}
+
+	public function get_current_form() {
+		return $this->current_form;
+	}
+
+	/**
+	 * BC: checks if the current action add some errors to the errors array
+	 * if it add an error the "run" method treat it as a failed action.
+	 *
+	 * @param $errors
+	 *
+	 * @throws \Exception
+	 */
+	private function handle_bc_errors( $errors ) {
+		$current_errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
+		$errors_diff = array_diff( $current_errors, $errors );
+
+		if ( count( $errors_diff ) > 0 ) {
+			throw new \Exception( implode( ', ', $errors_diff ) );
+		}
 	}
 
 	public function __construct() {

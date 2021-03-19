@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -94,8 +94,8 @@
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".9f87a4e2747cd21130f2.bundle.js";
-/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".2f8aa69eb835a7705004.bundle.js";
-/******/ 			if (chunkId === "vendors-node_modules_babel_runtime-corejs2_helpers_asyncToGenerator_js-node_modules_babel_run-fdf909") return "555de94d3d45395fb64c.bundle.js";
+/******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".9ac8fdd1db8d93856f8c.bundle.js";
+/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".e95c45b7d46e0a612b7d.bundle.js";
 /******/ 			if (chunkId === "modules_carousel_assets_js_frontend_handlers_base_js") return "f7edf46ee23c04733c35.bundle.js";
 /******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".4c0492dde4e7dcd5cc9d.bundle.js";
 /******/ 			if (chunkId === "carousel") return "" + chunkId + ".bb4c8274de83e045027f.bundle.js";
@@ -107,7 +107,7 @@
 /******/ 			if (chunkId === "popup") return "" + chunkId + ".578217b3d93e8efb2299.bundle.js";
 /******/ 			if (chunkId === "posts") return "" + chunkId + ".d74d398bbd5332eec332.bundle.js";
 /******/ 			if (chunkId === "portfolio") return "" + chunkId + ".89b8364078e0e54495a6.bundle.js";
-/******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".9512609e0867a17e5e8a.bundle.js";
+/******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".1bf001f1c2ad8e7e3a5a.bundle.js";
 /******/ 			if (chunkId === "slides") return "" + chunkId + ".a4197378419486376c60.bundle.js";
 /******/ 			if (chunkId === "social") return "" + chunkId + ".3d098e67c2733abd1e00.bundle.js";
 /******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".c73a15dc06cc2ea59a06.bundle.js";

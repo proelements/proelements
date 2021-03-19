@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 .wrap.elementor-admin-page-license form.elementor-license-box {
   max-width: 600px;
   background: white;
@@ -134,6 +134,8 @@ span.font-variations-count {
     padding: 0; }
   .post-type-elementor_font div#elementor-font-custommetabox h2.hndle {
     padding: 0; }
+  .post-type-elementor_font div#elementor-font-custommetabox .handle-actions {
+    display: none; }
 
 .post-type-elementor_font #tagsdiv-elementor_font_type,
 .post-type-elementor_font #minor-publishing-actions,

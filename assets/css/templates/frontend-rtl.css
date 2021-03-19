@@ -4430,3 +4430,6 @@ ol.elementor-toc__list-wrapper {
   color: var(--caption-color);
   margin-top: var(--caption-margin-top);
   text-align: var(--caption-text-align); }
+
+.elementor-payment-button {
+  border: none; }

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["animated-headline"],{
 
 /***/ "../assets/dev/js/frontend/utils/scroll.js":
@@ -285,6 +285,8 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       this.addHighlight();
       this.activateHighlightAnimation();
     }
+
+    this.deactivateScrollListener();
   },
   activateHighlightAnimation: function activateHighlightAnimation() {
     var _this = this;
@@ -319,6 +321,9 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     });
     this.intersectionObservers.startAnimation.element = this.elements.$headline[0];
     this.intersectionObservers.startAnimation.observer.observe(this.intersectionObservers.startAnimation.element);
+  },
+  deactivateScrollListener: function deactivateScrollListener() {
+    this.intersectionObservers.startAnimation.observer.unobserve(this.intersectionObservers.startAnimation.element);
   },
   onInit: function onInit() {
     elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
@@ -502,4 +507,4 @@ __webpack_require__(/*! ./_fix-re-wks */ "../node_modules/core-js/modules/_fix-r
 /***/ })
 
 }]);
-//# sourceMappingURL=animated-headline.2f8aa69eb835a7705004.bundle.js.map
+//# sourceMappingURL=animated-headline.e95c45b7d46e0a612b7d.bundle.js.map

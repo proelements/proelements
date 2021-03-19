@@ -9,6 +9,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Skin_Base as Elementor_Skin_Base;
 use Elementor\Widget_Base;
+use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -863,7 +864,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$optional_attributes_html = $this->get_optional_link_attributes_html();
 
-		$tag = $this->get_instance_value( 'title_tag' );
+		$tag = Utils::validate_html_tag( $this->get_instance_value( 'title_tag' ) );
 		?>
 		<<?php echo $tag; ?> class="elementor-post__title">
 			<a href="<?php echo $this->current_permalink; ?>" <?php echo $optional_attributes_html; ?>>

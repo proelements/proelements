@@ -8,6 +8,7 @@ use ElementorPro\Modules\QueryControl\Module as Query_Module;
 use Elementor\Repeater;
 use ElementorPro\Core\Utils;
 use Elementor\Group_Control_Typography;
+use ElementorPro\Core\Utils as Pro_Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -615,7 +616,7 @@ class Sitemap extends Base {
 			$items_html .= $this->sitemap_html_post_types( $item_type, $hierarchical, $max_depth, $query_args );
 		}
 
-		$title = empty( $title ) ? '' : sprintf( '<%s %s>%s</%1$s>', $title_tag, $this->get_render_attribute_string( $title_tag . $item_type ), $title );
+		$title = empty( $title ) ? '' : sprintf( '<%s %s>%s</%1$s>', Pro_Utils::validate_html_tag( $title_tag ), $this->get_render_attribute_string( $title_tag . $item_type ), $title );
 
 		$html = sprintf( '<div %s>%s', $this->get_render_attribute_string( 'section' . $item_type ), $title );
 		if ( empty( $items_html ) ) {

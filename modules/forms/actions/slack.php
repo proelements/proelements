@@ -199,7 +199,7 @@ class Slack extends Action_Base {
 		] );
 
 		if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-			$ajax_handler->add_admin_error_message( 'Slack Webhook Error' );
+			throw new \Exception( __( 'Webhook Error', 'elementor-pro' ) );
 		}
 	}
 }

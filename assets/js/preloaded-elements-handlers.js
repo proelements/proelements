@@ -1,4 +1,4 @@
-/*! pro-elements - v3.1.1 - 23-02-2021 */
+/*! pro-elements - v3.2.0 - 14-03-2021 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
 /***/ "../node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js":
@@ -1651,6 +1651,8 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       this.addHighlight();
       this.activateHighlightAnimation();
     }
+
+    this.deactivateScrollListener();
   },
   activateHighlightAnimation: function activateHighlightAnimation() {
     var _this = this;
@@ -1685,6 +1687,9 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     });
     this.intersectionObservers.startAnimation.element = this.elements.$headline[0];
     this.intersectionObservers.startAnimation.observer.observe(this.intersectionObservers.startAnimation.element);
+  },
+  deactivateScrollListener: function deactivateScrollListener() {
+    this.intersectionObservers.startAnimation.observer.unobserve(this.intersectionObservers.startAnimation.element);
   },
   onInit: function onInit() {
     elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
@@ -5534,6 +5539,12 @@ exports.default = void 0;
 
 var _keys = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/keys */ "../node_modules/@babel/runtime-corejs2/core-js/object/keys.js"));
 
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "../node_modules/@babel/runtime/regenerator/index.js"));
+
+__webpack_require__(/*! regenerator-runtime/runtime */ "../node_modules/regenerator-runtime/runtime.js");
+
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/asyncToGenerator */ "../node_modules/@babel/runtime-corejs2/helpers/asyncToGenerator.js"));
+
 __webpack_require__(/*! core-js/modules/es6.array.find */ "../node_modules/core-js/modules/es6.array.find.js");
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
@@ -5783,29 +5794,70 @@ var _default = /*#__PURE__*/function (_elementorModules$fro) {
     value: function runElementsHandlers() {}
   }, {
     key: "onInit",
-    value: function onInit() {
-      (0, _get2.default)((0, _getPrototypeOf2.default)(_default.prototype), "onInit", this).call(this);
-      this.initModal();
+    value: function () {
+      var _onInit = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                (0, _get2.default)((0, _getPrototypeOf2.default)(_default.prototype), "onInit", this).call(this); // In case that the library was not loaded, it indicates a Core version that enables dynamic loading.
 
-      if (this.isEdit) {
-        this.showModal();
-        return;
+                if (window.DialogsManager) {
+                  _context.next = 4;
+                  break;
+                }
+
+                _context.next = 4;
+                return elementorFrontend.utils.assetsLoader.load('script', 'dialog');
+
+              case 4:
+                this.initModal();
+
+                if (!this.isEdit) {
+                  _context.next = 8;
+                  break;
+                }
+
+                this.showModal();
+                return _context.abrupt("return");
+
+              case 8:
+                this.$element.show().remove();
+                this.elementHTML = this.$element[0].outerHTML;
+
+                if (!elementorFrontend.isEditMode()) {
+                  _context.next = 12;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 12:
+                if (!(elementorFrontend.isWPPreviewMode() && elementorFrontend.config.post.id === this.getSettings('id'))) {
+                  _context.next = 15;
+                  break;
+                }
+
+                this.showModal();
+                return _context.abrupt("return");
+
+              case 15:
+                this.startTiming();
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onInit() {
+        return _onInit.apply(this, arguments);
       }
 
-      this.$element.show().remove();
-      this.elementHTML = this.$element[0].outerHTML;
-
-      if (elementorFrontend.isEditMode()) {
-        return;
-      }
-
-      if (elementorFrontend.isWPPreviewMode() && elementorFrontend.config.post.id === this.getSettings('id')) {
-        this.showModal();
-        return;
-      }
-
-      this.startTiming();
-    }
+      return onInit;
+    }()
   }, {
     key: "onSettingsChange",
     value: function onSettingsChange(model) {
@@ -7902,6 +7954,8 @@ exports.default = _default;
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
 var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
 
 _Object$defineProperty(exports, "__esModule", {
@@ -7912,39 +7966,84 @@ exports.default = void 0;
 
 __webpack_require__(/*! core-js/modules/es6.array.find */ "../node_modules/core-js/modules/es6.array.find.js");
 
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "../node_modules/@babel/runtime/regenerator/index.js"));
+
+__webpack_require__(/*! regenerator-runtime/runtime */ "../node_modules/regenerator-runtime/runtime.js");
+
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/asyncToGenerator */ "../node_modules/@babel/runtime-corejs2/helpers/asyncToGenerator.js"));
+
 var _default = elementorModules.frontend.handlers.Base.extend({
-  onInit: function onInit() {
-    if (!this.isActive()) {
-      return;
+  onInit: function () {
+    var _onInit = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+      var elementSettings,
+          classes,
+          isCustomURL,
+          shareLinkSettings,
+          _args = arguments;
+      return _regenerator.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (this.isActive()) {
+                _context.next = 2;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 2:
+              elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, _args);
+              elementSettings = this.getElementSettings(), classes = this.getSettings('classes'), isCustomURL = elementSettings.share_url && elementSettings.share_url.url, shareLinkSettings = {
+                classPrefix: classes.shareLinkPrefix
+              };
+
+              if (isCustomURL) {
+                shareLinkSettings.url = elementSettings.share_url.url;
+              } else {
+                shareLinkSettings.url = location.href;
+                shareLinkSettings.title = elementorFrontend.config.post.title;
+                shareLinkSettings.text = elementorFrontend.config.post.excerpt;
+                shareLinkSettings.image = elementorFrontend.config.post.featuredImage;
+              }
+              /**
+               * First check of the ShareLink is for detecting if the optimized mode is disabled and the library should be loaded dynamically.
+               * Checking if the assetsLoader exist, in case that the library is not loaded due to Ad Blockers and not because the optimized mode is enabled.
+               */
+
+
+              if (!(!window.ShareLink && elementorFrontend.utils.assetsLoader)) {
+                _context.next = 8;
+                break;
+              }
+
+              _context.next = 8;
+              return elementorFrontend.utils.assetsLoader.load('script', 'share-link');
+
+            case 8:
+              if (this.elements.$shareButton.shareLink) {
+                _context.next = 10;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 10:
+              this.elements.$shareButton.shareLink(shareLinkSettings);
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function onInit() {
+      return _onInit.apply(this, arguments);
     }
 
-    elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
-    var elementSettings = this.getElementSettings(),
-        classes = this.getSettings('classes'),
-        isCustomURL = elementSettings.share_url && elementSettings.share_url.url,
-        shareLinkSettings = {
-      classPrefix: classes.shareLinkPrefix
-    };
-
-    if (isCustomURL) {
-      shareLinkSettings.url = elementSettings.share_url.url;
-    } else {
-      shareLinkSettings.url = location.href;
-      shareLinkSettings.title = elementorFrontend.config.post.title;
-      shareLinkSettings.text = elementorFrontend.config.post.excerpt;
-      shareLinkSettings.image = elementorFrontend.config.post.featuredImage;
-    }
-    /**
-     * Ad Blockers may block the share script. (/assets/lib/social-share/social-share.js).
-     */
-
-
-    if (!this.elements.$shareButton.shareLink) {
-      return;
-    }
-
-    this.elements.$shareButton.shareLink(shareLinkSettings);
-  },
+    return onInit;
+  }(),
   getDefaultSettings: function getDefaultSettings() {
     return {
       selectors: {

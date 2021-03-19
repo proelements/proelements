@@ -1,5 +1,26 @@
 # PRO Elements - by PROElements.org
 
+#### 3.2.0 - 2021-03-14
+* New: PayPal Button widget - Collect PayPal payments directly from your site
+* Experiment: Submissions - Save all of your form submissions in one place ([#1686](https://github.com/elementor/elementor/issues/1686))
+* Tweak: Added Stay In Column option to Inner Section element ([#7956](https://github.com/elementor/elementor/issues/7956))
+* Tweak: Adjusted 'Max Height' control range in Table of Contents widget
+* Tweak: Changed descriptive text in Create Custom Code screen
+* Tweak: Added support for dynamic capabilities in Code Highlight widget
+* Tweak: Added support for future load on demand for `share-link` library
+* Tweak: Added support for future load on demand for `dialog` library in Popup
+* Tweak: Allow overwriting the assets URL when using a mirror domain
+* Fix: Animation was triggered multiple times when accessing the viewport in certain cases in Animated Headline widget ([#13951](https://github.com/elementor/elementor/issues/13951))
+* Fix: Location is not being updated after a Custom Code snippet is published ([#13971](https://github.com/elementor/elementor/issues/13971))
+* Fix: Custom Fonts CSS files were not updated after regenerating CSS files
+* Fix: Conditions modal is not responsive in Custom Code
+* Fix: Empty order buttons are displayed in Custom Fonts screen
+* Fix: Typo in 'Reply To' Email action after submit placeholder in Forms widget
+* Fix: Unnecessary Save Draft button in Custom Code
+* Fix: RTL glitches in Custom Code
+* Fix: Sanitized options in the editor to enforce better security policies
+* Deprecated: See all deprecations to this version in our ([Developers Deprecations Post](https://developers.elementor.com/v3-2-planned-deprecations/))
+
 #### 3.1.1 - 2021-02-23
 * Tweak: Adjusted 'Max Height' control range in Table of Contents widget
 * Fix: Popup event handler is undefined ([https://github.com/elementor/elementor/issues/11475](#11475), [https://github.com/elementor/elementor/issues/10690](#10690))

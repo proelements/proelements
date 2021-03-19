@@ -181,23 +181,19 @@ class Mailchimp extends Integration_Base {
 			$api_key = $form_settings['mailchimp_api_key'];
 		}
 
-		try {
-			$handler = new Mailchimp_Handler( $api_key );
+		$handler = new Mailchimp_Handler( $api_key );
 
-			$subscriber['status_if_new'] = 'yes' === $form_settings['mailchimp_double_opt_in'] ? 'pending' : 'subscribed';
-			$subscriber['status'] = 'subscribed';
+		$subscriber['status_if_new'] = 'yes' === $form_settings['mailchimp_double_opt_in'] ? 'pending' : 'subscribed';
+		$subscriber['status'] = 'subscribed';
 
-			$end_point = sprintf( 'lists/%s/members/%s', $form_settings['mailchimp_list'], md5( strtolower( $subscriber['email_address'] ) ) );
+		$end_point = sprintf( 'lists/%s/members/%s', $form_settings['mailchimp_list'], md5( strtolower( $subscriber['email_address'] ) ) );
 
-			$response = $handler->post( $end_point, $subscriber, [
-				'method' => 'PUT', // Add or Update
-			] );
+		$response = $handler->post( $end_point, $subscriber, [
+			'method' => 'PUT', // Add or Update
+		] );
 
-			if ( 200 !== $response['code'] ) {
-				$ajax_handler->add_admin_error_message( Ajax_Handler::SERVER_ERROR );
-			}
-		} catch ( \Exception $exception ) {
-			$ajax_handler->add_admin_error_message( 'MailChimp ' . $exception->getMessage() );
+		if ( 200 !== $response['code'] ) {
+			throw new \Exception( Ajax_Handler::SERVER_ERROR );
 		}
 	}
 

@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\CodeHighlight\Widgets;
 
+use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
 use ElementorPro\Base\Base_Widget;
@@ -126,6 +127,12 @@ class Code_Highlight extends Base_Widget {
 				'label' => __( 'Code', 'elementor-pro' ),
 				'type' => Controls_Manager::CODE,
 				'default' => 'console.log( \'Code is Poetry\' );',
+				'dynamic' => [
+					'active' => true,
+					'categories' => [
+						TagsModule::TEXT_CATEGORY,
+					],
+				],
 			]
 		);
 

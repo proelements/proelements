@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Utils {
-
 	public static function get_public_post_types( $args = [] ) {
 		$post_type_args = [
 			// Default is the value $public.
@@ -296,5 +295,37 @@ class Utils {
 		}
 
 		return $path;
+	}
+
+	/**
+	 * Validate an HTML tag against a safe allowed list.
+	 *
+	 * TODO: Remove, use core.
+	 *
+	 * @param string $tag
+	 *
+	 * @return string
+	 */
+	public static function validate_html_tag( $tag ) {
+		static $allowed_html_wrapper_tags = [
+			'article',
+			'aside',
+			'div',
+			'footer',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+			'header',
+			'main',
+			'nav',
+			'p',
+			'section',
+			'span',
+		];
+
+		return in_array( strtolower( $tag ), $allowed_html_wrapper_tags ) ? $tag : 'div';
 	}
 }

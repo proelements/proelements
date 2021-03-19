@@ -154,6 +154,64 @@ class Form_Record {
 		$this->fields[ $field_id ][ $property ] = $value;
 	}
 
+	public function get_form_meta( $meta_keys = [] ) {
+		$result = [];
+
+		foreach ( $meta_keys as $metadata_type ) {
+			switch ( $metadata_type ) {
+				case 'date':
+					$result['date'] = [
+						'title' => __( 'Date', 'elementor-pro' ),
+						'value' => date_i18n( get_option( 'date_format' ) ),
+					];
+					break;
+
+				case 'time':
+					$result['time'] = [
+						'title' => __( 'Time', 'elementor-pro' ),
+						'value' => date_i18n( get_option( 'time_format' ) ),
+					];
+					break;
+
+				case 'page_url':
+					$result['page_url'] = [
+						'title' => __( 'Page URL', 'elementor-pro' ),
+						'value' => esc_url_raw( $_POST['referrer'] ),
+					];
+					break;
+
+				case 'page_title':
+					$result['page_title'] = [
+						'title' => __( 'Page Title', 'elementor-pro' ),
+						'value' => sanitize_text_field( $_POST['referer_title'] ),
+					];
+					break;
+
+				case 'user_agent':
+					$result['user_agent'] = [
+						'title' => __( 'User Agent', 'elementor-pro' ),
+						'value' => sanitize_textarea_field( $_SERVER['HTTP_USER_AGENT'] ),
+					];
+					break;
+
+				case 'remote_ip':
+					$result['remote_ip'] = [
+						'title' => __( 'Remote IP', 'elementor-pro' ),
+						'value' => Utils::get_client_ip(),
+					];
+					break;
+				case 'credit':
+					$result['credit'] = [
+						'title' => __( 'Powered by', 'elementor-pro' ),
+						'value' => __( 'Elementor', 'elementor-pro' ),
+					];
+					break;
+			}
+		}
+
+		return $result;
+	}
+
 	private function set_meta() {
 		$form_metadata = $this->form_settings['form_metadata'];
 
@@ -161,50 +219,7 @@ class Form_Record {
 			return;
 		}
 
-		foreach ( $form_metadata as $metadata_type ) {
-			switch ( $metadata_type ) {
-				case 'date':
-					$this->meta['date'] = [
-						'title' => __( 'Date', 'elementor-pro' ),
-						'value' => date_i18n( get_option( 'date_format' ) ),
-					];
-					break;
-
-				case 'time':
-					$this->meta['time'] = [
-						'title' => __( 'Time', 'elementor-pro' ),
-						'value' => date_i18n( get_option( 'time_format' ) ),
-					];
-					break;
-
-				case 'page_url':
-					$this->meta['page_url'] = [
-						'title' => __( 'Page URL', 'elementor-pro' ),
-						'value' => esc_url_raw( $_POST['referrer'] ),
-					];
-					break;
-
-				case 'user_agent':
-					$this->meta['user_agent'] = [
-						'title' => __( 'User Agent', 'elementor-pro' ),
-						'value' => sanitize_textarea_field( $_SERVER['HTTP_USER_AGENT'] ),
-					];
-					break;
-
-				case 'remote_ip':
-					$this->meta['remote_ip'] = [
-						'title' => __( 'Remote IP', 'elementor-pro' ),
-						'value' => Utils::get_client_ip(),
-					];
-					break;
-				case 'credit':
-					$this->meta['credit'] = [
-						'title' => __( 'Powered by', 'elementor-pro' ),
-						'value' => __( 'Elementor', 'elementor-pro' ),
-					];
-					break;
-			}
-		}
+		$this->meta = $this->get_form_meta( $form_metadata );
 	}
 
 	private function set_fields() {

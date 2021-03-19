@@ -119,6 +119,8 @@ span.font-variations-count {
     padding: 0; }
   .post-type-elementor_font div#elementor-font-custommetabox h2.hndle {
     padding: 0; }
+  .post-type-elementor_font div#elementor-font-custommetabox .handle-actions {
+    display: none; }
 
 .post-type-elementor_font #tagsdiv-elementor_font_type,
 .post-type-elementor_font #minor-publishing-actions,
@@ -1183,9 +1185,6 @@ span.font-variations-count {
   z-index: 9999;
   /* After 'eps-modal__overlay'. */ }
 
-.post-conditions-display {
-  margin: 0 2px; }
-
 .post-conditions .spinner {
   margin: 0 10px;
   float: none;
@@ -1293,6 +1292,8 @@ span.font-variations-count {
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field select {
         height: 20px;
         margin-top: 7px; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field select#location {
+        direction: ltr; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field.priority {
         margin-right: auto; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label {
@@ -1316,5 +1317,9 @@ span.font-variations-count {
         height: 100%; }
       #elementor-custom-code .inside .elementor-custom-code-codemirror-holder .elementor-custom-code-codemirror .CodeMirror-sizer {
         min-height: 300px !important; }
+
+.post-type-elementor_snippet #minor-publishing-actions,
+.post-type-elementor_snippet #save-action {
+  display: none; }
 
 /*# sourceMappingURL=custom-code-rtl.css.map */

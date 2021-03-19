@@ -131,8 +131,7 @@ class Mailerlite extends Integration_Base {
 		$subscriber = $this->create_subscriber_object( $record );
 
 		if ( ! $subscriber ) {
-			$ajax_handler->add_admin_error_message( __( 'MailerLite Integration requires an email field', 'elementor-pro' ) );
-			return;
+			new \Exception( __( 'Integration requires an email field', 'elementor-pro' ) );
 		}
 
 		if ( 'default' === $form_settings['mailerlite_api_key_source'] ) {
@@ -141,12 +140,8 @@ class Mailerlite extends Integration_Base {
 			$api_key = $form_settings['mailerlite_custom_api_key'];
 		}
 
-		try {
-			$handler = new Mailerlite_Handler( $api_key );
-			$handler->create_subscriber( $form_settings['mailerlite_group'], $subscriber );
-		} catch ( \Exception $exception ) {
-			$ajax_handler->add_admin_error_message( 'MailerLite ' . $exception->getMessage() );
-		}
+		$handler = new Mailerlite_Handler( $api_key );
+		$handler->create_subscriber( $form_settings['mailerlite_group'], $subscriber );
 	}
 
 	/**

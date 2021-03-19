@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\ThemeElements\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -197,7 +198,7 @@ class Breadcrumbs extends Base {
 			$html_tag = 'p';
 		}
 
-		return $html_tag;
+		return Utils::validate_html_tag( $html_tag );
 	}
 
 	protected function render() {

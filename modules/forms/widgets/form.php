@@ -766,9 +766,9 @@ class Form extends Form_Base {
 				'options' => $actions_options,
 				'render_type' => 'none',
 				'label_block' => true,
-				'default' => [
+				'default' => apply_filters( 'elementor_pro/forms/default_submit_actions', [
 					'email',
-				],
+				] ),
 				'description' => __( 'Add actions that will be performed after a visitor submits the form (e.g. send an email notification). Choosing an action will add its setting below.', 'elementor-pro' ),
 			]
 		);
@@ -2076,10 +2076,17 @@ class Form extends Form_Base {
 			$this->add_render_attribute( 'button', 'id', $instance['button_css_id'] );
 		}
 
+		$referer_title = trim( wp_title( '', false ) );
+
+		if ( ! $referer_title && is_home() ) {
+			$referer_title = get_option( 'blogname' );
+		}
+
 		?>
 		<form class="elementor-form" method="post" <?php echo $this->get_render_attribute_string( 'form' ); ?>>
 			<input type="hidden" name="post_id" value="<?php echo Utils::get_current_post_id(); ?>"/>
 			<input type="hidden" name="form_id" value="<?php echo $this->get_id(); ?>"/>
+			<input type="hidden" name="referer_title" value="<?php echo $referer_title; ?>" />
 
 			<?php if ( is_singular() ) {
 				// `queried_id` may be different from `post_id` on Single theme builder templates.

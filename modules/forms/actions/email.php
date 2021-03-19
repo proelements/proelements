@@ -209,7 +209,7 @@ class Email extends Action_Base {
 			'email_content' => '[all-fields]',
 			'email_from_name' => get_bloginfo( 'name' ),
 			'email_from' => get_bloginfo( 'admin_email' ),
-			'email_reply_to' => 'noreplay@' . Utils::get_site_domain(),
+			'email_reply_to' => 'noreply@' . Utils::get_site_domain(),
 			'email_to_cc' => '',
 			'email_to_bcc' => '',
 		];
@@ -296,7 +296,11 @@ class Email extends Action_Base {
 		do_action( 'elementor_pro/forms/mail_sent', $settings, $record );
 
 		if ( ! $email_sent ) {
-			$ajax_handler->add_error_message( Ajax_Handler::get_default_message( Ajax_Handler::SERVER_ERROR, $settings ) );
+			$message = Ajax_Handler::get_default_message( Ajax_Handler::SERVER_ERROR, $settings );
+
+			$ajax_handler->add_error_message( $message );
+
+			throw new \Exception( $message );
 		}
 	}
 

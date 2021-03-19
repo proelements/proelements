@@ -12,6 +12,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Core\Utils as Pro_Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -1506,7 +1507,7 @@ class Call_To_Action extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$title_tag = $settings['title_tag'];
+		$title_tag = Pro_Utils::validate_html_tag( $settings['title_tag'] );
 		$wrapper_tag = 'div';
 		$button_tag = 'a';
 		$bg_image = '';
@@ -1794,7 +1795,8 @@ class Call_To_Action extends Base_Widget {
 					</div>
 				<# } #>
 				<# if ( settings.title ) { #>
-					<{{ settings.title_tag }} {{{ view.getRenderAttributeString( 'title' ) }}}>{{{ settings.title }}}</{{ settings.title_tag }}>
+					<# var titleTag = elementorPro.validateHTMLTag( settings.title_tag ) #>
+					<{{ titleTag }} {{{ view.getRenderAttributeString( 'title' ) }}}>{{{ settings.title }}}</{{ titleTag }}>
 				<# } #>
 
 				<# if ( settings.description ) { #>

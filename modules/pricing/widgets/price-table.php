@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -1447,7 +1448,7 @@ class Price_Table extends Base_Widget {
 
 		$period_position = $settings['period_position'];
 		$period_element = '<span ' . $this->get_render_attribute_string( 'period' ) . '>' . $settings['period'] . '</span>';
-		$heading_tag = $settings['heading_tag'];
+		$heading_tag = Utils::validate_html_tag( $settings['heading_tag'] );
 
 		$migration_allowed = Icons_Manager::is_migration_allowed();
 		?>
@@ -1633,7 +1634,8 @@ class Price_Table extends Base_Widget {
 			<# if ( settings.heading || settings.sub_heading ) { #>
 				<div class="elementor-price-table__header">
 					<# if ( settings.heading ) { #>
-						<{{ settings.heading_tag }} {{{ view.getRenderAttributeString( 'heading' ) }}}>{{{ settings.heading }}}</{{ settings.heading_tag }}>
+						<# var headingTag = elementorPro.validateHTMLTag( settings.heading_tag ) #>
+						<{{ headingTag }} {{{ view.getRenderAttributeString( 'heading' ) }}}>{{{ settings.heading }}}</{{ headingTag }}>
 					<# } #>
 					<# if ( settings.sub_heading ) { #>
 						<span {{{ view.getRenderAttributeString( 'sub_heading' ) }}}>{{{ settings.sub_heading }}}</span>

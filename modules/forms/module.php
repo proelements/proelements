@@ -1,12 +1,15 @@
 <?php
 namespace ElementorPro\Modules\Forms;
 
+use ElementorPro\Modules\Forms\Data\Controller;
+use Elementor\Core\Experiments\Manager;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Modules\Forms\Actions;
 use ElementorPro\Modules\Forms\Classes;
 use ElementorPro\Modules\Forms\Fields;
 use ElementorPro\Modules\Forms\Controls\Fields_Map;
+use ElementorPro\Modules\Forms\Submissions\Component as Form_Submissions_Component;
 use ElementorPro\Modules\Forms\Controls\Fields_Repeater;
 use ElementorPro\Plugin;
 
@@ -116,6 +119,28 @@ class Module extends Module_Base {
 	}
 
 	/**
+	 * Register submissions
+	 */
+	private function register_submissions_component() {
+		$experiments_manager = Plugin::elementor()->experiments;
+		$name = Form_Submissions_Component::NAME;
+
+		$experiments_manager->add_feature( [
+			'name' => $name,
+			'title' => __( 'Form Submissions', 'elementor-pro' ),
+			'description' => __( 'Never lose another submission! Using “Actions After Submit” you can now choose to save all submissions to an internal database.', 'elementor-pro' ),
+			'release_status' => Manager::RELEASE_STATUS_BETA,
+			'default' => Manager::STATE_ACTIVE,
+		] );
+
+		if ( ! $experiments_manager->is_feature_active( $name ) ) {
+			return;
+		}
+
+		$this->add_component( $name, new Form_Submissions_Component() );
+	}
+
+	/**
 	 * Module constructor.
 	 */
 	public function __construct() {
@@ -138,21 +163,27 @@ class Module extends Module_Base {
 		$this->add_component( 'recaptcha_v3', new Classes\Recaptcha_V3_Handler() );
 		$this->add_component( 'honeypot', new Classes\Honeypot_Handler() );
 
+		$this->register_submissions_component();
+
 		// Actions Handlers
-		$this->add_form_action( 'email', new Actions\Email() );
-		$this->add_form_action( 'email2', new Actions\Email2() );
-		$this->add_form_action( 'redirect', new Actions\Redirect() );
-		$this->add_form_action( 'webhook', new Actions\Webhook() );
-		$this->add_form_action( 'mailchimp', new Actions\Mailchimp() );
-		$this->add_form_action( 'drip', new Actions\Drip() );
-		$this->add_form_action( 'activecampaign', new Actions\Activecampaign() );
-		$this->add_form_action( 'getresponse', new Actions\Getresponse() );
-		$this->add_form_action( 'convertkit', new Actions\Convertkit() );
-		$this->add_form_action( 'mailerlite', new Actions\Mailerlite() );
-		$this->add_form_action( 'slack', new Actions\Slack() );
-		$this->add_form_action( 'discord', new Actions\Discord() );
+		// Will be executed on the "register" action. Some actions need to be register before those actions (e.g: save-to-database).
+		add_action( 'elementor_pro/forms/register_action', function ( Module $forms_module ) {
+			$forms_module->add_form_action( 'email', new Actions\Email() );
+			$forms_module->add_form_action( 'email2', new Actions\Email2() );
+			$forms_module->add_form_action( 'redirect', new Actions\Redirect() );
+			$forms_module->add_form_action( 'webhook', new Actions\Webhook() );
+			$forms_module->add_form_action( 'mailchimp', new Actions\Mailchimp() );
+			$forms_module->add_form_action( 'drip', new Actions\Drip() );
+			$forms_module->add_form_action( 'activecampaign', new Actions\Activecampaign() );
+			$forms_module->add_form_action( 'getresponse', new Actions\Getresponse() );
+			$forms_module->add_form_action( 'convertkit', new Actions\Convertkit() );
+			$forms_module->add_form_action( 'mailerlite', new Actions\Mailerlite() );
+			$forms_module->add_form_action( 'slack', new Actions\Slack() );
+			$forms_module->add_form_action( 'discord', new Actions\Discord() );
+		} );
 
 		// Plugins actions
+		do_action( 'elementor_pro/forms/register_action', $this );
 
 		// MailPoet
 		if ( class_exists( '\WYSIJA' ) ) {
