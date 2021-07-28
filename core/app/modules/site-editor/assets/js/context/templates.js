@@ -46,7 +46,7 @@ export class TemplatesProvider extends BaseContext {
 	importTemplates( { fileName, fileData } ) {
 		return this.executeAction(
 			TemplatesProvider.actions.IMPORT,
-			() => $e.data.create( Templates.signature, { fileName, fileData } )
+			() => $e.data.create( Templates.signature, { fileName, fileData } ),
 		).then( ( response ) => {
 			this.updateTemplatesState( ( prev ) => (
 					{
@@ -58,10 +58,10 @@ export class TemplatesProvider extends BaseContext {
 								}
 
 								return { ...current, [ template.id ]: template };
-							}, {}
+							}, {},
 						),
 					}
-				)
+				),
 			);
 
 			return response;
@@ -71,7 +71,7 @@ export class TemplatesProvider extends BaseContext {
 	deleteTemplate( id ) {
 		return this.executeAction(
 			TemplatesProvider.actions.DELETE,
-			() => $e.data.delete( Templates.signature, { id } )
+			() => $e.data.delete( Templates.signature, { id } ),
 		).then( () => {
 			this.updateTemplatesState( ( prev ) => {
 				const newTemplates = { ...prev };
@@ -86,7 +86,7 @@ export class TemplatesProvider extends BaseContext {
 	updateTemplate( id, args ) {
 		return this.executeAction(
 			TemplatesProvider.actions.UPDATE,
-			() => $e.data.update( Templates.signature, args, { id } )
+			() => $e.data.update( Templates.signature, args, { id } ),
 		).then( ( response ) => {
 			this.updateTemplateItemState( id, response.data );
 		} );
@@ -95,10 +95,10 @@ export class TemplatesProvider extends BaseContext {
 	fetchTemplates() {
 		return this.executeAction(
 			TemplatesProvider.actions.FETCH,
-			() => $e.data.get( Templates.signature )
+			() => $e.data.get( Templates.signature ),
 		).then( ( response ) => {
 			this.updateTemplatesState( () => Object.values( response.data ).reduce(
-				( current, template ) => ( { ...current, [ template.id ]: template } ), {}
+				( current, template ) => ( { ...current, [ template.id ]: template } ), {},
 			), false );
 		} );
 	}

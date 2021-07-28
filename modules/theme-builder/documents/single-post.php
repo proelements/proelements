@@ -15,6 +15,10 @@ class Single_Post extends Single_Base {
 		return __( 'Single Post', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Single Posts', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-single-post';
 	}

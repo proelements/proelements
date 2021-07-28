@@ -2,7 +2,7 @@
 namespace ElementorPro\Modules\Forms\Submissions\Data\Endpoints;
 
 use Elementor\Data\Base\Endpoint;
-use ElementorPro\Core\Utils\Collection;
+use Elementor\Core\Utils\Collection;
 use ElementorPro\Modules\Forms\Submissions\Export\CSV_Export;
 use ElementorPro\Modules\Forms\Submissions\Database\Query;
 

@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
 use Elementor\Controls_Manager;
+use Elementor\Core\App\Modules\ImportExport\Module as Import_Export_Module;
 use Elementor\Modules\Library\Documents\Library_Document;
 use Elementor\TemplateLibrary\Source_Local;
 use Elementor\Utils;
@@ -236,6 +237,67 @@ abstract class Theme_Document extends Library_Document {
 
 		return $url;
 
+	}
+
+	public function get_export_summary() {
+		$summary = parent::get_export_summary();
+
+		$summary['location'] = $this->get_location();
+
+		$theme_builder = Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+
+		$conditions = $theme_builder->get_conditions_manager()->get_document_conditions( $this );
+
+		foreach ( $conditions as $condition ) {
+			if ( 'include' === $condition['type'] && ! $condition['sub_id'] ) {
+				$summary['conditions'][] = $condition;
+
+				break;
+			}
+		}
+
+		return $summary;
+	}
+
+	public function import( array $data ) {
+		parent::import( $data );
+
+		/** @var Module $theme_builder */
+		$theme_builder = Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+
+		$condition = $data['import_settings']['conditions'][0];
+
+		$condition = rtrim( implode( '/', $condition ), '/' );
+
+		$conflicts = $theme_builder->get_conditions_manager()->get_conditions_conflicts_by_location( $condition, $this->get_location() );
+
+		if ( $conflicts ) {
+			/** @var Import_Export_Module $import_export_module */
+			$import_export_module = Plugin::elementor()->app->get_component( 'import-export' );
+
+			$override_conditions = $import_export_module->import->get_settings( 'overrideConditions' );
+
+			if ( ! $override_conditions || ! in_array( $data['id'], $override_conditions, true ) ) {
+				return;
+			}
+
+			foreach ( $conflicts as $template ) {
+				/** @var Theme_Document $template_document */
+				$template_document = Plugin::elementor()->documents->get( $template['template_id'] );
+
+				$template_conditions = $theme_builder->get_conditions_manager()->get_document_conditions( $template_document );
+
+				foreach ( $template_conditions as $index => $template_condition ) {
+					if ( ! $template_conditions['sub_id'] && ! $template_conditions['sub_name'] ) {
+						unset( $template_conditions[ $index ] );
+					}
+				}
+
+				$theme_builder->get_conditions_manager()->save_conditions( $template_document->get_main_id(), $template_conditions );
+			}
+		}
+
+		$theme_builder->get_conditions_manager()->save_conditions( $this->get_main_id(), $data['import_settings']['conditions'] );
 	}
 
 	protected function register_controls() {

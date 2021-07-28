@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\Forms\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
@@ -549,16 +550,22 @@ class Login extends Base_Widget {
 			]
 		);
 
-		$this->add_control(
-			'button_background_color',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-button' => 'background-color: {{VALUE}};',
+				'name' => 'button_background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .elementor-button',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'global' => [
+							'default' => Global_Colors::COLOR_ACCENT,
+						],
+					],
 				],
 			]
 		);
@@ -615,13 +622,17 @@ class Login extends Base_Widget {
 			]
 		);
 
-		$this->add_control(
-			'button_background_hover_color',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .elementor-button:hover' => 'background-color: {{VALUE}};',
+				'name' => 'button_background_hover',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .elementor-button:hover',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
 				],
 			]
 		);
@@ -950,4 +961,8 @@ class Login extends Base_Widget {
 	}
 
 	public function render_plain_content() {}
+
+	public function get_group_name() {
+		return 'forms';
+	}
 }

@@ -10,6 +10,8 @@ export default function AddNew() {
 
 	/**
 	 * An hover element for each site part.
+	 *
+	 * @param {any} props
 	 */
 	const HoverElement = ( props ) => {
 		return (

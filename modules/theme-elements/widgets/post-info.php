@@ -601,7 +601,7 @@ class Post_Info extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-icon-list-icon' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .elementor-icon-list-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-icon-list-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-icon-list-icon svg' => '--e-icon-list-icon-size: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

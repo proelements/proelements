@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Forms\Fields;
 
+use Elementor\Icons_Manager;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
@@ -20,6 +21,16 @@ class Step extends Field_Base {
 	}
 
 	public function render( $item, $item_index, $form ) {
+		$font_icon = '';
+
+		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) && $item['selected_icon']['value'] ) {
+			if ( 'svg' === $item['selected_icon']['library'] ) {
+				$font_icon = Icons_Manager::render_uploaded_svg_icon( $item['selected_icon']['value'] );
+			} else {
+				$font_icon = Icons_Manager::render_font_icon( $item['selected_icon'] );
+			}
+		}
+
 		$form->add_render_attribute( 'step' . $item_index, [
 			'class' => 'e-field-step elementor-hidden',
 			'data-label' => $item['field_label'],
@@ -27,6 +38,7 @@ class Step extends Field_Base {
 			'data-nextButton' => $item['next_button'],
 			'data-iconUrl' => 'svg' === $item['selected_icon']['library'] && $item['selected_icon']['value'] ? $item['selected_icon']['value']['url'] : '',
 			'data-iconLibrary' => 'svg' !== $item['selected_icon']['library'] && $item['selected_icon']['value'] ? $item['selected_icon']['value'] : '',
+			'data-icon' => $font_icon,
 		] );
 
 		echo '<div ' . $form->get_render_attribute_string( 'step' . $item_index ) . '></div>';

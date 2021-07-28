@@ -2,7 +2,7 @@
 namespace ElementorPro\Modules\Forms\Submissions\Database\Repositories;
 
 use Elementor\Core\Base\Base_Object;
-use ElementorPro\Core\Utils\Collection;
+use Elementor\Core\Utils\Collection;
 use ElementorPro\Modules\Forms\Submissions\Database\Entities\Form_Snapshot;
 
 if ( ! defined( 'ABSPATH' ) ) {

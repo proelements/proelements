@@ -24,6 +24,10 @@ abstract class Single_Base extends Archive_Single_Base {
 		return __( 'Single', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Singles', 'elementor-pro' );
+	}
+
 	public static function get_editor_panel_config() {
 		$config = parent::get_editor_panel_config();
 

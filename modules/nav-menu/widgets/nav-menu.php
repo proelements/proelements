@@ -10,6 +10,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Plugin;
+use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -259,20 +260,30 @@ class Nav_Menu extends Base_Widget {
 			]
 		);
 
+		$icon_prefix = Icons_Manager::is_migration_allowed() ? 'fas ' : 'fa ';
+
 		$this->add_control(
-			'indicator',
+			'submenu_icon',
 			[
 				'label' => __( 'Submenu Indicator', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'classic',
-				'options' => [
-					'none' => __( 'None', 'elementor-pro' ),
-					'classic' => __( 'Classic', 'elementor-pro' ),
-					'chevron' => __( 'Chevron', 'elementor-pro' ),
-					'angle' => __( 'Angle', 'elementor-pro' ),
-					'plus' => __( 'Plus', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'separator' => 'before',
+				'default' => [
+					'value' => $icon_prefix . 'fa-caret-down',
+					'library' => 'fa-solid',
 				],
-				'prefix_class' => 'elementor-nav-menu--indicator-',
+				'recommended' => [
+					'fa-solid' => [
+						'chevron-down',
+						'angle-down',
+						'caret-down',
+						'plus',
+					],
+				],
+				'label_block' => false,
+				'skin' => 'inline',
+				'exclude_inline_options' => [ 'svg' ],
+				'frontend_available' => true,
 			]
 		);
 
@@ -1048,6 +1059,17 @@ class Nav_Menu extends Base_Widget {
 		$this->end_controls_section();
 	}
 
+	public function get_frontend_settings() {
+		$frontend_settings = parent::get_frontend_settings();
+
+		// If the saved value is FA4, but the user has upgraded to FA5, the value needs to be converted to FA5.
+		if ( 'fa ' === substr( $frontend_settings['submenu_icon']['value'], 0, 3 ) && Icons_Manager::is_migration_allowed() ) {
+			$frontend_settings['submenu_icon']['value'] = str_replace( 'fa ', 'fas ', $frontend_settings['submenu_icon']['value'] );
+		}
+
+		return $frontend_settings;
+	}
+
 	protected function render() {
 		$available_menus = $this->get_available_menus();
 
@@ -1072,6 +1094,7 @@ class Nav_Menu extends Base_Widget {
 
 		// Add custom filter to handle Nav Menu HTML output.
 		add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
+		add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_tabindex' ], 10, 4 );
 		add_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
 		add_filter( 'nav_menu_item_id', '__return_empty_string' );
 
@@ -1080,10 +1103,12 @@ class Nav_Menu extends Base_Widget {
 
 		// Dropdown Menu.
 		$args['menu_id'] = 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id();
+		$args['menu_type'] = 'dropdown';
 		$dropdown_menu_html = wp_nav_menu( $args );
 
 		// Remove all our custom filters.
 		remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ] );
+		remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_tabindex' ] );
 		remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
 		remove_filter( 'nav_menu_item_id', '__return_empty_string' );
 
@@ -1105,7 +1130,14 @@ class Nav_Menu extends Base_Widget {
 			] );
 		}
 
-		$this->add_render_attribute( 'main-menu', 'role', 'navigation' );
+		$is_migrated = isset( $settings['__fa4_migrated']['submenu_icon'] );
+
+		$this->add_render_attribute( 'main-menu', [
+			'migration_allowed' => Icons_Manager::is_migration_allowed() ? '1' : '0',
+			'migrated' => $is_migrated ? '1' : '0',
+			// Accessibility
+			'role' => 'navigation',
+		] );
 
 		if ( 'dropdown' !== $settings['layout'] ) :
 			$this->add_render_attribute( 'main-menu', 'class', [
@@ -1130,7 +1162,7 @@ class Nav_Menu extends Base_Widget {
 		endif;
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'menu-toggle' ); ?>>
-			<i class="eicon-menu-bar" aria-hidden="true"></i>
+			<i class="eicon-menu-bar" aria-hidden="true" role="presentation"></i>
 			<span class="elementor-screen-only"><?php _e( 'Menu', 'elementor-pro' ); ?></span>
 		</div>
 			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true"><?php echo $dropdown_menu_html; ?></nav>
@@ -1153,6 +1185,20 @@ class Nav_Menu extends Base_Widget {
 			$atts['class'] = $classes;
 		} else {
 			$atts['class'] .= ' ' . $classes;
+		}
+
+		return $atts;
+	}
+
+	public function handle_link_tabindex( $atts, $item, $args ) {
+		$settings = $this->get_active_settings();
+
+		// Add `tabindex = -1` to the links if it's a dropdown, for A11y.
+		$is_dropdown = 'dropdown' === $settings['layout'];
+		$is_dropdown = $is_dropdown || ( isset( $args->menu_type ) && 'dropdown' === $args->menu_type );
+
+		if ( $is_dropdown ) {
+			$atts['tabindex'] = '-1';
 		}
 
 		return $atts;

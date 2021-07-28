@@ -65,13 +65,16 @@ class Mailchimp_Handler {
 		}
 
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+		$code = (int) wp_remote_retrieve_response_code( $response );
 
-		if ( ! is_array( $body ) ) {
+		// Throw an exception if there is no response body.
+		// NOTE: HTTP 204 doesn't have a body.
+		if ( 204 !== $code && ! is_array( $body ) ) {
 			throw new \Exception( 'Mailchimp Error' );
 		}
 
 		return [
-			'code' => (int) wp_remote_retrieve_response_code( $response ),
+			'code' => $code,
 			'body' => $body,
 		];
 	}

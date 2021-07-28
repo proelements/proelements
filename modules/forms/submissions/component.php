@@ -57,7 +57,13 @@ class Component extends Module_Base {
 			'manage_options',
 			self::PAGE_ID,
 			function () {
-				echo '<div id="e-form-submissions"></div>';
+				?>
+					<div class="wrap">
+						<h1 class="wp-heading-inline"><?php echo __( 'Submissions', 'elementor-pro' ); ?></h1>
+						<hr class="wp-header-end">
+						<div id="e-form-submissions"></div>
+					</div>
+				<?php
 			}
 		);
 	}

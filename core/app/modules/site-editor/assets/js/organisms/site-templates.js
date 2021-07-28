@@ -83,7 +83,7 @@ export default function SiteTemplates( props ) {
 							key={ item.id }
 							{ ... item }
 							{ ... siteTemplateConfig }
-							isSelected={ parseInt( props.id ) === item.id }/>
+							isSelected={ parseInt( props.id ) === item.id }/>,
 					)
 				}
 			</CssGrid>

@@ -41,7 +41,7 @@ class Editor extends App {
 				// 'edit_element' is here for Backwards Compatibility for Elementor Pro versions <3.1.0
 				'edit_element' => __( 'Edit %s', 'elementor-pro' ),
 			],
-			'isActive' => true,
+			'isActive' => License_API::is_license_active(),
 			'urls' => [
 				'modules' => ELEMENTOR_PRO_MODULES_URL,
 			],

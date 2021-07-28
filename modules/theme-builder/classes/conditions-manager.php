@@ -111,13 +111,9 @@ class Conditions_Manager {
 			implode( ', ', $conflicted );
 	}
 
-	public function get_conditions_conflicts( $post_id, $condition ) {
-		/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder_module */
+	public function get_conditions_conflicts_by_location( $condition, $location, $ignore_post_id = null ) {
+		/** @var Module $theme_builder_module */
 		$theme_builder_module = Module::instance();
-
-		$document = $theme_builder_module->get_document( $post_id );
-
-		$location = $document->get_location();
 
 		$location_settings = $theme_builder_module->get_locations_manager()->get_location( $location );
 
@@ -135,7 +131,7 @@ class Conditions_Manager {
 					$this->purge_post_from_cache( $template_id );
 				}
 
-				if ( $post_id === $template_id ) {
+				if ( $ignore_post_id === $template_id ) {
 					continue;
 				}
 
@@ -154,6 +150,14 @@ class Conditions_Manager {
 		return $conflicted;
 	}
 
+	public function get_conditions_conflicts( $post_id, $condition ) {
+		/** @var Module $theme_builder_module */
+		$theme_builder_module = Module::instance();
+
+		$document = $theme_builder_module->get_document( $post_id );
+
+		return $this->get_conditions_conflicts_by_location( $condition, $document->get_location(), $post_id );
+	}
 
 	public function ajax_save_theme_template_conditions( $request ) {
 		if ( ! isset( $request['conditions'] ) ) {
@@ -486,8 +490,6 @@ class Conditions_Manager {
 			$document = $theme_builder_module->get_document( $theme_template_id );
 			if ( $document ) {
 				$documents[ $theme_template_id ] = $document;
-			} else {
-				$this->purge_post_from_cache( $theme_template_id );
 			}
 
 			if ( empty( $location_settings['multiple'] ) ) {

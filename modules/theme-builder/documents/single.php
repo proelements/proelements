@@ -15,6 +15,10 @@ class Single extends Single_Base {
 		return __( 'Single', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Singles', 'elementor-pro' );
+	}
+
 	protected function get_remote_library_config() {
 		$config = parent::get_remote_library_config();
 

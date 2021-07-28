@@ -23,6 +23,10 @@ class Footer extends Header_Footer_Base {
 		return __( 'Footer', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Footers', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-footer';
 	}

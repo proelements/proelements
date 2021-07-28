@@ -3,7 +3,7 @@ namespace ElementorPro\Modules\Forms\Submissions\Database;
 
 use Elementor\Core\Base\Base_Object;
 use ElementorPro\Plugin;
-use ElementorPro\Core\Utils\Collection;
+use Elementor\Core\Utils\Collection;
 use Exception;
 use ElementorPro\Modules\Forms\Classes\Action_Base;
 use ElementorPro\Modules\Forms\Submissions\Database\Repositories\Form_Snapshot_Repository;

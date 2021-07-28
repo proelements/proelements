@@ -62,6 +62,16 @@ class Code_Highlight extends Base_Widget {
 		return array_keys( $depends );
 	}
 
+	public function get_css_config() {
+		// This widget is loading its own CSS using get_style_depends.
+		return [
+			'key' => $this->get_group_name(),
+			'version' => ELEMENTOR_PRO_VERSION,
+			'file_path' => '',
+			'data' => [],
+		];
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',

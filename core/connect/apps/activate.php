@@ -3,6 +3,7 @@ namespace ElementorPro\Core\Connect\Apps;
 
 use Elementor\Core\Common\Modules\Connect\Apps\Common_App;
 use ElementorPro\License;
+use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -115,6 +116,13 @@ class Activate extends Common_App {
 		}
 
 		$this->redirect_to_admin_page();
+	}
+
+	protected function get_popup_success_event_data() {
+		return [
+			'templates_access_level' => API::get_library_access_level( 'template' ),
+			'kits_access_level' => API::get_library_access_level( 'kit' ),
+		];
 	}
 
 	protected function get_app_info() {

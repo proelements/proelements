@@ -135,6 +135,16 @@ class Ajax_Handler {
 		$actions = $module->get_form_actions();
 		$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
 
+		/**
+		 * Filters the record before it sent to actions after submit.
+		 *
+		 * @since 3.3.0
+		 *
+		 * @param Form_Record $record The form record.
+		 * @param Ajax_Handler $this The class that handle the submission of the record
+		 */
+		$record = apply_filters( 'elementor_pro/forms/record/actions_before', $record, $this );
+
 		foreach ( $actions as $action ) {
 			if ( ! in_array( $action->get_name(), $form['settings']['submit_actions'], true ) ) {
 				continue;

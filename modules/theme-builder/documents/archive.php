@@ -26,6 +26,10 @@ class Archive extends Archive_Single_Base {
 		return __( 'Archive', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Archives', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-archive';
 	}

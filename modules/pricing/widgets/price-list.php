@@ -581,4 +581,8 @@ class Price_List extends Base_Widget {
 		</ul>
 		<?php
 	}
+
+	public function get_group_name() {
+		return 'pricing';
+	}
 }

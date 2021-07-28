@@ -1,4 +1,4 @@
-/*! pro-elements - v3.2.0 - 14-03-2021 */
+/*! pro-elements - v3.3.1 - 20-06-2021 */
 #elementor-panel-get-pro-elements {
   display: none; }
 
@@ -127,7 +127,8 @@
   .elementor-facebook-widget.fb_iframe_widget span {
     width: 100% !important; }
   .elementor-facebook-widget.fb_iframe_widget iframe {
-    position: relative; }
+    position: relative;
+    width: 100% !important; }
 
 .elementor-facebook-widget.fb-like {
   height: 1px; }

@@ -7,6 +7,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Modules\ShareButtons\Module;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -361,7 +362,7 @@ class Share_Buttons extends Base_Widget {
 				],
 				'size_units' => [ 'em', 'px' ],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-share-btn__icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-share-btn__icon' => '--e-share-buttons-icon-size: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'view!' => 'text',
@@ -603,8 +604,7 @@ class Share_Buttons extends Base_Widget {
 						<div class="<?php echo esc_attr( $button_classes . $social_network_class ); ?>">
 							<?php if ( 'icon' === $settings['view'] || 'icon-text' === $settings['view'] ) : ?>
 								<span class="elementor-share-btn__icon">
-								<i class="<?php echo self::get_network_class( $network_name ); ?>"
-								   aria-hidden="true"></i>
+								<?php echo self::get_share_icon( $network_name ); ?>
 								<span
 									class="elementor-screen-only"><?php echo sprintf( __( 'Share on %s', 'elementor-pro' ), $network_name ); ?></span>
 							</span>
@@ -674,5 +674,24 @@ class Share_Buttons extends Base_Widget {
 			<#  } ); #>
 		</div>
 		<?php
+	}
+
+	private static function get_svg_icon( $icon_value ) {
+		$icon = [
+			'library' => 'fa-brands',
+			'value' => $icon_value,
+		];
+
+		return Icons_Manager::render_font_icon( $icon );
+	}
+
+	private static function get_share_icon( $network_name ) {
+		$network_class = self::get_network_class( $network_name );
+
+		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			return self::get_svg_icon( $network_class );
+		}
+
+		return sprintf( '<i class="%s" aria-hidden="true"></i>', $network_class );
 	}
 }

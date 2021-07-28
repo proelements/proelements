@@ -18,6 +18,10 @@ class Single_Page extends Single_Base {
 		return __( 'Single Page', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Single Pages', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-single-page';
 	}

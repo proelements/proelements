@@ -363,6 +363,31 @@ class Module extends Module_Base {
 		return add_query_arg( 'tabs_group', self::ADMIN_LIBRARY_TAB_GROUP, $base_url );
 	}
 
+	private function add_conflicts_to_import_result( array $result ) {
+		$manifest_data = $result['manifest'];
+
+		if ( empty( $manifest_data['templates'] ) ) {
+			return $result;
+		}
+
+		foreach ( $manifest_data['templates'] as $template_id => $template ) {
+			if ( empty( $template['conditions'] ) ) {
+				continue;
+			}
+
+			foreach ( $template['conditions'] as $condition ) {
+				$condition = rtrim( implode( '/', $condition ), '/' );
+				$conflicts = $this->get_conditions_manager()->get_conditions_conflicts_by_location( $condition, $template['location'] );
+
+				if ( $conflicts ) {
+					$result['conflicts'][ $template_id ] = $conflicts;
+				}
+			}
+		}
+
+		return $result;
+	}
+
 	public function __construct() {
 		parent::__construct();
 
@@ -390,6 +415,9 @@ class Module extends Module_Base {
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'print_post_type_field' ] );
 		add_filter( 'elementor/template-library/create_new_dialog_types', [ $this, 'create_new_dialog_types' ] );
 		add_filter( 'views_edit-' . Source_Local::CPT, [ $this, 'print_new_theme_builder_promotion' ], 9 );
+		add_filter( 'elementor/import/stage_1/result', function( array $result ) {
+			return $this->add_conflicts_to_import_result( $result );
+		} );
 
 		// Common
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );

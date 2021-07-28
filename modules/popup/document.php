@@ -40,6 +40,10 @@ class Document extends Theme_Section_Document {
 		return __( 'Popup', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Popups', 'elementor-pro' );
+	}
+
 	public function get_display_settings() {
 		if ( ! $this->display_settings ) {
 			$settings = $this->get_display_settings_data();
@@ -121,6 +125,25 @@ class Document extends Theme_Section_Document {
 		$settings['timing'] = $display_settings['timing']->get_frontend_settings();
 
 		return $settings;
+	}
+
+	public function get_export_data() {
+		$data = parent::get_export_data();
+
+		$display_settings = $this->get_display_settings();
+
+		$data['display_settings'] = [
+			'triggers' => $display_settings['triggers']->get_frontend_settings(),
+			'timing' => $display_settings['timing']->get_frontend_settings(),
+		];
+
+		return $data;
+	}
+
+	public function import( array $data ) {
+		parent::import( $data );
+
+		$this->save_display_settings_data( $data['display_settings'] );
 	}
 
 	protected function register_controls() {

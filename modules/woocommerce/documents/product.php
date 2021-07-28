@@ -28,6 +28,10 @@ class Product extends Single_Base {
 		return __( 'Single Product', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Single Products', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-single-product';
 	}

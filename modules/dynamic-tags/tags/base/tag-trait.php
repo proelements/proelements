@@ -11,6 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 trait Tag_Trait {
 
 	public function is_editable() {
-		return true;
+		return License_API::is_license_active();
 	}
 }

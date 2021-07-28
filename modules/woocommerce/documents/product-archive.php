@@ -27,6 +27,10 @@ class Product_Archive extends Archive {
 		return __( 'Products Archive', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Products Archives', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-products';
 	}

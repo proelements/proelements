@@ -19,6 +19,10 @@ class Search_Results extends Archive {
 		return __( 'Search Results', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Search Results', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-search-results';
 	}

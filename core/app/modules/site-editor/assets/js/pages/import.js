@@ -9,12 +9,10 @@ export default function Import() {
 		isUploading = React.useMemo( () => isImport && action.loading, [ action ] ),
 		hasError = React.useMemo( () => isImport && action.error, [ action ] );
 
-	const upload = React.useCallback( ( files ) => {
+	const upload = React.useCallback( ( file ) => {
 		if ( isUploading ) {
 			return;
 		}
-
-		const file = files[ 0 ];
 
 		readFile( file )
 			.then( ( fileData ) => importTemplates( { fileName: file.name, fileData } ) )
@@ -59,6 +57,7 @@ export default function Import() {
 				secondaryText={ __( 'or', 'elementor-pro' ) }
 				onFileSelect={ upload }
 				isLoading={ isUploading }
+				filetypes={ [ 'zip', 'json' ] }
 			/>
 		</section>
 	);

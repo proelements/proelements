@@ -19,6 +19,10 @@ class Error_404 extends Single_Base {
 		return __( 'Error 404', 'elementor-pro' );
 	}
 
+	public static function get_plural_title() {
+		return __( 'Error 404', 'elementor-pro' );
+	}
+
 	protected static function get_site_editor_icon() {
 		return 'eicon-error-404';
 	}

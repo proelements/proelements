@@ -1,5 +1,72 @@
 # PRO Elements - by PROElements.org
 
+#### 3.3.1 - 2021-06-20
+* Tweak: Added support for more Theme Builder display conditions in Export / Import experiment
+* Tweak: Adjusted License page heading structure for future feature
+* Tweak: Adjusted Font Awesome icon for allowing support for future feature
+* Fix: `frontend.min.js` file size increased in Elementor Pro 3.3.0 ([#15278](https://github.com/elementor/elementor/issues/15278))
+* Fix: Prevent conditions from being reset when object cache is enabled in site ([#13299](https://github.com/elementor/elementor/issues/13299))
+* Fix: Custom Code publish modal responsiveness issues ([#14519](https://github.com/elementor/elementor/issues/14519))
+* Fix: Populating fields with options programmatically doesn't appear in Submissions screen ([#10671](https://github.com/elementor/elementor/issues/10671))
+* Fix: Large images are not shown on the Image Carousel widget when set via Toolset dynamic tag
+* Fix: Enable inline editing to the inner content tabs in Video Playlist widget
+* Fix: Clicking on the video list doesn't play videos properly in Video Playlist widget
+* Fix: Hide Play Icon control when Image overlay is toggled off in Video Playlist widget
+* Fix: Removed extra space below the player when viewing from mobile view in Video Playlist widget
+* Fix: Import button is not working properly in Theme Builder interface
+* Fix: Preview Dynamic Content as control is not updating preview and throws an error in Popup Builder
+
+#### 3.3.0 - 2021-06-08
+* New: Video Playlist widget - Add Engaging Video Content to Your Website ([#11859](https://github.com/elementor/elementor/issues/11859), [#7803](https://github.com/elementor/elementor/issues/7803))
+* New: Hotspot widget - Create Interactive Images With Contextually Relevant Information ([#7282](https://github.com/elementor/elementor/issues/7282), [#2768](https://github.com/elementor/elementor/issues/2768))
+* Tweak: Accessibility improvements for sub-menus in Nav Menu widget ([#13859](https://github.com/elementor/elementor/issues/13859), [#13810](https://github.com/elementor/elementor/issues/13810))
+* Tweak: MailChimp action after submit can now add new tags to existing subscribers in Forms widget ([#11111](https://github.com/elementor/elementor/issues/11111))
+* Tweak: Added `elementor_pro/forms/record/actions_before` to filter the record before it sent to Actions After Submit in Forms widget ([#14261](https://github.com/elementor/elementor/issues/14261))
+* Tweak: Yoast SEO breadcrumbs widget can be used in Elementor without the need of enabling them in Yoast setting
+* Tweak: Added future support for widgets CSS conditional loading ([#10329](https://github.com/elementor/elementor/issues/10329), [#14229](https://github.com/elementor/elementor/issues/14229))
+* Tweak: Added future support for Sticky JS library conditional loading
+* Tweak: Added future support for Import / Export experiment
+* Tweak: Preparations and fixes for Import Export Experiment in Pro version
+* Tweak: Added gradient button capabilities to Login widget buttons
+* Tweak: Added gradient button capabilities to Slides widget button
+* Tweak: Added gradient button capabilities to Price Table widget button
+* Tweak: Added gradient button capabilities to Flip Box widget button
+* Tweak: Added Code Highlight widget Developers Documentation
+* Tweak: Adjusted Submissions page for future updates
+* Tweak: Added `em` and `%` units for padding control in Carousel widgets
+* Tweak: Shorten currency name to currency symbol in PayPal button widget
+* Fix: Custom Fonts URLs should be replaced when replace URL is triggered ([#7376](https://github.com/elementor/elementor/issues/7376), [#10382](https://github.com/elementor/elementor/issues/10382))
+* Fix: The currency symbol size changed in the Price Table widget if enabling sale ([#13519](https://github.com/elementor/elementor/issues/13519))
+* Fix: Nav Menu widget is not loading Font Awesome submenu icons ([#9907](https://github.com/elementor/elementor/issues/9907))
+* Fix: Hamburger toggle is not working in Nav menu widget
+* Fix: Activation bug for IDN domains
+* Fix: Conditions modal responsive glitches in Custom Code
+* Fix: Duplicated strings in Custom Code module
+* Fix: Enable resize option for code input field in Custom Code
+* Fix: “Save & Close “button in Custom Code's Conditions modal was not visible on small screen sizes
+* Fix: Removing a column from a section in the navigator resulted in an empty section
+* Fix: Recommend option is cut If the layout is not "Standard" in the Facebook Button widget
+* Fix: Video item does not play without adding an image in Media Carousel widget
+* Fix: `search-plus` icon missing from panel in Media Carousel widget
+* Fix: UI hover state glitch in Media Carousel widget
+* Fix: PHP notice was thrown when trying to import a kit without overrideConditions parameter in Kit Import flow
+* Fix: Templates conditions not imported if there are no conflicts in Import Export Experiment
+* Fix: Non english values are not encoded properly on Submissions export
+* Fix: Theme Builder import is not working properly
+* Fix: UI glitch when no global widgets were found in Editor Panel
+* Deprecated: See all deprecations to this version in our [Developers Deprecations Post](https://developers.elementor.com/v3-3-planned-deprecations/)
+
+#### 3.2.2 - 2021-05-05
+* Tweak: Added support for Expert tier templates in Templates Library
+* Tweak: Updated compatibility tag to support Elementor v3.2.x
+* Tweak: Added compatibility for future Library improvements
+* Fix: Toolset image dynamic field is not working with Gallery widget
+
+#### 3.2.1 - 2021-03-21
+* Tweak: Added strings context in PayPal button and Price Table widgets
+* Tweak: Added support for future Import / Export Kit feature
+* Fix: Submissions with over than 191 characters weren't indexed properly
+
 #### 3.2.0 - 2021-03-14
 * New: PayPal Button widget - Collect PayPal payments directly from your site
 * Experiment: Submissions - Save all of your form submissions in one place ([#1686](https://github.com/elementor/elementor/issues/1686))

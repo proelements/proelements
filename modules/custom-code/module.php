@@ -107,8 +107,8 @@ class Module extends Module_Base {
 
 	private function register_custom_post_type() {
 		$labels = [
-			'name' => _x( 'Custom code', 'Template Library', 'elementor-pro' ),
-			'singular_name' => _x( 'Custom code', 'Template Library', 'elementor-pro' ),
+			'name' => __( 'Custom Code', 'elementor-pro' ),
+			'singular_name' => __( 'Custom Code', 'elementor-pro' ),
 			'add_new' => __( 'Add new', 'elementor-pro' ),
 			'add_new_item' => __( 'New code', 'elementor-pro' ),
 			'edit_item' => __( 'Edit code', 'elementor-pro' ),
@@ -285,7 +285,7 @@ class Module extends Module_Base {
 	}
 
 	private function add_admin_menu() {
-		$menu_title = _x( 'Custom Code', 'Custom Code', 'elementor-pro' );
+		$menu_title = __( 'Custom Code', 'elementor-pro' );
 		add_submenu_page(
 			Settings::PAGE_ID,
 			$menu_title,
@@ -310,15 +310,20 @@ class Module extends Module_Base {
 	}
 
 	private function maybe_render_blank_state( $which ) {
-		/** @var Source_Local $source */
-		$source = Plugin::elementor()->templates_manager->get_source( 'local' );
+		$counts = (array) wp_count_posts( self::CPT );
+		unset( $counts['auto-draft'] );
 
-		return $source->maybe_render_blank_state( $which, [
-			'post_type' => self::DOCUMENT_TYPE,
-			'cpt' => self::CPT,
-			'description' => __( 'Add pixels, meta tags and any other scripts to your site.<br /><a target="_blank" href="https://go.elementor.com/wp-dash-custom-code">Learn more about adding custom code</a>', 'elementor-pro' ),
-			'href' => esc_url( admin_url( '/post-new.php?post_type=' . self::CPT ) ),
-		] );
+		if ( ! array_sum( $counts ) ) {
+			/** @var Source_Local $source */
+			$source = Plugin::elementor()->templates_manager->get_source( 'local' );
+
+			return $source->maybe_render_blank_state( $which, [
+				'post_type' => self::DOCUMENT_TYPE,
+				'cpt' => self::CPT,
+				'description' => __( 'Add pixels, meta tags and any other scripts to your site.<br /><a target="_blank" href="https://go.elementor.com/wp-dash-custom-code">Learn more about adding custom code</a>', 'elementor-pro' ),
+				'href' => esc_url( admin_url( '/post-new.php?post_type=' . self::CPT ) ),
+			] );
+		}
 	}
 
 	private function manage_posts_columns( $columns ) {

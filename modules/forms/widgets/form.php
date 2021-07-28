@@ -2419,4 +2419,8 @@ class Form extends Form_Base {
 		</form>
 		<?php
 	}
+
+	public function get_group_name() {
+		return 'forms';
+	}
 }

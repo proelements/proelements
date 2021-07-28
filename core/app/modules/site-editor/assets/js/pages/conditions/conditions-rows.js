@@ -38,7 +38,7 @@ export default function ConditionsRows( props ) {
 				/>
 			</div>
 			<ConditionConflicts conflicts={ condition.conflictErrors }/>
-		</div>
+		</div>,
 	);
 
 	const isSaving = action.current === ConditionsProvider.actions.SAVE && action.loading;

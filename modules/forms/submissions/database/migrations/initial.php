@@ -12,13 +12,13 @@ class Initial extends Base_Migration {
 
 		$e_submission_table = "CREATE TABLE `{$this->query->get_table_submissions()}` (
 			id bigint(20) unsigned auto_increment primary key,
-			type varchar(255) null,
-			hash_id varchar(255) not null,
+			type varchar(60) null,
+			hash_id varchar(60) not null,
 			main_meta_id bigint(20) unsigned not null comment 'Id of main field. to represent the main meta field',
 			post_id bigint(20) unsigned not null,
 			referer varchar(500) not null,
-			element_id varchar(255) not null,
-			form_name varchar(255) not null,
+			element_id varchar(20) not null,
+			form_name varchar(60) not null,
 			campaign_id bigint(20) unsigned not null,
 			user_id bigint(20) unsigned null,
 			user_ip varchar(46) not null,
@@ -37,15 +37,15 @@ class Initial extends Base_Migration {
 		$e_submission_values_table = "CREATE TABLE `{$this->query->get_table_submissions_values()}` (
 			id bigint(20) unsigned auto_increment primary key,
 			submission_id bigint(20) unsigned not null default 0,
-			`key` varchar(255) null,
+			`key` varchar(60) null,
 			value longtext null
 		) {$charset_collate};";
 
 		$e_submission_actions_log_table = "CREATE TABLE `{$this->query->get_table_form_actions_log()}` (
 			id bigint(20) unsigned auto_increment primary key,
 			submission_id bigint(20) unsigned not null,
-			action_name varchar(255) not null,
-			action_label varchar(255) null,
+			action_name varchar(60) not null,
+			action_label varchar(60) null,
 			status varchar(20) not null,
 			log text null,
 			created_at_gmt datetime not null,
