@@ -111,17 +111,17 @@ class Module extends Module_Base {
 	public function localize_settings( $settings ) {
 		$settings = array_replace_recursive( $settings, [
 			'i18n' => [
-				'publish_settings' => __( 'Publish Settings', 'elementor-pro' ),
-				'conditions' => __( 'Conditions', 'elementor-pro' ),
-				'display_conditions' => __( 'Display Conditions', 'elementor-pro' ),
-				'choose' => __( 'Choose', 'elementor-pro' ),
-				'add_condition' => __( 'Add Condition', 'elementor-pro' ),
-				'conditions_title' => __( 'Where Do You Want to Display Your %s?', 'elementor-pro' ),
-				'conditions_description' => __( 'Set the conditions that determine where your %s is used throughout your site.', 'elementor-pro' ) . '<br>' . __( 'For example, choose \'Entire Site\' to display the template across your site.', 'elementor-pro' ),
-				'conditions_publish_screen_description' => __( 'Apply current template to these pages.', 'elementor-pro' ),
-				'save_and_close' => __( 'Save & Close', 'elementor-pro' ),
-				'open_site_editor' => __( 'Open Site Editor', 'elementor-pro' ),
-				'view_live_site' => __( 'View Live Site', 'elementor-pro' ),
+				'publish_settings' => esc_html__( 'Publish Settings', 'elementor-pro' ),
+				'conditions' => esc_html__( 'Conditions', 'elementor-pro' ),
+				'display_conditions' => esc_html__( 'Display Conditions', 'elementor-pro' ),
+				'choose' => esc_html__( 'Choose', 'elementor-pro' ),
+				'add_condition' => esc_html__( 'Add Condition', 'elementor-pro' ),
+				'conditions_title' => esc_html__( 'Where Do You Want to Display Your %s?', 'elementor-pro' ),
+				'conditions_description' => esc_html__( 'Set the conditions that determine where your %s is used throughout your site.', 'elementor-pro' ) . '<br>' . esc_html__( 'For example, choose \'Entire Site\' to display the template across your site.', 'elementor-pro' ),
+				'conditions_publish_screen_description' => esc_html__( 'Apply current template to these pages.', 'elementor-pro' ),
+				'save_and_close' => esc_html__( 'Save & Close', 'elementor-pro' ),
+				'open_site_editor' => esc_html__( 'Open Site Editor', 'elementor-pro' ),
+				'view_live_site' => esc_html__( 'View Live Site', 'elementor-pro' ),
 			],
 		] );
 
@@ -193,17 +193,17 @@ class Module extends Module_Base {
 		?>
 		<div id="elementor-new-template__form__location__wrapper" class="elementor-form-field">
 			<label for="elementor-new-template__form__location" class="elementor-form-field__label">
-				<?php echo __( 'Select a Location', 'elementor-pro' ); ?>
+				<?php echo esc_html__( 'Select a Location', 'elementor-pro' ); ?>
 			</label>
 			<div class="elementor-form-field__select__wrapper">
 				<select id="elementor-new-template__form__location" class="elementor-form-field__select" name="meta_location">
 					<option value="">
-						<?php echo __( 'Select...', 'elementor-pro' ); ?>
+						<?php echo esc_html__( 'Select...', 'elementor-pro' ); ?>
 					</option>
 					<?php
 
 					foreach ( $locations as $location => $settings ) {
-						echo sprintf( '<option value="%1$s">%2$s</option>', $location, $settings['label'] );
+						echo sprintf( '<option value="%1$s">%2$s</option>', esc_html( $location ), esc_html( $settings['label'] ) );
 					}
 					?>
 				</select>
@@ -223,12 +223,16 @@ class Module extends Module_Base {
 		?>
 		<div id="elementor-new-template__form__post-type__wrapper" class="elementor-form-field">
 			<label for="elementor-new-template__form__post-type" class="elementor-form-field__label">
-				<?php echo __( 'Select Post Type', 'elementor-pro' ); ?>
+				<?php echo esc_html__( 'Select Post Type', 'elementor-pro' ); ?>
 			</label>
 			<div class="elementor-form-field__select__wrapper">
-				<select id="elementor-new-template__form__post-type" class="elementor-form-field__select" name="<?php echo Single::REMOTE_CATEGORY_META_KEY; ?>">
+				<select
+					id="elementor-new-template__form__post-type"
+					class="elementor-form-field__select"
+					name="<?php echo Single::REMOTE_CATEGORY_META_KEY; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"
+				>
 					<option value="">
-						<?php echo __( 'Select', 'elementor-pro' ); ?>...
+						<?php echo esc_html__( 'Select', 'elementor-pro' ); ?>...
 					</option>
 					<?php
 
@@ -240,12 +244,12 @@ class Module extends Module_Base {
 
 						if ( $is_base_page ) {
 							$post_type_object = get_post_type_object( $post_type );
-							echo sprintf( '<option value="%1$s">%2$s</option>', $post_type, $post_type_object->labels->singular_name );
+							echo sprintf( '<option value="%1$s">%2$s</option>', esc_html( $post_type ), esc_html( $post_type_object->labels->singular_name ) );
 						}
 					}
 
 					// 404.
-					echo sprintf( '<option value="%1$s">%2$s</option>', 'not_found404', __( '404 Page', 'elementor-pro' ) );
+					echo sprintf( '<option value="%1$s">%2$s</option>', 'not_found404', esc_html__( '404 Page', 'elementor-pro' ) );
 
 					?>
 				</select>
@@ -306,7 +310,7 @@ class Module extends Module_Base {
 
 	public function add_finder_items( array $categories ) {
 		$categories['create']['items']['theme-template'] = [
-			'title' => __( 'Add New Theme Template', 'elementor-pro' ),
+			'title' => esc_html__( 'Add New Theme Template', 'elementor-pro' ),
 			'icon' => 'plus-circle-o',
 			'url' => $this->get_admin_templates_url() . '#add_new',
 			'keywords' => [ 'template', 'theme', 'new', 'create' ],
@@ -324,7 +328,13 @@ class Module extends Module_Base {
 	 * @access public
 	 */
 	public function admin_menu() {
-		add_submenu_page( Source_Local::ADMIN_MENU_SLUG, '', __( 'Theme Builder', 'elementor-pro' ), 'publish_posts', $this->get_admin_templates_url( true ) );
+		add_submenu_page(
+			Source_Local::ADMIN_MENU_SLUG,
+			'',
+			esc_html__( 'Theme Builder', 'elementor-pro' ),
+			'publish_posts',
+			$this->get_admin_templates_url( true )
+		);
 	}
 
 	public function print_new_theme_builder_promotion( $views ) {
@@ -340,10 +350,10 @@ class Module extends Module_Base {
 			$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
 
 			$admin_notices->print_admin_notice( [
-				'title' => __( 'Meet the New Theme Builder: More Intuitive and Visual Than Ever', 'elementor-pro' ),
-				'description' => __( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor-pro' ),
+				'title' => esc_html__( 'Meet the New Theme Builder: More Intuitive and Visual Than Ever', 'elementor-pro' ),
+				'description' => esc_html__( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor-pro' ),
 				'button' => [
-					'text' => __( 'Try it Now', 'elementor-pro' ),
+					'text' => esc_html__( 'Try it Now', 'elementor-pro' ),
 					'class' => 'elementor-button elementor-button-success',
 					'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
 				],

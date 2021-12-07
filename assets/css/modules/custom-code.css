@@ -919,8 +919,7 @@ span.font-variations-count {
   max-width: 43.75rem;
   background: var(--eps-modal-background-color);
   border-radius: 0.1875rem;
-  animation: fade-in 0.4s ease-in both;
-  overflow: hidden; }
+  animation: fade-in 0.4s ease-in both; }
   .eps-modal__overlay {
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -935,9 +934,12 @@ span.font-variations-count {
   .eps-modal__header {
     font-size: 0.875rem;
     background: var(--eps-modal-header-background-color);
-    color: #fff;
     height: 2.75rem;
-    padding: 0.625rem 1rem; }
+    padding: 0.625rem 1rem;
+    border-radius: 0.1875rem; }
+    .eps-modal__header,
+    .eps-modal__header .title {
+      color: #fff; }
   .eps-modal__icon {
     margin-inline-end: 0.625rem; }
   .eps-modal__body {
@@ -949,6 +951,8 @@ span.font-variations-count {
       margin-bottom: 1.875rem; }
     .eps-modal__tip:not(:first-child), .eps-modal .eps-tip:not(:first-child) {
       margin-top: 1.875rem; }
+  .eps-modal__section:not(:first-child) {
+    margin-top: 1.875rem; }
   .eps-modal__close-wrapper {
     padding-inline-start: 1rem;
     border-inline-start: solid 1px #fff; }
@@ -962,9 +966,9 @@ span.font-variations-count {
   --button-primary-hover-background-color: #33a242;
   --button-primary-active-background-color: #35a945;
   --button-primary-color: #fff;
-  --button-secondary-background-color: #c2cbd2;
-  --button-secondary-hover-background-color: #b3bec7;
-  --button-secondary-active-background-color: #b9c3cc;
+  --button-secondary-background-color: #a4afb7;
+  --button-secondary-hover-background-color: #96a2ac;
+  --button-secondary-active-background-color: #9ba7b0;
   --button-secondary-color: #fff;
   --button-danger-background-color: #b01b1b;
   --button-danger-hover-background-color: #9a1818;
@@ -996,10 +1000,10 @@ span.font-variations-count {
     --button-primary-color: #fff;
     --button-primary-hover-background-color: #33a242;
     --button-primary-active-background-color: #35a945;
-    --button-secondary-background-color: #64666a;
+    --button-secondary-background-color: #b4b5b7;
     --button-secondary-color: #fff;
-    --button-secondary-hover-background-color: #58595d;
-    --button-secondary-active-background-color: #5d5e62;
+    --button-secondary-hover-background-color: #a7a8ab;
+    --button-secondary-active-background-color: #acadb0;
     --button-cta-background-color: #93003F;
     --button-cta-hover-background-color: #7a0034;
     --button-cta-active-background-color: #840038;
@@ -1015,9 +1019,14 @@ span.font-variations-count {
   .eps-button--contained {
     color: var(--button-color);
     padding: var(--button-padding-y) var(--button-padding-x);
-    background-color: var(--button-background-color, transparent); }
+    background-color: var(--button-background-color, transparent);
+    border: 1px solid var(--button-background-color); }
     .eps-button--contained:hover {
       color: var(--button-color); }
+  .eps-button--outlined {
+    display: block;
+    padding: var(--button-padding-y) var(--button-padding-x);
+    border: 1px solid var(--button-background-color); }
   .eps-button--contained, .eps-button--outlined {
     border-radius: 0.1875rem; }
   .eps-button--underlined {
@@ -1343,7 +1352,13 @@ span.font-variations-count {
       background: #ffffff; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-custom-code-panel-placement {
         padding: 5px 40px;
-        margin: 10px 0; }
+        margin: 10px 0;
+        flex-wrap: wrap;
+        gap: 10px; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-custom-code-options-placement {
+        display: none; }
+        #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-custom-code-options-placement.show {
+          display: flex; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel div {
         display: flex; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field i {
@@ -1356,6 +1371,8 @@ span.font-variations-count {
         direction: ltr; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field.priority {
         margin-left: auto; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field.location {
+        margin-inline-end: 10px; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label {
         font-weight: 500;
         font-size: 14px;
@@ -1365,6 +1382,11 @@ span.font-variations-count {
         margin-right: 20px; }
       #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-label:nth-child(odd) {
         margin-right: 5px; }
+      #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-checkboxes {
+        padding-top: 18px; }
+        #elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .elementor-field-checkboxes .label {
+          position: relative;
+          top: -5px; }
   #elementor-custom-code .inside .elementor-custom-code-codemirror-holder {
     border: 1px solid #eceeef;
     background: #f7f7f7;

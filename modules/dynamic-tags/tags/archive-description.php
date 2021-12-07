@@ -15,7 +15,7 @@ class Archive_Description extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Archive Description', 'elementor-pro' );
+		return esc_html__( 'Archive Description', 'elementor-pro' );
 	}
 
 	public function get_group() {

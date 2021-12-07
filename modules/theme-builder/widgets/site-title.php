@@ -19,7 +19,7 @@ class Site_Title extends Widget_Heading {
 	}
 
 	public function get_title() {
-		return __( 'Site Title', 'elementor-pro' );
+		return esc_html__( 'Site Title', 'elementor-pro' );
 	}
 
 	public function get_icon() {

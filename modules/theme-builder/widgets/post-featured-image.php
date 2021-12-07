@@ -19,7 +19,7 @@ class Post_Featured_Image extends Widget_Image {
 	}
 
 	public function get_title() {
-		return __( 'Featured Image', 'elementor-pro' );
+		return esc_html__( 'Featured Image', 'elementor-pro' );
 	}
 
 	public function get_icon() {

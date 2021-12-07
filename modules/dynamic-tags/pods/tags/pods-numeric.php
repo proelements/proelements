@@ -14,7 +14,7 @@ class Pods_Numeric extends Pods_Base {
 	}
 
 	public function get_title() {
-		return __( 'Pods', 'elementor-pro' ) . ' ' . __( 'Numeric', 'elementor-pro' ) . ' ' . __( 'Field', 'elementor-pro' );
+		return esc_html__( 'Pods', 'elementor-pro' ) . ' ' . esc_html__( 'Numeric', 'elementor-pro' ) . ' ' . esc_html__( 'Field', 'elementor-pro' );
 	}
 
 	public function get_categories() {

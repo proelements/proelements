@@ -17,17 +17,27 @@ abstract class Integration_Base extends Action_Base {
 
 	public static function global_api_control( $widget, $api_key = '', $label = '', $condition = [], $id = '' ) {
 		if ( empty( $api_key ) ) {
-			/* translators: 1: Integration label, 2: Setting Page link. */
-			$html = sprintf( __( 'Set your %1$s in the <a href="%2$s" target="_blank">Integrations Settings</a>.', 'elementor-pro' ), $label, Settings::get_url() . '#tab-integrations' );
+			$html = sprintf(
+				/* translators: 1: Integration label, 2: Link open tag, 3: Link closing tag. */
+				esc_html__( 'Set your %1$s in the %2$sIntegrations Settings%3$s.', 'elementor-pro' ),
+				$label,
+				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
+				'</a>'
+			);
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-warning';
 		} else {
-			/* translators: 1: Integration label, 2: Setting Page link. */
-			$html = sprintf( __( 'You are using %1$s set in the <a href="%2$s" target="_blank">Integrations Settings</a>.', 'elementor-pro' ), $label, Settings::get_url() . '#tab-integrations' );
+			$html = sprintf(
+				/* translators: 1: Integration label, 2: Link open tag, 3: Link closing tag. */
+				esc_html__( 'You are using %1$s set in the %2$sIntegrations Settings%3$s.', 'elementor-pro' ),
+				$label,
+				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
+				'</a>'
+			);
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-info';
 		}
 
 		/* translators: %s: Integration label */
-		$html .= ' ' . sprintf( __( 'You can also set a different %s by choosing "Custom".', 'elementor-pro' ), $label );
+		$html .= ' ' . sprintf( esc_html__( 'You can also set a different %s by choosing "Custom".', 'elementor-pro' ), $label );
 
 		$widget->add_control(
 			$id . '_api_key_msg',
@@ -52,7 +62,7 @@ abstract class Integration_Base extends Action_Base {
 		$repeater->add_control( 'local_id', [ 'type' => Controls_Manager::SELECT ] );
 
 		$fields_map_control_options = [
-			'label' => __( 'Field Mapping', 'elementor-pro' ),
+			'label' => esc_html__( 'Field Mapping', 'elementor-pro' ),
 			'type' => Fields_Map::CONTROL_TYPE,
 			'separator' => 'before',
 			'fields' => $repeater->get_controls(),

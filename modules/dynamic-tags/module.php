@@ -90,25 +90,25 @@ class Module extends TagsModule {
 	public function get_groups() {
 		return [
 			self::POST_GROUP => [
-				'title' => __( 'Post', 'elementor-pro' ),
+				'title' => esc_html__( 'Post', 'elementor-pro' ),
 			],
 			self::ARCHIVE_GROUP => [
-				'title' => __( 'Archive', 'elementor-pro' ),
+				'title' => esc_html__( 'Archive', 'elementor-pro' ),
 			],
 			self::SITE_GROUP => [
-				'title' => __( 'Site', 'elementor-pro' ),
+				'title' => esc_html__( 'Site', 'elementor-pro' ),
 			],
 			self::MEDIA_GROUP => [
-				'title' => __( 'Media', 'elementor-pro' ),
+				'title' => esc_html__( 'Media', 'elementor-pro' ),
 			],
 			self::ACTION_GROUP => [
-				'title' => __( 'Actions', 'elementor-pro' ),
+				'title' => esc_html__( 'Actions', 'elementor-pro' ),
 			],
 			self::AUTHOR_GROUP => [
-				'title' => __( 'Author', 'elementor-pro' ),
+				'title' => esc_html__( 'Author', 'elementor-pro' ),
 			],
 			self::COMMENTS_GROUP => [
-				'title' => __( 'Comments', 'elementor-pro' ),
+				'title' => esc_html__( 'Comments', 'elementor-pro' ),
 			],
 		];
 	}

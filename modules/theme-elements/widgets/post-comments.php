@@ -17,7 +17,7 @@ class Post_Comments extends Base {
 	}
 
 	public function get_title() {
-		return __( 'Post Comments', 'elementor-pro' );
+		return esc_html__( 'Post Comments', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -36,7 +36,7 @@ class Post_Comments extends Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Comments', 'elementor-pro' ),
+				'label' => esc_html__( 'Comments', 'elementor-pro' ),
 			]
 		);
 
@@ -50,23 +50,23 @@ class Post_Comments extends Base {
 		$this->add_control(
 			'skin_temp',
 			[
-				'label' => __( 'Skin', 'elementor-pro' ),
+				'label' => esc_html__( 'Skin', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Theme Comments', 'elementor-pro' ),
+					'' => esc_html__( 'Theme Comments', 'elementor-pro' ),
 				],
-				'description' => __( 'The Theme Comments skin uses the currently active theme comments design and layout to display the comment form and comments.', 'elementor-pro' ),
+				'description' => esc_html__( 'The Theme Comments skin uses the currently active theme comments design and layout to display the comment form and comments.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'source_type',
 			[
-				'label' => __( 'Source', 'elementor-pro' ),
+				'label' => esc_html__( 'Source', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					Module::SOURCE_TYPE_CURRENT_POST => __( 'Current Post', 'elementor-pro' ),
-					Module::SOURCE_TYPE_CUSTOM => __( 'Custom', 'elementor-pro' ),
+					Module::SOURCE_TYPE_CURRENT_POST => esc_html__( 'Current Post', 'elementor-pro' ),
+					Module::SOURCE_TYPE_CUSTOM => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => Module::SOURCE_TYPE_CURRENT_POST,
 				'separator' => 'before',
@@ -76,7 +76,7 @@ class Post_Comments extends Base {
 		$this->add_control(
 			'source_custom',
 			[
-				'label' => __( 'Search & Select', 'elementor-pro' ),
+				'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 				'type' => QueryControlModule::QUERY_CONTROL_ID,
 				'label_block' => true,
 				'autocomplete' => [

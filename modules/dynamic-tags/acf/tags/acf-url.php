@@ -15,7 +15,7 @@ class ACF_URL extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'ACF', 'elementor-pro' ) . ' ' . __( 'URL Field', 'elementor-pro' );
+		return esc_html__( 'ACF', 'elementor-pro' ) . ' ' . esc_html__( 'URL Field', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -95,7 +95,7 @@ class ACF_URL extends Data_Tag {
 		$this->add_control(
 			'fallback',
 			[
-				'label' => __( 'Fallback', 'elementor-pro' ),
+				'label' => esc_html__( 'Fallback', 'elementor-pro' ),
 			]
 		);
 	}

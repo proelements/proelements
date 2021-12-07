@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Honeypot_Handler {
 
 	public function add_field_type( $field_types ) {
-		$field_types['honeypot'] = __( 'Honeypot', 'elementor-pro' );
+		$field_types['honeypot'] = esc_html__( 'Honeypot', 'elementor-pro' );
 
 		return $field_types;
 	}
@@ -37,7 +37,9 @@ class Honeypot_Handler {
 		$widget->set_render_attribute( 'input' . $item_index, 'type', 'text' );
 		$widget->add_render_attribute( 'input' . $item_index, 'style', 'display:none !important;' );
 
-		echo '<input size="1" ' . $widget->get_render_attribute_string( 'input' . $item_index ) . '>';
+		echo '<input size="1" ';
+		$widget->print_render_attribute_string( 'input' . $item_index );
+		echo '>';
 	}
 
 	/**
@@ -56,7 +58,7 @@ class Honeypot_Handler {
 		$field = current( $fields );
 
 		if ( ! empty( $field['value'] ) ) {
-			$ajax_handler->add_error( $field['id'], __( 'Invalid Form.', 'elementor-pro' ) );
+			$ajax_handler->add_error( $field['id'], esc_html__( 'Invalid Form.', 'elementor-pro' ) );
 		}
 
 		// If success - remove the field form list (don't send it in emails and etc )

@@ -73,7 +73,7 @@ class Convertkit_Handler {
 		$results = $this->rest_client->get( 'forms/?api_key=' . $this->api_key );
 
 		$forms = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( ! empty( $results['body']['forms'] ) ) {
@@ -96,7 +96,7 @@ class Convertkit_Handler {
 		$results = $this->rest_client->get( 'tags/?api_key=' . $this->api_key );
 
 		$tags = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( ! empty( $results['body']['tags'] ) ) {

@@ -16,7 +16,7 @@ class Pods_Gallery extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Pods', 'elementor-pro' ) . ' ' . __( 'Gallery Field', 'elementor-pro' );
+		return esc_html__( 'Pods', 'elementor-pro' ) . ' ' . esc_html__( 'Gallery Field', 'elementor-pro' );
 	}
 
 	public function get_categories() {
@@ -68,7 +68,7 @@ class Pods_Gallery extends Data_Tag {
 		$this->add_control(
 			'key',
 			[
-				'label' => __( 'Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'groups' => Module::get_control_options( $this->get_supported_fields() ),
 			]

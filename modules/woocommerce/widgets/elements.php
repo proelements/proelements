@@ -16,7 +16,7 @@ class Elements extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'WooCommerce Pages', 'elementor-pro' );
+		return esc_html__( 'WooCommerce Pages', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -53,22 +53,22 @@ class Elements extends Base_Widget {
 		$this->start_controls_section(
 			'section_product',
 			[
-				'label' => __( 'Element', 'elementor-pro' ),
+				'label' => esc_html__( 'Element', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'element',
 			[
-				'label' => __( 'Page', 'elementor-pro' ),
+				'label' => esc_html__( 'Page', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => '— ' . __( 'Select', 'elementor-pro' ) . ' —',
-					'woocommerce_cart' => __( 'Cart Page', 'elementor-pro' ),
-					'product_page' => __( 'Single Product Page', 'elementor-pro' ),
-					'woocommerce_checkout' => __( 'Checkout Page', 'elementor-pro' ),
-					'woocommerce_order_tracking' => __( 'Order Tracking Form', 'elementor-pro' ),
-					'woocommerce_my_account' => __( 'My Account', 'elementor-pro' ),
+					'' => '— ' . esc_html__( 'Select', 'elementor-pro' ) . ' —',
+					'woocommerce_cart' => esc_html__( 'Cart Page', 'elementor-pro' ),
+					'product_page' => esc_html__( 'Single Product Page', 'elementor-pro' ),
+					'woocommerce_checkout' => esc_html__( 'Checkout Page', 'elementor-pro' ),
+					'woocommerce_order_tracking' => esc_html__( 'Order Tracking Form', 'elementor-pro' ),
+					'woocommerce_my_account' => esc_html__( 'My Account', 'elementor-pro' ),
 				],
 			]
 		);
@@ -76,7 +76,7 @@ class Elements extends Base_Widget {
 		$this->add_control(
 			'product_id',
 			[
-				'label' => __( 'Product', 'elementor-pro' ),
+				'label' => esc_html__( 'Product', 'elementor-pro' ),
 				'type' => QueryModule::QUERY_CONTROL_ID,
 				'options' => [],
 				'label_block' => true,
@@ -110,7 +110,7 @@ class Elements extends Base_Widget {
 				}
 
 				if ( empty( $product ) && current_user_can( 'manage_options' ) ) {
-					return __( 'Please set a valid product', 'elementor-pro' );
+					return esc_html__( 'Please set a valid product', 'elementor-pro' );
 				}
 
 				$this->add_render_attribute( 'shortcode', 'id', $settings['product_id'] );
@@ -122,7 +122,11 @@ class Elements extends Base_Widget {
 				break;
 		}
 
-		$shortcode = sprintf( '[%s %s]', $settings['element'], $this->get_render_attribute_string( 'shortcode' ) );
+		$shortcode = sprintf(
+			'[%s %s]',
+			esc_html( $settings['element'] ),
+			$this->get_render_attribute_string( 'shortcode' )
+		);
 
 		return $shortcode;
 	}
@@ -139,15 +143,17 @@ class Elements extends Base_Widget {
 		$html = do_shortcode( $shortcode );
 
 		if ( 'woocommerce_checkout' === $this->get_settings( 'element' ) && '<div class="woocommerce"></div>' === $html ) {
-			$html = '<div class="woocommerce">' . __( 'Your cart is currently empty.', 'elementor-pro' ) . '</div>';
+			$html = '<div class="woocommerce">' . esc_html__( 'Your cart is currently empty.', 'elementor-pro' ) . '</div>';
 		}
 
-		echo $html;
+		// PHPCS - Woocommerce output
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		Module::instance()->remove_products_post_class_filter();
 	}
 
 	public function render_plain_content() {
-		echo $this->get_shortcode();
+		// PHPCS - Already escaped in get_shortcode
+		echo $this->get_shortcode(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

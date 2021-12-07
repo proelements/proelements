@@ -17,16 +17,18 @@ class Shortcode {
 	}
 
 	public function admin_columns_headers( $defaults ) {
-		$defaults['shortcode'] = __( 'Shortcode', 'elementor-pro' );
+		$defaults['shortcode'] = esc_html__( 'Shortcode', 'elementor-pro' );
 
 		return $defaults;
 	}
 
 	public function admin_columns_content( $column_name, $post_id ) {
 		if ( 'shortcode' === $column_name ) {
-			// %s = shortcode, %d = post_id
-			$shortcode = esc_attr( sprintf( '[%s id="%d"]', self::SHORTCODE, $post_id ) );
-			printf( '<input class="elementor-shortcode-input" type="text" readonly onfocus="this.select()" value="%s" />', $shortcode );
+			printf(
+				'<input class="elementor-shortcode-input" type="text" readonly onfocus="this.select()" value="%s" />',
+				// %s = shortcode, %d = post_id
+				esc_attr( sprintf( '[%s id="%d"]', self::SHORTCODE, $post_id ) )
+			);
 		}
 	}
 

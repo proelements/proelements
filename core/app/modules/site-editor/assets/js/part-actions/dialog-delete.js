@@ -21,12 +21,13 @@ export default function DialogDelete( props ) {
 		<Dialog
 			title={ __( 'Move Item To Trash', 'elementor-pro' ) }
 			text={ __( 'Are you sure you want to move this item to trash:', 'elementor-pro' ) + ` "${ template.title }"` }
-			onSubmit={() => closeDialog( true )}
+			onSubmit={ () => closeDialog( true ) }
 			approveButtonText={ __( 'Move to Trash', 'elementor-pro' ) }
-			approveButtonOnClick={() => closeDialog( true )}
+			approveButtonOnClick={ () => closeDialog( true ) }
 			approveButtonColor="danger"
 			dismissButtonText={ __( 'Cancel', 'elementor-pro' ) }
-			dismissButtonOnClick={() => closeDialog()}
+			dismissButtonOnClick={ () => closeDialog() }
+			onClose={ () => closeDialog() }
 		/>
 	);
 }

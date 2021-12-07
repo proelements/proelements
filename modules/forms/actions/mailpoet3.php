@@ -25,7 +25,7 @@ class Mailpoet3 extends Integration_Base {
 		$widget->start_controls_section(
 			'section_mailpoet3',
 			[
-				'label' => __( 'MailPoet 3', 'elementor-pro' ),
+				'label' => esc_html__( 'MailPoet 3', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -42,7 +42,7 @@ class Mailpoet3 extends Integration_Base {
 		$widget->add_control(
 			'mailpoet3_lists',
 			[
-				'label' => __( 'List', 'elementor-pro' ),
+				'label' => esc_html__( 'List', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'label_block' => true,
 				'options' => $options,
@@ -71,7 +71,7 @@ class Mailpoet3 extends Integration_Base {
 			API::MP( 'v1' )->addSubscriber( $subscriber, (array) $settings['mailpoet3_lists'] );
 			$existing_subscriber = false;
 		} catch ( \Exception $exception ) {
-			$error_string = __( 'This subscriber already exists.', 'mailpoet' ); // phpcs:ignore WordPress.WP.I18n
+			$error_string = esc_html__( 'This subscriber already exists.', 'mailpoet' ); // phpcs:ignore WordPress.WP.I18n
 
 			if ( $error_string === $exception->getMessage() ) {
 				$existing_subscriber = true;
@@ -111,17 +111,17 @@ class Mailpoet3 extends Integration_Base {
 		$mailpoet_fields = [
 			[
 				'remote_id' => 'first_name',
-				'remote_label' => __( 'First Name', 'elementor-pro' ),
+				'remote_label' => esc_html__( 'First Name', 'elementor-pro' ),
 				'remote_type' => 'text',
 			],
 			[
 				'remote_id' => 'last_name',
-				'remote_label' => __( 'Last Name', 'elementor-pro' ),
+				'remote_label' => esc_html__( 'Last Name', 'elementor-pro' ),
 				'remote_type' => 'text',
 			],
 			[
 				'remote_id' => 'email',
-				'remote_label' => __( 'Email', 'elementor-pro' ),
+				'remote_label' => esc_html__( 'Email', 'elementor-pro' ),
 				'remote_type' => 'email',
 				'remote_required' => true,
 			],

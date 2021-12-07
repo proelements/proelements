@@ -22,7 +22,14 @@ trait Posts_Archive_Skin_Base {
 				$message = esc_html( $message );
 			}
 
-			echo '<div class="elementor-posts-nothing-found">' . $message . '</div>';
+			?>
+				<div class="elementor-posts-nothing-found">
+					<?php
+						// PHPCS - escaped before if should escape
+						echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+				</div>
+			<?php
 
 			$this->render_loop_footer();
 

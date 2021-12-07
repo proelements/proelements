@@ -16,7 +16,7 @@ class Toolset_Image extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Toolset', 'elementor-pro' ) . ' ' . __( 'Image Field', 'elementor-pro' );
+		return esc_html__( 'Toolset', 'elementor-pro' ) . ' ' . esc_html__( 'Image Field', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -68,7 +68,7 @@ class Toolset_Image extends Data_Tag {
 		$this->add_control(
 			'key',
 			[
-				'label' => __( 'Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'groups' => Module::get_control_options( $this->get_supported_fields() ),
 			]
@@ -77,7 +77,7 @@ class Toolset_Image extends Data_Tag {
 		$this->add_control(
 			'fallback',
 			[
-				'label' => __( 'Fallback', 'elementor-pro' ),
+				'label' => esc_html__( 'Fallback', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 			]
 		);

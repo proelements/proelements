@@ -7,16 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Single_Post extends Single_Base {
 
-	protected static function get_site_editor_type() {
+	public static function get_type() {
 		return 'single-post';
 	}
 
 	public static function get_title() {
-		return __( 'Single Post', 'elementor-pro' );
+		return esc_html__( 'Single Post', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Single Posts', 'elementor-pro' );
+		return esc_html__( 'Single Posts', 'elementor-pro' );
 	}
 
 	protected static function get_site_editor_icon() {
@@ -25,9 +25,9 @@ class Single_Post extends Single_Base {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => __( 'What is a Single Post Template?', 'elementor-pro' ),
-			'content' => __( 'A single post template allows you to easily design the layout and style of posts, ensuring a design consistency throughout all your blog posts, for example.', 'elementor-pro' ),
-			'tip' => __( 'You can create multiple single post templates, and assign each to a different category.', 'elementor-pro' ),
+			'title' => esc_html__( 'What is a Single Post Template?', 'elementor-pro' ),
+			'content' => esc_html__( 'A single post template allows you to easily design the layout and style of posts, ensuring a design consistency throughout all your blog posts, for example.', 'elementor-pro' ),
+			'tip' => esc_html__( 'You can create multiple single post templates, and assign each to a different category.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-post',
 			'video_url' => 'https://www.youtube.com/embed/8Fk-Edu7DL0',
 		];

@@ -62,7 +62,7 @@ class Elementor_Post_Query {
 			add_filter( 'found_posts', [ $this, 'fix_query_found_posts' ], 1, 2 );
 		}
 
-		$query = new \WP_Query( $this->query_args );
+		$query = new \WP_Query( $this->query_args );// SQL_CALC_FOUND_ROWS is used.
 
 		remove_action( 'pre_get_posts', [ $this, 'pre_get_posts_query_filter' ] );
 		remove_action( 'pre_get_posts', [ $this, 'fix_query_offset' ], 1 );
@@ -187,7 +187,7 @@ class Elementor_Post_Query {
 		if ( 'yes' === $this->get_widget_settings( 'avoid_duplicates' ) ) {
 			$post__not_in = isset( $this->query_args['post__not_in'] ) ? $this->query_args['post__not_in'] : [];
 			$post__not_in = array_merge( $post__not_in, Module::$displayed_ids );
-			$this->set_query_arg( 'post__not_in', $post__not_in );
+			$this->set_query_arg( 'post__not_in', $post__not_in, true );
 		}
 	}
 
@@ -331,11 +331,13 @@ class Elementor_Post_Query {
 	}
 
 	/**
-	 * @param string    $key
-	 * @param mixed     $value
+	 * @param       $key
+	 * @param       $value
+	 * @param false $override
+	 *
 	 */
-	protected function set_query_arg( $key, $value ) {
-		if ( ! isset( $this->query_args[ $key ] ) ) {
+	protected function set_query_arg( $key, $value, $override = false ) {
+		if ( ! isset( $this->query_args[ $key ] ) || $override ) {
 			$this->query_args[ $key ] = $value;
 		}
 	}

@@ -38,7 +38,7 @@ class Mailchimp_Handler {
 		];
 	}
 
-	private function query( $end_point ) {
+	public function query( $end_point ) {
 		$response = wp_remote_get( $this->api_base_url . $end_point, $this->api_request_args );
 
 		if ( is_wp_error( $response ) || 200 != (int) wp_remote_retrieve_response_code( $response ) ) {

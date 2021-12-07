@@ -15,7 +15,7 @@ class Author_Meta extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Author Meta', 'elementor-pro' );
+		return esc_html__( 'Author Meta', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -45,7 +45,7 @@ class Author_Meta extends Tag {
 		$this->add_control(
 			'key',
 			[
-				'label' => __( 'Meta Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Meta Key', 'elementor-pro' ),
 			]
 		);
 	}

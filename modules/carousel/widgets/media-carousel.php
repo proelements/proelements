@@ -27,7 +27,7 @@ class Media_Carousel extends Base {
 	}
 
 	public function get_title() {
-		return __( 'Media Carousel', 'elementor-pro' );
+		return esc_html__( 'Media Carousel', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -67,7 +67,7 @@ class Media_Carousel extends Base {
 		$this->start_controls_section(
 			'section_lightbox_style',
 			[
-				'label' => __( 'Lightbox', 'elementor-pro' ),
+				'label' => esc_html__( 'Lightbox', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -75,7 +75,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'lightbox_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'#elementor-lightbox-slideshow-{{ID}}' => 'background-color: {{VALUE}};',
@@ -86,7 +86,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'lightbox_ui_color',
 			[
-				'label' => __( 'UI Color', 'elementor-pro' ),
+				'label' => esc_html__( 'UI Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'#elementor-lightbox-slideshow-{{ID}} .dialog-lightbox-close-button, #elementor-lightbox-slideshow-{{ID}} .elementor-swiper-button' => 'color: {{VALUE}};',
@@ -97,7 +97,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'lightbox_ui_hover_color',
 			[
-				'label' => __( 'UI Hover Color', 'elementor-pro' ),
+				'label' => esc_html__( 'UI Hover Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'#elementor-lightbox-slideshow-{{ID}} .dialog-lightbox-close-button:hover, #elementor-lightbox-slideshow-{{ID}} .elementor-swiper-button:hover' => 'color: {{VALUE}};',
@@ -108,7 +108,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'lightbox_video_width',
 			[
-				'label' => __( 'Video Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Video Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => '%',
@@ -136,15 +136,15 @@ class Media_Carousel extends Base {
 			'type',
 			[
 				'type' => Controls_Manager::CHOOSE,
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'default' => 'image',
 				'options' => [
 					'image' => [
-						'title' => __( 'Image', 'elementor-pro' ),
+						'title' => esc_html__( 'Image', 'elementor-pro' ),
 						'icon' => 'eicon-image-bold',
 					],
 					'video' => [
-						'title' => __( 'Video', 'elementor-pro' ),
+						'title' => esc_html__( 'Video', 'elementor-pro' ),
 						'icon' => 'eicon-video-camera',
 					],
 				],
@@ -155,7 +155,7 @@ class Media_Carousel extends Base {
 		$repeater->add_control(
 			'image',
 			[
-				'label' => __( 'Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 			]
 		);
@@ -163,12 +163,12 @@ class Media_Carousel extends Base {
 		$repeater->add_control(
 			'image_link_to_type',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'file' => __( 'Media File', 'elementor-pro' ),
-					'custom' => __( 'Custom URL', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'file' => esc_html__( 'Media File', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom URL', 'elementor-pro' ),
 				],
 				'condition' => [
 					'type' => 'image',
@@ -180,7 +180,7 @@ class Media_Carousel extends Base {
 			'image_link_to',
 			[
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'show_external' => 'true',
 				'condition' => [
 					'type' => 'image',
@@ -194,10 +194,10 @@ class Media_Carousel extends Base {
 		$repeater->add_control(
 			'video',
 			[
-				'label' => __( 'Video Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Video Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'Enter your video link', 'elementor-pro' ),
-				'description' => __( 'YouTube or Vimeo link', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Enter your video link', 'elementor-pro' ),
+				'description' => esc_html__( 'YouTube or Vimeo link', 'elementor-pro' ),
 				'options' => false,
 				'condition' => [
 					'type' => 'video',
@@ -301,7 +301,8 @@ class Media_Carousel extends Base {
 				$this->add_render_attribute( $element_key . '_link', 'data-elementor-lightbox-video', Embed::get_embed_url( $slide['video']['url'], $embed_url_params ) );
 			}
 
-			echo '<a ' . $this->get_render_attribute_string( $element_key . '_link' ) . '>';
+			// PHPCS - the method get_render_attribute_string is safe.
+			echo '<a ' . $this->get_render_attribute_string( $element_key . '_link' ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		$this->print_slide_image( $slide, $element_key, $settings );
@@ -313,22 +314,26 @@ class Media_Carousel extends Base {
 
 	protected function print_slide_image( array $slide, $element_key, array $settings ) {
 		?>
-		<div <?php echo $this->get_render_attribute_string( $element_key . '-image' ); ?>>
+		<div <?php $this->print_render_attribute_string( $element_key . '-image' ); ?>>
 			<?php if ( 'video' === $slide['type'] && $settings['video_play_icon'] ) : ?>
 				<div class="elementor-custom-embed-play">
-					<i class="eicon-play" aria-hidden="true"></i>
-					<span class="elementor-screen-only"><?php _e( 'Play', 'elementor-pro' ); ?></span>
+					<?php
+						Icons_Manager::render_icon( [
+							'library' => 'eicons',
+							'value' => 'eicon-play',
+						], [ 'aria-hidden' => 'true' ] );
+					?>
+					<span class="elementor-screen-only"><?php echo esc_html__( 'Play', 'elementor-pro' ); ?></span>
 				</div>
 			<?php endif; ?>
 		</div>
 		<?php if ( $settings['overlay'] ) : ?>
-			<div <?php echo $this->get_render_attribute_string( 'image-overlay' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'image-overlay' ); ?>>
 				<?php
 				if ( 'text' === $settings['overlay'] ) {
 					echo wp_kses_post( $this->get_image_caption( $slide ) );
 				} else {
-					// TODO: replace with print_unescaped_string.
-					echo $this->get_overlay_icon( $settings['icon'] );
+					$this->render_overlay_icon( $settings['icon'] );
 				}
 				?>
 			</div>
@@ -346,13 +351,13 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'skin',
 			[
-				'label' => __( 'Skin', 'elementor-pro' ),
+				'label' => esc_html__( 'Skin', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'carousel',
 				'options' => [
-					'carousel' => __( 'Carousel', 'elementor-pro' ),
-					'slideshow' => __( 'Slideshow', 'elementor-pro' ),
-					'coverflow' => __( 'Coverflow', 'elementor-pro' ),
+					'carousel' => esc_html__( 'Carousel', 'elementor-pro' ),
+					'slideshow' => esc_html__( 'Slideshow', 'elementor-pro' ),
+					'coverflow' => esc_html__( 'Coverflow', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-skin-',
 				'render_type' => 'template',
@@ -369,13 +374,13 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'image_fit',
 			[
-				'label' => __( 'Image Fit', 'elementor-pro' ),
+				'label' => esc_html__( 'Image Fit', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'Cover', 'elementor-pro' ),
-					'contain' => __( 'Contain', 'elementor-pro' ),
-					'auto' => __( 'Auto', 'elementor-pro' ),
+					'' => esc_html__( 'Cover', 'elementor-pro' ),
+					'contain' => esc_html__( 'Contain', 'elementor-pro' ),
+					'auto' => esc_html__( 'Auto', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-main-swiper .elementor-carousel-image' => 'background-size: {{VALUE}}',
@@ -392,7 +397,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'play_icon_title',
 			[
-				'label' => __( 'Play Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Play Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -400,10 +405,11 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'play_icon_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-custom-embed-play i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-custom-embed-play svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -411,7 +417,7 @@ class Media_Carousel extends Base {
 		$this->add_responsive_control(
 			'play_icon_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -447,13 +453,13 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'overlay',
 			[
-				'label' => __( 'Overlay', 'elementor-pro' ),
+				'label' => esc_html__( 'Overlay', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'text' => __( 'Text', 'elementor-pro' ),
-					'icon' => __( 'Icon', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'text' => esc_html__( 'Text', 'elementor-pro' ),
+					'icon' => esc_html__( 'Icon', 'elementor-pro' ),
 				],
 				'condition' => [
 					'skin!' => 'slideshow',
@@ -465,13 +471,13 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'caption',
 			[
-				'label' => __( 'Caption', 'elementor-pro' ),
+				'label' => esc_html__( 'Caption', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'title',
 				'options' => [
-					'title' => __( 'Title', 'elementor-pro' ),
-					'caption' => __( 'Caption', 'elementor-pro' ),
-					'description' => __( 'Description', 'elementor-pro' ),
+					'title' => esc_html__( 'Title', 'elementor-pro' ),
+					'caption' => esc_html__( 'Caption', 'elementor-pro' ),
+					'description' => esc_html__( 'Description', 'elementor-pro' ),
 				],
 				'condition' => [
 					'skin!' => 'slideshow',
@@ -483,7 +489,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'icon',
 			[
-				'label' => __( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'search-plus',
 				'options' => [
@@ -510,7 +516,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'overlay_animation',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'fade',
 				'options' => [
@@ -538,7 +544,7 @@ class Media_Carousel extends Base {
 		$this->start_controls_section(
 			'section_overlay',
 			[
-				'label' => __( 'Overlay', 'elementor-pro' ),
+				'label' => esc_html__( 'Overlay', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'skin!' => 'slideshow',
@@ -550,7 +556,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'overlay_background_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-carousel-image-overlay' => 'background-color: {{VALUE}};',
@@ -561,7 +567,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'overlay_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-carousel-image-overlay' => '--e-carousel-image-overlay-color: {{VALUE}};',
@@ -586,7 +592,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'icon_size',
 			[
-				'label' => __( 'Icon Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-carousel-image-overlay' => '--e-carousel-image-overlay-icon-size: {{SIZE}}{{UNIT}};',
@@ -611,7 +617,7 @@ class Media_Carousel extends Base {
 			'slideshow_height',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => __( 'Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Height', 'elementor-pro' ),
 				'range' => [
 					'px' => [
 						'min' => 20,
@@ -630,7 +636,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'thumbs_title',
 			[
-				'label' => __( 'Thumbnails', 'elementor-pro' ),
+				'label' => esc_html__( 'Thumbnails', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'skin' => 'slideshow',
@@ -647,7 +653,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'thumbs_ratio',
 			[
-				'label' => __( 'Ratio', 'elementor-pro' ),
+				'label' => esc_html__( 'Ratio', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '219',
 				'options' => [
@@ -666,7 +672,7 @@ class Media_Carousel extends Base {
 		$this->add_control(
 			'centered_slides',
 			[
-				'label' => __( 'Centered Slides', 'elementor-pro' ),
+				'label' => esc_html__( 'Centered Slides', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'skin' => 'slideshow',
@@ -689,8 +695,8 @@ class Media_Carousel extends Base {
 			'slideshow_slides_per_view',
 			[
 				'type' => Controls_Manager::SELECT,
-				'label' => __( 'Slides Per View', 'elementor-pro' ),
-				'options' => [ '' => __( 'Default', 'elementor-pro' ) ] + $slides_per_view,
+				'label' => esc_html__( 'Slides Per View', 'elementor-pro' ),
+				'options' => [ '' => esc_html__( 'Default', 'elementor-pro' ) ] + $slides_per_view,
 				'condition' => [
 					'skin' => 'slideshow',
 				],
@@ -765,18 +771,14 @@ class Media_Carousel extends Base {
 		return 'carousel';
 	}
 
-	private function get_overlay_icon( $icon_name ) {
+	private function render_overlay_icon( $icon_name ) {
 		$icon_value = 'fas fa-' . $icon_name;
 
-		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
-			$icon = [
-				'library' => 'fa-solid',
-				'value' => $icon_value,
-			];
+		$icon = [
+			'library' => 'fa-solid',
+			'value' => $icon_value,
+		];
 
-			return Icons_Manager::render_font_icon( $icon );
-		}
-
-		return sprintf( '<i class="%s"></i>', $icon_value );
+		Icons_Manager::render_icon( $icon );
 	}
 }

@@ -16,7 +16,7 @@ class Product_Add_To_Cart extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Add To Cart', 'elementor-pro' );
+		return esc_html__( 'Add To Cart', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -50,7 +50,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->start_controls_section(
 			'section_atc_button_style',
 			[
-				'label' => __( 'Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Button', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -59,7 +59,7 @@ class Product_Add_To_Cart extends Base_Widget {
 			'wc_style_warning',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
+				'raw' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -67,23 +67,23 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_responsive_control(
 			'alignment',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor-pro' ),
+						'title' => esc_html__( 'Justified', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -111,7 +111,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [
 					'{{WRAPPER}} .cart button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -122,7 +122,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -135,14 +135,14 @@ class Product_Add_To_Cart extends Base_Widget {
 
 		$this->start_controls_tab( 'button_style_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'button_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cart button' => 'color: {{VALUE}}',
@@ -153,7 +153,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cart button' => 'background-color: {{VALUE}}',
@@ -164,7 +164,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cart button' => 'border-color: {{VALUE}}',
@@ -176,14 +176,14 @@ class Product_Add_To_Cart extends Base_Widget {
 
 		$this->start_controls_tab( 'button_style_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'button_text_color_hover',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cart button:hover' => 'color: {{VALUE}}',
@@ -194,7 +194,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_bg_color_hover',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cart button:hover' => 'background-color: {{VALUE}}',
@@ -205,7 +205,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_border_color_hover',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .cart button:hover' => 'border-color: {{VALUE}}',
@@ -216,7 +216,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'button_transition',
 			[
-				'label' => __( 'Transition Duration', 'elementor-pro' ),
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 0.2,
@@ -242,7 +242,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->start_controls_section(
 			'section_atc_quantity_style',
 			[
-				'label' => __( 'Quantity', 'elementor-pro' ),
+				'label' => esc_html__( 'Quantity', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -250,7 +250,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'spacing',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -280,7 +280,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -291,7 +291,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -304,14 +304,14 @@ class Product_Add_To_Cart extends Base_Widget {
 
 		$this->start_controls_tab( 'quantity_style_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'quantity_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty' => 'color: {{VALUE}}',
@@ -322,7 +322,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty' => 'background-color: {{VALUE}}',
@@ -333,7 +333,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty' => 'border-color: {{VALUE}}',
@@ -345,14 +345,14 @@ class Product_Add_To_Cart extends Base_Widget {
 
 		$this->start_controls_tab( 'quantity_style_focus',
 			[
-				'label' => __( 'Focus', 'elementor-pro' ),
+				'label' => esc_html__( 'Focus', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'quantity_text_color_focus',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty:focus' => 'color: {{VALUE}}',
@@ -363,7 +363,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_bg_color_focus',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty:focus' => 'background-color: {{VALUE}}',
@@ -374,7 +374,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_border_color_focus',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty:focus' => 'border-color: {{VALUE}}',
@@ -385,7 +385,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'quantity_transition',
 			[
-				'label' => __( 'Transition Duration', 'elementor-pro' ),
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 0.2,
@@ -411,7 +411,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->start_controls_section(
 			'section_atc_variations_style',
 			[
-				'label' => __( 'Variations', 'elementor-pro' ),
+				'label' => esc_html__( 'Variations', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -419,7 +419,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_width',
 			[
-				'label' => __( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%' ],
 				'default' => [
@@ -434,7 +434,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart .variations' => 'margin-bottom: {{SIZE}}{{UNIT}}',
@@ -445,7 +445,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_space_between',
 			[
-				'label' => __( 'Space Between', 'elementor-pro' ),
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations tr:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}}',
@@ -456,7 +456,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'heading_variations_label_style',
 			[
-				'label' => __( 'Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Label', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -465,7 +465,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_label_color_focus',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations label' => 'color: {{VALUE}}',
@@ -484,7 +484,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'heading_variations_select_style',
 			[
-				'label' => __( 'Select field', 'elementor-pro' ),
+				'label' => esc_html__( 'Select field', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -493,7 +493,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_select_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations td.value select' => 'color: {{VALUE}}',
@@ -504,7 +504,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_select_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'background-color: {{VALUE}}',
@@ -515,7 +515,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_select_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border: 1px solid {{VALUE}}',
@@ -534,7 +534,7 @@ class Product_Add_To_Cart extends Base_Widget {
 		$this->add_control(
 			'variations_select_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border-radius: {{SIZE}}{{UNIT}}',

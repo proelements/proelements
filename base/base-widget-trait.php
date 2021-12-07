@@ -18,9 +18,7 @@ trait Base_Widget_Trait {
 		return [ 'pro-elements' ];
 	}
 
-	public function get_css_config() {
-		$widget_name = $this->get_group_name();
-
+	public function get_widget_css_config( $widget_name ) {
 		$direction = is_rtl() ? '-rtl' : '';
 
 		$css_file_path = 'css/widget-' . $widget_name . $direction . '.min.css';
@@ -33,5 +31,10 @@ trait Base_Widget_Trait {
 				'file_url' => ELEMENTOR_PRO_ASSETS_URL . $css_file_path,
 			],
 		];
+	}
+
+	// TODO: Remove this method when the minimum core version is 3.3.1.
+	public function get_css_config() {
+		return $this->get_widget_css_config( $this->get_group_name() );
 	}
 }

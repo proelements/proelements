@@ -22,7 +22,7 @@ class Date extends Field_Base {
 	}
 
 	public function get_name() {
-		return __( 'Date', 'elementor-pro' );
+		return esc_html__( 'Date', 'elementor-pro' );
 	}
 
 	public function render( $item, $item_index, $form ) {
@@ -39,7 +39,10 @@ class Date extends Field_Base {
 		if ( ! empty( $item['max_date'] ) ) {
 			$form->add_render_attribute( 'input' . $item_index, 'max', esc_attr( $item['max_date'] ) );
 		}
-		echo '<input ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
+		?>
+
+		<input <?php $form->print_render_attribute_string( 'input' . $item_index ); ?>>
+		<?php
 	}
 
 	public function update_controls( $widget ) {
@@ -54,7 +57,7 @@ class Date extends Field_Base {
 		$field_controls = [
 			'min_date' => [
 				'name' => 'min_date',
-				'label' => __( 'Min. Date', 'elementor-pro' ),
+				'label' => esc_html__( 'Min. Date', 'elementor-pro' ),
 				'type' => Controls_Manager::DATE_TIME,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -69,7 +72,7 @@ class Date extends Field_Base {
 			],
 			'max_date' => [
 				'name' => 'max_date',
-				'label' => __( 'Max. Date', 'elementor-pro' ),
+				'label' => esc_html__( 'Max. Date', 'elementor-pro' ),
 				'type' => Controls_Manager::DATE_TIME,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -84,7 +87,7 @@ class Date extends Field_Base {
 			],
 			'use_native_date' => [
 				'name' => 'use_native_date',
-				'label' => __( 'Native HTML5', 'elementor-pro' ),
+				'label' => esc_html__( 'Native HTML5', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'field_type' => $this->get_type(),

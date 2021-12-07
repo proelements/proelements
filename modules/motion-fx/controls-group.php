@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\MotionFX;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Base;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -37,10 +38,10 @@ class Controls_Group extends Group_Control_Base {
 	protected function init_fields() {
 		$fields = [
 			'motion_fx_scrolling' => [
-				'label' => __( 'Scrolling Effects', 'elementor-pro' ),
+				'label' => esc_html__( 'Scrolling Effects', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor-pro' ),
-				'label_on' => __( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'render_type' => 'ui',
 				'frontend_available' => true,
 			],
@@ -70,65 +71,100 @@ class Controls_Group extends Group_Control_Base {
 			],
 		];
 
+		if ( version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ) {
+
+			$css_transform_controls = [
+				[
+					'name' => 'transform_x_anchor_point',
+					'value' => '',
+				],
+				[
+					'name' => 'transform_y_anchor_point',
+					'value' => '',
+				],
+			];
+
+			$transform_origin_conditions['terms'] = array_merge( $transform_origin_conditions['terms'], $css_transform_controls );
+		}
+
 		$fields['transform_origin_x'] = [
-			'label' => __( 'X Anchor Point', 'elementor-pro' ),
+			'label' => esc_html__( 'X Anchor Point', 'elementor-pro' ),
 			'type' => Controls_Manager::CHOOSE,
 			'default' => 'center',
 			'options' => [
 				'left' => [
-					'title' => __( 'Left', 'elementor-pro' ),
+					'title' => esc_html__( 'Left', 'elementor-pro' ),
 					'icon' => 'eicon-h-align-left',
 				],
 				'center' => [
-					'title' => __( 'Center', 'elementor-pro' ),
+					'title' => esc_html__( 'Center', 'elementor-pro' ),
 					'icon' => 'eicon-h-align-center',
 				],
 				'right' => [
-					'title' => __( 'Right', 'elementor-pro' ),
+					'title' => esc_html__( 'Right', 'elementor-pro' ),
 					'icon' => 'eicon-h-align-right',
 				],
 			],
 			'conditions' => $transform_origin_conditions,
 			'toggle' => false,
 			'render_type' => 'ui',
+			'selectors' => [
+				'{{SELECTOR}}' => '--e-transform-origin-x: {{VALUE}}',
+			],
 		];
 
 		$fields['transform_origin_y'] = [
-			'label' => __( 'Y Anchor Point', 'elementor-pro' ),
+			'label' => esc_html__( 'Y Anchor Point', 'elementor-pro' ),
 			'type' => Controls_Manager::CHOOSE,
 			'default' => 'center',
 			'options' => [
 				'top' => [
-					'title' => __( 'Top', 'elementor-pro' ),
+					'title' => esc_html__( 'Top', 'elementor-pro' ),
 					'icon' => 'eicon-v-align-top',
 				],
 				'center' => [
-					'title' => __( 'Center', 'elementor-pro' ),
+					'title' => esc_html__( 'Center', 'elementor-pro' ),
 					'icon' => 'eicon-v-align-middle',
 				],
 				'bottom' => [
-					'title' => __( 'Bottom', 'elementor-pro' ),
+					'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 					'icon' => 'eicon-v-align-bottom',
 				],
 			],
 			'conditions' => $transform_origin_conditions,
 			'selectors' => [
-				'{{SELECTOR}}' => 'transform-origin: {{transform_origin_x.VALUE}} {{VALUE}}',
+				'{{SELECTOR}}' => '--e-transform-origin-y: {{VALUE}}',
 			],
 			'toggle' => false,
 		];
 
+		// TODO: Once Core 3.4.0 is out, get the active devices using Breakpoints/Manager::get_active_devices_list().
+		$active_breakpoint_instances = Plugin::elementor()->breakpoints->get_active_breakpoints();
+		// Devices need to be ordered from largest to smallest.
+		$active_devices = array_reverse( array_keys( $active_breakpoint_instances ) );
+
+		// Add desktop in the correct position.
+		if ( in_array( 'widescreen', $active_devices, true ) ) {
+			$active_devices = array_merge( array_slice( $active_devices, 0, 1 ), [ 'desktop' ], array_slice( $active_devices, 1 ) );
+		} else {
+			$active_devices = array_merge( [ 'desktop' ], $active_devices );
+		}
+
+		$devices_options = [];
+
+		foreach ( $active_devices as $device_key ) {
+			$device_label = 'desktop' === $device_key ? esc_html__( 'Desktop', 'elementor-pro' ) : $active_breakpoint_instances[ $device_key ]->get_label();
+
+			$devices_options[ $device_key ] = $device_label;
+		}
+
 		$fields['devices'] = [
-			'label' => __( 'Apply Effects On', 'elementor-pro' ),
+			'label' => esc_html__( 'Apply Effects On', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT2,
 			'multiple' => true,
 			'label_block' => true,
-			'default' => [ 'desktop', 'tablet', 'mobile' ],
-			'options' => [
-				'desktop' => __( 'Desktop', 'elementor-pro' ),
-				'tablet' => __( 'Tablet', 'elementor-pro' ),
-				'mobile' => __( 'Mobile', 'elementor-pro' ),
-			],
+			'default' => $active_devices,
+			'options' => $devices_options,
 			'condition' => [
 				'motion_fx_scrolling' => 'yes',
 			],
@@ -137,12 +173,12 @@ class Controls_Group extends Group_Control_Base {
 		];
 
 		$fields['range'] = [
-			'label' => __( 'Effects Relative To', 'elementor-pro' ),
+			'label' => esc_html__( 'Effects Relative To', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'' => __( 'Default', 'elementor-pro' ),
-				'viewport' => __( 'Viewport', 'elementor-pro' ),
-				'page' => __( 'Entire Page', 'elementor-pro' ),
+				'' => esc_html__( 'Default', 'elementor-pro' ),
+				'viewport' => esc_html__( 'Viewport', 'elementor-pro' ),
+				'page' => esc_html__( 'Entire Page', 'elementor-pro' ),
 			],
 			'condition' => [
 				'motion_fx_scrolling' => 'yes',
@@ -152,10 +188,10 @@ class Controls_Group extends Group_Control_Base {
 		];
 
 		$fields['motion_fx_mouse'] = [
-			'label' => __( 'Mouse Effects', 'elementor-pro' ),
+			'label' => esc_html__( 'Mouse Effects', 'elementor-pro' ),
 			'type' => Controls_Manager::SWITCHER,
-			'label_off' => __( 'Off', 'elementor-pro' ),
-			'label_on' => __( 'On', 'elementor-pro' ),
+			'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+			'label_on' => esc_html__( 'On', 'elementor-pro' ),
 			'separator' => 'before',
 			'render_type' => 'none',
 			'frontend_available' => true,
@@ -175,18 +211,18 @@ class Controls_Group extends Group_Control_Base {
 	private function get_scrolling_effects() {
 		return [
 			'translateY' => [
-				'label' => __( 'Vertical Scroll', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Scroll', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'options' => [
-							'' => __( 'Up', 'elementor-pro' ),
-							'negative' => __( 'Down', 'elementor-pro' ),
+							'' => esc_html__( 'Up', 'elementor-pro' ),
+							'negative' => esc_html__( 'Down', 'elementor-pro' ),
 						],
 					],
 					'speed' => [
-						'label' => __( 'Speed', 'elementor-pro' ),
+						'label' => esc_html__( 'Speed', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 4,
@@ -199,7 +235,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'affectedRange' => [
-						'label' => __( 'Viewport', 'elementor-pro' ),
+						'label' => esc_html__( 'Viewport', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'sizes' => [
@@ -218,18 +254,18 @@ class Controls_Group extends Group_Control_Base {
 				],
 			],
 			'translateX' => [
-				'label' => __( 'Horizontal Scroll', 'elementor-pro' ),
+				'label' => esc_html__( 'Horizontal Scroll', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'options' => [
-							'' => __( 'To Left', 'elementor-pro' ),
-							'negative' => __( 'To Right', 'elementor-pro' ),
+							'' => esc_html__( 'To Left', 'elementor-pro' ),
+							'negative' => esc_html__( 'To Right', 'elementor-pro' ),
 						],
 					],
 					'speed' => [
-						'label' => __( 'Speed', 'elementor-pro' ),
+						'label' => esc_html__( 'Speed', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 4,
@@ -242,7 +278,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'affectedRange' => [
-						'label' => __( 'Viewport', 'elementor-pro' ),
+						'label' => esc_html__( 'Viewport', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'sizes' => [
@@ -261,10 +297,10 @@ class Controls_Group extends Group_Control_Base {
 				],
 			],
 			'opacity' => [
-				'label' => __( 'Transparency', 'elementor-pro' ),
+				'label' => esc_html__( 'Transparency', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'default' => 'out-in',
 						'options' => [
@@ -275,7 +311,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'level' => [
-						'label' => __( 'Level', 'elementor-pro' ),
+						'label' => esc_html__( 'Level', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 10,
@@ -289,7 +325,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'range' => [
-						'label' => __( 'Viewport', 'elementor-pro' ),
+						'label' => esc_html__( 'Viewport', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'sizes' => [
@@ -308,10 +344,10 @@ class Controls_Group extends Group_Control_Base {
 				],
 			],
 			'blur' => [
-				'label' => __( 'Blur', 'elementor-pro' ),
+				'label' => esc_html__( 'Blur', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'default' => 'out-in',
 						'options' => [
@@ -322,7 +358,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'level' => [
-						'label' => __( 'Level', 'elementor-pro' ),
+						'label' => esc_html__( 'Level', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 7,
@@ -335,7 +371,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'range' => [
-						'label' => __( 'Viewport', 'elementor-pro' ),
+						'label' => esc_html__( 'Viewport', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'sizes' => [
@@ -354,18 +390,18 @@ class Controls_Group extends Group_Control_Base {
 				],
 			],
 			'rotateZ' => [
-				'label' => __( 'Rotate', 'elementor-pro' ),
+				'label' => esc_html__( 'Rotate', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'options' => [
-							'' => __( 'To Left', 'elementor-pro' ),
-							'negative' => __( 'To Right', 'elementor-pro' ),
+							'' => esc_html__( 'To Left', 'elementor-pro' ),
+							'negative' => esc_html__( 'To Right', 'elementor-pro' ),
 						],
 					],
 					'speed' => [
-						'label' => __( 'Speed', 'elementor-pro' ),
+						'label' => esc_html__( 'Speed', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 1,
@@ -378,7 +414,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'affectedRange' => [
-						'label' => __( 'Viewport', 'elementor-pro' ),
+						'label' => esc_html__( 'Viewport', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'sizes' => [
@@ -397,10 +433,10 @@ class Controls_Group extends Group_Control_Base {
 				],
 			],
 			'scale' => [
-				'label' => __( 'Scale', 'elementor-pro' ),
+				'label' => esc_html__( 'Scale', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'default' => 'out-in',
 						'options' => [
@@ -411,7 +447,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'speed' => [
-						'label' => __( 'Speed', 'elementor-pro' ),
+						'label' => esc_html__( 'Speed', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 4,
@@ -424,7 +460,7 @@ class Controls_Group extends Group_Control_Base {
 						],
 					],
 					'range' => [
-						'label' => __( 'Viewport', 'elementor-pro' ),
+						'label' => esc_html__( 'Viewport', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'sizes' => [
@@ -448,19 +484,19 @@ class Controls_Group extends Group_Control_Base {
 	private function get_mouse_effects() {
 		return [
 			'mouseTrack' => [
-				'label' => __( 'Mouse Track', 'elementor-pro' ),
+				'label' => esc_html__( 'Mouse Track', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'default' => '',
 						'options' => [
-							'' => __( 'Opposite', 'elementor-pro' ),
-							'negative' => __( 'Direct', 'elementor-pro' ),
+							'' => esc_html__( 'Opposite', 'elementor-pro' ),
+							'negative' => esc_html__( 'Direct', 'elementor-pro' ),
 						],
 					],
 					'speed' => [
-						'label' => __( 'Speed', 'elementor-pro' ),
+						'label' => esc_html__( 'Speed', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 1,
@@ -475,19 +511,19 @@ class Controls_Group extends Group_Control_Base {
 				],
 			],
 			'tilt' => [
-				'label' => __( '3D Tilt', 'elementor-pro' ),
+				'label' => esc_html__( '3D Tilt', 'elementor-pro' ),
 				'fields' => [
 					'direction' => [
-						'label' => __( 'Direction', 'elementor-pro' ),
+						'label' => esc_html__( 'Direction', 'elementor-pro' ),
 						'type' => Controls_Manager::SELECT,
 						'default' => '',
 						'options' => [
-							'' => __( 'Direct', 'elementor-pro' ),
-							'negative' => __( 'Opposite', 'elementor-pro' ),
+							'' => esc_html__( 'Direct', 'elementor-pro' ),
+							'negative' => esc_html__( 'Opposite', 'elementor-pro' ),
 						],
 					],
 					'speed' => [
-						'label' => __( 'Speed', 'elementor-pro' ),
+						'label' => esc_html__( 'Speed', 'elementor-pro' ),
 						'type' => Controls_Manager::SLIDER,
 						'default' => [
 							'size' => 4,

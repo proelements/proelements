@@ -17,7 +17,7 @@ class Icomoon extends Icon_Set_Base {
 	}
 
 	public function get_type() {
-		return __( 'Icomoon', 'elementor-pro' );
+		return esc_html__( 'Icomoon', 'elementor-pro' );
 	}
 
 	public function is_valid() {

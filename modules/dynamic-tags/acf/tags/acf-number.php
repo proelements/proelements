@@ -15,7 +15,7 @@ class ACF_Number extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'ACF', 'elementor-pro' ) . ' ' . __( 'Number', 'elementor-pro' ) . ' ' . __( 'Field', 'elementor-pro' );
+		return esc_html__( 'ACF', 'elementor-pro' ) . ' ' . esc_html__( 'Number', 'elementor-pro' ) . ' ' . esc_html__( 'Field', 'elementor-pro' );
 	}
 
 	public function get_group() {

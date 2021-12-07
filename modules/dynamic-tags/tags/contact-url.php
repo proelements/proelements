@@ -16,7 +16,7 @@ class Contact_URL extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Contact URL', 'elementor-pro' );
+		return esc_html__( 'Contact URL', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -31,21 +31,21 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'link_type',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => '— ' . __( 'Select', 'elementor-pro' ) . ' —',
-					'email' => __( 'Email', 'elementor-pro' ),
-					'tel' => __( 'Tel', 'elementor-pro' ),
-					'sms' => __( 'SMS', 'elementor-pro' ),
-					'whatsapp' => __( 'WhatsApp', 'elementor-pro' ),
-					'skype' => __( 'Skype', 'elementor-pro' ),
-					'messenger' => __( 'Messenger', 'elementor-pro' ),
-					'viber' => __( 'Viber', 'elementor-pro' ),
-					'waze' => __( 'Waze', 'elementor-pro' ),
-					'google_calendar' => __( 'Google Calendar', 'elementor-pro' ),
-					'outlook_calendar' => __( 'Outlook Calendar', 'elementor-pro' ),
-					'yahoo_calendar' => __( 'Yahoo Calendar', 'elementor-pro' ),
+					'' => '— ' . esc_html__( 'Select', 'elementor-pro' ) . ' —',
+					'email' => esc_html__( 'Email', 'elementor-pro' ),
+					'tel' => esc_html__( 'Tel', 'elementor-pro' ),
+					'sms' => esc_html__( 'SMS', 'elementor-pro' ),
+					'whatsapp' => esc_html__( 'WhatsApp', 'elementor-pro' ),
+					'skype' => esc_html__( 'Skype', 'elementor-pro' ),
+					'messenger' => esc_html__( 'Messenger', 'elementor-pro' ),
+					'viber' => esc_html__( 'Viber', 'elementor-pro' ),
+					'waze' => esc_html__( 'Waze', 'elementor-pro' ),
+					'google_calendar' => esc_html__( 'Google Calendar', 'elementor-pro' ),
+					'outlook_calendar' => esc_html__( 'Outlook Calendar', 'elementor-pro' ),
+					'yahoo_calendar' => esc_html__( 'Yahoo Calendar', 'elementor-pro' ),
 				],
 			]
 		);
@@ -53,7 +53,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'mail_to',
 			[
-				'label' => __( 'Email', 'elementor-pro' ),
+				'label' => esc_html__( 'Email', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'link_type' => 'email',
@@ -64,7 +64,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'mail_subject',
 			[
-				'label' => __( 'Subject', 'elementor-pro' ),
+				'label' => esc_html__( 'Subject', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => 'true',
 				'condition' => [
@@ -76,7 +76,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'mail_body',
 			[
-				'label' => __( 'Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Message', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'condition' => [
 					'link_type' => 'email',
@@ -87,7 +87,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'tel_number',
 			[
-				'label' => __( 'Number', 'elementor-pro' ),
+				'label' => esc_html__( 'Number', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'link_type' => [
@@ -103,7 +103,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'username',
 			[
-				'label' => __( 'Username', 'elementor-pro' ),
+				'label' => esc_html__( 'Username', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'link_type' => [ 'skype', 'messenger' ],
@@ -114,11 +114,11 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'viber_action',
 			[
-				'label' => __( 'Action', 'elementor-pro' ),
+				'label' => esc_html__( 'Action', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'contact' => __( 'Contact', 'elementor-pro' ),
-					'add' => __( 'Add', 'elementor-pro' ),
+					'contact' => esc_html__( 'Contact', 'elementor-pro' ),
+					'add' => esc_html__( 'Add', 'elementor-pro' ),
 				],
 				'default' => 'contact',
 				'condition' => [
@@ -130,14 +130,14 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'skype_action',
 			[
-				'label' => __( 'Action', 'elementor-pro' ),
+				'label' => esc_html__( 'Action', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'call' => __( 'Call', 'elementor-pro' ),
-					'chat' => __( 'Chat', 'elementor-pro' ),
-					'userinfo' => __( 'Show Profile', 'elementor-pro' ),
-					'add' => __( 'Add to Contacts', 'elementor-pro' ),
-					'voicemail' => __( 'Send Voice Mail', 'elementor-pro' ),
+					'call' => esc_html__( 'Call', 'elementor-pro' ),
+					'chat' => esc_html__( 'Chat', 'elementor-pro' ),
+					'userinfo' => esc_html__( 'Show Profile', 'elementor-pro' ),
+					'add' => esc_html__( 'Add to Contacts', 'elementor-pro' ),
+					'voicemail' => esc_html__( 'Send Voice Mail', 'elementor-pro' ),
 				],
 				'default' => 'call',
 				'condition' => [
@@ -149,7 +149,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'waze_address',
 			[
-				'label' => __( 'Location', 'elementor-pro' ),
+				'label' => esc_html__( 'Location', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => 'true',
 				'condition' => [
@@ -161,7 +161,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'event_title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => 'true',
 				'condition' => [
@@ -177,7 +177,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'event_description',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'condition' => [
 					'link_type' => [
@@ -192,7 +192,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'event_location',
 			[
-				'label' => __( 'Location', 'elementor-pro' ),
+				'label' => esc_html__( 'Location', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => 'true',
 				'condition' => [
@@ -208,7 +208,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'event_start_date',
 			[
-				'label' => __( 'Start', 'elementor-pro' ),
+				'label' => esc_html__( 'Start', 'elementor-pro' ),
 				'type' => Controls_Manager::DATE_TIME,
 				'condition' => [
 					'link_type' => [
@@ -223,7 +223,7 @@ class Contact_URL extends Tag {
 		$this->add_control(
 			'event_end_date',
 			[
-				'label' => __( 'End', 'elementor-pro' ),
+				'label' => esc_html__( 'End', 'elementor-pro' ),
 				'type' => Controls_Manager::DATE_TIME,
 				'condition' => [
 					'link_type' => [
@@ -440,7 +440,7 @@ class Contact_URL extends Tag {
 				$value = $this->build_viber_link( $settings );
 				break;
 		}
-		echo $value;
+		echo esc_html( $value );
 	}
 }
 

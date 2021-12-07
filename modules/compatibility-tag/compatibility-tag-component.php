@@ -26,7 +26,7 @@ class Compatibility_Tag_Component extends Compatibility_Tag_Base_Module {
 	 * @return string
 	 */
 	protected function get_plugin_label() {
-		return __( 'Elementor Pro', 'elementor-pro' );
+		return esc_html__( 'Elementor Pro', 'elementor-pro' );
 	}
 
 	/**

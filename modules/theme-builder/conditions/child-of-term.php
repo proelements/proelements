@@ -14,7 +14,7 @@ class Child_Of_Term extends Taxonomy {
 	}
 
 	public function get_label() {
-		return sprintf( __( 'Direct Child %s Of', 'elementor-pro' ), $this->taxonomy->labels->singular_name );
+		return sprintf( esc_html__( 'Direct Child %s Of', 'elementor-pro' ), $this->taxonomy->labels->singular_name );
 	}
 
 	public function __construct( $data ) {

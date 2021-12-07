@@ -3,6 +3,7 @@
 namespace ElementorPro\Modules\Gallery\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
@@ -10,6 +11,7 @@ use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
+use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Plugin;
 
@@ -34,7 +36,7 @@ class Gallery extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Gallery', 'elementor-pro' );
+		return esc_html__( 'Gallery', 'elementor-pro' );
 	}
 
 	public function get_script_depends() {
@@ -49,18 +51,26 @@ class Gallery extends Base_Widget {
 		return 'eicon-gallery-justified';
 	}
 
+	public function get_inline_css_depends() {
+		if ( 'multiple' === $this->get_settings_for_display( 'gallery_type' ) ) {
+			return [ 'nav-menu' ];
+		}
+
+		return [];
+	}
+
 	protected function register_controls() {
-		$this->start_controls_section( 'settings', [ 'label' => __( 'Settings', 'elementor-pro' ) ] );
+		$this->start_controls_section( 'settings', [ 'label' => esc_html__( 'Settings', 'elementor-pro' ) ] );
 
 		$this->add_control(
 			'gallery_type',
 			[
 				'type' => Controls_Manager::SELECT,
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'default' => 'single',
 				'options' => [
-					'single' => __( 'Single', 'elementor-pro' ),
-					'multiple' => __( 'Multiple', 'elementor-pro' ),
+					'single' => esc_html__( 'Single', 'elementor-pro' ),
+					'multiple' => esc_html__( 'Multiple', 'elementor-pro' ),
 				],
 			]
 		);
@@ -84,8 +94,8 @@ class Gallery extends Base_Widget {
 			'gallery_title',
 			[
 				'type' => Controls_Manager::TEXT,
-				'label' => __( 'Title', 'elementor-pro' ),
-				'default' => __( 'New Gallery', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
+				'default' => esc_html__( 'New Gallery', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -106,12 +116,12 @@ class Gallery extends Base_Widget {
 			'galleries',
 			[
 				'type' => Controls_Manager::REPEATER,
-				'label' => __( 'Galleries', 'elementor-pro' ),
+				'label' => esc_html__( 'Galleries', 'elementor-pro' ),
 				'fields' => $repeater->get_controls(),
 				'title_field' => '{{{ gallery_title }}}',
 				'default' => [
 					[
-						'gallery_title' => __( 'New Gallery', 'elementor-pro' ),
+						'gallery_title' => esc_html__( 'New Gallery', 'elementor-pro' ),
 					],
 				],
 				'condition' => [
@@ -124,10 +134,10 @@ class Gallery extends Base_Widget {
 			'order_by',
 			[
 				'type' => Controls_Manager::SELECT,
-				'label' => __( 'Order By', 'elementor-pro' ),
+				'label' => esc_html__( 'Order By', 'elementor-pro' ),
 				'options' => [
-					'' => __( 'Default', 'elementor-pro' ),
-					'random' => __( 'Random', 'elementor-pro' ),
+					'' => esc_html__( 'Default', 'elementor-pro' ),
+					'random' => esc_html__( 'Random', 'elementor-pro' ),
 				],
 				'default' => '',
 			]
@@ -137,7 +147,7 @@ class Gallery extends Base_Widget {
 			'lazyload',
 			[
 				'type' => Controls_Manager::SWITCHER,
-				'label' => __( 'Lazy Load', 'elementor-pro' ),
+				'label' => esc_html__( 'Lazy Load', 'elementor-pro' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'frontend_available' => true,
@@ -148,12 +158,12 @@ class Gallery extends Base_Widget {
 			'gallery_layout',
 			[
 				'type' => Controls_Manager::SELECT,
-				'label' => __( 'Layout', 'elementor-pro' ),
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
 				'default' => 'grid',
 				'options' => [
-					'grid' => __( 'Grid', 'elementor-pro' ),
-					'justified' => __( 'Justified', 'elementor-pro' ),
-					'masonry' => __( 'Masonry', 'elementor-pro' ),
+					'grid' => esc_html__( 'Grid', 'elementor-pro' ),
+					'justified' => esc_html__( 'Justified', 'elementor-pro' ),
+					'masonry' => esc_html__( 'Masonry', 'elementor-pro' ),
 				],
 				'separator' => 'before',
 				'frontend_available' => true,
@@ -163,7 +173,7 @@ class Gallery extends Base_Widget {
 		$this->add_responsive_control(
 			'columns',
 			[
-				'label' => __( 'Columns', 'elementor-pro' ),
+				'label' => esc_html__( 'Columns', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 4,
 				'tablet_default' => 2,
@@ -178,10 +188,31 @@ class Gallery extends Base_Widget {
 			]
 		);
 
+		$active_breakpoints = Plugin::elementor()->breakpoints->get_active_breakpoints();
+		$ideal_row_height_device_args = [];
+		$gap_device_args = [];
+
+		// Add default values for all active breakpoints.
+		foreach ( $active_breakpoints as $breakpoint_name => $breakpoint_instance ) {
+			if ( 'widescreen' !== $breakpoint_name ) {
+				$ideal_row_height_device_args[ $breakpoint_name ] = [
+					'default' => [
+						'size' => 150,
+					],
+				];
+
+				$gap_device_args[ $breakpoint_name ] = [
+					'default' => [
+						'size' => 10,
+					],
+				];
+			}
+		}
+
 		$this->add_responsive_control(
 			'ideal_row_height',
 			[
-				'label' => __( 'Row Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Row Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -192,12 +223,7 @@ class Gallery extends Base_Widget {
 				'default' => [
 					'size' => 200,
 				],
-				'tablet_default' => [
-					'size' => 150,
-				],
-				'mobile_default' => [
-					'size' => 150,
-				],
+				'device_args' => $ideal_row_height_device_args,
 				'condition' => [
 					'gallery_layout' => 'justified',
 				],
@@ -210,17 +236,12 @@ class Gallery extends Base_Widget {
 		$this->add_responsive_control(
 			'gap',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 10,
 				],
-				'tablet_default' => [
-					'size' => 10,
-				],
-				'mobile_default' => [
-					'size' => 10,
-				],
+				'device_args' => $gap_device_args,
 				'required' => true,
 				'render_type' => 'none',
 				'frontend_available' => true,
@@ -230,13 +251,13 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'link_to',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'file',
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'file' => __( 'Media File', 'elementor-pro' ),
-					'custom' => __( 'Custom URL', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'file' => esc_html__( 'Media File', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom URL', 'elementor-pro' ),
 				],
 				'frontend_available' => true,
 			]
@@ -245,7 +266,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'url',
 			[
-				'label' => __( 'URL', 'elementor-pro' ),
+				'label' => esc_html__( 'URL', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
 				'condition' => [
 					'link_to' => 'custom',
@@ -258,7 +279,7 @@ class Gallery extends Base_Widget {
 			'aspect_ratio',
 			[
 				'type' => Controls_Manager::SELECT,
-				'label' => __( 'Aspect Ratio', 'elementor-pro' ),
+				'label' => esc_html__( 'Aspect Ratio', 'elementor-pro' ),
 				'default' => '3:2',
 				'options' => [
 					'1:1' => '1:1',
@@ -289,7 +310,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_section(
 			'section_filter_bar_content',
 			[
-				'label' => __( 'Filter Bar', 'elementor-pro' ),
+				'label' => esc_html__( 'Filter Bar', 'elementor-pro' ),
 				'condition' => [
 					'gallery_type' => 'multiple',
 				],
@@ -300,7 +321,7 @@ class Gallery extends Base_Widget {
 			'show_all_galleries',
 			[
 				'type' => Controls_Manager::SWITCHER,
-				'label' => __( '"All" Filter', 'elementor-pro' ),
+				'label' => esc_html__( '"All" Filter', 'elementor-pro' ),
 				'default' => 'yes',
 				'frontend_available' => true,
 			]
@@ -310,8 +331,8 @@ class Gallery extends Base_Widget {
 			'show_all_galleries_label',
 			[
 				'type' => Controls_Manager::TEXT,
-				'label' => __( '"All" Filter Label', 'elementor-pro' ),
-				'default' => __( 'All', 'elementor-pro' ),
+				'label' => esc_html__( '"All" Filter Label', 'elementor-pro' ),
+				'default' => esc_html__( 'All', 'elementor-pro' ),
 				'condition' => [
 					'show_all_galleries' => 'yes',
 				],
@@ -321,17 +342,17 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'pointer',
 			[
-				'label' => __( 'Pointer', 'elementor-pro' ),
+				'label' => esc_html__( 'Pointer', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'underline',
 				'options' => [
-					'none' => __( 'None', 'elementor-pro' ),
-					'underline' => __( 'Underline', 'elementor-pro' ),
-					'overline' => __( 'Overline', 'elementor-pro' ),
-					'double-line' => __( 'Double Line', 'elementor-pro' ),
-					'framed' => __( 'Framed', 'elementor-pro' ),
-					'background' => __( 'Background', 'elementor-pro' ),
-					'text' => __( 'Text', 'elementor-pro' ),
+					'none' => esc_html__( 'None', 'elementor-pro' ),
+					'underline' => esc_html__( 'Underline', 'elementor-pro' ),
+					'overline' => esc_html__( 'Overline', 'elementor-pro' ),
+					'double-line' => esc_html__( 'Double Line', 'elementor-pro' ),
+					'framed' => esc_html__( 'Framed', 'elementor-pro' ),
+					'background' => esc_html__( 'Background', 'elementor-pro' ),
+					'text' => esc_html__( 'Text', 'elementor-pro' ),
 				],
 				'style_transfer' => true,
 			]
@@ -340,7 +361,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'animation_line',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'fade',
 				'options' => [
@@ -360,7 +381,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'animation_framed',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'fade',
 				'options' => [
@@ -380,7 +401,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'animation_background',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'fade',
 				'options' => [
@@ -406,7 +427,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'animation_text',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'grow',
 				'options' => [
@@ -426,12 +447,12 @@ class Gallery extends Base_Widget {
 
 		$this->end_controls_section(); // settings
 
-		$this->start_controls_section( 'overlay', [ 'label' => __( 'Overlay', 'elementor-pro' ) ] );
+		$this->start_controls_section( 'overlay', [ 'label' => esc_html__( 'Overlay', 'elementor-pro' ) ] );
 
 		$this->add_control(
 			'overlay_background',
 			[
-				'label' => __( 'Background', 'elementor-pro' ),
+				'label' => esc_html__( 'Background', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'frontend_available' => true,
@@ -441,15 +462,15 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'overlay_title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'title' => __( 'Title', 'elementor-pro' ),
-					'caption' => __( 'Caption', 'elementor-pro' ),
-					'alt' => __( 'Alt', 'elementor-pro' ),
-					'description' => __( 'Description', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'title' => esc_html__( 'Title', 'elementor-pro' ),
+					'caption' => esc_html__( 'Caption', 'elementor-pro' ),
+					'alt' => esc_html__( 'Alt', 'elementor-pro' ),
+					'description' => esc_html__( 'Description', 'elementor-pro' ),
 				],
 				'frontend_available' => true,
 			]
@@ -458,15 +479,15 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'overlay_description',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'title' => __( 'Title', 'elementor-pro' ),
-					'caption' => __( 'Caption', 'elementor-pro' ),
-					'alt' => __( 'Alt', 'elementor-pro' ),
-					'description' => __( 'Description', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'title' => esc_html__( 'Title', 'elementor-pro' ),
+					'caption' => esc_html__( 'Caption', 'elementor-pro' ),
+					'alt' => esc_html__( 'Alt', 'elementor-pro' ),
+					'description' => esc_html__( 'Description', 'elementor-pro' ),
 				],
 				'frontend_available' => true,
 			]
@@ -477,7 +498,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_section(
 			'image_style',
 			[
-				'label' => __( 'Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -487,14 +508,14 @@ class Gallery extends Base_Widget {
 		$this->start_controls_tab(
 			'image_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'image_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--image-border-color: {{VALUE}}',
@@ -505,7 +526,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'image_border_width',
 			[
-				'label' => __( 'Border Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -517,7 +538,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'image_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -539,14 +560,14 @@ class Gallery extends Base_Widget {
 		$this->start_controls_tab(
 			'image_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'image_border_color_hover',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-gallery-item:hover' => 'border-color: {{VALUE}}',
@@ -557,7 +578,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'image_border_radius_hover',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -581,7 +602,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'image_hover_animation',
 			[
-				'label' => __( 'Hover Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'' => 'None',
@@ -602,7 +623,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'image_animation_duration',
 			[
-				'label' => __( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 800,
@@ -624,7 +645,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_section(
 			'overlay_style',
 			[
-				'label' => __( 'Overlay', 'elementor-pro' ),
+				'label' => esc_html__( 'Overlay', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'overlay_background' => 'yes',
@@ -637,7 +658,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_tab(
 			'overlay_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
@@ -650,7 +671,7 @@ class Gallery extends Base_Widget {
 				'selector' => '{{WRAPPER}} .elementor-gallery-item__overlay',
 				'fields_options' => [
 					'background' => [
-						'label' => __( 'Overlay', 'elementor-pro' ),
+						'label' => esc_html__( 'Overlay', 'elementor-pro' ),
 					],
 				],
 			]
@@ -661,7 +682,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_tab(
 			'overlay_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
@@ -690,11 +711,11 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'image_blend_mode',
 			[
-				'label' => __( 'Blend Mode', 'elementor-pro' ),
+				'label' => esc_html__( 'Blend Mode', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'Normal', 'elementor-pro' ),
+					'' => esc_html__( 'Normal', 'elementor-pro' ),
 					'multiply' => 'Multiply',
 					'screen' => 'Screen',
 					'overlay' => 'Overlay',
@@ -719,17 +740,17 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'background_overlay_hover_animation',
 			[
-				'label' => __( 'Hover Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'groups' => [
 					[
-						'label' => __( 'None', 'elementor-pro' ),
+						'label' => esc_html__( 'None', 'elementor-pro' ),
 						'options' => [
-							'' => __( 'None', 'elementor-pro' ),
+							'' => esc_html__( 'None', 'elementor-pro' ),
 						],
 					],
 					[
-						'label' => __( 'Entrance', 'elementor-pro' ),
+						'label' => esc_html__( 'Entrance', 'elementor-pro' ),
 						'options' => [
 							'enter-from-right' => 'Slide In Right',
 							'enter-from-left' => 'Slide In Left',
@@ -741,7 +762,7 @@ class Gallery extends Base_Widget {
 						],
 					],
 					[
-						'label' => __( 'Exit', 'elementor-pro' ),
+						'label' => esc_html__( 'Exit', 'elementor-pro' ),
 						'options' => [
 							'exit-to-right' => 'Slide Out Right',
 							'exit-to-left' => 'Slide Out Left',
@@ -763,7 +784,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'background_overlay_animation_duration',
 			[
-				'label' => __( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 800,
@@ -785,7 +806,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_section(
 			'overlay_content_style',
 			[
-				'label' => __( 'Content', 'elementor-pro' ),
+				'label' => esc_html__( 'Content', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				//TODO: add conditions for this section
 			]
@@ -794,19 +815,19 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'content_alignment',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -820,19 +841,19 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'content_vertical_position',
 			[
-				'label' => __( 'Vertical Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'middle' => [
-						'title' => __( 'Middle', 'elementor-pro' ),
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-middle',
 					],
 					'bottom' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -850,7 +871,7 @@ class Gallery extends Base_Widget {
 		$this->add_responsive_control(
 			'content_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'default' => [
@@ -865,7 +886,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'heading_title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -877,7 +898,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--title-text-color: {{VALUE}}',
@@ -905,7 +926,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'title_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -920,7 +941,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'heading_description',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -932,7 +953,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'description_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--description-text-color: {{VALUE}}',
@@ -960,17 +981,17 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'content_hover_animation',
 			[
-				'label' => __( 'Hover Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'groups' => [
 					[
-						'label' => __( 'None', 'elementor-pro' ),
+						'label' => esc_html__( 'None', 'elementor-pro' ),
 						'options' => [
-							'' => __( 'None', 'elementor-pro' ),
+							'' => esc_html__( 'None', 'elementor-pro' ),
 						],
 					],
 					[
-						'label' => __( 'Entrance', 'elementor-pro' ),
+						'label' => esc_html__( 'Entrance', 'elementor-pro' ),
 						'options' => [
 							'enter-from-right' => 'Slide In Right',
 							'enter-from-left' => 'Slide In Left',
@@ -982,7 +1003,7 @@ class Gallery extends Base_Widget {
 						],
 					],
 					[
-						'label' => __( 'Reaction', 'elementor-pro' ),
+						'label' => esc_html__( 'Reaction', 'elementor-pro' ),
 						'options' => [
 							'grow' => 'Grow',
 							'shrink' => 'Shrink',
@@ -993,7 +1014,7 @@ class Gallery extends Base_Widget {
 						],
 					],
 					[
-						'label' => __( 'Exit', 'elementor-pro' ),
+						'label' => esc_html__( 'Exit', 'elementor-pro' ),
 						'options' => [
 							'exit-to-right' => 'Slide Out Right',
 							'exit-to-left' => 'Slide Out Left',
@@ -1015,7 +1036,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'content_animation_duration',
 			[
-				'label' => __( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 800,
@@ -1038,7 +1059,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'content_sequenced_animation',
 			[
-				'label' => __( 'Sequenced Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Sequenced Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'content_hover_animation!' => '',
@@ -1053,7 +1074,7 @@ class Gallery extends Base_Widget {
 		$this->start_controls_section(
 			'filter_bar_style',
 			[
-				'label' => __( 'Filter Bar', 'elementor-pro' ),
+				'label' => esc_html__( 'Filter Bar', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'gallery_type' => 'multiple',
@@ -1064,19 +1085,19 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'align_filter_bar_items',
 			[
-				'label' => __( 'Align', 'elementor-pro' ),
+				'label' => esc_html__( 'Align', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -1095,14 +1116,14 @@ class Gallery extends Base_Widget {
 
 		$this->start_controls_tab( 'filter_bar_colors_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'galleries_title_color_normal',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_PRIMARY,
@@ -1128,14 +1149,14 @@ class Gallery extends Base_Widget {
 
 		$this->start_controls_tab( 'filter_bar_colors_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'galleries_title_color_hover',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -1156,7 +1177,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'galleries_title_color_hover_pointer_bg',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
@@ -1171,7 +1192,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'galleries_pointer_color_hover',
 			[
-				'label' => __( 'Pointer Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Pointer Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_ACCENT,
@@ -1189,14 +1210,14 @@ class Gallery extends Base_Widget {
 
 		$this->start_controls_tab( 'filter_bar_colors_active',
 			[
-				'label' => __( 'Active', 'elementor-pro' ),
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'galleries_title_color_active',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -1210,7 +1231,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'galleries_pointer_color_active',
 			[
-				'label' => __( 'Pointer Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Pointer Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_ACCENT,
@@ -1232,9 +1253,9 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'pointer_width',
 			[
-				'label' => __( 'Pointer Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Pointer Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
+				'devices' => [ Breakpoints_Manager::BREAKPOINT_KEY_DESKTOP, Breakpoints_Manager::BREAKPOINT_KEY_TABLET ],
 				'range' => [
 					'px' => [
 						'max' => 30,
@@ -1253,7 +1274,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'galleries_titles_space_between',
 			[
-				'label' => __( 'Space Between', 'elementor-pro' ),
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -1265,7 +1286,7 @@ class Gallery extends Base_Widget {
 		$this->add_control(
 			'galleries_titles_gap',
 			[
-				'label' => __( 'Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -1366,9 +1387,11 @@ class Gallery extends Base_Widget {
 					}
 				}
 			} ?>
-			<div <?php echo $this->get_render_attribute_string( 'titles-container' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'titles-container' ); ?>>
 				<?php if ( $settings['show_all_galleries'] ) { ?>
-					<a data-gallery-index="all" class="elementor-item elementor-gallery-title"><?php echo $settings['show_all_galleries_label']; ?></a>
+					<a data-gallery-index="all" class="elementor-item elementor-gallery-title">
+						<?php $this->print_unescaped_setting( 'show_all_galleries_label' ); ?>
+					</a>
 				<?php } ?>
 
 				<?php foreach ( $settings['galleries'] as $index => $gallery ) :
@@ -1378,7 +1401,9 @@ class Gallery extends Base_Widget {
 
 					$galleries[ $index ] = $gallery['multiple_gallery'];
 					?>
-					<a data-gallery-index="<?php echo $index; ?>" class="elementor-item elementor-gallery-title"><?php echo $gallery['gallery_title']; ?></a>
+					<a data-gallery-index="<?php echo esc_attr( $index ); ?>" class="elementor-item elementor-gallery-title">
+						<?php $this->print_unescaped_setting( 'gallery_title', 'galleries', $index ); ?>
+					</a>
 					<?php
 				endforeach; ?>
 			</div>
@@ -1428,7 +1453,7 @@ class Gallery extends Base_Widget {
 		}
 
 		if ( ! empty( $galleries ) ) { ?>
-		<div <?php echo $this->get_render_attribute_string( 'gallery_container' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'gallery_container' ); ?>>
 			<?php
 			foreach ( $gallery_items as $id => $tags ) :
 				$unique_index = $id; //$gallery_index . '_' . $index;
@@ -1489,28 +1514,34 @@ class Gallery extends Base_Widget {
 						'alt' => $image_data['alt'],
 					]
 				);?>
-				<<?php echo $gallery_item_tag; ?> <?php echo $this->get_render_attribute_string( 'gallery_item_' . $unique_index ); ?>>
-					<div <?php echo $this->get_render_attribute_string( 'gallery_item_image_' . $unique_index ); ?> ></div>
+				<<?php Utils::print_validated_html_tag( $gallery_item_tag ); ?> <?php $this->print_render_attribute_string( 'gallery_item_' . $unique_index ); ?>>
+					<div <?php $this->print_render_attribute_string( 'gallery_item_image_' . $unique_index ); ?> ></div>
 					<?php if ( ! empty( $settings['overlay_background'] ) ) : ?>
-					<div <?php echo $this->get_render_attribute_string( 'gallery_item_background_overlay' ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'gallery_item_background_overlay' ); ?>></div>
 					<?php endif; ?>
 					<?php if ( $has_title || $has_description ) : ?>
-					<div <?php echo $this->get_render_attribute_string( 'gallery_item_content' ); ?>>
+					<div <?php $this->print_render_attribute_string( 'gallery_item_content' ); ?>>
 						<?php if ( $has_title ) :
 							$title = $image_data[ $settings['overlay_title'] ];
 							if ( ! empty( $title ) ) : ?>
-							<div <?php echo $this->get_render_attribute_string( 'gallery_item_title' ); ?>><?php echo $title; ?></div>
+								<div <?php $this->print_render_attribute_string( 'gallery_item_title' ); ?>>
+									<?php // PHPCS - the main text of a widget should not be escaped. ?>
+									<?php echo $title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</div>
 							<?php endif;
 						endif;
 						if ( $has_description ) :
 							$description = $image_data[ $settings['overlay_description'] ];
 							if ( ! empty( $description ) ) :?>
-							<div <?php echo $this->get_render_attribute_string( 'gallery_item_description' ); ?>><?php echo $description; ?></div>
+								<div <?php $this->print_render_attribute_string( 'gallery_item_description' ); ?>>
+									<?php // PHPCS - the main text of a widget should not be escaped. ?>
+									<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</div>
 							<?php endif;
 						endif; ?>
 					</div>
 					<?php endif; ?>
-				</<?php echo $gallery_item_tag; ?>>
+				</<?php Utils::print_validated_html_tag( $gallery_item_tag ); ?>>
 			<?php endforeach;
 			//endforeach; ?>
 		</div>

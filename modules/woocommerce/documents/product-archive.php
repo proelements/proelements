@@ -19,16 +19,16 @@ class Product_Archive extends Archive {
 		return $properties;
 	}
 
-	protected static function get_site_editor_type() {
+	public static function get_type() {
 		return 'product-archive';
 	}
 
 	public static function get_title() {
-		return __( 'Products Archive', 'elementor-pro' );
+		return esc_html__( 'Products Archive', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Products Archives', 'elementor-pro' );
+		return esc_html__( 'Products Archives', 'elementor-pro' );
 	}
 
 	protected static function get_site_editor_icon() {
@@ -46,9 +46,9 @@ class Product_Archive extends Archive {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => __( 'What is a Products Archive Template?', 'elementor-pro' ),
-			'content' => __( 'A products archive template allows you to easily design the layout and style of your WooCommerce shop page or other product archive pages - those pages that show a list of products, which may be filtered by terms such as categories, tags, etc.', 'elementor-pro' ),
-			'tip' => __( 'You can create multiple products archive templates, and assign each to different categories of products. This gives you the freedom to customize the appearance for each type of product being shown.', 'elementor-pro' ),
+			'title' => esc_html__( 'What is a Products Archive Template?', 'elementor-pro' ),
+			'content' => esc_html__( 'A products archive template allows you to easily design the layout and style of your WooCommerce shop page or other product archive pages - those pages that show a list of products, which may be filtered by terms such as categories, tags, etc.', 'elementor-pro' ),
+			'tip' => esc_html__( 'You can create multiple products archive templates, and assign each to different categories of products. This gives you the freedom to customize the appearance for each type of product being shown.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-products-archive',
 			'video_url' => 'https://www.youtube.com/embed/cQLeirgkguA',
 		];
@@ -90,7 +90,7 @@ class Product_Archive extends Archive {
 
 		$post_type_object = get_post_type_object( $post_type );
 
-		$post_type_archives[ 'post_type_archive/' . $post_type ] = $post_type_object->label . ' ' . __( 'Archive', 'elementor-pro' );
+		$post_type_archives[ 'post_type_archive/' . $post_type ] = $post_type_object->label . ' ' . esc_html__( 'Archive', 'elementor-pro' );
 
 		$post_type_taxonomies = get_object_taxonomies( $post_type, 'objects' );
 
@@ -100,18 +100,18 @@ class Product_Archive extends Archive {
 		] );
 
 		foreach ( $post_type_taxonomies as $slug => $object ) {
-			$taxonomies[ 'taxonomy/' . $slug ] = $object->label . ' ' . __( 'Archive', 'elementor-pro' );
+			$taxonomies[ 'taxonomy/' . $slug ] = $object->label . ' ' . esc_html__( 'Archive', 'elementor-pro' );
 		}
 
 		$options = [
-			'search' => __( 'Search Results', 'elementor-pro' ),
+			'search' => esc_html__( 'Search Results', 'elementor-pro' ),
 		];
 
 		$options += $taxonomies + $post_type_archives;
 
 		return [
 			'archive' => [
-				'label' => __( 'Archive', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive', 'elementor-pro' ),
 				'options' => $options,
 			],
 		];
@@ -126,11 +126,11 @@ class Product_Archive extends Archive {
 	protected static function get_editor_panel_categories() {
 		$categories = [
 			'woocommerce-elements-archive' => [
-				'title' => __( 'Product Archive', 'elementor-pro' ),
+				'title' => esc_html__( 'Product Archive', 'elementor-pro' ),
 			],
 			// Move to top as active.
 			'woocommerce-elements' => [
-				'title' => __( 'WooCommerce', 'elementor-pro' ),
+				'title' => esc_html__( 'WooCommerce', 'elementor-pro' ),
 				'active' => true,
 			],
 		];

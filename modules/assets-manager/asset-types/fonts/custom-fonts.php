@@ -17,7 +17,7 @@ class Custom_Fonts extends Classes\Font_Base {
 	const FONT_FACE_META_KEY = 'elementor_font_face';
 
 	public function get_name() {
-		return __( 'Custom Fonts', 'elementor-pro' );
+		return esc_html__( 'Custom Fonts', 'elementor-pro' );
 	}
 
 	public function get_type() {
@@ -61,7 +61,7 @@ class Custom_Fonts extends Classes\Font_Base {
 			[
 				'id' => 'font_weight',
 				'field_type' => 'select',
-				'label' => __( 'Weight', 'elementor-pro' ) . ':',
+				'label' => esc_html__( 'Weight', 'elementor-pro' ) . ':',
 				'extra_attributes' => [
 					'class' => 'font_weight',
 				],
@@ -70,7 +70,7 @@ class Custom_Fonts extends Classes\Font_Base {
 			[
 				'id' => 'font_style',
 				'field_type' => 'select',
-				'label' => __( 'Style', 'elementor-pro' ) . ':',
+				'label' => esc_html__( 'Style', 'elementor-pro' ) . ':',
 				'extra_attributes' => [
 					'class' => 'font_style',
 				],
@@ -80,7 +80,7 @@ class Custom_Fonts extends Classes\Font_Base {
 				'id' => 'preview_label',
 				'field_type' => 'html',
 				'label' => false,
-				'raw_html' => sprintf( '<div class="inline-preview">%s</div>', __( 'Elementor Is Making the Web Beautiful!!!', 'elementor-pro' ) ),
+				'raw_html' => sprintf( '<div class="inline-preview">%s</div>', esc_html__( 'Elementor Is Making the Web Beautiful!!!', 'elementor-pro' ) ),
 			],
 			[
 				'id' => 'toolbar',
@@ -112,11 +112,11 @@ class Custom_Fonts extends Classes\Font_Base {
 				'mine' => str_replace( '|', ',', $mine ),
 				'ext' => $type,
 				/* translators: %s: Font file format. */
-				'label' => sprintf( __( '%s File', 'elementor-pro' ), strtoupper( $type ) ),
+				'label' => sprintf( esc_html__( '%s File', 'elementor-pro' ), strtoupper( $type ) ),
 				/* translators: %s: Font file format. */
-				'box_title' => sprintf( __( 'Upload font .%s file', 'elementor-pro' ), $type ),
+				'box_title' => sprintf( esc_html__( 'Upload font .%s file', 'elementor-pro' ), $type ),
 				/* translators: %s: Font file format. */
-				'box_action' => sprintf( __( 'Select .%s file', 'elementor-pro' ), $type ),
+				'box_action' => sprintf( esc_html__( 'Select .%s file', 'elementor-pro' ), $type ),
 				'preview_anchor' => 'none',
 				'description' => $this->get_file_type_description( $type ),
 			];
@@ -136,9 +136,9 @@ class Custom_Fonts extends Classes\Font_Base {
 			'fields' => $fields,
 			'id' => 'font_face',
 			'label' => false,
-			'add_label' => __( 'Add Font Variation', 'elementor-pro' ),
-			'toggle_title' => __( 'Edit', 'elementor-pro' ),
-			'remove_title' => __( 'Delete', 'elementor-pro' ),
+			'add_label' => esc_html__( 'Add Font Variation', 'elementor-pro' ),
+			'toggle_title' => esc_html__( 'Edit', 'elementor-pro' ),
+			'remove_title' => esc_html__( 'Delete', 'elementor-pro' ),
 			'field_type' => 'repeater',
 			'row_label' => [
 				'default' => 'Settings',
@@ -149,7 +149,8 @@ class Custom_Fonts extends Classes\Font_Base {
 
 		$this->print_metabox( [ $repeater ] );
 
-		printf( '<style>%s</style>', get_post_meta( $post->ID, self::FONT_FACE_META_KEY, true ) );
+		// PHPCS - Dedicated for CSS.
+		printf( '<style>%s</style>', get_post_meta( $post->ID, self::FONT_FACE_META_KEY, true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function save_meta( $post_id, $data ) {
@@ -199,7 +200,7 @@ class Custom_Fonts extends Classes\Font_Base {
 		$svg_handler = Plugin::elementor()->assets_manager->get_asset( 'svg-handler' );
 
 		if ( Files_Upload_Handler::file_sanitizer_can_run() && ! $svg_handler->sanitize_svg( $file['tmp_name'] ) ) {
-			$file['error'] = __( 'Invalid SVG Format, file not uploaded for security reasons', 'elementor-pro' );
+			$file['error'] = esc_html__( 'Invalid SVG Format, file not uploaded for security reasons', 'elementor-pro' );
 		}
 
 		return $file;
@@ -343,7 +344,8 @@ class Custom_Fonts extends Classes\Font_Base {
 			return;
 		}
 
-		printf( '<style>%s</style><span style="font-family: \'%s\';">%s</span>', $font_face, esc_html( get_the_title( $post_id ) ), $this->font_preview_phrase );
+		// PHPCS - the variable $font_face is CSS. the property $this->font_preview_phrase is safe.
+		printf( '<style>%s</style><span style="font-family: \'%s\';">%s</span>', $font_face, esc_html( get_the_title( $post_id ) ), $this->font_preview_phrase ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function get_font_family_type( $post_id, $post_title ) {
@@ -393,7 +395,7 @@ class Custom_Fonts extends Classes\Font_Base {
 
 		if ( empty( $font_face ) ) {
 			/* translators: %s: Font family. */
-			$error_message = sprintf( __( 'Font %s was not found.', 'elementor-pro' ), $font_family );
+			$error_message = sprintf( esc_html__( 'Font %s was not found.', 'elementor-pro' ), $font_family );
 
 			throw new \Exception( $error_message );
 		}
@@ -405,16 +407,16 @@ class Custom_Fonts extends Classes\Font_Base {
 
 	private function get_font_style_options() {
 		return [
-			'normal' => __( 'Normal', 'elementor-pro' ),
-			'italic' => __( 'Italic', 'elementor-pro' ),
-			'oblique' => __( 'Oblique', 'elementor-pro' ),
+			'normal' => esc_html__( 'Normal', 'elementor-pro' ),
+			'italic' => esc_html__( 'Italic', 'elementor-pro' ),
+			'oblique' => esc_html__( 'Oblique', 'elementor-pro' ),
 		];
 	}
 
 	private function get_font_weight_options() {
 		return [
-			'normal' => __( 'Normal', 'elementor-pro' ),
-			'bold' => __( 'Bold', 'elementor-pro' ),
+			'normal' => esc_html__( 'Normal', 'elementor-pro' ),
+			'bold' => esc_html__( 'Bold', 'elementor-pro' ),
 			'100' => '100',
 			'200' => '200',
 			'300' => '300',
@@ -429,11 +431,11 @@ class Custom_Fonts extends Classes\Font_Base {
 
 	private function get_file_type_description( $file_type ) {
 		$descriptions = [
-			'eot' => __( 'Embedded OpenType, Used by IE6-IE9 Browsers', 'elementor-pro' ),
-			'woff2' => __( 'The Web Open Font Format 2, Used by Super Modern Browsers', 'elementor-pro' ),
-			'woff' => __( 'The Web Open Font Format, Used by Modern Browsers', 'elementor-pro' ),
-			'ttf' => __( 'TrueType Fonts, Used for better supporting Safari, Android, iOS', 'elementor-pro' ),
-			'svg' => __( 'SVG fonts allow SVG to be used as glyphs when displaying text, Used by Legacy iOS', 'elementor-pro' ),
+			'eot' => esc_html__( 'Embedded OpenType, Used by IE6-IE9 Browsers', 'elementor-pro' ),
+			'woff2' => esc_html__( 'The Web Open Font Format 2, Used by Super Modern Browsers', 'elementor-pro' ),
+			'woff' => esc_html__( 'The Web Open Font Format, Used by Modern Browsers', 'elementor-pro' ),
+			'ttf' => esc_html__( 'TrueType Fonts, Used for better supporting Safari, Android, iOS', 'elementor-pro' ),
+			'svg' => esc_html__( 'SVG fonts allow SVG to be used as glyphs when displaying text, Used by Legacy iOS', 'elementor-pro' ),
 		];
 
 		return isset( $descriptions[ $file_type ] ) ? $descriptions[ $file_type ] : '';

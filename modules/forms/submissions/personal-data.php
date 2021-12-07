@@ -16,7 +16,7 @@ class Personal_Data extends Base_Object {
 	 * @return string
 	 */
 	private function get_title() {
-		return __( 'Elementor Submissions', 'elementor-pro' );
+		return esc_html__( 'Elementor Submissions', 'elementor-pro' );
 	}
 
 	/**
@@ -48,31 +48,31 @@ class Personal_Data extends Base_Object {
 					} )
 					->merge([
 						[
-							'name' => __( 'User IP', 'elementor-pro' ),
+							'name' => esc_html__( 'User IP', 'elementor-pro' ),
 							'value' => $submission->user_ip,
 						],
 						[
-							'name' => __( 'Referer', 'elementor-pro' ),
+							'name' => esc_html__( 'Referer', 'elementor-pro' ),
 							'value' => $submission->referer,
 						],
 						[
-							'name' => __( 'User Agent', 'elementor-pro' ),
+							'name' => esc_html__( 'User Agent', 'elementor-pro' ),
 							'value' => $submission->user_agent,
 						],
 						[
-							'name' => __( 'Created At', 'elementor-pro' ),
+							'name' => esc_html__( 'Created At', 'elementor-pro' ),
 							'value' => $submission->created_at,
 						],
 						[
-							'name' => __( 'Created At GMT', 'elementor-pro' ),
+							'name' => esc_html__( 'Created At GMT', 'elementor-pro' ),
 							'value' => $submission->created_at_gmt,
 						],
 						[
-							'name' => __( 'Updated At', 'elementor-pro' ),
+							'name' => esc_html__( 'Updated At', 'elementor-pro' ),
 							'value' => $submission->updated_at,
 						],
 						[
-							'name' => __( 'Updated At GMT', 'elementor-pro' ),
+							'name' => esc_html__( 'Updated At GMT', 'elementor-pro' ),
 							'value' => $submission->updated_at_gmt,
 						],
 					])

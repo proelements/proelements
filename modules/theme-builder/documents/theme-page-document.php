@@ -42,12 +42,12 @@ abstract class Theme_Page_Document extends Theme_Document {
 		$this->add_control(
 			'page_template',
 			[
-				'label' => __( 'Page Layout', 'elementor-pro' ),
+				'label' => esc_html__( 'Page Layout', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Default', 'elementor-pro' ),
-					PageTemplatesModule::TEMPLATE_CANVAS => __( 'Elementor Canvas', 'elementor-pro' ),
-					PageTemplatesModule::TEMPLATE_HEADER_FOOTER => __( 'Elementor Full Width', 'elementor-pro' ),
+					'' => esc_html__( 'Default', 'elementor-pro' ),
+					PageTemplatesModule::TEMPLATE_CANVAS => esc_html__( 'Elementor Canvas', 'elementor-pro' ),
+					PageTemplatesModule::TEMPLATE_HEADER_FOOTER => esc_html__( 'Elementor Full Width', 'elementor-pro' ),
 				],
 			]
 		);
@@ -56,7 +56,7 @@ abstract class Theme_Page_Document extends Theme_Document {
 			'page_template_default_description',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'Default Page Template from your theme', 'elementor-pro' ),
+				'raw' => esc_html__( 'Default Page Template from your theme', 'elementor-pro' ),
 				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
@@ -69,7 +69,7 @@ abstract class Theme_Page_Document extends Theme_Document {
 			'page_template_canvas_description',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'No header, no footer, just Elementor', 'elementor-pro' ),
+				'raw' => esc_html__( 'No header, no footer, just Elementor', 'elementor-pro' ),
 				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
@@ -82,7 +82,7 @@ abstract class Theme_Page_Document extends Theme_Document {
 			'page_template_header_footer_description',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'This template includes the header, full-width content and footer', 'elementor-pro' ),
+				'raw' => esc_html__( 'This template includes the header, full-width content and footer', 'elementor-pro' ),
 				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [

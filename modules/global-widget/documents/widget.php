@@ -19,6 +19,9 @@ class Widget extends Library_Document {
 		$properties['show_in_library'] = false;
 		$properties['is_editable'] = false;
 
+		// Since, created in the editor environment.
+		$properties['show_in_finder'] = false;
+
 		return $properties;
 	}
 
@@ -27,11 +30,11 @@ class Widget extends Library_Document {
 	}
 
 	public static function get_title() {
-		return __( 'Global Widget', 'elementor-pro' );
+		return esc_html__( 'Global Widget', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Global Widgets', 'elementor-pro' );
+		return esc_html__( 'Global Widgets', 'elementor-pro' );
 	}
 
 	public function is_editable_by_current_user() {

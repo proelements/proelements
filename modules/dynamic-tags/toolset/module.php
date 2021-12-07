@@ -107,7 +107,7 @@ class Module extends DynamicTags\Module {
 	public function get_groups() {
 		return [
 			self::TOOLSET_GROUP => [
-				'title' => __( 'Toolset', 'elementor-pro' ),
+				'title' => esc_html__( 'Toolset', 'elementor-pro' ),
 			],
 		];
 	}

@@ -18,7 +18,7 @@ class Product_Title extends Widget_Heading {
 	}
 
 	public function get_title() {
-		return __( 'Product Title', 'elementor-pro' );
+		return esc_html__( 'Product Title', 'elementor-pro' );
 	}
 
 	public function get_icon() {

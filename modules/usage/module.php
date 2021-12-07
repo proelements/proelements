@@ -2,9 +2,9 @@
 namespace ElementorPro\Modules\Usage;
 
 use Elementor\Core\Base\Module as BaseModule;
-use ElementorPro\Plugin;
 use ElementorPro\Modules\AssetsManager\AssetTypes\Fonts\Custom_Fonts;
 use ElementorPro\Modules\AssetsManager\AssetTypes\Icons\Custom_Icons;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Elementor usage module.
+ * @method static Module instance()
  */
 class Module extends BaseModule {
 	/**
@@ -71,7 +72,10 @@ class Module extends BaseModule {
 	 */
 	public static function get_fonts_usage() {
 		$usage = [];
-		$query = new \WP_Query( [ 'post_type' => 'elementor_font' ] );
+		$query = new \WP_Query( [
+			'posts_per_page' => -1,
+			'post_type' => 'elementor_font',
+		] );
 
 		$post_index = 0;
 		foreach ( $query->get_posts() as $post ) {
@@ -116,7 +120,10 @@ class Module extends BaseModule {
 	 */
 	public static function get_icons_usage() {
 		$usage = [];
-		$query = new \WP_Query( [ 'post_type' => 'elementor_icons' ] );
+		$query = new \WP_Query( [
+			'posts_per_page' => -1,
+			'post_type' => 'elementor_icons',
+		] );
 
 		$index = 0;
 		foreach ( $query->get_posts() as $post ) {

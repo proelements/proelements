@@ -24,7 +24,7 @@ class Author_URL extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Author URL', 'elementor-pro' );
+		return esc_html__( 'Author URL', 'elementor-pro' );
 	}
 
 	public function get_panel_template_setting_key() {
@@ -51,12 +51,12 @@ class Author_URL extends Data_Tag {
 		$this->add_control(
 			'url',
 			[
-				'label' => __( 'URL', 'elementor-pro' ),
+				'label' => esc_html__( 'URL', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'archive',
 				'options' => [
-					'archive' => __( 'Author Archive', 'elementor-pro' ),
-					'website' => __( 'Author Website', 'elementor-pro' ),
+					'archive' => esc_html__( 'Author Archive', 'elementor-pro' ),
+					'website' => esc_html__( 'Author Website', 'elementor-pro' ),
 				],
 			]
 		);

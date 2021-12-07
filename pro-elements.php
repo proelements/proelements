@@ -5,8 +5,8 @@
  * Description: This plugin enables GPL features of Elementor Pro: widgets, theme builder, dynamic colors & content, forms & popup builder, and more. Note that PRO Elements is not a substitute for Elementor Pro. If you need all Elementor Pro features, including access to pro templates library and dedicated support, we encourage you to <a href="https://elementor.com/pro/" target="_blank">purchase Elementor Pro</a>.
  * Plugin URI: https://proelements.org/
  * Author: PROElements.org
- * Version: 3.3.1
- * Elementor tested up to: 3.2.0
+ * Version: 3.5.1
+ * Elementor tested up to: 3.5.0
  * Author URI: https://proelements.org/
  *
  * Text Domain: elementor-pro
@@ -32,7 +32,7 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-	define( 'ELEMENTOR_PRO_VERSION', '3.3.1' );
+	define( 'ELEMENTOR_PRO_VERSION', '3.5.1' );
 
 	define( 'ELEMENTOR_PRO__FILE__', __FILE__ );
 	define( 'ELEMENTOR_PRO_PLUGIN_BASE', plugin_basename( ELEMENTOR_PRO__FILE__ ) );
@@ -46,14 +46,14 @@ function pro_elements_plugin_load_plugin() {
 
 	load_plugin_textdomain( 'elementor-pro' );
 
-	$elementor_version_required = '3.1.0';
+	$elementor_version_required = '3.4.0';
 	if ( ! version_compare( ELEMENTOR_VERSION, $elementor_version_required, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_plugin_fail_load_out_of_date' );
 
 		return;
 	}
 
-	$elementor_version_recommendation = '3.1.2';
+	$elementor_version_recommendation = '3.4.0';
 	if ( ! version_compare( ELEMENTOR_VERSION, $elementor_version_recommendation, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_admin_notice_upgrade_recommendation' );
 	}
@@ -63,6 +63,14 @@ function pro_elements_plugin_load_plugin() {
 
 pro_elements_plugin_load_plugin();
 
+function print_error( $message ) {
+	if ( ! $message ) {
+		return;
+	}
+	// PHPCS - $message should not be escaped
+	echo '<div class="error">' . $message . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
 function pro_elements_plugin_fail_load_out_of_date() {
 	if ( ! current_user_can( 'update_plugins' ) ) {
 		return;
@@ -71,10 +79,10 @@ function pro_elements_plugin_fail_load_out_of_date() {
 	$file_path = 'elementor/elementor.php';
 
 	$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
-	$message = '<p>' . __( 'Pro Elements module is not working because you are using an old version of Elementor.', 'elementor-pro' ) . '</p>';
-	$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_link, __( 'Update Elementor Now', 'elementor-pro' ) ) . '</p>';
+	$message = '<p>' . esc_html__( 'Pro Elements module is not working because you are using an old version of Elementor.', 'elementor-pro' ) . '</p>';
+	$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_link, esc_html__( 'Update Elementor Now', 'elementor-pro' ) ) . '</p>';
 
-	echo '<div class="error">' . $message . '</div>';
+	print_error($message);
 }
 
 /**
@@ -99,8 +107,8 @@ function pro_elements_plugin_fail_load() {
 
 		$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
 
-		$message = '<p>' . __( 'Pro Elements is not working because you need to activate the Elementor plugin.', 'elementor-pro' ) . '</p>';
-		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, __( 'Activate Elementor Now', 'elementor-pro' ) ) . '</p>';
+		$message = '<p>' . esc_html__( 'Pro Elements is not working because you need to activate the Elementor plugin.', 'elementor-pro' ) . '</p>';
+		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, esc_html__( 'Activate Elementor Now', 'elementor-pro' ) ) . '</p>';
 	} else {
 		if ( ! current_user_can( 'install_plugins' ) ) {
 			return;
@@ -108,11 +116,11 @@ function pro_elements_plugin_fail_load() {
 
 		$install_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=elementor' ), 'install-plugin_elementor' );
 
-		$message = '<p>' . __( 'Pro Elements is not working because you need to install the Elementor plugin.', 'elementor-pro' ) . '</p>';
-		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, __( 'Install Elementor Now', 'elementor-pro' ) ) . '</p>';
+		$message = '<p>' . esc_html__( 'Pro Elements is not working because you need to install the Elementor plugin.', 'elementor-pro' ) . '</p>';
+		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, esc_html__( 'Install Elementor Now', 'elementor-pro' ) ) . '</p>';
 	}
 
-	echo '<div class="error"><p>' . $message . '</p></div>';
+	print_error($message);
 }
 
 function pro_elements_admin_notice_upgrade_recommendation() {
@@ -123,10 +131,10 @@ function pro_elements_admin_notice_upgrade_recommendation() {
 	$file_path = 'elementor/elementor.php';
 
 	$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
-	$message = '<p>' . __( 'A new version of Elementor is available. For better performance and compatibility of Pro Elements, we recommend updating to the latest version.', 'elementor-pro' ) . '</p>';
-	$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_link, __( 'Update Elementor Now', 'elementor-pro' ) ) . '</p>';
+	$message = '<p>' . esc_html__( 'A new version of Elementor is available. For better performance and compatibility of Pro Elements, we recommend updating to the latest version.', 'elementor-pro' ) . '</p>';
+	$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_link, esc_html__( 'Update Elementor Now', 'elementor-pro' ) ) . '</p>';
 
-	echo '<div class="error">' . $message . '</div>';
+	print_error($message);
 }
 
 if ( ! function_exists( '_is_elementor_installed' ) ) {

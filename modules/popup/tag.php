@@ -18,7 +18,7 @@ class Tag extends DynamicTagsTag {
 	}
 
 	public function get_title() {
-		return __( 'Popup', 'elementor-pro' );
+		return esc_html__( 'Popup', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -33,13 +33,13 @@ class Tag extends DynamicTagsTag {
 		$this->add_control(
 			'action',
 			[
-				'label' => __( 'Action', 'elementor-pro' ),
+				'label' => esc_html__( 'Action', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'open',
 				'options' => [
-					'open' => __( 'Open Popup', 'elementor-pro' ),
-					'close' => __( 'Close Popup', 'elementor-pro' ),
-					'toggle' => __( 'Toggle Popup', 'elementor-pro' ),
+					'open' => esc_html__( 'Open Popup', 'elementor-pro' ),
+					'close' => esc_html__( 'Close Popup', 'elementor-pro' ),
+					'toggle' => esc_html__( 'Toggle Popup', 'elementor-pro' ),
 				],
 			]
 		);
@@ -47,7 +47,7 @@ class Tag extends DynamicTagsTag {
 		$this->add_control(
 			'popup',
 			[
-				'label' => __( 'Popup', 'elementor-pro' ),
+				'label' => esc_html__( 'Popup', 'elementor-pro' ),
 				'type' => QueryControlModule::QUERY_CONTROL_ID,
 				'autocomplete' => [
 					'object' => QueryControlModule::QUERY_OBJECT_LIBRARY_TEMPLATE,
@@ -72,7 +72,7 @@ class Tag extends DynamicTagsTag {
 		$this->add_control(
 			'do_not_show_again',
 			[
-				'label' => __( 'Don\'t Show Again', 'elementor-pro' ),
+				'label' => esc_html__( 'Don\'t Show Again', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'action' => 'close',
@@ -108,10 +108,12 @@ class Tag extends DynamicTagsTag {
 
 		Module::add_popup_to_location( $settings['popup'] );
 
-		echo $link_action_url;
+		// PHPCS - `create_action_hash` is safe.
+		echo $link_action_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function print_close_popup_link( array $settings ) {
-		echo Plugin::elementor()->frontend->create_action_hash( 'popup:close', [ 'do_not_show_again' => $settings['do_not_show_again'] ] );
+		// PHPCS - `create_action_hash` is safe.
+		echo Plugin::elementor()->frontend->create_action_hash( 'popup:close', [ 'do_not_show_again' => $settings['do_not_show_again'] ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

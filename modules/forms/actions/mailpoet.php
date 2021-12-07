@@ -23,7 +23,7 @@ class Mailpoet extends Integration_Base {
 		$widget->start_controls_section(
 			'section_mailpoet',
 			[
-				'label' => __( 'MailPoet', 'elementor-pro' ),
+				'label' => esc_html__( 'MailPoet', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -42,7 +42,7 @@ class Mailpoet extends Integration_Base {
 		$widget->add_control(
 			'mailpoet_lists',
 			[
-				'label' => __( 'List', 'elementor-pro' ),
+				'label' => esc_html__( 'List', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'label_block' => true,
 				'options' => $options,
@@ -106,17 +106,17 @@ class Mailpoet extends Integration_Base {
 			'default' => [
 				[
 					'remote_id' => 'firstname',
-					'remote_label' => __( 'First Name', 'elementor-pro' ),
+					'remote_label' => esc_html__( 'First Name', 'elementor-pro' ),
 					'remote_type' => 'text',
 				],
 				[
 					'remote_id' => 'lastname',
-					'remote_label' => __( 'Last Name', 'elementor-pro' ),
+					'remote_label' => esc_html__( 'Last Name', 'elementor-pro' ),
 					'remote_type' => 'text',
 				],
 				[
 					'remote_id' => 'email',
-					'remote_label' => __( 'Email', 'elementor-pro' ),
+					'remote_label' => esc_html__( 'Email', 'elementor-pro' ),
 					'remote_type' => 'email',
 					'remote_required' => true,
 				],

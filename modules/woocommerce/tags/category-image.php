@@ -13,7 +13,7 @@ class Category_Image extends Base_Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Category Image', 'elementor-pro' );
+		return esc_html__( 'Category Image', 'elementor-pro' );
 	}
 
 	public function get_group() {

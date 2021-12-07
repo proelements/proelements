@@ -5,6 +5,7 @@ use Elementor\Core\Documents_Manager;
 use Elementor\Element_Base;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Modules\GlobalWidget\Documents\Widget;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,6 +24,8 @@ class Module extends Module_Base {
 		parent::__construct();
 
 		$this->add_hooks();
+
+		Plugin::elementor()->data_manager->register_controller_instance( new Data\Controller() );
 	}
 
 	public function get_widgets() {
@@ -66,14 +69,14 @@ class Module extends Module_Base {
 		$settings = array_replace_recursive( $settings, [
 			'widget_templates' => $widget_templates_content,
 			'i18n' => [
-				'unlink' => __( 'Unlink', 'elementor-pro' ),
-				'cancel' => __( 'Cancel', 'elementor-pro' ),
-				'unlink_widget' => __( 'Unlink Widget', 'elementor-pro' ),
-				'global' => __( 'Global', 'elementor-pro' ),
-				'dialog_confirm_unlink' => __( 'This will make the widget stop being global. It\'ll be reverted into being just a regular widget.', 'elementor-pro' ),
-				'global_widget_save_title' => __( 'Save your widget as a global widget', 'elementor-pro' ),
-				'global_widget_save_description' => __( 'You\'ll be able to add this global widget to multiple areas on your site, and edit it from one single place.', 'elementor-pro' ),
-				'linked_to_global' => __( 'Linked to Global', 'elementor-pro' ),
+				'unlink' => esc_html__( 'Unlink', 'elementor-pro' ),
+				'cancel' => esc_html__( 'Cancel', 'elementor-pro' ),
+				'unlink_widget' => esc_html__( 'Unlink Widget', 'elementor-pro' ),
+				'global' => esc_html__( 'Global', 'elementor-pro' ),
+				'dialog_confirm_unlink' => esc_html__( 'This will make the widget stop being global. It\'ll be reverted into being just a regular widget.', 'elementor-pro' ),
+				'global_widget_save_title' => esc_html__( 'Save your widget as a global widget', 'elementor-pro' ),
+				'global_widget_save_description' => esc_html__( 'You\'ll be able to add this global widget to multiple areas on your site, and edit it from one single place.', 'elementor-pro' ),
+				'linked_to_global' => esc_html__( 'Linked to Global', 'elementor-pro' ),
 			],
 		] );
 
@@ -206,6 +209,32 @@ class Module extends Module_Base {
 		Plugin::elementor()->common->add_template( __DIR__ . '/views/panel-template.php' );
 	}
 
+	/**
+	 * Get document data.
+	 *
+	 * Used to manipulate data of global widgets.
+	 *
+	 * @param $data
+	 * @param $document
+	 *
+	 * @return array
+	 */
+	private function get_document_data( $data, $document ) {
+		// If not a global widget template document or does not have elements.
+		if ( ! ( $document instanceof Widget ) && ! empty( $data['elements'] ) ) {
+			$data['elements'] = Plugin::elementor()->db->iterate_data( $data['elements'], function( $element ) {
+				if ( ! empty( $element['templateID'] ) ) {
+					$element['originalWidgetType'] = $element['widgetType'];
+					$element['widgetType'] = 'global';
+				}
+
+				return $element;
+			} );
+		}
+
+		return $data;
+	}
+
 	private function add_hooks() {
 		add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
 		add_action( 'elementor/template-library/after_save_template', [ $this, 'set_template_widget_type_meta' ], 10, 2 );
@@ -219,5 +248,8 @@ class Module extends Module_Base {
 		add_filter( 'elementor/utils/is_post_support', [ $this, 'is_post_type_support_elementor' ], 10, 3 );
 
 		add_filter( 'elementor/template_library/is_template_supports_export', [ $this, 'is_template_supports_export' ], 10, 2 );
+		add_filter( 'elementor/document/save/data', function ( $data, $document ) {
+			return $this->get_document_data( $data, $document );
+		}, 10, 2 );
 	}
 }

@@ -20,7 +20,7 @@ class Posts_Archive_Skin_Classic extends Skin_Classic {
 	}
 
 	public function get_title() {
-		return __( 'Classic', 'elementor-pro' );
+		return esc_html__( 'Classic', 'elementor-pro' );
 	}
 
 	public function get_container_class() {

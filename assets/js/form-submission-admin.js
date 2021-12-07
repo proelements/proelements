@@ -1,4 +1,4 @@
-/*! pro-elements - v3.3.1 - 20-06-2021 */
+/*! pro-elements - v3.5.1 - 10-11-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2750,6 +2750,55 @@ FormActionsLog.propTypes = {
 
 /***/ }),
 
+/***/ "../modules/forms/submissions/assets/js/admin/components/link.js":
+/*!***********************************************************************!*\
+  !*** ../modules/forms/submissions/assets/js/admin/components/link.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/define-property */ "../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js");
+
+_Object$defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = Link;
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
+
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/extends */ "../node_modules/@babel/runtime-corejs2/helpers/extends.js"));
+
+__webpack_require__(/*! core-js/modules/es6.regexp.split.js */ "../node_modules/core-js/modules/es6.regexp.split.js");
+
+var _router = __webpack_require__(/*! @reach/router */ "../node_modules/@reach/router/es/index.js");
+
+function Link(props) {
+  var ref = (0, _react.useRef)();
+  (0, _react.useEffect)(function () {
+    if (!ref.current) {
+      return;
+    }
+
+    ref.current.setAttribute('href', "".concat(location.href.split('#')[0], "#").concat(props.to));
+  }, [props.to, ref.current]);
+  return /*#__PURE__*/_react.default.createElement(_router.Link, (0, _extends2.default)({}, props, {
+    ref: ref
+  }));
+}
+
+Link.propTypes = (0, _objectSpread2.default)({}, _router.Link.propTypes);
+
+/***/ }),
+
 /***/ "../modules/forms/submissions/assets/js/admin/components/links-filter.js":
 /*!*******************************************************************************!*\
   !*** ../modules/forms/submissions/assets/js/admin/components/links-filter.js ***!
@@ -3428,11 +3477,11 @@ __webpack_require__(/*! core-js/modules/es6.function.name.js */ "../node_modules
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
 
+var _link = _interopRequireDefault(__webpack_require__(/*! ./link */ "../modules/forms/submissions/assets/js/admin/components/link.js"));
+
 var _wpTable = _interopRequireDefault(__webpack_require__(/*! ./wp-table */ "../modules/forms/submissions/assets/js/admin/components/wp-table/index.js"));
 
 var _date = __webpack_require__(/*! ../utils/date */ "../modules/forms/submissions/assets/js/admin/utils/date.js");
-
-var _router = __webpack_require__(/*! @reach/router */ "../node_modules/@reach/router/es/index.js");
 
 var _React = _react.default,
     useState = _React.useState;
@@ -3453,7 +3502,7 @@ function SubmissionRow(props) {
     className: "check-column"
   }, props.checkBoxComponent), /*#__PURE__*/_react.default.createElement(_wpTable.default.Cell, {
     className: "has-row-actions column-primary"
-  }, 'trash' === props.item.status ? props.item.main.value : /*#__PURE__*/_react.default.createElement(_router.Link, {
+  }, 'trash' === props.item.status ? props.item.main.value : /*#__PURE__*/_react.default.createElement(_link.default, {
     to: "/".concat(props.item.id),
     "aria-label": "View"
   }, props.item.main.value), props.rowActionComponent, /*#__PURE__*/_react.default.createElement("button", {
@@ -4571,6 +4620,8 @@ exports.default = RowActions;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/extends */ "../node_modules/@babel/runtime-corejs2/helpers/extends.js"));
+
 __webpack_require__(/*! core-js/modules/es6.array.map.js */ "../node_modules/core-js/modules/es6.array.map.js");
 
 function RowActions(props) {
@@ -4581,17 +4632,18 @@ function RowActions(props) {
     }
   }, props.actions.map(function (action, index) {
     var isLastAction = index + 1 === props.actions.length;
+    var ActionComponent = action.component || 'a';
     return /*#__PURE__*/_react.default.createElement("span", {
       key: action.key,
       className: action.className
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(ActionComponent, (0, _extends2.default)({
       href: "#",
       "aria-label": action.label,
       onClick: function onClick(e) {
         e.preventDefault();
         action.onApply(props.item);
       }
-    }, action.label), !isLastAction && /*#__PURE__*/_react.default.createElement("span", null, "\xA0|\xA0"));
+    }, action.props ? action.props(props.item) : {}), action.label), !isLastAction && /*#__PURE__*/_react.default.createElement("span", null, "\xA0|\xA0"));
   }));
 }
 
@@ -4599,8 +4651,10 @@ RowActions.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    onApply: PropTypes.func.isRequired,
-    className: PropTypes.string
+    onApply: PropTypes.func,
+    className: PropTypes.string,
+    props: PropTypes.func,
+    component: PropTypes.any
   })),
   // The resource item that the table present.
   item: PropTypes.object
@@ -5580,7 +5634,9 @@ function downloadExportsResults(dataResults) {
 function transformFormResultIntoBlob(formResult, currentDate) {
   return {
     filename: EXPORT_FILE_NAME_FORMAT.replace('{FORM_LABEL}', formResult.form_label).replace('{DATE}', currentDate).concat(".".concat(formResult.extension)),
-    blob: new Blob([formResult.content], {
+    blob: new Blob([// UTF-8 BOM to support microsoft excel
+    // ref: https://stackoverflow.com/questions/31959487/utf-8-encoidng-issue-when-exporting-csv-file-javascript
+    "\uFEFF", formResult.content], {
       type: formResult.mimetype
     })
   };
@@ -6281,41 +6337,41 @@ var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-co
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
 
-var _router = __webpack_require__(/*! @reach/router */ "../node_modules/@reach/router/es/index.js");
-
-var _wpTable = _interopRequireDefault(__webpack_require__(/*! ../components/wp-table */ "../modules/forms/submissions/assets/js/admin/components/wp-table/index.js"));
-
-var _useRestDataList2 = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-rest-data-list */ "../modules/forms/submissions/assets/js/admin/hooks/use-rest-data-list.js"));
-
-var _searchBox = _interopRequireDefault(__webpack_require__(/*! ../components/search-box */ "../modules/forms/submissions/assets/js/admin/components/search-box.js"));
-
 var _checkbox = _interopRequireDefault(__webpack_require__(/*! ../components/checkbox */ "../modules/forms/submissions/assets/js/admin/components/checkbox/index.js"));
-
-var _pagination = _interopRequireDefault(__webpack_require__(/*! ../components/pagination */ "../modules/forms/submissions/assets/js/admin/components/pagination.js"));
-
-var _bulkActionSelect = __webpack_require__(/*! ../components/bulk-action-select */ "../modules/forms/submissions/assets/js/admin/components/bulk-action-select.js");
-
-var _noticesContext = __webpack_require__(/*! ../context/notices-context */ "../modules/forms/submissions/assets/js/admin/context/notices-context.js");
-
-var _linksFilter = _interopRequireDefault(__webpack_require__(/*! ../components/links-filter */ "../modules/forms/submissions/assets/js/admin/components/links-filter.js"));
-
-var _resourceFilter = _interopRequireDefault(__webpack_require__(/*! ../components/resource-filter */ "../modules/forms/submissions/assets/js/admin/components/resource-filter.js"));
 
 var _dateFilter = _interopRequireDefault(__webpack_require__(/*! ../components/date-filter */ "../modules/forms/submissions/assets/js/admin/components/date-filter.js"));
 
 var _exportButton = _interopRequireDefault(__webpack_require__(/*! ../components/export-button */ "../modules/forms/submissions/assets/js/admin/components/export-button.js"));
 
-var _useDataAction7 = _interopRequireWildcard(__webpack_require__(/*! ../hooks/use-data-action */ "../modules/forms/submissions/assets/js/admin/hooks/use-data-action.js"));
+var _link = _interopRequireDefault(__webpack_require__(/*! ../components/link */ "../modules/forms/submissions/assets/js/admin/components/link.js"));
+
+var _linksFilter = _interopRequireDefault(__webpack_require__(/*! ../components/links-filter */ "../modules/forms/submissions/assets/js/admin/components/links-filter.js"));
 
 var _noticeMessages = _interopRequireDefault(__webpack_require__(/*! ../notice-messages */ "../modules/forms/submissions/assets/js/admin/notice-messages.js"));
 
+var _pagination = _interopRequireDefault(__webpack_require__(/*! ../components/pagination */ "../modules/forms/submissions/assets/js/admin/components/pagination.js"));
+
+var _refererFilter = _interopRequireDefault(__webpack_require__(/*! ../components/referer-filter */ "../modules/forms/submissions/assets/js/admin/components/referer-filter.js"));
+
+var _resourceFilter = _interopRequireDefault(__webpack_require__(/*! ../components/resource-filter */ "../modules/forms/submissions/assets/js/admin/components/resource-filter.js"));
+
+var _searchBox = _interopRequireDefault(__webpack_require__(/*! ../components/search-box */ "../modules/forms/submissions/assets/js/admin/components/search-box.js"));
+
 var _submissionRow = _interopRequireDefault(__webpack_require__(/*! ../components/submission-row */ "../modules/forms/submissions/assets/js/admin/components/submission-row.js"));
 
-var _settingsContext = __webpack_require__(/*! ../context/settings-context */ "../modules/forms/submissions/assets/js/admin/context/settings-context.js");
+var _useDataAction7 = _interopRequireWildcard(__webpack_require__(/*! ../hooks/use-data-action */ "../modules/forms/submissions/assets/js/admin/hooks/use-data-action.js"));
+
+var _useRestDataList2 = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-rest-data-list */ "../modules/forms/submissions/assets/js/admin/hooks/use-rest-data-list.js"));
+
+var _wpTable = _interopRequireDefault(__webpack_require__(/*! ../components/wp-table */ "../modules/forms/submissions/assets/js/admin/components/wp-table/index.js"));
+
+var _bulkActionSelect = __webpack_require__(/*! ../components/bulk-action-select */ "../modules/forms/submissions/assets/js/admin/components/bulk-action-select.js");
 
 var _useExport3 = __webpack_require__(/*! ../hooks/use-export */ "../modules/forms/submissions/assets/js/admin/hooks/use-export.js");
 
-var _refererFilter = _interopRequireDefault(__webpack_require__(/*! ../components/referer-filter */ "../modules/forms/submissions/assets/js/admin/components/referer-filter.js"));
+var _noticesContext = __webpack_require__(/*! ../context/notices-context */ "../modules/forms/submissions/assets/js/admin/context/notices-context.js");
+
+var _settingsContext = __webpack_require__(/*! ../context/settings-context */ "../modules/forms/submissions/assets/js/admin/context/settings-context.js");
 
 var _React = _react.default,
     useMemo = _React.useMemo,
@@ -6329,8 +6385,6 @@ var BEFORE_FILTER_KEY = 'before';
 
 function Index() {
   var _meta$pagination2, _fetchOptions$filter, _fetchOptions$filter2, _fetchOptions$filter3, _fetchOptions$filter4;
-
-  var navigate = (0, _router.useNavigate)();
 
   var _useNoticesContext = (0, _noticesContext.useNoticesContext)(),
       notifyError = _useNoticesContext.notifyError,
@@ -6461,12 +6515,17 @@ function Index() {
     return [{
       key: 'view',
       label: __('View', 'elementor-pro'),
-      onApply: function onApply(item) {
-        return navigate("/".concat(item.id));
-      },
       shouldShow: function shouldShow(item) {
         return 'trash' !== item.status;
-      }
+      },
+      props: function props(item) {
+        return {
+          to: "/".concat(item.id),
+          // override the default behavior of click event
+          onClick: undefined
+        };
+      },
+      component: _link.default
     }, {
       key: 'restore',
       label: __('Restore', 'elementor-pro'),

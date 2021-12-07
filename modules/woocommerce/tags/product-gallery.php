@@ -13,7 +13,7 @@ class Product_Gallery extends Base_Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Product Gallery', 'elementor-pro' );
+		return esc_html__( 'Product Gallery', 'elementor-pro' );
 	}
 
 	public function get_group() {

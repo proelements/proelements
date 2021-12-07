@@ -10,8 +10,8 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
+use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
-use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -24,7 +24,7 @@ class Price_Table extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Price Table', 'elementor-pro' );
+		return esc_html__( 'Price Table', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -39,16 +39,16 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_header',
 			[
-				'label' => __( 'Header', 'elementor-pro' ),
+				'label' => esc_html__( 'Header', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'heading',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Enter your title', 'elementor-pro' ),
+				'default' => esc_html__( 'Enter your title', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -58,9 +58,9 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'sub_heading',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Enter your description', 'elementor-pro' ),
+				'default' => esc_html__( 'Enter your description', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -70,7 +70,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_tag',
 			[
-				'label' => __( 'Title HTML Tag', 'elementor-pro' ),
+				'label' => esc_html__( 'Title HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h2' => 'H2',
@@ -88,17 +88,17 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_pricing',
 			[
-				'label' => __( 'Pricing', 'elementor-pro' ),
+				'label' => esc_html__( 'Pricing', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'currency_symbol',
 			[
-				'label' => __( 'Currency Symbol', 'elementor-pro' ),
+				'label' => esc_html__( 'Currency Symbol', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
 					'dollar' => '&#36; ' . _x( 'Dollar', 'Currency', 'elementor-pro' ),
 					'euro' => '&#128; ' . _x( 'Euro', 'Currency', 'elementor-pro' ),
 					'baht' => '&#3647; ' . _x( 'Baht', 'Currency', 'elementor-pro' ),
@@ -116,7 +116,7 @@ class Price_Table extends Base_Widget {
 					'shekel' => '&#8362; ' . _x( 'Shekel', 'Currency', 'elementor-pro' ),
 					'yen' => '&#165; ' . _x( 'Yen/Yuan', 'Currency', 'elementor-pro' ),
 					'won' => '&#8361; ' . _x( 'Won', 'Currency', 'elementor-pro' ),
-					'custom' => __( 'Custom', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => 'dollar',
 			]
@@ -125,7 +125,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'currency_symbol_custom',
 			[
-				'label' => __( 'Custom Symbol', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Symbol', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'currency_symbol' => 'custom',
@@ -136,7 +136,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'price',
 			[
-				'label' => __( 'Price', 'elementor-pro' ),
+				'label' => esc_html__( 'Price', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '39.99',
 				'dynamic' => [
@@ -148,7 +148,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'currency_format',
 			[
-				'label' => __( 'Currency Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Currency Format', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'' => '1,234.56 (Default)',
@@ -160,10 +160,10 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'sale',
 			[
-				'label' => __( 'Sale', 'elementor-pro' ),
+				'label' => esc_html__( 'Sale', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'On', 'elementor-pro' ),
-				'label_off' => __( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
 				'default' => '',
 			]
 		);
@@ -171,7 +171,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'original_price',
 			[
-				'label' => __( 'Original Price', 'elementor-pro' ),
+				'label' => esc_html__( 'Original Price', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => '59',
 				'condition' => [
@@ -186,9 +186,9 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'period',
 			[
-				'label' => __( 'Period', 'elementor-pro' ),
+				'label' => esc_html__( 'Period', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Monthly', 'elementor-pro' ),
+				'default' => esc_html__( 'Monthly', 'elementor-pro' ),
 			]
 		);
 
@@ -197,7 +197,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_features',
 			[
-				'label' => __( 'Features', 'elementor-pro' ),
+				'label' => esc_html__( 'Features', 'elementor-pro' ),
 			]
 		);
 
@@ -206,9 +206,9 @@ class Price_Table extends Base_Widget {
 		$repeater->add_control(
 			'item_text',
 			[
-				'label' => __( 'Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'List Item', 'elementor-pro' ),
+				'default' => esc_html__( 'List Item', 'elementor-pro' ),
 			]
 		);
 
@@ -220,7 +220,7 @@ class Price_Table extends Base_Widget {
 		$repeater->add_control(
 			'selected_item_icon',
 			[
-				'label' => __( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::ICONS,
 				'fa4compatibility' => 'item_icon',
 				'default' => $default_icon,
@@ -230,7 +230,7 @@ class Price_Table extends Base_Widget {
 		$repeater->add_control(
 			'item_icon_color',
 			[
-				'label' => __( 'Icon Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} i' => 'color: {{VALUE}}',
@@ -246,15 +246,15 @@ class Price_Table extends Base_Widget {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'item_text' => __( 'List Item #1', 'elementor-pro' ),
+						'item_text' => esc_html__( 'List Item #1', 'elementor-pro' ),
 						'selected_item_icon' => $default_icon,
 					],
 					[
-						'item_text' => __( 'List Item #2', 'elementor-pro' ),
+						'item_text' => esc_html__( 'List Item #2', 'elementor-pro' ),
 						'selected_item_icon' => $default_icon,
 					],
 					[
-						'item_text' => __( 'List Item #3', 'elementor-pro' ),
+						'item_text' => esc_html__( 'List Item #3', 'elementor-pro' ),
 						'selected_item_icon' => $default_icon,
 					],
 				],
@@ -267,16 +267,16 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_footer',
 			[
-				'label' => __( 'Footer', 'elementor-pro' ),
+				'label' => esc_html__( 'Footer', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'button_text',
 			[
-				'label' => __( 'Button Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Button Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Click Here', 'elementor-pro' ),
+				'default' => esc_html__( 'Click Here', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -286,9 +286,9 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'default' => [
 					'url' => '#',
 				],
@@ -301,9 +301,9 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'footer_additional_info',
 			[
-				'label' => __( 'Additional Info', 'elementor-pro' ),
+				'label' => esc_html__( 'Additional Info', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
-				'default' => __( 'This is text element', 'elementor-pro' ),
+				'default' => esc_html__( 'This is text element', 'elementor-pro' ),
 				'rows' => 3,
 				'dynamic' => [
 					'active' => true,
@@ -316,14 +316,14 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_ribbon',
 			[
-				'label' => __( 'Ribbon', 'elementor-pro' ),
+				'label' => esc_html__( 'Ribbon', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'show_ribbon',
 			[
-				'label' => __( 'Show', 'elementor-pro' ),
+				'label' => esc_html__( 'Show', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'separator' => 'before',
@@ -333,9 +333,9 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'ribbon_title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Popular', 'elementor-pro' ),
+				'default' => esc_html__( 'Popular', 'elementor-pro' ),
 				'condition' => [
 					'show_ribbon' => 'yes',
 				],
@@ -348,15 +348,15 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'ribbon_horizontal_position',
 			[
-				'label' => __( 'Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
@@ -371,7 +371,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_header_style',
 			[
-				'label' => __( 'Header', 'elementor-pro' ),
+				'label' => esc_html__( 'Header', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -380,13 +380,13 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'header_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-price-table__header' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}' => '--e-price-table-header-background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -394,7 +394,7 @@ class Price_Table extends Base_Widget {
 		$this->add_responsive_control(
 			'header_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -406,7 +406,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_heading_style',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -415,7 +415,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__heading' => 'color: {{VALUE}}',
@@ -437,7 +437,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_sub_heading_style',
 			[
-				'label' => __( 'Sub Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Sub Title', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -446,7 +446,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'sub_heading_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__subheading' => 'color: {{VALUE}}',
@@ -470,7 +470,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_pricing_element_style',
 			[
-				'label' => __( 'Pricing', 'elementor-pro' ),
+				'label' => esc_html__( 'Pricing', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -479,7 +479,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'pricing_element_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__price' => 'background-color: {{VALUE}}',
@@ -490,7 +490,7 @@ class Price_Table extends Base_Widget {
 		$this->add_responsive_control(
 			'pricing_element_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -502,7 +502,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'price_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__currency, {{WRAPPER}} .elementor-price-table__integer-part, {{WRAPPER}} .elementor-price-table__fractional-part' => 'color: {{VALUE}}',
@@ -515,7 +515,8 @@ class Price_Table extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'price_typography',
-				'selector' => '{{WRAPPER}} .elementor-price-table__price',
+				// Targeting also the .elementor-price-table class in order to get a higher specificity from the inline CSS.
+				'selector' => '{{WRAPPER}} .elementor-price-table .elementor-price-table__price',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
@@ -525,7 +526,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_currency_style',
 			[
-				'label' => __( 'Currency Symbol', 'elementor-pro' ),
+				'label' => esc_html__( 'Currency Symbol', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -537,7 +538,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'currency_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -557,16 +558,16 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'currency_position',
 			[
-				'label' => __( 'Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'before',
 				'options' => [
 					'before' => [
-						'title' => __( 'Before', 'elementor-pro' ),
+						'title' => esc_html__( 'Before', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'after' => [
-						'title' => __( 'After', 'elementor-pro' ),
+						'title' => esc_html__( 'After', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
@@ -576,19 +577,19 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'currency_vertical_position',
 			[
-				'label' => __( 'Vertical Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'middle' => [
-						'title' => __( 'Middle', 'elementor-pro' ),
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-middle',
 					],
 					'bottom' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -610,7 +611,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'fractional_part_style',
 			[
-				'label' => __( 'Fractional Part', 'elementor-pro' ),
+				'label' => esc_html__( 'Fractional Part', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -619,7 +620,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'fractional-part_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -636,19 +637,19 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'fractional_part_vertical_position',
 			[
-				'label' => __( 'Vertical Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'middle' => [
-						'title' => __( 'Middle', 'elementor-pro' ),
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-middle',
 					],
 					'bottom' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -667,7 +668,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_original_price_style',
 			[
-				'label' => __( 'Original Price', 'elementor-pro' ),
+				'label' => esc_html__( 'Original Price', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -680,7 +681,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'original_price_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -713,19 +714,19 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'original_price_vertical_position',
 			[
-				'label' => __( 'Vertical Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'middle' => [
-						'title' => __( 'Middle', 'elementor-pro' ),
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-middle',
 					],
 					'bottom' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -748,7 +749,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_period_style',
 			[
-				'label' => __( 'Period', 'elementor-pro' ),
+				'label' => esc_html__( 'Period', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -760,7 +761,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'period_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -791,12 +792,12 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'period_position',
 			[
-				'label' => __( 'Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Position', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'options' => [
-					'below' => __( 'Below', 'elementor-pro' ),
-					'beside' => __( 'Beside', 'elementor-pro' ),
+					'below' => esc_html__( 'Below', 'elementor-pro' ),
+					'beside' => esc_html__( 'Beside', 'elementor-pro' ),
 				],
 				'default' => 'below',
 				'condition' => [
@@ -810,7 +811,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_features_list_style',
 			[
-				'label' => __( 'Features', 'elementor-pro' ),
+				'label' => esc_html__( 'Features', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -819,7 +820,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'features_list_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'separator' => 'before',
 				'selectors' => [
@@ -831,7 +832,7 @@ class Price_Table extends Base_Widget {
 		$this->add_responsive_control(
 			'features_list_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -843,14 +844,14 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'features_list_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-price-table__features-list' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-price-table__features-list' => '--e-price-table-features-list-color: {{VALUE}}',
 				],
 			]
 		);
@@ -869,19 +870,19 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'features_list_alignment',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -894,7 +895,7 @@ class Price_Table extends Base_Widget {
 		$this->add_responsive_control(
 			'item_width',
 			[
-				'label' => __( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -911,7 +912,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'list_divider',
 			[
-				'label' => __( 'Divider', 'elementor-pro' ),
+				'label' => esc_html__( 'Divider', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'separator' => 'before',
@@ -921,13 +922,13 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'divider_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'solid' => __( 'Solid', 'elementor-pro' ),
-					'double' => __( 'Double', 'elementor-pro' ),
-					'dotted' => __( 'Dotted', 'elementor-pro' ),
-					'dashed' => __( 'Dashed', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
 				],
 				'default' => 'solid',
 				'condition' => [
@@ -942,7 +943,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'divider_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ddd',
 				'global' => [
@@ -960,7 +961,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'divider_weight',
 			[
-				'label' => __( 'Weight', 'elementor-pro' ),
+				'label' => esc_html__( 'Weight', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 2,
@@ -984,7 +985,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'divider_width',
 			[
-				'label' => __( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'condition' => [
 					'list_divider' => 'yes',
@@ -998,7 +999,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'divider_gap',
 			[
-				'label' => __( 'Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 15,
@@ -1024,7 +1025,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_footer_style',
 			[
-				'label' => __( 'Footer', 'elementor-pro' ),
+				'label' => esc_html__( 'Footer', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1033,7 +1034,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'footer_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__footer' => 'background-color: {{VALUE}}',
@@ -1044,7 +1045,7 @@ class Price_Table extends Base_Widget {
 		$this->add_responsive_control(
 			'footer_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -1056,7 +1057,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_footer_button',
 			[
-				'label' => __( 'Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Button', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -1068,15 +1069,15 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'md',
 				'options' => [
-					'xs' => __( 'Extra Small', 'elementor-pro' ),
-					'sm' => __( 'Small', 'elementor-pro' ),
-					'md' => __( 'Medium', 'elementor-pro' ),
-					'lg' => __( 'Large', 'elementor-pro' ),
-					'xl' => __( 'Extra Large', 'elementor-pro' ),
+					'xs' => esc_html__( 'Extra Small', 'elementor-pro' ),
+					'sm' => esc_html__( 'Small', 'elementor-pro' ),
+					'md' => esc_html__( 'Medium', 'elementor-pro' ),
+					'lg' => esc_html__( 'Large', 'elementor-pro' ),
+					'xl' => esc_html__( 'Extra Large', 'elementor-pro' ),
 				],
 				'condition' => [
 					'button_text!' => '',
@@ -1089,7 +1090,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_tab(
 			'tab_button_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 				'condition' => [
 					'button_text!' => '',
 				],
@@ -1099,7 +1100,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -1150,7 +1151,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -1162,7 +1163,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_text_padding',
 			[
-				'label' => __( 'Text Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -1176,7 +1177,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_tab(
 			'tab_button_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 				'condition' => [
 					'button_text!' => '',
 				],
@@ -1186,7 +1187,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_hover_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__button:hover' => 'color: {{VALUE}};',
@@ -1212,7 +1213,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_hover_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-price-table__button:hover' => 'border-color: {{VALUE}};',
@@ -1223,7 +1224,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'button_hover_animation',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
 			]
 		);
@@ -1235,7 +1236,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'heading_additional_info',
 			[
-				'label' => __( 'Additional Info', 'elementor-pro' ),
+				'label' => esc_html__( 'Additional Info', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -1247,7 +1248,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'additional_info_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1278,7 +1279,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'additional_info_margin',
 			[
-				'label' => __( 'Margin', 'elementor-pro' ),
+				'label' => esc_html__( 'Margin', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'default' => [
@@ -1302,7 +1303,7 @@ class Price_Table extends Base_Widget {
 		$this->start_controls_section(
 			'section_ribbon_style',
 			[
-				'label' => __( 'Ribbon', 'elementor-pro' ),
+				'label' => esc_html__( 'Ribbon', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 				'condition' => [
@@ -1314,7 +1315,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'ribbon_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_ACCENT,
@@ -1330,7 +1331,7 @@ class Price_Table extends Base_Widget {
 		$this->add_responsive_control(
 			'ribbon_distance',
 			[
-				'label' => __( 'Distance', 'elementor-pro' ),
+				'label' => esc_html__( 'Distance', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -1347,7 +1348,7 @@ class Price_Table extends Base_Widget {
 		$this->add_control(
 			'ribbon_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'separator' => 'before',
@@ -1383,7 +1384,7 @@ class Price_Table extends Base_Widget {
 		$currency_position = $this->get_settings( 'currency_position' );
 		$location_setting = ! empty( $currency_position ) ? $currency_position : 'before';
 		if ( ! empty( $symbol ) && $location === $location_setting ) {
-			echo '<span class="elementor-price-table__currency">' . $symbol . '</span>';
+			echo '<span class="elementor-price-table__currency">' . esc_html( $symbol ) . '</span>';
 		}
 	}
 
@@ -1468,11 +1469,15 @@ class Price_Table extends Base_Widget {
 			<?php if ( $settings['heading'] || $settings['sub_heading'] ) : ?>
 				<div class="elementor-price-table__header">
 					<?php if ( ! empty( $settings['heading'] ) ) : ?>
-						<<?php echo $heading_tag . ' ' . $this->get_render_attribute_string( 'heading' ); ?>><?php echo $settings['heading'] . '</' . $heading_tag; ?>>
+						<<?php Utils::print_validated_html_tag( $heading_tag ); ?> <?php $this->print_render_attribute_string( 'heading' ); ?>>
+						<?php $this->print_unescaped_setting( 'heading' ); ?>
+						</<?php Utils::print_validated_html_tag( $heading_tag ); ?>>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $settings['sub_heading'] ) ) : ?>
-						<span <?php echo $this->get_render_attribute_string( 'sub_heading' ); ?>><?php echo $settings['sub_heading']; ?></span>
+						<span <?php $this->print_render_attribute_string( 'sub_heading' ); ?>>
+							<?php $this->print_unescaped_setting( 'sub_heading' ); ?>
+						</span>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
@@ -1482,22 +1487,35 @@ class Price_Table extends Base_Widget {
 					<div class="elementor-price-table__original-price elementor-typo-excluded">
 						<?php
 						$this->render_currency_symbol( $symbol, 'before' );
-						echo $settings['original_price'];
+						$this->print_unescaped_setting( 'original_price' );
 						$this->render_currency_symbol( $symbol, 'after' );
 						?>
 					</div>
 				<?php endif; ?>
 				<?php $this->render_currency_symbol( $symbol, 'before' ); ?>
 				<?php if ( ! empty( $intpart ) || 0 <= $intpart ) : ?>
-					<span class="elementor-price-table__integer-part"><?php echo $intpart; ?></span>
+					<span class="elementor-price-table__integer-part">
+						<?php
+							// PHPCS - the main text of a widget should not be escaped.
+							echo $intpart; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						?>
+					</span>
 				<?php endif; ?>
 
 				<?php if ( '' !== $fraction || ( ! empty( $settings['period'] ) && 'beside' === $period_position ) ) : ?>
 					<div class="elementor-price-table__after-price">
-						<span class="elementor-price-table__fractional-part"><?php echo $fraction; ?></span>
+						<span class="elementor-price-table__fractional-part">
+							<?php
+								// PHPCS - the main text of a widget should not be escaped.
+								echo $fraction; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+						</span>
 
 						<?php if ( ! empty( $settings['period'] ) && 'beside' === $period_position ) : ?>
-							<?php echo $period_element; ?>
+							<?php
+								// PHPCS - already escaped before
+								echo $period_element; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
@@ -1505,7 +1523,10 @@ class Price_Table extends Base_Widget {
 				<?php $this->render_currency_symbol( $symbol, 'after' ); ?>
 
 				<?php if ( ! empty( $settings['period'] ) && 'below' === $period_position ) : ?>
-					<?php echo $period_element; ?>
+					<?php
+						// PHPCS - already escaped before
+						echo $period_element; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
 				<?php endif; ?>
 			</div>
 
@@ -1523,7 +1544,7 @@ class Price_Table extends Base_Widget {
 						}
 						$is_new = ! isset( $item['item_icon'] ) && $migration_allowed;
 						?>
-						<li class="elementor-repeater-item-<?php echo $item['_id']; ?>">
+						<li class="elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?>">
 							<div class="elementor-price-table__feature-inner">
 								<?php if ( ! empty( $item['item_icon'] ) || ! empty( $item['selected_item_icon'] ) ) :
 									if ( $is_new || $migrated ) :
@@ -1534,8 +1555,8 @@ class Price_Table extends Base_Widget {
 									endif;
 								endif; ?>
 								<?php if ( ! empty( $item['item_text'] ) ) : ?>
-									<span <?php echo $this->get_render_attribute_string( $repeater_setting_key ); ?>>
-										<?php echo $item['item_text']; ?>
+									<span <?php $this->print_render_attribute_string( $repeater_setting_key ); ?>>
+										<?php $this->print_unescaped_setting( 'item_text', 'features_list', $index ); ?>
 									</span>
 									<?php
 								else :
@@ -1551,11 +1572,15 @@ class Price_Table extends Base_Widget {
 			<?php if ( ! empty( $settings['button_text'] ) || ! empty( $settings['footer_additional_info'] ) ) : ?>
 				<div class="elementor-price-table__footer">
 					<?php if ( ! empty( $settings['button_text'] ) ) : ?>
-						<a <?php echo $this->get_render_attribute_string( 'button_text' ); ?>><?php echo $settings['button_text']; ?></a>
+						<a <?php $this->print_render_attribute_string( 'button_text' ); ?>>
+							<?php $this->print_unescaped_setting( 'button_text' ); ?>
+						</a>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $settings['footer_additional_info'] ) ) : ?>
-						<div <?php echo $this->get_render_attribute_string( 'footer_additional_info' ); ?>><?php echo $settings['footer_additional_info']; ?></div>
+						<div <?php $this->print_render_attribute_string( 'footer_additional_info' ); ?>>
+							<?php $this->print_unescaped_setting( 'footer_additional_info' ); ?>
+						</div>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
@@ -1570,8 +1595,10 @@ class Price_Table extends Base_Widget {
 			endif;
 
 			?>
-			<div <?php echo $this->get_render_attribute_string( 'ribbon-wrapper' ); ?>>
-				<div <?php echo $this->get_render_attribute_string( 'ribbon_title' ); ?>><?php echo $settings['ribbon_title']; ?></div>
+			<div <?php $this->print_render_attribute_string( 'ribbon-wrapper' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'ribbon_title' ); ?>>
+					<?php $this->print_unescaped_setting( 'ribbon_title' ); ?>
+				</div>
 			</div>
 			<?php
 		endif;

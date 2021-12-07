@@ -14,7 +14,7 @@ class Site_Tagline extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Site Tagline', 'elementor-pro' );
+		return esc_html__( 'Site Tagline', 'elementor-pro' );
 	}
 
 	public function get_group() {

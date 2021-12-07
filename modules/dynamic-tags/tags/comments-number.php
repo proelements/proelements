@@ -16,7 +16,7 @@ class Comments_Number extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Comments Number', 'elementor-pro' );
+		return esc_html__( 'Comments Number', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -34,36 +34,36 @@ class Comments_Number extends Tag {
 		$this->add_control(
 			'format_no_comments',
 			[
-				'label' => __( 'No Comments Format', 'elementor-pro' ),
-				'default' => __( 'No Responses', 'elementor-pro' ),
+				'label' => esc_html__( 'No Comments Format', 'elementor-pro' ),
+				'default' => esc_html__( 'No Responses', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'format_one_comments',
 			[
-				'label' => __( 'One Comment Format', 'elementor-pro' ),
-				'default' => __( 'One Response', 'elementor-pro' ),
+				'label' => esc_html__( 'One Comment Format', 'elementor-pro' ),
+				'default' => esc_html__( 'One Response', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'format_many_comments',
 			[
-				'label' => __( 'Many Comment Format', 'elementor-pro' ),
-				'default' => __( '{number} Responses', 'elementor-pro' ),
+				'label' => esc_html__( 'Many Comment Format', 'elementor-pro' ),
+				'default' => esc_html__( '{number} Responses', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'link_to',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'comments_link' => __( 'Comments Link', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'comments_link' => esc_html__( 'Comments Link', 'elementor-pro' ),
 				],
 			]
 		);

@@ -18,16 +18,16 @@ class Archive extends Archive_Single_Base {
 		return $properties;
 	}
 
-	protected static function get_site_editor_type() {
+	public static function get_type() {
 		return 'archive';
 	}
 
 	public static function get_title() {
-		return __( 'Archive', 'elementor-pro' );
+		return esc_html__( 'Archive', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Archives', 'elementor-pro' );
+		return esc_html__( 'Archives', 'elementor-pro' );
 	}
 
 	protected static function get_site_editor_icon() {
@@ -36,9 +36,9 @@ class Archive extends Archive_Single_Base {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => __( 'What is an Archive Template?', 'elementor-pro' ),
-			'content' => __( 'An archive template allows you to easily design the layout and style of archive pages - those pages that show a list of posts (e.g. a blog’s list of recent posts), which may be filtered by terms such as authors, categories, tags, search results, etc.', 'elementor-pro' ),
-			'tip' => __( 'If you’d like a different style for a specific category, it’s easy to create a separate archive template whose condition is to only display when users are viewing that category’s list of posts.', 'elementor-pro' ),
+			'title' => esc_html__( 'What is an Archive Template?', 'elementor-pro' ),
+			'content' => esc_html__( 'An archive template allows you to easily design the layout and style of archive pages - those pages that show a list of posts (e.g. a blog’s list of recent posts), which may be filtered by terms such as authors, categories, tags, search results, etc.', 'elementor-pro' ),
+			'tip' => esc_html__( 'If you’d like a different style for a specific category, it’s easy to create a separate archive template whose condition is to only display when users are viewing that category’s list of posts.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-archive',
 			'video_url' => 'https://www.youtube.com/embed/wxElpEh9bfA',
 		];
@@ -47,7 +47,7 @@ class Archive extends Archive_Single_Base {
 	protected static function get_editor_panel_categories() {
 		$categories = [
 			'theme-elements-archive' => [
-				'title' => __( 'Archive', 'elementor-pro' ),
+				'title' => esc_html__( 'Archive', 'elementor-pro' ),
 			],
 		];
 
@@ -69,7 +69,7 @@ class Archive extends Archive_Single_Base {
 			$post_type_object = get_post_type_object( $post_type );
 
 			if ( $post_type_object->has_archive ) {
-				$post_type_archives[ 'post_type_archive/' . $post_type ] = sprintf( __( '%s Archive', 'elementor-pro' ), $post_type_object->label );
+				$post_type_archives[ 'post_type_archive/' . $post_type ] = sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $post_type_object->label );
 			}
 
 			$post_type_taxonomies = get_object_taxonomies( $post_type, 'objects' );
@@ -80,22 +80,22 @@ class Archive extends Archive_Single_Base {
 			] );
 
 			foreach ( $post_type_taxonomies as $slug => $object ) {
-				$taxonomies[ 'taxonomy/' . $slug ] = sprintf( __( '%s Archive', 'elementor-pro' ), $object->label );
+				$taxonomies[ 'taxonomy/' . $slug ] = sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $object->label );
 			}
 		}
 
 		$options = [
-			'archive/recent_posts' => __( 'Recent Posts', 'elementor-pro' ),
-			'archive/date' => __( 'Date Archive', 'elementor-pro' ),
-			'archive/author' => __( 'Author Archive', 'elementor-pro' ),
-			'search' => __( 'Search Results', 'elementor-pro' ),
+			'archive/recent_posts' => esc_html__( 'Recent Posts', 'elementor-pro' ),
+			'archive/date' => esc_html__( 'Date Archive', 'elementor-pro' ),
+			'archive/author' => esc_html__( 'Author Archive', 'elementor-pro' ),
+			'search' => esc_html__( 'Search Results', 'elementor-pro' ),
 		];
 
 		$options += $taxonomies + $post_type_archives;
 
 		return [
 			'archive' => [
-				'label' => __( 'Archive', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive', 'elementor-pro' ),
 				'options' => $options,
 			],
 		];

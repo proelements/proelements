@@ -20,7 +20,7 @@ class Post_Excerpt extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Post Excerpt', 'elementor-pro' );
+		return esc_html__( 'Post Excerpt', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -39,7 +39,7 @@ class Post_Excerpt extends Base_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-pro' ),
+				'label' => esc_html__( 'Content', 'elementor-pro' ),
 			]
 		);
 
@@ -60,7 +60,7 @@ class Post_Excerpt extends Base_Widget {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -68,23 +68,23 @@ class Post_Excerpt extends Base_Widget {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor-pro' ),
+						'title' => esc_html__( 'Justified', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -97,7 +97,7 @@ class Post_Excerpt extends Base_Widget {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -123,6 +123,6 @@ class Post_Excerpt extends Base_Widget {
 	}
 
 	protected function render() {
-		echo $this->get_settings_for_display( 'excerpt' );
+		$this->print_unescaped_setting( 'excerpt' );
 	}
 }

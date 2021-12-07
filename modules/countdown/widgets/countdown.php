@@ -21,7 +21,7 @@ class Countdown extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Countdown', 'elementor-pro' );
+		return esc_html__( 'Countdown', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -36,18 +36,18 @@ class Countdown extends Base_Widget {
 		$this->start_controls_section(
 			'section_countdown',
 			[
-				'label' => __( 'Countdown', 'elementor-pro' ),
+				'label' => esc_html__( 'Countdown', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'countdown_type',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'due_date' => __( 'Due Date', 'elementor-pro' ),
-					'evergreen' => __( 'Evergreen Timer', 'elementor-pro' ),
+					'due_date' => esc_html__( 'Due Date', 'elementor-pro' ),
+					'evergreen' => esc_html__( 'Evergreen Timer', 'elementor-pro' ),
 				],
 				'default' => 'due_date',
 			]
@@ -56,11 +56,11 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'due_date',
 			[
-				'label' => __( 'Due Date', 'elementor-pro' ),
+				'label' => esc_html__( 'Due Date', 'elementor-pro' ),
 				'type' => Controls_Manager::DATE_TIME,
 				'default' => gmdate( 'Y-m-d H:i', strtotime( '+1 month' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ),
 				/* translators: %s: Time zone. */
-				'description' => sprintf( __( 'Date set according to your timezone: %s.', 'elementor-pro' ), Utils::get_timezone_string() ),
+				'description' => sprintf( esc_html__( 'Date set according to your timezone: %s.', 'elementor-pro' ), Utils::get_timezone_string() ),
 				'condition' => [
 					'countdown_type' => 'due_date',
 				],
@@ -70,10 +70,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'evergreen_counter_hours',
 			[
-				'label' => __( 'Hours', 'elementor-pro' ),
+				'label' => esc_html__( 'Hours', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 47,
-				'placeholder' => __( 'Hours', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Hours', 'elementor-pro' ),
 				'condition' => [
 					'countdown_type' => 'evergreen',
 				],
@@ -83,10 +83,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'evergreen_counter_minutes',
 			[
-				'label' => __( 'Minutes', 'elementor-pro' ),
+				'label' => esc_html__( 'Minutes', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 59,
-				'placeholder' => __( 'Minutes', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Minutes', 'elementor-pro' ),
 				'condition' => [
 					'countdown_type' => 'evergreen',
 				],
@@ -96,11 +96,11 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'label_display',
 			[
-				'label' => __( 'View', 'elementor-pro' ),
+				'label' => esc_html__( 'View', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'block' => __( 'Block', 'elementor-pro' ),
-					'inline' => __( 'Inline', 'elementor-pro' ),
+					'block' => esc_html__( 'Block', 'elementor-pro' ),
+					'inline' => esc_html__( 'Inline', 'elementor-pro' ),
 				],
 				'default' => 'block',
 				'prefix_class' => 'elementor-countdown--label-',
@@ -110,10 +110,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'show_days',
 			[
-				'label' => __( 'Days', 'elementor-pro' ),
+				'label' => esc_html__( 'Days', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -121,10 +121,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'show_hours',
 			[
-				'label' => __( 'Hours', 'elementor-pro' ),
+				'label' => esc_html__( 'Hours', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -132,10 +132,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'show_minutes',
 			[
-				'label' => __( 'Minutes', 'elementor-pro' ),
+				'label' => esc_html__( 'Minutes', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -143,10 +143,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'show_seconds',
 			[
-				'label' => __( 'Seconds', 'elementor-pro' ),
+				'label' => esc_html__( 'Seconds', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -154,10 +154,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'show_labels',
 			[
-				'label' => __( 'Show Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Show Label', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 				'separator' => 'before',
 			]
@@ -166,7 +166,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'custom_labels',
 			[
-				'label' => __( 'Custom Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Label', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'show_labels!' => '',
@@ -177,10 +177,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'label_days',
 			[
-				'label' => __( 'Days', 'elementor-pro' ),
+				'label' => esc_html__( 'Days', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Days', 'elementor-pro' ),
-				'placeholder' => __( 'Days', 'elementor-pro' ),
+				'default' => esc_html__( 'Days', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Days', 'elementor-pro' ),
 				'condition' => [
 					'show_labels!' => '',
 					'custom_labels!' => '',
@@ -192,10 +192,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'label_hours',
 			[
-				'label' => __( 'Hours', 'elementor-pro' ),
+				'label' => esc_html__( 'Hours', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Hours', 'elementor-pro' ),
-				'placeholder' => __( 'Hours', 'elementor-pro' ),
+				'default' => esc_html__( 'Hours', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Hours', 'elementor-pro' ),
 				'condition' => [
 					'show_labels!' => '',
 					'custom_labels!' => '',
@@ -207,10 +207,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'label_minutes',
 			[
-				'label' => __( 'Minutes', 'elementor-pro' ),
+				'label' => esc_html__( 'Minutes', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Minutes', 'elementor-pro' ),
-				'placeholder' => __( 'Minutes', 'elementor-pro' ),
+				'default' => esc_html__( 'Minutes', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Minutes', 'elementor-pro' ),
 				'condition' => [
 					'show_labels!' => '',
 					'custom_labels!' => '',
@@ -222,10 +222,10 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'label_seconds',
 			[
-				'label' => __( 'Seconds', 'elementor-pro' ),
+				'label' => esc_html__( 'Seconds', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Seconds', 'elementor-pro' ),
-				'placeholder' => __( 'Seconds', 'elementor-pro' ),
+				'default' => esc_html__( 'Seconds', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Seconds', 'elementor-pro' ),
 				'condition' => [
 					'show_labels!' => '',
 					'custom_labels!' => '',
@@ -237,12 +237,12 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'expire_actions',
 			[
-				'label' => __( 'Actions After Expire', 'elementor-pro' ),
+				'label' => esc_html__( 'Actions After Expire', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'options' => [
-					'redirect' => __( 'Redirect', 'elementor-pro' ),
-					'hide' => __( 'Hide', 'elementor-pro' ),
-					'message' => __( 'Show Message', 'elementor-pro' ),
+					'redirect' => esc_html__( 'Redirect', 'elementor-pro' ),
+					'hide' => esc_html__( 'Hide', 'elementor-pro' ),
+					'message' => esc_html__( 'Show Message', 'elementor-pro' ),
 				],
 				'label_block' => true,
 				'separator' => 'before',
@@ -254,7 +254,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'message_after_expire',
 			[
-				'label' => __( 'Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Message', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'separator' => 'before',
 				'dynamic' => [
@@ -269,7 +269,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'expire_redirect_url',
 			[
-				'label' => __( 'Redirect URL', 'elementor-pro' ),
+				'label' => esc_html__( 'Redirect URL', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
 				'separator' => 'before',
 				'options' => false,
@@ -287,7 +287,7 @@ class Countdown extends Base_Widget {
 		$this->start_controls_section(
 			'section_box_style',
 			[
-				'label' => __( 'Boxes', 'elementor-pro' ),
+				'label' => esc_html__( 'Boxes', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -295,7 +295,7 @@ class Countdown extends Base_Widget {
 		$this->add_responsive_control(
 			'container_width',
 			[
-				'label' => __( 'Container Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Container Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => '%',
@@ -327,7 +327,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'box_background_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_PRIMARY,
@@ -350,7 +350,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'box_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -362,7 +362,7 @@ class Countdown extends Base_Widget {
 		$this->add_responsive_control(
 			'box_spacing',
 			[
-				'label' => __( 'Space Between', 'elementor-pro' ),
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 10,
@@ -385,7 +385,7 @@ class Countdown extends Base_Widget {
 		$this->add_responsive_control(
 			'box_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -399,7 +399,7 @@ class Countdown extends Base_Widget {
 		$this->start_controls_section(
 			'section_content_style',
 			[
-				'label' => __( 'Content', 'elementor-pro' ),
+				'label' => esc_html__( 'Content', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -407,7 +407,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'heading_digits',
 			[
-				'label' => __( 'Digits', 'elementor-pro' ),
+				'label' => esc_html__( 'Digits', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -415,7 +415,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'digits_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-digits' => 'color: {{VALUE}};',
@@ -437,7 +437,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'heading_label',
 			[
-				'label' => __( 'Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Label', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -446,7 +446,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'label_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-label' => 'color: {{VALUE}};',
@@ -470,7 +470,7 @@ class Countdown extends Base_Widget {
 		$this->start_controls_section(
 			'section_expire_message_style',
 			[
-				'label' => __( 'Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Message', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'expire_actions' => 'message',
@@ -481,19 +481,19 @@ class Countdown extends Base_Widget {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -506,7 +506,7 @@ class Countdown extends Base_Widget {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -532,7 +532,7 @@ class Countdown extends Base_Widget {
 		$this->add_responsive_control(
 			'message_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -566,12 +566,12 @@ class Countdown extends Base_Widget {
 
 	private function init_default_countdown_labels() {
 		$this->_default_countdown_labels = [
-			'label_months' => __( 'Months', 'elementor-pro' ),
-			'label_weeks' => __( 'Weeks', 'elementor-pro' ),
-			'label_days' => __( 'Days', 'elementor-pro' ),
-			'label_hours' => __( 'Hours', 'elementor-pro' ),
-			'label_minutes' => __( 'Minutes', 'elementor-pro' ),
-			'label_seconds' => __( 'Seconds', 'elementor-pro' ),
+			'label_months' => esc_html__( 'Months', 'elementor-pro' ),
+			'label_weeks' => esc_html__( 'Weeks', 'elementor-pro' ),
+			'label_days' => esc_html__( 'Days', 'elementor-pro' ),
+			'label_hours' => esc_html__( 'Hours', 'elementor-pro' ),
+			'label_minutes' => esc_html__( 'Minutes', 'elementor-pro' ),
+			'label_seconds' => esc_html__( 'Seconds', 'elementor-pro' ),
 		];
 	}
 
@@ -646,7 +646,7 @@ class Countdown extends Base_Widget {
 		}
 
 		if ( $actions ) {
-			$this->add_render_attribute( 'div', 'data-expire-actions', json_encode( $actions ) );
+			$this->add_render_attribute( 'div', 'data-expire-actions', wp_json_encode( $actions ) );
 		}
 
 		$this->add_render_attribute( 'div', [
@@ -655,16 +655,20 @@ class Countdown extends Base_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'div' ); ?>>
-			<?php echo $string; ?>
+		<div <?php $this->print_render_attribute_string( 'div' ); ?>>
+			<?php echo wp_kses_post( $string ); ?>
 		</div>
 		<?php
 		if ( $actions && is_array( $actions ) ) {
 			foreach ( $actions as $action ) {
 				if ( 'message' !== $action['type'] ) {
 					continue;
-				}
-				echo '<div class="elementor-countdown-expire--message">' . $instance['message_after_expire'] . '</div>';
+				} ?>
+				<div class="elementor-countdown-expire--message">
+					<?php // PHPCS - the main text of a widget should not be escaped.
+					echo $instance['message_after_expire']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+				<?php
 			}
 		}
 	}

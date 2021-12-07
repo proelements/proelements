@@ -17,7 +17,7 @@ class Font_Base extends Assets_Base {
 	public function __construct() {
 		parent::__construct();
 
-		$this->font_preview_phrase = __( 'Elementor Is Making the Web Beautiful!!!', 'elementor-pro' );
+		$this->font_preview_phrase = esc_html__( 'Elementor Is Making the Web Beautiful!!!', 'elementor-pro' );
 	}
 
 	public function get_name() {

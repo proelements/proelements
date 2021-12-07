@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Forms\Classes;
 
+use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Modules\Forms\Module;
 
@@ -12,7 +13,7 @@ abstract class Form_Base extends Base_Widget {
 
 	public function on_export( $element ) {
 		/** @var \ElementorPro\Modules\Forms\Classes\Action_Base[] $actions */
-		$actions = Module::instance()->get_form_actions();
+		$actions = Module::instance()->actions_registrar->get();
 
 		foreach ( $actions as $action ) {
 			$new_element_data = $action->on_export( $element );
@@ -26,11 +27,11 @@ abstract class Form_Base extends Base_Widget {
 
 	public static function get_button_sizes() {
 		return [
-			'xs' => __( 'Extra Small', 'elementor-pro' ),
-			'sm' => __( 'Small', 'elementor-pro' ),
-			'md' => __( 'Medium', 'elementor-pro' ),
-			'lg' => __( 'Large', 'elementor-pro' ),
-			'xl' => __( 'Extra Large', 'elementor-pro' ),
+			'xs' => esc_html__( 'Extra Small', 'elementor-pro' ),
+			'sm' => esc_html__( 'Small', 'elementor-pro' ),
+			'md' => esc_html__( 'Medium', 'elementor-pro' ),
+			'lg' => esc_html__( 'Large', 'elementor-pro' ),
+			'xl' => esc_html__( 'Extra Large', 'elementor-pro' ),
 		];
 	}
 
@@ -100,8 +101,8 @@ abstract class Form_Base extends Base_Widget {
 
 		ob_start();
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'select-wrapper' . $i ); ?>>
-			<select <?php echo $this->get_render_attribute_string( 'select' . $i ); ?>>
+		<div <?php $this->print_render_attribute_string( 'select-wrapper' . $i ); ?>>
+			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
 				<?php
 				foreach ( $options as $key => $option ) {
 					$option_id = $item['custom_id'] . $key;
@@ -119,10 +120,11 @@ abstract class Form_Base extends Base_Widget {
 					// Support multiple selected values
 					if ( ! empty( $item['field_value'] ) && in_array( $option_value, explode( ',', $item['field_value'] ) ) ) {
 						$this->add_render_attribute( $option_id, 'selected', 'selected' );
-					}
-					echo '<option ' . $this->get_render_attribute_string( $option_id ) . '>' . $option_label . '</option>';
-				}
-				?>
+					} ?>
+					<option <?php $this->print_render_attribute_string( $option_id ); ?>><?php
+						// PHPCS - $option_label is already escaped
+						echo $option_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
+				<?php } ?>
 			</select>
 		</div>
 		<?php
@@ -217,7 +219,8 @@ abstract class Form_Base extends Base_Widget {
 			$this->add_render_attribute( 'field-group' . $i, 'class', 'elementor-sm-' . $item['width_mobile'] );
 		}
 
-		if ( ! empty( $item['placeholder'] ) ) {
+		// Allow zero as placeholder.
+		if ( ! Utils::is_empty( $item['placeholder'] ) ) {
 			$this->add_render_attribute( 'input' . $i, 'placeholder', $item['placeholder'] );
 		}
 

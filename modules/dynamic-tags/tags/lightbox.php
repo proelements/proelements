@@ -19,7 +19,7 @@ class Lightbox extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Lightbox', 'elementor-pro' );
+		return esc_html__( 'Lightbox', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -37,15 +37,15 @@ class Lightbox extends Tag {
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'video' => [
-						'title' => __( 'Video', 'elementor-pro' ),
+						'title' => esc_html__( 'Video', 'elementor-pro' ),
 						'icon' => 'eicon-video-camera',
 					],
 					'image' => [
-						'title' => __( 'Image', 'elementor-pro' ),
+						'title' => esc_html__( 'Image', 'elementor-pro' ),
 						'icon' => 'eicon-image-bold',
 					],
 				],
@@ -55,7 +55,7 @@ class Lightbox extends Tag {
 		$this->add_control(
 			'image',
 			[
-				'label' => __( 'Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'condition' => [
 					'type' => 'image',
@@ -66,7 +66,7 @@ class Lightbox extends Tag {
 		$this->add_control(
 			'video_url',
 			[
-				'label' => __( 'Video URL', 'elementor-pro' ),
+				'label' => esc_html__( 'Video URL', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
 				'condition' => [
@@ -133,6 +133,7 @@ class Lightbox extends Tag {
 			return;
 		}
 
-		echo Plugin::elementor()->frontend->create_action_hash( 'lightbox', $value );
+		// PHPCS - the method Plugin::elementor()->frontend->create_action_hash is safe.
+		echo Plugin::elementor()->frontend->create_action_hash( 'lightbox', $value ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

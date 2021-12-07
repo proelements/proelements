@@ -16,7 +16,7 @@ class User_Info extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'User Info', 'elementor-pro' );
+		return esc_html__( 'User Info', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -71,19 +71,19 @@ class User_Info extends Tag {
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Field', 'elementor-pro' ),
+				'label' => esc_html__( 'Field', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Choose', 'elementor-pro' ),
-					'id' => __( 'ID', 'elementor-pro' ),
-					'display_name' => __( 'Display Name', 'elementor-pro' ),
-					'login' => __( 'Username', 'elementor-pro' ),
-					'first_name' => __( 'First Name', 'elementor-pro' ),
-					'last_name' => __( 'Last Name', 'elementor-pro' ),
-					'description' => __( 'Bio', 'elementor-pro' ),
-					'email' => __( 'Email', 'elementor-pro' ),
-					'url' => __( 'Website', 'elementor-pro' ),
-					'meta' => __( 'User Meta', 'elementor-pro' ),
+					'' => esc_html__( 'Choose', 'elementor-pro' ),
+					'id' => esc_html__( 'ID', 'elementor-pro' ),
+					'display_name' => esc_html__( 'Display Name', 'elementor-pro' ),
+					'login' => esc_html__( 'Username', 'elementor-pro' ),
+					'first_name' => esc_html__( 'First Name', 'elementor-pro' ),
+					'last_name' => esc_html__( 'Last Name', 'elementor-pro' ),
+					'description' => esc_html__( 'Bio', 'elementor-pro' ),
+					'email' => esc_html__( 'Email', 'elementor-pro' ),
+					'url' => esc_html__( 'Website', 'elementor-pro' ),
+					'meta' => esc_html__( 'User Meta', 'elementor-pro' ),
 				],
 			]
 		);
@@ -91,7 +91,7 @@ class User_Info extends Tag {
 		$this->add_control(
 			'meta_key',
 			[
-				'label' => __( 'Meta Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Meta Key', 'elementor-pro' ),
 				'condition' => [
 					'type' => 'meta',
 				],

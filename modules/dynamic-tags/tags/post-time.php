@@ -15,7 +15,7 @@ class Post_Time extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Time', 'elementor-pro' );
+		return esc_html__( 'Post Time', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -30,11 +30,11 @@ class Post_Time extends Tag {
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'post_date_gmt' => __( 'Post Published', 'elementor-pro' ),
-					'post_modified_gmt' => __( 'Post Modified', 'elementor-pro' ),
+					'post_date_gmt' => esc_html__( 'Post Published', 'elementor-pro' ),
+					'post_modified_gmt' => esc_html__( 'Post Modified', 'elementor-pro' ),
 				],
 				'default' => 'post_date_gmt',
 			]
@@ -43,14 +43,14 @@ class Post_Time extends Tag {
 		$this->add_control(
 			'format',
 			[
-				'label' => __( 'Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Format', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => __( 'Default', 'elementor-pro' ),
+					'default' => esc_html__( 'Default', 'elementor-pro' ),
 					'g:i a' => gmdate( 'g:i a' ),
 					'g:i A' => gmdate( 'g:i A' ),
 					'H:i' => gmdate( 'H:i' ),
-					'custom' => __( 'Custom', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => 'default',
 			]
@@ -59,9 +59,9 @@ class Post_Time extends Tag {
 		$this->add_control(
 			'custom_format',
 			[
-				'label' => __( 'Custom Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Format', 'elementor-pro' ),
 				'default' => '',
-				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
+				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', esc_html__( 'Documentation on date and time formatting', 'elementor-pro' ) ),
 				'condition' => [
 					'format' => 'custom',
 				],

@@ -35,7 +35,7 @@ class In_Taxonomy extends Condition_Base {
 
 	public function get_label() {
 		/* translators: %s: Taxonomy label. */
-		return sprintf( __( 'In %s', 'elementor-pro' ), $this->taxonomy->labels->singular_name );
+		return sprintf( esc_html__( 'In %s', 'elementor-pro' ), $this->taxonomy->labels->singular_name );
 	}
 
 	public function check( $args ) {

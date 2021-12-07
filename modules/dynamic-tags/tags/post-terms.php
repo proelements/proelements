@@ -16,7 +16,7 @@ class Post_Terms extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Terms', 'elementor-pro' );
+		return esc_html__( 'Post Terms', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -58,7 +58,7 @@ class Post_Terms extends Tag {
 		$this->add_control(
 			'taxonomy',
 			[
-				'label' => __( 'Taxonomy', 'elementor-pro' ),
+				'label' => esc_html__( 'Taxonomy', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => $options,
 				'default' => 'post_tag',
@@ -68,7 +68,7 @@ class Post_Terms extends Tag {
 		$this->add_control(
 			'separator',
 			[
-				'label' => __( 'Separator', 'elementor-pro' ),
+				'label' => esc_html__( 'Separator', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => ', ',
 			]
@@ -77,7 +77,7 @@ class Post_Terms extends Tag {
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]

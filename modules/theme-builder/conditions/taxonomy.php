@@ -55,7 +55,7 @@ class Taxonomy extends Condition_Base {
 				'section' => 'settings',
 				'type' => QueryModule::QUERY_CONTROL_ID,
 				'options' => [
-					'' => __( 'All', 'elementor-pro' ),
+					'' => esc_html__( 'All', 'elementor-pro' ),
 				],
 				'autocomplete' => [
 					'object' => QueryModule::QUERY_OBJECT_TAX,

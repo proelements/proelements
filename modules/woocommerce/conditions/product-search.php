@@ -23,7 +23,7 @@ class Product_Search extends ThemeBuilder\Conditions\Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'Search Results', 'elementor-pro' );
+		return esc_html__( 'Search Results', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

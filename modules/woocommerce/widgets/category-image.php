@@ -18,7 +18,7 @@ class Category_Image extends Widget_Image {
 	}
 
 	public function get_title() {
-		return __( 'Category Image', 'elementor-pro' );
+		return esc_html__( 'Category Image', 'elementor-pro' );
 	}
 
 	public function get_icon() {

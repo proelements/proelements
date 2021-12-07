@@ -44,24 +44,29 @@ class Recaptcha_Handler {
 	}
 
 	public static function get_setup_message() {
-		return __( 'To use reCAPTCHA, you need to add the API Key and complete the setup process in Dashboard > Elementor > Settings > Integrations > reCAPTCHA.', 'elementor-pro' );
+		return esc_html__( 'To use reCAPTCHA, you need to add the API Key and complete the setup process in Dashboard > Elementor > Settings > Integrations > reCAPTCHA.', 'elementor-pro' );
 	}
 
 	public function register_admin_fields( Settings $settings ) {
 		$settings->add_section( Settings::TAB_INTEGRATIONS, static::get_recaptcha_name(), [
-			'label' => __( 'reCAPTCHA', 'elementor-pro' ),
+			'label' => esc_html__( 'reCAPTCHA', 'elementor-pro' ),
 			'callback' => function () {
-				echo sprintf( __( '<a href="%s" target="_blank">reCAPTCHA</a> is a free service by Google that protects your website from spam and abuse. It does this while letting your valid users pass through with ease.', 'elementor-pro' ), 'https://www.google.com/recaptcha/' );
+				echo sprintf(
+					/* translators: 1: Link open tag, 2: Link closing tag. */
+					esc_html__( '%1$sreCAPTCHA%2$s is a free service by Google that protects your website from spam and abuse. It does this while letting your valid users pass through with ease.', 'elementor-pro' ),
+					'<a href="https://www.google.com/recaptcha/" target="_blank">',
+					'</a>'
+				);
 			},
 			'fields' => [
 				'pro_recaptcha_site_key' => [
-					'label' => __( 'Site Key', 'elementor-pro' ),
+					'label' => esc_html__( 'Site Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
 					],
 				],
 				'pro_recaptcha_secret_key' => [
-					'label' => __( 'Secret Key', 'elementor-pro' ),
+					'label' => esc_html__( 'Secret Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
 					],
@@ -122,20 +127,21 @@ class Recaptcha_Handler {
 
 		$field = current( $fields );
 
-		if ( empty( $_POST['g-recaptcha-response'] ) ) {
-			$ajax_handler->add_error( $field['id'], __( 'The Captcha field cannot be blank. Please enter a value.', 'elementor-pro' ) );
+		if ( empty( $_POST['g-recaptcha-response'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$ajax_handler->add_error( $field['id'], esc_html__( 'The Captcha field cannot be blank. Please enter a value.', 'elementor-pro' ) );
 
 			return;
 		}
 
 		$recaptcha_errors = [
-			'missing-input-secret' => __( 'The secret parameter is missing.', 'elementor-pro' ),
-			'invalid-input-secret' => __( 'The secret parameter is invalid or malformed.', 'elementor-pro' ),
-			'missing-input-response' => __( 'The response parameter is missing.', 'elementor-pro' ),
-			'invalid-input-response' => __( 'The response parameter is invalid or malformed.', 'elementor-pro' ),
+			'missing-input-secret' => esc_html__( 'The secret parameter is missing.', 'elementor-pro' ),
+			'invalid-input-secret' => esc_html__( 'The secret parameter is invalid or malformed.', 'elementor-pro' ),
+			'missing-input-response' => esc_html__( 'The response parameter is missing.', 'elementor-pro' ),
+			'invalid-input-response' => esc_html__( 'The response parameter is invalid or malformed.', 'elementor-pro' ),
 		];
 
-		$recaptcha_response = $_POST['g-recaptcha-response'];
+		// PHPCS - response protected by recaptcha secret
+		$recaptcha_response = $_POST['g-recaptcha-response']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$recaptcha_secret = static::get_secret_key();
 		$client_ip = Utils::get_client_ip();
 
@@ -153,7 +159,7 @@ class Recaptcha_Handler {
 
 		if ( 200 !== (int) $response_code ) {
 			/* translators: %d: Response code. */
-			$ajax_handler->add_error( $field['id'], sprintf( __( 'Can not connect to the reCAPTCHA server (%d).', 'elementor-pro' ), $response_code ) );
+			$ajax_handler->add_error( $field['id'], sprintf( esc_html__( 'Can not connect to the reCAPTCHA server (%d).', 'elementor-pro' ), $response_code ) );
 
 			return;
 		}
@@ -163,7 +169,7 @@ class Recaptcha_Handler {
 		$result = json_decode( $body, true );
 
 		if ( ! $this->validate_result( $result, $field ) ) {
-			$message = __( 'Invalid Form - reCAPTCHA validation failed', 'elementor-pro' );
+			$message = esc_html__( 'Invalid Form - reCAPTCHA validation failed', 'elementor-pro' );
 
 			if ( isset( $result['error-codes'] ) ) {
 				$result_errors = array_flip( $result['error-codes'] );
@@ -224,7 +230,8 @@ class Recaptcha_Handler {
 
 		$recaptcha_html .= '</div>';
 
-		echo $recaptcha_html;
+		// PHPCS - It's all escaped
+		echo $recaptcha_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -260,7 +267,7 @@ class Recaptcha_Handler {
 	}
 
 	public function add_field_type( $field_types ) {
-		$field_types['recaptcha'] = __( 'reCAPTCHA', 'elementor-pro' );
+		$field_types['recaptcha'] = esc_html__( 'reCAPTCHA', 'elementor-pro' );
 
 		return $field_types;
 	}

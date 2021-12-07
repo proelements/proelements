@@ -1,4 +1,4 @@
-/*! pro-elements - v3.3.1 - 20-06-2021 */
+/*! pro-elements - v3.5.1 - 10-11-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -66,6 +66,16 @@
 /*!**************************************************************************!*\
   !*** ../core/app/modules/site-editor/assets/js/pages/template-type.scss ***!
   \**************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "../core/app/modules/site-editor/assets/js/site-editor.scss":
+/*!******************************************************************!*\
+  !*** ../core/app/modules/site-editor/assets/js/site-editor.scss ***!
+  \******************************************************************/
 /***/ (() => {
 
 
@@ -5244,6 +5254,9 @@ function DialogDelete(props) {
     dismissButtonText: __('Cancel', 'elementor-pro'),
     dismissButtonOnClick: function dismissButtonOnClick() {
       return closeDialog();
+    },
+    onClose: function onClose() {
+      return closeDialog();
     }
   });
 }
@@ -5270,13 +5283,15 @@ var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
 
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js");
+
 _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = DialogRename;
 
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
 
@@ -5290,10 +5305,17 @@ function DialogRename(props) {
       updateTemplate = _React$useContext.updateTemplate,
       template = findTemplateItemInState(props.id);
 
-  var _React$useState = _react.default.useState(false),
+  var _React$useState = _react.default.useState(''),
       _React$useState2 = (0, _slicedToArray2.default)(_React$useState, 2),
       title = _React$useState2[0],
       setTitle = _React$useState2[1];
+
+  (0, _react.useEffect)(function () {
+    // The "title" state should be updated if the template title changed.
+    if (template) {
+      setTitle(template.title);
+    }
+  }, [template]);
 
   var closeDialog = function closeDialog(shouldUpdate) {
     props.setId(null);
@@ -5310,7 +5332,7 @@ function DialogRename(props) {
   }
 
   return /*#__PURE__*/_react.default.createElement(_appUi.Dialog, {
-    title: __('Rename Part', 'elementor-pro'),
+    title: __('Rename Site Part', 'elementor-pro'),
     approveButtonText: __('Change', 'elementor-pro'),
     onSubmit: function onSubmit() {
       return closeDialog(true);
@@ -5318,15 +5340,19 @@ function DialogRename(props) {
     approveButtonOnClick: function approveButtonOnClick() {
       return closeDialog(true);
     },
+    approveButtonColor: "primary",
     dismissButtonText: __('Cancel', 'elementor-pro'),
     dismissButtonOnClick: function dismissButtonOnClick() {
+      return closeDialog();
+    },
+    onClose: function onClose() {
       return closeDialog();
     }
   }, /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
     className: "eps-input eps-input-text eps-input--block",
     autoFocus: true,
-    defaultValue: template.title,
+    value: title,
     onChange: function onChange(e) {
       return setTitle(e.target.value);
     }
@@ -5507,7 +5533,11 @@ var _router2 = _interopRequireDefault(__webpack_require__(/*! @elementor/router 
 
 var _component = _interopRequireDefault(__webpack_require__(/*! ./data/component */ "../core/app/modules/site-editor/assets/js/data/component.js"));
 
+__webpack_require__(/*! ./site-editor.scss */ "../core/app/modules/site-editor/assets/js/site-editor.scss");
+
 function SiteEditor() {
+  var _elementorAppProConfi, _elementorAppProConfi2;
+
   var headerButtons = [{
     id: 'import',
     text: __('import', 'elementor-pro'),
@@ -5549,6 +5579,12 @@ function SiteEditor() {
       url: "/site-editor"
     }),
     headerButtons: headerButtons
+  }, /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
+    container: true,
+    className: "e-site-editor__content_container"
+  }, /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
+    item: true,
+    className: "e-site-editor__content_container_main"
   }, /*#__PURE__*/_react.default.createElement(_templates2.default, null, /*#__PURE__*/_react.default.createElement(_router.LocationProvider, {
     history: _router2.default.appHistory
   }, /*#__PURE__*/_react.default.createElement(_router.Router, null, /*#__PURE__*/_react.default.createElement(SiteEditorDefault, {
@@ -5565,7 +5601,13 @@ function SiteEditor() {
     path: "site-editor/import"
   }), /*#__PURE__*/_react.default.createElement(_siteEditor.NotFound, {
     default: true
-  }))))));
+  }))))), /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
+    item: true,
+    className: "e-site-editor__content_container_secondary"
+  }, /*#__PURE__*/_react.default.createElement(_appUi.Button, {
+    text: __('Switch to table view', 'elementor-pro'),
+    url: (_elementorAppProConfi = elementorAppProConfig['site-editor']) === null || _elementorAppProConfi === void 0 ? void 0 : (_elementorAppProConfi2 = _elementorAppProConfi.urls) === null || _elementorAppProConfi2 === void 0 ? void 0 : _elementorAppProConfi2.legacy_view
+  })))));
 }
 
 var Module = function Module() {

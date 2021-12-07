@@ -44,11 +44,11 @@ class Group_Control_Query extends Group_Control_Base {
 		$name .= '_';
 
 		$fields['post_type'] = [
-			'label' => __( 'Source', 'elementor-pro' ),
+			'label' => esc_html__( 'Source', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'by_id' => __( 'Manual Selection', 'elementor-pro' ),
-				'current_query' => __( 'Current Query', 'elementor-pro' ),
+				'by_id' => esc_html__( 'Manual Selection', 'elementor-pro' ),
+				'current_query' => esc_html__( 'Current Query', 'elementor-pro' ),
 			],
 		];
 
@@ -62,7 +62,7 @@ class Group_Control_Query extends Group_Control_Base {
 
 		$fields['query_include'] = [
 			'type' => Controls_Manager::TAB,
-			'label' => __( 'Include', 'elementor-pro' ),
+			'label' => esc_html__( 'Include', 'elementor-pro' ),
 			'tabs_wrapper' => $tabs_wrapper,
 			'condition' => [
 				'post_type!' => [
@@ -73,7 +73,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['posts_ids'] = [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -90,12 +90,12 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['include'] = [
-			'label' => __( 'Include By', 'elementor-pro' ),
+			'label' => esc_html__( 'Include By', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT2,
 			'multiple' => true,
 			'options' => [
-				'terms' => __( 'Term', 'elementor-pro' ),
-				'authors' => __( 'Author', 'elementor-pro' ),
+				'terms' => esc_html__( 'Term', 'elementor-pro' ),
+				'authors' => esc_html__( 'Author', 'elementor-pro' ),
 			],
 			'condition' => [
 				'post_type!' => [
@@ -109,8 +109,8 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['include_term_ids'] = [
-			'label' => __( 'Term', 'elementor-pro' ),
-			'description' => __( 'Terms are items in a taxonomy. The available taxonomies are: Categories, Tags, Formats and custom taxonomies.', 'elementor-pro' ),
+			'label' => esc_html__( 'Term', 'elementor-pro' ),
+			'description' => esc_html__( 'Terms are items in a taxonomy. The available taxonomies are: Categories, Tags, Formats and custom taxonomies.', 'elementor-pro' ),
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -132,7 +132,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['include_authors'] = [
-			'label' => __( 'Author', 'elementor-pro' ),
+			'label' => esc_html__( 'Author', 'elementor-pro' ),
 			'label_block' => true,
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'multiple' => true,
@@ -155,7 +155,7 @@ class Group_Control_Query extends Group_Control_Base {
 
 		$fields['query_exclude'] = [
 			'type' => Controls_Manager::TAB,
-			'label' => __( 'Exclude', 'elementor-pro' ),
+			'label' => esc_html__( 'Exclude', 'elementor-pro' ),
 			'tabs_wrapper' => $tabs_wrapper,
 			'condition' => [
 				'post_type!' => [
@@ -166,14 +166,14 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['exclude'] = [
-			'label' => __( 'Exclude By', 'elementor-pro' ),
+			'label' => esc_html__( 'Exclude By', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT2,
 			'multiple' => true,
 			'options' => [
-				'current_post' => __( 'Current Post', 'elementor-pro' ),
-				'manual_selection' => __( 'Manual Selection', 'elementor-pro' ),
-				'terms' => __( 'Term', 'elementor-pro' ),
-				'authors' => __( 'Author', 'elementor-pro' ),
+				'current_post' => esc_html__( 'Current Post', 'elementor-pro' ),
+				'manual_selection' => esc_html__( 'Manual Selection', 'elementor-pro' ),
+				'terms' => esc_html__( 'Term', 'elementor-pro' ),
+				'authors' => esc_html__( 'Author', 'elementor-pro' ),
 			],
 			'condition' => [
 				'post_type!' => [
@@ -187,7 +187,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['exclude_ids'] = [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -208,7 +208,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['exclude_term_ids'] = [
-			'label' => __( 'Term', 'elementor-pro' ),
+			'label' => esc_html__( 'Term', 'elementor-pro' ),
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -231,7 +231,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['exclude_authors'] = [
-			'label' => __( 'Author', 'elementor-pro' ),
+			'label' => esc_html__( 'Author', 'elementor-pro' ),
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -253,10 +253,10 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['avoid_duplicates'] = [
-			'label' => __( 'Avoid Duplicates', 'elementor-pro' ),
+			'label' => esc_html__( 'Avoid Duplicates', 'elementor-pro' ),
 			'type' => Controls_Manager::SWITCHER,
 			'default' => '',
-			'description' => __( 'Set to Yes to avoid duplicate posts from showing up. This only effects the frontend.', 'elementor-pro' ),
+			'description' => esc_html__( 'Set to Yes to avoid duplicate posts from showing up. This only effects the frontend.', 'elementor-pro' ),
 			'tabs_wrapper' => $tabs_wrapper,
 			'inner_tab' => $exclude_wrapper,
 			'condition' => [
@@ -268,7 +268,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['offset'] = [
-			'label' => __( 'Offset', 'elementor-pro' ),
+			'label' => esc_html__( 'Offset', 'elementor-pro' ),
 			'type' => Controls_Manager::NUMBER,
 			'default' => 0,
 			'condition' => [
@@ -277,23 +277,23 @@ class Group_Control_Query extends Group_Control_Base {
 					'current_query',
 				],
 			],
-			'description' => __( 'Use this setting to skip over posts (e.g. \'2\' to skip over 2 posts).', 'elementor-pro' ),
+			'description' => esc_html__( 'Use this setting to skip over posts (e.g. \'2\' to skip over 2 posts).', 'elementor-pro' ),
 			'tabs_wrapper' => $tabs_wrapper,
 			'inner_tab' => $exclude_wrapper,
 		];
 
 		$fields['select_date'] = [
-			'label' => __( 'Date', 'elementor-pro' ),
+			'label' => esc_html__( 'Date', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'post_type' => '',
 			'options' => [
-				'anytime' => __( 'All', 'elementor-pro' ),
-				'today' => __( 'Past Day', 'elementor-pro' ),
-				'week' => __( 'Past Week', 'elementor-pro' ),
-				'month'  => __( 'Past Month', 'elementor-pro' ),
-				'quarter' => __( 'Past Quarter', 'elementor-pro' ),
-				'year' => __( 'Past Year', 'elementor-pro' ),
-				'exact' => __( 'Custom', 'elementor-pro' ),
+				'anytime' => esc_html__( 'All', 'elementor-pro' ),
+				'today' => esc_html__( 'Past Day', 'elementor-pro' ),
+				'week' => esc_html__( 'Past Week', 'elementor-pro' ),
+				'month'  => esc_html__( 'Past Month', 'elementor-pro' ),
+				'quarter' => esc_html__( 'Past Quarter', 'elementor-pro' ),
+				'year' => esc_html__( 'Past Year', 'elementor-pro' ),
+				'exact' => esc_html__( 'Custom', 'elementor-pro' ),
 			],
 			'default' => 'anytime',
 			'multiple' => false,
@@ -307,12 +307,12 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['date_before'] = [
-			'label' => __( 'Before', 'elementor-pro' ),
+			'label' => esc_html__( 'Before', 'elementor-pro' ),
 			'type' => Controls_Manager::DATE_TIME,
 			'post_type' => '',
 			'label_block' => false,
 			'multiple' => false,
-			'placeholder' => __( 'Choose', 'elementor-pro' ),
+			'placeholder' => esc_html__( 'Choose', 'elementor-pro' ),
 			'condition' => [
 				'select_date' => 'exact',
 				'post_type!' => [
@@ -320,16 +320,16 @@ class Group_Control_Query extends Group_Control_Base {
 					'current_query',
 				],
 			],
-			'description' => __( 'Setting a ‘Before’ date will show all the posts published until the chosen date (inclusive).', 'elementor-pro' ),
+			'description' => esc_html__( 'Setting a ‘Before’ date will show all the posts published until the chosen date (inclusive).', 'elementor-pro' ),
 		];
 
 		$fields['date_after'] = [
-			'label' => __( 'After', 'elementor-pro' ),
+			'label' => esc_html__( 'After', 'elementor-pro' ),
 			'type' => Controls_Manager::DATE_TIME,
 			'post_type' => '',
 			'label_block' => false,
 			'multiple' => false,
-			'placeholder' => __( 'Choose', 'elementor-pro' ),
+			'placeholder' => esc_html__( 'Choose', 'elementor-pro' ),
 			'condition' => [
 				'select_date' => 'exact',
 				'post_type!' => [
@@ -337,18 +337,18 @@ class Group_Control_Query extends Group_Control_Base {
 					'current_query',
 				],
 			],
-			'description' => __( 'Setting an ‘After’ date will show all the posts published since the chosen date (inclusive).', 'elementor-pro' ),
+			'description' => esc_html__( 'Setting an ‘After’ date will show all the posts published since the chosen date (inclusive).', 'elementor-pro' ),
 		];
 
 		$fields['orderby'] = [
-			'label' => __( 'Order By', 'elementor-pro' ),
+			'label' => esc_html__( 'Order By', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => 'post_date',
 			'options' => [
-				'post_date' => __( 'Date', 'elementor-pro' ),
-				'post_title' => __( 'Title', 'elementor-pro' ),
-				'menu_order' => __( 'Menu Order', 'elementor-pro' ),
-				'rand' => __( 'Random', 'elementor-pro' ),
+				'post_date' => esc_html__( 'Date', 'elementor-pro' ),
+				'post_title' => esc_html__( 'Title', 'elementor-pro' ),
+				'menu_order' => esc_html__( 'Menu Order', 'elementor-pro' ),
+				'rand' => esc_html__( 'Random', 'elementor-pro' ),
 			],
 			'condition' => [
 				'post_type!' => 'current_query',
@@ -356,12 +356,12 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['order'] = [
-			'label' => __( 'Order', 'elementor-pro' ),
+			'label' => esc_html__( 'Order', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => 'desc',
 			'options' => [
-				'asc' => __( 'ASC', 'elementor-pro' ),
-				'desc' => __( 'DESC', 'elementor-pro' ),
+				'asc' => esc_html__( 'ASC', 'elementor-pro' ),
+				'desc' => esc_html__( 'DESC', 'elementor-pro' ),
 			],
 			'condition' => [
 				'post_type!' => 'current_query',
@@ -369,7 +369,7 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['posts_per_page'] = [
-			'label' => __( 'Posts Per Page', 'elementor-pro' ),
+			'label' => esc_html__( 'Posts Per Page', 'elementor-pro' ),
 			'type' => Controls_Manager::NUMBER,
 			'default' => 3,
 			'condition' => [
@@ -378,20 +378,20 @@ class Group_Control_Query extends Group_Control_Base {
 		];
 
 		$fields['ignore_sticky_posts'] = [
-			'label' => __( 'Ignore Sticky Posts', 'elementor-pro' ),
+			'label' => esc_html__( 'Ignore Sticky Posts', 'elementor-pro' ),
 			'type' => Controls_Manager::SWITCHER,
 			'default' => 'yes',
 			'condition' => [
 				'post_type' => 'post',
 			],
-			'description' => __( 'Sticky-posts ordering is visible on frontend only', 'elementor-pro' ),
+			'description' => esc_html__( 'Sticky-posts ordering is visible on frontend only', 'elementor-pro' ),
 		];
 
 		$fields['query_id'] = [
-			'label' => __( 'Query ID', 'elementor-pro' ),
+			'label' => esc_html__( 'Query ID', 'elementor-pro' ),
 			'type' => Controls_Manager::TEXT,
 			'default' => '',
-			'description' => __( 'Give your Query a custom unique id to allow server side filtering', 'elementor-pro' ),
+			'description' => esc_html__( 'Give your Query a custom unique id to allow server side filtering', 'elementor-pro' ),
 			'separator' => 'before',
 		];
 

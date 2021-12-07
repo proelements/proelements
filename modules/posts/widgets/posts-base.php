@@ -5,6 +5,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
 use Elementor\Controls_Manager;
+use ElementorPro\Modules\Posts\Traits\Button_Widget_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -14,6 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Posts
  */
 abstract class Posts_Base extends Base_Widget {
+	use Button_Widget_Trait;
+
+	const LOAD_MORE_ON_CLICK = 'load_more_on_click';
+	const LOAD_MORE_INFINITE_SCROLL = 'load_more_infinite_scroll';
 
 	/**
 	 * @var \WP_Query
@@ -36,36 +41,136 @@ abstract class Posts_Base extends Base_Widget {
 
 	public function render() {}
 
+	public function register_load_more_button_style_controls() {
+		$this->add_control(
+			'heading_load_more_style_button',
+			[
+				'label' => esc_html__( 'Button', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'pagination_type' => 'load_more_on_click',
+				],
+			]
+		);
+
+		$this->register_button_style_controls( [
+			'section_condition' => [
+				'pagination_type' => 'load_more_on_click',
+			],
+		] );
+	}
+
+	public function register_load_more_message_style_controls() {
+		$this->add_control(
+			'heading_load_more_on_click_no_posts_message',
+			[
+				'label' => esc_html__( 'No More Posts Message', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'pagination_type' => 'load_more_on_click',
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_load_more_on_click_infinity_scroll_no_posts_message',
+			[
+				'label' => esc_html__( 'No More Posts Message', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'pagination_type' => 'load_more_infinite_scroll',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'load_more_no_posts_message',
+				'selector' => '{{WRAPPER}} .e-load-more-message',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
+			]
+		);
+
+		$this->add_control(
+			'load_more_no_posts_message_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}' => '--load-more-message-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'load_more_spinner_color',
+			[
+				'label' => esc_html__( 'Spinner Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}' => '--load-more-spinner-color: {{VALUE}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'load_more_spinner[value]!' => '',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'load_more_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--load-more—spacing: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+	}
+
 	public function register_pagination_section_controls() {
 		$this->start_controls_section(
 			'section_pagination',
 			[
-				'label' => __( 'Pagination', 'elementor-pro' ),
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'pagination_type',
 			[
-				'label' => __( 'Pagination', 'elementor-pro' ),
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
-				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'numbers' => __( 'Numbers', 'elementor-pro' ),
-					'prev_next' => __( 'Previous/Next', 'elementor-pro' ),
-					'numbers_and_prev_next' => __( 'Numbers', 'elementor-pro' ) . ' + ' . __( 'Previous/Next', 'elementor-pro' ),
-				],
+				'options' => $this->get_pagination_type_options(),
+				'frontend_available' => true,
 			]
 		);
 
 		$this->add_control(
 			'pagination_page_limit',
 			[
-				'label' => __( 'Page Limit', 'elementor-pro' ),
+				'label' => esc_html__( 'Page Limit', 'elementor-pro' ),
 				'default' => '5',
 				'condition' => [
-					'pagination_type!' => '',
+					'pagination_type!' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+						'',
+					],
 				],
 			]
 		);
@@ -73,7 +178,7 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_control(
 			'pagination_numbers_shorten',
 			[
-				'label' => __( 'Shorten', 'elementor-pro' ),
+				'label' => esc_html__( 'Shorten', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
 				'condition' => [
@@ -88,8 +193,8 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_control(
 			'pagination_prev_label',
 			[
-				'label' => __( 'Previous Label', 'elementor-pro' ),
-				'default' => __( '&laquo; Previous', 'elementor-pro' ),
+				'label' => esc_html__( 'Previous Label', 'elementor-pro' ),
+				'default' => esc_html__( '&laquo; Previous', 'elementor-pro' ),
 				'condition' => [
 					'pagination_type' => [
 						'prev_next',
@@ -102,8 +207,8 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_control(
 			'pagination_next_label',
 			[
-				'label' => __( 'Next Label', 'elementor-pro' ),
-				'default' => __( 'Next &raquo;', 'elementor-pro' ),
+				'label' => esc_html__( 'Next Label', 'elementor-pro' ),
+				'default' => esc_html__( 'Next &raquo;', 'elementor-pro' ),
 				'condition' => [
 					'pagination_type' => [
 						'prev_next',
@@ -116,19 +221,19 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_control(
 			'pagination_align',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -137,20 +242,171 @@ abstract class Posts_Base extends Base_Widget {
 					'{{WRAPPER}} .elementor-pagination' => 'text-align: {{VALUE}};',
 				],
 				'condition' => [
-					'pagination_type!' => '',
+					'pagination_type!' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+						'',
+					],
 				],
+			]
+		);
+
+		$this->add_control(
+			'load_more_spinner',
+			[
+				'label' => esc_html__( 'Spinner', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'fa4compatibility' => 'icon',
+				'default' => [
+					'value' => 'fas fa-spinner',
+					'library' => 'fa-solid',
+				],
+				'exclude_inline_options' => [ 'svg' ],
+				'recommended' => [
+					'fa-solid' => [
+						'spinner',
+						'cog',
+						'sync',
+						'sync-alt',
+						'asterisk',
+						'circle-notch',
+					],
+				],
+				'skin' => 'inline',
+				'label_block' => false,
+				'condition' => [
+					'pagination_type' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'heading_load_more_button',
+			[
+				'label' => esc_html__( 'Button', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'pagination_type' => 'load_more_on_click',
+				],
+			]
+		);
+
+		$this->register_button_content_controls( [
+			'button_text' => esc_html__( 'Load More', 'elementor-pro' ),
+			'control_label_name' => esc_html__( 'Button Text', 'elementor-pro' ),
+			'prefix_class' => 'load-more-align-',
+			'alignment_default' => 'center',
+			'section_condition' => [
+				'pagination_type' => 'load_more_on_click',
+			],
+			'exclude_inline_options' => [ 'svg' ],
+		] );
+
+		$this->remove_control( 'button_type' );
+		$this->remove_control( 'link' );
+		$this->remove_control( 'size' );
+
+		$this->add_control(
+			'heading_load_more_no_posts_message',
+			[
+				'label' => esc_html__( 'No More Posts Message', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'pagination_type' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+					],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'load_more_no_posts_message_align',
+			[
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => esc_html__( 'Justified', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--load-more-message-alignment: {{VALUE}};',
+				],
+				'condition' => [
+					'pagination_type' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'load_more_no_posts_message_switcher',
+			[
+				'label' => esc_html__( 'Custom Messages', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'condition' => [
+					'pagination_type' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'load_more_no_posts_custom_message',
+			[
+				'label' => esc_html__( 'No more posts message', 'elementor-pro' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'No more posts to show', 'elementor-pro' ),
+				'condition' => [
+					'pagination_type' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+					],
+					'load_more_no_posts_message_switcher' => 'yes',
+				],
+				'label_block' => true,
 			]
 		);
 
 		$this->end_controls_section();
 
+		// Pagination style controls for prev/next and numbers pagination.
 		$this->start_controls_section(
 			'section_pagination_style',
 			[
-				'label' => __( 'Pagination', 'elementor-pro' ),
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'pagination_type!' => '',
+					'pagination_type!' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+						'',
+					],
 				],
 			]
 		);
@@ -169,7 +425,7 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_control(
 			'pagination_color_heading',
 			[
-				'label' => __( 'Colors', 'elementor-pro' ),
+				'label' => esc_html__( 'Colors', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -180,14 +436,14 @@ abstract class Posts_Base extends Base_Widget {
 		$this->start_controls_tab(
 			'pagination_color_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'pagination_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-pagination .page-numbers:not(.dots)' => 'color: {{VALUE}};',
@@ -200,14 +456,14 @@ abstract class Posts_Base extends Base_Widget {
 		$this->start_controls_tab(
 			'pagination_color_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'pagination_hover_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-pagination a.page-numbers:hover' => 'color: {{VALUE}};',
@@ -220,14 +476,14 @@ abstract class Posts_Base extends Base_Widget {
 		$this->start_controls_tab(
 			'pagination_color_active',
 			[
-				'label' => __( 'Active', 'elementor-pro' ),
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'pagination_active_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-pagination .page-numbers.current' => 'color: {{VALUE}};',
@@ -242,7 +498,7 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_responsive_control(
 			'pagination_spacing',
 			[
-				'label' => __( 'Space Between', 'elementor-pro' ),
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'separator' => 'before',
 				'default' => [
@@ -266,7 +522,7 @@ abstract class Posts_Base extends Base_Widget {
 		$this->add_responsive_control(
 			'pagination_spacing_top',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -281,6 +537,27 @@ abstract class Posts_Base extends Base_Widget {
 		);
 
 		$this->end_controls_section();
+
+		// Pagination style controls for on-load pagination with type on-click/infinity-scroll.
+		$this->start_controls_section(
+			'section_style',
+			[
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'pagination_type' => [
+						'load_more_on_click',
+						'load_more_infinite_scroll',
+					],
+				],
+			]
+		);
+
+		$this->register_load_more_button_style_controls();
+
+		$this->register_load_more_message_style_controls();
+
+		$this->end_controls_section();
 	}
 
 	abstract public function query_posts();
@@ -293,7 +570,7 @@ abstract class Posts_Base extends Base_Widget {
 		return max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) );
 	}
 
-	private function get_wp_link_page( $i ) {
+	public function get_wp_link_page( $i ) {
 		if ( ! is_singular() || is_front_page() ) {
 			return get_pagenum_link( $i );
 		}
@@ -364,12 +641,23 @@ abstract class Posts_Base extends Base_Widget {
 		$this->start_controls_section(
 			'section_layout',
 			[
-				'label' => __( 'Layout', 'elementor-pro' ),
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$this->end_controls_section();
+	}
+
+	protected function get_pagination_type_options() {
+		return [
+			'' => esc_html__( 'None', 'elementor-pro' ),
+			'numbers' => esc_html__( 'Numbers', 'elementor-pro' ),
+			'prev_next' => esc_html__( 'Previous/Next', 'elementor-pro' ),
+			'numbers_and_prev_next' => esc_html__( 'Numbers', 'elementor-pro' ) . ' + ' . esc_html__( 'Previous/Next', 'elementor-pro' ),
+			self::LOAD_MORE_ON_CLICK => esc_html__( 'Load on Click', 'elementor-pro' ),
+			self::LOAD_MORE_INFINITE_SCROLL => esc_html__( 'Infinite Scroll', 'elementor-pro' ),
+		];
 	}
 
 	public function render_plain_content() {}

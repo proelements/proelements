@@ -153,7 +153,7 @@ class Templates extends Base_Endpoint {
 		$is_active = false;
 
 		if ( ! $has_instances ) {
-			$template['instances'] = [ 'no_instances' => __( 'No instances', 'elementor-pro' ) ];
+			$template['instances'] = [ 'no_instances' => esc_html__( 'No instances', 'elementor-pro' ) ];
 		} else {
 			$is_active = 'publish' === $template['status'];
 		}

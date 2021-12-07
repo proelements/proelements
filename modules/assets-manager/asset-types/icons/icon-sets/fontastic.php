@@ -18,7 +18,7 @@ class Fontastic extends Icon_Set_Base {
 	}
 
 	public function get_type() {
-		return __( 'Fontastic', 'elementor-pro' );
+		return esc_html__( 'Fontastic', 'elementor-pro' );
 	}
 
 	public function is_valid() {

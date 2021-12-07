@@ -17,7 +17,7 @@ class Step extends Field_Base {
 	}
 
 	public function get_name() {
-		return __( 'Step', 'elementor-pro' );
+		return esc_html__( 'Step', 'elementor-pro' );
 	}
 
 	public function render( $item, $item_index, $form ) {
@@ -41,7 +41,10 @@ class Step extends Field_Base {
 			'data-icon' => $font_icon,
 		] );
 
-		echo '<div ' . $form->get_render_attribute_string( 'step' . $item_index ) . '></div>';
+		?>
+		<div <?php $form->print_render_attribute_string( 'step' . $item_index ); ?> ></div>
+
+		<?php
 	}
 
 	/**
@@ -59,7 +62,7 @@ class Step extends Field_Base {
 		$field_controls = [
 			'previous_button' => [
 				'name' => 'previous_button',
-				'label' => __( 'Previous Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Previous Button', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -70,7 +73,7 @@ class Step extends Field_Base {
 			],
 			'next_button' => [
 				'name' => 'next_button',
-				'label' => __( 'Next Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Next Button', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -81,10 +84,10 @@ class Step extends Field_Base {
 			],
 			'selected_icon' => [
 				'name' => 'selected_icon',
-				'label' => __( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::ICONS,
 				'fa4compatibility' => 'icon',
-				'description' => __( 'Visible only if selected step type contains "Icon"', 'elementor-pro' ),
+				'description' => esc_html__( 'Visible only if selected step type contains "Icon"', 'elementor-pro' ),
 				'default' => [
 					'value' => 'fas fa-star',
 					'library' => 'fa-solid',

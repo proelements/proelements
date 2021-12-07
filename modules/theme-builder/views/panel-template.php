@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <script type="text/template" id="tmpl-elementor-theme-builder-conditions-view">
 	<div class="elementor-template-library-blank-icon">
-		<img src="<?php echo ELEMENTOR_PRO_MODULES_URL; ?>theme-builder/assets/images/conditions-tab.svg">
+		<img src="<?php echo ELEMENTOR_PRO_MODULES_URL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>theme-builder/assets/images/conditions-tab.svg">
 	</div>
 	<div class="elementor-template-library-blank-title">{{{ elementorPro.translate( 'conditions_title', [ elementor.config.document.post_type_title ] ) }}}</div>
 	<div class="elementor-template-library-blank-message">{{{ elementorPro.translate( 'conditions_description', [ elementor.config.document.post_type_title ] ) }}}</div>

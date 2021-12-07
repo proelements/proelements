@@ -37,12 +37,21 @@ class Facebook_SDK_Manager {
 	 */
 	public static function add_app_id_control( $widget ) {
 		if ( ! self::get_app_id() ) {
-			/* translators: %s: Setting Page link. */
-			$html = sprintf( __( 'Set your Facebook App ID in the <a href="%s" target="_blank">Integrations Settings</a>', 'elementor-pro' ), Settings::get_url() . '#tab-integrations' );
+			/* translators: 1: Setting Page link open tag, 2: Link closing tag. */
+			$html = sprintf(
+				esc_html__( 'Set your Facebook App ID in the %1$sIntegrations Settings%2$s', 'elementor-pro' ),
+				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
+				'</a>'
+			);
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-warning';
 		} else {
-			/* translators: 1: App ID, 2: Setting Page link. */
-			$html = sprintf( __( 'You are connected to Facebook App %1$s, <a href="%2$s" target="_blank">Change App</a>', 'elementor-pro' ), self::get_app_id(), Settings::get_url() . '#tab-integrations' );
+			/* translators: 1: App ID, 2: Setting Page link open tag, 3: Link closing tag. */
+			$html = sprintf(
+				esc_html__( 'You are connected to Facebook App %1$s, %2$sChange App%3$s', 'elementor-pro' ),
+				self::get_app_id(),
+				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
+				'</a>'
+			);
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-info';
 		}
 
@@ -69,7 +78,8 @@ class Facebook_SDK_Manager {
 		add_action( 'wp_head', [ __CLASS__, 'enqueue_meta_app_id' ] );
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localize_settings' ] );
 
-		if ( ! empty( $_POST['option_page'] ) && 'elementor' === $_POST['option_page'] ) {
+		// The nonce already validated on the options page,
+		if ( ! empty( $_POST['option_page'] ) && 'elementor' === $_POST['option_page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$this->validate_sdk();
 		}
 
@@ -94,19 +104,27 @@ class Facebook_SDK_Manager {
 			'callback' => function() {
 				echo '<hr><h2>' . esc_html__( 'Facebook SDK', 'elementor-pro' ) . '</h2>';
 
-				/* translators: %s: Facebook App Setting link. */
-				echo sprintf( __( 'Facebook SDK lets you connect to your <a href="%s" target="_blank">dedicated application</a> so you can track the Facebook Widgets analytics on your site.', 'elementor-pro' ), 'https://developers.facebook.com/docs/apps/register/' ) .
-					 '<br>' .
-					 '<br>' .
-					 __( 'If you are using the Facebook Comments Widget, you can add moderating options through your application. Note that this option will not work on local sites and on domains that don\'t have public access.', 'elementor-pro' );
+				echo sprintf(
+					/* translators: 1: Link open tag, 2: Link closing tag. */
+					esc_html__( 'Facebook SDK lets you connect to your %1$sdedicated application%2$s so you can track the Facebook Widgets analytics on your site.', 'elementor-pro' ),
+					'<a href="https://developers.facebook.com/docs/apps/register/" target="_blank">',
+					'</a>'
+				);
+				echo '<br><br>';
+
+				echo esc_html__( 'If you are using the Facebook Comments Widget, you can add moderating options through your application. Note that this option will not work on local sites and on domains that don\'t have public access.', 'elementor-pro' );
 			},
 			'fields' => [
 				'pro_facebook_app_id' => [
-					'label' => __( 'App ID', 'elementor-pro' ),
+					'label' => esc_html__( 'App ID', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						/* translators: %s: Facebook App Setting link. */
-						'desc' => sprintf( __( 'Remember to add the domain to your <a href="%s" target="_blank">App Domains</a>', 'elementor-pro' ), $this->get_app_settings_url() ),
+						/* translators: 1: Link open tag, 2: Link closing tag. */
+						'desc' => sprintf(
+							esc_html__( 'Remember to add the domain to your %1$sApp Domains%2$s', 'elementor-pro' ),
+							sprintf( '<a href="%s" target="_blank">', $this->get_app_settings_url() ),
+							'</a>'
+						),
 					],
 				],
 			],
@@ -125,18 +143,18 @@ class Facebook_SDK_Manager {
 	private function validate_sdk() {
 		$errors = [];
 
-		if ( ! empty( $_POST['elementor_pro_facebook_app_id'] ) ) {
-			$response = wp_remote_get( 'https://graph.facebook.com/' . $_POST['elementor_pro_facebook_app_id'] );
+		if ( ! empty( $_POST['elementor_pro_facebook_app_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$response = wp_remote_get( 'https://graph.facebook.com/' . $_POST['elementor_pro_facebook_app_id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-				$errors[] = __( 'Facebook App ID is not valid', 'elementor-pro' );
+				$errors[] = esc_html__( 'Facebook App ID is not valid', 'elementor-pro' );
 			}
 		}
 
 		$message = implode( '<br>', $errors );
 
 		if ( ! empty( $errors ) ) {
-			wp_die( $message, __( 'Facebook SDK', 'elementor-pro' ), [ 'back_link' => true ] );
+			wp_die( $message, esc_html__( 'Facebook SDK', 'elementor-pro' ), [ 'back_link' => true ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }

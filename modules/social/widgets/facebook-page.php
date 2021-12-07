@@ -31,7 +31,7 @@ class Facebook_Page extends Base_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Page', 'elementor-pro' ),
+				'label' => esc_html__( 'Page', 'elementor-pro' ),
 			]
 		);
 
@@ -40,18 +40,18 @@ class Facebook_Page extends Base_Widget {
 		$this->add_control(
 			'url',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'placeholder' => 'https://www.facebook.com/your-page/',
 				'default' => 'https://www.facebook.com/elemntor/',
 				'label_block' => true,
-				'description' => __( 'Paste the URL of the Facebook page.', 'elementor-pro' ),
+				'description' => esc_html__( 'Paste the URL of the Facebook page.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'tabs',
 			[
-				'label' => __( 'Layout', 'elementor-pro' ),
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
 				'label_block' => true,
@@ -59,9 +59,9 @@ class Facebook_Page extends Base_Widget {
 					'timeline',
 				],
 				'options' => [
-					'timeline' => __( 'Timeline', 'elementor-pro' ),
-					'events' => __( 'Events', 'elementor-pro' ),
-					'messages' => __( 'Messages', 'elementor-pro' ),
+					'timeline' => esc_html__( 'Timeline', 'elementor-pro' ),
+					'events' => esc_html__( 'Events', 'elementor-pro' ),
+					'messages' => esc_html__( 'Messages', 'elementor-pro' ),
 				],
 			]
 		);
@@ -69,7 +69,7 @@ class Facebook_Page extends Base_Widget {
 		$this->add_control(
 			'small_header',
 			[
-				'label' => __( 'Small Header', 'elementor-pro' ),
+				'label' => esc_html__( 'Small Header', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
 			]
@@ -78,7 +78,7 @@ class Facebook_Page extends Base_Widget {
 		$this->add_control(
 			'show_cover',
 			[
-				'label' => __( 'Cover Photo', 'elementor-pro' ),
+				'label' => esc_html__( 'Cover Photo', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -87,7 +87,7 @@ class Facebook_Page extends Base_Widget {
 		$this->add_control(
 			'show_facepile',
 			[
-				'label' => __( 'Profile Photos', 'elementor-pro' ),
+				'label' => esc_html__( 'Profile Photos', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -96,7 +96,7 @@ class Facebook_Page extends Base_Widget {
 		$this->add_control(
 			'show_cta',
 			[
-				'label' => __( 'Custom CTA Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom CTA Button', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -105,7 +105,7 @@ class Facebook_Page extends Base_Widget {
 		$this->add_control(
 			'height',
 			[
-				'label' => __( 'Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => 'px',

@@ -14,7 +14,7 @@ class Toolset_Date extends Toolset_Base {
 	}
 
 	public function get_title() {
-		return __( 'Toolset', 'elementor-pro' ) . ' ' . __( 'Date Field', 'elementor-pro' );
+		return esc_html__( 'Toolset', 'elementor-pro' ) . ' ' . esc_html__( 'Date Field', 'elementor-pro' );
 	}
 
 	public function render() {
@@ -78,16 +78,16 @@ class Toolset_Date extends Toolset_Base {
 		$this->add_control(
 			'format',
 			[
-				'label' => __( 'Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Format', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => __( 'Default', 'elementor-pro' ),
+					'default' => esc_html__( 'Default', 'elementor-pro' ),
 					'F j, Y' => gmdate( 'F j, Y' ),
 					'Y-m-d' => gmdate( 'Y-m-d' ),
 					'm/d/Y' => gmdate( 'm/d/Y' ),
 					'd/m/Y' => gmdate( 'd/m/Y' ),
-					'human' => __( 'Human Readable', 'elementor-pro' ),
-					'custom' => __( 'Custom', 'elementor-pro' ),
+					'human' => esc_html__( 'Human Readable', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => 'default',
 			]
@@ -96,9 +96,9 @@ class Toolset_Date extends Toolset_Base {
 		$this->add_control(
 			'custom_format',
 			[
-				'label' => __( 'Custom Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Format', 'elementor-pro' ),
 				'default' => '',
-				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
+				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', esc_html__( 'Documentation on date and time formatting', 'elementor-pro' ) ),
 				'condition' => [
 					'format' => 'custom',
 				],

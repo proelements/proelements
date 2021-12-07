@@ -15,6 +15,19 @@ abstract class Field_Base {
 
 	abstract public function get_name();
 
+	/**
+	 * Get the field ID.
+	 *
+	 * TODO: Make it an abstract function that will replace `get_type()`.
+	 *
+	 * @since 3.5.0
+	 *
+	 * @return string
+	 */
+	public function get_id() {
+		return $this->get_type();
+	}
+
 	abstract public function render( $item, $item_index, $form );
 
 	public function validation( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {}

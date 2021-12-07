@@ -17,14 +17,14 @@ class Form_Action extends Action_Base {
 	}
 
 	public function get_label() {
-		return __( 'Popup', 'elementor-pro' );
+		return esc_html__( 'Popup', 'elementor-pro' );
 	}
 
 	public function register_settings_section( $widget ) {
 		$widget->start_controls_section(
 			'section_popup',
 			[
-				'label' => __( 'Popup', 'elementor-pro' ),
+				'label' => esc_html__( 'Popup', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -34,12 +34,12 @@ class Form_Action extends Action_Base {
 		$widget->add_control(
 			'popup_action',
 			[
-				'label' => __( 'Action', 'elementor-pro' ),
+				'label' => esc_html__( 'Action', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Choose', 'elementor-pro' ),
-					'open' => __( 'Open Popup', 'elementor-pro' ),
-					'close' => __( 'Close Popup', 'elementor-pro' ),
+					'' => esc_html__( 'Choose', 'elementor-pro' ),
+					'open' => esc_html__( 'Open Popup', 'elementor-pro' ),
+					'close' => esc_html__( 'Close Popup', 'elementor-pro' ),
 				],
 			]
 		);
@@ -47,7 +47,7 @@ class Form_Action extends Action_Base {
 		$widget->add_control(
 			'popup_action_popup_id',
 			[
-				'label' => __( 'Popup', 'elementor-pro' ),
+				'label' => esc_html__( 'Popup', 'elementor-pro' ),
 				'type' => QueryControlModule::QUERY_CONTROL_ID,
 				'label_block' => true,
 				'autocomplete' => [
@@ -71,7 +71,7 @@ class Form_Action extends Action_Base {
 		$widget->add_control(
 			'popup_action_do_not_show_again',
 			[
-				'label' => __( 'Don\'t Show Again', 'elementor-pro' ),
+				'label' => esc_html__( 'Don\'t Show Again', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'popup_action' => 'close',
@@ -136,7 +136,7 @@ class Form_Action extends Action_Base {
 		$forms_module = FormsModule::instance();
 
 		// Register popup form action
-		$forms_module->add_form_action( $this->get_name(), $this );
+		$forms_module->actions_registrar->register( $this );
 
 		add_action( 'elementor-pro/forms/pre_render', [ $this, 'maybe_print_popup' ], 10, 2 );
 	}

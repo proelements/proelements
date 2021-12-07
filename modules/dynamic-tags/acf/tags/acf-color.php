@@ -15,7 +15,7 @@ class ACF_COLOR extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'ACF', 'elementor-pro' ) . ' ' . __( 'Color Picker Field', 'elementor-pro' );
+		return esc_html__( 'ACF', 'elementor-pro' ) . ' ' . esc_html__( 'Color Picker Field', 'elementor-pro' );
 	}
 
 	public function get_group() {

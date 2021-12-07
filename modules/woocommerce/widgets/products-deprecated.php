@@ -31,7 +31,7 @@ class Products_Deprecated extends Products_Base {
 	}
 
 	public function get_title() {
-		return __( 'Woo - Products-', 'elementor-pro' );
+		return esc_html__( 'Woo - Products-', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -62,12 +62,12 @@ class Products_Deprecated extends Products_Base {
 	}
 
 	protected function register_controls() {
-		$this->deprecated_notice( Plugin::get_title(), '2.0.10', '', __( 'Products', 'elementor-pro' ) );
+		$this->deprecated_notice( Plugin::get_title(), '2.0.10', '', esc_html__( 'Products', 'elementor-pro' ) );
 
 		$this->start_controls_section(
 			'section_layout',
 			[
-				'label' => __( 'Layout', 'elementor-pro' ),
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -75,7 +75,7 @@ class Products_Deprecated extends Products_Base {
 		$this->add_control(
 			'posts_per_page',
 			[
-				'label' => __( 'Products Count', 'elementor-pro' ),
+				'label' => esc_html__( 'Products Count', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => '4',
 			]
@@ -86,7 +86,7 @@ class Products_Deprecated extends Products_Base {
 		$this->start_controls_section(
 			'section_filter',
 			[
-				'label' => __( 'Query', 'elementor-pro' ),
+				'label' => esc_html__( 'Query', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -102,7 +102,7 @@ class Products_Deprecated extends Products_Base {
 		$this->add_control(
 			'advanced',
 			[
-				'label' => __( 'Advanced', 'elementor-pro' ),
+				'label' => esc_html__( 'Advanced', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -110,13 +110,13 @@ class Products_Deprecated extends Products_Base {
 		$this->add_control(
 			'filter_by',
 			[
-				'label' => __( 'Filter By', 'elementor-pro' ),
+				'label' => esc_html__( 'Filter By', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'featured' => __( 'Featured', 'elementor-pro' ),
-					'sale' => __( 'Sale', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'featured' => esc_html__( 'Featured', 'elementor-pro' ),
+					'sale' => esc_html__( 'Sale', 'elementor-pro' ),
 				],
 			]
 		);
@@ -124,17 +124,17 @@ class Products_Deprecated extends Products_Base {
 		$this->add_control(
 			'orderby',
 			[
-				'label' => __( 'Order By', 'elementor-pro' ),
+				'label' => esc_html__( 'Order By', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'date',
 				'options' => [
-					'date' => __( 'Date', 'elementor-pro' ),
-					'title' => __( 'Title', 'elementor-pro' ),
-					'price' => __( 'Price', 'elementor-pro' ),
-					'popularity' => __( 'Popularity', 'elementor-pro' ),
-					'rating' => __( 'Rating', 'elementor-pro' ),
-					'rand' => __( 'Random', 'elementor-pro' ),
-					'menu_order' => __( 'Menu Order', 'elementor-pro' ),
+					'date' => esc_html__( 'Date', 'elementor-pro' ),
+					'title' => esc_html__( 'Title', 'elementor-pro' ),
+					'price' => esc_html__( 'Price', 'elementor-pro' ),
+					'popularity' => esc_html__( 'Popularity', 'elementor-pro' ),
+					'rating' => esc_html__( 'Rating', 'elementor-pro' ),
+					'rand' => esc_html__( 'Random', 'elementor-pro' ),
+					'menu_order' => esc_html__( 'Menu Order', 'elementor-pro' ),
 				],
 			]
 		);
@@ -142,17 +142,56 @@ class Products_Deprecated extends Products_Base {
 		$this->add_control(
 			'order',
 			[
-				'label' => __( 'Order', 'elementor-pro' ),
+				'label' => esc_html__( 'Order', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'desc',
 				'options' => [
-					'asc' => __( 'ASC', 'elementor-pro' ),
-					'desc' => __( 'DESC', 'elementor-pro' ),
+					'asc' => esc_html__( 'ASC', 'elementor-pro' ),
+					'desc' => esc_html__( 'DESC', 'elementor-pro' ),
 				],
 			]
 		);
 
-		Module::add_exclude_controls( $this );
+		$this->add_control(
+			'exclude',
+			[
+				'label' => esc_html__( 'Exclude', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT2,
+				'multiple' => true,
+				'options' => [
+					'current_post' => esc_html__( 'Current Post', 'elementor-pro' ),
+					'manual_selection' => esc_html__( 'Manual Selection', 'elementor-pro' ),
+				],
+				'label_block' => true,
+			]
+		);
+
+		$this->add_control(
+			'exclude_ids',
+			[
+				'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
+				'type' => Module::QUERY_CONTROL_ID,
+				'autocomplete' => [
+					'object' => Module::QUERY_OBJECT_POST,
+				],
+				'options' => [],
+				'label_block' => true,
+				'multiple' => true,
+				'condition' => [
+					'exclude' => 'manual_selection',
+				],
+			]
+		);
+
+		$this->add_control(
+			'avoid_duplicates',
+			[
+				'label' => esc_html__( 'Avoid Duplicates', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'description' => esc_html__( 'Set to Yes to avoid duplicate posts from showing up on the page. This only affects the frontend.', 'elementor-pro' ),
+			]
+		);
 
 		$this->end_controls_section();
 

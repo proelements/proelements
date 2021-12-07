@@ -15,7 +15,7 @@ class Comments_URL extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Comments URL', 'elementor-pro' );
+		return esc_html__( 'Comments URL', 'elementor-pro' );
 	}
 
 	public function get_group() {

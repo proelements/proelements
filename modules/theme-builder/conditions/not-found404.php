@@ -20,7 +20,7 @@ class Not_Found404 extends Condition_Base {
 	}
 
 	public function get_label() {
-		return __( '404 Page', 'elementor-pro' );
+		return esc_html__( '404 Page', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

@@ -21,7 +21,8 @@ abstract class Assets_Base {
 			<?php
 			foreach ( $fields as $field ) :
 				$field['saved'] = isset( $field['saved'] ) ? $field['saved'] : '';
-				echo $this->get_metabox_field_html( $field, $field['saved'] );
+				// PHPCS - admin fields
+				echo $this->get_metabox_field_html( $field, $field['saved'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			endforeach;
 			?>
 		</div>
@@ -71,6 +72,9 @@ abstract class Assets_Base {
 			case 'dropzone':
 				$html = $this->get_dropzone_field( $field, $saved );
 				break;
+
+			case 'checkbox':
+				return $this->get_checkbox_field( $field, $saved );
 
 			default:
 				$method = 'get_' . $field['field_type'] . 'field';
@@ -183,8 +187,8 @@ abstract class Assets_Base {
 				'data-preview_anchor' => isset( $field['preview_anchor'] ) ? $field['preview_anchor'] : 'none',
 				'data-mime_type' => isset( $field['mine'] ) ? $field['mine'] : '',
 				'data-ext' => isset( $field['ext'] ) ? $field['ext'] : '',
-				'data-upload_text' => __( 'Upload', 'elementor-pro' ),
-				'data-remove_text' => __( 'Delete', 'elementor-pro' ),
+				'data-upload_text' => esc_html__( 'Upload', 'elementor-pro' ),
+				'data-remove_text' => esc_html__( 'Delete', 'elementor-pro' ),
 				'data-box_title' => isset( $field['box_title'] ) ? $field['box_title'] : '',
 				'data-box_action' => isset( $field['box_action'] ) ? $field['box_action'] : '',
 			]
@@ -210,7 +214,7 @@ abstract class Assets_Base {
 			$input_attributes['multiple'] = true;
 		}
 		$input_html = $this->get_input_field( $input_attributes );
-		$field['label'] = '<h4><span class="box__dragndrop">' . __( 'Drag & Drop to Upload', 'elementor-pro' ) . '</span></h4>';
+		$field['label'] = '<h4><span class="box__dragndrop">' . esc_html__( 'Drag & Drop to Upload', 'elementor-pro' ) . '</span></h4>';
 		if ( ! empty( $field['sub-label'] ) ) {
 			$field['label'] .= '<h5>' . $field['sub-label'] . '</h5>';
 		}
@@ -220,8 +224,8 @@ abstract class Assets_Base {
 				<div class="elementor--dropzone--upload__icon">
 					<i class="eicon-library-upload"></i>
 				</div>
-				<?php echo $input_html; ?>
-				<?php echo $this->get_field_label( $field ); ?>
+				<?php echo $input_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo $this->get_field_label( $field ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<div class="elementor-button elementor--dropzone--upload__browse">
 					<span><?php esc_html_e( 'Click here to browse', 'elementor-pro' ); ?></span>
 				</div>
@@ -237,8 +241,8 @@ abstract class Assets_Base {
 	public function get_repeater_field( $field, $saved ) {
 		$id = $field['id'];
 		$js_id = 'repeater_' . Utils::generate_random_string();
-		$add_label = isset( $field['add_label'] ) ? $field['add_label'] : __( 'Add item', 'elementor-pro' );
-		$row_label = isset( $field['row_label'] ) ? $field['row_label'] : __( 'Row', 'elementor-pro' );
+		$add_label = isset( $field['add_label'] ) ? $field['add_label'] : esc_html__( 'Add item', 'elementor-pro' );
+		$row_label = isset( $field['row_label'] ) ? $field['row_label'] : esc_html__( 'Row', 'elementor-pro' );
 		$row_label_html_args = [
 			'id' => 'row_label_' . $js_id,
 			'class' => 'repeater-title hidden',
@@ -259,15 +263,15 @@ abstract class Assets_Base {
 		<script type="text/template" id="<?php echo esc_attr( $js_id . '_block' ); ?>">
 			<div class="repeater-block block-visible">
 				<?php
-				echo $row_label_html;
-				echo $this->get_repeater_tools( $field );
+				echo $row_label_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $this->get_repeater_tools( $field ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				<div class="repeater-content form-table">
 					<?php
 					foreach ( $field['fields'] as $sub_field ) {
 						$sub_field['real_id'] = $id;
 						$sub_field['id'] = $id . '[__counter__][' . $sub_field['id'] . ']';
-						echo $this->get_metabox_field_html( $sub_field, '' );
+						echo $this->get_metabox_field_html( $sub_field, '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					?>
 				</div>
@@ -281,24 +285,40 @@ abstract class Assets_Base {
 		if ( is_array( $saved ) && count( $saved ) > 0 ) {
 			foreach ( (array) $saved as $key => $item ) {
 				echo '<div class="repeater-block">';
-				echo $row_label_html;
-				echo $this->get_repeater_tools( $field );
+				echo $row_label_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $this->get_repeater_tools( $field ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<div class="repeater-content hidden form-table">';
 				foreach ( $field['fields'] as $sub_field ) {
 					$default = isset( $sub_field['default'] ) ? $sub_field['default'] : '';
 					$item_meta = isset( $item[ $sub_field['id'] ] ) ? $item[ $sub_field['id'] ] : $default;
 					$sub_field['real_id'] = $sub_field['id'];
 					$sub_field['id'] = $id . '[' . $counter . '][' . $sub_field['id'] . ']';
-					echo $this->get_metabox_field_html( $sub_field, $item_meta );
+					echo $this->get_metabox_field_html( $sub_field, $item_meta ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 				echo '</div>'; // end table
 				echo '</div>';
 				$counter++;
 			}
 		}
-		echo '<input type="button" class="button elementor-button add-repeater-row" value="' . esc_attr( $add_label ) . '" data-template-id="' . $js_id . '_block">';
+		echo '<input type="button" class="button elementor-button add-repeater-row" value="' . esc_attr( $add_label ) . '" data-template-id="' . esc_html( $js_id ) . '_block">';
 
 		return ob_get_clean();
+	}
+
+	public function get_checkbox_field( $field, $saved ) {
+		Utils::print_unescaped_internal_string( $this->get_field_row( $field, '' ) );
+
+		echo '<div id="' . esc_attr( $field['id'] ) . '" class="elementor-field-checkboxes">';
+
+		foreach ( $field['options'] as $checkbox_key => $label ) {
+			$name = $field['id'] . '_' . $checkbox_key;
+
+			$checked = ! empty( $saved ) && in_array( $checkbox_key, $saved, true ) ? 'checked' : '';
+
+			echo '<input name="' . esc_attr( $name ) . '" type="checkbox" ' . esc_attr( $checked ) . '><span class="label">' . esc_html( $label ) . '</span></input>';
+		}
+
+		echo '</div>';
 	}
 
 	private function get_html_tag( $field ) {
@@ -311,10 +331,10 @@ abstract class Assets_Base {
 	}
 
 	private function get_repeater_tools( $field ) {
-		$confirm = isset( $field['confirm'] ) ? $field['confirm'] : __( 'Are you sure?', 'elementor-pro' );
-		$remove_title = isset( $field['remove_title'] ) ? $field['remove_title'] : __( 'Delete', 'elementor-pro' );
-		$toggle_title = isset( $field['toggle_title'] ) ? $field['toggle_title'] : __( 'Edit', 'elementor-pro' );
-		$close_title = isset( $field['close_title'] ) ? $field['close_title'] : __( 'Close', 'elementor-pro' );
+		$confirm = isset( $field['confirm'] ) ? $field['confirm'] : esc_html__( 'Are you sure?', 'elementor-pro' );
+		$remove_title = isset( $field['remove_title'] ) ? $field['remove_title'] : esc_html__( 'Delete', 'elementor-pro' );
+		$toggle_title = isset( $field['toggle_title'] ) ? $field['toggle_title'] : esc_html__( 'Edit', 'elementor-pro' );
+		$close_title = isset( $field['close_title'] ) ? $field['close_title'] : esc_html__( 'Close', 'elementor-pro' );
 
 		return '<span class="elementor-repeater-tool-btn close-repeater-row" title="' . esc_attr( $close_title ) . '">
                     <i class="eicon-times" aria-hidden="true"></i>' . $close_title . '

@@ -17,7 +17,7 @@ class Page_Title extends Title_Widget_Base {
 	}
 
 	public function get_title() {
-		return __( 'Page Title', 'elementor-pro' );
+		return esc_html__( 'Page Title', 'elementor-pro' );
 	}
 
 	public function get_icon() {

@@ -12,7 +12,7 @@ class Any_Child_Of extends Child_Of {
 	}
 
 	public function get_label() {
-		return __( 'Any Child Of', 'elementor-pro' );
+		return esc_html__( 'Any Child Of', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

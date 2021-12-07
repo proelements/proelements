@@ -15,7 +15,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 	const FA_KIT_SCRIPT_LINK = 'https://kit.fontawesome.com/%s.js';
 
 	public function get_name() {
-		return __( 'Font Awesome Pro', 'elementor-pro' );
+		return esc_html__( 'Font Awesome Pro', 'elementor-pro' );
 	}
 
 	public function get_type() {
@@ -30,7 +30,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 		$json_url = ELEMENTOR_PRO_ASSETS_URL . 'lib/font-awesome-pro/%s.js';
 		$icons['fa-regular'] = [
 			'name' => 'fa-regular',
-			'label' => __( 'Font Awesome - Regular Pro', 'elementor-pro' ),
+			'label' => esc_html__( 'Font Awesome - Regular Pro', 'elementor-pro' ),
 			'url' => false,
 			'enqueue' => false,
 			'prefix' => 'fa-',
@@ -42,7 +42,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 		];
 		$icons['fa-solid'] = [
 			'name' => 'fa-solid',
-			'label' => __( 'Font Awesome - Solid Pro', 'elementor-pro' ),
+			'label' => esc_html__( 'Font Awesome - Solid Pro', 'elementor-pro' ),
 			'url' => false,
 			'enqueue' => false,
 			'prefix' => 'fa-',
@@ -54,7 +54,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 		];
 		$icons['fa-brands'] = [
 			'name' => 'fa-brands',
-			'label' => __( 'Font Awesome - Brands Pro', 'elementor-pro' ),
+			'label' => esc_html__( 'Font Awesome - Brands Pro', 'elementor-pro' ),
 			'url' => false,
 			'enqueue' => false,
 			'prefix' => 'fa-',
@@ -66,7 +66,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 		];
 		$icons['fa-light'] = [
 			'name' => 'fa-light',
-			'label' => __( 'Font Awesome - Light Pro', 'elementor-pro' ),
+			'label' => esc_html__( 'Font Awesome - Light Pro', 'elementor-pro' ),
 			'url' => false,
 			'enqueue' => false,
 			'prefix' => 'fa-',
@@ -78,7 +78,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 		];
 		$icons['fa-duotone'] = [
 			'name' => 'fa-duotone',
-			'label' => __( 'Font Awesome - Duotone Pro', 'elementor-pro' ),
+			'label' => esc_html__( 'Font Awesome - Duotone Pro', 'elementor-pro' ),
 			'url' => false,
 			'enqueue' => false,
 			'prefix' => 'fa-',
@@ -105,10 +105,15 @@ class Font_Awesome_Pro extends  Assets_Base {
 			},
 			'fields' => [
 				self::FA_KIT_ID_OPTION_NAME => [
-					'label' => __( 'Kit ID', 'elementor-pro' ),
+					'label' => esc_html__( 'Kit ID', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						'desc' => sprintf( __( 'Enter Your <a href="%s" target="_blank">Font Awesome Pro Kit ID</a>.', 'elementor-pro' ), 'https://fontawesome.com/kits' ),
+						'desc' => sprintf(
+							/* translators: 1: Link open tag, 2: Link closing tag. */
+							esc_html__( 'Enter Your %1$sFont Awesome Pro Kit ID%2$s.', 'elementor-pro' ),
+							'<a href="https://fontawesome.com/kits" target="_blank">',
+							'</a>'
+						),
 					],
 					'setting_args' => [
 						'sanitize_callback' => [ $this, 'sanitize_kit_id_settings' ],

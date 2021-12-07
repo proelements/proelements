@@ -15,7 +15,7 @@ class Post_Date extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Date', 'elementor-pro' );
+		return esc_html__( 'Post Date', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -30,11 +30,11 @@ class Post_Date extends Tag {
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'post_date_gmt' => __( 'Post Published', 'elementor-pro' ),
-					'post_modified_gmt' => __( 'Post Modified', 'elementor-pro' ),
+					'post_date_gmt' => esc_html__( 'Post Published', 'elementor-pro' ),
+					'post_modified_gmt' => esc_html__( 'Post Modified', 'elementor-pro' ),
 				],
 				'default' => 'post_date_gmt',
 			]
@@ -43,16 +43,16 @@ class Post_Date extends Tag {
 		$this->add_control(
 			'format',
 			[
-				'label' => __( 'Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Format', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => __( 'Default', 'elementor-pro' ),
+					'default' => esc_html__( 'Default', 'elementor-pro' ),
 					'F j, Y' => gmdate( 'F j, Y' ),
 					'Y-m-d' => gmdate( 'Y-m-d' ),
 					'm/d/Y' => gmdate( 'm/d/Y' ),
 					'd/m/Y' => gmdate( 'd/m/Y' ),
-					'human' => __( 'Human Readable', 'elementor-pro' ),
-					'custom' => __( 'Custom', 'elementor-pro' ),
+					'human' => esc_html__( 'Human Readable', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => 'default',
 			]
@@ -61,9 +61,9 @@ class Post_Date extends Tag {
 		$this->add_control(
 			'custom_format',
 			[
-				'label' => __( 'Custom Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Format', 'elementor-pro' ),
 				'default' => '',
-				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
+				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', esc_html__( 'Documentation on date and time formatting', 'elementor-pro' ) ),
 				'condition' => [
 					'format' => 'custom',
 				],
@@ -77,7 +77,7 @@ class Post_Date extends Tag {
 
 		if ( 'human' === $format ) {
 			/* translators: %s: Human readable date/time. */
-			$value = sprintf( __( '%s ago', 'elementor-pro' ), human_time_diff( strtotime( get_post()->{$date_type} ) ) );
+			$value = sprintf( esc_html__( '%s ago', 'elementor-pro' ), human_time_diff( strtotime( get_post()->{$date_type} ) ) );
 		} else {
 			switch ( $format ) {
 				case 'default':

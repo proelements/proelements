@@ -5,6 +5,7 @@ use Elementor\Core\Base\Document;
 use Elementor\Core\Upgrade\Updater;
 use Elementor\Icons_Manager;
 use Elementor\Core\Upgrade\Upgrades as Core_Upgrades;
+use ElementorPro\License\API;
 use ElementorPro\Plugin;
 use Elementor\Modules\History\Revisions_Manager;
 
@@ -13,6 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Upgrades {
+
+	public static $typography_control_names = [
+		'typography', // The popover toggle ('starter_name').
+		'font_family',
+		'font_size',
+		'font_weight',
+		'text_transform',
+		'font_style',
+		'text_decoration',
+		'line_height',
+		'letter_spacing',
+	];
+
+	public static function _on_each_version( $updater ) {
+		self::_remove_remote_info_api_data();
+	}
 
 	public static function _v_1_3_0() {
 		global $wpdb;
@@ -673,6 +690,17 @@ class Upgrades {
 		return Core_Upgrades::recalc_usage_data( $updater );
 	}
 
+	public static function _v_3_5_0_price_list( $updater ) {
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_copy_title_styles_to_new_price_controls' ],
+				'control_ids' => [],
+			],
+		];
+
+		return self::_update_widget_settings( 'price-list', $updater, $changes );
+	}
+
 	/**
 	 * $changes is an array of arrays in the following format:
 	 * [
@@ -1034,5 +1062,49 @@ class Upgrades {
 		}
 
 		return $element;
+	}
+
+	/**
+	 * Copy Title Styles to New Price Controls
+	 *
+	 * Copy the values from the  Price List widget's Title Style controls to new Price Style controls.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param $element
+	 * @param $args
+	 * @return mixed
+	 */
+	public static function _copy_title_styles_to_new_price_controls( $element, $args ) {
+		if ( empty( $element['widgetType'] ) || $args['widget_id'] !== $element['widgetType'] ) {
+			return $element;
+		}
+
+		if ( ! empty( $element['settings']['heading_color'] ) ) {
+			$element['settings']['price_color'] = $element['settings']['heading_color'];
+
+			$args['do_update'] = true;
+		}
+
+		$old_control_prefix = 'heading_typography_';
+		$new_control_prefix = 'price_typography_';
+
+		foreach ( self::$typography_control_names as $control_name ) {
+			if ( ! empty( $element['settings'][ $old_control_prefix . $control_name ] ) ) {
+				$element['settings'][ $new_control_prefix . $control_name ] = $element['settings'][ $old_control_prefix . $control_name ];
+
+				$args['do_update'] = true;
+			}
+		}
+
+		return $element;
+	}
+
+	public static function _remove_remote_info_api_data() {
+		global $wpdb;
+
+		$key = API::TRANSIENT_KEY_PREFIX;
+
+		return $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '{$key}%';" ); // phpcs:ignore
 	}
 }

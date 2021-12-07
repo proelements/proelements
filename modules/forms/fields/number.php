@@ -17,7 +17,7 @@ class Number extends Field_Base {
 	}
 
 	public function get_name() {
-		return __( 'Number', 'elementor-pro' );
+		return esc_html__( 'Number', 'elementor-pro' );
 	}
 
 	public function render( $item, $item_index, $form ) {
@@ -30,7 +30,9 @@ class Number extends Field_Base {
 			$form->add_render_attribute( 'input' . $item_index, 'max', esc_attr( $item['field_max'] ) );
 		}
 
-		echo '<input ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
+		?>
+			<input <?php $form->print_render_attribute_string( 'input' . $item_index ); ?> >
+		<?php
 	}
 
 	/**
@@ -48,7 +50,7 @@ class Number extends Field_Base {
 		$field_controls = [
 			'field_min' => [
 				'name' => 'field_min',
-				'label' => __( 'Min. Value', 'elementor-pro' ),
+				'label' => esc_html__( 'Min. Value', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -59,7 +61,7 @@ class Number extends Field_Base {
 			],
 			'field_max' => [
 				'name' => 'field_max',
-				'label' => __( 'Max. Value', 'elementor-pro' ),
+				'label' => esc_html__( 'Max. Value', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -77,11 +79,11 @@ class Number extends Field_Base {
 	public function validation( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {
 
 		if ( ! empty( $field['field_max'] ) && $field['field_max'] < (int) $field['value'] ) {
-			$ajax_handler->add_error( $field['id'], sprintf( __( 'The value must be less than or equal to %s', 'elementor-pro' ), $field['field_max'] ) );
+			$ajax_handler->add_error( $field['id'], sprintf( esc_html__( 'The value must be less than or equal to %s', 'elementor-pro' ), $field['field_max'] ) );
 		}
 
 		if ( ! empty( $field['field_min'] ) && $field['field_min'] > (int) $field['value'] ) {
-			$ajax_handler->add_error( $field['id'], sprintf( __( 'The value must be greater than or equal %s', 'elementor-pro' ), $field['field_min'] ) );
+			$ajax_handler->add_error( $field['id'], sprintf( esc_html__( 'The value must be greater than or equal %s', 'elementor-pro' ), $field['field_min'] ) );
 		}
 	}
 

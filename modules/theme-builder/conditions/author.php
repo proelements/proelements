@@ -22,7 +22,7 @@ class Author extends Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'Author Archive', 'elementor-pro' );
+		return esc_html__( 'Author Archive', 'elementor-pro' );
 	}
 
 	public function check( $args = null ) {

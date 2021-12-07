@@ -40,25 +40,26 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 				do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
 
 				// Meta data.
-				echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
+				echo wc_get_formatted_cart_item_data( $cart_item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 			</div>
 
 			<div class="elementor-menu-cart__product-price product-price" data-title="<?php esc_attr_e( 'Price', 'elementor-pro' ); ?>">
-				<?php echo apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key ); ?>
+				<?php echo apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '<span class="product-quantity">%s &times;</span> %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 
 			<div class="elementor-menu-cart__product-remove product-remove">
-				<?php
-				echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
-					'<a href="%s" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s"></a>',
-					esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-					__( 'Remove this item', 'elementor-pro' ),
-					esc_attr( $product_id ),
-					esc_attr( $cart_item_key ),
-					esc_attr( $_product->get_sku() )
-				), $cart_item_key );
-				?>
+				<?php foreach ( [ 'elementor_remove_from_cart_button', 'remove_from_cart_button' ] as $class ) {
+					echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						'<a href="%s" class="%s" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s"></a>',
+						esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+						$class,
+						__( 'Remove this item', 'elementor-pro' ),
+						esc_attr( $product_id ),
+						esc_attr( $cart_item_key ),
+						esc_attr( $_product->get_sku() )
+					), $cart_item_key );
+				} ?>
 			</div>
 		</div>
 		<?php
@@ -83,14 +84,15 @@ if ( empty( $cart_items ) ) { ?>
 	</div>
 
 	<div class="elementor-menu-cart__subtotal">
-		<strong><?php echo __( 'Subtotal', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?>:</strong> <?php echo WC()->cart->get_cart_subtotal(); ?>
+		<strong><?php echo esc_html__( 'Subtotal', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?>:</strong>
+		<?php echo WC()->cart->get_cart_subtotal(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
 	<div class="elementor-menu-cart__footer-buttons">
 		<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="elementor-button elementor-button--view-cart elementor-size-md">
-			<span class="elementor-button-text"><?php echo __( 'View cart', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?></span>
+			<span class="elementor-button-text"><?php echo esc_html__( 'View cart', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?></span>
 		</a>
 		<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="elementor-button elementor-button--checkout elementor-size-md">
-			<span class="elementor-button-text"><?php echo __( 'Checkout', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?></span>
+			<span class="elementor-button-text"><?php echo esc_html__( 'Checkout', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n ?></span>
 		</a>
 	</div>
 	<?php

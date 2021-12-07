@@ -6,8 +6,8 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use ElementorPro\Modules\QueryControl\Module as Query_Module;
 use Elementor\Repeater;
-use ElementorPro\Core\Utils;
 use Elementor\Group_Control_Typography;
+use Elementor\Utils;
 use ElementorPro\Core\Utils as Pro_Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ class Sitemap extends Base {
 	}
 
 	public function get_title() {
-		return __( 'Sitemap', 'elementor-pro' );
+		return esc_html__( 'Sitemap', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -42,7 +42,7 @@ class Sitemap extends Base {
 		$this->start_controls_section(
 			'sitemap_section',
 			[
-				'label' => __( 'Sitemap', 'elementor-pro' ),
+				'label' => esc_html__( 'Sitemap', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -67,7 +67,7 @@ class Sitemap extends Base {
 		$this->start_controls_section(
 			'sitemap_query_section',
 			[
-				'label' => __( 'Additional Options', 'elementor-pro' ),
+				'label' => esc_html__( 'Additional Options', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -75,12 +75,12 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_exclude',
 			[
-				'label' => __( 'Exclude', 'elementor-pro' ),
+				'label' => esc_html__( 'Exclude', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
 				'options' => [
-					'current_post' => __( 'Current Post', 'elementor-pro' ),
-					'manual_selection' => __( 'Manual Selection', 'elementor-pro' ),
+					'current_post' => esc_html__( 'Current Post', 'elementor-pro' ),
+					'manual_selection' => esc_html__( 'Manual Selection', 'elementor-pro' ),
 				],
 				'label_block' => true,
 			]
@@ -89,7 +89,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_exclude_ids',
 			[
-				'label' => __( 'Search & Select', 'elementor-pro' ),
+				'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 				'type' => Query_Module::QUERY_CONTROL_ID,
 				'options' => [],
 				'label_block' => true,
@@ -106,10 +106,10 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_password_protected',
 			[
-				'label' => __( 'Protected Posts', 'elementor-pro' ),
+				'label' => esc_html__( 'Protected Posts', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor-pro' ),
-				'label_on' => __( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
 			]
 		);
 
@@ -120,7 +120,7 @@ class Sitemap extends Base {
 		$this->add_responsive_control(
 			'sitemap_columns',
 			[
-				'label' => __( 'Columns', 'elementor-pro' ),
+				'label' => esc_html__( 'Columns', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '4',
 				'tablet_default' => '2',
@@ -142,7 +142,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_title_tag',
 			[
-				'label' => __( 'Title HTML Tag', 'elementor-pro' ),
+				'label' => esc_html__( 'Title HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -162,7 +162,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_add_nofollow',
 			[
-				'label' => __( 'Add nofollow', 'elementor-pro' ),
+				'label' => esc_html__( 'Add nofollow', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 			]
 		);
@@ -171,7 +171,7 @@ class Sitemap extends Base {
 	private function register_post_type_controls() {
 		$supported_taxonomies = [];
 
-		$public_types = Utils::get_public_post_types();
+		$public_types = Pro_Utils::get_public_post_types();
 
 		foreach ( $public_types as $type => $title ) {
 			$taxonomies = get_object_taxonomies( $type, 'objects' );
@@ -188,12 +188,12 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_type_selector',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'post_type',
 				'options' => [
-					'post_type' => __( 'Post Type', 'elementor-pro' ),
-					'taxonomy' => __( 'Taxonomy', 'elementor-pro' ),
+					'post_type' => esc_html__( 'Post Type', 'elementor-pro' ),
+					'taxonomy' => esc_html__( 'Taxonomy', 'elementor-pro' ),
 				],
 			]
 		);
@@ -201,7 +201,7 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_source_post_type',
 			[
-				'label' => __( 'Source', 'elementor-pro' ),
+				'label' => esc_html__( 'Source', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'page',
 				'options' => $public_types,
@@ -214,7 +214,7 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_source_taxonomy',
 			[
-				'label' => __( 'Source', 'elementor-pro' ),
+				'label' => esc_html__( 'Source', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'category',
 				'options' => $supported_taxonomies,
@@ -227,7 +227,7 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -235,14 +235,14 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_orderby_post_type',
 			[
-				'label' => __( 'Order By', 'elementor-pro' ),
+				'label' => esc_html__( 'Order By', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'post_date',
 				'options' => [
-					'post_date' => __( 'Date', 'elementor-pro' ),
-					'post_title' => __( 'Title', 'elementor-pro' ),
-					'menu_order' => __( 'Menu Order', 'elementor-pro' ),
-					'rand' => __( 'Random', 'elementor-pro' ),
+					'post_date' => esc_html__( 'Date', 'elementor-pro' ),
+					'post_title' => esc_html__( 'Title', 'elementor-pro' ),
+					'menu_order' => esc_html__( 'Menu Order', 'elementor-pro' ),
+					'rand' => esc_html__( 'Random', 'elementor-pro' ),
 				],
 				'condition' => [
 					'sitemap_type_selector' => 'post_type',
@@ -253,12 +253,12 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_orderby_taxonomy',
 			[
-				'label' => __( 'Order By', 'elementor-pro' ),
+				'label' => esc_html__( 'Order By', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'name',
 				'options' => [
-					'id' => __( 'ID', 'elementor-pro' ),
-					'name' => __( 'Name', 'elementor-pro' ),
+					'id' => esc_html__( 'ID', 'elementor-pro' ),
+					'name' => esc_html__( 'Name', 'elementor-pro' ),
 				],
 				'condition' => [
 					'sitemap_type_selector' => 'taxonomy',
@@ -269,12 +269,12 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_order',
 			[
-				'label' => __( 'Order', 'elementor-pro' ),
+				'label' => esc_html__( 'Order', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'desc',
 				'options' => [
-					'asc' => __( 'ASC', 'elementor-pro' ),
-					'desc' => __( 'DESC', 'elementor-pro' ),
+					'asc' => esc_html__( 'ASC', 'elementor-pro' ),
+					'desc' => esc_html__( 'DESC', 'elementor-pro' ),
 				],
 			]
 		);
@@ -282,7 +282,7 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_hide_empty',
 			[
-				'label' => __( 'Hide Empty', 'elementor-pro' ),
+				'label' => esc_html__( 'Hide Empty', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'condition' => [
@@ -294,7 +294,7 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_hierarchical',
 			[
-				'label' => __( 'Hierarchical View', 'elementor-pro' ),
+				'label' => esc_html__( 'Hierarchical View', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 			]
@@ -303,11 +303,11 @@ class Sitemap extends Base {
 		$repeater->add_control(
 			'sitemap_depth',
 			[
-				'label' => __( 'Depth', 'elementor-pro' ),
+				'label' => esc_html__( 'Depth', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '0',
 				'options' => [
-					'0' => __( 'All', 'elementor-pro' ),
+					'0' => esc_html__( 'All', 'elementor-pro' ),
 					'1' => 1,
 					'2' => 2,
 					'3' => 3,
@@ -330,12 +330,12 @@ class Sitemap extends Base {
 				'default' => [
 					[
 						'sitemap_type_selector' => 'post_type',
-						'sitemap_title' => __( 'Pages', 'elementor-pro' ),
+						'sitemap_title' => esc_html__( 'Pages', 'elementor-pro' ),
 						'sitemap_source_post_type' => 'page',
 					],
 					[
 						'sitemap_type_selector' => 'taxonomy',
-						'sitemap_title' => __( 'Categories', 'elementor-pro' ),
+						'sitemap_title' => esc_html__( 'Categories', 'elementor-pro' ),
 						'sitemap_source_taxonomy' => 'category',
 					],
 				],
@@ -348,7 +348,7 @@ class Sitemap extends Base {
 		$this->start_controls_section(
 			'section_sitemap_style',
 			[
-				'label' => __( 'List', 'elementor-pro' ),
+				'label' => esc_html__( 'List', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -356,7 +356,7 @@ class Sitemap extends Base {
 		$this->add_responsive_control(
 			'sitemap_list_indent',
 			[
-				'label' => __( 'Indent', 'elementor-pro' ),
+				'label' => esc_html__( 'Indent', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -374,7 +374,7 @@ class Sitemap extends Base {
 		$this->add_responsive_control(
 			'sitemap_section_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -386,7 +386,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_title_style',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -395,7 +395,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_title_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -421,7 +421,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_list_style',
 			[
-				'label' => __( 'List Item', 'elementor-pro' ),
+				'label' => esc_html__( 'List Item', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -430,7 +430,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_list_item_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -456,7 +456,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_bullet_style',
 			[
-				'label' => __( 'Bullet', 'elementor-pro' ),
+				'label' => esc_html__( 'Bullet', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -465,7 +465,7 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_bullet_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -480,24 +480,24 @@ class Sitemap extends Base {
 		$this->add_control(
 			'sitemap_list_item_bullet_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'disc',
 				'options' => [
 					'disc' => [
-						'title' => __( 'Disc', 'elementor-pro' ),
+						'title' => esc_html__( 'Disc', 'elementor-pro' ),
 						'icon' => 'eicon-circle',
 					],
 					'circle' => [
-						'title' => __( 'Circle', 'elementor-pro' ),
+						'title' => esc_html__( 'Circle', 'elementor-pro' ),
 						'icon' => 'eicon-circle-o',
 					],
 					'square' => [
-						'title' => __( 'Square', 'elementor-pro' ),
+						'title' => esc_html__( 'Square', 'elementor-pro' ),
 						'icon' => 'eicon-square',
 					],
 					'none' => [
-						'title' => __( 'None', 'elementor-pro' ),
+						'title' => esc_html__( 'None', 'elementor-pro' ),
 						'icon' => 'eicon-ban',
 					],
 				],
@@ -542,9 +542,12 @@ class Sitemap extends Base {
 			$this->add_render_attribute( 'a', 'rel', 'nofollow' );
 		}
 
-		echo '<div ' . $this->get_render_attribute_string( 'wrapper' ) . '>';
+		echo '<div ';
+		$this->print_render_attribute_string( 'wrapper' );
+		echo '>';
 		foreach ( $settings['sitemap_items'] as $sitemap_item ) {
-			echo $this->render_sitemap_item( $sitemap_item, $title_tag, $posts_query );
+			// PHPCS - `render_sitemap_item` is safe.
+			echo $this->render_sitemap_item( $sitemap_item, $title_tag, $posts_query ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</div>';
 	}
@@ -616,11 +619,11 @@ class Sitemap extends Base {
 			$items_html .= $this->sitemap_html_post_types( $item_type, $hierarchical, $max_depth, $query_args );
 		}
 
-		$title = empty( $title ) ? '' : sprintf( '<%s %s>%s</%1$s>', Pro_Utils::validate_html_tag( $title_tag ), $this->get_render_attribute_string( $title_tag . $item_type ), $title );
+		$title = empty( $title ) ? '' : sprintf( '<%s %s>%s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->get_render_attribute_string( $title_tag . $item_type ), $title );
 
 		$html = sprintf( '<div %s>%s', $this->get_render_attribute_string( 'section' . $item_type ), $title );
 		if ( empty( $items_html ) ) {
-			$html .= sprintf( '<span %s>%s</span>', $this->get_render_attribute_string( 'list' . $item_type ), __( 'None', 'elementor-pro' ) );
+			$html .= sprintf( '<span %s>%s</span>', $this->get_render_attribute_string( 'list' . $item_type ), esc_html__( 'None', 'elementor-pro' ) );
 		} else {
 			$html .= sprintf( '<ul %s>%s</ul>', $this->get_render_attribute_string( 'list' . $item_type ), $items_html );
 		}

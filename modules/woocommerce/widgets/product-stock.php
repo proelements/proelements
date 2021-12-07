@@ -15,7 +15,7 @@ class Product_Stock extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Product Stock', 'elementor-pro' );
+		return esc_html__( 'Product Stock', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -31,7 +31,7 @@ class Product_Stock extends Base_Widget {
 		$this->start_controls_section(
 			'section_product_stock_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -40,7 +40,7 @@ class Product_Stock extends Base_Widget {
 			'wc_style_warning',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
+				'raw' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -48,7 +48,7 @@ class Product_Stock extends Base_Widget {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .stock' => 'color: {{VALUE}}',
@@ -60,7 +60,7 @@ class Product_Stock extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'text_typography',
-				'label' => __( 'Typography', 'elementor-pro' ),
+				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .stock',
 			]
 		);
@@ -76,7 +76,8 @@ class Product_Stock extends Base_Widget {
 			return;
 		}
 
-		echo wc_get_stock_html( $product );
+		// PHPCS - the method wc_get_stock_html is safe.
+		echo wc_get_stock_html( $product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_plain_content() {}

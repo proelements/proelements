@@ -17,7 +17,7 @@ class Fontello extends Icon_Set_Base {
 	}
 
 	public function get_type() {
-		return __( 'Fontello', 'elementor-pro' );
+		return esc_html__( 'Fontello', 'elementor-pro' );
 	}
 
 	public function is_valid() {

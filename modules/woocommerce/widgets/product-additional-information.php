@@ -15,7 +15,7 @@ class Product_Additional_Information extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Additional Information', 'elementor-pro' );
+		return esc_html__( 'Additional Information', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -25,17 +25,17 @@ class Product_Additional_Information extends Base_Widget {
 	protected function register_controls() {
 
 		$this->start_controls_section( 'section_additional_info_style', [
-			'label' => __( 'General', 'elementor-pro' ),
+			'label' => esc_html__( 'General', 'elementor-pro' ),
 			'tab' => Controls_Manager::TAB_STYLE,
 		] );
 
 		$this->add_control(
 			'show_heading',
 			[
-				'label' => __( 'Heading', 'elementor-pro' ),
+				'label' => esc_html__( 'Heading', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'render_type' => 'ui',
 				'return_value' => 'yes',
 				'default' => 'yes',
@@ -46,7 +46,7 @@ class Product_Additional_Information extends Base_Widget {
 		$this->add_control(
 			'heading_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} h2' => 'color: {{VALUE}}',
@@ -61,7 +61,7 @@ class Product_Additional_Information extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'label' => __( 'Typography', 'elementor-pro' ),
+				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} h2',
 				'condition' => [
 					'show_heading!' => '',
@@ -72,7 +72,7 @@ class Product_Additional_Information extends Base_Widget {
 		$this->add_control(
 			'content_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .shop_attributes' => 'color: {{VALUE}}',
@@ -85,7 +85,7 @@ class Product_Additional_Information extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography',
-				'label' => __( 'Typography', 'elementor-pro' ),
+				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .shop_attributes',
 			]
 		);

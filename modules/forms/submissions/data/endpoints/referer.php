@@ -1,7 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Forms\Submissions\Data\Endpoints;
 
-use ElementorPro\Data\Base\Endpoint;
+use Elementor\Data\Base\Endpoint;
 use ElementorPro\Modules\Forms\Submissions\Database\Query;
 
 if ( ! defined( 'ABSPATH' ) ) {

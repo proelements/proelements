@@ -16,7 +16,7 @@ class ACF_Image extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'ACF', 'elementor-pro' ) . ' ' . __( 'Image Field', 'elementor-pro' );
+		return esc_html__( 'ACF', 'elementor-pro' ) . ' ' . esc_html__( 'Image Field', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -85,7 +85,7 @@ class ACF_Image extends Data_Tag {
 		$this->add_control(
 			'fallback',
 			[
-				'label' => __( 'Fallback', 'elementor-pro' ),
+				'label' => esc_html__( 'Fallback', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 			]
 		);

@@ -102,16 +102,16 @@ class Module extends Module_Base {
 
 		add_action( 'wp_footer', function () {
 			$this->print_snippets( Custom_Code_Metabox::OPTION_LOCATION_BODY_END );
-		} );
+		}, 21 /* After 'wp_print_footer_scripts' */ );
 	}
 
 	private function register_custom_post_type() {
 		$labels = [
-			'name' => __( 'Custom Code', 'elementor-pro' ),
-			'singular_name' => __( 'Custom Code', 'elementor-pro' ),
-			'add_new' => __( 'Add new', 'elementor-pro' ),
-			'add_new_item' => __( 'New code', 'elementor-pro' ),
-			'edit_item' => __( 'Edit code', 'elementor-pro' ),
+			'name' => esc_html__( 'Custom Code', 'elementor-pro' ),
+			'singular_name' => esc_html__( 'Custom Code', 'elementor-pro' ),
+			'add_new' => esc_html__( 'Add new', 'elementor-pro' ),
+			'add_new_item' => esc_html__( 'New code', 'elementor-pro' ),
+			'edit_item' => esc_html__( 'Edit code', 'elementor-pro' ),
 		];
 
 		register_post_type( self::CPT, [
@@ -156,7 +156,7 @@ class Module extends Module_Base {
 					__( 'Custom code submitted.', 'elementor-pro' ),
 					sprintf(
 						__( 'Custom code scheduled for: %1$s.', 'elementor-pro' ),
-						'<strong>' . date_i18n( __( 'M j, Y @ G:i', 'elementor-pro' ), strtotime( $post->post_date ) ) . '</strong>'
+						'<strong>' . date_i18n( esc_html__( 'M j, Y @ G:i', 'elementor-pro' ), strtotime( $post->post_date ) ) . '</strong>'
 					),
 					__( 'Custom code draft updated.', 'elementor-pro' ),
 				];
@@ -285,7 +285,7 @@ class Module extends Module_Base {
 	}
 
 	private function add_admin_menu() {
-		$menu_title = __( 'Custom Code', 'elementor-pro' );
+		$menu_title = esc_html__( 'Custom Code', 'elementor-pro' );
 		add_submenu_page(
 			Settings::PAGE_ID,
 			$menu_title,
@@ -317,10 +317,10 @@ class Module extends Module_Base {
 			/** @var Source_Local $source */
 			$source = Plugin::elementor()->templates_manager->get_source( 'local' );
 
-			return $source->maybe_render_blank_state( $which, [
+			$source->maybe_render_blank_state( $which, [
 				'post_type' => self::DOCUMENT_TYPE,
 				'cpt' => self::CPT,
-				'description' => __( 'Add pixels, meta tags and any other scripts to your site.<br /><a target="_blank" href="https://go.elementor.com/wp-dash-custom-code">Learn more about adding custom code</a>', 'elementor-pro' ),
+				'description' => esc_html__( 'Add pixels, meta tags and any other scripts to your site.', 'elementor-pro' ) . sprintf( '<br><a target="_blank" href="https://go.elementor.com/wp-dash-custom-code">%s</a>', esc_html__( 'Learn more about adding custom code', 'elementor-pro' ) ),
 				'href' => esc_url( admin_url( '/post-new.php?post_type=' . self::CPT ) ),
 			] );
 		}
@@ -328,9 +328,9 @@ class Module extends Module_Base {
 
 	private function manage_posts_columns( $columns ) {
 		$new = [
-			self::ADDITIONAL_COLUMN_INSTANCES => __( 'Instances', 'elementor-pro' ),
-			Custom_Code_Metabox::FIELD_LOCATION => __( 'Location', 'elementor-pro' ),
-			Custom_Code_Metabox::FIELD_PRIORITY => __( 'Priority', 'elementor-pro' ),
+			self::ADDITIONAL_COLUMN_INSTANCES => esc_html__( 'Instances', 'elementor-pro' ),
+			Custom_Code_Metabox::FIELD_LOCATION => esc_html__( 'Location', 'elementor-pro' ),
+			Custom_Code_Metabox::FIELD_PRIORITY => esc_html__( 'Priority', 'elementor-pro' ),
 		];
 
 		// Insert after 'author'.
@@ -353,12 +353,12 @@ class Module extends Module_Base {
 				}
 			}
 
-			echo $value;
+			echo esc_html( $value );
 		} else if ( self::ADDITIONAL_COLUMN_INSTANCES === $column_name ) {
 			/** @var Conditions_Manager $conditions_manager */
 			$conditions_manager = Plugin::instance()->modules_manager->get_modules( 'theme-builder' )->get_conditions_manager();
 
-			echo implode( ', ', $conditions_manager->get_document_instances( $post_id ) );
+			echo esc_html( implode( ', ', $conditions_manager->get_document_instances( $post_id ) ) );
 		}
 	}
 

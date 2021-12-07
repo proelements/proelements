@@ -28,12 +28,14 @@ class Elementor_Library extends \WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
-		echo $args['before_widget'];
+		// PHPCS - Theme arg
+		echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( ! empty( $instance['title'] ) ) {
 			/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 			$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
-			echo $args['before_title'] . $title . $args['after_title'];
+			// PHPCS - Theme arg
+			echo $args['before_title'] . esc_html( $title ) . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		if ( ! empty( $instance['template_id'] ) && 'publish' === get_post_status( $instance['template_id'] ) ) {
@@ -41,14 +43,16 @@ class Elementor_Library extends \WP_Widget {
 
 			add_filter( 'elementor/frontend/builder_content_data', [ $this, 'filter_content_data' ] );
 
-			echo Plugin::elementor()->frontend->get_builder_content_for_display( $instance['template_id'] );
+			// PHPCS - the main content
+			echo Plugin::elementor()->frontend->get_builder_content_for_display( $instance['template_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			remove_filter( 'elementor/frontend/builder_content_data', [ $this, 'filter_content_data' ] );
 
 			unset( $this->sidebar_id );
 		}
 
-		echo $args['after_widget'];
+		// PHPCS - Theme arg
+		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -88,7 +92,8 @@ class Elementor_Library extends \WP_Widget {
 		$templates = Module::get_templates();
 
 		if ( ! $templates ) {
-			echo Module::empty_templates_message();
+			// PHPCS - the method empty_templates_message is safe.
+			echo Module::empty_templates_message(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			return;
 		}
@@ -101,13 +106,16 @@ class Elementor_Library extends \WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'template_id' ) ); ?>"><?php esc_attr_e( 'Choose Template', 'elementor-pro' ); ?>:</label>
 			<select class="widefat elementor-widget-template-select" id="<?php echo esc_attr( $this->get_field_id( 'template_id' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'template_id' ) ); ?>">
-				<option value="">— <?php _e( 'Select', 'elementor-pro' ); ?> —</option>
+				<option value="">— <?php echo esc_html__( 'Select', 'elementor-pro' ); ?> —</option>
 				<?php
 				foreach ( $templates as $template ) :
-					$selected = selected( $template['template_id'], $instance['template_id'] );
 					?>
-					<option value="<?php echo $template['template_id']; ?>" <?php echo $selected; ?> data-type="<?php echo esc_attr( $template['type'] ); ?>">
-						<?php echo $template['title']; ?> (<?php echo $template['type']; ?>)
+					<option
+						value="<?php echo esc_html( $template['template_id'] ); ?>"
+						<?php selected( $template['template_id'], $instance['template_id'] ); ?>
+						data-type="<?php echo esc_attr( $template['type'] ); ?>"
+					>
+						<?php echo esc_html( $template['title'] ); ?> (<?php echo esc_html( $template['type'] ); ?>)
 					</option>
 				<?php endforeach; ?>
 			</select>
@@ -121,8 +129,12 @@ class Elementor_Library extends \WP_Widget {
 				$style = '';
 			}
 			?>
-			<a target="_blank" class="elementor-edit-template"<?php echo $style; ?> href="<?php echo esc_url( add_query_arg( 'elementor', '', get_permalink( $instance['template_id'] ) ) ); ?>">
-				<i class="eicon-pencil"></i> <?php echo __( 'Edit Template', 'elementor-pro' ); ?>
+			<a
+				target="_blank"
+				class="elementor-edit-template"<?php echo $style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				href="<?php echo esc_url( add_query_arg( 'elementor', '', get_permalink( $instance['template_id'] ) ) ); ?>"
+			>
+				<i class="eicon-pencil"></i> <?php echo esc_html__( 'Edit Template', 'elementor-pro' ); ?>
 			</a>
 		</p>
 		<?php

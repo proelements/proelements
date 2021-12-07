@@ -25,7 +25,7 @@ class Internal_URL extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Internal URL', 'elementor-pro' );
+		return esc_html__( 'Internal URL', 'elementor-pro' );
 	}
 
 	public function get_panel_template() {
@@ -57,18 +57,18 @@ class Internal_URL extends Data_Tag {
 
 	protected function register_controls() {
 		$this->add_control( 'type', [
-			'label' => __( 'Type', 'elementor-pro' ),
+			'label' => esc_html__( 'Type', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'post' => __( 'Content', 'elementor-pro' ),
-				'taxonomy' => __( 'Taxonomy', 'elementor-pro' ),
-				'attachment' => __( 'Media', 'elementor-pro' ),
-				'author' => __( 'Author', 'elementor-pro' ),
+				'post' => esc_html__( 'Content', 'elementor-pro' ),
+				'taxonomy' => esc_html__( 'Taxonomy', 'elementor-pro' ),
+				'attachment' => esc_html__( 'Media', 'elementor-pro' ),
+				'author' => esc_html__( 'Author', 'elementor-pro' ),
 			],
 		] );
 
 		$this->add_control( 'post_id', [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => QueryModule::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -85,7 +85,7 @@ class Internal_URL extends Data_Tag {
 		] );
 
 		$this->add_control( 'taxonomy_id', [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => QueryModule::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -99,7 +99,7 @@ class Internal_URL extends Data_Tag {
 		] );
 
 		$this->add_control( 'attachment_id', [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => QueryModule::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,
@@ -113,7 +113,7 @@ class Internal_URL extends Data_Tag {
 		] );
 
 		$this->add_control( 'author_id', [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => QueryModule::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,

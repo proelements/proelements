@@ -18,7 +18,7 @@ class Archive_Products extends Products {
 	}
 
 	public function get_title() {
-		return __( 'Archive Products', 'elementor-pro' );
+		return esc_html__( 'Archive Products', 'elementor-pro' );
 	}
 
 	public function get_categories() {
@@ -68,7 +68,7 @@ class Archive_Products extends Products {
 				'wc_notice_wc_not_supported',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => __( 'Looks like you are using WooCommerce, while your theme does not support it. Please consider switching themes.', 'elementor-pro' ),
+					'raw' => esc_html__( 'Looks like you are using WooCommerce, while your theme does not support it. Please consider switching themes.', 'elementor-pro' ),
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
 				]
 			);
@@ -78,7 +78,7 @@ class Archive_Products extends Products {
 			'wc_notice_use_customizer',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'To change the Products Archive’s layout, go to Appearance > Customize.', 'elementor-pro' ),
+				'raw' => esc_html__( 'To change the Products Archive’s layout, go to Appearance > Customize.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -87,7 +87,7 @@ class Archive_Products extends Products {
 			'wc_notice_wrong_data',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'The editor preview might look different from the live site. Please make sure to check the frontend.', 'elementor-pro' ),
+				'raw' => esc_html__( 'The editor preview might look different from the live site. Please make sure to check the frontend.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -118,16 +118,16 @@ class Archive_Products extends Products {
 		$this->start_controls_section(
 			'section_advanced',
 			[
-				'label' => __( 'Advanced', 'elementor-pro' ),
+				'label' => esc_html__( 'Advanced', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'nothing_found_message',
 			[
-				'label' => __( 'Nothing Found Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
-				'default' => __( 'It seems we can\'t find what you\'re looking for.', 'elementor-pro' ),
+				'default' => esc_html__( 'It seems we can\'t find what you\'re looking for.', 'elementor-pro' ),
 			]
 		);
 
@@ -137,7 +137,7 @@ class Archive_Products extends Products {
 			'section_nothing_found_style',
 			[
 				'tab' => Controls_Manager::TAB_STYLE,
-				'label' => __( 'Nothing Found Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
 				'condition' => [
 					'nothing_found_message!' => '',
 				],
@@ -147,7 +147,7 @@ class Archive_Products extends Products {
 		$this->add_control(
 			'nothing_found_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,

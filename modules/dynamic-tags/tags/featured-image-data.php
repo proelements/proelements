@@ -28,7 +28,7 @@ class Featured_Image_Data extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Featured Image Data', 'elementor-pro' );
+		return esc_html__( 'Featured Image Data', 'elementor-pro' );
 	}
 
 	private function get_attacment() {
@@ -80,16 +80,16 @@ class Featured_Image_Data extends Tag {
 		$this->add_control(
 			'attachment_data',
 			[
-				'label' => __( 'Data', 'elementor-pro' ),
+				'label' => esc_html__( 'Data', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'title',
 				'options' => [
-					'title' => __( 'Title', 'elementor-pro' ),
-					'alt' => __( 'Alt', 'elementor-pro' ),
-					'caption' => __( 'Caption', 'elementor-pro' ),
-					'description' => __( 'Description', 'elementor-pro' ),
-					'src' => __( 'File URL', 'elementor-pro' ),
-					'href' => __( 'Attachment URL', 'elementor-pro' ),
+					'title' => esc_html__( 'Title', 'elementor-pro' ),
+					'alt' => esc_html__( 'Alt', 'elementor-pro' ),
+					'caption' => esc_html__( 'Caption', 'elementor-pro' ),
+					'description' => esc_html__( 'Description', 'elementor-pro' ),
+					'src' => esc_html__( 'File URL', 'elementor-pro' ),
+					'href' => esc_html__( 'Attachment URL', 'elementor-pro' ),
 				],
 			]
 		);

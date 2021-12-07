@@ -25,14 +25,14 @@ class Convertkit extends Integration_Base {
 	}
 
 	public function get_label() {
-		return __( 'ConvertKit', 'elementor-pro' );
+		return esc_html__( 'ConvertKit', 'elementor-pro' );
 	}
 
 	public function register_settings_section( $widget ) {
 		$widget->start_controls_section(
 			'section_convertkit',
 			[
-				'label' => __( 'ConvertKit', 'elementor-pro' ),
+				'label' => esc_html__( 'ConvertKit', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -52,7 +52,7 @@ class Convertkit extends Integration_Base {
 		$widget->add_control(
 			'convertkit_api_key_source',
 			[
-				'label' => __( 'API Key', 'elementor-pro' ),
+				'label' => esc_html__( 'API Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'options' => [
@@ -66,9 +66,9 @@ class Convertkit extends Integration_Base {
 		$widget->add_control(
 			'convertkit_custom_api_key',
 			[
-				'label' => __( 'Custom API Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom API Key', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'description' => __( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
+				'description' => esc_html__( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
 				'condition' => [
 					'convertkit_api_key_source' => 'custom',
 				],
@@ -78,7 +78,7 @@ class Convertkit extends Integration_Base {
 		$widget->add_control(
 			'convertkit_form',
 			[
-				'label' => __( 'Form', 'elementor-pro' ),
+				'label' => esc_html__( 'Form', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [],
 				'render_type' => 'none',
@@ -105,7 +105,7 @@ class Convertkit extends Integration_Base {
 		$widget->add_control(
 			'convertkit_tags',
 			[
-				'label' => __( 'Tags', 'elementor-pro' ),
+				'label' => esc_html__( 'Tags', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'options' => [],
 				'multiple' => true,
@@ -136,7 +136,7 @@ class Convertkit extends Integration_Base {
 		$subscriber = $this->create_subscriber_object( $record );
 
 		if ( ! $subscriber ) {
-			throw new \Exception( __( 'Integration requires an email field', 'elementor-pro' ) );
+			throw new \Exception( esc_html__( 'Integration requires an email field', 'elementor-pro' ) );
 		}
 
 		if ( 'default' === $form_settings['convertkit_api_key_source'] ) {
@@ -240,16 +240,21 @@ class Convertkit extends Integration_Base {
 			},
 			'fields' => [
 				self::OPTION_NAME_API_KEY => [
-					'label' => __( 'API Key', 'elementor-pro' ),
+					'label' => esc_html__( 'API Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						'desc' => sprintf( __( 'To integrate with our forms you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-pro' ), 'https://app.convertkit.com/account/edit' ),
+						'desc' => sprintf(
+							/* translators: 1: Link open tag, 2: Link closing tag. */
+							esc_html__( 'To integrate with our forms you need an %1$sAPI Key%2$s.', 'elementor-pro' ),
+							'<a href="https://app.convertkit.com/account/edit" target="_blank">',
+							'</a>'
+						),
 					],
 				],
 				'validate_api_data' => [
 					'field_args' => [
 						'type' => 'raw_html',
-						'html' => sprintf( '<button data-action="%s" data-nonce="%s" class="button elementor-button-spinner" id="elementor_pro_convertkit_api_key_button">%s</button>', self::OPTION_NAME_API_KEY . '_validate', wp_create_nonce( self::OPTION_NAME_API_KEY ), __( 'Validate API Key', 'elementor-pro' ) ),
+						'html' => sprintf( '<button data-action="%s" data-nonce="%s" class="button elementor-button-spinner" id="elementor_pro_convertkit_api_key_button">%s</button>', self::OPTION_NAME_API_KEY . '_validate', wp_create_nonce( self::OPTION_NAME_API_KEY ), esc_html__( 'Validate API Key', 'elementor-pro' ) ),
 					],
 				],
 			],

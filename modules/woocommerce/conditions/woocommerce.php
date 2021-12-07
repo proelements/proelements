@@ -19,11 +19,11 @@ class Woocommerce extends ThemeBuilder\Conditions\Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'WooCommerce', 'elementor-pro' );
+		return esc_html__( 'WooCommerce', 'elementor-pro' );
 	}
 
 	public function get_all_label() {
-		return __( 'Entire Shop', 'elementor-pro' );
+		return esc_html__( 'Entire Shop', 'elementor-pro' );
 	}
 
 	public function register_sub_conditions() {

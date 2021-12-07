@@ -12,10 +12,16 @@ $location_manager = Module::instance()->get_locations_manager();
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<?php echo Utils::get_meta_viewport( 'theme-builder' ); ?>
+	<?php
+		// PHPCS - not a user input.
+		echo Utils::get_meta_viewport( 'theme-builder' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<title>
-			<?php echo wp_get_document_title(); ?>
+			<?php
+				// PHPCS - already escaped by WordPress.
+				echo wp_get_document_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
 		</title>
 	<?php endif; ?>
 	<?php wp_head(); ?>

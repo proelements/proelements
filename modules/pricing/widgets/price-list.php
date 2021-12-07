@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Pricing\Widgets;
 
+use Elementor\Utils;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
@@ -20,7 +21,7 @@ class Price_List extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Price List', 'elementor-pro' );
+		return esc_html__( 'Price List', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -35,7 +36,7 @@ class Price_List extends Base_Widget {
 		$this->start_controls_section(
 			'section_list',
 			[
-				'label' => __( 'List', 'elementor-pro' ),
+				'label' => esc_html__( 'List', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -45,7 +46,7 @@ class Price_List extends Base_Widget {
 		$repeater->add_control(
 			'price',
 			[
-				'label' => __( 'Price', 'elementor-pro' ),
+				'label' => esc_html__( 'Price', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -56,7 +57,7 @@ class Price_List extends Base_Widget {
 		$repeater->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'label_block' => 'true',
@@ -69,7 +70,7 @@ class Price_List extends Base_Widget {
 		$repeater->add_control(
 			'item_description',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => '',
 				'dynamic' => [
@@ -81,7 +82,7 @@ class Price_List extends Base_Widget {
 		$repeater->add_control(
 			'image',
 			[
-				'label' => __( 'Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [],
 				'dynamic' => [
@@ -93,7 +94,7 @@ class Price_List extends Base_Widget {
 		$repeater->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
 				'default' => [ 'url' => '#' ],
 				'dynamic' => [
@@ -105,25 +106,25 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'price_list',
 			[
-				'label' => __( 'List Items', 'elementor-pro' ),
+				'label' => esc_html__( 'List Items', 'elementor-pro' ),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'title' => __( 'First item on the list', 'elementor-pro' ),
-						'item_description' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
+						'title' => esc_html__( 'First item on the list', 'elementor-pro' ),
+						'item_description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'price' => '$20',
 						'link' => [ 'url' => '#' ],
 					],
 					[
-						'title' => __( 'Second item on the list', 'elementor-pro' ),
-						'item_description' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
+						'title' => esc_html__( 'Second item on the list', 'elementor-pro' ),
+						'item_description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'price' => '$9',
 						'link' => [ 'url' => '#' ],
 					],
 					[
-						'title' => __( 'Third item on the list', 'elementor-pro' ),
-						'item_description' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
+						'title' => esc_html__( 'Third item on the list', 'elementor-pro' ),
+						'item_description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'price' => '$32',
 						'link' => [ 'url' => '#' ],
 					],
@@ -136,7 +137,7 @@ class Price_List extends Base_Widget {
 		$this->start_controls_section(
 			'section_list_style',
 			[
-				'label' => __( 'List', 'elementor-pro' ),
+				'label' => esc_html__( 'List', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -144,7 +145,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'heading__title',
 			[
-				'label' => __( 'Title & Price', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -152,7 +153,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'heading_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_PRIMARY,
@@ -175,9 +176,43 @@ class Price_List extends Base_Widget {
 		);
 
 		$this->add_control(
+			'price_title',
+			[
+				'label' => __( 'Price', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'price_color',
+			[
+				'label' => __( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-price-list-price' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'price_typography',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .elementor-price-list-price',
+			]
+		);
+
+		$this->add_control(
 			'heading_item_description',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -186,7 +221,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'description_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -211,7 +246,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'heading_separator',
 			[
-				'label' => __( 'Separator', 'elementor-pro' ),
+				'label' => esc_html__( 'Separator', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -220,14 +255,14 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'separator_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'solid' => __( 'Solid', 'elementor-pro' ),
-					'dotted' => __( 'Dotted', 'elementor-pro' ),
-					'dashed' => __( 'Dashed', 'elementor-pro' ),
-					'double' => __( 'Double', 'elementor-pro' ),
-					'none' => __( 'None', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'none' => esc_html__( 'None', 'elementor-pro' ),
 				],
 				'default' => 'dotted',
 				'render_type' => 'template',
@@ -240,7 +275,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'separator_weight',
 			[
-				'label' => __( 'Weight', 'elementor-pro' ),
+				'label' => esc_html__( 'Weight', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -262,7 +297,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'separator_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -279,7 +314,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'separator_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -300,7 +335,7 @@ class Price_List extends Base_Widget {
 		$this->start_controls_section(
 			'section_image_style',
 			[
-				'label' => __( 'Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -317,7 +352,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -329,7 +364,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'image_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -353,7 +388,7 @@ class Price_List extends Base_Widget {
 		$this->start_controls_section(
 			'section_item_style',
 			[
-				'label' => __( 'Item', 'elementor-pro' ),
+				'label' => esc_html__( 'Item', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -362,7 +397,7 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'row_gap',
 			[
-				'label' => __( 'Rows Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Rows Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -386,19 +421,19 @@ class Price_List extends Base_Widget {
 		$this->add_control(
 			'vertical_align',
 			[
-				'label' => __( 'Vertical Align', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Align', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-middle',
 					],
 					'bottom' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -469,10 +504,16 @@ class Price_List extends Base_Widget {
 				$this->add_render_attribute( $title_repeater_setting_key, 'class', 'elementor-price-list-title' );
 				$this->add_render_attribute( $description_repeater_setting_key, 'class', 'elementor-price-list-description' );
 				?>
-				<?php echo $this->render_item_header( $item ); ?>
+				<?php
+					// PHPCS - the method render_item_header is safe.
+					echo $this->render_item_header( $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				?>
 				<?php if ( ! empty( $item['image']['url'] ) ) : ?>
 					<div class="elementor-price-list-image">
-					<?php echo $this->render_image( $item, $settings ); ?>
+					<?php
+						// PHPCS - the method render_image is safe.
+						echo $this->render_image( $item, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
 				</div>
 				<?php endif; ?>
 
@@ -480,21 +521,28 @@ class Price_List extends Base_Widget {
 				<?php if ( ! empty( $item['title'] ) || ! empty( $item['price'] ) ) : ?>
 					<div class="elementor-price-list-header">
 					<?php if ( ! empty( $item['title'] ) ) : ?>
-						<span <?php echo $this->get_render_attribute_string( $title_repeater_setting_key ); ?>><?php echo $item['title']; ?></span>
+						<span <?php $this->print_render_attribute_string( $title_repeater_setting_key ); ?>>
+							<?php $this->print_unescaped_setting( 'title', 'price_list', $index ); ?>
+						</span>
 					<?php endif; ?>
 						<?php if ( 'none' != $settings['separator_style'] ) : ?>
 							<span class="elementor-price-list-separator"></span>
 						<?php endif; ?>
 						<?php if ( ! empty( $item['price'] ) ) : ?>
-							<span class="elementor-price-list-price"><?php echo $item['price']; ?></span>
+							<span class="elementor-price-list-price"><?php $this->print_unescaped_setting( 'price', 'price_list', $index ); ?></span>
 						<?php endif; ?>
 				</div>
 				<?php endif; ?>
 					<?php if ( ! empty( $item['item_description'] ) ) : ?>
-						<p <?php echo $this->get_render_attribute_string( $description_repeater_setting_key ); ?>><?php echo $item['item_description']; ?></p>
+						<p <?php $this->print_render_attribute_string( $description_repeater_setting_key ); ?>>
+							<?php $this->print_unescaped_setting( 'item_description', 'price_list', $index ); ?>
+						</p>
 					<?php endif; ?>
 			</div>
-				<?php echo $this->render_item_footer( $item ); ?>
+				<?php
+					// PHPCS - the method render_item_footer is safe.
+					echo $this->render_item_footer( $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				?>
 			<?php endif; ?>
 		<?php endforeach; ?>
 

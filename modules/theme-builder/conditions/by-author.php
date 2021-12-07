@@ -22,7 +22,7 @@ class By_Author extends Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'By Author', 'elementor-pro' );
+		return esc_html__( 'By Author', 'elementor-pro' );
 	}
 
 	public function check( $args = null ) {

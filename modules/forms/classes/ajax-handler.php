@@ -29,17 +29,18 @@ class Ajax_Handler {
 	const SUBSCRIBER_ALREADY_EXISTS = 'subscriber_already_exists';
 
 	public static function is_form_submitted() {
-		return wp_doing_ajax() && isset( $_POST['action'] ) && 'elementor_pro_forms_send_form' === $_POST['action'];
+		// PHPCS - No nonce is required, all visitors may send the form.
+		return wp_doing_ajax() && isset( $_POST['action'] ) && 'elementor_pro_forms_send_form' === $_POST['action']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 
 	public static function get_default_messages() {
 		return [
-			self::SUCCESS => __( 'The form was sent successfully.', 'elementor-pro' ),
-			self::ERROR => __( 'An error occurred.', 'elementor-pro' ),
-			self::FIELD_REQUIRED => __( 'This field is required.', 'elementor-pro' ),
-			self::INVALID_FORM => __( 'There\'s something wrong. The form is invalid.', 'elementor-pro' ),
-			self::SERVER_ERROR => __( 'Server error. Form not sent.', 'elementor-pro' ),
-			self::SUBSCRIBER_ALREADY_EXISTS => __( 'Subscriber already exists.', 'elementor-pro' ),
+			self::SUCCESS => esc_html__( 'The form was sent successfully.', 'elementor-pro' ),
+			self::ERROR => esc_html__( 'An error occurred.', 'elementor-pro' ),
+			self::FIELD_REQUIRED => esc_html__( 'This field is required.', 'elementor-pro' ),
+			self::INVALID_FORM => esc_html__( 'There\'s something wrong. The form is invalid.', 'elementor-pro' ),
+			self::SERVER_ERROR => esc_html__( 'Server error. Form not sent.', 'elementor-pro' ),
+			self::SUBSCRIBER_ALREADY_EXISTS => esc_html__( 'Subscriber already exists.', 'elementor-pro' ),
 		];
 	}
 
@@ -53,16 +54,17 @@ class Ajax_Handler {
 
 		$default_messages = self::get_default_messages();
 
-		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : __( 'Unknown', 'elementor-pro' );
+		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : esc_html__( 'Unknown', 'elementor-pro' );
 	}
 
 	public function ajax_send_form() {
+		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		// $post_id that holds the form settings.
-		$post_id = $_POST['post_id'];
+		$post_id = $post_data['post_id'];
 
 		// $queried_id the post for dynamic values data.
-		if ( isset( $_POST['queried_id'] ) ) {
-			$queried_id = $_POST['queried_id'];
+		if ( isset( $post_data['queried_id'] ) ) {
+			$queried_id = $post_data['queried_id'];
 		} else {
 			$queried_id = $post_id;
 		}
@@ -70,7 +72,7 @@ class Ajax_Handler {
 		// Make the post as global post for dynamic values.
 		Plugin::elementor()->db->switch_to_post( $queried_id );
 
-		$form_id = $_POST['form_id'];
+		$form_id = $post_data['form_id'];
 
 		$elementor = Plugin::elementor();
 		$document = $elementor->documents->get( $post_id );
@@ -115,7 +117,7 @@ class Ajax_Handler {
 				->send();
 		}
 
-		$record = new Form_Record( $_POST['form_fields'], $form );
+		$record = new Form_Record( $post_data['form_fields'], $form );
 
 		if ( ! $record->validate( $this ) ) {
 			$this
@@ -132,7 +134,7 @@ class Ajax_Handler {
 
 		$module = Module::instance();
 
-		$actions = $module->get_form_actions();
+		$actions = $module->actions_registrar->get();
 		$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
 
 		/**
@@ -159,9 +161,13 @@ class Ajax_Handler {
 			} catch ( \Exception $e ) {
 				$exception = $e;
 
+				// Add an admin error.
 				if ( ! in_array( $exception->getMessage(), $this->messages['admin_error'], true ) ) {
 					$this->add_admin_error_message( "{$action->get_label()} {$exception->getMessage()}" );
 				}
+
+				// Add a user error.
+				$this->add_error_message( $this->get_default_message( self::ERROR, $this->current_form['settings'] ) );
 			}
 
 			$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
@@ -251,8 +257,8 @@ class Ajax_Handler {
 		}
 
 		$error_msg = implode( '<br>', $this->messages['error'] );
-		if ( current_user_can( 'edit_post', $_POST['post_id'] ) && ! empty( $this->messages['admin_error'] ) ) {
-			$this->add_admin_error_message( __( 'This Message is not visible for site visitors.', 'elementor-pro' ) );
+		if ( current_user_can( 'edit_post', $_POST['post_id'] ) && ! empty( $this->messages['admin_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$this->add_admin_error_message( esc_html__( 'This Message is not visible for site visitors.', 'elementor-pro' ) );
 			$error_msg .= '<div class="elementor-forms-admin-errors">' . implode( '<br>', $this->messages['admin_error'] ) . '</div>';
 		}
 

@@ -15,7 +15,7 @@ class Current_Date_Time extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Current Date Time', 'elementor-pro' );
+		return esc_html__( 'Current Date Time', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -30,16 +30,16 @@ class Current_Date_Time extends Tag {
 		$this->add_control(
 			'date_format',
 			[
-				'label' => __( 'Date Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Date Format', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => __( 'Default', 'elementor-pro' ),
-					'' => __( 'None', 'elementor-pro' ),
+					'default' => esc_html__( 'Default', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
 					'F j, Y' => gmdate( 'F j, Y' ),
 					'Y-m-d' => gmdate( 'Y-m-d' ),
 					'm/d/Y' => gmdate( 'm/d/Y' ),
 					'd/m/Y' => gmdate( 'd/m/Y' ),
-					'custom' => __( 'Custom', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => 'default',
 			]
@@ -48,11 +48,11 @@ class Current_Date_Time extends Tag {
 		$this->add_control(
 			'time_format',
 			[
-				'label' => __( 'Time Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Time Format', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => __( 'Default', 'elementor-pro' ),
-					'' => __( 'None', 'elementor-pro' ),
+					'default' => esc_html__( 'Default', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
 					'g:i a' => gmdate( 'g:i a' ),
 					'g:i A' => gmdate( 'g:i A' ),
 					'H:i' => gmdate( 'H:i' ),
@@ -67,9 +67,9 @@ class Current_Date_Time extends Tag {
 		$this->add_control(
 			'custom_format',
 			[
-				'label' => __( 'Custom Format', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Format', 'elementor-pro' ),
 				'default' => get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
-				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-pro' ) ),
+				'description' => sprintf( '<a href="https://go.elementor.com/wordpress-date-time/" target="_blank">%s</a>', esc_html__( 'Documentation on date and time formatting', 'elementor-pro' ) ),
 				'condition' => [
 					'date_format' => 'custom',
 				],

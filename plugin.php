@@ -5,7 +5,6 @@ use ElementorPro\Core\Admin\Admin;
 use ElementorPro\Core\App\App;
 use ElementorPro\Core\Connect;
 use Elementor\Core\Responsive\Files\Frontend as FrontendFile;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Utils;
 use ElementorPro\Core\Editor\Editor;
 use ElementorPro\Core\Modules_Manager;
@@ -58,6 +57,10 @@ class Plugin {
 	 */
 	public $app;
 
+	/**
+	 * @var License\Admin
+	 */
+	public $license_admin;
 
 	private $classes_aliases = [
 		'ElementorPro\Modules\PanelPostsControl\Module' => 'ElementorPro\Modules\QueryControl\Module',
@@ -76,7 +79,7 @@ class Plugin {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Something went wrong.', 'elementor-pro' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'elementor-pro' ), '1.0.0' );
 	}
 
 	/**
@@ -87,7 +90,7 @@ class Plugin {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Something went wrong.', 'elementor-pro' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'elementor-pro' ), '1.0.0' );
 	}
 
 	/**
@@ -199,6 +202,7 @@ class Plugin {
 			'nonce' => wp_create_nonce( 'elementor-pro-frontend' ),
 			'urls' => [
 				'assets' => apply_filters( 'elementor_pro/frontend/assets_url', ELEMENTOR_PRO_ASSETS_URL ),
+				'rest' => get_rest_url(),
 			],
 		];
 
@@ -425,7 +429,7 @@ class Plugin {
 
 		if ( is_admin() ) {
 			$this->admin = new Admin();
-
+			$this->license_admin = new License\Admin();
 			require_once __DIR__ . '/updater/updater.php';
 			$config = array(
 				'slug'               => 'pro-elements.php',
@@ -451,7 +455,7 @@ class Plugin {
 	}
 
 	final public static function get_title() {
-		return __( 'Pro Elements', 'elementor-pro' );
+		return esc_html__( 'Pro Elements', 'elementor-pro' );
 	}
 }
 

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Query_Failed_Response  extends \WP_Error {
 	public function __construct( $query_error_message, $message = null ) {
 		if ( ! $message ) {
-			$message = __( 'Something went wrong.', 'elementor-pro' );
+			$message = esc_html__( 'Something went wrong.', 'elementor-pro' );
 		}
 
 		$this->log_error( $query_error_message );

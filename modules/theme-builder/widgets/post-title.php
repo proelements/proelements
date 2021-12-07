@@ -13,7 +13,7 @@ class Post_Title extends Title_Widget_Base {
 	}
 
 	public function get_title() {
-		return __( 'Post Title', 'elementor-pro' );
+		return esc_html__( 'Post Title', 'elementor-pro' );
 	}
 
 	public function get_icon() {

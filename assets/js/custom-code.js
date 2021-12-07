@@ -1,4 +1,4 @@
-/*! pro-elements - v3.3.1 - 20-06-2021 */
+/*! pro-elements - v3.5.1 - 10-11-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -209,6 +209,23 @@ function _arrayLikeToArray(arr, len) {
 }
 
 module.exports = _arrayLikeToArray;
+module.exports.default = module.exports, module.exports.__esModule = true;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime-corejs2/helpers/arrayWithHoles.js":
+/*!************************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/helpers/arrayWithHoles.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _Array$isArray = __webpack_require__(/*! @babel/runtime-corejs2/core-js/array/is-array */ "../node_modules/@babel/runtime-corejs2/core-js/array/is-array.js");
+
+function _arrayWithHoles(arr) {
+  if (_Array$isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
 module.exports.default = module.exports, module.exports.__esModule = true;
 
 /***/ }),
@@ -629,6 +646,66 @@ module.exports.default = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
+/***/ "../node_modules/@babel/runtime-corejs2/helpers/iterableToArrayLimit.js":
+/*!******************************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/helpers/iterableToArrayLimit.js ***!
+  \******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _Symbol = __webpack_require__(/*! @babel/runtime-corejs2/core-js/symbol */ "../node_modules/@babel/runtime-corejs2/core-js/symbol.js");
+
+var _Symbol$iterator = __webpack_require__(/*! @babel/runtime-corejs2/core-js/symbol/iterator */ "../node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js");
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr && (typeof _Symbol !== "undefined" && arr[_Symbol$iterator] || arr["@@iterator"]);
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+module.exports.default = module.exports, module.exports.__esModule = true;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime-corejs2/helpers/nonIterableRest.js":
+/*!*************************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/helpers/nonIterableRest.js ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+module.exports = _nonIterableRest;
+module.exports.default = module.exports, module.exports.__esModule = true;
+
+/***/ }),
+
 /***/ "../node_modules/@babel/runtime-corejs2/helpers/nonIterableSpread.js":
 /*!***************************************************************************!*\
   !*** ../node_modules/@babel/runtime-corejs2/helpers/nonIterableSpread.js ***!
@@ -749,6 +826,29 @@ function _setPrototypeOf(o, p) {
 }
 
 module.exports = _setPrototypeOf;
+module.exports.default = module.exports, module.exports.__esModule = true;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js":
+/*!***********************************************************************!*\
+  !*** ../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayWithHoles = __webpack_require__(/*! ./arrayWithHoles.js */ "../node_modules/@babel/runtime-corejs2/helpers/arrayWithHoles.js");
+
+var iterableToArrayLimit = __webpack_require__(/*! ./iterableToArrayLimit.js */ "../node_modules/@babel/runtime-corejs2/helpers/iterableToArrayLimit.js");
+
+var unsupportedIterableToArray = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "../node_modules/@babel/runtime-corejs2/helpers/unsupportedIterableToArray.js");
+
+var nonIterableRest = __webpack_require__(/*! ./nonIterableRest.js */ "../node_modules/@babel/runtime-corejs2/helpers/nonIterableRest.js");
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
 module.exports.default = module.exports, module.exports.__esModule = true;
 
 /***/ }),
@@ -2563,6 +2663,8 @@ var CustomCode = /*#__PURE__*/function (_elementorModules$Mod) {
       ReactDOM.render( /*#__PURE__*/_react.default.createElement(_conditionsModal.default, null), document.querySelector('.post-conditions'));
       this.addTipsyToFields();
       this.addDescription();
+      this.addLocationChangeHandler();
+      this.setOptionsPlacementVisibility('elementor_body_end' === jQuery('#location').val());
     }
   }, {
     key: "addTipsyToFields",
@@ -2581,6 +2683,21 @@ var CustomCode = /*#__PURE__*/function (_elementorModules$Mod) {
     value: function addDescription() {
       var description = '<p>' + __('Manage and create all of your custom code here.<br />Organize all of your custom code and incorporate code snippets in your site. Add tracking codes, meta titles, and other scripts. Set display conditions, locations, and priority all from one place.', 'elementor-pro') + '&nbsp;<a target="_blank" href="https://go.elementor.com/wp-dash-custom-code">' + __('Learn more', 'elementor-pro') + '</a>' + '</p>';
       jQuery(description).insertBefore('.wp-header-end');
+    }
+  }, {
+    key: "addLocationChangeHandler",
+    value: function addLocationChangeHandler() {
+      var _this2 = this;
+
+      jQuery('#location').on('change', function (e) {
+        _this2.setOptionsPlacementVisibility('elementor_body_end' === e.target.value);
+      });
+    }
+  }, {
+    key: "setOptionsPlacementVisibility",
+    value: function setOptionsPlacementVisibility(state) {
+      var $optionsPlacement = jQuery('.elementor-custom-code-options-placement');
+      $optionsPlacement.toggleClass('show', state);
     }
   }]);
   return CustomCode;
@@ -2606,35 +2723,31 @@ var _Object$defineProperty = __webpack_require__(/*! @babel/runtime-corejs2/core
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
 
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js");
+
 _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = void 0;
+exports.default = ConditionsModal;
 
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
 
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "../node_modules/@babel/runtime/regenerator/index.js"));
-
-var _values = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/values */ "../node_modules/@babel/runtime-corejs2/core-js/object/values.js"));
-
-var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/json/stringify */ "../node_modules/@babel/runtime-corejs2/core-js/json/stringify.js"));
 
 __webpack_require__(/*! core-js/modules/es6.array.map.js */ "../node_modules/core-js/modules/es6.array.map.js");
 
 __webpack_require__(/*! core-js/modules/es6.function.name.js */ "../node_modules/core-js/modules/es6.function.name.js");
 
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/extends */ "../node_modules/@babel/runtime-corejs2/helpers/extends.js"));
+var _values = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/object/values */ "../node_modules/@babel/runtime-corejs2/core-js/object/values.js"));
+
+var _stringify = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/json/stringify */ "../node_modules/@babel/runtime-corejs2/core-js/json/stringify.js"));
 
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/asyncToGenerator */ "../node_modules/@babel/runtime-corejs2/helpers/asyncToGenerator.js"));
 
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/classCallCheck */ "../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js"));
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/objectSpread2 */ "../node_modules/@babel/runtime-corejs2/helpers/objectSpread2.js"));
 
-var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createClass */ "../node_modules/@babel/runtime-corejs2/helpers/createClass.js"));
-
-var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/inherits */ "../node_modules/@babel/runtime-corejs2/helpers/inherits.js"));
-
-var _createSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/createSuper */ "../node_modules/@babel/runtime-corejs2/helpers/createSuper.js"));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/slicedToArray */ "../node_modules/@babel/runtime-corejs2/helpers/slicedToArray.js"));
 
 var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
 
@@ -2645,176 +2758,171 @@ var _conditionsConfig = _interopRequireDefault(__webpack_require__(/*! elementor
 /**
  * Publish metabox conditions ( 'Edit' modal ).
  */
-var ConditionsModal = /*#__PURE__*/function (_ModalProvider) {
-  (0, _inherits2.default)(ConditionsModal, _ModalProvider);
+function ConditionsModal() {
+  var _useState = (0, _react.useState)(false),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      showModal = _useState2[0],
+      setShowModal = _useState2[1],
+      _useState3 = (0, _react.useState)({
+    conditions: null,
+    instances: null
+  }),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      data = _useState4[0],
+      setData = _useState4[1],
+      isSavedOnce = (0, _react.useRef)(false),
+      post = elementorProAdmin.customCode.post,
+      elements = (0, _react.useMemo)(function () {
+    return {
+      $form: jQuery('#post'),
+      $formConditions: jQuery('<input />'),
+      $publishButton: jQuery('#publish'),
+      title: {
+        $label: jQuery('#title-prompt-text'),
+        $input: jQuery('#title')
+      }
+    };
+  }, []),
+      onPostSubmit = function onPostSubmit() {
+    var title = elements.title;
 
-  var _super = (0, _createSuper2.default)(ConditionsModal);
+    if (!title.$input.attr('value').length) {
+      title.$label.addClass('screen-reader-text');
+      title.$input.attr('value', __('Elementor Custom-Code #', 'elementor-pro') + elementorProAdmin.customCode.post.ID);
+    }
+  },
+      onPublishClick = function onPublishClick(e) {
+    if ('auto-draft' === post.post_status && !showModal && !isSavedOnce.current) {
+      e.preventDefault(); // Set default condition for new post.
 
-  function ConditionsModal(props) {
-    var _this;
+      // Set default condition for new post.
+      var conditions = [{
+        name: 'general',
+        sub: '',
+        subId: '',
+        type: 'include'
+      }];
+      setData(function (prevState) {
+        return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, prevState), {}, {
+          conditions: conditions
+        });
+      });
+      setShowModal(true);
+    }
+  },
+      onConditionsSaved = function onConditionsSaved(args) {
+    var conditions = args.conditions,
+        instances = (0, _values.default)(args.instances).join(','),
+        $form = elements.$form,
+        $formConditions = elements.$formConditions,
+        $publishButton = elements.$publishButton;
+    isSavedOnce.current = true;
+    setData(function (prevState) {
+      return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, prevState), {}, {
+        conditions: conditions,
+        instances: instances
+      });
+    }); // Temporary workaround for applying conditions for draft custom code post.
 
-    (0, _classCallCheck2.default)(this, ConditionsModal);
-    _this = _super.call(this, props);
-    _this.state.conditions = null;
-    _this.state.instances = null;
-    _this.isSavedOnce = false;
-    return _this;
-  }
+    // Temporary workaround for applying conditions for draft custom code post.
+    if ('auto-draft' === post.post_status || 'draft' === post.post_status) {
+      $formConditions.attr('type', 'hidden').attr('name', '_conditions').attr('value', (0, _stringify.default)(conditions)).appendTo($form);
+    }
 
-  (0, _createClass2.default)(ConditionsModal, [{
-    key: "componentDidMount",
-    value: function () {
-      var _componentDidMount = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var _this2 = this;
+    $publishButton.trigger('click');
+    setShowModal(false);
+  },
+      initData = /*#__PURE__*/function () {
+    var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+      var conditionsConfig;
+      return _regenerator.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _conditionsConfig.default.create();
 
-        return _regenerator.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                this.post = elementorProAdmin.customCode.post;
-                _context.next = 3;
-                return _conditionsConfig.default.create();
-
-              case 3:
-                this.conditionsConfig = _context.sent;
-                $e.data.get('site-editor/templates-conditions', {
-                  id: this.post.ID
-                }, {
-                  refresh: true
-                }).then(function (result) {
-                  // Since the 'state' format is different from db one.
-                  var conditions = (0, _values.default)(result.data).map(function (condition) {
-                    return {
-                      type: condition.type,
-                      name: condition.name,
-                      sub: condition.sub_name,
-                      subId: condition.sub_id
-                    };
-                  });
-
-                  _this2.setState({
+            case 2:
+              conditionsConfig = _context.sent;
+              $e.data.get('site-editor/templates-conditions', {
+                id: post.ID
+              }, {
+                refresh: true
+              }).then(function (result) {
+                // Since the 'state' format is different from db one.
+                var conditions = (0, _values.default)(result.data).map(function (condition) {
+                  return {
+                    type: condition.type,
+                    name: condition.name,
+                    sub: condition.sub_name,
+                    subId: condition.sub_id
+                  };
+                }),
+                    instances = (0, _values.default)(conditionsConfig.calculateInstances(conditions)).join(',');
+                setData(function (prevState) {
+                  return (0, _objectSpread2.default)((0, _objectSpread2.default)({}, prevState), {}, {
                     conditions: conditions,
-                    instances: (0, _values.default)(_this2.conditionsConfig.calculateInstances(conditions)).join(',')
+                    instances: instances
                   });
                 });
-                this.elements = {
-                  $form: jQuery('#post'),
-                  $formConditions: jQuery('<input />'),
-                  $publishButton: jQuery('#publish'),
-                  title: {
-                    $label: jQuery('#title-prompt-text'),
-                    $input: jQuery('#title')
-                  }
-                };
-                this.elements.$publishButton.on('click', this.onPublishClick.bind(this));
-                this.elements.$form.on('submit', this.onPostSubmit.bind(this));
+              });
 
-              case 8:
-              case "end":
-                return _context.stop();
-            }
+            case 4:
+            case "end":
+              return _context.stop();
           }
-        }, _callee, this);
-      }));
+        }
+      }, _callee);
+    }));
 
-      function componentDidMount() {
-        return _componentDidMount.apply(this, arguments);
-      }
+    return function initData() {
+      return _ref.apply(this, arguments);
+    };
+  }(),
+      bindEvents = function bindEvents() {
+    elements.$publishButton.on('click', onPublishClick);
+    elements.$form.on('submit', onPostSubmit);
+  };
 
-      return componentDidMount;
-    }()
-  }, {
-    key: "onPostSubmit",
-    value: function onPostSubmit() {
-      var title = this.elements.title;
+  (0, _react.useEffect)(function () {
+    initData();
+    bindEvents();
+  }, []);
 
-      if (!title.$input.attr('value').length) {
-        title.$label.addClass('screen-reader-text');
-        title.$input.attr('value', __('Elementor Custom-Code #', 'elementor-pro') + elementorProAdmin.customCode.post.ID);
-      }
-    }
-  }, {
-    key: "onPublishClick",
-    value: function onPublishClick(e) {
-      if ('auto-draft' === this.post.post_status && !this.state.show && !this.isSavedOnce) {
-        e.preventDefault(); // Set default condition for new post.
+  if (!post || !data.conditions) {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_appUi.Text, {
+      tag: "span"
+    }, __('Loading', 'elementor')), /*#__PURE__*/_react.default.createElement(_appUi.Icon, {
+      className: "spinner"
+    }));
+  }
 
-        this.setState({
-          conditions: [{
-            name: 'general',
-            sub: '',
-            subId: '',
-            type: 'include'
-          }]
-        });
-        this.showModal();
-      }
-    }
-  }, {
-    key: "onConditionsSaved",
-    value: function onConditionsSaved(args) {
-      this.isSavedOnce = true;
-      this.setState({
-        instances: (0, _values.default)(args.instances).join(','),
-        conditions: args.conditions
-      });
-    }
-  }, {
-    key: "onAfterSave",
-    value: function onAfterSave() {
-      var _this$elements = this.elements,
-          $form = _this$elements.$form,
-          $formConditions = _this$elements.$formConditions,
-          $publishButton = _this$elements.$publishButton; // Temporary workaround for applying conditions for draft custom code post.
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_appUi.Text, {
+    tag: "span",
+    className: "post-conditions-display"
+  }, /*#__PURE__*/_react.default.createElement("b", null, data.instances + ' ')), /*#__PURE__*/_react.default.createElement(_appUi.Button, {
+    onClick: function onClick() {
+      return setShowModal(true);
+    },
+    text: __('Edit', 'elementor'),
+    variant: "underlined"
+  }), /*#__PURE__*/_react.default.createElement(_appUi.ModalProvider, {
+    show: showModal,
+    setShow: setShowModal,
+    title: __('Publish Settings', 'elementor'),
+    icon: "eps-app__logo eicon-elementor"
+  }, /*#__PURE__*/_react.default.createElement(_appUi.CssGrid, {
+    columns: 1,
+    spacing: 700
+  }, /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement(_conditions.default, {
+    id: post.ID,
+    status: post.post_status,
+    conditions: data.conditions,
+    onConditionsSaved: onConditionsSaved,
+    onAfterSave: function onAfterSave() {}
+  })))));
+}
 
-      if ('auto-draft' === this.post.post_status || 'draft' === this.post.post_status) {
-        $formConditions.attr('type', 'hidden').attr('name', '_conditions').attr('value', (0, _stringify.default)(this.state.conditions)).appendTo($form);
-      }
-
-      $publishButton.trigger('click');
-      this.hideModal();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      if (!this.post || !this.state.conditions) {
-        return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_appUi.Text, {
-          tag: 'span'
-        }, __('Loading', 'elementor')), /*#__PURE__*/_react.default.createElement("span", {
-          className: "spinner"
-        }));
-      }
-
-      var modalProps = {
-        title: __('Publish Settings', 'elementor'),
-        icon: 'eps-app__logo eicon-elementor'
-      },
-          toggleButtonProps = {
-        text: __('Edit', 'elementor'),
-        variant: 'underlined'
-      };
-      return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("span", {
-        className: "post-conditions-display"
-      }, /*#__PURE__*/_react.default.createElement("b", null, this.state.instances)), "\xA0", /*#__PURE__*/_react.default.createElement(_appUi.Button, (0, _extends2.default)({}, toggleButtonProps, {
-        onClick: this.state.showModal
-      })), /*#__PURE__*/_react.default.createElement(_appUi.Modal, (0, _extends2.default)({
-        modalProps: this.state
-      }, modalProps), /*#__PURE__*/_react.default.createElement(_appUi.CssGrid, {
-        columns: 1,
-        spacing: 700
-      }, /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement(_conditions.default, {
-        id: this.post.ID,
-        status: this.post.post_status,
-        conditions: this.state.conditions,
-        onConditionsSaved: this.onConditionsSaved.bind(this),
-        onAfterSave: this.onAfterSave.bind(this)
-      })))));
-    }
-  }]);
-  return ConditionsModal;
-}(_appUi.ModalProvider);
-
-exports.default = ConditionsModal;
 ConditionsModal.propTypes = {
   children: PropTypes.object // Disable parent requirement.
 

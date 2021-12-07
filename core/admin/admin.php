@@ -157,15 +157,15 @@ class Admin extends App {
 				],
 			],
 			'rollback_pro' => [
-				'label' => __( 'Rollback Pro Version', 'elementor-pro' ),
+				'label' => esc_html__( 'Rollback Pro Version', 'elementor-pro' ),
 				'field_args' => [
 					'type' => 'raw_html',
 					'html' => sprintf(
-						$rollback_html . '<a data-placeholder-text="' . __( 'Reinstall', 'elementor-pro' ) . ' v{VERSION}" href="#" data-placeholder-url="%s" class="button elementor-button-spinner elementor-rollback-button">%s</a>',
+						$rollback_html . '<a data-placeholder-text="' . esc_html__( 'Reinstall', 'elementor-pro' ) . ' v{VERSION}" href="#" data-placeholder-url="%s" class="button elementor-button-spinner elementor-rollback-button">%s</a>',
 						wp_nonce_url( admin_url( 'admin-post.php?action=elementor_pro_rollback&version=VERSION' ), 'elementor_pro_rollback' ),
 						__( 'Reinstall', 'elementor-pro' )
 					),
-					'desc' => '<span style="color: red;">' . __( 'Warning: Please backup your database before making the rollback.', 'elementor-pro' ) . '</span>',
+					'desc' => '<span style="color: red;">' . esc_html__( 'Warning: Please backup your database before making the rollback.', 'elementor-pro' ) . '</span>',
 				],
 			],
 		] );
@@ -176,12 +176,12 @@ class Admin extends App {
 
 		$rollback_versions = $this->get_rollback_versions();
 		if ( empty( $_GET['version'] ) || ! in_array( $_GET['version'], $rollback_versions, true ) ) {
-			wp_die( __( 'Error occurred, The version selected is invalid. Try selecting different version.', 'elementor-pro' ) );
+			wp_die( esc_html__( 'Error occurred, The version selected is invalid. Try selecting different version.', 'elementor-pro' ) );
 		}
 
 		$package_url = API::get_plugin_package_url( $_GET['version'] );
 		if ( is_wp_error( $package_url ) ) {
-			wp_die( $package_url );
+			wp_die( $package_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		$plugin_slug = basename( ELEMENTOR_PRO__FILE__, '.php' );
@@ -195,7 +195,7 @@ class Admin extends App {
 
 		$rollback->run();
 
-		wp_die( '', __( 'Rollback to Previous Version', 'elementor-pro' ), [ 'response' => 200 ] );
+		wp_die( '', esc_html__( 'Rollback to Previous Version', 'elementor-pro' ), [ 'response' => 200 ] );
 	}
 
 	public function plugin_action_links( $links ) {
@@ -207,17 +207,17 @@ class Admin extends App {
 	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
 		if ( ELEMENTOR_PRO_PLUGIN_BASE === $plugin_file ) {
 			$plugin_slug = basename( ELEMENTOR_PRO__FILE__, '.php' );
-			$plugin_name = __( 'Elementor Pro', 'elementor-pro' );
+			$plugin_name = esc_html__( 'Elementor Pro', 'elementor-pro' );
 
 			$row_meta = [
 				'view-details' => sprintf( '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
 					esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' ) ),
 					/* translators: %s: Plugin name - Elementor Pro. */
-					esc_attr( sprintf( __( 'More information about %s', 'elementor-pro' ), $plugin_name ) ),
+					esc_attr( sprintf( esc_html__( 'More information about %s', 'elementor-pro' ), $plugin_name ) ),
 					esc_attr( $plugin_name ),
 					__( 'View details', 'elementor-pro' )
 				),
-				'changelog' => '<a href="https://go.elementor.com/pro-changelog/" title="' . esc_attr( __( 'View Elementor Pro Changelog', 'elementor-pro' ) ) . '" target="_blank">' . __( 'Changelog', 'elementor-pro' ) . '</a>',
+				'changelog' => '<a href="https://go.elementor.com/pro-changelog/" title="' . esc_attr( esc_html__( 'View Elementor Pro Changelog', 'elementor-pro' ) ) . '" target="_blank">' . esc_html__( 'Changelog', 'elementor-pro' ) . '</a>',
 			];
 
 			$plugin_meta = array_merge( $plugin_meta, $row_meta );
@@ -236,7 +236,7 @@ class Admin extends App {
 		$settings_url = Settings::get_url();
 
 		$categories['settings']['items']['integrations'] = [
-			'title' => __( 'Integrations', 'elementor-pro' ),
+			'title' => esc_html__( 'Integrations', 'elementor-pro' ),
 			'icon' => 'integration',
 			'url' => $settings_url . '#tab-integrations',
 			'keywords' => [ 'integrations', 'settings', 'typekit', 'facebook', 'recaptcha', 'mailchimp', 'drip', 'activecampaign', 'getresponse', 'convertkit', 'elementor' ],

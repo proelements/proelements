@@ -16,7 +16,7 @@ class Author_Info extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Author Info', 'elementor-pro' );
+		return esc_html__( 'Author Info', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -47,13 +47,13 @@ class Author_Info extends Tag {
 		$this->add_control(
 			'key',
 			[
-				'label' => __( 'Field', 'elementor-pro' ),
+				'label' => esc_html__( 'Field', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'description',
 				'options' => [
-					'description' => __( 'Bio', 'elementor-pro' ),
-					'email' => __( 'Email', 'elementor-pro' ),
-					'url' => __( 'Website', 'elementor-pro' ),
+					'description' => esc_html__( 'Bio', 'elementor-pro' ),
+					'email' => esc_html__( 'Email', 'elementor-pro' ),
+					'url' => esc_html__( 'Website', 'elementor-pro' ),
 				],
 			]
 		);

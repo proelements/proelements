@@ -63,7 +63,7 @@ class Activecampaign_Handler {
 		] );
 
 		$lists = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( ! empty( $results['body'] ) ) {

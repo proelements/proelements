@@ -15,7 +15,7 @@ class Product_Rating extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Product Rating', 'elementor-pro' );
+		return esc_html__( 'Product Rating', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -31,7 +31,7 @@ class Product_Rating extends Base_Widget {
 		$this->start_controls_section(
 			'section_product_rating_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -40,7 +40,7 @@ class Product_Rating extends Base_Widget {
 			'wc_style_warning',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
+				'raw' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -48,7 +48,7 @@ class Product_Rating extends Base_Widget {
 		$this->add_control(
 			'star_color',
 			[
-				'label' => __( 'Star Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Star Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .star-rating' => 'color: {{VALUE}}',
@@ -59,7 +59,7 @@ class Product_Rating extends Base_Widget {
 		$this->add_control(
 			'empty_star_color',
 			[
-				'label' => __( 'Empty Star Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Empty Star Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .star-rating::before' => 'color: {{VALUE}}',
@@ -70,7 +70,7 @@ class Product_Rating extends Base_Widget {
 		$this->add_control(
 			'link_color',
 			[
-				'label' => __( 'Link Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Link Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-review-link' => 'color: {{VALUE}}',
@@ -89,7 +89,7 @@ class Product_Rating extends Base_Widget {
 		$this->add_control(
 			'star_size',
 			[
-				'label' => __( 'Star Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Star Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => 'em',
@@ -110,7 +110,7 @@ class Product_Rating extends Base_Widget {
 		$this->add_control(
 			'space_between',
 			[
-				'label' => __( 'Space Between', 'elementor-pro' ),
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em' ],
 				'default' => [
@@ -138,23 +138,23 @@ class Product_Rating extends Base_Widget {
 		$this->add_responsive_control(
 			'alignment',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor-pro' ),
+						'title' => esc_html__( 'Justified', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],

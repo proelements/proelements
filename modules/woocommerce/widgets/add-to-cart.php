@@ -19,7 +19,7 @@ class Add_To_Cart extends Widget_Button {
 	}
 
 	public function get_title() {
-		return __( 'Custom Add To Cart', 'elementor-pro' );
+		return esc_html__( 'Custom Add To Cart', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -48,14 +48,14 @@ class Add_To_Cart extends Widget_Button {
 		$this->start_controls_section(
 			'section_product',
 			[
-				'label' => __( 'Product', 'elementor-pro' ),
+				'label' => esc_html__( 'Product', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'product_id',
 			[
-				'label' => __( 'Product', 'elementor-pro' ),
+				'label' => esc_html__( 'Product', 'elementor-pro' ),
 				'type' => Module::QUERY_CONTROL_ID,
 				'options' => [],
 				'label_block' => true,
@@ -71,18 +71,18 @@ class Add_To_Cart extends Widget_Button {
 		$this->add_control(
 			'show_quantity',
 			[
-				'label' => __( 'Show Quantity', 'elementor-pro' ),
+				'label' => esc_html__( 'Show Quantity', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor-pro' ),
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'description' => __( 'Please note that switching on this option will disable some of the design controls.', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'description' => esc_html__( 'Please note that switching on this option will disable some of the design controls.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'quantity',
 			[
-				'label' => __( 'Quantity', 'elementor-pro' ),
+				'label' => esc_html__( 'Quantity', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 1,
 				'condition' => [
@@ -108,8 +108,8 @@ class Add_To_Cart extends Widget_Button {
 		$this->update_control(
 			'text',
 			[
-				'default' => __( 'Add to Cart', 'elementor-pro' ),
-				'placeholder' => __( 'Add to Cart', 'elementor-pro' ),
+				'default' => esc_html__( 'Add to Cart', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Add to Cart', 'elementor-pro' ),
 			]
 		);
 
@@ -139,7 +139,8 @@ class Add_To_Cart extends Widget_Button {
 		if ( ! empty( $settings['product_id'] ) ) {
 			$product_id = $settings['product_id'];
 		} elseif ( wp_doing_ajax() ) {
-			$product_id = $_POST['post_id'];
+			// PHPCS - No nonce is required.
+			$product_id = $_POST['post_id']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		} else {
 			$product_id = get_queried_object_id();
 		}
@@ -184,7 +185,7 @@ class Add_To_Cart extends Widget_Button {
 			);
 
 		} elseif ( current_user_can( 'manage_options' ) ) {
-			$settings['text'] = __( 'Please set a valid product', 'elementor-pro' );
+			$settings['text'] = esc_html__( 'Please set a valid product', 'elementor-pro' );
 			$this->set_settings( $settings );
 		}
 
@@ -193,7 +194,7 @@ class Add_To_Cart extends Widget_Button {
 
 	private function render_form_button( $product ) {
 		if ( ! $product && current_user_can( 'manage_options' ) ) {
-			echo __( 'Please set a valid product', 'elementor-pro' );
+			echo esc_html__( 'Please set a valid product', 'elementor-pro' );
 
 			return;
 		}
@@ -213,7 +214,9 @@ class Add_To_Cart extends Widget_Button {
 		woocommerce_template_single_add_to_cart();
 		$form = ob_get_clean();
 		$form = str_replace( 'single_add_to_cart_button', 'single_add_to_cart_button elementor-button', $form );
-		echo $form;
+
+		// PHPCS - The HTML from 'woocommerce_template_single_add_to_cart' is safe.
+		echo $form; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		remove_filter( 'woocommerce_product_single_add_to_cart_text', $text_callback );
 		remove_filter( 'woocommerce_get_stock_html', '__return_empty_string' );

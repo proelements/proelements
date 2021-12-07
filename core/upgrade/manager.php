@@ -18,7 +18,11 @@ class Manager extends Upgrades_Manager {
 	}
 
 	public function get_plugin_label() {
-		return __( 'Elementor Pro', 'elementor-pro' );
+		return esc_html__( 'Elementor Pro', 'elementor-pro' );
+	}
+
+	public function get_updater_label() {
+		return esc_html__( 'Elementor Pro Data Updater', 'elementor-pro' );
 	}
 
 	public function get_new_version() {

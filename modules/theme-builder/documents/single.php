@@ -7,16 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Single extends Single_Base {
 
-	protected static function get_site_editor_type() {
+	public static function get_type() {
 		return 'single';
 	}
 
 	public static function get_title() {
-		return __( 'Single', 'elementor-pro' );
+		return esc_html__( 'Single', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Singles', 'elementor-pro' );
+		return esc_html__( 'Singles', 'elementor-pro' );
 	}
 
 	protected function get_remote_library_config() {

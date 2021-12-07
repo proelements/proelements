@@ -16,7 +16,7 @@ class Author_Profile_Picture extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Author Profile Picture', 'elementor-pro' );
+		return esc_html__( 'Author Profile Picture', 'elementor-pro' );
 	}
 
 	public function get_group() {

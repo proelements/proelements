@@ -8,8 +8,9 @@ use Elementor\Group_Control_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Icons_Manager;
+use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
-use ElementorPro\Core\Utils;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -22,7 +23,7 @@ class Table_Of_Contents extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Table of Contents', 'elementor-pro' );
+		return esc_html__( 'Table of Contents', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -37,31 +38,51 @@ class Table_Of_Contents extends Base_Widget {
 		return [ 'toc' ];
 	}
 
+	/**
+	 * Get Frontend Settings
+	 *
+	 * In the TOC widget, this implementation is used to pass a pre-rendered version of the icon to the front end,
+	 * which is required in case the FontAwesome SVG experiment is active.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @return array
+	 */
+	public function get_frontend_settings() {
+		$frontend_settings = parent::get_frontend_settings();
+
+		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) && ! empty( $frontend_settings['icon']['value'] ) ) {
+			$frontend_settings['icon']['rendered_tag'] = Icons_Manager::render_font_icon( $frontend_settings['icon'] );
+		}
+
+		return $frontend_settings;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'table_of_contents',
 			[
-				'label' => __( 'Table of Contents', 'elementor-pro' ),
+				'label' => esc_html__( 'Table of Contents', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
 				'label_block' => true,
-				'default' => __( 'Table of Contents', 'elementor-pro' ),
+				'default' => esc_html__( 'Table of Contents', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'html_tag',
 			[
-				'label' => __( 'HTML Tag', 'elementor-pro' ),
+				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h2' => 'H2',
@@ -79,14 +100,14 @@ class Table_Of_Contents extends Base_Widget {
 
 		$this->start_controls_tab( 'include',
 			[
-				'label' => __( 'Include', 'elementor-pro' ),
+				'label' => esc_html__( 'Include', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'headings_by_tags',
 			[
-				'label' => __( 'Anchors By Tags', 'elementor-pro' ),
+				'label' => esc_html__( 'Anchors By Tags', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
 				'default' => [ 'h2', 'h3', 'h4', 'h5', 'h6' ],
@@ -106,10 +127,10 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'container',
 			[
-				'label' => __( 'Container', 'elementor-pro' ),
+				'label' => esc_html__( 'Container', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'description' => __( 'This control confines the Table of Contents to heading elements under a specific container', 'elementor-pro' ),
+				'description' => esc_html__( 'This control confines the Table of Contents to heading elements under a specific container', 'elementor-pro' ),
 				'frontend_available' => true,
 			]
 		);
@@ -118,16 +139,16 @@ class Table_Of_Contents extends Base_Widget {
 
 		$this->start_controls_tab( 'exclude',
 			[
-				'label' => __( 'Exclude', 'elementor-pro' ),
+				'label' => esc_html__( 'Exclude', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'exclude_headings_by_selector',
 			[
-				'label' => __( 'Anchors By Selector', 'elementor-pro' ),
+				'label' => esc_html__( 'Anchors By Selector', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'description' => __( 'CSS selectors, in a comma-separated list', 'elementor-pro' ),
+				'description' => esc_html__( 'CSS selectors, in a comma-separated list', 'elementor-pro' ),
 				'default' => [],
 				'label_block' => true,
 				'frontend_available' => true,
@@ -141,12 +162,12 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'marker_view',
 			[
-				'label' => __( 'Marker View', 'elementor-pro' ),
+				'label' => esc_html__( 'Marker View', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'numbers',
 				'options' => [
-					'numbers' => __( 'Numbers', 'elementor-pro' ),
-					'bullets' => __( 'Bullets', 'elementor-pro' ),
+					'numbers' => esc_html__( 'Numbers', 'elementor-pro' ),
+					'bullets' => esc_html__( 'Bullets', 'elementor-pro' ),
 				],
 				'separator' => 'before',
 				'frontend_available' => true,
@@ -156,7 +177,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'icon',
 			[
-				'label' => __( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fas fa-circle',
@@ -189,14 +210,14 @@ class Table_Of_Contents extends Base_Widget {
 		$this->start_controls_section(
 			'additional_options',
 			[
-				'label' => __( 'Additional Options', 'elementor-pro' ),
+				'label' => esc_html__( 'Additional Options', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'word_wrap',
 			[
-				'label' => __( 'Word Wrap', 'elementor-pro' ),
+				'label' => esc_html__( 'Word Wrap', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'ellipsis',
 				'prefix_class' => 'elementor-toc--content-',
@@ -206,7 +227,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'minimize_box',
 			[
-				'label' => __( 'Minimize Box', 'elementor-pro' ),
+				'label' => esc_html__( 'Minimize Box', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'frontend_available' => true,
@@ -216,7 +237,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'expand_icon',
 			[
-				'label' => __( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fas fa-chevron-down',
@@ -245,7 +266,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'collapse_icon',
 			[
-				'label' => __( 'Minimize Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Minimize Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fas fa-chevron-up',
@@ -271,21 +292,33 @@ class Table_Of_Contents extends Base_Widget {
 			]
 		);
 
-		$breakpoints = Responsive::get_breakpoints();
+		// TODO: For Pro 3.6.0, convert this to the breakpoints utility method introduced in core 3.5.0.
+		$breakpoints = Plugin::elementor()->breakpoints->get_active_breakpoints();
+
+		$minimized_on_options = [];
+
+		foreach ( $breakpoints as $breakpoint_key => $breakpoint ) {
+			// This feature is meant for mobile screens.
+			if ( 'widescreen' === $breakpoint_key || 'laptop' === $breakpoint_key ) {
+				continue;
+			}
+
+			$minimized_on_options[ $breakpoint_key ] = sprintf(
+				/* translators: 1: `<` character, 2: Breakpoint value. */
+				esc_html__( '%1$s (%2$s %3$dpx)', 'elementor-pro' ),
+				$breakpoint->get_label(),
+				'<',
+				$breakpoint->get_value()
+			);
+		}
 
 		$this->add_control(
 			'minimized_on',
 			[
-				'label' => __( 'Minimized On', 'elementor-pro' ),
+				'label' => esc_html__( 'Minimized On', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'tablet',
-				'options' => [
-					/* translators: %d: Breakpoint number. */
-					'mobile' => sprintf( __( 'Mobile (< %dpx)', 'elementor-pro' ), $breakpoints['md'] ),
-					/* translators: %d: Breakpoint number. */
-					'tablet' => sprintf( __( 'Tablet (< %dpx)', 'elementor-pro' ), $breakpoints['lg'] ),
-					'none' => __( 'None', 'elementor-pro' ),
-				],
+				'options' => $minimized_on_options,
 				'prefix_class' => 'elementor-toc--minimized-on-',
 				'condition' => [
 					'minimize_box!' => '',
@@ -297,7 +330,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'hierarchical_view',
 			[
-				'label' => __( 'Hierarchical View', 'elementor-pro' ),
+				'label' => esc_html__( 'Hierarchical View', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'frontend_available' => true,
@@ -307,9 +340,9 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'collapse_subitems',
 			[
-				'label' => __( 'Collapse Subitems', 'elementor-pro' ),
+				'label' => esc_html__( 'Collapse Subitems', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'description' => __( 'The "Collapse" option should only be used if the Table of Contents is made sticky', 'elementor-pro' ),
+				'description' => esc_html__( 'The "Collapse" option should only be used if the Table of Contents is made sticky', 'elementor-pro' ),
 				'condition' => [
 					'hierarchical_view' => 'yes',
 				],
@@ -322,7 +355,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->start_controls_section(
 			'box_style',
 			[
-				'label' => __( 'Box', 'elementor-pro' ),
+				'label' => esc_html__( 'Box', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -330,7 +363,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'background_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -342,7 +375,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-border-color: {{VALUE}}',
@@ -351,9 +384,21 @@ class Table_Of_Contents extends Base_Widget {
 		);
 
 		$this->add_control(
+			'loader_color',
+			[
+				'label' => esc_html__( 'Loader Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					// Not using CSS var for BC, when not configured: the loader should get the color from the body tag.
+					'{{WRAPPER}} .elementor-toc__spinner' => 'color: {{VALUE}}; fill: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
 			'border_width',
 			[
-				'label' => __( 'Border Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-border-width: {{SIZE}}{{UNIT}}',
@@ -364,7 +409,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-border-radius: {{SIZE}}{{UNIT}}',
@@ -375,7 +420,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_responsive_control(
 			'padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-padding: {{SIZE}}{{UNIT}}',
@@ -386,7 +431,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_responsive_control(
 			'min_height',
 			[
-				'label' => __( 'Min Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'vh' ],
 				'range' => [
@@ -415,7 +460,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->start_controls_section(
 			'header_style',
 			[
-				'label' => __( 'Header', 'elementor-pro' ),
+				'label' => esc_html__( 'Header', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -423,7 +468,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'header_background_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--header-background-color: {{VALUE}}',
@@ -434,7 +479,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'header_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -459,7 +504,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'toggle_button_color',
 			[
-				'label' => __( 'Icon Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'condition' => [
 					'minimize_box' => 'yes',
@@ -473,7 +518,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'header_separator_width',
 			[
-				'label' => __( 'Separator Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Separator Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}}' => '--separator-width: {{SIZE}}{{UNIT}}',
@@ -486,7 +531,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->start_controls_section(
 			'list_style',
 			[
-				'label' => __( 'List', 'elementor-pro' ),
+				'label' => esc_html__( 'List', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -494,7 +539,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_responsive_control(
 			'max_height',
 			[
-				'label' => __( 'Max Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Max Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'vh' ],
 				'range' => [
@@ -523,7 +568,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'list_indent',
 			[
-				'label' => __( 'Indent', 'elementor-pro' ),
+				'label' => esc_html__( 'Indent', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em' ],
 				'default' => [
@@ -539,14 +584,14 @@ class Table_Of_Contents extends Base_Widget {
 
 		$this->start_controls_tab( 'normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'item_text_color_normal',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -560,7 +605,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'item_text_underline_normal',
 			[
-				'label' => __( 'Underline', 'elementor-pro' ),
+				'label' => esc_html__( 'Underline', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'selectors' => [
 					'{{WRAPPER}}' => '--item-text-decoration: underline',
@@ -572,14 +617,14 @@ class Table_Of_Contents extends Base_Widget {
 
 		$this->start_controls_tab( 'hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'item_text_color_hover',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_ACCENT,
@@ -593,7 +638,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'item_text_underline_hover',
 			[
-				'label' => __( 'Underline', 'elementor-pro' ),
+				'label' => esc_html__( 'Underline', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'selectors' => [
@@ -606,14 +651,14 @@ class Table_Of_Contents extends Base_Widget {
 
 		$this->start_controls_tab( 'active',
 			[
-				'label' => __( 'Active', 'elementor-pro' ),
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'item_text_color_active',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--item-text-active-color: {{VALUE}}',
@@ -624,7 +669,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'item_text_underline_active',
 			[
-				'label' => __( 'Underline', 'elementor-pro' ),
+				'label' => esc_html__( 'Underline', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'selectors' => [
 					'{{WRAPPER}}' => '--item-text-active-decoration: underline',
@@ -639,7 +684,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'heading_marker',
 			[
-				'label' => __( 'Marker', 'elementor-pro' ),
+				'label' => esc_html__( 'Marker', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -648,7 +693,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_control(
 			'marker_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -662,7 +707,7 @@ class Table_Of_Contents extends Base_Widget {
 		$this->add_responsive_control(
 			'marker_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -686,15 +731,30 @@ class Table_Of_Contents extends Base_Widget {
 		$html_tag = Utils::validate_html_tag( $settings['html_tag'] );
 		?>
 		<div class="elementor-toc__header">
-			<?php echo '<' . $html_tag . ' class="elementor-toc__header-title">' . $settings['title'] . '</' . $html_tag . '>'; ?>
+			<<?php Utils::print_validated_html_tag( $html_tag ); ?> class="elementor-toc__header-title">
+				<?php $this->print_unescaped_setting( 'title' ); ?>
+			</<?php Utils::print_validated_html_tag( $html_tag ); ?>>
 			<?php if ( 'yes' === $settings['minimize_box'] ) : ?>
 				<div class="elementor-toc__toggle-button elementor-toc__toggle-button--expand"><?php Icons_Manager::render_icon( $settings['expand_icon'] ); ?></div>
 				<div class="elementor-toc__toggle-button elementor-toc__toggle-button--collapse"><?php Icons_Manager::render_icon( $settings['collapse_icon'] ); ?></div>
 			<?php endif; ?>
 		</div>
-		<div <?php echo $this->get_render_attribute_string( 'body' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'body' ); ?>>
 			<div class="elementor-toc__spinner-container">
-				<i class="elementor-toc__spinner eicon-loading eicon-animation-spin" aria-hidden="true"></i>
+				<?php
+					Icons_Manager::render_icon(
+						[
+							'library' => 'eicons',
+							'value' => 'eicon-loading',
+						],
+						[
+							'class' => [
+								'elementor-toc__spinner',
+								'eicon-animation-spin',
+							],
+							'aria-hidden' => 'true',
+						]
+					); ?>
 			</div>
 		</div>
 		<?php

@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Custom_Code_Metabox extends Assets_Base {
 	const FIELD_LOCATION = 'location';
 	const FIELD_PRIORITY = 'priority';
+	const FILED_EXTRA_OPTIONS = 'extra_options';
 	const FIELD_CODE = 'code';
 
 	const OPTION_LOCATION_HEAD = 'elementor_head';
@@ -20,10 +21,17 @@ class Custom_Code_Metabox extends Assets_Base {
 
 	const OPTION_PRIORITY_LENGTH = 10;
 
+	const INPUT_OPTION_ENSURE_JQUERY = 'ensure_jquery';
+
 	const INPUT_FIELDS = [
 		self::FIELD_LOCATION,
 		self::FIELD_PRIORITY,
 		self::FIELD_CODE,
+		self::FILED_EXTRA_OPTIONS,
+	];
+
+	const INPUT_OPTIONS = [
+		self::INPUT_OPTION_ENSURE_JQUERY,
 	];
 
 	public function get_name() {
@@ -46,17 +54,23 @@ class Custom_Code_Metabox extends Assets_Base {
 
 	public function get_location_labels() {
 		return [
-			self::OPTION_LOCATION_HEAD => __( 'Head', 'elementor-pro' ),
-			self::OPTION_LOCATION_BODY_START => __( 'Body Start', 'elementor-pro' ),
-			self::OPTION_LOCATION_BODY_END => __( 'Body End', 'elementor-pro' ),
+			self::OPTION_LOCATION_HEAD => esc_html__( 'Head', 'elementor-pro' ),
+			self::OPTION_LOCATION_BODY_START => esc_html__( 'Body Start', 'elementor-pro' ),
+			self::OPTION_LOCATION_BODY_END => esc_html__( 'Body End', 'elementor-pro' ),
 		];
 	}
 
 	public function get_location_options() {
 		return [
-			self::OPTION_LOCATION_HEAD => __( '<head>', 'elementor-pro' ),
-			self::OPTION_LOCATION_BODY_START => __( '<body> - Start', 'elementor-pro' ),
-			self::OPTION_LOCATION_BODY_END => __( '<body> - End', 'elementor-pro' ),
+			self::OPTION_LOCATION_HEAD => '<head>',
+			self::OPTION_LOCATION_BODY_START => sprintf(
+			/* translators: %s: Body open tag. */
+				esc_html__( '%s - Start', 'elementor-pro' ), '<body>'
+			),
+			self::OPTION_LOCATION_BODY_END => sprintf(
+			/* translators: %s: Body end tag. */
+				esc_html__( '%s - End', 'elementor-pro' ), '</body>'
+			),
 		];
 	}
 
@@ -135,16 +149,40 @@ class Custom_Code_Metabox extends Assets_Base {
 			[
 				'id' => self::FIELD_LOCATION,
 				'field_type' => 'select',
-				'label' => __( 'Location', 'elementor-pro' ) . ':',
+				'label' => esc_html__( 'Location', 'elementor-pro' ) . ':',
 				'options' => $this->get_location_options(),
-				'info' => __( 'Define where the Custom Code will appear', 'elementor-pro' ),
+				'info' => esc_html__( 'Define where the Custom Code will appear', 'elementor-pro' ),
+			],
+			[
+				'id' => 'open-div-placement',
+				'field_type' => 'html_tag',
+				'label' => false,
+				'tag' => 'div',
+				'attributes' => [
+					'class' => 'elementor-custom-code-options-placement',
+				],
+			],
+			[
+				'id' => self::FILED_EXTRA_OPTIONS,
+				'field_type' => 'checkbox',
+				'options' => [
+					self::INPUT_OPTION_ENSURE_JQUERY => esc_html__( 'Always load jQuery', 'elementor-pro' ),
+				],
+				'info' => esc_html__( 'If your snippet includes jQuery, this will ensure it will work for all visitors. It may have a minor impact on loading speed.', 'elementor-pro' ),
+			],
+			[
+				'id' => 'close-div-placement',
+				'field_type' => 'html_tag',
+				'label' => false,
+				'tag' => 'div',
+				'close' => true,
 			],
 			[
 				'id' => self::FIELD_PRIORITY,
 				'field_type' => 'select',
-				'label' => __( 'Priority', 'elementor-pro' ) . ':',
+				'label' => esc_html__( 'Priority', 'elementor-pro' ) . ':',
 				'options' => $this->get_priority_options(),
-				'info' => __( 'Define in which order the Custom Code will appear', 'elementor-pro' ),
+				'info' => esc_html__( 'Define in which order the Custom Code will appear', 'elementor-pro' ),
 			],
 			[
 				'id' => 'close-div-placement',
@@ -292,12 +330,15 @@ class Custom_Code_Metabox extends Assets_Base {
 			return $post_id;
 		}
 
+		// PHPCS - Should not validate for nonce (already done in WordPress save_post).
+		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
 		foreach ( self::INPUT_FIELDS as $field ) {
-			if ( isset( $_POST[ $field ] ) && ! Utils::is_empty( $_POST[ $field ] ) ) {
+			if ( isset( $post_data[ $field ] ) && ! Utils::is_empty( $post_data[ $field ] ) ) {
 				if ( self::FIELD_CODE === $field ) {
-					$post_meta = $_POST[ $field ];
+					$post_meta = $post_data[ $field ];
 				} else {
-					$post_meta = sanitize_text_field( $_POST[ $field ] );
+					$post_meta = sanitize_text_field( $post_data[ $field ] );
 				}
 
 				if ( ! current_user_can( 'unfiltered_html' ) ) {
@@ -308,15 +349,36 @@ class Custom_Code_Metabox extends Assets_Base {
 				/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder */
 				$theme_builder = Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
 				$theme_builder->get_conditions_manager()->get_cache()->regenerate();
+			} elseif ( self::FILED_EXTRA_OPTIONS === $field ) {
+				$input_options = [];
+
+				foreach ( self::INPUT_OPTIONS as $input_option ) {
+					$key = self::FILED_EXTRA_OPTIONS . '_' . $input_option;
+					// PHP - The request is safe.
+					$input_option_value = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : null; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+					if ( 'on' === $input_option_value ) {
+						$input_options [] = $input_option;
+					}
+				}
+
+				update_post_meta( $post->ID, "_elementor_$field", $input_options );
 			}
 		}
 
 		// Temporary workaround for applying conditions for draft custom code post.
-		if ( ! empty( $_POST['_conditions'] ) ) {
-			$conditions = (array) json_decode( wp_unslash( $_POST['_conditions'] ) );
+		if ( ! empty( $post_data['_conditions'] ) ) {
+			$conditions = (array) json_decode( wp_unslash( $post_data['_conditions'] ) );
 
 			foreach ( $conditions as $key => $item ) {
-				$conditions[ $key ] = array_values( (array) $item );
+				$item_assoc_array = (array) $item;
+
+				$conditions[ $key ] = [
+					$item_assoc_array['type'],
+					$item_assoc_array['name'],
+					$item_assoc_array['sub'],
+					$item_assoc_array['subId'],
+				];
 			}
 
 			/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder */
@@ -344,7 +406,7 @@ class Custom_Code_Metabox extends Assets_Base {
 			?>
 			<div class="misc-pub-section misc-pub-post-conditions">
 				<i class="dashicons dashicons-networking" aria-hidden="true"></i>
-				<?php echo __( 'Conditions:', 'elementor-pro' ); ?>
+				<?php echo esc_html__( 'Conditions:', 'elementor-pro' ); ?>
 				<span class="post-conditions"></span>
 			</div>
 			<?php

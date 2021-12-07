@@ -16,7 +16,7 @@ class Post_Custom_Field extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Custom Field', 'elementor-pro' );
+		return esc_html__( 'Post Custom Field', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -44,7 +44,7 @@ class Post_Custom_Field extends Tag {
 		$this->add_control(
 			'key',
 			[
-				'label' => __( 'Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => $this->get_custom_keys_array(),
 			]
@@ -53,7 +53,7 @@ class Post_Custom_Field extends Tag {
 		$this->add_control(
 			'custom_key',
 			[
-				'label' => __( 'Custom Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Key', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => 'key',
 				'condition' => [
@@ -83,7 +83,7 @@ class Post_Custom_Field extends Tag {
 	private function get_custom_keys_array() {
 		$custom_keys = get_post_custom_keys();
 		$options = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( ! empty( $custom_keys ) ) {

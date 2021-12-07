@@ -60,7 +60,7 @@ class Drip_Handler {
 		$results = $this->rest_client->get( 'accounts' );
 
 		$accounts = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( ! empty( $results['body']['accounts'] ) ) {

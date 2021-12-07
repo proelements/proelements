@@ -87,7 +87,10 @@ class Locations_Manager {
 		}
 
 		if ( ! empty( $css_files ) ) {
+			// Enqueue the frontend styles manually also for pages that don't built with Elementor.
 			Plugin::elementor()->frontend->enqueue_styles();
+
+			// Enqueue after the frontend styles to override them.
 			foreach ( $css_files as $css_file ) {
 				$css_file->enqueue();
 			}
@@ -343,7 +346,7 @@ class Locations_Manager {
 				$location_settings = $this->get_location( $document_location );
 				// If is a `content` document or the theme is not support the document location (header/footer and etc.).
 				if ( $location_settings && ! $location_settings['edit_in_content'] ) {
-					$content = '<div class="elementor-theme-builder-content-area">' . __( 'Content Area', 'elementor-pro' ) . '</div>';
+					$content = '<div class="elementor-theme-builder-content-area">' . esc_html__( 'Content Area', 'elementor-pro' ) . '</div>';
 				}
 			}
 		}
@@ -416,7 +419,7 @@ class Locations_Manager {
 	public function register_core_location( $location, $args = [] ) {
 		if ( ! isset( $this->core_locations[ $location ] ) ) {
 			/* translators: %s: Location name. */
-			wp_die( esc_html( sprintf( __( 'Location \'%s\' is not a core location.', 'elementor-pro' ), $location ) ) );
+			wp_die( esc_html( sprintf( esc_html__( 'Location \'%s\' is not a core location.', 'elementor-pro' ), $location ) ) );
 		}
 
 		$args = array_replace_recursive( $this->core_locations[ $location ], $args );
@@ -447,26 +450,26 @@ class Locations_Manager {
 			'header' => [
 				'is_core' => true,
 				'public' => false,
-				'label' => __( 'Header', 'elementor-pro' ),
+				'label' => esc_html__( 'Header', 'elementor-pro' ),
 				'edit_in_content' => false,
 			],
 			'footer' => [
 				'is_core' => true,
 				'public' => false,
-				'label' => __( 'Footer', 'elementor-pro' ),
+				'label' => esc_html__( 'Footer', 'elementor-pro' ),
 				'edit_in_content' => false,
 			],
 			'archive' => [
 				'is_core' => true,
 				'public' => false,
 				'overwrite' => true,
-				'label' => __( 'Archive', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive', 'elementor-pro' ),
 				'edit_in_content' => true,
 			],
 			'single' => [
 				'is_core' => true,
 				'public' => false,
-				'label' => __( 'Single', 'elementor-pro' ),
+				'label' => esc_html__( 'Single', 'elementor-pro' ),
 				'edit_in_content' => true,
 			],
 		];

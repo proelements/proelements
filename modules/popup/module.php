@@ -55,7 +55,7 @@ class Module extends Module_Base {
 		$location_manager->register_location(
 			'popup',
 			[
-				'label' => __( 'Popup', 'elementor-pro' ),
+				'label' => esc_html__( 'Popup', 'elementor-pro' ),
 				'multiple' => true,
 				'public' => false,
 				'edit_in_content' => false,
@@ -78,13 +78,13 @@ class Module extends Module_Base {
 	public function localize_settings( array $settings ) {
 		$settings = array_replace_recursive( $settings, [
 			'i18n' => [
-				'popups' => __( 'Popups', 'elementor-pro' ),
-				'triggers' => __( 'Triggers', 'elementor-pro' ),
-				'timing' => __( 'Advanced Rules', 'elementor-pro' ),
-				'popup_publish_screen_triggers_description' => __( 'What action the user needs to do for the popup to open.', 'elementor-pro' ),
-				'popup_publish_screen_timing_description' => __( 'Requirements that have to be met for the popup to open.', 'elementor-pro' ),
-				'popup_settings_introduction_title' => __( 'Please Note', 'elementor-pro' ),
-				'popup_settings_introduction_message' => __( 'Popup settings are accessed via the settings icon in the bottom menu', 'elementor-pro' ),
+				'popups' => esc_html__( 'Popups', 'elementor-pro' ),
+				'triggers' => esc_html__( 'Triggers', 'elementor-pro' ),
+				'timing' => esc_html__( 'Advanced Rules', 'elementor-pro' ),
+				'popup_publish_screen_triggers_description' => esc_html__( 'What action the user needs to do for the popup to open.', 'elementor-pro' ),
+				'popup_publish_screen_timing_description' => esc_html__( 'Requirements that have to be met for the popup to open.', 'elementor-pro' ),
+				'popup_settings_introduction_title' => esc_html__( 'Please Note', 'elementor-pro' ),
+				'popup_settings_introduction_message' => esc_html__( 'Popup settings are accessed via the settings icon in the bottom menu', 'elementor-pro' ),
 			],
 		] );
 
@@ -107,19 +107,19 @@ class Module extends Module_Base {
 	 * @access public
 	 */
 	public function admin_menu() {
-		add_submenu_page( Source_Local::ADMIN_MENU_SLUG, '', __( 'Popups', 'elementor-pro' ), 'publish_posts', $this->get_admin_url( true ) );
+		add_submenu_page( Source_Local::ADMIN_MENU_SLUG, '', esc_html__( 'Popups', 'elementor-pro' ), 'publish_posts', $this->get_admin_url( true ) );
 	}
 
 	public function add_finder_items( array $categories ) {
 		$categories['general']['items']['popups'] = [
-			'title' => __( 'Popups', 'elementor-pro' ),
+			'title' => esc_html__( 'Popups', 'elementor-pro' ),
 			'icon' => 'library-save',
 			'url' => $this->get_admin_url(),
 			'keywords' => [ 'template', 'popup', 'library' ],
 		];
 
 		$categories['create']['items']['popups'] = [
-			'title' => __( 'Add New Popup', 'elementor-pro' ),
+			'title' => esc_html__( 'Add New Popup', 'elementor-pro' ),
 			'icon' => 'plus-circle-o',
 			'url' => $this->get_admin_url() . '#add_new',
 			'keywords' => [ 'template', 'theme', 'popup', 'new', 'create' ],

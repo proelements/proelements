@@ -16,14 +16,14 @@ class Slack extends Action_Base {
 	}
 
 	public function get_label() {
-		return __( 'Slack', 'elementor-pro' );
+		return esc_html__( 'Slack', 'elementor-pro' );
 	}
 
 	public function register_settings_section( $widget ) {
 		$widget->start_controls_section(
 			'section_slack',
 			[
-				'label' => __( 'Slack', 'elementor-pro' ),
+				'label' => esc_html__( 'Slack', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -33,12 +33,12 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_webhook',
 			[
-				'label' => __( 'Webhook URL', 'elementor-pro' ),
+				'label' => esc_html__( 'Webhook URL', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => 'https://hooks.slack.com/services/',
 				'label_block' => true,
 				'separator' => 'before',
-				'description' => __( 'Enter the webhook URL that will receive the form\'s submitted data.', 'elementor-pro' ) . ' ' . sprintf( '<a href="%s" target="_blank">%s</a>.', 'https://slack.com/apps/A0F7XDUAZ-incoming-webhooks/', __( 'Click here for Instructions', 'elementor-pro' ) ),
+				'description' => esc_html__( 'Enter the webhook URL that will receive the form\'s submitted data.', 'elementor-pro' ) . ' ' . sprintf( '<a href="%s" target="_blank">%s</a>.', 'https://slack.com/apps/A0F7XDUAZ-incoming-webhooks/', esc_html__( 'Click here for Instructions', 'elementor-pro' ) ),
 				'render_type' => 'none',
 				'classes' => 'elementor-control-direction-ltr',
 			]
@@ -47,7 +47,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_channel',
 			[
-				'label' => __( 'Channel', 'elementor-pro' ),
+				'label' => esc_html__( 'Channel', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -55,7 +55,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_username',
 			[
-				'label' => __( 'Username', 'elementor-pro' ),
+				'label' => esc_html__( 'Username', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -63,7 +63,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_pretext',
 			[
-				'label' => __( 'Pre Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Pre Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -71,7 +71,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_title',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -79,7 +79,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_text',
 			[
-				'label' => __( 'Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -87,7 +87,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_add_fields',
 			[
-				'label' => __( 'Form Data', 'elementor-pro' ),
+				'label' => esc_html__( 'Form Data', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -96,7 +96,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_add_ts',
 			[
-				'label' => __( 'Timestamp', 'elementor-pro' ),
+				'label' => esc_html__( 'Timestamp', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -105,7 +105,7 @@ class Slack extends Action_Base {
 		$widget->add_control(
 			'slack_webhook_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'alpha' => false,
 				'default' => '#D30C5C',
@@ -146,10 +146,11 @@ class Slack extends Action_Base {
 		}
 
 		$attachment = [
-			'text' => __( 'A new Form Submission has been received', 'elementor-pro' ),
-			'title' => __( 'A new Submission', 'elementor-pro' ),
+			'text' => esc_html__( 'A new Form Submission has been received', 'elementor-pro' ),
+			'title' => esc_html__( 'A new Submission', 'elementor-pro' ),
 			'color' => isset( $settings['slack_webhook_color'] ) ? $settings['slack_webhook_color'] : '#D30C5C',
-			'title_link' => isset( $_POST['referrer'] ) ? $_POST['referrer'] : site_url(),
+			// PHPCS - No nonce is required for title_link.
+			'title_link' => esc_url( isset( $_POST['referrer'] ) ? $_POST['referrer'] : site_url() ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		];
 
 		if ( ! empty( $settings['slack_title'] ) ) {
@@ -181,7 +182,7 @@ class Slack extends Action_Base {
 
 		if ( ! empty( $settings['slack_add_ts'] ) && 'yes' === $settings['slack_add_ts'] ) {
 			$attachment = array_merge( $attachment, [
-				'footer' => sprintf( __( 'Powered by %s', 'elementor-pro' ), 'Elementor' ),
+				'footer' => sprintf( esc_html__( 'Powered by %s', 'elementor-pro' ), 'Elementor' ),
 				'footer_icon' => is_ssl() ? ELEMENTOR_ASSETS_URL . 'images/logo-icon.png' : null,
 				'ts' => time(),
 			] );
@@ -199,7 +200,7 @@ class Slack extends Action_Base {
 		] );
 
 		if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-			throw new \Exception( __( 'Webhook Error', 'elementor-pro' ) );
+			throw new \Exception( esc_html__( 'Webhook Error', 'elementor-pro' ) );
 		}
 	}
 }

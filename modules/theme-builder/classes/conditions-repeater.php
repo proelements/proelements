@@ -25,8 +25,8 @@ class Conditions_Repeater extends Control_Repeater {
 					'type' => Controls_Manager::SELECT,
 					'default' => 'include',
 					'options' => [
-						'include' => __( 'Include', 'elementor-pro' ),
-						'exclude' => __( 'Exclude', 'elementor-pro' ),
+						'include' => esc_html__( 'Include', 'elementor-pro' ),
+						'exclude' => esc_html__( 'Exclude', 'elementor-pro' ),
 					],
 				],
 				[
@@ -35,7 +35,7 @@ class Conditions_Repeater extends Control_Repeater {
 					'default' => 'general',
 					'groups' => [
 						[
-							'label' => __( 'General', 'elementor-pro' ),
+							'label' => esc_html__( 'General', 'elementor-pro' ),
 							'options' => [],
 						],
 					],
@@ -44,7 +44,7 @@ class Conditions_Repeater extends Control_Repeater {
 					'name' => 'sub_name',
 					'type' => Controls_Manager::SELECT,
 					'options' => [
-						'' => __( 'All', 'elementor-pro' ),
+						'' => esc_html__( 'All', 'elementor-pro' ),
 					],
 					'conditions' => [
 						'terms' => [
@@ -60,7 +60,7 @@ class Conditions_Repeater extends Control_Repeater {
 					'name' => 'sub_id',
 					'type' => Controls_Manager::SELECT,
 					'options' => [
-						'' => __( 'All', 'elementor-pro' ),
+						'' => esc_html__( 'All', 'elementor-pro' ),
 					],
 					'conditions' => [
 						'terms' => [

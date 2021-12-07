@@ -26,11 +26,11 @@ class Singular extends Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'Singular', 'elementor-pro' );
+		return esc_html__( 'Singular', 'elementor-pro' );
 	}
 
 	public function get_all_label() {
-		return __( 'All Singular', 'elementor-pro' );
+		return esc_html__( 'All Singular', 'elementor-pro' );
 	}
 
 	public function register_sub_conditions() {

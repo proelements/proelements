@@ -22,7 +22,7 @@ class Shop_Page extends ThemeBuilder\Conditions\Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'Shop Page', 'elementor-pro' );
+		return esc_html__( 'Shop Page', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

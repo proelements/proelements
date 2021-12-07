@@ -14,6 +14,19 @@ abstract class Action_Base {
 	abstract public function get_label();
 
 	/**
+	 * Get the action ID.
+	 *
+	 * TODO: Make it an abstract function that will replace `get_name()`.
+	 *
+	 * @since 3.5.0
+	 *
+	 * @return string
+	 */
+	public function get_id() {
+		return $this->get_name();
+	}
+
+	/**
 	 * @param Form_Record  $record
 	 * @param Ajax_Handler $ajax_handler
 	 */

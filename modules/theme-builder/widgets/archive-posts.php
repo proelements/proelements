@@ -23,7 +23,7 @@ class Archive_Posts extends Posts_Base {
 	}
 
 	public function get_title() {
-		return __( 'Archive Posts', 'elementor-pro' );
+		return esc_html__( 'Archive Posts', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -36,6 +36,10 @@ class Archive_Posts extends Posts_Base {
 
 	public function get_keywords() {
 		return [ 'posts', 'cpt', 'archive', 'loop', 'query', 'cards', 'custom post type' ];
+	}
+
+	public function get_inline_css_depends() {
+		return [ 'posts' ];
 	}
 
 	protected function register_skins() {
@@ -63,16 +67,16 @@ class Archive_Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_advanced',
 			[
-				'label' => __( 'Advanced', 'elementor-pro' ),
+				'label' => esc_html__( 'Advanced', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'nothing_found_message',
 			[
-				'label' => __( 'Nothing Found Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
-				'default' => __( 'It seems we can\'t find what you\'re looking for.', 'elementor-pro' ),
+				'default' => esc_html__( 'It seems we can\'t find what you\'re looking for.', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -85,7 +89,7 @@ class Archive_Posts extends Posts_Base {
 			'section_nothing_found_style',
 			[
 				'tab' => Controls_Manager::TAB_STYLE,
-				'label' => __( 'Nothing Found Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
 				'condition' => [
 					'nothing_found_message!' => '',
 				],
@@ -95,7 +99,7 @@ class Archive_Posts extends Posts_Base {
 		$this->add_control(
 			'nothing_found_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -120,7 +124,6 @@ class Archive_Posts extends Posts_Base {
 		$this->end_controls_section();
 	}
 
-
 	public function query_posts() {
 		global $wp_query;
 
@@ -138,7 +141,7 @@ class Archive_Posts extends Posts_Base {
 		$query_vars = apply_filters( 'elementor/theme/posts_archive/query_posts/query_vars', $query_vars );
 
 		if ( $query_vars !== $wp_query->query_vars ) {
-			$this->query = new \WP_Query( $query_vars );
+			$this->query = new \WP_Query( $query_vars ); // SQL_CALC_FOUND_ROWS is used.
 		} else {
 			$this->query = $wp_query;
 		}

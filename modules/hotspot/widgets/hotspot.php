@@ -10,6 +10,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Repeater;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Icons_Manager;
+use Elementor\Utils;
 use Elementor\Widget_Image;
 use ElementorPro\Base\Base_Widget_Trait;
 
@@ -25,7 +26,7 @@ class Hotspot extends Widget_Image {
 	}
 
 	public function get_title() {
-		return __( 'Hotspot', 'elementor-pro' );
+		return esc_html__( 'Hotspot', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -55,7 +56,7 @@ class Hotspot extends Widget_Image {
 		$this->start_controls_section(
 			'hotspot_section',
 			[
-				'label' => __( 'Hotspot', 'elementor-pro' ),
+				'label' => esc_html__( 'Hotspot', 'elementor-pro' ),
 			]
 		);
 
@@ -66,14 +67,14 @@ class Hotspot extends Widget_Image {
 		$repeater->start_controls_tab(
 			'hotspot_content_tab',
 			[
-				'label' => __( 'Content', 'elementor-pro' ),
+				'label' => esc_html__( 'Content', 'elementor-pro' ),
 			]
 		);
 
 		$repeater->add_control(
 			'hotspot_label',
 			[
-				'label' => __( 'Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Label', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'label_block' => true,
@@ -86,19 +87,19 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_link',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __( 'https://your-link.com', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 			]
 		);
 
 		$repeater->add_control(
 			'hotspot_icon',
 			[
-				'label' => __( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
@@ -108,15 +109,15 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_icon_position',
 			[
-				'label' => __( 'Icon Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
-						'title' => __( 'Icon Start', 'elementor-pro' ),
+						'title' => esc_html__( 'Icon Start', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'end' => [
-						'title' => __( 'Icon End', 'elementor-pro' ),
+						'title' => esc_html__( 'Icon End', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
@@ -138,7 +139,7 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_icon_spacing',
 			[
-				'label' => __( 'Icon Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -164,18 +165,18 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_custom_size',
 			[
-				'label' => __( 'Custom Hotspot Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Hotspot Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor-pro' ),
-				'label_on' => __( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'default' => 'no',
-				'description' => __( 'Set custom Hotspot size that will only affect this specific hotspot.', 'elementor-pro' ),
+				'description' => esc_html__( 'Set custom Hotspot size that will only affect this specific hotspot.', 'elementor-pro' ),
 			]
 		);
 
 		$repeater->add_control('hotspot_width',
 			[
-				'label' => __( 'Min Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -197,7 +198,7 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_height',
 			[
-				'label' => __( 'Min Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -220,9 +221,9 @@ class Hotspot extends Widget_Image {
 			'hotspot_tooltip_content',
 			[
 				'render_type' => 'template',
-				'label' => __( 'Tooltip Content', 'elementor-pro' ),
+				'label' => esc_html__( 'Tooltip Content', 'elementor-pro' ),
 				'type' => Controls_Manager::WYSIWYG,
-				'default' => __( 'Add Your Tooltip Text Here', 'elementor-pro' ),
+				'default' => esc_html__( 'Add Your Tooltip Text Here', 'elementor-pro' ),
 			]
 		);
 
@@ -231,23 +232,23 @@ class Hotspot extends Widget_Image {
 		$repeater->start_controls_tab(
 			'hotspot_position_tab',
 			[
-				'label' => __( 'POSITION', 'elementor-pro' ),
+				'label' => esc_html__( 'POSITION', 'elementor-pro' ),
 			]
 		);
 
 		$repeater->add_control(
 			'hotspot_horizontal',
 			[
-				'label' => __( 'Horizontal Orientation', 'elementor-pro' ),
+				'label' => esc_html__( 'Horizontal Orientation', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => is_rtl() ? 'right' : 'left',
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
@@ -258,7 +259,7 @@ class Hotspot extends Widget_Image {
 		$repeater->add_responsive_control(
 			'hotspot_offset_x',
 			[
-				'label' => __( 'Offset', 'elementor-pro' ),
+				'label' => esc_html__( 'Offset', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%' ],
 				'default' => [
@@ -275,15 +276,15 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_vertical',
 			[
-				'label' => __( 'Vertical Orientation', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Orientation', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'bottom' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -295,7 +296,7 @@ class Hotspot extends Widget_Image {
 		$repeater->add_responsive_control(
 			'hotspot_offset_y',
 			[
-				'label' => __( 'Offset', 'elementor-pro' ),
+				'label' => esc_html__( 'Offset', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%' ],
 				'default' => [
@@ -312,19 +313,19 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_tooltip_position',
 			[
-				'label' => __( 'Custom Tooltip Properties', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom Tooltip Properties', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor-pro' ),
-				'label_on' => __( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'default' => 'no',
-				'description' => sprintf( __( 'Set custom Tooltip opening that will only affect this specific hotspot.', 'elementor-pro' ), '<code>|</code>' ),
+				'description' => sprintf( esc_html__( 'Set custom Tooltip opening that will only affect this specific hotspot.', 'elementor-pro' ), '<code>|</code>' ),
 			]
 		);
 
 		$repeater->add_control(
 			'hotspot_heading',
 			[
-				'label' => __( 'Box', 'elementor-pro' ),
+				'label' => esc_html__( 'Box', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'hotspot_tooltip_position' => 'yes',
@@ -335,23 +336,23 @@ class Hotspot extends Widget_Image {
 		$repeater->add_responsive_control(
 			'hotspot_position',
 			[
-				'label' => __( 'Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'right' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'bottom' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'left' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 					'top' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -368,7 +369,7 @@ class Hotspot extends Widget_Image {
 		$repeater->add_responsive_control(
 			'hotspot_tooltip_width',
 			[
-				'label' => __( 'Min Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -390,10 +391,10 @@ class Hotspot extends Widget_Image {
 		$repeater->add_control(
 			'hotspot_tooltip_text_wrap',
 			[
-				'label' => __( 'Text Wrap', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Wrap', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor-pro' ),
-				'label_on' => __( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--white-space: normal',
 				],
@@ -410,7 +411,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'hotspot',
 			[
-				'label' => __( 'Hotspot', 'elementor-pro' ),
+				'label' => esc_html__( 'Hotspot', 'elementor-pro' ),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'title_field' => '{{{ hotspot_label }}}',
@@ -426,13 +427,13 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'hotspot_animation',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'e-hotspot--soft-beat' => __( 'Soft Beat', 'elementor-pro' ),
-					'e-hotspot--expand' => __( 'Expand', 'elementor-pro' ),
-					'e-hotspot--overlay' => __( 'Overlay', 'elementor-pro' ),
-					'' => __( 'None', 'elementor-pro' ),
+					'e-hotspot--soft-beat' => esc_html__( 'Soft Beat', 'elementor-pro' ),
+					'e-hotspot--expand' => esc_html__( 'Expand', 'elementor-pro' ),
+					'e-hotspot--overlay' => esc_html__( 'Overlay', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
 				],
 				'default' => 'e-hotspot--expand',
 				'separator' => 'before',
@@ -442,10 +443,10 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'hotspot_sequenced_animation',
 			[
-				'label' => __( 'Sequenced Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Sequenced Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor-pro' ),
-				'label_on' => __( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'default' => 'no',
 				'frontend_available' => true,
 				'render_type' => 'none',
@@ -455,7 +456,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'hotspot_sequenced_animation_duration',
 			[
-				'label' => __( 'Sequence Duration (ms)', 'elementor-pro' ),
+				'label' => esc_html__( 'Sequence Duration (ms)', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -479,32 +480,32 @@ class Hotspot extends Widget_Image {
 		$this->start_controls_section(
 			'tooltip_section',
 			[
-				'label' => __( 'Tooltip', 'elementor-pro' ),
+				'label' => esc_html__( 'Tooltip', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_responsive_control(
 			'tooltip_position',
 			[
-				'label' => __( 'Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'top',
 				'toggle' => false,
 				'options' => [
 					'right' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'bottom' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'left' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 					'top' => [
-						'title' => __( 'Bottom', 'elementor-pro' ),
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
@@ -518,12 +519,12 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'tooltip_trigger',
 			[
-				'label' => __( 'Trigger', 'elementor-pro' ),
+				'label' => esc_html__( 'Trigger', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'mouseenter' => __( 'Hover', 'elementor-pro' ),
-					'click' => __( 'Click', 'elementor-pro' ),
-					'none' => __( 'None', 'elementor-pro' ),
+					'mouseenter' => esc_html__( 'Hover', 'elementor-pro' ),
+					'click' => esc_html__( 'Click', 'elementor-pro' ),
+					'none' => esc_html__( 'None', 'elementor-pro' ),
 				],
 				'default' => 'click',
 				'frontend_available' => true,
@@ -533,16 +534,16 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'tooltip_animation',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'e-hotspot--fade-in-out' => __( 'Fade In/Out', 'elementor-pro' ),
-					'e-hotspot--fade-grow' => __( 'Fade Grow', 'elementor-pro' ),
-					'e-hotspot--fade-direction' => __( 'Fade By Direction', 'elementor-pro' ),
-					'e-hotspot--slide-direction' => __( 'Slide By Direction', 'elementor-pro' ),
+					'e-hotspot--fade-in-out' => esc_html__( 'Fade In/Out', 'elementor-pro' ),
+					'e-hotspot--fade-grow' => esc_html__( 'Fade Grow', 'elementor-pro' ),
+					'e-hotspot--fade-direction' => esc_html__( 'Fade By Direction', 'elementor-pro' ),
+					'e-hotspot--slide-direction' => esc_html__( 'Slide By Direction', 'elementor-pro' ),
 				],
 				'default' => 'e-hotspot--fade-in-out',
-				'placeholder' => __( 'Enter your image caption', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Enter your image caption', 'elementor-pro' ),
 				'condition' => [
 					'tooltip_trigger!' => 'none',
 				],
@@ -553,7 +554,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'tooltip_animation_duration',
 			[
-				'label' => __( 'Duration (ms)', 'elementor-pro' ),
+				'label' => esc_html__( 'Duration (ms)', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -596,15 +597,15 @@ class Hotspot extends Widget_Image {
 		$this->update_control( 'align', [
 			'options' => [
 				'flex-start' => [
-					'title' => __( 'Start', 'elementor-pro' ),
+					'title' => esc_html__( 'Start', 'elementor-pro' ),
 					'icon' => 'eicon-text-align-left',
 				],
 				'center' => [
-					'title' => __( 'Center', 'elementor-pro' ),
+					'title' => esc_html__( 'Center', 'elementor-pro' ),
 					'icon' => 'eicon-text-align-center',
 				],
 				'flex-end' => [
-					'title' => __( 'End', 'elementor-pro' ),
+					'title' => esc_html__( 'End', 'elementor-pro' ),
 					'icon' => 'eicon-text-align-right',
 				],
 			],
@@ -666,7 +667,7 @@ class Hotspot extends Widget_Image {
 		$this->start_controls_section(
 			'section_style_hotspot',
 			[
-				'label' => __( 'Hotspot', 'elementor-pro' ),
+				'label' => esc_html__( 'Hotspot', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -674,7 +675,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_hotspot_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-color: {{VALUE}};',
@@ -688,7 +689,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_hotspot_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -725,7 +726,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_hotspot_width',
 			[
-				'label' => __( 'Min Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -744,7 +745,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_hotspot_height',
 			[
-				'label' => __( 'Min Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -763,7 +764,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_hotspot_box_color',
 			[
-				'label' => __( 'Box Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Box Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-box-color: {{VALUE}};',
@@ -777,7 +778,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_hotspot_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'em' => [
@@ -803,7 +804,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_hotspot_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -834,7 +835,7 @@ class Hotspot extends Widget_Image {
 		$this->start_controls_section(
 			'section_style_tooltip',
 			[
-				'label' => __( 'Tooltip', 'elementor-pro' ),
+				'label' => esc_html__( 'Tooltip', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -842,7 +843,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_tooltip_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--tooltip-text-color: {{VALUE}};',
@@ -864,23 +865,23 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_tooltip_align',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor-pro' ),
+						'title' => esc_html__( 'Justified', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -893,7 +894,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_tooltip_heading',
 			[
-				'label' => __( 'Box', 'elementor-pro' ),
+				'label' => esc_html__( 'Box', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -902,7 +903,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_tooltip_width',
 			[
-				'label' => __( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -921,7 +922,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_tooltip_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'default' => [
@@ -936,7 +937,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_tooltip_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--tooltip-color: {{VALUE}}',
@@ -950,7 +951,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'style_tooltip_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -978,11 +979,11 @@ class Hotspot extends Widget_Image {
 		$show_tooltip = 'none' === $settings['tooltip_trigger'];
 		$sequenced_animation_class = 'yes' === $settings['hotspot_sequenced_animation'] ? 'e-hotspot--sequenced' : '';
 
-		// Main Image ?>
-		<?php echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image', 'image' ); ?>
+		// Main Image
+		Group_Control_Image_Size::print_attachment_image_html( $settings, 'image', 'image' );
 
-		<?php // Hotspot ?>
-		<?php foreach ( $settings['hotspot'] as $key => $hotspot ) :
+		// Hotspot
+		foreach ( $settings['hotspot'] as $key => $hotspot ) :
 			$is_circle = ! $hotspot['hotspot_label'] && ! $hotspot['hotspot_icon']['value'];
 			$is_only_icon = ! $hotspot['hotspot_label'] && $hotspot['hotspot_icon']['value'];
 			$hotspot_position_x = '%' === $hotspot['hotspot_offset_x']['unit'] ? 'e-hotspot--position-' . $hotspot['hotspot_horizontal'] : '';
@@ -1001,6 +1002,7 @@ class Hotspot extends Widget_Image {
 						$hotspot_position_x,
 						$hotspot_position_y,
 						$is_hotspot_link ? 'e-hotspot--link' : '',
+						( 'click' === $settings['tooltip_trigger'] && $is_hotspot_link ) ? 'e-hotspot--no-tooltip' : '',
 					],
 				]
 			);
@@ -1038,7 +1040,7 @@ class Hotspot extends Widget_Image {
 			);
 
 			//tooltip attributes
-			$tooltip_custom_position = ( $is_tooltip_direction_animation && $hotspot['hotspot_tooltip_position'] && $hotspot['hotspot_position'] ) ? 'e-hotspot--overidde-tooltip-animation-from-' . $hotspot['hotspot_position'] : '';
+			$tooltip_custom_position = ( $is_tooltip_direction_animation && $hotspot['hotspot_tooltip_position'] && $hotspot['hotspot_position'] ) ? 'e-hotspot--override-tooltip-animation-from-' . $hotspot['hotspot_position'] : '';
 			$tooltip_repeater_setting_key = $this->get_repeater_setting_key( 'tooltip', 'hotspots', $key );
 			$this->add_render_attribute(
 				$tooltip_repeater_setting_key, [
@@ -1053,10 +1055,10 @@ class Hotspot extends Widget_Image {
 			); ?>
 
 			<?php // Hotspot ?>
-			<<?php echo $hotspot_element_tag; ?> <?php echo $this->get_render_attribute_string( $hotspot_repeater_setting_key ); ?>>
+			<<?php Utils::print_validated_html_tag( $hotspot_element_tag ); ?> <?php $this->print_render_attribute_string( $hotspot_repeater_setting_key ); ?>>
 
 				<?php // Hotspot Trigger ?>
-				<div <?php echo $this->get_render_attribute_string( $trigger_repeater_setting_key ); ?>>
+				<div <?php $this->print_render_attribute_string( $trigger_repeater_setting_key ); ?>>
 					<?php if ( $is_circle ) : ?>
 						<div class="e-hotspot__outer-circle"></div>
 						<div class="e-hotspot__inner-circle"></div>
@@ -1065,25 +1067,31 @@ class Hotspot extends Widget_Image {
 							<div class="e-hotspot__icon"><?php Icons_Manager::render_icon( $hotspot['hotspot_icon'] ); ?></div>
 						<?php endif; ?>
 						<?php if ( $hotspot['hotspot_label'] ) : ?>
-							<div class="e-hotspot__label"><?php echo $hotspot['hotspot_label']; ?></div>
+							<div class="e-hotspot__label"><?php
+								// PHPCS - the main text of a widget should not be escaped.
+								echo $hotspot['hotspot_label']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?></div>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>
 
 				<?php // Hotspot Tooltip ?>
-				<?php if ( $hotspot['hotspot_tooltip_content'] && ! $is_hotspot_link ) : ?>
+				<?php if ( $hotspot['hotspot_tooltip_content'] && ! ( 'click' === $settings['tooltip_trigger'] && $is_hotspot_link ) ) : ?>
 					<?php if ( $is_tooltip_direction_animation ) : ?>
-						<div <?php echo $this->get_render_attribute_string( $direction_mask_repeater_setting_key ); ?>>
+						<div <?php $this->print_render_attribute_string( $direction_mask_repeater_setting_key ); ?>>
 					<?php endif; ?>
-					<div <?php echo $this->get_render_attribute_string( $tooltip_repeater_setting_key ); ?> >
-						<?php echo $hotspot['hotspot_tooltip_content']; ?>
+					<div <?php $this->print_render_attribute_string( $tooltip_repeater_setting_key ); ?> >
+						<?php
+						// PHPCS - the main text of a widget should not be escaped.
+						echo $hotspot['hotspot_tooltip_content']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						?>
 					</div>
 					<?php if ( $is_tooltip_direction_animation ) : ?>
 						</div>
 					<?php endif; ?>
 				<?php endif; ?>
 
-			</<?php echo $hotspot_element_tag; ?>>
+			</<?php Utils::print_validated_html_tag( $hotspot_element_tag ); ?>>
 
 	<?php endforeach; ?>
 
@@ -1166,7 +1174,7 @@ class Hotspot extends Widget_Image {
 			});
 
 			//tooltip attributes
-			const tooltipCustomPosition = ( isTooltipDirectionAnimation && hotspot.hotspot_tooltip_position && hotspot.hotspot_position ) ? 'e-hotspot--overidde-tooltip-animation-from-' + hotspot.hotspot_position : '';
+			const tooltipCustomPosition = ( isTooltipDirectionAnimation && hotspot.hotspot_tooltip_position && hotspot.hotspot_position ) ? 'e-hotspot--override-tooltip-animation-from-' + hotspot.hotspot_position : '';
 			const tooltipRepeaterSettingKey = view.getRepeaterSettingKey('tooltip', 'hotspots', index);
 			view.addRenderAttribute( tooltipRepeaterSettingKey, {
 				'class': [
@@ -1197,7 +1205,7 @@ class Hotspot extends Widget_Image {
 					</div>
 
 					<?php // Hotspot Tooltip ?>
-					<# if( hotspot.hotspot_tooltip_content && ! hotspotLink ){ #>
+					<# if( hotspot.hotspot_tooltip_content && ! ( 'click' === settings.tooltip_trigger && hotspotLink ) ){ #>
 					<# if( isTooltipDirectionAnimation ){ #>
 					<div {{{ view.getRenderAttributeString( directionMaskRepeaterSettingKey ) }}}>
 						<# } #>

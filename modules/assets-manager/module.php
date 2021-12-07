@@ -37,8 +37,8 @@ class Module extends Module_Base {
 	public function localize_settings( $settings ) {
 		$settings = array_replace_recursive( $settings, [
 			'i18n' => [
-				'fontsUploadEmptyNotice' => __( 'Choose a font to publish.', 'elementor-pro' ),
-				'iconsUploadEmptyNotice' => __( 'Upload an icon set to publish.', 'elementor-pro' ),
+				'fontsUploadEmptyNotice' => esc_html__( 'Choose a font to publish.', 'elementor-pro' ),
+				'iconsUploadEmptyNotice' => esc_html__( 'Upload an icon set to publish.', 'elementor-pro' ),
 			],
 		] );
 

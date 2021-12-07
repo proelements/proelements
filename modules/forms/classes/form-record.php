@@ -17,7 +17,7 @@ class Form_Record {
 
 	public function get_formatted_data( $with_meta = false ) {
 		$formatted = [];
-		$no_label = __( 'No Label', 'elementor-pro' );
+		$no_label = esc_html__( 'No Label', 'elementor-pro' );
 		$fields = $this->fields;
 
 		if ( $with_meta ) {
@@ -161,49 +161,49 @@ class Form_Record {
 			switch ( $metadata_type ) {
 				case 'date':
 					$result['date'] = [
-						'title' => __( 'Date', 'elementor-pro' ),
+						'title' => esc_html__( 'Date', 'elementor-pro' ),
 						'value' => date_i18n( get_option( 'date_format' ) ),
 					];
 					break;
 
 				case 'time':
 					$result['time'] = [
-						'title' => __( 'Time', 'elementor-pro' ),
+						'title' => esc_html__( 'Time', 'elementor-pro' ),
 						'value' => date_i18n( get_option( 'time_format' ) ),
 					];
 					break;
 
 				case 'page_url':
 					$result['page_url'] = [
-						'title' => __( 'Page URL', 'elementor-pro' ),
-						'value' => esc_url_raw( $_POST['referrer'] ),
+						'title' => esc_html__( 'Page URL', 'elementor-pro' ),
+						'value' => esc_url_raw( $_POST['referrer'] ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					];
 					break;
 
 				case 'page_title':
 					$result['page_title'] = [
-						'title' => __( 'Page Title', 'elementor-pro' ),
-						'value' => sanitize_text_field( $_POST['referer_title'] ),
+						'title' => esc_html__( 'Page Title', 'elementor-pro' ),
+						'value' => sanitize_text_field( $_POST['referer_title'] ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					];
 					break;
 
 				case 'user_agent':
 					$result['user_agent'] = [
-						'title' => __( 'User Agent', 'elementor-pro' ),
+						'title' => esc_html__( 'User Agent', 'elementor-pro' ),
 						'value' => sanitize_textarea_field( $_SERVER['HTTP_USER_AGENT'] ),
 					];
 					break;
 
 				case 'remote_ip':
 					$result['remote_ip'] = [
-						'title' => __( 'Remote IP', 'elementor-pro' ),
+						'title' => esc_html__( 'Remote IP', 'elementor-pro' ),
 						'value' => Utils::get_client_ip(),
 					];
 					break;
 				case 'credit':
 					$result['credit'] = [
-						'title' => __( 'Powered by', 'elementor-pro' ),
-						'value' => __( 'Elementor', 'elementor-pro' ),
+						'title' => esc_html__( 'Powered by', 'elementor-pro' ),
+						'value' => esc_html__( 'Elementor', 'elementor-pro' ),
 					];
 					break;
 			}

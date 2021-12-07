@@ -17,10 +17,6 @@ class Module extends Module_Base {
 		'twitter' => [
 			'title' => 'Twitter',
 		],
-		'google' => [
-			'title' => 'Google+',
-			'has_counter' => true,
-		],
 		'linkedin' => [
 			'title' => 'LinkedIn',
 			'has_counter' => true,

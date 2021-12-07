@@ -63,7 +63,7 @@ class Mailerlite_Handler {
 		$results = $this->rest_client->get( 'groups' );
 
 		$groups = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( 200 === $results['code'] ) {

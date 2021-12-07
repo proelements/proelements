@@ -14,7 +14,7 @@ class Post_ID extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post ID', 'elementor-pro' );
+		return esc_html__( 'Post ID', 'elementor-pro' );
 	}
 
 	public function get_group() {

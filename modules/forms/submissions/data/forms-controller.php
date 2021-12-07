@@ -1,8 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Forms\Submissions\Data;
 
-use ElementorPro\Data\Base\Controller as Controller_Base;
-use ElementorPro\Modules\Forms\Submissions\Database\Query;
+use Elementor\Data\Base\Controller as Controller_Base;
 use ElementorPro\Modules\Forms\Submissions\Database\Entities\Form_Snapshot;
 use ElementorPro\Modules\Forms\Submissions\Database\Repositories\Form_Snapshot_Repository;
 

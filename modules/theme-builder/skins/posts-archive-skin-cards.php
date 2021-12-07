@@ -21,7 +21,7 @@ class Posts_Archive_Skin_Cards extends Skin_Cards {
 	}
 
 	public function get_title() {
-		return __( 'Cards', 'elementor-pro' );
+		return esc_html__( 'Cards', 'elementor-pro' );
 	}
 
 	public function get_container_class() {

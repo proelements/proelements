@@ -16,7 +16,7 @@ class Product_Meta extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Product Meta', 'elementor-pro' );
+		return esc_html__( 'Product Meta', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -32,7 +32,7 @@ class Product_Meta extends Base_Widget {
 		$this->start_controls_section(
 			'section_product_meta_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -41,7 +41,7 @@ class Product_Meta extends Base_Widget {
 			'wc_style_warning',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
+				'raw' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -49,13 +49,13 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor-pro' ),
+				'label' => esc_html__( 'View', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'inline',
 				'options' => [
-					'table' => __( 'Table', 'elementor-pro' ),
-					'stacked' => __( 'Stacked', 'elementor-pro' ),
-					'inline' => __( 'Inline', 'elementor-pro' ),
+					'table' => esc_html__( 'Table', 'elementor-pro' ),
+					'stacked' => esc_html__( 'Stacked', 'elementor-pro' ),
+					'inline' => esc_html__( 'Inline', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-woo-meta--view-',
 			]
@@ -64,7 +64,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_responsive_control(
 			'space_between',
 			[
-				'label' => __( 'Space Between', 'elementor-pro' ),
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -85,10 +85,10 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'divider',
 			[
-				'label' => __( 'Divider', 'elementor-pro' ),
+				'label' => esc_html__( 'Divider', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor-pro' ),
-				'label_on' => __( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'selectors' => [
 					'{{WRAPPER}} .product_meta .detail-container:not(:last-child):after' => 'content: ""',
 				],
@@ -100,13 +100,13 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'divider_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'solid' => __( 'Solid', 'elementor-pro' ),
-					'double' => __( 'Double', 'elementor-pro' ),
-					'dotted' => __( 'Dotted', 'elementor-pro' ),
-					'dashed' => __( 'Dashed', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
 				],
 				'default' => 'solid',
 				'condition' => [
@@ -122,7 +122,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'divider_weight',
 			[
-				'label' => __( 'Weight', 'elementor-pro' ),
+				'label' => esc_html__( 'Weight', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 1,
@@ -146,7 +146,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_responsive_control(
 			'divider_width',
 			[
-				'label' => __( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default' => [
@@ -165,7 +165,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'divider_height',
 			[
-				'label' => __( 'Height', 'elementor-pro' ),
+				'label' => esc_html__( 'Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default' => [
@@ -194,7 +194,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'divider_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ddd',
 				'global' => [
@@ -212,7 +212,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'heading_text_style',
 			[
-				'label' => __( 'Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Text', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -229,7 +229,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => 'color: {{VALUE}}',
@@ -240,7 +240,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'heading_link_style',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -257,7 +257,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'link_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} a' => 'color: {{VALUE}}',
@@ -270,7 +270,7 @@ class Product_Meta extends Base_Widget {
 		$this->start_controls_section(
 			'section_product_meta_captions',
 			[
-				'label' => __( 'Captions', 'elementor-pro' ),
+				'label' => esc_html__( 'Captions', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -278,7 +278,7 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'heading_category_caption',
 			[
-				'label' => __( 'Category', 'elementor-pro' ),
+				'label' => esc_html__( 'Category', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -286,25 +286,25 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'category_caption_single',
 			[
-				'label' => __( 'Singular', 'elementor-pro' ),
+				'label' => esc_html__( 'Singular', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'Category', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Category', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'category_caption_plural',
 			[
-				'label' => __( 'Plural', 'elementor-pro' ),
+				'label' => esc_html__( 'Plural', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'Categories', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Categories', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'heading_tag_caption',
 			[
-				'label' => __( 'Tag', 'elementor-pro' ),
+				'label' => esc_html__( 'Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -313,25 +313,25 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'tag_caption_single',
 			[
-				'label' => __( 'Singular', 'elementor-pro' ),
+				'label' => esc_html__( 'Singular', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'Tag', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Tag', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'tag_caption_plural',
 			[
-				'label' => __( 'Plural', 'elementor-pro' ),
+				'label' => esc_html__( 'Plural', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'Tags', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Tags', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'heading_sku_caption',
 			[
-				'label' => __( 'SKU', 'elementor-pro' ),
+				'label' => esc_html__( 'SKU', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -340,18 +340,18 @@ class Product_Meta extends Base_Widget {
 		$this->add_control(
 			'sku_caption',
 			[
-				'label' => __( 'SKU', 'elementor-pro' ),
+				'label' => esc_html__( 'SKU', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'SKU', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'SKU', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'sku_missing_caption',
 			[
-				'label' => __( 'Missing', 'elementor-pro' ),
+				'label' => esc_html__( 'Missing', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'N/A', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'N/A', 'elementor-pro' ),
 			]
 		);
 
@@ -371,22 +371,31 @@ class Product_Meta extends Base_Widget {
 			return;
 		}
 
-		$sku = $product->get_sku();
+		$sku = esc_html( $product->get_sku() );
 
 		$settings = $this->get_settings_for_display();
-		$sku_caption = ! empty( $settings['sku_caption'] ) ? $settings['sku_caption'] : __( 'SKU', 'elementor-pro' );
-		$sku_missing = ! empty( $settings['sku_missing_caption'] ) ? $settings['sku_missing_caption'] : __( 'N/A', 'elementor-pro' );
-		$category_caption_single = ! empty( $settings['category_caption_single'] ) ? $settings['category_caption_single'] : __( 'Category', 'elementor-pro' );
-		$category_caption_plural = ! empty( $settings['category_caption_plural'] ) ? $settings['category_caption_plural'] : __( 'Categories', 'elementor-pro' );
-		$tag_caption_single = ! empty( $settings['tag_caption_single'] ) ? $settings['tag_caption_single'] : __( 'Tag', 'elementor-pro' );
-		$tag_caption_plural = ! empty( $settings['tag_caption_plural'] ) ? $settings['tag_caption_plural'] : __( 'Tags', 'elementor-pro' );
+		$sku_caption = ! empty( $settings['sku_caption'] ) ? esc_html( $settings['sku_caption'] ) : esc_html__( 'SKU', 'elementor-pro' );
+		$sku_missing = ! empty( $settings['sku_missing_caption'] ) ? esc_html( $settings['sku_missing_caption'] ) : esc_html__( 'N/A', 'elementor-pro' );
+		$category_caption_single = ! empty( $settings['category_caption_single'] ) ? $settings['category_caption_single'] : esc_html__( 'Category', 'elementor-pro' );
+		$category_caption_plural = ! empty( $settings['category_caption_plural'] ) ? $settings['category_caption_plural'] : esc_html__( 'Categories', 'elementor-pro' );
+		$tag_caption_single = ! empty( $settings['tag_caption_single'] ) ? $settings['tag_caption_single'] : esc_html__( 'Tag', 'elementor-pro' );
+		$tag_caption_plural = ! empty( $settings['tag_caption_plural'] ) ? $settings['tag_caption_plural'] : esc_html__( 'Tags', 'elementor-pro' );
 		?>
 		<div class="product_meta">
 
 			<?php do_action( 'woocommerce_product_meta_start' ); ?>
 
 			<?php if ( wc_product_sku_enabled() && ( $sku || $product->is_type( 'variable' ) ) ) : ?>
-				<span class="sku_wrapper detail-container"><span class="detail-label"><?php echo esc_html( $sku_caption ); ?></span> <span class="sku"><?php echo $sku ? $sku : esc_html( $sku_missing ); ?></span></span>
+				<span class="sku_wrapper detail-container">
+					<span class="detail-label">
+						<?php // PHPCS - the $sku_caption variable is safe. ?>
+						<?php echo $sku_caption; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</span>
+					<span class="sku">
+						<?php // PHPCS - the $sku && $sku_missing variables are safe. ?>
+						<?php echo $sku ? $sku : $sku_missing; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</span>
+				</span>
 			<?php endif; ?>
 
 			<?php if ( count( $product->get_category_ids() ) ) : ?>

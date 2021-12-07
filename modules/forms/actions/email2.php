@@ -14,7 +14,7 @@ class Email2 extends Email {
 	}
 
 	public function get_label() {
-		return __( 'Email 2', 'elementor-pro' );
+		return esc_html__( 'Email 2', 'elementor-pro' );
 	}
 
 	protected function get_control_id( $control_id ) {

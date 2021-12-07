@@ -17,7 +17,7 @@ abstract class Header_Footer_Base extends Theme_Section_Document {
 		// Move to top as active.
 		$categories = [
 			'theme-elements' => [
-				'title' => __( 'Site', 'elementor-pro' ),
+				'title' => esc_html__( 'Site', 'elementor-pro' ),
 				'active' => true,
 			],
 		];
@@ -33,7 +33,7 @@ abstract class Header_Footer_Base extends Theme_Section_Document {
 		$this->update_control(
 			'section_page_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 			]
 		);
 	}

@@ -2,9 +2,9 @@
 namespace ElementorPro\Modules\Forms\Submissions;
 
 use Elementor\Settings;
+use ElementorPro\Modules\Forms\Registrars\Form_Actions_Registrar;
 use ElementorPro\Plugin;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Modules\Forms\Module as FormsModule;
 use ElementorPro\Modules\Forms\Submissions\Database\Query;
 use ElementorPro\Modules\Forms\Submissions\Data\Controller;
 use ElementorPro\Modules\Forms\Submissions\Database\Migration;
@@ -59,7 +59,7 @@ class Component extends Module_Base {
 			function () {
 				?>
 					<div class="wrap">
-						<h1 class="wp-heading-inline"><?php echo __( 'Submissions', 'elementor-pro' ); ?></h1>
+						<h1 class="wp-heading-inline"><?php echo esc_html__( 'Submissions', 'elementor-pro' ); ?></h1>
 						<hr class="wp-header-end">
 						<div id="e-form-submissions"></div>
 					</div>
@@ -119,11 +119,7 @@ class Component extends Module_Base {
 			'before'
 		);
 
-		wp_set_script_translations(
-			'form-submission-admin',
-			'elementor-pro',
-			ELEMENTOR_PRO_PATH . 'languages'
-		);
+		wp_set_script_translations( 'form-submission-admin', 'elementor-pro' );
 	}
 
 	private function scheduled_submissions_delete() {
@@ -138,7 +134,7 @@ class Component extends Module_Base {
 	}
 
 	private function get_title() {
-		return __( 'Submissions', 'elementor-pro' );
+		return esc_html__( 'Submissions', 'elementor-pro' );
 	}
 
 	/**
@@ -156,8 +152,8 @@ class Component extends Module_Base {
 			Migration::install();
 		} );
 
-		add_action( 'elementor_pro/forms/register_action', function ( FormsModule $forms_module ) {
-			$forms_module->add_form_action( 'save-to-database', new Save_To_Database() );
+		add_action( 'elementor_pro/forms/actions/register', function ( Form_Actions_Registrar $actions_registrar ) {
+			$actions_registrar->register( new Save_To_Database() );
 		}, 0 /* Before all the actions */ );
 
 		add_filter( 'elementor_pro/forms/default_submit_actions', function ( $actions ) {

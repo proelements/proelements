@@ -117,7 +117,7 @@ class Module extends Module_Base {
 	}
 
 	public function localize_settings( array $settings ) {
-		$settings['i18n']['motion_effects'] = __( 'Motion Effects', 'elementor-pro' );
+		$settings['i18n']['motion_effects'] = esc_html__( 'Motion Effects', 'elementor-pro' );
 
 		return $settings;
 	}

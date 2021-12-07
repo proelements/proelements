@@ -6,8 +6,8 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
+use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
-use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -20,7 +20,7 @@ class Animated_Headline extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Animated Headline', 'elementor-pro' );
+		return esc_html__( 'Animated Headline', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -35,19 +35,19 @@ class Animated_Headline extends Base_Widget {
 		$this->start_controls_section(
 			'text_elements',
 			[
-				'label' => __( 'Headline', 'elementor-pro' ),
+				'label' => esc_html__( 'Headline', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'headline_style',
 			[
-				'label' => __( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'highlight',
 				'options' => [
-					'highlight' => __( 'Highlighted', 'elementor-pro' ),
-					'rotate' => __( 'Rotating', 'elementor-pro' ),
+					'highlight' => esc_html__( 'Highlighted', 'elementor-pro' ),
+					'rotate' => esc_html__( 'Rotating', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-headline--style-',
 				'render_type' => 'template',
@@ -58,7 +58,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'animation_type',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'typing' => 'Typing',
@@ -82,7 +82,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'marker',
 			[
-				'label' => __( 'Shape', 'elementor-pro' ),
+				'label' => esc_html__( 'Shape', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'circle',
 				'options' => [
@@ -107,7 +107,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'before_text',
 			[
-				'label' => __( 'Before Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Before Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -115,8 +115,8 @@ class Animated_Headline extends Base_Widget {
 						TagsModule::TEXT_CATEGORY,
 					],
 				],
-				'default' => __( 'This page is', 'elementor-pro' ),
-				'placeholder' => __( 'Enter your headline', 'elementor-pro' ),
+				'default' => esc_html__( 'This page is', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Enter your headline', 'elementor-pro' ),
 				'label_block' => true,
 				'separator' => 'before',
 			]
@@ -125,7 +125,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'highlighted_text',
 			[
-				'label' => __( 'Highlighted Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Highlighted Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -133,7 +133,7 @@ class Animated_Headline extends Base_Widget {
 						TagsModule::TEXT_CATEGORY,
 					],
 				],
-				'default' => __( 'Amazing', 'elementor-pro' ),
+				'default' => esc_html__( 'Amazing', 'elementor-pro' ),
 				'label_block' => true,
 				'condition' => [
 					'headline_style' => 'highlight',
@@ -146,9 +146,9 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'rotating_text',
 			[
-				'label' => __( 'Rotating Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Rotating Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
-				'placeholder' => __( 'Enter each word in a separate line', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Enter each word in a separate line', 'elementor-pro' ),
 				'separator' => 'none',
 				'default' => "Better\nBigger\nFaster",
 				'dynamic' => [
@@ -167,7 +167,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'after_text',
 			[
-				'label' => __( 'After Text', 'elementor-pro' ),
+				'label' => esc_html__( 'After Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -175,7 +175,7 @@ class Animated_Headline extends Base_Widget {
 						TagsModule::TEXT_CATEGORY,
 					],
 				],
-				'placeholder' => __( 'Enter your headline', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Enter your headline', 'elementor-pro' ),
 				'label_block' => true,
 				'separator' => 'none',
 			]
@@ -184,7 +184,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'loop',
 			[
-				'label' => __( 'Infinite Loop', 'elementor-pro' ),
+				'label' => esc_html__( 'Infinite Loop', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'render_type' => 'template',
@@ -199,7 +199,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'highlight_animation_duration',
 			[
-				'label' => __( 'Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::NUMBER,
 				'default' => 1200,
 				'render_type' => 'template',
@@ -216,7 +216,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'highlight_iteration_delay',
 			[
-				'label' => __( 'Delay', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Delay', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::NUMBER,
 				'default' => 8000,
 				'render_type' => 'template',
@@ -231,7 +231,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'rotate_iteration_delay',
 			[
-				'label' => __( 'Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::NUMBER,
 				'default' => 2500,
 				'render_type' => 'template',
@@ -245,7 +245,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
@@ -257,19 +257,19 @@ class Animated_Headline extends Base_Widget {
 		$this->add_responsive_control(
 			'alignment',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -283,7 +283,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'tag',
 			[
-				'label' => __( 'HTML Tag', 'elementor-pro' ),
+				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -305,7 +305,7 @@ class Animated_Headline extends Base_Widget {
 		$this->start_controls_section(
 			'section_style_marker',
 			[
-				'label' => __( 'Shape', 'elementor-pro' ),
+				'label' => esc_html__( 'Shape', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'headline_style' => 'highlight',
@@ -316,7 +316,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'marker_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_ACCENT,
@@ -330,7 +330,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'stroke_width',
 			[
-				'label' => __( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -347,7 +347,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'above_content',
 			[
-				'label' => __( 'Bring to Front', 'elementor-pro' ),
+				'label' => esc_html__( 'Bring to Front', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-headline-dynamic-wrapper svg' => 'z-index: 2',
@@ -359,7 +359,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'rounded_edges',
 			[
-				'label' => __( 'Rounded Edges', 'elementor-pro' ),
+				'label' => esc_html__( 'Rounded Edges', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke-linecap: round; stroke-linejoin: round',
@@ -372,7 +372,7 @@ class Animated_Headline extends Base_Widget {
 		$this->start_controls_section(
 			'section_style_text',
 			[
-				'label' => __( 'Headline', 'elementor-pro' ),
+				'label' => esc_html__( 'Headline', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -380,7 +380,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -406,7 +406,7 @@ class Animated_Headline extends Base_Widget {
 			'heading_words_style',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => __( 'Animated Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Animated Text', 'elementor-pro' ),
 				'separator' => 'before',
 			]
 		);
@@ -414,7 +414,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'words_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -441,7 +441,7 @@ class Animated_Headline extends Base_Widget {
 			'typing_animation_highlight_colors',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => __( 'Selected Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Selected Text', 'elementor-pro' ),
 				'separator' => 'before',
 				'condition' => [
 					'headline_style' => 'rotate',
@@ -453,7 +453,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'highlighted_text_background_color',
 			[
-				'label' => __( 'Selection Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Selection Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--typing-selected-bg-color: {{VALUE}}',
@@ -468,7 +468,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'highlighted_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--typing-selected-color: {{VALUE}}',
@@ -502,32 +502,33 @@ class Animated_Headline extends Base_Widget {
 
 		if ( ! empty( $settings['link']['url'] ) ) {
 			$this->add_link_attributes( 'url', $settings['link'] );
+			?>
+			<a <?php $this->print_render_attribute_string( 'url' ); ?>>
 
-			echo '<a ' . $this->get_render_attribute_string( 'url' ) . '>';
+			<?php
 		}
 
 		?>
-		<<?php echo $tag; ?> <?php echo $this->get_render_attribute_string( 'headline' ); ?>>
+		<<?php Utils::print_validated_html_tag( $tag ); ?> <?php $this->print_render_attribute_string( 'headline' ); ?>>
 		<?php if ( ! empty( $settings['before_text'] ) ) : ?>
-			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo $settings['before_text']; ?></span>
+			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php $this->print_unescaped_setting( 'before_text' ); ?></span>
 		<?php endif; ?>
 		<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
 		<?php if ( 'rotate' === $settings['headline_style'] && $settings['rotating_text'] ) :
 			$rotating_text = explode( "\n", $settings['rotating_text'] );
-			foreach ( $rotating_text as $key => $text ) :
-				$status_class = 1 > $key ? 'elementor-headline-text-active' : ''; ?>
-			<span class="elementor-headline-dynamic-text <?php echo $status_class; ?>">
-				<?php echo str_replace( ' ', '&nbsp;', $text ); ?>
+			foreach ( $rotating_text as $key => $text ) : ?>
+			<span class="elementor-headline-dynamic-text<?php echo 1 > $key ? ' elementor-headline-text-active' : ''; ?>">
+				<?php Utils::print_unescaped_internal_string( str_replace( ' ', '&nbsp;', $text ) ); ?>
 			</span>
 		<?php endforeach; ?>
 		<?php elseif ( 'highlight' === $settings['headline_style'] && ! empty( $settings['highlighted_text'] ) ) : ?>
-			<span class="elementor-headline-dynamic-text elementor-headline-text-active"><?php echo $settings['highlighted_text']; ?></span>
+			<span class="elementor-headline-dynamic-text elementor-headline-text-active"><?php $this->print_unescaped_setting( 'highlighted_text' ); ?></span>
 		<?php endif ?>
 		</span>
 		<?php if ( ! empty( $settings['after_text'] ) ) : ?>
-			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo $settings['after_text']; ?></span>
+			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php $this->print_unescaped_setting( 'after_text' ); ?></span>
 			<?php endif; ?>
-		</<?php echo $tag; ?>>
+		</<?php Utils::print_validated_html_tag( $tag ); ?>>
 		<?php
 
 		if ( ! empty( $settings['link']['url'] ) ) {
@@ -580,7 +581,7 @@ class Animated_Headline extends Base_Widget {
 						}
 
 						else if ( 'highlight' === settings.headline_style && settings.highlighted_text ) { #>
-							<span class="elementor-headline-dynamic-text elementor-headline-text-active">{{ settings.highlighted_text }}</span>
+							<span class="elementor-headline-dynamic-text elementor-headline-text-active">{{{ settings.highlighted_text }}}</span>
 						<# } #>
 						</span>
 					<# } #>

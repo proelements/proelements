@@ -25,14 +25,14 @@ class Drip extends Integration_Base {
 	}
 
 	public function get_label() {
-		return __( 'Drip', 'elementor-pro' );
+		return esc_html__( 'Drip', 'elementor-pro' );
 	}
 
 	public function register_settings_section( $widget ) {
 		$widget->start_controls_section(
 			'section_drip',
 			[
-				'label' => __( 'Drip', 'elementor-pro' ),
+				'label' => esc_html__( 'Drip', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -52,7 +52,7 @@ class Drip extends Integration_Base {
 		$widget->add_control(
 			'drip_api_token_source',
 			[
-				'label' => __( 'API Key', 'elementor-pro' ),
+				'label' => esc_html__( 'API Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'options' => [
@@ -66,19 +66,19 @@ class Drip extends Integration_Base {
 		$widget->add_control(
 			'drip_custom_api_token',
 			[
-				'label' => __( 'Custom API Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom API Key', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'drip_api_token_source' => 'custom',
 				],
-				'description' => __( 'Use this field to set a custom API key for the current form', 'elementor-pro' ),
+				'description' => esc_html__( 'Use this field to set a custom API key for the current form', 'elementor-pro' ),
 			]
 		);
 
 		$widget->add_control(
 			'drip_account',
 			[
-				'label' => __( 'Account', 'elementor-pro' ),
+				'label' => esc_html__( 'Account', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [],
 				'render_type' => 'none',
@@ -105,7 +105,7 @@ class Drip extends Integration_Base {
 		$widget->add_control(
 			'drip_custom_field_heading',
 			[
-				'label' => __( 'Send Additional Data to Drip', 'elementor-pro' ),
+				'label' => esc_html__( 'Send Additional Data to Drip', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'drip_account!' => '',
@@ -116,10 +116,10 @@ class Drip extends Integration_Base {
 		$widget->add_control(
 			'drip_custom_fields',
 			[
-				'label' => __( 'Form Fields', 'elementor-pro' ),
+				'label' => esc_html__( 'Form Fields', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
-				'description' => __( 'Send all form fields to drip as custom fields', 'elementor-pro' ),
+				'description' => esc_html__( 'Send all form fields to drip as custom fields', 'elementor-pro' ),
 				'condition' => [
 					'drip_account!' => '',
 				],
@@ -129,9 +129,9 @@ class Drip extends Integration_Base {
 		$widget->add_control(
 			'tags',
 			[
-				'label' => __( 'Tags', 'elementor-pro' ),
+				'label' => esc_html__( 'Tags', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'description' => __( 'Add as many tags as you want, comma separated.', 'elementor-pro' ),
+				'description' => esc_html__( 'Add as many tags as you want, comma separated.', 'elementor-pro' ),
 				'condition' => [
 					'drip_account!' => '',
 				],
@@ -159,7 +159,7 @@ class Drip extends Integration_Base {
 		$subscriber = $this->create_subscriber_object( $record );
 
 		if ( ! $subscriber ) {
-			throw new \Exception( __( 'Integration requires an email field', 'elementor-pro' ) );
+			throw new \Exception( esc_html__( 'Integration requires an email field', 'elementor-pro' ) );
 		}
 
 		if ( 'default' === $form_settings['drip_api_token_source'] ) {
@@ -284,16 +284,21 @@ class Drip extends Integration_Base {
 			},
 			'fields' => [
 				self::OPTION_NAME_API_KEY => [
-					'label' => __( 'API Key', 'elementor-pro' ),
+					'label' => esc_html__( 'API Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						'desc' => sprintf( __( 'To integrate with our forms you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-pro' ), 'http://kb.getdrip.com/general/where-can-i-find-my-api-token/' ),
+						'desc' => sprintf(
+							/* translators: 1: Link open tag, 2: Link closing tag. */
+							esc_html__( 'To integrate with our forms you need an %1$sAPI Key%2$s.', 'elementor-pro' ),
+							'<a href="http://kb.getdrip.com/general/where-can-i-find-my-api-token/" target="_blank">',
+							'</a>'
+						),
 					],
 				],
 				'validate_api_data' => [
 					'field_args' => [
 						'type' => 'raw_html',
-						'html' => sprintf( '<button data-action="%s" data-nonce="%s" class="button elementor-button-spinner" id="elementor_pro_drip_api_token_button">%s</button>', self::OPTION_NAME_API_KEY . '_validate', wp_create_nonce( self::OPTION_NAME_API_KEY ), __( 'Validate API Key', 'elementor-pro' ) ),
+						'html' => sprintf( '<button data-action="%s" data-nonce="%s" class="button elementor-button-spinner" id="elementor_pro_drip_api_token_button">%s</button>', self::OPTION_NAME_API_KEY . '_validate', wp_create_nonce( self::OPTION_NAME_API_KEY ), esc_html__( 'Validate API Key', 'elementor-pro' ) ),
 					],
 				],
 			],

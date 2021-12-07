@@ -15,7 +15,7 @@ class Single_Elements extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Woo - Single Elements', 'elementor-pro' );
+		return esc_html__( 'Woo - Single Elements', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -31,28 +31,28 @@ class Single_Elements extends Base_Widget {
 		$this->start_controls_section(
 			'section_product',
 			[
-				'label' => __( 'Element', 'elementor-pro' ),
+				'label' => esc_html__( 'Element', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'element',
 			[
-				'label' => __( 'Element', 'elementor-pro' ),
+				'label' => esc_html__( 'Element', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => '— ' . __( 'Select', 'elementor-pro' ) . ' —',
-					'woocommerce_output_product_data_tabs' => __( 'Data Tabs', 'elementor-pro' ),
-					'woocommerce_template_single_title' => __( 'Title', 'elementor-pro' ),
-					'woocommerce_template_single_rating' => __( 'Rating', 'elementor-pro' ),
-					'woocommerce_template_single_price' => __( 'Price', 'elementor-pro' ),
-					'woocommerce_template_single_excerpt' => __( 'Excerpt', 'elementor-pro' ),
-					'woocommerce_template_single_meta' => __( 'Meta', 'elementor-pro' ),
-					'woocommerce_template_single_sharing' => __( 'Sharing', 'elementor-pro' ),
-					'woocommerce_show_product_sale_flash' => __( 'Sale Flash', 'elementor-pro' ),
-					'woocommerce_product_additional_information_tab' => __( 'Additional Information Tab', 'elementor-pro' ),
-					'woocommerce_upsell_display' => __( 'Upsell', 'elementor-pro' ),
-					'wc_get_stock_html' => __( 'Stock Status', 'elementor-pro' ),
+					'' => '— ' . esc_html__( 'Select', 'elementor-pro' ) . ' —',
+					'woocommerce_output_product_data_tabs' => esc_html__( 'Data Tabs', 'elementor-pro' ),
+					'woocommerce_template_single_title' => esc_html__( 'Title', 'elementor-pro' ),
+					'woocommerce_template_single_rating' => esc_html__( 'Rating', 'elementor-pro' ),
+					'woocommerce_template_single_price' => esc_html__( 'Price', 'elementor-pro' ),
+					'woocommerce_template_single_excerpt' => esc_html__( 'Excerpt', 'elementor-pro' ),
+					'woocommerce_template_single_meta' => esc_html__( 'Meta', 'elementor-pro' ),
+					'woocommerce_template_single_sharing' => esc_html__( 'Sharing', 'elementor-pro' ),
+					'woocommerce_show_product_sale_flash' => esc_html__( 'Sale Flash', 'elementor-pro' ),
+					'woocommerce_product_additional_information_tab' => esc_html__( 'Additional Information Tab', 'elementor-pro' ),
+					'woocommerce_upsell_display' => esc_html__( 'Upsell', 'elementor-pro' ),
+					'wc_get_stock_html' => esc_html__( 'Stock Status', 'elementor-pro' ),
 				],
 			]
 		);
@@ -94,7 +94,7 @@ class Single_Elements extends Base_Widget {
 
 				if ( 'no' === get_option( 'woocommerce_enable_review_rating' ) ) {
 					if ( $is_edit_mode ) {
-						$html = __( 'Admin Notice:', 'elementor-pro' ) . ' ' . __( 'Please enable the Review Rating', 'elementor-pro' );
+						$html = esc_html__( 'Admin Notice:', 'elementor-pro' ) . ' ' . esc_html__( 'Please enable the Review Rating', 'elementor-pro' );
 					}
 					break;
 				}
@@ -103,7 +103,7 @@ class Single_Elements extends Base_Widget {
 				woocommerce_template_single_rating();
 				$html = ob_get_clean();
 				if ( '' === $html && $is_edit_mode ) {
-					$html = __( 'Admin Notice:', 'elementor-pro' ) . ' ' . __( 'No Rating Reviews', 'elementor-pro' );
+					$html = esc_html__( 'Admin Notice:', 'elementor-pro' ) . ' ' . esc_html__( 'No Rating Reviews', 'elementor-pro' );
 				}
 				break;
 
@@ -117,7 +117,8 @@ class Single_Elements extends Base_Widget {
 	}
 
 	protected function render() {
-		echo $this->get_element();
+		// PHPCS - the method get_content is safe.
+		echo $this->get_element(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_plain_content() {}

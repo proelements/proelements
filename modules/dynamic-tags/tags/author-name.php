@@ -15,7 +15,7 @@ class Author_Name extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Author Name', 'elementor-pro' );
+		return esc_html__( 'Author Name', 'elementor-pro' );
 	}
 
 	public function get_group() {

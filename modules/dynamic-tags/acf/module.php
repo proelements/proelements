@@ -72,7 +72,7 @@ class Module extends DynamicTags\Module {
 				// Use group ID for unique keys
 				if ( $has_option_page_location ) {
 					$key = 'options:' . $field['name'];
-					$options[ $key ] = __( 'Options', 'elementor-pro' ) . ':' . $field['label'];
+					$options[ $key ] = esc_html__( 'Options', 'elementor-pro' ) . ':' . $field['label'];
 					if ( $is_only_options_page ) {
 						continue;
 					}
@@ -103,7 +103,7 @@ class Module extends DynamicTags\Module {
 		$tag->add_control(
 			'key',
 			[
-				'label' => __( 'Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'groups' => self::get_control_options( $tag->get_supported_fields() ),
 			]
@@ -144,7 +144,7 @@ class Module extends DynamicTags\Module {
 	public function get_groups() {
 		return [
 			self::ACF_GROUP => [
-				'title' => __( 'ACF', 'elementor-pro' ),
+				'title' => esc_html__( 'ACF', 'elementor-pro' ),
 			],
 		];
 	}

@@ -15,7 +15,7 @@ class Request_Parameter extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Request Parameter', 'elementor-pro' );
+		return esc_html__( 'Request Parameter', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -41,29 +41,29 @@ class Request_Parameter extends Tag {
 
 		switch ( $request_type ) {
 			case 'POST':
-				if ( ! isset( $_POST[ $param_name ] ) ) {
+				if ( ! isset( $_POST[ $param_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					return '';
 				}
-				$value = $_POST[ $param_name ];
+				$value = $_POST[ $param_name ]; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				break;
 			case 'GET':
-				if ( ! isset( $_GET[ $param_name ] ) ) {
+				if ( ! isset( $_GET[ $param_name ] ) ) { // phpcs:ignore
 					return '';
 				}
-				$value = $_GET[ $param_name ];
+				$value = $_GET[ $param_name ]; // phpcs:ignore
 				break;
 			case 'QUERY_VAR':
 				$value = get_query_var( $param_name );
 				break;
 		}
-		echo htmlentities( wp_kses_post( $value ) );
+		echo htmlentities( wp_kses_post( $value ) );  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	protected function register_controls() {
 		$this->add_control(
 			'request_type',
 			[
-				'label'   => __( 'Type', 'elementor-pro' ),
+				'label'   => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'get',
 				'options' => [
@@ -76,7 +76,7 @@ class Request_Parameter extends Tag {
 		$this->add_control(
 			'param_name',
 			[
-				'label'   => __( 'Parameter Name', 'elementor-pro' ),
+				'label'   => esc_html__( 'Parameter Name', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 			]
 		);

@@ -24,7 +24,7 @@ class Post_Featured_Image extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Featured Image', 'elementor-pro' );
+		return esc_html__( 'Featured Image', 'elementor-pro' );
 	}
 
 	public function get_value( array $options = [] ) {
@@ -46,7 +46,7 @@ class Post_Featured_Image extends Data_Tag {
 		$this->add_control(
 			'fallback',
 			[
-				'label' => __( 'Fallback', 'elementor-pro' ),
+				'label' => esc_html__( 'Fallback', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 			]
 		);

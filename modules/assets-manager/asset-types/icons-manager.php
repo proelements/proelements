@@ -60,15 +60,15 @@ class Icons_Manager {
 		$labels = [
 			'name' => _x( 'Custom Icons', 'CPT Name', 'elementor-pro' ),
 			'singular_name' => _x( 'Icon Set', 'CPT Singular Name', 'elementor-pro' ),
-			'add_new' => __( 'Add New', 'elementor-pro' ),
-			'add_new_item' => __( 'Add New Icon Set', 'elementor-pro' ),
-			'edit_item' => __( 'Edit Icon Set', 'elementor-pro' ),
-			'new_item' => __( 'New Icon Set', 'elementor-pro' ),
-			'all_items' => __( 'All Icons', 'elementor-pro' ),
-			'view_item' => __( 'View Icon', 'elementor-pro' ),
-			'search_items' => __( 'Search Icon Set', 'elementor-pro' ),
-			'not_found' => __( 'No icons found', 'elementor-pro' ),
-			'not_found_in_trash' => __( 'No icons found in trash', 'elementor-pro' ),
+			'add_new' => esc_html__( 'Add New', 'elementor-pro' ),
+			'add_new_item' => esc_html__( 'Add New Icon Set', 'elementor-pro' ),
+			'edit_item' => esc_html__( 'Edit Icon Set', 'elementor-pro' ),
+			'new_item' => esc_html__( 'New Icon Set', 'elementor-pro' ),
+			'all_items' => esc_html__( 'All Icons', 'elementor-pro' ),
+			'view_item' => esc_html__( 'View Icon', 'elementor-pro' ),
+			'search_items' => esc_html__( 'Search Icon Set', 'elementor-pro' ),
+			'not_found' => esc_html__( 'No icons found', 'elementor-pro' ),
+			'not_found_in_trash' => esc_html__( 'No icons found in trash', 'elementor-pro' ),
 			'parent_item_colon' => '',
 			'menu_name' => _x( 'Custom Icons', 'CPT Menu Name', 'elementor-pro' ),
 		];
@@ -92,17 +92,17 @@ class Icons_Manager {
 	public function post_updated_messages( $messages ) {
 		$messages[ self::CPT ] = [
 			0 => '', // Unused. Messages start at index 1.
-			1 => __( 'Icon Set updated.', 'elementor-pro' ),
-			2 => __( 'Custom field updated.', 'elementor-pro' ),
-			3 => __( 'Custom field deleted.', 'elementor-pro' ),
-			4 => __( 'Icon Set updated.', 'elementor-pro' ),
+			1 => esc_html__( 'Icon Set updated.', 'elementor-pro' ),
+			2 => esc_html__( 'Custom field updated.', 'elementor-pro' ),
+			3 => esc_html__( 'Custom field deleted.', 'elementor-pro' ),
+			4 => esc_html__( 'Icon Set updated.', 'elementor-pro' ),
 			/* translators: %s: date and time of the revision */
-			5 => isset( $_GET['revision'] ) ? sprintf( __( 'Icon Set restored to revision from %s', 'elementor-pro' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6 => __( 'Icon Set saved.', 'elementor-pro' ),
-			7 => __( 'Icon Set saved.', 'elementor-pro' ),
-			8 => __( 'Icon Set submitted.', 'elementor-pro' ),
-			9 => __( 'Icon Set updated.', 'elementor-pro' ),
-			10 => __( 'Icon Set draft updated.', 'elementor-pro' ),
+			5 => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Icon Set restored to revision from %s', 'elementor-pro' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => esc_html__( 'Icon Set saved.', 'elementor-pro' ),
+			7 => esc_html__( 'Icon Set saved.', 'elementor-pro' ),
+			8 => esc_html__( 'Icon Set submitted.', 'elementor-pro' ),
+			9 => esc_html__( 'Icon Set updated.', 'elementor-pro' ),
+			10 => esc_html__( 'Icon Set draft updated.', 'elementor-pro' ),
 		];
 
 		return $messages;
@@ -155,7 +155,7 @@ class Icons_Manager {
 
 	public function add_finder_item( array $categories ) {
 		$categories['settings']['items']['custom-icons'] = [
-			'title' => __( 'Custom Icons', 'elementor-pro' ),
+			'title' => esc_html__( 'Custom Icons', 'elementor-pro' ),
 			'icon' => 'favorite',
 			'url' => admin_url( 'edit.php?post_type=' . self::CPT ),
 			'keywords' => [ 'custom', 'icons', 'elementor' ],

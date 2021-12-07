@@ -17,7 +17,7 @@ class Page_Title extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Page Title', 'elementor-pro' );
+		return esc_html__( 'Page Title', 'elementor-pro' );
 	}
 
 	public function get_group() {
@@ -58,7 +58,7 @@ class Page_Title extends Tag {
 		$this->add_control(
 			'include_context',
 			[
-				'label' => __( 'Include Context', 'elementor-pro' ),
+				'label' => esc_html__( 'Include Context', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 			]
 		);
@@ -66,7 +66,7 @@ class Page_Title extends Tag {
 		$this->add_control(
 			'show_home_title',
 			[
-				'label' => __( 'Show Home Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Show Home Title', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 			]
 		);

@@ -24,7 +24,7 @@ class Archive_URL extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Archive URL', 'elementor-pro' );
+		return esc_html__( 'Archive URL', 'elementor-pro' );
 	}
 
 	public function get_panel_template() {

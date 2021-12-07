@@ -49,30 +49,35 @@ class Recaptcha_V3_Handler extends Recaptcha_Handler {
 	}
 
 	public static function get_setup_message() {
-		return __( 'To use reCAPTCHA V3, you need to add the API Key and complete the setup process in Dashboard > Elementor > Settings > Integrations > reCAPTCHA V3.', 'elementor-pro' );
+		return esc_html__( 'To use reCAPTCHA V3, you need to add the API Key and complete the setup process in Dashboard > Elementor > Settings > Integrations > reCAPTCHA V3.', 'elementor-pro' );
 	}
 
 	public function register_admin_fields( Settings $settings ) {
 		$settings->add_section( Settings::TAB_INTEGRATIONS, 'recaptcha_v3', [
-			'label' => __( 'reCAPTCHA V3', 'elementor-pro' ),
+			'label' => esc_html__( 'reCAPTCHA V3', 'elementor-pro' ),
 			'callback' => function() {
-				echo sprintf( __( '<a href="%s" target="_blank">reCAPTCHA V3</a> is a free service by Google that protects your website from spam and abuse. It does this while letting your valid users pass through with ease.', 'elementor-pro' ), 'https://www.google.com/recaptcha/intro/v3.html' );
+				echo sprintf(
+					/* translators: 1: Link open tag, 2: Link closing tag. */
+					esc_html__( '%1$sreCAPTCHA V3%2$s is a free service by Google that protects your website from spam and abuse. It does this while letting your valid users pass through with ease.', 'elementor-pro' ),
+					'<a href="https://www.google.com/recaptcha/intro/v3.html" target="_blank">',
+					'</a>'
+				);
 			},
 			'fields' => [
 				'pro_recaptcha_v3_site_key' => [
-					'label' => __( 'Site Key', 'elementor-pro' ),
+					'label' => esc_html__( 'Site Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
 					],
 				],
 				'pro_recaptcha_v3_secret_key' => [
-					'label' => __( 'Secret Key', 'elementor-pro' ),
+					'label' => esc_html__( 'Secret Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
 					],
 				],
 				'pro_recaptcha_v3_threshold' => [
-					'label' => __( 'Score Threshold', 'elementor-pro' ),
+					'label' => esc_html__( 'Score Threshold', 'elementor-pro' ),
 					'field_args' => [
 						'attributes' => [
 							'min' => 0,
@@ -82,7 +87,7 @@ class Recaptcha_V3_Handler extends Recaptcha_Handler {
 						],
 						'std' => 0.5,
 						'type' => 'number',
-						'desc' => __( 'Score threshold should be a value between 0 and 1, default: 0.5', 'elementor-pro' ),
+						'desc' => esc_html__( 'Score threshold should be a value between 0 and 1, default: 0.5', 'elementor-pro' ),
 					],
 				],
 			],
@@ -110,7 +115,7 @@ class Recaptcha_V3_Handler extends Recaptcha_Handler {
 	 */
 	protected function add_error( $ajax_handler, $field, $message ) {
 		parent::add_error( $ajax_handler, $field, $message );
-		$ajax_handler->add_error_message( __( 'reCAPTCHA V3 validation failed, suspected as abusive usage', 'elementor-pro' ) );
+		$ajax_handler->add_error_message( esc_html__( 'reCAPTCHA V3 validation failed, suspected as abusive usage', 'elementor-pro' ) );
 	}
 
 	protected function validate_result( $result, $field ) {
@@ -120,7 +125,7 @@ class Recaptcha_V3_Handler extends Recaptcha_Handler {
 	}
 
 	public function add_field_type( $field_types ) {
-		$field_types['recaptcha_v3'] = __( 'reCAPTCHA V3', 'elementor-pro' );
+		$field_types['recaptcha_v3'] = esc_html__( 'reCAPTCHA V3', 'elementor-pro' );
 
 		return $field_types;
 	}

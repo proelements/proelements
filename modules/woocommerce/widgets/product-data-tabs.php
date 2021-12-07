@@ -16,7 +16,7 @@ class Product_Data_Tabs extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Product Data Tabs', 'elementor-pro' );
+		return esc_html__( 'Product Data Tabs', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -32,7 +32,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->start_controls_section(
 			'section_product_tabs_style',
 			[
-				'label' => __( 'Tabs', 'elementor-pro' ),
+				'label' => esc_html__( 'Tabs', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -41,7 +41,7 @@ class Product_Data_Tabs extends Base_Widget {
 			'wc_style_warning',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
+				'raw' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -50,14 +50,14 @@ class Product_Data_Tabs extends Base_Widget {
 
 		$this->start_controls_tab( 'normal_tabs_style',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'tab_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'color: {{VALUE}}',
@@ -68,7 +68,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'tab_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'alpha' => false,
 				'selectors' => [
@@ -80,7 +80,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'tabs_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
@@ -93,14 +93,14 @@ class Product_Data_Tabs extends Base_Widget {
 
 		$this->start_controls_tab( 'active_tabs_style',
 			[
-				'label' => __( 'Active', 'elementor-pro' ),
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'active_tab_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active a' => 'color: {{VALUE}}',
@@ -111,7 +111,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'active_tab_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'alpha' => false,
 				'selectors' => [
@@ -124,7 +124,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'active_tabs_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
@@ -149,7 +149,7 @@ class Product_Data_Tabs extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tab_typography',
-				'label' => __( 'Typography', 'elementor-pro' ),
+				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a',
 			]
 		);
@@ -157,7 +157,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'tab_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-radius: {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0 0',
@@ -170,7 +170,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->start_controls_section(
 			'section_product_panel_style',
 			[
-				'label' => __( 'Panel', 'elementor-pro' ),
+				'label' => esc_html__( 'Panel', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -178,7 +178,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-Tabs-panel' => 'color: {{VALUE}}',
@@ -190,7 +190,7 @@ class Product_Data_Tabs extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography',
-				'label' => __( 'Typography', 'elementor-pro' ),
+				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel',
 			]
 		);
@@ -199,7 +199,7 @@ class Product_Data_Tabs extends Base_Widget {
 			'heading_panel_heading_style',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => __( 'Heading', 'elementor-pro' ),
+				'label' => esc_html__( 'Heading', 'elementor-pro' ),
 				'separator' => 'before',
 			]
 		);
@@ -207,7 +207,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'heading_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-Tabs-panel h2' => 'color: {{VALUE}}',
@@ -219,7 +219,7 @@ class Product_Data_Tabs extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_heading_typography',
-				'label' => __( 'Typography', 'elementor-pro' ),
+				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel h2',
 			]
 		);
@@ -234,7 +234,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'panel_border_width',
 			[
-				'label' => __( 'Border Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; margin-top: -{{TOP}}{{UNIT}}',
@@ -245,7 +245,7 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'panel_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',

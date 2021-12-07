@@ -1,10 +1,12 @@
 <?php
 namespace ElementorPro\Modules\Forms\Submissions\Actions;
 
-use ElementorPro\Plugin;
+use Elementor\Controls_Manager;
 use Elementor\Core\Utils\Collection;
+use ElementorPro\Plugin;
 use ElementorPro\Modules\Forms\Widgets\Form;
 use ElementorPro\Modules\Forms\Classes\Action_Base;
+use ElementorPro\Modules\Forms\Submissions\Component;
 use ElementorPro\Modules\Forms\Submissions\Database\Query;
 use ElementorPro\Modules\Forms\Submissions\Database\Repositories\Form_Snapshot_Repository;
 
@@ -22,11 +24,36 @@ class Save_To_Database extends Action_Base {
 	}
 
 	public function get_label() {
-		return __( 'Collect Submissions', 'elementor-pro' );
+		return esc_html__( 'Collect Submissions', 'elementor-pro' );
 	}
 
 	public function register_settings_section( $widget ) {
-		// This action does not have extra settings.
+		$widget->start_controls_section(
+			'section_submissions',
+			[
+				'label' => esc_html__( 'Collect Submissions', 'elementor-pro' ),
+				'condition' => [
+					'submit_actions' => $this->get_name(),
+				],
+			]
+		);
+
+		$widget->add_control(
+			'submissions_action_message',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf(
+					__(
+						'Collected Submissions will be saved to Elementor > <a href="%s" target="_blank" rel="noreferrer">Submissions</a>',
+						'elementor-pro'
+					),
+					self_admin_url( 'admin.php?page=' . Component::PAGE_ID )
+				),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
+		$widget->end_controls_section();
 	}
 
 	public function on_export( $element ) {

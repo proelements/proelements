@@ -19,7 +19,7 @@ class Site_Logo extends Widget_Image {
 	}
 
 	public function get_title() {
-		return __( 'Site Logo', 'elementor-pro' );
+		return esc_html__( 'Site Logo', 'elementor-pro' );
 	}
 
 	public function get_icon() {

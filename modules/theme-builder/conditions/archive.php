@@ -28,11 +28,11 @@ class Archive extends Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'Archives', 'elementor-pro' );
+		return esc_html__( 'Archives', 'elementor-pro' );
 	}
 
 	public function get_all_label() {
-		return __( 'All Archives', 'elementor-pro' );
+		return esc_html__( 'All Archives', 'elementor-pro' );
 	}
 
 	public function register_sub_conditions() {

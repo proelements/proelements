@@ -67,7 +67,7 @@ class App extends BaseApp {
 			true
 		);
 
-		wp_set_script_translations( 'elementor-pro-app', 'elementor-pro', ELEMENTOR_PRO_PATH . 'languages' );
+		wp_set_script_translations( 'elementor-pro-app', 'elementor-pro' );
 	}
 
 	private function enqueue_config() {

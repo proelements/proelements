@@ -20,7 +20,7 @@ class Posts extends Posts_Base {
 	}
 
 	public function get_title() {
-		return __( 'Posts', 'elementor-pro' );
+		return esc_html__( 'Posts', 'elementor-pro' );
 	}
 
 	public function get_keywords() {
@@ -64,7 +64,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_query',
 			[
-				'label' => __( 'Query', 'elementor-pro' ),
+				'label' => esc_html__( 'Query', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);

@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\Posts\Skins;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Image_Size;
+use Elementor\Utils;
 use Elementor\Widget_Base;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilder;
 use ElementorPro\Plugin;
@@ -24,7 +25,7 @@ trait Skin_Content_Base {
 	}
 
 	public function get_title() {
-		return __( 'Full Content', 'elementor-pro' );
+		return esc_html__( 'Full Content', 'elementor-pro' );
 	}
 
 	public function register_skin_controls( Widget_Base $widget ) {
@@ -41,7 +42,7 @@ trait Skin_Content_Base {
 		$this->add_control(
 			'thumbnail',
 			[
-				'label' => __( 'Show Thumbnail', 'elementor-pro' ),
+				'label' => esc_html__( 'Show Thumbnail', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'thumbnail',
 				'prefix_class' => 'elementor-posts--show-',
@@ -65,7 +66,7 @@ trait Skin_Content_Base {
 		$this->add_responsive_control(
 			'item_ratio',
 			[
-				'label' => __( 'Image Ratio', 'elementor-pro' ),
+				'label' => esc_html__( 'Image Ratio', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 0.66,
@@ -96,7 +97,7 @@ trait Skin_Content_Base {
 		$this->add_responsive_control(
 			'image_width',
 			[
-				'label' => __( 'Image Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Image Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -142,7 +143,7 @@ trait Skin_Content_Base {
 		$this->add_control(
 			'row_gap',
 			[
-				'label' => __( 'Rows Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Rows Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 35,
@@ -193,19 +194,23 @@ trait Skin_Content_Base {
 
 		$optional_attributes_html = $this->get_optional_link_attributes_html();
 
+		// PHPCS - `get_permalink` is safe.
 		?>
-		<a class="elementor-post__thumbnail__link" href="<?php echo $this->current_permalink; ?>" <?php echo $optional_attributes_html; ?>>
-			<div class="elementor-post__thumbnail"><?php echo $thumbnail_html; ?></div>
+		<a class="elementor-post__thumbnail__link" href="<?php echo $this->current_permalink; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" <?php Utils::print_unescaped_internal_string( $optional_attributes_html ); ?>>
+		<div class="elementor-post__thumbnail"><?php echo wp_kses_post( $thumbnail_html ); ?></div>
 		</a>
 		<?php
 	}
 
 	public function render_post_content( $with_wrapper = false ) {
 		static $did_posts = [];
+		static $level = 0;
+
 		$post = get_post();
 
 		if ( post_password_required( $post->ID ) ) {
-			echo get_the_password_form( $post->ID );
+			// PHPCS - `get_the_password_form`. is safe.
+			echo get_the_password_form( $post->ID ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 
@@ -214,6 +219,7 @@ trait Skin_Content_Base {
 			return;
 		}
 
+		$level++;
 		$did_posts[ $post->ID ] = true;
 		// End avoid recursion
 
@@ -236,6 +242,8 @@ trait Skin_Content_Base {
 					$post = get_post( $preview_id );
 
 					if ( ! $post ) {
+						$level--;
+
 						return;
 					}
 				}
@@ -247,29 +255,37 @@ trait Skin_Content_Base {
 			// Print manually (and don't use `the_content()`) because it's within another `the_content` filter, and the Elementor filter has been removed to avoid recursion.
 			$content = Plugin::elementor()->frontend->get_builder_content( $post->ID, true );
 
-			if ( empty( $content ) ) {
-				Plugin::elementor()->frontend->remove_content_filter();
+			Plugin::elementor()->frontend->remove_content_filter();
 
+			if ( empty( $content ) ) {
 				// Split to pages.
 				setup_postdata( $post );
 
 				/** This filter is documented in wp-includes/post-template.php */
-				echo apply_filters( 'the_content', get_the_content() );
+				// PHPCS - `get_the_content` is safe.
+				echo apply_filters( 'the_content', get_the_content() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 				wp_link_pages( [
-					'before' => '<div class="page-links elementor-page-links"><span class="page-links-title elementor-page-links-title">' . __( 'Pages:', 'elementor-pro' ) . '</span>',
+					'before' => '<div class="page-links elementor-page-links"><span class="page-links-title elementor-page-links-title">' . esc_html__( 'Pages:', 'elementor-pro' ) . '</span>',
 					'after' => '</div>',
 					'link_before' => '<span>',
 					'link_after' => '</span>',
-					'pagelink' => '<span class="screen-reader-text">' . __( 'Page', 'elementor-pro' ) . ' </span>%',
+					'pagelink' => '<span class="screen-reader-text">' . esc_html__( 'Page', 'elementor-pro' ) . ' </span>%',
 					'separator' => '<span class="screen-reader-text">, </span>',
 				] );
 
 				Plugin::elementor()->frontend->add_content_filter();
 
+				$level--;
+
+				// Restore edit mode state
+				Plugin::elementor()->editor->set_edit_mode( $is_edit_mode );
+
 				return;
 			} else {
+				Plugin::elementor()->frontend->remove_content_filters();
 				$content = apply_filters( 'the_content', $content );
+				Plugin::elementor()->frontend->restore_content_filters();
 			}
 		} // End if().
 
@@ -280,6 +296,12 @@ trait Skin_Content_Base {
 			echo '<div class="elementor-post__content">' . balanceTags( $content, true ) . '</div>';  // XSS ok.
 		} else {
 			echo $content; // XSS ok.
+		}
+
+		$level--;
+
+		if ( 0 === $level ) {
+			$did_posts = [];
 		}
 	}
 

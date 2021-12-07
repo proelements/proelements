@@ -20,7 +20,7 @@ class Upload extends Field_Base {
 	}
 
 	public function get_name() {
-		return __( 'File Upload', 'elementor-pro' );
+		return esc_html__( 'File Upload', 'elementor-pro' );
 	}
 
 	/**
@@ -38,32 +38,32 @@ class Upload extends Field_Base {
 		$field_controls = [
 			'file_sizes' => [
 				'name' => 'file_sizes',
-				'label' => __( 'Max. File Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Max. File Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],
 				'options' => $this->get_upload_file_size_options(),
-				'description' => __( 'If you need to increase max upload size please contact your hosting.', 'elementor-pro' ),
+				'description' => esc_html__( 'If you need to increase max upload size please contact your hosting.', 'elementor-pro' ),
 				'tab' => 'content',
 				'inner_tab' => 'form_fields_content_tab',
 				'tabs_wrapper' => 'form_fields_tabs',
 			],
 			'file_types' => [
 				'name' => 'file_types',
-				'label' => __( 'Allowed File Types', 'elementor-pro' ),
+				'label' => esc_html__( 'Allowed File Types', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],
-				'description' => __( 'Enter the allowed file types, separated by a comma (jpg, gif, pdf, etc).', 'elementor-pro' ),
+				'description' => esc_html__( 'Enter the allowed file types, separated by a comma (jpg, gif, pdf, etc).', 'elementor-pro' ),
 				'tab' => 'content',
 				'inner_tab' => 'form_fields_content_tab',
 				'tabs_wrapper' => 'form_fields_tabs',
 			],
 			'allow_multiple_upload' => [
 				'name' => 'allow_multiple_upload',
-				'label' => __( 'Multiple Files', 'elementor-pro' ),
+				'label' => esc_html__( 'Multiple Files', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -74,7 +74,7 @@ class Upload extends Field_Base {
 			],
 			'max_files' => [
 				'name' => 'max_files',
-				'label' => __( 'Max. Files', 'elementor-pro' ),
+				'label' => esc_html__( 'Max. Files', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -109,12 +109,14 @@ class Upload extends Field_Base {
 				'input' . $item_index,
 				[
 					'data-maxsize' => $item['file_sizes'],  //MB
-					'data-maxsize-message' => __( 'This file exceeds the maximum allowed size.', 'elementor-pro' ),
+					'data-maxsize-message' => esc_html__( 'This file exceeds the maximum allowed size.', 'elementor-pro' ),
 				]
 			);
 		}
+		?>
+		<input <?php $form->print_render_attribute_string( 'input' . $item_index ); ?>>
 
-		echo '<input ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
+		<?php
 	}
 
 	/**
@@ -232,17 +234,17 @@ class Upload extends Field_Base {
 
 		if ( ! $upload_errors ) {
 			$upload_errors = [
-				UPLOAD_ERR_OK => __( 'There is no error, the file uploaded with success.', 'elementor-pro' ),
+				UPLOAD_ERR_OK => esc_html__( 'There is no error, the file uploaded with success.', 'elementor-pro' ),
 				/* translators: 1: upload_max_filesize, 2: php.ini */
-				UPLOAD_ERR_INI_SIZE => sprintf( __( 'The uploaded file exceeds the %1$s directive in %2$s.', 'elementor-pro' ), 'upload_max_filesize', 'php.ini' ),
+				UPLOAD_ERR_INI_SIZE => sprintf( esc_html__( 'The uploaded file exceeds the %1$s directive in %2$s.', 'elementor-pro' ), 'upload_max_filesize', 'php.ini' ),
 				/* translators: %s: MAX_FILE_SIZE */
-				UPLOAD_ERR_FORM_SIZE => sprintf( __( 'The uploaded file exceeds the %s directive that was specified in the HTML form.', 'elementor-pro' ), 'MAX_FILE_SIZE' ),
-				UPLOAD_ERR_PARTIAL => __( 'The uploaded file was only partially uploaded.', 'elementor-pro' ),
-				UPLOAD_ERR_NO_FILE => __( 'No file was uploaded.', 'elementor-pro' ),
-				UPLOAD_ERR_NO_TMP_DIR => __( 'Missing a temporary folder.', 'elementor-pro' ),
-				UPLOAD_ERR_CANT_WRITE => __( 'Failed to write file to disk.', 'elementor-pro' ),
+				UPLOAD_ERR_FORM_SIZE => sprintf( esc_html__( 'The uploaded file exceeds the %s directive that was specified in the HTML form.', 'elementor-pro' ), 'MAX_FILE_SIZE' ),
+				UPLOAD_ERR_PARTIAL => esc_html__( 'The uploaded file was only partially uploaded.', 'elementor-pro' ),
+				UPLOAD_ERR_NO_FILE => esc_html__( 'No file was uploaded.', 'elementor-pro' ),
+				UPLOAD_ERR_NO_TMP_DIR => esc_html__( 'Missing a temporary folder.', 'elementor-pro' ),
+				UPLOAD_ERR_CANT_WRITE => esc_html__( 'Failed to write file to disk.', 'elementor-pro' ),
 				/* translators: %s: phpinfo() */
-				UPLOAD_ERR_EXTENSION => sprintf( __( 'A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with %s may help.', 'elementor-pro' ), 'phpinfo()' ),
+				UPLOAD_ERR_EXTENSION => sprintf( esc_html__( 'A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with %s may help.', 'elementor-pro' ), 'phpinfo()' ),
 			];
 			$this->fix_file_indices();
 		}
@@ -284,12 +286,12 @@ class Upload extends Field_Base {
 
 			// valid file type?
 			if ( ! $this->is_file_type_valid( $field, $file ) ) {
-				$ajax_handler->add_error( $id, __( 'This file type is not allowed.', 'elementor-pro' ) );
+				$ajax_handler->add_error( $id, esc_html__( 'This file type is not allowed.', 'elementor-pro' ) );
 			}
 
 			// allowed file size?
 			if ( ! $this->is_file_size_valid( $field, $file ) ) {
-				$ajax_handler->add_error( $id, __( 'This file exceeds the maximum allowed size.', 'elementor-pro' ) );
+				$ajax_handler->add_error( $id, esc_html__( 'This file exceeds the maximum allowed size.', 'elementor-pro' ) );
 			}
 		}
 	}
@@ -435,10 +437,10 @@ class Upload extends Field_Base {
 						]
 					);
 				} else {
-					$ajax_handler->add_error( $id, __( 'There was an error while trying to upload your file.', 'elementor-pro' ) );
+					$ajax_handler->add_error( $id, esc_html__( 'There was an error while trying to upload your file.', 'elementor-pro' ) );
 				}
 			} else {
-				$ajax_handler->add_admin_error_message( __( 'Upload directory is not writable or does not exist.', 'elementor-pro' ) );
+				$ajax_handler->add_admin_error_message( esc_html__( 'Upload directory is not writable or does not exist.', 'elementor-pro' ) );
 			}
 		}
 	}

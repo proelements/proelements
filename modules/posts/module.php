@@ -1,7 +1,9 @@
 <?php
 namespace ElementorPro\Modules\Posts;
 
+use Elementor\Utils;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Modules\Posts\Data\Controller;
 use ElementorPro\Modules\Posts\Widgets\Posts_Base;
 use ElementorPro\Plugin;
 
@@ -72,8 +74,13 @@ class Module extends Module_Base {
 			if ( isset( $element['widgetType'] ) && in_array( $element['widgetType'], $posts_widgets, true ) ) {
 				// Has pagination.
 				if ( ! empty( $element['settings']['pagination_type'] ) ) {
-					// No max pages limits.
-					if ( empty( $element['settings']['pagination_page_limit'] ) ) {
+					$using_ajax_pagination = in_array( $element['settings']['pagination_type'], [
+						Posts_Base::LOAD_MORE_ON_CLICK,
+						Posts_Base::LOAD_MORE_INFINITE_SCROLL,
+					], true);
+
+					// No max pages limits or in load more mode.
+					if ( empty( $element['settings']['pagination_page_limit'] ) || $using_ajax_pagination ) {
 						$is_valid = true;
 					} elseif ( (int) $current_page <= (int) $element['settings']['pagination_page_limit'] ) {
 						// Has page limit but current page is less than or equal to max page limit.
@@ -89,7 +96,10 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		Plugin::elementor()->data_manager->register_controller( Controller::class );
+
 		add_filter( 'pre_handle_404', [ $this, 'allow_posts_widget_pagination' ], 10, 2 );
 	}
 
 }
+

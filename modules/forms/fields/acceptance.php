@@ -15,7 +15,7 @@ class Acceptance extends Field_Base {
 	}
 
 	public function get_name() {
-		return __( 'Acceptance', 'elementor-pro' );
+		return esc_html__( 'Acceptance', 'elementor-pro' );
 	}
 
 	public function update_controls( $widget ) {
@@ -30,7 +30,7 @@ class Acceptance extends Field_Base {
 		$field_controls = [
 			'acceptance_text' => [
 				'name' => 'acceptance_text',
-				'label' => __( 'Acceptance Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Acceptance Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -41,7 +41,7 @@ class Acceptance extends Field_Base {
 			],
 			'checked_by_default' => [
 				'name' => 'checked_by_default',
-				'label' => __( 'Checked by Default', 'elementor-pro' ),
+				'label' => esc_html__( 'Checked by Default', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -69,6 +69,14 @@ class Acceptance extends Field_Base {
 			$form->add_render_attribute( 'input' . $item_index, 'checked', 'checked' );
 		}
 
-		echo '<div class="elementor-field-subgroup"><span class="elementor-field-option"><input ' . $form->get_render_attribute_string( 'input' . $item_index ) . '> ' . $label . '</span></div>';
+		?>
+		<div class="elementor-field-subgroup">
+			<span class="elementor-field-option">
+				<input <?php $form->print_render_attribute_string( 'input' . $item_index ); ?>>
+				<?php // PHPCS - the variables $label is safe.
+				echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</span>
+		</div>
+		<?php
 	}
 }

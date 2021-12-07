@@ -16,11 +16,11 @@ class Search_Results extends Archive {
 	}
 
 	public static function get_title() {
-		return __( 'Search Results', 'elementor-pro' );
+		return esc_html__( 'Search Results', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Search Results', 'elementor-pro' );
+		return esc_html__( 'Search Results', 'elementor-pro' );
 	}
 
 	protected static function get_site_editor_icon() {
@@ -29,9 +29,9 @@ class Search_Results extends Archive {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => __( 'What is a Search Results Template?', 'elementor-pro' ),
-			'content' => __( 'You can easily control the layout and design of the Search Results page with the Search Results template, which is simply a special archive template just for displaying search results.', 'elementor-pro' ),
-			'tip' => __( 'You can customize the message if there are no results for the search term.', 'elementor-pro' ),
+			'title' => esc_html__( 'What is a Search Results Template?', 'elementor-pro' ),
+			'content' => esc_html__( 'You can easily control the layout and design of the Search Results page with the Search Results template, which is simply a special archive template just for displaying search results.', 'elementor-pro' ),
+			'tip' => esc_html__( 'You can customize the message if there are no results for the search term.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-search-results',
 			'video_url' => 'https://www.youtube.com/embed/KKkIU_L5sDo',
 		];
@@ -43,12 +43,12 @@ class Search_Results extends Archive {
 
 	public static function get_preview_as_options() {
 		$options = [
-			'search' => __( 'Search Results', 'elementor-pro' ),
+			'search' => esc_html__( 'Search Results', 'elementor-pro' ),
 		];
 
 		return [
 			'archive' => [
-				'label' => __( 'Archive', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive', 'elementor-pro' ),
 				'options' => $options,
 			],
 		];

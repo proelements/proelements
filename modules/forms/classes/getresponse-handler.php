@@ -55,7 +55,7 @@ class Getresponse_Handler {
 		$results = $this->rest_client->get( 'campaigns' );
 
 		$lists = [
-			'' => __( 'Select...', 'elementor-pro' ),
+			'' => esc_html__( 'Select...', 'elementor-pro' ),
 		];
 
 		if ( ! empty( $results['body'] ) ) {
@@ -79,13 +79,13 @@ class Getresponse_Handler {
 
 		$fields = [
 			[
-				'remote_label' => __( 'Email', 'elementor-pro' ),
+				'remote_label' => esc_html__( 'Email', 'elementor-pro' ),
 				'remote_type' => 'email',
 				'remote_id' => 'email',
 				'remote_required' => true,
 			],
 			[
-				'remote_label' => __( 'Name', 'elementor-pro' ),
+				'remote_label' => esc_html__( 'Name', 'elementor-pro' ),
 				'remote_type' => 'text',
 				'remote_id' => 'name',
 				'remote_required' => false,

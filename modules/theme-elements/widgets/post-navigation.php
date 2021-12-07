@@ -18,7 +18,7 @@ class Post_Navigation extends Base {
 	}
 
 	public function get_title() {
-		return __( 'Post Navigation', 'elementor-pro' );
+		return esc_html__( 'Post Navigation', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -41,17 +41,17 @@ class Post_Navigation extends Base {
 		$this->start_controls_section(
 			'section_post_navigation_content',
 			[
-				'label' => __( 'Post Navigation', 'elementor-pro' ),
+				'label' => esc_html__( 'Post Navigation', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'show_label',
 			[
-				'label' => __( 'Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Label', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -59,9 +59,9 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'prev_label',
 			[
-				'label' => __( 'Previous Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Previous Label', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Previous', 'elementor-pro' ),
+				'default' => esc_html__( 'Previous', 'elementor-pro' ),
 				'condition' => [
 					'show_label' => 'yes',
 				],
@@ -71,9 +71,9 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'next_label',
 			[
-				'label' => __( 'Next Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Next Label', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Next', 'elementor-pro' ),
+				'default' => esc_html__( 'Next', 'elementor-pro' ),
 				'condition' => [
 					'show_label' => 'yes',
 				],
@@ -83,10 +83,10 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'show_arrow',
 			[
-				'label' => __( 'Arrows', 'elementor-pro' ),
+				'label' => esc_html__( 'Arrows', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -94,18 +94,18 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'arrow',
 			[
-				'label' => __( 'Arrows Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Arrows Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'fa fa-angle-left' => __( 'Angle', 'elementor-pro' ),
-					'fa fa-angle-double-left' => __( 'Double Angle', 'elementor-pro' ),
-					'fa fa-chevron-left' => __( 'Chevron', 'elementor-pro' ),
-					'fa fa-chevron-circle-left' => __( 'Chevron Circle', 'elementor-pro' ),
-					'fa fa-caret-left' => __( 'Caret', 'elementor-pro' ),
-					'fa fa-arrow-left' => __( 'Arrow', 'elementor-pro' ),
-					'fa fa-long-arrow-left' => __( 'Long Arrow', 'elementor-pro' ),
-					'fa fa-arrow-circle-left' => __( 'Arrow Circle', 'elementor-pro' ),
-					'fa fa-arrow-circle-o-left' => __( 'Arrow Circle Negative', 'elementor-pro' ),
+					'fa fa-angle-left' => esc_html__( 'Angle', 'elementor-pro' ),
+					'fa fa-angle-double-left' => esc_html__( 'Double Angle', 'elementor-pro' ),
+					'fa fa-chevron-left' => esc_html__( 'Chevron', 'elementor-pro' ),
+					'fa fa-chevron-circle-left' => esc_html__( 'Chevron Circle', 'elementor-pro' ),
+					'fa fa-caret-left' => esc_html__( 'Caret', 'elementor-pro' ),
+					'fa fa-arrow-left' => esc_html__( 'Arrow', 'elementor-pro' ),
+					'fa fa-long-arrow-left' => esc_html__( 'Long Arrow', 'elementor-pro' ),
+					'fa fa-arrow-circle-left' => esc_html__( 'Arrow Circle', 'elementor-pro' ),
+					'fa fa-arrow-circle-o-left' => esc_html__( 'Arrow Circle Negative', 'elementor-pro' ),
 				],
 				'default' => 'fa fa-angle-left',
 				'condition' => [
@@ -117,10 +117,10 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'show_title',
 			[
-				'label' => __( 'Post Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Post Title', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 			]
 		);
@@ -128,10 +128,10 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'show_borders',
 			[
-				'label' => __( 'Borders', 'elementor-pro' ),
+				'label' => esc_html__( 'Borders', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 				'prefix_class' => 'elementor-post-navigation-borders-',
 			]
@@ -156,13 +156,13 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'in_same_term',
 			[
-				'label' => __( 'In same Term', 'elementor-pro' ),
+				'label' => esc_html__( 'In same Term', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'options' => $post_type_options,
 				'default' => '',
 				'multiple' => true,
 				'label_block' => true,
-				'description' => __( 'Indicates whether next post must be within the same taxonomy term as the current post, this lets you set a taxonomy per each post type', 'elementor-pro' ),
+				'description' => esc_html__( 'Indicates whether next post must be within the same taxonomy term as the current post, this lets you set a taxonomy per each post type', 'elementor-pro' ),
 			]
 		);
 
@@ -170,7 +170,7 @@ class Post_Navigation extends Base {
 			$this->add_control(
 				$post_type . '_taxonomy',
 				[
-					'label' => $post_type_label . ' ' . __( 'Taxonomy', 'elementor-pro' ),
+					'label' => $post_type_label . ' ' . esc_html__( 'Taxonomy', 'elementor-pro' ),
 					'type' => Controls_Manager::SELECT,
 					'options' => $post_type_taxonomies[ $post_type ],
 					'default' => '',
@@ -186,7 +186,7 @@ class Post_Navigation extends Base {
 		$this->start_controls_section(
 			'label_style',
 			[
-				'label' => __( 'Label', 'elementor-pro' ),
+				'label' => esc_html__( 'Label', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_label' => 'yes',
@@ -199,14 +199,14 @@ class Post_Navigation extends Base {
 		$this->start_controls_tab(
 			'label_color_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'label_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -223,14 +223,14 @@ class Post_Navigation extends Base {
 		$this->start_controls_tab(
 			'label_color_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'label_hover_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} span.post-navigation__prev--label:hover' => 'color: {{VALUE}};',
@@ -260,7 +260,7 @@ class Post_Navigation extends Base {
 		$this->start_controls_section(
 			'title_style',
 			[
-				'label' => __( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_title' => 'yes',
@@ -273,14 +273,14 @@ class Post_Navigation extends Base {
 		$this->start_controls_tab(
 			'tab_color_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -296,14 +296,14 @@ class Post_Navigation extends Base {
 		$this->start_controls_tab(
 			'tab_color_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'hover_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} span.post-navigation__prev--title:hover, {{WRAPPER}} span.post-navigation__next--title:hover' => 'color: {{VALUE}};',
@@ -332,7 +332,7 @@ class Post_Navigation extends Base {
 		$this->start_controls_section(
 			'arrow_style',
 			[
-				'label' => __( 'Arrow', 'elementor-pro' ),
+				'label' => esc_html__( 'Arrow', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_arrow' => 'yes',
@@ -345,14 +345,14 @@ class Post_Navigation extends Base {
 		$this->start_controls_tab(
 			'arrow_color_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'arrow_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .post-navigation__arrow-wrapper' => 'color: {{VALUE}};',
@@ -365,14 +365,14 @@ class Post_Navigation extends Base {
 		$this->start_controls_tab(
 			'arrow_color_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'arrow_hover_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .post-navigation__arrow-wrapper:hover' => 'color: {{VALUE}};',
@@ -387,7 +387,7 @@ class Post_Navigation extends Base {
 		$this->add_responsive_control(
 			'arrow_size',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -404,7 +404,7 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'arrow_padding',
 			[
-				'label' => __( 'Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'body:not(.rtl) {{WRAPPER}} .post-navigation__arrow-prev' => 'padding-right: {{SIZE}}{{UNIT}};',
@@ -426,7 +426,7 @@ class Post_Navigation extends Base {
 		$this->start_controls_section(
 			'borders_section_style',
 			[
-				'label' => __( 'Borders', 'elementor-pro' ),
+				'label' => esc_html__( 'Borders', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_borders!' => '',
@@ -437,7 +437,7 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'sep_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				//'default' => '#D4D4D4',
 				'selectors' => [
@@ -450,7 +450,7 @@ class Post_Navigation extends Base {
 		$this->add_responsive_control(
 			'borders_width',
 			[
-				'label' => __( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -470,7 +470,7 @@ class Post_Navigation extends Base {
 		$this->add_control(
 			'borders_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post-navigation' => 'padding: {{SIZE}}{{UNIT}} 0;',

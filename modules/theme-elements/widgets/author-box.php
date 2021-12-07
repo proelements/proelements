@@ -7,7 +7,6 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
-use ElementorPro\Core\Utils as Pro_Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -20,7 +19,7 @@ class Author_Box extends Base {
 	}
 
 	public function get_title() {
-		return __( 'Author Box', 'elementor-pro' );
+		return esc_html__( 'Author Box', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -42,19 +41,19 @@ class Author_Box extends Base {
 		$this->start_controls_section(
 			'section_author_info',
 			[
-				'label' => __( 'Author Info', 'elementor-pro' ),
+				'label' => esc_html__( 'Author Info', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'source',
 			[
-				'label' => __( 'Source', 'elementor-pro' ),
+				'label' => esc_html__( 'Source', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'current',
 				'options' => [
-					'current' => __( 'Current Author', 'elementor-pro' ),
-					'custom' => __( 'Custom', 'elementor-pro' ),
+					'current' => esc_html__( 'Current Author', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 			]
 		);
@@ -62,11 +61,11 @@ class Author_Box extends Base {
 		$this->add_control(
 			'show_avatar',
 			[
-				'label' => __( 'Profile Picture', 'elementor-pro' ),
+				'label' => esc_html__( 'Profile Picture', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'prefix_class' => 'elementor-author-box--avatar-',
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 				'separator' => 'before',
 				'condition' => [
@@ -80,7 +79,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'author_avatar',
 			[
-				'label' => __( 'Profile Picture', 'elementor-pro' ),
+				'label' => esc_html__( 'Profile Picture', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
@@ -96,11 +95,11 @@ class Author_Box extends Base {
 		$this->add_control(
 			'show_name',
 			[
-				'label' => __( 'Display Name', 'elementor-pro' ),
+				'label' => esc_html__( 'Display Name', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'prefix_class' => 'elementor-author-box--name-',
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 				'condition' => [
 					'source!' => 'custom',
@@ -114,9 +113,9 @@ class Author_Box extends Base {
 		$this->add_control(
 			'author_name',
 			[
-				'label' => __( 'Name', 'elementor-pro' ),
+				'label' => esc_html__( 'Name', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'John Doe', 'elementor-pro' ),
+				'default' => esc_html__( 'John Doe', 'elementor-pro' ),
 				'condition' => [
 					'source' => 'custom',
 				],
@@ -128,7 +127,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'author_name_tag',
 			[
-				'label' => __( 'HTML Tag', 'elementor-pro' ),
+				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -147,28 +146,28 @@ class Author_Box extends Base {
 		$this->add_control(
 			'link_to',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'None', 'elementor-pro' ),
-					'website' => __( 'Website', 'elementor-pro' ),
-					'posts_archive' => __( 'Posts Archive', 'elementor-pro' ),
+					'' => esc_html__( 'None', 'elementor-pro' ),
+					'website' => esc_html__( 'Website', 'elementor-pro' ),
+					'posts_archive' => esc_html__( 'Posts Archive', 'elementor-pro' ),
 				],
 				'condition' => [
 					'source!' => 'custom',
 				],
-				'description' => __( 'Link for the Author Name and Image', 'elementor-pro' ),
+				'description' => esc_html__( 'Link for the Author Name and Image', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'show_biography',
 			[
-				'label' => __( 'Biography', 'elementor-pro' ),
+				'label' => esc_html__( 'Biography', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'prefix_class' => 'elementor-author-box--biography-',
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 				'condition' => [
 					'source!' => 'custom',
@@ -181,11 +180,11 @@ class Author_Box extends Base {
 		$this->add_control(
 			'show_link',
 			[
-				'label' => __( 'Archive Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive Button', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'prefix_class' => 'elementor-author-box--link-',
-				'label_on' => __( 'Show', 'elementor-pro' ),
-				'label_off' => __( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'no',
 				'condition' => [
 					'source!' => 'custom',
@@ -197,22 +196,22 @@ class Author_Box extends Base {
 		$this->add_control(
 			'author_website',
 			[
-				'label' => __( 'Link', 'elementor-pro' ),
+				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'condition' => [
 					'source' => 'custom',
 				],
-				'description' => __( 'Link for the Author Name and Image', 'elementor-pro' ),
+				'description' => esc_html__( 'Link for the Author Name and Image', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'author_bio',
 			[
-				'label' => __( 'Biography', 'elementor-pro' ),
+				'label' => esc_html__( 'Biography', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
-				'default' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
+				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 				'rows' => 3,
 				'condition' => [
 					'source' => 'custom',
@@ -224,9 +223,9 @@ class Author_Box extends Base {
 		$this->add_control(
 			'posts_url',
 			[
-				'label' => __( 'Archive Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive Button', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'condition' => [
 					'source' => 'custom',
 				],
@@ -236,28 +235,28 @@ class Author_Box extends Base {
 		$this->add_control(
 			'link_text',
 			[
-				'label' => __( 'Archive Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Archive Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'All Posts', 'elementor-pro' ),
+				'default' => esc_html__( 'All Posts', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'layout',
 			[
-				'label' => __( 'Layout', 'elementor-pro' ),
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'above' => [
-						'title' => __( 'Above', 'elementor-pro' ),
+						'title' => esc_html__( 'Above', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
@@ -269,19 +268,19 @@ class Author_Box extends Base {
 		$this->add_control(
 			'alignment',
 			[
-				'label' => __( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
@@ -294,7 +293,7 @@ class Author_Box extends Base {
 		$this->start_controls_section(
 			'section_image_style',
 			[
-				'label' => __( 'Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -302,15 +301,15 @@ class Author_Box extends Base {
 		$this->add_control(
 			'image_vertical_align',
 			[
-				'label' => __( 'Vertical Align', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Align', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'top' => [
-						'title' => __( 'Top', 'elementor-pro' ),
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'middle' => [
-						'title' => __( 'Middle', 'elementor-pro' ),
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
 						'icon' => 'eicon-v-align-middle',
 					],
 				],
@@ -324,7 +323,7 @@ class Author_Box extends Base {
 		$this->add_responsive_control(
 			'image_size',
 			[
-				'label' => __( 'Image Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Image Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -341,7 +340,7 @@ class Author_Box extends Base {
 		$this->add_responsive_control(
 			'image_gap',
 			[
-				'label' => __( 'Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -364,7 +363,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'image_border',
 			[
-				'label' => __( 'Border', 'elementor-pro' ),
+				'label' => esc_html__( 'Border', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__avatar img' => 'border-style: solid',
@@ -375,7 +374,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'image_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
@@ -390,7 +389,7 @@ class Author_Box extends Base {
 		$this->add_responsive_control(
 			'image_border_width',
 			[
-				'label' => __( 'Border Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -410,7 +409,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'image_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__avatar img' => 'border-radius: {{SIZE}}{{UNIT}}',
@@ -436,7 +435,7 @@ class Author_Box extends Base {
 		$this->start_controls_section(
 			'section_text_style',
 			[
-				'label' => __( 'Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Text', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -444,7 +443,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'heading_name_style',
 			[
-				'label' => __( 'Name', 'elementor-pro' ),
+				'label' => esc_html__( 'Name', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -453,7 +452,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'name_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -478,7 +477,7 @@ class Author_Box extends Base {
 		$this->add_responsive_control(
 			'name_gap',
 			[
-				'label' => __( 'Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -495,7 +494,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'heading_bio_style',
 			[
-				'label' => __( 'Biography', 'elementor-pro' ),
+				'label' => esc_html__( 'Biography', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -504,7 +503,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'bio_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -529,7 +528,7 @@ class Author_Box extends Base {
 		$this->add_responsive_control(
 			'bio_gap',
 			[
-				'label' => __( 'Gap', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -558,14 +557,14 @@ class Author_Box extends Base {
 		$this->start_controls_tab(
 			'tab_button_normal',
 			[
-				'label' => __( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'button_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -580,7 +579,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'button_background_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__button' => 'background-color: {{VALUE}}',
@@ -604,14 +603,14 @@ class Author_Box extends Base {
 		$this->start_controls_tab(
 			'tab_button_hover',
 			[
-				'label' => __( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'button_hover_color',
 			[
-				'label' => __( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
@@ -625,7 +624,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'button_background_hover_color',
 			[
-				'label' => __( 'Background Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-author-box__button:hover' => 'background-color: {{VALUE}};',
@@ -636,7 +635,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'button_hover_animation',
 			[
-				'label' => __( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation', 'elementor-pro' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
 			]
 		);
@@ -648,7 +647,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'button_border_width',
 			[
-				'label' => __( 'Border Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -669,7 +668,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'button_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -690,7 +689,7 @@ class Author_Box extends Base {
 		$this->add_control(
 			'button_text_padding',
 			[
-				'label' => __( 'Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -709,7 +708,7 @@ class Author_Box extends Base {
 		$link_tag = 'div';
 		$link_url = '';
 		$link_target = '';
-		$author_name_tag = Pro_Utils::validate_html_tag( $settings['author_name_tag'] );
+		$author_name_tag = Utils::validate_html_tag( $settings['author_name_tag'] );
 
 		$custom_src = ( 'custom' === $settings['source'] );
 
@@ -807,27 +806,29 @@ class Author_Box extends Base {
 		?>
 		<div class="elementor-author-box">
 			<?php if ( $print_avatar ) { ?>
-				<<?php echo $link_tag; ?> <?php echo $this->get_render_attribute_string( 'author_link' ); ?> class="elementor-author-box__avatar">
-					<img <?php echo $this->get_render_attribute_string( 'avatar' ); ?>>
-				</<?php echo $link_tag; ?>>
+				<<?php Utils::print_validated_html_tag( $link_tag ); ?> <?php $this->print_render_attribute_string( 'author_link' ); ?> class="elementor-author-box__avatar">
+					<img <?php $this->print_render_attribute_string( 'avatar' ); ?>>
+				</<?php Utils::print_validated_html_tag( $link_tag ); ?>>
 			<?php } ?>
 
 			<div class="elementor-author-box__text">
 				<?php if ( $print_name ) : ?>
-					<<?php echo $link_tag; ?> <?php echo $this->get_render_attribute_string( 'author_link' ); ?>>
-						<?php echo '<' . $author_name_tag . ' class="elementor-author-box__name">' . $author['display_name'] . '</' . $author_name_tag . '>'; ?>
-					</<?php echo $link_tag; ?>>
+					<<?php Utils::print_validated_html_tag( $link_tag ); ?> <?php $this->print_render_attribute_string( 'author_link' ); ?>>
+						<<?php Utils::print_validated_html_tag( $author_name_tag ); ?> class="elementor-author-box__name">
+							<?php Utils::print_unescaped_internal_string( $author['display_name'] ); ?>
+						</<?php Utils::print_validated_html_tag( $author_name_tag ); ?>>
+					</<?php Utils::print_validated_html_tag( $link_tag ); ?>>
 				<?php endif; ?>
 
 				<?php if ( $print_bio ) : ?>
 					<div class="elementor-author-box__bio">
-						<?php echo $author['bio']; ?>
+						<?php Utils::print_unescaped_internal_string( $author['bio'] ); ?>
 					</div>
 				<?php endif; ?>
 
 				<?php if ( $print_link ) : ?>
-					<a <?php echo $this->get_render_attribute_string( 'button' ); ?>>
-						<?php echo $settings['link_text']; ?>
+					<a <?php $this->print_render_attribute_string( 'button' ); ?>>
+						<?php $this->print_unescaped_setting( 'link_text' ); ?>
 					</a>
 				<?php endif; ?>
 			</div>

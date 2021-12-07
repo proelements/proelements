@@ -14,7 +14,7 @@ class Post_Excerpt extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Excerpt', 'elementor-pro' );
+		return esc_html__( 'Post Excerpt', 'elementor-pro' );
 	}
 
 	public function get_group() {

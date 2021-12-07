@@ -14,7 +14,7 @@ class ACF_File extends ACF_Image {
 	}
 
 	public function get_title() {
-		return __( 'ACF', 'elementor-pro' ) . ' ' . __( 'File Field', 'elementor-pro' );
+		return esc_html__( 'ACF', 'elementor-pro' ) . ' ' . esc_html__( 'File Field', 'elementor-pro' );
 	}
 
 	public function get_categories() {

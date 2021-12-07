@@ -16,7 +16,7 @@ class Facebook_Embed extends Base_Widget {
 	}
 
 	public function get_title() {
-		return __( 'Facebook Embed', 'elementor-pro' );
+		return esc_html__( 'Facebook Embed', 'elementor-pro' );
 	}
 
 	public function get_icon() {
@@ -35,7 +35,7 @@ class Facebook_Embed extends Base_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Embed', 'elementor-pro' ),
+				'label' => esc_html__( 'Embed', 'elementor-pro' ),
 			]
 		);
 
@@ -44,13 +44,13 @@ class Facebook_Embed extends Base_Widget {
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor-pro' ),
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'post',
 				'options' => [
-					'post' => __( 'Post', 'elementor-pro' ),
-					'video' => __( 'Video', 'elementor-pro' ),
-					'comment' => __( 'Comment', 'elementor-pro' ),
+					'post' => esc_html__( 'Post', 'elementor-pro' ),
+					'video' => esc_html__( 'Video', 'elementor-pro' ),
+					'comment' => esc_html__( 'Comment', 'elementor-pro' ),
 				],
 			]
 		);
@@ -58,7 +58,7 @@ class Facebook_Embed extends Base_Widget {
 		$this->add_control(
 			'post_url',
 			[
-				'label' => __( 'URL', 'elementor-pro' ),
+				'label' => esc_html__( 'URL', 'elementor-pro' ),
 				'default' => 'https://www.facebook.com/elemntor/posts/2624214124556197',
 				'dynamic' => [
 					'active' => true,
@@ -67,14 +67,14 @@ class Facebook_Embed extends Base_Widget {
 				'condition' => [
 					'type' => 'post',
 				],
-				'description' => __( 'Hover over the date next to the post, and copy its link address.', 'elementor-pro' ),
+				'description' => esc_html__( 'Hover over the date next to the post, and copy its link address.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'video_url',
 			[
-				'label' => __( 'URL', 'elementor-pro' ),
+				'label' => esc_html__( 'URL', 'elementor-pro' ),
 				'default' => 'https://www.facebook.com/elemntor/videos/1683988961912056/',
 				'dynamic' => [
 					'active' => true,
@@ -83,14 +83,14 @@ class Facebook_Embed extends Base_Widget {
 				'condition' => [
 					'type' => 'video',
 				],
-				'description' => __( 'Hover over the date next to the video, and copy its link address.', 'elementor-pro' ),
+				'description' => esc_html__( 'Hover over the date next to the video, and copy its link address.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'comment_url',
 			[
-				'label' => __( 'URL', 'elementor-pro' ),
+				'label' => esc_html__( 'URL', 'elementor-pro' ),
 				'default' => 'https://www.facebook.com/elemntor/videos/1811703749140576/?comment_id=1812873919023559',
 				'dynamic' => [
 					'active' => true,
@@ -99,17 +99,17 @@ class Facebook_Embed extends Base_Widget {
 				'condition' => [
 					'type' => 'comment',
 				],
-				'description' => __( 'Hover over the date next to the comment, and copy its link address.', 'elementor-pro' ),
+				'description' => esc_html__( 'Hover over the date next to the comment, and copy its link address.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'include_parent',
 			[
-				'label' => __( 'Parent Comment', 'elementor-pro' ),
+				'label' => esc_html__( 'Parent Comment', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
-				'description' => __( 'Set to include parent comment (if URL is a reply).', 'elementor-pro' ),
+				'description' => esc_html__( 'Set to include parent comment (if URL is a reply).', 'elementor-pro' ),
 				'condition' => [
 					'type' => 'comment',
 				],
@@ -119,10 +119,10 @@ class Facebook_Embed extends Base_Widget {
 		$this->add_control(
 			'show_text',
 			[
-				'label' => __( 'Full Post', 'elementor-pro' ),
+				'label' => esc_html__( 'Full Post', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
-				'description' => __( 'Show the full text of the post', 'elementor-pro' ),
+				'description' => esc_html__( 'Show the full text of the post', 'elementor-pro' ),
 				'condition' => [
 					'type' => [ 'post', 'video' ],
 				],
@@ -132,7 +132,7 @@ class Facebook_Embed extends Base_Widget {
 		$this->add_control(
 			'video_allowfullscreen',
 			[
-				'label' => __( 'Allow Full Screen', 'elementor-pro' ),
+				'label' => esc_html__( 'Allow Full Screen', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
 				'condition' => [
@@ -144,7 +144,7 @@ class Facebook_Embed extends Base_Widget {
 		$this->add_control(
 			'video_autoplay',
 			[
-				'label' => __( 'Autoplay', 'elementor-pro' ),
+				'label' => esc_html__( 'Autoplay', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
 				'condition' => [
@@ -156,10 +156,10 @@ class Facebook_Embed extends Base_Widget {
 		$this->add_control(
 			'video_show_captions',
 			[
-				'label' => __( 'Captions', 'elementor-pro' ),
+				'label' => esc_html__( 'Captions', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
-				'description' => __( 'Show captions if available (only on desktop).', 'elementor-pro' ),
+				'description' => esc_html__( 'Show captions if available (only on desktop).', 'elementor-pro' ),
 				'condition' => [
 					'type' => 'video',
 				],

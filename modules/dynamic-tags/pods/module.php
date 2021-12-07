@@ -120,7 +120,7 @@ class Module extends DynamicTags\Module {
 	public function get_groups() {
 		return [
 			self::PODS_GROUP => [
-				'title' => __( 'Pods', 'elementor-pro' ),
+				'title' => esc_html__( 'Pods', 'elementor-pro' ),
 			],
 		];
 	}

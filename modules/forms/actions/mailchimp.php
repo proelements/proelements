@@ -30,14 +30,14 @@ class Mailchimp extends Integration_Base {
 	}
 
 	public function get_label() {
-		return __( 'MailChimp', 'elementor-pro' );
+		return esc_html__( 'MailChimp', 'elementor-pro' );
 	}
 
 	public function register_settings_section( $widget ) {
 		$widget->start_controls_section(
 			'section_mailchimp',
 			[
-				'label' => __( 'MailChimp', 'elementor-pro' ),
+				'label' => esc_html__( 'MailChimp', 'elementor-pro' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -57,7 +57,7 @@ class Mailchimp extends Integration_Base {
 		$widget->add_control(
 			'mailchimp_api_key_source',
 			[
-				'label' => __( 'API Key', 'elementor-pro' ),
+				'label' => esc_html__( 'API Key', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'options' => [
@@ -71,19 +71,19 @@ class Mailchimp extends Integration_Base {
 		$widget->add_control(
 			'mailchimp_api_key',
 			[
-				'label' => __( 'Custom API Key', 'elementor-pro' ),
+				'label' => esc_html__( 'Custom API Key', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'mailchimp_api_key_source' => 'custom',
 				],
-				'description' => __( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
+				'description' => esc_html__( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
 			]
 		);
 
 		$widget->add_control(
 			'mailchimp_list',
 			[
-				'label' => __( 'Audience', 'elementor-pro' ),
+				'label' => esc_html__( 'Audience', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [],
 				'render_type' => 'none',
@@ -108,7 +108,7 @@ class Mailchimp extends Integration_Base {
 		$widget->add_control(
 			'mailchimp_groups',
 			[
-				'label' => __( 'Groups', 'elementor-pro' ),
+				'label' => esc_html__( 'Groups', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT2,
 				'options' => [],
 				'label_block' => true,
@@ -123,8 +123,8 @@ class Mailchimp extends Integration_Base {
 		$widget->add_control(
 			'mailchimp_tags',
 			[
-				'label' => __( 'Tags', 'elementor-pro' ),
-				'description' => __( 'Add comma separated tags', 'elementor-pro' ),
+				'label' => esc_html__( 'Tags', 'elementor-pro' ),
+				'description' => esc_html__( 'Add comma separated tags', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'render_type' => 'none',
 				'condition' => [
@@ -136,7 +136,7 @@ class Mailchimp extends Integration_Base {
 		$widget->add_control(
 			'mailchimp_double_opt_in',
 			[
-				'label' => __( 'Double Opt-In', 'elementor-pro' ),
+				'label' => esc_html__( 'Double Opt-In', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
 				'condition' => [
@@ -238,11 +238,11 @@ class Mailchimp extends Integration_Base {
 		// Build the request tags.
 		$request_tags = [];
 
-		// Set current tags to inactive.
+		// Set current tags to active.
 		foreach ( $subscriber['tags'] as $tag ) {
 			$request_tags[] = [
 				'name' => $tag['name'],
-				'status' => 'inactive',
+				'status' => 'active',
 			];
 		}
 
@@ -272,6 +272,53 @@ class Mailchimp extends Integration_Base {
 	}
 
 	/**
+	 * Get Mailchimp subscriber data.
+	 *
+	 * @param string $list - Mailchimp List ID.
+	 * @param string $email_hash - Subscriber's email hash (lowercase + MD5).
+	 *
+	 * @return array|null
+	 */
+	private function get_subscriber_data( $list, $email_hash ) {
+		$handler = new Mailchimp_Handler( $this->api_key );
+		$end_point = sprintf( 'lists/%s/members/%s', $list, $email_hash );
+
+		try {
+			return $handler->query( $end_point );
+		} catch ( \Exception $e ) {
+			return null;
+		}
+	}
+
+	/**
+	 * Set Mailchimp subscriber data.
+	 *
+	 * @param string $list - Mailchimp List ID.
+	 * @param string $email_hash - Subscriber's email hash (lowercase + MD5).
+	 * @param array $data - New subscriber data to set.
+	 *
+	 * @return array
+	 */
+	private function set_subscriber_data( $list, $email_hash, $data ) {
+		$handler = new Mailchimp_Handler( $this->api_key );
+
+		$end_point = sprintf( 'lists/%s/members/%s', $list, $email_hash );
+
+		$response = $handler->post( $end_point, $data, [
+			'method' => 'PUT', // Add or Update
+		] );
+
+		if ( 200 !== $response['code'] ) {
+			$error = ! empty( $response['body']['detail'] ) ? $response['body']['detail'] : '';
+			$code = $response['code'];
+
+			throw new \Exception( "HTTP {$code} - {$error}" );
+		}
+
+		return $response['body'];
+	}
+
+	/**
 	 * Create or update a Mailchimp subscriber.
 	 *
 	 * @param array $subscriber - Subscriber data from the form in the frontend.
@@ -294,25 +341,24 @@ class Mailchimp extends Integration_Base {
 			$subscriber['tags'] = explode( ',', trim( $form_settings['mailchimp_tags'] ) );
 		}
 
-		$handler = new Mailchimp_Handler( $this->api_key );
+		$list = $form_settings['mailchimp_list'];
+		$email_hash = md5( strtolower( $subscriber['email_address'] ) );
+		$double_opt_in = ( 'yes' === $form_settings['mailchimp_double_opt_in'] );
 
-		$subscriber['status_if_new'] = 'yes' === $form_settings['mailchimp_double_opt_in'] ? 'pending' : 'subscribed';
-		$subscriber['status'] = 'subscribed';
+		$subscriber['status_if_new'] = $double_opt_in ? 'pending' : 'subscribed';
 
-		$end_point = sprintf( 'lists/%s/members/%s', $form_settings['mailchimp_list'], md5( strtolower( $subscriber['email_address'] ) ) );
+		if ( $double_opt_in ) {
+			$subscriber_data = $this->get_subscriber_data( $list, $email_hash );
 
-		$response = $handler->post( $end_point, $subscriber, [
-			'method' => 'PUT', // Add or Update
-		] );
-
-		if ( 200 !== $response['code'] ) {
-			$error = ! empty( $response['body']['detail'] ) ? $response['body']['detail'] : '';
-			$code = $response['code'];
-
-			throw new \Exception( "HTTP {$code} - {$error}" );
+			// Change the current status only if the user isn't subscribed already.
+			if ( $subscriber_data && 'subscribed' !== $subscriber_data['status'] ) {
+				$subscriber['status'] = 'pending';
+			}
+		} else {
+			$subscriber['status'] = 'subscribed';
 		}
 
-		return $response['body'];
+		return $this->set_subscriber_data( $list, $email_hash, $subscriber );
 	}
 
 	/**
@@ -373,11 +419,19 @@ class Mailchimp extends Integration_Base {
 
 		$handler = new Mailchimp_Handler( $api_key );
 
-		if ( 'lists' === $data['mailchimp_action'] ) {
-			return $handler->get_lists();
-		}
+		switch ( $data['mailchimp_action'] ) {
+			case 'lists':
+				return $handler->get_lists();
 
-		return $handler->get_list_details( $data['mailchimp_list'] );
+			case 'fields':
+				return $handler->get_fields( $data['mailchimp_list'] );
+
+			case 'groups':
+				return $handler->get_groups( $data['mailchimp_list'] );
+
+			default:
+				return $handler->get_list_details( $data['mailchimp_list'] );
+		}
 	}
 
 	public function register_admin_fields( Settings $settings ) {
@@ -387,16 +441,21 @@ class Mailchimp extends Integration_Base {
 			},
 			'fields' => [
 				self::OPTION_NAME_API_KEY => [
-					'label' => __( 'API Key', 'elementor-pro' ),
+					'label' => esc_html__( 'API Key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						'desc' => sprintf( __( 'To integrate with our forms you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-pro' ), 'https://kb.mailchimp.com/integrations/api-integrations/about-api-keys' ),
+						'desc' => sprintf(
+							/* translators: 1: Link open tag, 2: Link closing tag. */
+							esc_html__( 'To integrate with our forms you need an %1$sAPI Key%2$s.', 'elementor-pro' ),
+							'<a href="https://kb.mailchimp.com/integrations/api-integrations/about-api-keys" target="_blank">',
+							'</a>'
+						),
 					],
 				],
 				'validate_api_data' => [
 					'field_args' => [
 						'type' => 'raw_html',
-						'html' => sprintf( '<button data-action="%s" data-nonce="%s" class="button elementor-button-spinner" id="elementor_pro_mailchimp_api_key_button">%s</button>', self::OPTION_NAME_API_KEY . '_validate', wp_create_nonce( self::OPTION_NAME_API_KEY ), __( 'Validate API Key', 'elementor-pro' ) ),
+						'html' => sprintf( '<button data-action="%s" data-nonce="%s" class="button elementor-button-spinner" id="elementor_pro_mailchimp_api_key_button">%s</button>', self::OPTION_NAME_API_KEY . '_validate', wp_create_nonce( self::OPTION_NAME_API_KEY ), esc_html__( 'Validate API Key', 'elementor-pro' ) ),
 					],
 				],
 			],

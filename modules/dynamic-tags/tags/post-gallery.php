@@ -15,7 +15,7 @@ class Post_Gallery extends Data_Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Image Attachments', 'elementor-pro' );
+		return esc_html__( 'Post Image Attachments', 'elementor-pro' );
 	}
 
 	public function get_categories() {

@@ -46,6 +46,8 @@ class Elementor_Related_Query extends Elementor_Post_Query {
 		$this->set_fallback_arg_by_settings( 'posts_per_page', $original_query->query_vars['posts_per_page'] );
 		$this->fallback_args = apply_filters( 'elementor/query/fallback_query_args', $this->fallback_args, $this->widget );
 
+		$this->fallback_args['no_found_rows'] = true;
+
 		return new \WP_Query( $this->fallback_args );
 	}
 

@@ -14,7 +14,7 @@ class Post_Title extends Tag {
 	}
 
 	public function get_title() {
-		return __( 'Post Title', 'elementor-pro' );
+		return esc_html__( 'Post Title', 'elementor-pro' );
 	}
 
 	public function get_group() {

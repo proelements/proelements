@@ -58,7 +58,7 @@ class Conditions_Manager {
 		$offset = 3;
 
 		$posts_columns = array_slice( $posts_columns, 0, $offset, true ) + [
-			'instances' => __( 'Instances', 'elementor-pro' ),
+			'instances' => esc_html__( 'Instances', 'elementor-pro' ),
 		] + array_slice( $posts_columns, $offset, null, true );
 
 		return $posts_columns;
@@ -72,9 +72,10 @@ class Conditions_Manager {
 		$instances = $this->get_document_instances( $post_id );
 
 		if ( ! empty( $instances ) ) {
-			echo implode( '<br />', $instances );
+			// PHPCS - the method get_document_instances is safe.
+			echo implode( '<br />', $instances ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
-			echo __( 'None', 'elementor-pro' );
+			echo esc_html__( 'None', 'elementor-pro' );
 		}
 	}
 
@@ -106,7 +107,7 @@ class Conditions_Manager {
 			return '';
 		}
 
-		return __( 'Elementor recognized that you have set this location for other templates: ', 'elementor-pro' ) .
+		return esc_html__( 'Elementor recognized that you have set this location for other templates: ', 'elementor-pro' ) .
 			' ' .
 			implode( ', ', $conflicted );
 	}

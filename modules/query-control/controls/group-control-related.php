@@ -28,7 +28,7 @@ class Group_Control_Related extends Group_Control_Query {
 		$tabs_wrapper = $name . '_query_args';
 		$include_wrapper = $name . '_query_include';
 
-		$fields['post_type']['options']['related'] = __( 'Related', 'elementor-pro' );
+		$fields['post_type']['options']['related'] = esc_html__( 'Related', 'elementor-pro' );
 		$fields['include_term_ids']['condition']['post_type!'][] = 'related';
 		$fields['related_taxonomies']['condition']['post_type'][] = 'related';
 		$fields['include_authors']['condition']['post_type!'][] = 'related';
@@ -37,7 +37,7 @@ class Group_Control_Related extends Group_Control_Query {
 		$fields['offset']['condition']['post_type!'][] = 'related';
 
 		$related_taxonomies = [
-			'label' => __( 'Term', 'elementor-pro' ),
+			'label' => esc_html__( 'Term', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT2,
 			'options' => $this->get_supported_taxonomies(),
 			'label_block' => true,
@@ -53,15 +53,15 @@ class Group_Control_Related extends Group_Control_Query {
 		];
 
 		$related_fallback = [
-			'label' => __( 'Fallback', 'elementor-pro' ),
+			'label' => esc_html__( 'Fallback', 'elementor-pro' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'fallback_none' => __( 'None', 'elementor-pro' ),
-				'fallback_by_id' => __( 'Manual Selection', 'elementor-pro' ),
-				'fallback_recent' => __( 'Recent Posts', 'elementor-pro' ),
+				'fallback_none' => esc_html__( 'None', 'elementor-pro' ),
+				'fallback_by_id' => esc_html__( 'Manual Selection', 'elementor-pro' ),
+				'fallback_recent' => esc_html__( 'Recent Posts', 'elementor-pro' ),
 			],
 			'default' => 'fallback_none',
-			'description' => __( 'Displayed if no relevant results are found. Manual selection display order is random', 'elementor-pro' ),
+			'description' => esc_html__( 'Displayed if no relevant results are found. Manual selection display order is random', 'elementor-pro' ),
 			'condition' => [
 				'post_type' => 'related',
 			],
@@ -69,7 +69,7 @@ class Group_Control_Related extends Group_Control_Query {
 		];
 
 		$fallback_ids = [
-			'label' => __( 'Search & Select', 'elementor-pro' ),
+			'label' => esc_html__( 'Search & Select', 'elementor-pro' ),
 			'type' => Query_Module::QUERY_CONTROL_ID,
 			'options' => [],
 			'label_block' => true,

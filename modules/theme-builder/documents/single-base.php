@@ -21,11 +21,11 @@ abstract class Single_Base extends Archive_Single_Base {
 	}
 
 	public static function get_title() {
-		return __( 'Single', 'elementor-pro' );
+		return esc_html__( 'Single', 'elementor-pro' );
 	}
 
 	public static function get_plural_title() {
-		return __( 'Singles', 'elementor-pro' );
+		return esc_html__( 'Singles', 'elementor-pro' );
 	}
 
 	public static function get_editor_panel_config() {
@@ -41,7 +41,7 @@ abstract class Single_Base extends Archive_Single_Base {
 	protected static function get_editor_panel_categories() {
 		$categories = [
 			'theme-elements-single' => [
-				'title' => __( 'Single', 'elementor-pro' ),
+				'title' => esc_html__( 'Single', 'elementor-pro' ),
 			],
 		];
 
@@ -84,7 +84,7 @@ abstract class Single_Base extends Archive_Single_Base {
 			 * show a placeholder instead of content.
 			 */
 			if ( $requested_document && ! $requested_document instanceof Section && $requested_document->get_location() !== $this->get_location() ) {
-				echo '<div class="elementor-theme-builder-content-area">' . __( 'Content Area', 'elementor-pro' ) . '</div>';
+				echo '<div class="elementor-theme-builder-content-area">' . esc_html__( 'Content Area', 'elementor-pro' ) . '</div>';
 
 				return;
 			}
@@ -132,10 +132,10 @@ abstract class Single_Base extends Archive_Single_Base {
 
 		return [
 			'single' => [
-				'label' => __( 'Single', 'elementor-pro' ),
+				'label' => esc_html__( 'Single', 'elementor-pro' ),
 				'options' => $post_types_options,
 			],
-			'page/404' => __( '404', 'elementor-pro' ),
+			'page/404' => esc_html__( '404', 'elementor-pro' ),
 		];
 	}
 
@@ -170,11 +170,11 @@ abstract class Single_Base extends Archive_Single_Base {
 
 		wp_localize_script( 'elementor-frontend', 'elementorPreviewErrorArgs', [
 			/* translators: %s: is the widget name. */
-			'headerMessage' => sprintf( __( 'The %s Widget was not found in your template.', 'elementor-pro' ), $depended_widget_title ),
+			'headerMessage' => sprintf( esc_html__( 'The %s Widget was not found in your template.', 'elementor-pro' ), $depended_widget_title ),
 			/* translators: %1$s: is the widget name. %2$s: is the template name.  */
-			'message' => sprintf( __( 'You must include the %1$s Widget in your template (%2$s), in order for Elementor to work on this page.', 'elementor-pro' ), $depended_widget_title, '<strong>' . static::get_title() . '</strong>' ),
+			'message' => sprintf( esc_html__( 'You must include the %1$s Widget in your template (%2$s), in order for Elementor to work on this page.', 'elementor-pro' ), $depended_widget_title, '<strong>' . static::get_title() . '</strong>' ),
 			'strings' => [
-				'confirm' => __( 'Edit Template', 'elementor-pro' ),
+				'confirm' => esc_html__( 'Edit Template', 'elementor-pro' ),
 			],
 			'confirmURL' => $this->get_edit_url(),
 		] );
