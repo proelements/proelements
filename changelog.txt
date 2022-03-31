@@ -1,5 +1,86 @@
 # PRO Elements - by PROElements.org
 
+#### 3.6.4 - 2022-03-15
+
+* Tweak: Kit import dynamic reference support for templates and dynamic tags
+* Tweak: Updated tested up to version tag to `3.6.0`
+* Fix: Sticky caused scrolling issues after clicking an element that expands the page height ([#17821](https://github.com/elementor/elementor/issues/17821), [#17839](https://github.com/elementor/elementor/issues/17839), [#18069](https://github.com/elementor/elementor/issues/18069))
+* Fix: When saving Global widget JS error is being thrown and editor fails to load ([#17954](https://github.com/elementor/elementor/issues/17954))
+* Fix: Motion effects are missing from Background section under Style tab in Container element ([#18063](https://github.com/elementor/elementor/issues/18063))
+* Fix: Imported Kit doesn't appear in the theme builder after successful import in some cases
+* Fix: Added future Pro support to fix the Cart icon that shifted aside in Menu cart widget
+
+#### 3.6.3 - 2022-02-28
+
+* Fix: Custom Code display conditions modal is not working ([#17865](https://github.com/elementor/elementor/issues/17865), [#17942](https://github.com/elementor/elementor/issues/17942), [#17994](https://github.com/elementor/elementor/issues/17994))
+* Fix: Share buttons are not accessible for keyboard navigation ([#8615](https://github.com/elementor/elementor/issues/8615))
+
+#### 3.6.2 - 2022-02-14
+
+* Fix: Auto updates mechanism is not working as expected (this version might be also installed automatically)
+
+#### 3.6.1 - 2022-02-09
+
+* Tweak: Allow connecting via generic source for future feature support
+* Fix: Custom Code doesn't work when WooCommerce is active ([#17675](https://github.com/elementor/elementor/issues/17675))
+* Fix: Content animation didn't work when Improved asset loading experiment is active Slides widget ([#17055](https://github.com/elementor/elementor/issues/17055))
+* Fix: PHP warning appears some times when trying to force-check for available updates
+* Fix: Page transitions are being triggered when not needed
+* Fix: Text alignment on Tablet responsive device affects base device in Testimonial Carousel widget
+* Fix: Harden Submissions feature to prevent potential security issues
+* Fix: Page Transitions Icon option Preloader doesn't work on frontend
+
+#### 3.6.0 - 2022-01-31
+
+* New: WooCommerce Purchase Summary widget - Fully customize the content and style of your order summary page ([#5756](https://github.com/elementor/elementor/issues/5756), [#15862](https://github.com/elementor/elementor/issues/15862))
+* New: WooCommerce Notices styling on Site Settings - Customize the appearance of WooCommerce notices ([#14570](https://github.com/elementor/elementor/issues/14570), [#15896](https://github.com/elementor/elementor/issues/15896))
+* New: WooCommerce Notices widget - Set the position of WooCommerce notices on your shop pages ([#8124](https://github.com/elementor/elementor/issues/8124))
+* Experiment: Page Transitions - Customize the page loading experience, and increase brand recognition ([#10576](https://github.com/elementor/elementor/issues/10576))
+* Tweak: Added WooCommerce & Theme Elements widgets to Improved CSS Loading experiment to save up 126KB per page load ([#17412](https://github.com/elementor/elementor/issues/17412), [#17337](https://github.com/elementor/elementor/issues/17337))
+* Tweak: Added new layout options in WooCommerce Add To Cart and WooCommerce Custom Add To Cart widgets ([#5437](https://github.com/elementor/elementor/issues/5437), [#10617](https://github.com/elementor/elementor/issues/10617))
+* Tweak: Added Stroke functionality for typography control in various widgets ([#11158](https://github.com/elementor/elementor/issues/11158))
+* Tweak: Removed `elementor-section-wrap` by adding it to the Optimized DOM Output experiment ([#16950](https://github.com/elementor/elementor/issues/16950))
+* Tweak: Added style controls for variations in WooCommerce Menu Cart widget
+* Tweak: Added color control to navigation dots in Media Carousel, Reviews, and Slides widgets
+* Tweak: Disabled Vimeo autoplay on edit mode when getting video data in Video Playlist widget
+* Tweak: Added notice about Facebook's new EU consent policy in Facebook Button, Facebook Comments, Facebook Embed, and Facebook Page widgets
+* Tweak: Refactor string translation calls to use native WP translation methods
+* Tweak: Convert `home_url` license API call to `get_site_url` for better compatibility
+* Tweak: Promoted Default to New Theme Builder and Scroll Snap experiments to Stable status in Experiments screen
+* Tweak: Scroll Snap experiment set to active by default for all websites in Experiments screen
+* Tweak: Scrolling Effects in Header and Section backgrounds are not working as expected when effects are relative to the entire page
+* Tweak: Added "Auto Updates" capability to Pro versions
+* Tweak: Removed sequenced animation hover effect option from Classic skin in Call to Action widget
+* Tweak: Added "Excerpt Length" control in Post Excerpt widget
+* Tweak: Deleted deprecated methods from Query Control module
+* Tweak: Adjusted Inline-CSS Experiment to work with Additional Custom Breakpoints experiment
+* Fix: Automatically open cart functionality didn't work in product page in WooCommerce Menu Cart widget ([#5921](https://github.com/elementor/elementor/issues/5921), [#16276](https://github.com/elementor/elementor/issues/16276),[#16879](https://github.com/elementor/elementor/issues/16879))
+* Fix: Buttons are not visible when there are too many products in the cart in WooCommerce Menu Cart widget ([#16221](https://github.com/elementor/elementor/issues/16221), [#17283](https://github.com/elementor/elementor/issues/17283),[#16333](https://github.com/elementor/elementor/issues/16333),[#13005](https://github.com/elementor/elementor/issues/13005))
+* Fix: Mini cart modal z-index is too low in WooCommerce Menu Cart widget ([#16333](https://github.com/elementor/elementor/issues/16333))
+* Fix: Side cart buttons are not visible at first glance on mobile in WooCommerce Menu Cart widget ([#16221](https://github.com/elementor/elementor/issues/16221))
+* Fix: Read More field recognizes inline HTML elements as plain text in Posts and Archive Posts widget ([#16985](https://github.com/elementor/elementor/issues/16985))
+* Fix: Load More functionality caused JS error console in Posts widget ([#17036](https://github.com/elementor/elementor/issues/17036))
+* Fix: Autoplay is not working as expected when the lazy load is active in Video Playlist widget ([#15304](https://github.com/elementor/elementor/issues/15304), [#16274](https://github.com/elementor/elementor/issues/16274))
+* Fix: Right navigation area wasn't 100% clickable in Post Navigation widget ([#14252](https://github.com/elementor/elementor/issues/14252))
+* Fix: Posts duplicate when there are two Posts widgets inside a page using pagination functionality ([#17056](https://github.com/elementor/elementor/issues/17056))
+* Fix: Global widget changes are not reflected on frontend ([#16820](https://github.com/elementor/elementor/issues/16820))
+* Fix: JS Error console message when using the Load More functionality and Post Per Page option in Posts widget
+* Fix: Heading styling is not being loaded when Inline CSS experiment is active in Post and Page Title widgets
+* Fix: Sticky offset not working as expected when changing device mode on the browser 
+* Fix: Scroll Snap functionality wasn't applied on Templates and Archives
+* Fix: Toggle icon color didn't work on hover state when Inline Font Icons experiment is activated in Nav Menu widget
+* Fix: Variations style controls are not working as expected in WooCommerce Add to Cart widget
+* Fix: Display conditions module is not working as expected when using the new Theme Builder UI
+* Fix: Edit header handles `z-index` issues in Header document
+* Fix: Panel icons UI glitch in Call To Action widget
+* Fix: WordPress 5.9 `WP_User_query` `who` argument deprecation adjustments
+
+#### 3.5.2 - 2021-11-28
+* Tweak: Adjusted license mechanism to support trial period
+* Fix: Updates made to Global Widgets do not reflect accordingly to linked widgets ([#16815](https://github.com/elementor/elementor/issues/16815))
+* Fix: Hamburger toggle button doesn't change to “close” when menu is collapsed in Nav Menu widget when Inline Font Awesome experiment is active
+* Fix: Global Widget cannot be unlinked
+
 #### 3.5.1 - 2021-11-10
 * Fix: Inline HTML elements appear as plain text in Animated Headline widget ([#16816](https://github.com/elementor/elementor/issues/16816))
 * Fix: Dropdown items inherited values from Main Menu space between control in Nav Menu widget ([#16815]((https://github.com/elementor/elementor/issues/16815))
@@ -150,7 +231,7 @@
 * Fix: Populating fields with options programmatically doesn't appear in Submissions screen ([#10671](https://github.com/elementor/elementor/issues/10671))
 * Fix: Large images are not shown on the Image Carousel widget when set via Toolset dynamic tag
 * Fix: Enable inline editing to the inner content tabs in Video Playlist widget
-* Fix: Clicking on the video list doesn't play videos properly in Video Playlist widget
+* Fix: Clicking on the video list doesn't play videos properly in Video Playlist widget 
 * Fix: Hide Play Icon control when Image overlay is toggled off in Video Playlist widget
 * Fix: Removed extra space below the player when viewing from mobile view in Video Playlist widget
 * Fix: Import button is not working properly in Theme Builder interface

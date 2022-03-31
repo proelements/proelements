@@ -29,6 +29,14 @@ class Tag extends DynamicTagsTag {
 		return [ DynamicTagsModule::URL_CATEGORY ];
 	}
 
+	public static function on_import_replace_dynamic_content( $config, $map_old_new_post_ids ) {
+		if ( isset( $config['settings']['popup'] ) ) {
+			$config['settings']['popup'] = $map_old_new_post_ids[ $config['settings']['popup'] ];
+		}
+
+		return $config;
+	}
+
 	public function register_controls() {
 		$this->add_control(
 			'action',

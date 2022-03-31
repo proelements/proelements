@@ -1,11 +1,11 @@
-/*! pro-elements - v3.5.1 - 10-11-2021 */
+/*! pro-elements - v3.6.4 - 15-03-2022 */
 .elementor-document-handle {
   display: none;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   position: absolute;
-  z-index: 100;
+  z-index: 2147483640;
   top: 0;
   left: 50%;
   -webkit-transform: translateX(-50%);

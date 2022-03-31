@@ -63,6 +63,20 @@ class Facebook_SDK_Manager {
 				'content_classes' => $content_classes,
 			]
 		);
+
+		$widget->add_control(
+			'app_eu_message',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf(
+					/* translators: 1: Link open tag, 2: Link close tag. */
+					esc_html__( 'For visitors from the EU, Facebook widgets will only work for site visitors if they have logged into Facebook and consented to cookies. %1$sLearn more%2$s', 'elementor-pro' ),
+					sprintf( '<a href="%s" target="_blank">', 'https://developers.facebook.com/docs/plugins/' ),
+					'</a>'
+				),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
 	}
 
 	public function localize_settings( $settings ) {

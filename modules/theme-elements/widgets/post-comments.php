@@ -118,4 +118,8 @@ class Post_Comments extends Base {
 			Plugin::elementor()->db->restore_current_post();
 		}
 	}
+
+	public function get_group_name() {
+		return 'theme-elements';
+	}
 }

@@ -25,6 +25,7 @@ class Module extends Module_Base {
 
 	protected $docs_types = [];
 	protected $use_mini_cart_template;
+	protected $woocommerce_notices_elements = [];
 
 	public static function is_active() {
 		return class_exists( 'woocommerce' );
@@ -67,9 +68,11 @@ class Module extends Module_Base {
 			'Product_Related',
 			'Product_Upsell',
 
+			'Purchase_Summary',
 			'Checkout',
 			'Cart',
 			'My_Account',
+			'Notices',
 		];
 	}
 
@@ -110,7 +113,9 @@ class Module extends Module_Base {
 		] );
 
 		foreach ( $tags as $tag ) {
-			$module->register_tag( 'ElementorPro\\Modules\\Woocommerce\\tags\\' . $tag );
+			$tag = 'ElementorPro\\Modules\\Woocommerce\\tags\\' . $tag;
+
+			$module->register( new $tag() );
 		}
 	}
 
@@ -163,8 +168,12 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * Render menu cart.
+	 * Render Menu Cart
+	 *
 	 * The `widget_shopping_cart_content` div will be populated by woocommerce js.
+	 *
+	 * When in the editor we populate this on page load as we can't rely on the woocoommerce js to re-add the fragments
+	 * each time a widget us re-rendered.
 	 */
 	public static function render_menu_cart() {
 		if ( null === WC()->cart ) {
@@ -172,6 +181,7 @@ class Module extends Module_Base {
 		}
 
 		$widget_cart_is_hidden = apply_filters( 'woocommerce_widget_cart_is_hidden', false );
+		$is_edit_mode = Plugin::elementor()->editor->is_edit_mode();
 		?>
 		<div class="elementor-menu-cart__wrapper">
 			<?php if ( ! $widget_cart_is_hidden ) : ?>
@@ -180,7 +190,9 @@ class Module extends Module_Base {
 						<div class="elementor-menu-cart__main" aria-hidden="true">
 							<div class="elementor-menu-cart__close-button"></div>
 							<div class="widget_shopping_cart_content">
-								<?php woocommerce_mini_cart(); ?>
+								<?php if ( $is_edit_mode ) {
+									woocommerce_mini_cart();
+								} ?>
 							</div>
 						</div>
 					</div>
@@ -232,7 +244,7 @@ class Module extends Module_Base {
 		$has_cart = is_a( WC()->cart, 'WC_Cart' );
 
 		if ( $has_cart ) {
-			$settings['menu_cart'] = [
+			$settings['woocommerce']['menu_cart'] = [
 				'cart_page_url' => wc_get_cart_url(),
 				'checkout_page_url' => wc_get_checkout_url(),
 			];
@@ -460,6 +472,42 @@ class Module extends Module_Base {
 	public function register_ajax_actions( Ajax $ajax ) {
 		// `woocommerce_update_page_option` is called in the editor save-show-modal.js.
 		$ajax->register_ajax_action( 'pro_woocommerce_update_page_option', [ $this, 'update_page_option' ] );
+		$ajax->register_ajax_action( 'pro_woocommerce_mock_notices', [ $this, 'woocommerce_mock_notices' ] );
+	}
+
+	public function woocommerce_mock_notices( $data ) {
+		if ( in_array( 'wc_error', $data['notice_elements'], true ) ) {
+			/* translators: 1: Error notice text, 2: Error notice link. */
+			$notice_message = sprintf(
+				'%1$s <a href="#" class="wc-backward">%2$s</a>',
+				esc_html__( 'Oops, this is how an error notice would look.', 'elementor-pro' ),
+				esc_html__( 'Here\'s a link', 'elementor-pro' )
+			);
+			wc_add_notice( $notice_message, 'error' );
+		}
+
+		if ( in_array( 'wc_message', $data['notice_elements'], true ) ) {
+			/* translators: 1: Message notice button, 2: Message notice text, 3: Message notice link. */
+			$notice_message = sprintf(
+				'<a href="#" tabindex="1" class="button wc-forward">%1$s</a> %2$s <a href="#" class="restore-item">%3$s</a>',
+				esc_html__( 'Button', 'elementor-pro' ),
+				esc_html__( 'This is what a WooCommerce message notice looks like.', 'elementor-pro' ),
+				esc_html__( 'Here\'s a link', 'elementor-pro' )
+			);
+			wc_add_notice( $notice_message, 'success' );
+		}
+
+		if ( in_array( 'wc_info', $data['notice_elements'], true ) ) {
+			/* translators: 1: Info notice button, 2: Info notice text. */
+			$notice_message = sprintf(
+				'<a href="#" tabindex="1" class="button wc-forward">%1$s</a> %2$s',
+				esc_html__( 'Button', 'elementor-pro' ),
+				esc_html__( 'This is how WooCommerce provides an info notice.', 'elementor-pro' )
+			);
+			wc_add_notice( $notice_message, 'notice' );
+		}
+
+		return '<div class="woocommerce-notices-wrapper">' . wc_print_notices( true ) . '</div>';
 	}
 
 	/**
@@ -528,13 +576,100 @@ class Module extends Module_Base {
 	 * @return array
 	 */
 	public function add_localize_data( $settings ) {
-		$settings['woocommercePages'] = [
+		$settings['woocommerce']['woocommercePages'] = [
 			'checkout' => wc_get_page_id( 'checkout' ),
 			'cart' => wc_get_page_id( 'cart' ),
 			'myaccount' => wc_get_page_id( 'myaccount' ),
+			'purchase_summary' => get_option( 'elementor_woocommerce_purchase_summary_page_id' ),
 		];
 
 		return $settings;
+	}
+
+	/**
+	 * Localize Added To Cart On Product Single
+	 *
+	 * WooCommerce doesn't trigger `added_to_cart` event on its products single page which is required for us to
+	 * automatically open our Menu Cart if the settings is chosen. We make the `productAddedToCart` setting
+	 * available that we can use in the Menu Cart js to check if a product has just been added.
+	 *
+	 * @since 3.5.0
+	 */
+	public function localize_added_to_cart_on_product_single() {
+		add_filter( 'elementor_pro/frontend/localize_settings', function ( $settings ) {
+			$settings['woocommerce']['productAddedToCart'] = true;
+			return $settings;
+		} );
+	}
+
+	public function e_notices_body_classes( $classes ) {
+		foreach ( $this->woocommerce_notices_elements as $notice_element ) {
+			$classes[] = 'e-' . str_replace( '_', '-', $notice_element ) . '-notice ';
+		}
+
+		return $classes;
+	}
+
+	/**
+	 * Should load WC Notices Styles
+	 *
+	 * Determine if we should load the WooCommerce notices CSS.
+	 * It should only load:
+	 * - When we are in the Editor, regardless if any notices have been activated.
+	 * - If WooCoomerce is active.
+	 * - When we are on the front end, if at least one notice is activated.
+	 *
+	 * It should not load in WP Admin.
+	 *
+	 * @return boolean
+	 */
+	private function should_load_wc_notices_styles() {
+		$woocommerce_active = in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
+		$is_editor = ! empty( $_GET['elementor-preview'] );
+
+		// Editor checks.
+		if ( $woocommerce_active && $is_editor ) {
+			return true;
+		}
+
+		$kit = Plugin::elementor()->kits_manager->get_active_kit_for_frontend();
+		$this->woocommerce_notices_elements = is_array( $kit->get_settings_for_display( 'woocommerce_notices_elements' ) ) ? $kit->get_settings_for_display( 'woocommerce_notices_elements' ) : [];
+
+		// Front end checks.
+		if (
+			0 < count( $this->woocommerce_notices_elements ) // At least one notice has been activated.
+			&& $woocommerce_active // WooCommerce is active.
+			&& ( ! is_admin() || $is_editor ) // We are not in WP Admin.
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function get_order_received_endpoint_url( $url, $endpoint, $value ) {
+		$order_received_endpoint = get_option( 'woocommerce_checkout_order_received_endpoint', 'order-received' );
+
+		if ( $order_received_endpoint === $endpoint ) {
+			$woocommerce_purchase_summary_page_id = get_option( 'elementor_woocommerce_purchase_summary_page_id' );
+			$order = wc_get_order( $value );
+
+			if ( $woocommerce_purchase_summary_page_id && $order ) {
+				$url = trailingslashit( trailingslashit( trailingslashit( get_permalink( $woocommerce_purchase_summary_page_id ) ) . $order_received_endpoint ) . $order->get_id() );
+			}
+		}
+
+		return $url;
+	}
+
+	public function maybe_define_woocommerce_checkout() {
+		$woocommerce_purchase_summary_page_id = get_option( 'elementor_woocommerce_purchase_summary_page_id' );
+
+		if ( $woocommerce_purchase_summary_page_id && intval( $woocommerce_purchase_summary_page_id ) === get_queried_object_id() ) {
+			if ( ! defined( 'WOOCOMMERCE_CHECKOUT' ) ) {
+				define( 'WOOCOMMERCE_CHECKOUT', true );
+			}
+		}
 	}
 
 	public function __construct() {
@@ -550,7 +685,7 @@ class Module extends Module_Base {
 		}
 
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
-		add_action( 'elementor/dynamic_tags/register_tags', [ $this, 'register_tags' ] );
+		add_action( 'elementor/dynamic_tags/register', [ $this, 'register_tags' ] );
 		add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
 		add_action( 'elementor/theme/register_conditions', [ $this, 'register_conditions' ] );
 
@@ -593,6 +728,10 @@ class Module extends Module_Base {
 
 		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'add_localize_data' ] );
 
+		add_action( 'wp', [ $this, 'maybe_define_woocommerce_checkout' ] );
+
+		add_filter( 'woocommerce_get_endpoint_url', [ $this, 'get_order_received_endpoint_url' ], 10, 3 );
+
 		// Filters for messages on the Shipping calculator
 		add_filter( 'woocommerce_shipping_may_be_available_html', function ( $html ) {
 			return $this->print_woocommerce_shipping_message( $html, 'woocommerce-shipping-may-be-available-html e-checkout-message e-cart-content' );
@@ -617,5 +756,20 @@ class Module extends Module_Base {
 		add_filter( 'woocommerce_no_shipping_available_html', function ( $html ) {
 			return $this->print_woocommerce_shipping_message( $html, 'woocommerce-no-shipping-available-html e-checkout-message' );
 		}, 10, 1 );
+
+		add_action( 'woocommerce_add_to_cart', [ $this, 'localize_added_to_cart_on_product_single' ] );
+
+		// WooCommerce Notice Site Settings
+		if ( $this->should_load_wc_notices_styles() ) {
+			add_filter( 'body_class', [ $this, 'e_notices_body_classes' ] );
+
+			// WooCommerce Notices CSS
+			wp_enqueue_style(
+				'e-woocommerce-notices',
+				ELEMENTOR_PRO_URL . 'assets/css/woocommerce-notices.min.css',
+				[],
+				ELEMENTOR_PRO_VERSION
+			);
+		}
 	}
 }

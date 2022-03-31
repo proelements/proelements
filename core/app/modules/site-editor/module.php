@@ -87,7 +87,7 @@ class Module extends BaseModule {
 			'name' => 'theme_builder_v2',
 			'title' => __( 'Default to New Theme Builder', 'elementor-pro' ),
 			'description' => __( 'Entering the Theme Builder through WP Dashboard > Templates > Theme Builder opens the New theme builder by default. But don’t worry, you can always view the WP styled version of the screen with a simple click of a button.', 'elementor-pro' ),
-			'release_status' => Manager::RELEASE_STATUS_BETA,
+			'release_status' => Manager::RELEASE_STATUS_STABLE,
 			'default' => Manager::STATE_ACTIVE,
 		] );
 	}

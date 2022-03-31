@@ -265,8 +265,8 @@ class Module extends Module_Base {
 		if ( is_wp_error( $query ) ) {
 			return $query;
 		}
-		$query['who'] = 'authors';
-		return $query;
+
+		return $this->add_edit_capability_to_user_query( $query );
 	}
 
 	private function autocomplete_query_for_user( $data ) {
@@ -362,9 +362,10 @@ class Module extends Module_Base {
 
 	private function get_titles_query_for_author( $data ) {
 		$query = $this->get_titles_query_for_user( $data );
-		$query['who'] = 'authors';
+
 		$query['has_published_posts'] = true;
-		return $query;
+
+		return $this->add_edit_capability_to_user_query( $query );
 	}
 
 	private function get_titles_query_for_user( $data ) {
@@ -478,7 +479,6 @@ class Module extends Module_Base {
 
 			case 'author':
 				$query_params = [
-					'who' => 'authors',
 					'has_published_posts' => true,
 					'fields' => [
 						'ID',
@@ -491,6 +491,8 @@ class Module extends Module_Base {
 					],
 				];
 
+				$query_params = $this->add_edit_capability_to_user_query( $query_params );
+
 				$user_query = new \WP_User_Query( $query_params );
 
 				foreach ( $user_query->get_results() as $author ) {
@@ -501,7 +503,6 @@ class Module extends Module_Base {
 				}
 				break;
 			default:
-				$results = apply_filters_deprecated( 'elementor_pro/query_control/get_autocomplete/' . $data['filter_type'], $data, '3.0.0', 'elementor/query/get_autocomplete/' . $data['filter_type'] );
 				$results = apply_filters( 'elementor/query/get_autocomplete/' . $data['filter_type'], [], $data );
 		}
 
@@ -647,7 +648,6 @@ class Module extends Module_Base {
 
 			case 'author':
 				$query_params = [
-					'who' => 'authors',
 					'has_published_posts' => true,
 					'fields' => [
 						'ID',
@@ -656,6 +656,8 @@ class Module extends Module_Base {
 					'include' => $ids,
 				];
 
+				$query_params = $this->add_edit_capability_to_user_query( $query_params );
+
 				$user_query = new \WP_User_Query( $query_params );
 
 				foreach ( $user_query->get_results() as $author ) {
@@ -663,7 +665,6 @@ class Module extends Module_Base {
 				}
 				break;
 			default:
-				$results = apply_filters_deprecated( 'elementor_pro/query_control/get_value_titles/' . $request['filter_type'], $request, '3.0.0', 'elementor/query/get_value_titles/' . $request['filter_type'] );
 				$results = apply_filters( 'elementor/query/get_value_titles/' . $request['filter_type'], [], $request );
 		}
 
@@ -683,6 +684,13 @@ class Module extends Module_Base {
 		switch ( $query_data['object'] ) {
 			case self::QUERY_OBJECT_TAX:
 				$by_field = ! empty( $query_data['by_field'] ) ? $query_data['by_field'] : 'term_taxonomy_id';
+
+				// The term_id is not working in 2022-01-18, this is a hack to replace the term id with
+				// `include`, the code is a legacy code so the solution is minimal as possible.
+				if ( isset( $query_args['term_id'] ) ) {
+					$query_args['include'] = array_map( 'intval', $query_args['term_id'] );
+				}
+
 				$terms = get_terms( $query_args );
 
 				if ( is_wp_error( $terms ) ) {
@@ -814,16 +822,14 @@ class Module extends Module_Base {
 		return $data;
 	}
 
-	public function register_controls() {
-		$controls_manager = Plugin::elementor()->controls_manager;
-
+	public function register_controls( Controls_Manager $controls_manager ) {
 		$controls_manager->add_group_control( Group_Control_Posts::get_type(), new Group_Control_Posts() );
 
 		$controls_manager->add_group_control( Group_Control_Query::get_type(), new Group_Control_Query() );
 
 		$controls_manager->add_group_control( Group_Control_Related::get_type(), new Group_Control_Related() );
 
-		$controls_manager->register_control( self::QUERY_CONTROL_ID, new Query() );
+		$controls_manager->register( new Query() );
 	}
 
 	/**
@@ -933,38 +939,6 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated 2.5.0
-	 * @param \WP_Query &$query
-	 */
-	public function fix_query_offset( &$query ) {
-		if ( ! empty( $query->query_vars['offset_to_fix'] ) ) {
-			if ( $query->is_paged ) {
-				$query->query_vars['offset'] = $query->query_vars['offset_to_fix'] + ( ( $query->query_vars['paged'] - 1 ) * $query->query_vars['posts_per_page'] );
-			} else {
-				$query->query_vars['offset'] = $query->query_vars['offset_to_fix'];
-			}
-		}
-	}
-
-	/**
-	 * @deprecated 2.5.0
-	 *
-	 * @param int       $found_posts
-	 * @param \WP_Query $query
-	 *
-	 * @return mixed
-	 */
-	public static function fix_query_found_posts( $found_posts, $query ) {
-		$offset_to_fix = $query->get( 'offset_to_fix' );
-
-		if ( $offset_to_fix ) {
-			$found_posts -= $offset_to_fix;
-		}
-
-		return $found_posts;
-	}
-
-	/**
 	 * @param Ajax $ajax_manager
 	 */
 	public function register_ajax_actions( $ajax_manager ) {
@@ -977,26 +951,36 @@ class Module extends Module_Base {
 		$ajax_manager->register_ajax_action( 'pro_panel_posts_control_filter_autocomplete_deprecated', [ $this, 'ajax_posts_filter_autocomplete_deprecated' ] );
 	}
 
-	public function localize_settings( $settings ) {
-		$settings = array_replace_recursive( $settings, [
-			'i18n' => [
-				'all' => esc_html__( 'All', 'elementor-pro' ),
-			],
-		] );
+	/**
+	 * @deprecated 3.1.0
+	 */
+	public function localize_settings() {
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
 
-		return $settings;
+		return [];
 	}
 
 	protected function add_actions() {
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
-		add_action( 'elementor/controls/controls_registered', [ $this, 'register_controls' ] );
+		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
+	}
 
-		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'localize_settings' ] );
+	/**
+	 * In WordPress 5.9 the 'who' query param was deprecated, this method
+	 * adding the new `capability` query param to the query and still support old versions of WordPress.
+	 *
+	 * @param $query
+	 *
+	 * @return mixed
+	 */
+	private function add_edit_capability_to_user_query( $query ) {
+		// Capability queries were only introduced in WP 5.9.
+		if ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+			$query['capability'] = [ 'edit_posts' ];
+		} else {
+			$query['who'] = 'authors';
+		}
 
-		/**
-		 * @see https://codex.wordpress.org/Making_Custom_Queries_using_Offset_and_Pagination
-		 */
-		add_action( 'pre_get_posts', [ $this, 'fix_query_offset' ], 1 );
-		add_filter( 'found_posts', [ $this, 'fix_query_found_posts' ], 1, 2 );
+		return $query;
 	}
 }

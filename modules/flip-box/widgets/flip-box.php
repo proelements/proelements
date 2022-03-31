@@ -8,6 +8,7 @@ use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
@@ -55,7 +56,7 @@ class Flip_Box extends Base_Widget {
 					],
 					'image' => [
 						'title' => esc_html__( 'Image', 'elementor-pro' ),
-						'icon' => 'fa fa-picture-o',
+						'icon' => 'eicon-image-bold',
 					],
 					'icon' => [
 						'title' => esc_html__( 'Icon', 'elementor-pro' ),
@@ -935,6 +936,14 @@ class Flip_Box extends Base_Widget {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-flip-box__front .elementor-flip-box__layer__title',
+			]
+		);
+
 		$this->add_control(
 			'heading_description_style_a',
 			[
@@ -1123,6 +1132,14 @@ class Flip_Box extends Base_Widget {
 				'condition' => [
 					'title_text_b!' => '',
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke_b',
+				'selector' => '{{WRAPPER}} .elementor-flip-box__back .elementor-flip-box__layer__title',
 			]
 		);
 

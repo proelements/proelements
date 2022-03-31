@@ -154,4 +154,8 @@ class Archive_Products_Deprecated extends Products {
 
 		parent::render();
 	}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

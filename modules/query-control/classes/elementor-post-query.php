@@ -58,6 +58,9 @@ class Elementor_Post_Query {
 		$post_type = $this->get_widget_settings( 'post_type' );
 
 		if ( 'by_id' !== $post_type && 0 < $offset_control ) {
+			/**
+			 * @see https://codex.wordpress.org/Making_Custom_Queries_using_Offset_and_Pagination
+			 */
 			add_action( 'pre_get_posts', [ $this, 'fix_query_offset' ], 1 );
 			add_filter( 'found_posts', [ $this, 'fix_query_found_posts' ], 1, 2 );
 		}
@@ -371,7 +374,6 @@ class Elementor_Post_Query {
 			 * @param \WP_Query     $wp_query
 			 * @param Widget_Base   $this->current_widget
 			 */
-			do_action_deprecated( "elementor_pro/{$widget_name}/query/{$query_id}", [ $wp_query, $this->widget ], '2.5.0', "elementor/query/{$query_id}" );
 			do_action( "elementor/query/{$query_id}", $wp_query, $this->widget );
 		}
 	}

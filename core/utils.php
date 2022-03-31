@@ -296,4 +296,22 @@ class Utils {
 
 		return $path;
 	}
+
+	/**
+	 * Remove words from a sentence.
+	 *
+	 * @param string  $text
+	 * @param integer $length
+	 *
+	 * @return string
+	 */
+	public static function trim_words( $text, $length ) {
+		if ( $length && str_word_count( $text ) > $length ) {
+			$text = explode( ' ', $text, $length + 1 );
+			unset( $text[ $length ] );
+			$text = implode( ' ', $text );
+		}
+
+		return $text;
+	}
 }

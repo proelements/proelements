@@ -1115,6 +1115,7 @@ class Nav_Menu extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} div.elementor-menu-toggle:hover' => 'color: {{VALUE}}', // Harder selector to override text color control
+					'{{WRAPPER}} div.elementor-menu-toggle:hover svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -1306,16 +1307,31 @@ class Nav_Menu extends Base_Widget {
 		endif;
 		?>
 		<div <?php $this->print_render_attribute_string( 'menu-toggle' ); ?>>
-			<?php Icons_Manager::render_icon(
-				[
-					'library' => 'eicons',
-					'value' => 'eicon-menu-bar',
-				],
-				[
-					'aria-hidden' => 'true',
-					'role' => 'presentation',
-				]
-			); ?>
+			<?php
+				Icons_Manager::render_icon(
+					[
+						'library' => 'eicons',
+						'value' => 'eicon-menu-bar',
+					],
+					[
+						'aria-hidden' => 'true',
+						'role' => 'presentation',
+						'class' => 'elementor-menu-toggle__icon--open',
+					]
+				);
+
+				Icons_Manager::render_icon(
+					[
+						'library' => 'eicons',
+						'value' => 'eicon-close',
+					],
+					[
+						'aria-hidden' => 'true',
+						'role' => 'presentation',
+						'class' => 'elementor-menu-toggle__icon--close',
+					]
+				);
+			?>
 			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'elementor-pro' ); ?></span>
 		</div>
 			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true">

@@ -156,4 +156,8 @@ class Elements extends Base_Widget {
 		// PHPCS - Already escaped in get_shortcode
 		echo $this->get_shortcode(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

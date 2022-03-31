@@ -103,7 +103,7 @@ trait Button_Widget_Trait {
 				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'start'    => [
+					'left'    => [
 						'title' => esc_html__( 'Left', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-left',
 					],
@@ -111,7 +111,7 @@ trait Button_Widget_Trait {
 						'title' => esc_html__( 'Center', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-center',
 					],
-					'end' => [
+					'right' => [
 						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-text-align-right',
 					],

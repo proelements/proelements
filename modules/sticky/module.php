@@ -136,6 +136,11 @@ class Module extends Module_Base {
 			Widget_Base::class,
 		];
 
+		// TODO: Remove when Container is the default.
+		if ( Plugin::elementor()->experiments->is_feature_active( 'container' ) ) {
+			$types[] = \Elementor\Includes\Elements\Container::class;
+		}
+
 		if ( $this->is_instance_of( $element, $types ) ) {
 			$conditions = [
 				'sticky!' => '',
@@ -190,6 +195,7 @@ class Module extends Module_Base {
 
 	private function add_actions() {
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'register_controls' ] );
+		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'register_controls' ] );
 	}
 }

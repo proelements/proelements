@@ -5,6 +5,7 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Repeater;
 use Elementor\Utils;
 
@@ -90,7 +91,7 @@ class Testimonial_Carousel extends Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				'prefix_class' => 'elementor-testimonial--align-',
+				'prefix_class' => 'elementor-testimonial-%s-align-',
 			]
 		);
 
@@ -263,6 +264,14 @@ class Testimonial_Carousel extends Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-testimonial__text',
 			]
 		);
 

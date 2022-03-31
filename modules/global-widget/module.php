@@ -68,16 +68,6 @@ class Module extends Module_Base {
 
 		$settings = array_replace_recursive( $settings, [
 			'widget_templates' => $widget_templates_content,
-			'i18n' => [
-				'unlink' => esc_html__( 'Unlink', 'elementor-pro' ),
-				'cancel' => esc_html__( 'Cancel', 'elementor-pro' ),
-				'unlink_widget' => esc_html__( 'Unlink Widget', 'elementor-pro' ),
-				'global' => esc_html__( 'Global', 'elementor-pro' ),
-				'dialog_confirm_unlink' => esc_html__( 'This will make the widget stop being global. It\'ll be reverted into being just a regular widget.', 'elementor-pro' ),
-				'global_widget_save_title' => esc_html__( 'Save your widget as a global widget', 'elementor-pro' ),
-				'global_widget_save_description' => esc_html__( 'You\'ll be able to add this global widget to multiple areas on your site, and edit it from one single place.', 'elementor-pro' ),
-				'linked_to_global' => esc_html__( 'Linked to Global', 'elementor-pro' ),
-			],
 		] );
 
 		return $settings;

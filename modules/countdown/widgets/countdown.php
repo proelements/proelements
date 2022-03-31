@@ -6,6 +6,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Plugin;
@@ -462,6 +463,14 @@ class Countdown extends Base_Widget {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-countdown-label',
 			]
 		);
 

@@ -1,7 +1,9 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder;
 
+use Elementor\Controls_Manager;
 use Elementor\Core\Admin\Admin_Notices;
+use Elementor\Core\Admin\Menu\Main as MainMenu;
 use Elementor\Core\App\App;
 use Elementor\Core\Base\Document;
 use Elementor\TemplateLibrary\Source_Local;
@@ -108,24 +110,13 @@ class Module extends Module_Base {
 		return $document;
 	}
 
-	public function localize_settings( $settings ) {
-		$settings = array_replace_recursive( $settings, [
-			'i18n' => [
-				'publish_settings' => esc_html__( 'Publish Settings', 'elementor-pro' ),
-				'conditions' => esc_html__( 'Conditions', 'elementor-pro' ),
-				'display_conditions' => esc_html__( 'Display Conditions', 'elementor-pro' ),
-				'choose' => esc_html__( 'Choose', 'elementor-pro' ),
-				'add_condition' => esc_html__( 'Add Condition', 'elementor-pro' ),
-				'conditions_title' => esc_html__( 'Where Do You Want to Display Your %s?', 'elementor-pro' ),
-				'conditions_description' => esc_html__( 'Set the conditions that determine where your %s is used throughout your site.', 'elementor-pro' ) . '<br>' . esc_html__( 'For example, choose \'Entire Site\' to display the template across your site.', 'elementor-pro' ),
-				'conditions_publish_screen_description' => esc_html__( 'Apply current template to these pages.', 'elementor-pro' ),
-				'save_and_close' => esc_html__( 'Save & Close', 'elementor-pro' ),
-				'open_site_editor' => esc_html__( 'Open Site Editor', 'elementor-pro' ),
-				'view_live_site' => esc_html__( 'View Live Site', 'elementor-pro' ),
-			],
-		] );
+	/**
+	 * @deprecated 3.1.0
+	 */
+	public function localize_settings() {
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
 
-		return $settings;
+		return [];
 	}
 
 	public function document_config( $config, $post_id ) {
@@ -156,10 +147,8 @@ class Module extends Module_Base {
 		return $config;
 	}
 
-	public function register_controls() {
-		$controls_manager = Plugin::elementor()->controls_manager;
-
-		$controls_manager->register_control( Classes\Conditions_Repeater::CONTROL_TYPE, new Classes\Conditions_Repeater() );
+	public function register_controls( Controls_Manager $controls_manager ) {
+		$controls_manager->register( new Classes\Conditions_Repeater() );
 	}
 
 	public function create_new_dialog_types( $types ) {
@@ -322,12 +311,26 @@ class Module extends Module_Base {
 	/**
 	 * Add New item to admin menu.
 	 *
+	 * @since 3.6.0
+	 * @access private
+	 */
+	private function register_admin_menu( MainMenu $menu ) {
+		$menu->add_submenu( [
+			'menu_title' => esc_html__( 'Theme Builder', 'elementor-pro' ),
+			'menu_slug' => Plugin::elementor()->app->get_settings( 'menu_url' ),
+			'index' => 30,
+		] );
+	}
+
+	/**
+	 * Add New item to admin menu.
+	 *
 	 * Fired by `admin_menu` action.
 	 *
-	 * @since 2.4.0
-	 * @access public
+	 * @since 3.6.0
+	 * @access private
 	 */
-	public function admin_menu() {
+	private function register_admin_menu_legacy() {
 		add_submenu_page(
 			Source_Local::ADMIN_MENU_SLUG,
 			'',
@@ -409,20 +412,29 @@ class Module extends Module_Base {
 		$this->add_component( 'preview', new Classes\Preview_Manager() );
 		$this->add_component( 'locations', new Classes\Locations_Manager() );
 
-		add_action( 'elementor/controls/controls_registered', [ $this, 'register_controls' ] );
+		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
 
 		// Editor
 		add_action( 'elementor/editor/init', [ $this, 'on_elementor_editor_init' ] );
-		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'localize_settings' ] );
 		add_filter( 'elementor/document/config', [ $this, 'document_config' ], 10, 2 );
 
 		// Admin
 		add_action( 'admin_head', [ $this, 'admin_head' ] );
-		add_action( 'admin_menu', [ $this, 'admin_menu' ], 22 /* After core promotion menu */ );
 		add_filter( 'add_menu_classes', [ $this, 'hide_admin_app_submenu' ], 9 /* Before core submenu fixes */ );
 		add_action( 'manage_' . Source_Local::CPT . '_posts_custom_column', [ $this, 'admin_columns_content' ], 10, 2 );
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'print_location_field' ] );
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'print_post_type_field' ] );
+
+		if ( Plugin::elementor()->experiments->is_feature_active( 'admin_menu_rearrangement' ) ) {
+			add_action( 'elementor/admin/menu_registered/elementor', function( MainMenu $menu ) {
+				$this->register_admin_menu( $menu );
+			} );
+		} else {
+			add_action( 'admin_menu', function() {
+				$this->register_admin_menu_legacy();
+			}, 22 /* After core promotion menu */ );
+		}
+
 		add_filter( 'elementor/template-library/create_new_dialog_types', [ $this, 'create_new_dialog_types' ] );
 		add_filter( 'views_edit-' . Source_Local::CPT, [ $this, 'print_new_theme_builder_promotion' ], 9 );
 		add_filter( 'elementor/import/stage_1/result', function( array $result ) {

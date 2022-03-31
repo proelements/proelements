@@ -95,6 +95,31 @@ class Add_To_Cart extends Widget_Button {
 
 		parent::register_controls();
 
+		$this->start_controls_section(
+			'section_layout',
+			[
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'' => esc_html__( 'Inline', 'elementor-pro' ),
+					'stacked' => esc_html__( 'Stacked', 'elementor-pro' ),
+					'auto' => esc_html__( 'Auto', 'elementor-pro' ),
+				],
+				'prefix_class' => 'elementor-add-to-cart--layout-',
+				'render_type' => 'template',
+			]
+		);
+
+		$this->end_controls_section();
+
 		$this->update_control(
 			'link',
 			[
@@ -110,6 +135,13 @@ class Add_To_Cart extends Widget_Button {
 			[
 				'default' => esc_html__( 'Add to Cart', 'elementor-pro' ),
 				'placeholder' => esc_html__( 'Add to Cart', 'elementor-pro' ),
+			]
+		);
+
+		$this->update_responsive_control(
+			'align',
+			[
+				'prefix_class' => 'elementor-add-to-cart%s--align-',
 			]
 		);
 
@@ -138,7 +170,7 @@ class Add_To_Cart extends Widget_Button {
 
 		if ( ! empty( $settings['product_id'] ) ) {
 			$product_id = $settings['product_id'];
-		} elseif ( wp_doing_ajax() ) {
+		} elseif ( wp_doing_ajax() && ! empty( $settings['product_id'] ) ) {
 			// PHPCS - No nonce is required.
 			$product_id = $_POST['post_id']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		} else {
@@ -148,11 +180,49 @@ class Add_To_Cart extends Widget_Button {
 		global $product;
 		$product = wc_get_product( $product_id );
 
+		$settings = $this->get_settings_for_display();
+
+		if ( in_array( $settings['layout'], [ 'auto', 'stacked' ] ) ) {
+			add_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
+			add_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
+		}
+
 		if ( 'yes' === $settings['show_quantity'] ) {
 			$this->render_form_button( $product );
 		} else {
 			$this->render_ajax_button( $product );
 		}
+
+		if ( in_array( $settings['layout'], [ 'auto', 'stacked' ] ) ) {
+			remove_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
+			remove_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
+		}
+	}
+
+	/**
+	 * Before Add to Cart Quantity
+	 *
+	 * Added wrapper tag around the quantity input and "Add to Cart" button
+	 * used to more solidly accommodate the layout when additional elements
+	 * are added by 3rd party plugins.
+	 *
+	 * @since 3.6.0
+	 */
+	public function before_add_to_cart_quantity() {
+		?>
+		<div class="e-atc-qty-button-holder">
+		<?php
+	}
+
+	/**
+	 * After Add to Cart Quantity
+	 *
+	 * @since 3.6.0
+	 */
+	public function after_add_to_cart_button() {
+		?>
+		</div>
+		<?php
 	}
 
 	/**
@@ -231,4 +301,8 @@ class Add_To_Cart extends Widget_Button {
 	 */
 	// Force remote render
 	protected function content_template() {}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

@@ -2,19 +2,13 @@
 namespace ElementorPro\Modules\TableOfContents;
 
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Module extends Module_Base {
-
-	public function __construct() {
-		parent::__construct();
-
-		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'localize_settings' ] );
-		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localize_settings' ] );
-	}
 
 	public function get_widgets() {
 		return [
@@ -26,9 +20,12 @@ class Module extends Module_Base {
 		return 'table-of-contents';
 	}
 
-	public function localize_settings( array $settings ) {
-		$settings['i18n']['toc_no_headings_found'] = esc_html__( 'No headings were found on this page.', 'elementor-pro' );
+	/**
+	 * @deprecated 3.1.0
+	 */
+	public function localize_settings() {
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
 
-		return $settings;
+		return [];
 	}
 }

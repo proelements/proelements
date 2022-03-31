@@ -1024,4 +1024,8 @@ class Post_Info extends Base {
 		</ul>
 		<?php
 	}
+
+	public function get_group_name() {
+		return 'theme-elements';
+	}
 }

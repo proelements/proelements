@@ -718,6 +718,10 @@ class Sitemap extends Base {
 
 		return str_replace( $source, $replace, $str );
 	}
+
+	public function get_group_name() {
+		return 'theme-elements';
+	}
 }
 
 

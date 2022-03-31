@@ -32,6 +32,14 @@ class Internal_URL extends Data_Tag {
 		return ' ({{ url }})';
 	}
 
+	public static function on_import_replace_dynamic_content( $config, $map_old_new_post_ids ) {
+		if ( isset( $config['settings']['post_id'] ) ) {
+			$config['settings']['post_id'] = $map_old_new_post_ids[ $config['settings']['post_id'] ];
+		}
+
+		return $config;
+	}
+
 	public function get_value( array $options = [] ) {
 		$settings = $this->get_settings();
 

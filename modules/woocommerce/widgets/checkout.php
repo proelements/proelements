@@ -36,7 +36,7 @@ class Checkout extends Base_Widget {
 	}
 
 	public function get_categories() {
-		return [ 'theme-elements', 'woocommerce-elements' ];
+		return [ 'woocommerce-elements' ];
 	}
 
 	public function get_help_url() {
@@ -4169,5 +4169,9 @@ class Checkout extends Base_Widget {
 		if ( $is_editor ) {
 			wp_set_current_user( $store_current_user );
 		}
+	}
+
+	public function get_group_name() {
+		return 'woocommerce';
 	}
 }

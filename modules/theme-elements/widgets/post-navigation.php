@@ -547,4 +547,8 @@ class Post_Navigation extends Base {
 		</div>
 		<?php
 	}
+
+	public function get_group_name() {
+		return 'theme-elements';
+	}
 }

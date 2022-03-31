@@ -34,6 +34,15 @@ class Site_Title extends Widget_Heading {
 		return [ 'site', 'title', 'name' ];
 	}
 
+	public function get_inline_css_depends() {
+		return [
+			[
+				'name' => 'heading',
+				'is_core_dependency' => true,
+			],
+		];
+	}
+
 	protected function register_controls() {
 		parent::register_controls();
 

@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Repeater;
 use ElementorPro\Base\Base_Widget;
 
@@ -171,6 +172,14 @@ class Price_List extends Base_Widget {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
+				'selector' => '{{WRAPPER}} .elementor-price-list-header',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
 				'selector' => '{{WRAPPER}} .elementor-price-list-header',
 			]
 		);

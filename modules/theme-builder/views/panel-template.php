@@ -47,8 +47,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="elementor-template-library-blank-icon">
 		<img src="<?php echo ELEMENTOR_PRO_MODULES_URL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>theme-builder/assets/images/conditions-tab.svg">
 	</div>
-	<div class="elementor-template-library-blank-title">{{{ elementorPro.translate( 'conditions_title', [ elementor.config.document.post_type_title ] ) }}}</div>
-	<div class="elementor-template-library-blank-message">{{{ elementorPro.translate( 'conditions_description', [ elementor.config.document.post_type_title ] ) }}}</div>
+	<div class="elementor-template-library-blank-title">
+		{{ sprintf(
+			'<?php echo esc_html__( 'Where Do You Want to Display Your %s?', 'elementor-pro' ); ?>',
+			elementor.config.document.post_type_title
+		) }}
+	</div>
+	<div class="elementor-template-library-blank-message">
+		{{ sprintf(
+			'<?php echo esc_html__( 'Set the conditions that determine where your %s is used throughout your site.', 'elementor-pro' ); ?>',
+			elementor.config.document.post_type_title
+		) }}
+
+		<br />
+
+		<?php echo esc_html__( "For example, choose 'Entire Site' to display the template across your site.", 'elementor-pro' ); ?>
+	</div>
 	<div id="elementor-theme-builder-conditions">
 		<div id="elementor-theme-builder-conditions-controls"></div>
 	</div>

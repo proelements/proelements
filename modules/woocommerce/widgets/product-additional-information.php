@@ -105,4 +105,8 @@ class Product_Additional_Information extends Base_Widget {
 	}
 
 	public function render_plain_content() {}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

@@ -311,6 +311,11 @@ class Paypal_Button extends Payment_Button {
 
 		$css_file_path = 'css/widget-' . $widget_name . $direction . '.min.css';
 
+		/*
+		 * Currently this widget does not support custom-breakpoints in its CSS file.
+		 * In order to support it, this widget needs to get the CSS config from the base-widget-trait.php.
+		 * But to make sure that it implements the Pro assets-path due to the fact that it extends a Core widget.
+		*/
 		return [
 			'key' => $widget_name,
 			'version' => ELEMENTOR_PRO_VERSION,

@@ -1,6 +1,8 @@
 <?php
 namespace ElementorPro\Modules\DynamicTags\Tags;
 
+use Elementor\Controls_Manager;
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\DynamicTags\Tags\Base\Tag;
 use ElementorPro\Modules\DynamicTags\Module;
 
@@ -21,6 +23,17 @@ class Post_Excerpt extends Tag {
 		return Module::POST_GROUP;
 	}
 
+	protected function register_controls() {
+
+		$this->add_control(
+			'max_length',
+			[
+				'label' => esc_html__( 'Excerpt Length', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+			]
+		);
+	}
+
 	public function get_categories() {
 		return [ Module::TEXT_CATEGORY ];
 	}
@@ -33,6 +46,12 @@ class Post_Excerpt extends Tag {
 			return;
 		}
 
-		echo wp_kses_post( $post->post_excerpt );
+		$settings = $this->get_settings_for_display();
+		$max_length = (int) $settings['max_length'];
+		$excerpt = $post->post_excerpt;
+
+		$excerpt = Utils::trim_words( $excerpt, $max_length );
+
+		echo wp_kses_post( $excerpt );
 	}
 }

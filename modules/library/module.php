@@ -36,15 +36,13 @@ class Module extends Module_Base {
 		register_widget( 'ElementorPro\Modules\Library\WP_Widgets\Elementor_Library' );
 	}
 
-	public function localize_settings( $settings ) {
-		$settings = array_replace_recursive( $settings, [
-			'i18n' => [
-				'home_url' => home_url(),
-				'edit_template' => esc_html__( 'Edit Template', 'elementor-pro' ),
-			],
-		] );
+	/**
+	 * @deprecated 3.1.0
+	 */
+	public function localize_settings() {
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
 
-		return $settings;
+		return [];
 	}
 
 	public function add_to_results_for_library_widget_templates( $val, $post, $request ) {
@@ -138,8 +136,6 @@ class Module extends Module_Base {
 	}
 
 	public function add_filters() {
-		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'localize_settings' ] );
-		add_filter( 'elementor_pro/admin/localize_settings', [ $this, 'localize_settings' ] ); // For WordPress Widgets and Customizer
 		add_filter( 'elementor/widgets/black_list', function( $black_list ) {
 			$black_list[] = 'ElementorPro\Modules\Library\WP_Widgets\Elementor_Library';
 

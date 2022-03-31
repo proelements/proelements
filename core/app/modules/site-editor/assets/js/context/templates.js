@@ -95,7 +95,7 @@ export class TemplatesProvider extends BaseContext {
 	fetchTemplates() {
 		return this.executeAction(
 			TemplatesProvider.actions.FETCH,
-			() => $e.data.get( Templates.signature ),
+			() => $e.data.get( Templates.signature, {}, { refresh: true } ),
 		).then( ( response ) => {
 			this.updateTemplatesState( () => Object.values( response.data ).reduce(
 				( current, template ) => ( { ...current, [ template.id ]: template } ), {},

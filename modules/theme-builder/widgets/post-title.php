@@ -39,4 +39,13 @@ class Post_Title extends Title_Widget_Base {
 			],
 		];
 	}
+
+	public function get_inline_css_depends() {
+		return [
+			[
+				'name' => 'heading',
+				'is_core_dependency' => true,
+			],
+		];
+	}
 }

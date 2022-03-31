@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Icons_Manager;
 use Elementor\Skin_Base as Elementor_Skin_Base;
 use Elementor\Widget_Base;
@@ -575,6 +576,14 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-post__title',
+			]
+		);
+
 		$this->add_responsive_control(
 			'title_spacing',
 			[
@@ -759,7 +768,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'read_more_typography',
-				'selector' => '{{WRAPPER}} .elementor-post__read-more',
+				// The 'a' selector is added for specificity, for when this control's selector is used in globals CSS.
+				'selector' => '{{WRAPPER}} a.elementor-post__read-more',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -909,7 +919,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		?>
 			<a class="elementor-post__read-more" href="<?php echo $this->current_permalink; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" <?php Utils::print_unescaped_internal_string( $optional_attributes_html ); ?>>
 				<?php
-				echo esc_html( $this->get_instance_value( 'read_more_text' ) );
+				echo wp_kses_post( ( $this->get_instance_value( 'read_more_text' ) ) );
 				?>
 			</a>
 		<?php

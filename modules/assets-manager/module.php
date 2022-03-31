@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\AssetsManager;
 
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Modules\AssetsManager\AssetTypes;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -32,23 +33,18 @@ class Module extends Module_Base {
 		return $this->asset_managers;
 	}
 
-	// Add translation string for the modal that appears when a user tries
-	// to publish a new font "post" without uploading/choosing one
-	public function localize_settings( $settings ) {
-		$settings = array_replace_recursive( $settings, [
-			'i18n' => [
-				'fontsUploadEmptyNotice' => esc_html__( 'Choose a font to publish.', 'elementor-pro' ),
-				'iconsUploadEmptyNotice' => esc_html__( 'Upload an icon set to publish.', 'elementor-pro' ),
-			],
-		] );
+	/**
+	 * @deprecated 3.1.0
+	 */
+	public function localize_settings() {
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
 
-		return $settings;
+		return [];
 	}
 
 	public function __construct() {
 		parent::__construct();
 
-		add_filter( 'elementor_pro/admin/localize_settings', [ $this, 'localize_settings' ] );
 		$this->add_asset_manager( 'font', new AssetTypes\Fonts_Manager() );
 		$this->add_asset_manager( 'icon', new AssetTypes\Icons_Manager() );
 	}

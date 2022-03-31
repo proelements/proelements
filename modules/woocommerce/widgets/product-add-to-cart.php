@@ -36,6 +36,12 @@ class Product_Add_To_Cart extends Base_Widget {
 			return;
 		}
 
+		$settings = $this->get_settings_for_display();
+
+		if ( in_array( $settings['layout'], [ 'auto', 'stacked' ] ) ) {
+			add_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
+			add_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
+		}
 		?>
 
 		<div class="elementor-add-to-cart elementor-product-<?php echo esc_attr( wc_get_product()->get_type() ); ?>">
@@ -43,9 +49,64 @@ class Product_Add_To_Cart extends Base_Widget {
 		</div>
 
 		<?php
+		if ( in_array( $settings['layout'], [ 'auto', 'stacked' ] ) ) {
+			remove_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
+			remove_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
+		}
+	}
+
+	/**
+	 * Before Add to Cart Quantity
+	 *
+	 * Added wrapper tag around the quantity input and "Add to Cart" button
+	 * used to more solidly accommodate the layout when additional elements
+	 * are added by 3rd party plugins.
+	 *
+	 * @since 3.6.0
+	 */
+	public function before_add_to_cart_quantity() {
+		?>
+		<div class="e-atc-qty-button-holder">
+		<?php
+	}
+
+	/**
+	 * After Add to Cart Button
+	 *
+	 * @since 3.6.0
+	 */
+	public function after_add_to_cart_button() {
+		?>
+		</div>
+		<?php
 	}
 
 	protected function register_controls() {
+
+		$this->start_controls_section(
+			'section_layout',
+			[
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'' => esc_html__( 'Inline', 'elementor-pro' ),
+					'stacked' => esc_html__( 'Stacked', 'elementor-pro' ),
+					'auto' => esc_html__( 'Auto', 'elementor-pro' ),
+				],
+				'prefix_class' => 'elementor-add-to-cart--layout-',
+				'render_type' => 'template',
+			]
+		);
+
+		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_atc_button_style',
@@ -247,15 +308,14 @@ class Product_Add_To_Cart extends Base_Widget {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'spacing',
 			[
 				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
-					'body:not(.rtl) {{WRAPPER}} .quantity + .button' => 'margin-left: {{SIZE}}{{UNIT}}',
-					'body.rtl {{WRAPPER}} .quantity + .button' => 'margin-right: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}}' => '--button-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -448,7 +508,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
-					'.woocommerce {{WRAPPER}} form.cart table.variations tr:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}}',
+					'.woocommerce {{WRAPPER}} form.cart table.variations tr th, .woocommerce {{WRAPPER}} form.cart table.variations tr td' => 'padding-top: calc( {{SIZE}}{{UNIT}}/2 ); padding-bottom: calc( {{SIZE}}{{UNIT}}/2 );',
 				],
 			]
 		);
@@ -507,7 +567,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'.woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'background-color: {{VALUE}}',
+					'.woocommerce {{WRAPPER}} form.cart table.variations td.value select, .woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -518,7 +578,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'.woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border: 1px solid {{VALUE}}',
+					'.woocommerce {{WRAPPER}} form.cart table.variations td.value select, .woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border: 1px solid {{VALUE}}',
 				],
 			]
 		);
@@ -537,7 +597,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
-					'.woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border-radius: {{SIZE}}{{UNIT}}',
+					'.woocommerce {{WRAPPER}} form.cart table.variations td.value select, .woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border-radius: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -546,4 +606,8 @@ class Product_Add_To_Cart extends Base_Widget {
 	}
 
 	public function render_plain_content() {}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

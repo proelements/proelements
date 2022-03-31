@@ -1,4 +1,4 @@
-/*! pro-elements - v3.5.1 - 10-11-2021 */
+/*! pro-elements - v3.6.4 - 15-03-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -81,33 +81,35 @@
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".cc6c8eb49e0aff6d419e.bundle.js";
-/******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".5ee0445e2c9b1f2ed68f.bundle.js";
-/******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".a8f3d929735cca75a572.bundle.js";
-/******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".a7329beb7783748287a5.bundle.js";
-/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".0ccd23763059df7affcc.bundle.js";
-/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".b5cf350f530535d64364.bundle.js";
-/******/ 			if (chunkId === "carousel") return "" + chunkId + ".364bbaf018e09f58c819.bundle.js";
-/******/ 			if (chunkId === "countdown") return "" + chunkId + ".6b48da864045c1ea0edd.bundle.js";
-/******/ 			if (chunkId === "hotspot") return "" + chunkId + ".66952182f9ae91b6896c.bundle.js";
-/******/ 			if (chunkId === "form") return "form.23168c11e0d20fa0282b.bundle.js";
-/******/ 			if (chunkId === "gallery") return "" + chunkId + ".e5ba72e3c57da531df85.bundle.js";
-/******/ 			if (chunkId === "lottie") return "" + chunkId + ".dccf7257e6cc366bc6bd.bundle.js";
-/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".e248eec66bc3d5587cf6.bundle.js";
-/******/ 			if (chunkId === "popup") return "" + chunkId + ".5ddbdd46f21fc221d760.bundle.js";
-/******/ 			if (chunkId === "load-more") return "" + chunkId + ".cd76720206dc6d21abc0.bundle.js";
-/******/ 			if (chunkId === "posts") return "" + chunkId + ".c23c8d29f44afbd62da6.bundle.js";
-/******/ 			if (chunkId === "portfolio") return "" + chunkId + ".71a9b9fb42566ae496bd.bundle.js";
-/******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".d147b71ef798e333e678.bundle.js";
-/******/ 			if (chunkId === "slides") return "" + chunkId + ".6d3f738223ac9b3c9b7a.bundle.js";
-/******/ 			if (chunkId === "social") return "" + chunkId + ".b17f5f1767e41333a1dc.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".0744140055afdd9bf411.bundle.js";
-/******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".22a6d49be96f6e1aa290.bundle.js";
-/******/ 			if (chunkId === "search-form") return "" + chunkId + ".fda69e244861c6890e79.bundle.js";
-/******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".cf8829a628c66ec7c688.bundle.js";
-/******/ 			if (chunkId === "woocommerce-checkout-page") return "" + chunkId + ".acd4a2b8bc03ed32111f.bundle.js";
-/******/ 			if (chunkId === "woocommerce-cart") return "" + chunkId + ".39ccd7e510e98f3afb01.bundle.js";
-/******/ 			if (chunkId === "woocommerce-my-account") return "" + chunkId + ".d52e81c74f27be09eb2e.bundle.js";
+/******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".e520eaa79dbee1cfac29.bundle.js";
+/******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".35b54e34a5cb0387ddc0.bundle.js";
+/******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".00c5c212bbc3b1d155b0.bundle.js";
+/******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".93daadba13b5e1d2c129.bundle.js";
+/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".9d0deabe7a095aba599a.bundle.js";
+/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".24f26a220d051ebe9cf0.bundle.js";
+/******/ 			if (chunkId === "carousel") return "" + chunkId + ".8af41a7f7916e49faa64.bundle.js";
+/******/ 			if (chunkId === "countdown") return "" + chunkId + ".494333ff20e0a2ae981c.bundle.js";
+/******/ 			if (chunkId === "hotspot") return "" + chunkId + ".6561fc82c7a4cd4ad252.bundle.js";
+/******/ 			if (chunkId === "form") return "form.40d683f118e1e1f37822.bundle.js";
+/******/ 			if (chunkId === "gallery") return "" + chunkId + ".80bd2ebe264e5ec1e591.bundle.js";
+/******/ 			if (chunkId === "lottie") return "" + chunkId + ".6edefd55e83420c3e577.bundle.js";
+/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".1dac4a83f83a7b3c7934.bundle.js";
+/******/ 			if (chunkId === "popup") return "" + chunkId + ".4567e25e40bd00bdcd10.bundle.js";
+/******/ 			if (chunkId === "load-more") return "" + chunkId + ".ac40b4a3f37f08bbeba2.bundle.js";
+/******/ 			if (chunkId === "posts") return "" + chunkId + ".5e1be2ed6501aa917477.bundle.js";
+/******/ 			if (chunkId === "portfolio") return "" + chunkId + ".472eaa4ac6ea33e02365.bundle.js";
+/******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".da3a2fe5589f4d6df8be.bundle.js";
+/******/ 			if (chunkId === "slides") return "" + chunkId + ".b2be07a53adca10fb263.bundle.js";
+/******/ 			if (chunkId === "social") return "" + chunkId + ".a44d2048d9b1fcb6c560.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".4c67276d84a32454299a.bundle.js";
+/******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".543f7a304d84538a71f2.bundle.js";
+/******/ 			if (chunkId === "search-form") return "" + chunkId + ".b54087cb78208841e9e9.bundle.js";
+/******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".cedd0e5dff14e897d7f2.bundle.js";
+/******/ 			if (chunkId === "woocommerce-purchase-summary") return "" + chunkId + ".6f7dc47a408b6b1e11cc.bundle.js";
+/******/ 			if (chunkId === "woocommerce-checkout-page") return "" + chunkId + ".c51ad6b97bbcc4d7f461.bundle.js";
+/******/ 			if (chunkId === "woocommerce-cart") return "" + chunkId + ".de67cf3afe8ce5d8311a.bundle.js";
+/******/ 			if (chunkId === "woocommerce-my-account") return "" + chunkId + ".b271ccbc23c638cdf33a.bundle.js";
+/******/ 			if (chunkId === "woocommerce-notices") return "" + chunkId + ".9d7a1628d10a597bd42e.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
@@ -262,19 +264,21 @@
 /******/ 			// add "moreModules" to the modules object,
 /******/ 			// then flag all "chunkIds" as loaded and fire callback
 /******/ 			var moduleId, chunkId, i = 0;
-/******/ 			for(moduleId in moreModules) {
-/******/ 				if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
 /******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
 /******/ 			}
-/******/ 			if(runtime) var result = runtime(__webpack_require__);
 /******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for(;i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
 /******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
 /******/ 					installedChunks[chunkId][0]();
 /******/ 				}
-/******/ 				installedChunks[chunkIds[i]] = 0;
+/******/ 				installedChunks[chunkId] = 0;
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}

@@ -34,6 +34,15 @@ class Site_Logo extends Widget_Image {
 		return [ 'site', 'logo', 'branding' ];
 	}
 
+	public function get_inline_css_depends() {
+		return [
+			[
+				'name' => 'image',
+				'is_core_dependency' => true,
+			],
+		];
+	}
+
 	protected function register_controls() {
 		parent::register_controls();
 

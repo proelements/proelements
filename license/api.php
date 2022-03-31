@@ -15,6 +15,9 @@ class API {
 	const STATUS_SITE_INACTIVE = 'site_inactive';
 	const STATUS_DISABLED = 'disabled';
 
+	// Features
+	const FEATURE_PRO_TRIAL = 'pro_trial';
+
 	// Requests lock config.
 	const REQUEST_LOCK_TTL = MINUTE_IN_SECONDS;
 	const REQUEST_LOCK_OPTION_NAME = '_elementor_pro_api_requests_lock';
@@ -27,13 +30,20 @@ class API {
 	 * @return \stdClass|\WP_Error
 	 */
 	private static function remote_post( $body_args = [] ) {
+		/**
+		 * Allow third party plugins to set the url to get_site_url() instead of home_url().
+		 *
+		 * @param boolean Whether to use home_url() or get_site_url().
+		 */
+		$use_home_url = apply_filters( 'elementor_pro/license/api/use_home_url', true );
+
 		$body_args = wp_parse_args(
 			$body_args,
 			[
 				'api_version' => ELEMENTOR_PRO_VERSION,
 				'item_name' => self::PRODUCT_NAME,
 				'site_lang' => get_bloginfo( 'language' ),
-				'url' => home_url(),
+				'url' => $use_home_url ? home_url() : get_site_url(),
 			]
 		);
 
@@ -304,6 +314,23 @@ class API {
 		$license_data = self::get_license_data();
 
 		return self::STATUS_VALID === $license_data['license'];
+	}
+
+	public static function is_license_expired() {
+		$license_data = self::get_license_data();
+
+		return self::STATUS_EXPIRED === $license_data['license'];
+	}
+
+	public static function is_licence_pro_trial() {
+		return self::is_licence_has_feature( self::FEATURE_PRO_TRIAL );
+	}
+
+	public static function is_licence_has_feature( $feature_name ) {
+		$license_data = self::get_license_data();
+
+		return ! empty( $license_data['features'] )
+			&& in_array( $feature_name, $license_data['features'], true );
 	}
 
 	/**

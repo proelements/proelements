@@ -288,7 +288,7 @@ class Query extends Base_Object {
 		if ( $search ) {
 			$search = '%' . $this->wpdb->esc_like( $search ) . '%';
 
-			$where = " AND s.referer_title LIKE '{$search}'";
+			$where = $this->wpdb->prepare( ' AND s.referer_title LIKE %s', $search );
 		}
 
 		if ( $value ) {
@@ -717,14 +717,15 @@ class Query extends Base_Object {
 			$like = '%' . $this->wpdb->esc_like( $filters['search']['value'] ) . '%';
 			$meta_table_name = $this->get_table_submissions_values();
 
+			$search = $this->wpdb->prepare( 'LIKE %s OR t_submissions.id LIKE %s', [ $like, $like ] );
+
 			$target_where_query .= "(
 				(
 					SELECT GROUP_CONCAT({$meta_table_name}.value)
 					FROM `{$meta_table_name}`
 					WHERE {$meta_table_name}.submission_id = t_submissions.id
 					GROUP BY {$meta_table_name}.submission_id
-				) LIKE '{$like}' OR
-				t_submissions.id LIKE '{$like}'
+				) {$search}
 			)";
 		}
 	}

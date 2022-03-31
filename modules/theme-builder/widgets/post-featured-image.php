@@ -34,6 +34,15 @@ class Post_Featured_Image extends Widget_Image {
 		return [ 'image', 'featured', 'thumbnail' ];
 	}
 
+	public function get_inline_css_depends() {
+		return [
+			[
+				'name' => 'image',
+				'is_core_dependency' => true,
+			],
+		];
+	}
+
 	protected function register_controls() {
 		parent::register_controls();
 

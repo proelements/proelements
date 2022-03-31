@@ -24,4 +24,8 @@ class Product_Content extends Post_Content {
 	public function get_keywords() {
 		return [ 'content', 'post', 'product' ];
 	}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

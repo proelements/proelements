@@ -29,10 +29,10 @@
 			elements.$window = $( window );
 
 			if ( settings.parent ) {
-				if ( 'parent' === settings.parent ) {
-					elements.$parent = $element.parent();
-				} else {
-					elements.$parent = $element.closest( settings.parent );
+				elements.$parent = $element.parent();
+
+				if ( 'parent' !== settings.parent ) {
+					elements.$parent = elements.$parent.closest( settings.parent );
 				}
 			}
 		};

@@ -165,4 +165,8 @@ class Product_Images extends Base_Widget {
 			<?php
 		}
 	}
+
+	public function get_group_name() {
+		return 'woocommerce';
+	}
 }

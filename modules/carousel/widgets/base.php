@@ -475,9 +475,24 @@ abstract class Base extends Base_Widget {
 		);
 
 		$this->add_control(
-			'pagination_color',
+			'pagination_color_inactive',
 			[
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					// The opacity property will override the default inactive dot color which is opacity 0.2.
+					'{{WRAPPER}} .swiper-pagination-bullet:not(.swiper-pagination-bullet-active)' => 'background-color: {{VALUE}}; opacity: 1;',
+				],
+				'condition' => [
+					'pagination!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_color',
+			[
+				'label' => esc_html__( 'Active Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .swiper-pagination-bullet-active, {{WRAPPER}} .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',

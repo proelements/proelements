@@ -32,6 +32,14 @@ class Template extends Base_Widget {
 		return false;
 	}
 
+	public static function on_import_replace_dynamic_content( $config, $map_old_new_post_ids ) {
+		if ( isset( $config['settings']['template_id'] ) ) {
+			$config['settings']['template_id'] = $map_old_new_post_ids[ $config['settings']['template_id'] ];
+		}
+
+		return $config;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_template',

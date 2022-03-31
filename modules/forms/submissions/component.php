@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Forms\Submissions;
 
+use Elementor\Core\Admin\Menu\Main as MainMenu;
 use Elementor\Settings;
 use ElementorPro\Modules\Forms\Registrars\Form_Actions_Registrar;
 use ElementorPro\Plugin;
@@ -44,10 +45,21 @@ class Component extends Module_Base {
 		return ( ! empty( $_GET['page'] ) && self::PAGE_ID === $_GET['page'] );
 	}
 
+	private function register_admin_menu( MainMenu $menu ) {
+		$menu->add_submenu( [
+			'menu_title' => $this->get_title(),
+			'menu_slug' => self::PAGE_ID,
+			'function' => function () {
+				$this->render_admin_page();
+			},
+			'index' => 35,
+		] );
+	}
+
 	/**
 	 * Register admin menu
 	 */
-	private function register_admin_menu() {
+	private function register_admin_menu_legacy() {
 		$title = $this->get_title();
 
 		add_submenu_page(
@@ -57,15 +69,19 @@ class Component extends Module_Base {
 			'manage_options',
 			self::PAGE_ID,
 			function () {
-				?>
-					<div class="wrap">
-						<h1 class="wp-heading-inline"><?php echo esc_html__( 'Submissions', 'elementor-pro' ); ?></h1>
-						<hr class="wp-header-end">
-						<div id="e-form-submissions"></div>
-					</div>
-				<?php
+				$this->render_admin_page();
 			}
 		);
+	}
+
+	private function render_admin_page() {
+		?>
+		<div class="wrap">
+			<h1 class="wp-heading-inline"><?php echo esc_html__( 'Submissions', 'elementor-pro' ); ?></h1>
+			<hr class="wp-header-end">
+			<div id="e-form-submissions"></div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -164,9 +180,15 @@ class Component extends Module_Base {
 			$this->scheduled_submissions_delete();
 		} );
 
-		add_action( 'admin_menu', function () {
-			$this->register_admin_menu();
-		}, 21 /* after Elementor page */ );
+		if ( Plugin::elementor()->experiments->is_feature_active( 'admin_menu_rearrangement' ) ) {
+			add_action( 'elementor/admin/menu_registered/elementor', function( MainMenu $menu ) {
+				$this->register_admin_menu( $menu );
+			} );
+		} else {
+			add_action( 'admin_menu', function() {
+				$this->register_admin_menu_legacy();
+			}, 21 /* after Elementor page */ );
+		}
 
 		if ( $this->is_current() ) {
 			add_action( 'admin_enqueue_scripts', function () {

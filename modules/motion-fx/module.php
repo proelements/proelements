@@ -2,11 +2,12 @@
 
 namespace ElementorPro\Modules\MotionFX;
 
+use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Element_Column;
 use Elementor\Element_Section;
+use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -33,8 +34,8 @@ class Module extends Module_Base {
 		return 'motion-fx';
 	}
 
-	public function register_controls_group() {
-		Plugin::elementor()->controls_manager->add_group_control( Controls_Group::get_type(), new Controls_Group() );
+	public function register_controls_group( Controls_Manager $controls_manager ) {
+		$controls_manager->add_group_control( Controls_Group::get_type(), new Controls_Group() );
 	}
 
 	public function add_controls_group_to_element( Element_Base $element ) {
@@ -46,7 +47,7 @@ class Module extends Module_Base {
 			$exclude[] = 'motion_fx_mouse';
 		} elseif ( $element instanceof Element_Column ) {
 			$selector .= ' > .elementor-widget-wrap';
-		} else {
+		} elseif ( $element instanceof Widget_Base ) {
 			$selector .= ' > .elementor-widget-container';
 		}
 
@@ -116,22 +117,25 @@ class Module extends Module_Base {
 		$element->end_injection();
 	}
 
-	public function localize_settings( array $settings ) {
-		$settings['i18n']['motion_effects'] = esc_html__( 'Motion Effects', 'elementor-pro' );
+	/**
+	 * @deprecated 3.1.0
+	 */
+	public function localize_settings() {
+		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
 
-		return $settings;
+		return [];
 	}
 
 	private function add_actions() {
-		add_action( 'elementor/controls/controls_registered', [ $this, 'register_controls_group' ] );
+		add_action( 'elementor/controls/register', [ $this, 'register_controls_group' ] );
 
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
+		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/column/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 
 		add_action( 'elementor/element/section/section_background/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );
+		add_action( 'elementor/element/container/section_background/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );
 		add_action( 'elementor/element/column/section_style/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );
-
-		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 }

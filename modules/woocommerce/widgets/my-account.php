@@ -29,7 +29,7 @@ class My_Account extends Base_Widget {
 	}
 
 	public function get_categories() {
-		return [ 'theme-elements', 'woocommerce-elements' ];
+		return [ 'woocommerce-elements' ];
 	}
 
 	protected function register_controls() {
@@ -1935,5 +1935,9 @@ class My_Account extends Base_Widget {
 	 */
 	public function after_account_content() {
 		echo '</div>';
+	}
+
+	public function get_group_name() {
+		return 'woocommerce';
 	}
 }
