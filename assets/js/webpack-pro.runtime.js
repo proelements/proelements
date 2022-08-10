@@ -1,4 +1,4 @@
-/*! pro-elements - v3.6.4 - 15-03-2022 */
+/*! pro-elements - v3.7.3 - 31-07-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -81,35 +81,36 @@
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".e520eaa79dbee1cfac29.bundle.js";
-/******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".35b54e34a5cb0387ddc0.bundle.js";
-/******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".00c5c212bbc3b1d155b0.bundle.js";
-/******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".93daadba13b5e1d2c129.bundle.js";
-/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".9d0deabe7a095aba599a.bundle.js";
-/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".24f26a220d051ebe9cf0.bundle.js";
-/******/ 			if (chunkId === "carousel") return "" + chunkId + ".8af41a7f7916e49faa64.bundle.js";
-/******/ 			if (chunkId === "countdown") return "" + chunkId + ".494333ff20e0a2ae981c.bundle.js";
-/******/ 			if (chunkId === "hotspot") return "" + chunkId + ".6561fc82c7a4cd4ad252.bundle.js";
-/******/ 			if (chunkId === "form") return "form.40d683f118e1e1f37822.bundle.js";
-/******/ 			if (chunkId === "gallery") return "" + chunkId + ".80bd2ebe264e5ec1e591.bundle.js";
-/******/ 			if (chunkId === "lottie") return "" + chunkId + ".6edefd55e83420c3e577.bundle.js";
-/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".1dac4a83f83a7b3c7934.bundle.js";
-/******/ 			if (chunkId === "popup") return "" + chunkId + ".4567e25e40bd00bdcd10.bundle.js";
-/******/ 			if (chunkId === "load-more") return "" + chunkId + ".ac40b4a3f37f08bbeba2.bundle.js";
-/******/ 			if (chunkId === "posts") return "" + chunkId + ".5e1be2ed6501aa917477.bundle.js";
-/******/ 			if (chunkId === "portfolio") return "" + chunkId + ".472eaa4ac6ea33e02365.bundle.js";
-/******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".da3a2fe5589f4d6df8be.bundle.js";
-/******/ 			if (chunkId === "slides") return "" + chunkId + ".b2be07a53adca10fb263.bundle.js";
-/******/ 			if (chunkId === "social") return "" + chunkId + ".a44d2048d9b1fcb6c560.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".4c67276d84a32454299a.bundle.js";
-/******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".543f7a304d84538a71f2.bundle.js";
-/******/ 			if (chunkId === "search-form") return "" + chunkId + ".b54087cb78208841e9e9.bundle.js";
-/******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".cedd0e5dff14e897d7f2.bundle.js";
-/******/ 			if (chunkId === "woocommerce-purchase-summary") return "" + chunkId + ".6f7dc47a408b6b1e11cc.bundle.js";
-/******/ 			if (chunkId === "woocommerce-checkout-page") return "" + chunkId + ".c51ad6b97bbcc4d7f461.bundle.js";
-/******/ 			if (chunkId === "woocommerce-cart") return "" + chunkId + ".de67cf3afe8ce5d8311a.bundle.js";
-/******/ 			if (chunkId === "woocommerce-my-account") return "" + chunkId + ".b271ccbc23c638cdf33a.bundle.js";
-/******/ 			if (chunkId === "woocommerce-notices") return "" + chunkId + ".9d7a1628d10a597bd42e.bundle.js";
+/******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".025966fc6b037ea07f05.bundle.js";
+/******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".1aa3281934eb1be42914.bundle.js";
+/******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".35291ad27cdc2a8a7921.bundle.js";
+/******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".3c4e82ad4f8635e44542.bundle.js";
+/******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".d38557a8e9be0c7ac097.bundle.js";
+/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".4d4d3c90102df0feeeb4.bundle.js";
+/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".e3ec0e8809948259690d.bundle.js";
+/******/ 			if (chunkId === "carousel") return "" + chunkId + ".ec49ae64da497d8adeee.bundle.js";
+/******/ 			if (chunkId === "countdown") return "" + chunkId + ".486737044795b3a87ad3.bundle.js";
+/******/ 			if (chunkId === "hotspot") return "" + chunkId + ".7a26a87c29a1cd99ebc4.bundle.js";
+/******/ 			if (chunkId === "form") return "form.e231ef9f8b852ecaa4d3.bundle.js";
+/******/ 			if (chunkId === "gallery") return "" + chunkId + ".ab76804bbe6e9657fa8b.bundle.js";
+/******/ 			if (chunkId === "lottie") return "" + chunkId + ".68b160acb16985899f6c.bundle.js";
+/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".344ae9625cf591e355d9.bundle.js";
+/******/ 			if (chunkId === "popup") return "" + chunkId + ".1e0f0af4c386170080a9.bundle.js";
+/******/ 			if (chunkId === "load-more") return "" + chunkId + ".fec6d8e0469ce9de4c2e.bundle.js";
+/******/ 			if (chunkId === "posts") return "" + chunkId + ".088a95f657e27386e013.bundle.js";
+/******/ 			if (chunkId === "portfolio") return "" + chunkId + ".71a295881db9bf336b34.bundle.js";
+/******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".d46ad1a7ae4811ddf539.bundle.js";
+/******/ 			if (chunkId === "slides") return "" + chunkId + ".c147fd1a583874a5c204.bundle.js";
+/******/ 			if (chunkId === "social") return "" + chunkId + ".1c34ab246a4f2f971eb3.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".04aedbfe66f61e99e535.bundle.js";
+/******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".9298f3dd8f2722909f33.bundle.js";
+/******/ 			if (chunkId === "search-form") return "" + chunkId + ".2a7313a0f793c51489e5.bundle.js";
+/******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".3dd7c3f10f39d618076a.bundle.js";
+/******/ 			if (chunkId === "woocommerce-purchase-summary") return "" + chunkId + ".d052d7d713baf4381542.bundle.js";
+/******/ 			if (chunkId === "woocommerce-checkout-page") return "" + chunkId + ".f8efa8ea5086f53925da.bundle.js";
+/******/ 			if (chunkId === "woocommerce-cart") return "" + chunkId + ".e2b26d683c4de1ac5aff.bundle.js";
+/******/ 			if (chunkId === "woocommerce-my-account") return "" + chunkId + ".44bbb4dd4591f0c43079.bundle.js";
+/******/ 			if (chunkId === "woocommerce-notices") return "" + chunkId + ".7acc357dab73c74f532c.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

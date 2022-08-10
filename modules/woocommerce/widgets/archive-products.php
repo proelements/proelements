@@ -21,6 +21,10 @@ class Archive_Products extends Products {
 		return esc_html__( 'Archive Products', 'elementor-pro' );
 	}
 
+	public function get_keywords() {
+		return [ 'woocommerce', 'shop', 'store', 'product', 'archive' ];
+	}
+
 	public function get_categories() {
 		return [
 			'woocommerce-elements-archive',
@@ -128,6 +132,9 @@ class Archive_Products extends Products {
 				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'It seems we can\'t find what you\'re looking for.', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 

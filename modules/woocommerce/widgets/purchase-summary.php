@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Woocommerce\Widgets;
 
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Woocommerce\Module;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
@@ -1131,7 +1132,7 @@ class Purchase_Summary extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'order_details_titles_totals_typography',
-				'selector' => '{{WRAPPER}} .shop_table thead tr th, {{WRAPPER}} .shop_table tfoot th, {{WRAPPER}} .shop_table tfoot tr td, {{WRAPPER}} .shop_table tfoot tr td span',
+				'selector' => '{{WRAPPER}} .shop_table thead tr th, {{WRAPPER}} .shop_table tfoot th, {{WRAPPER}} .shop_table tfoot tr td, {{WRAPPER}} .shop_table tfoot tr td span, {{WRAPPER}} .woocommerce-table--order-downloads tr td:before',
 			]
 		);
 
@@ -1140,7 +1141,7 @@ class Purchase_Summary extends Base_Widget {
 			[
 				'name' => 'order_details_titles_totals_text_shadow',
 				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .shop_table thead tr th, {{WRAPPER}} .shop_table tfoot th, {{WRAPPER}} .shop_table tfoot tr td, {{WRAPPER}} .shop_table tfoot tr td span',
+				'selector' => '{{WRAPPER}} .shop_table thead tr th, {{WRAPPER}} .shop_table tfoot th, {{WRAPPER}} .shop_table tfoot tr td, {{WRAPPER}} .shop_table tfoot tr td span, {{WRAPPER}} .woocommerce-table--order-downloads tr td:before',
 			]
 		);
 
@@ -1553,12 +1554,7 @@ class Purchase_Summary extends Base_Widget {
 
 	protected function render() {
 		$is_editor = Plugin::elementor()->editor->is_edit_mode();
-		$is_preview = (
-			isset( $_GET['preview'] )
-			&& isset( $_GET['preview_id'] )
-			&& isset( $_GET['preview_nonce'] )
-			&& wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . $_GET['preview_id'] )
-		);
+		$is_preview = Module::is_preview();
 
 		if ( $is_editor || $is_preview ) {
 			$this->set_preview_order();

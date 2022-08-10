@@ -616,15 +616,25 @@ class Testimonial_Carousel extends Base {
 	}
 
 	protected function print_slide( array $slide, array $settings, $element_key ) {
+		$lazyload = 'yes' === $this->get_settings( 'lazyload' );
+
 		$this->add_render_attribute( $element_key . '-testimonial', [
 			'class' => 'elementor-testimonial',
 		] );
 
 		if ( ! empty( $slide['image']['url'] ) ) {
-			$this->add_render_attribute( $element_key . '-image', [
-				'src' => $this->get_slide_image_url( $slide, $settings ),
-				'alt' => ! empty( $slide['name'] ) ? $slide['name'] : '',
-			] );
+			$img_src = $this->get_slide_image_url( $slide, $settings );
+
+			if ( $lazyload ) {
+				$img_attribute['class'] = 'swiper-lazy';
+				$img_attribute['data-src'] = $img_src;
+			} else {
+				$img_attribute['src'] = $img_src;
+			}
+
+			$img_attribute['alt'] = $this->get_slide_image_alt_attribute( $slide );
+
+			$this->add_render_attribute( $element_key . '-image', $img_attribute );
 		}
 
 		?>
@@ -642,6 +652,9 @@ class Testimonial_Carousel extends Base {
 				<?php if ( $slide['image']['url'] ) : ?>
 					<div class="elementor-testimonial__image">
 						<img <?php $this->print_render_attribute_string( $element_key . '-image' ); ?>>
+						<?php if ( $lazyload ) : ?>
+							<div class="swiper-lazy-preloader"></div>
+						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 				<?php $this->print_cite( $slide, 'inside' ); ?>

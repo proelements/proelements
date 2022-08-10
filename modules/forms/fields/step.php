@@ -64,6 +64,9 @@ class Step extends Field_Base {
 				'name' => 'previous_button',
 				'label' => esc_html__( 'Previous Button', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],
@@ -75,6 +78,9 @@ class Step extends Field_Base {
 				'name' => 'next_button',
 				'label' => esc_html__( 'Next Button', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],

@@ -122,7 +122,7 @@ class Save_To_Database extends Action_Base {
 					];
 
 					if ( isset( $field['field_options'] ) ) {
-						$mapped_field['options'] = explode( PHP_EOL, $field['field_options'] );
+						$mapped_field['options'] = preg_split( '/(\r\n|\n|\r)/', $field['field_options'] );
 					}
 
 					if ( isset( $field['allow_multiple'] ) ) {

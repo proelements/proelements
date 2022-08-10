@@ -8,7 +8,9 @@
 			isFollowingParent = false,
 			isReachedEffectsPoint = false,
 			elements = {},
-			settings;
+			settings,
+			elementOffsetValue,
+			elementWidth;
 
 		var defaultSettings = {
 			to: 'top',
@@ -21,6 +23,9 @@
 				stickyEffects: 'sticky-effects',
 				spacer: 'sticky-spacer',
 			},
+			isRTL: false,
+			relativeTarget: 'parent',
+			handleScrollbarWidth: false,
 		};
 
 		var initElements = function() {
@@ -79,6 +84,25 @@
 			return $elementCSSBackup.data( 'css-backup-' + backupState );
 		};
 
+		const updateElementSizesData = () => {
+			if ( 'document' === settings.relativeTarget ) {
+				if ( isSticky ) {
+					elementOffsetValue = elements.$spacer.offset().left;
+				} else {
+					elementOffsetValue = $element.offset().left;
+				}
+
+				if ( settings.isRTL ) {
+					// `window.innerWidth` includes the scrollbar while `document.body.offsetWidth` doesn't.
+					const documentWidth = settings.handleScrollbarWidth ? window.innerWidth : document.body.offsetWidth;
+
+					elementOffsetValue = Math.max( documentWidth - elementWidth - elementOffsetValue, 0 );
+				}
+			} else {
+				elementWidth = getElementOuterSize( $element, 'width' );
+			}
+		}
+
 		var addSpacer = function() {
 			elements.$spacer = $element.clone()
 				.addClass( settings.classes.spacer )
@@ -96,18 +120,21 @@
 		};
 
 		var stickElement = function() {
-			backupCSS( $element, 'unsticky', [ 'position', 'width', 'margin-top', 'margin-bottom', 'top', 'bottom' ] );
+			backupCSS( $element, 'unsticky', [ 'position', 'width', 'margin-top', 'margin-bottom', 'top', 'bottom', 'inset-inline-start' ] );
 
-			var css = {
+			const css = {
 				position: 'fixed',
-				width: getElementOuterSize( $element, 'width' ),
+				width: elementWidth,
 				marginTop: 0,
 				marginBottom: 0,
 			};
 
 			css[ settings.to ] = settings.offset;
-
 			css[ 'top' === settings.to ? 'bottom' : 'top' ] = '';
+
+			if ( elementOffsetValue ) {
+				css[ 'inset-inline-start' ] = elementOffsetValue + 'px';
+			}
 
 			$element
 				.css( css )
@@ -127,7 +154,7 @@
 
 			backupCSS( $element, 'notFollowing', [ 'position', 'top', 'bottom' ] );
 
-			var css = {
+			const css = {
 				position: 'absolute',
 			};
 
@@ -192,6 +219,8 @@
 		};
 
 		var stick = function() {
+			updateElementSizesData();
+
 			addSpacer();
 
 			stickElement();
@@ -288,7 +317,15 @@
 				return;
 			}
 
+			// In case the relative parent is the document, and the element is currently sticky, the element width is
+			// backed up in order to retain the correct width after unsticking the element.
+			if ( 'document' === settings.relativeTarget && isSticky ) {
+				elementWidth = elements.$spacer.width();
+			}
+
 			unstickElement();
+
+			updateElementSizesData();
 
 			stickElement();
 

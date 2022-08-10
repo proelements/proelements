@@ -36,7 +36,8 @@ class Module extends Module_Base {
 			 * Filters the attributes that won't be rendered in the wrapper element.
 			 *
 			 * By default Elementor doesn't render some attributes to prevent things
-			 * from breaking down. But this list of attributes can be changed.
+			 * from breaking down. This hook allows developers to alter this list of
+			 * attributes.
 			 *
 			 * @since 2.2.0
 			 *

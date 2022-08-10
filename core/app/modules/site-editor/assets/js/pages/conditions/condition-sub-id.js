@@ -12,6 +12,7 @@ export default function ConditionSubId( props ) {
 		return '';
 	}
 
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const settings = React.useMemo( () => getSettings( props.subIdAutocomplete ), [ props.subIdAutocomplete ] );
 
 	const onChange = ( e ) => props.updateConditions( props.id, { subId: e.target.value } );

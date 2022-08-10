@@ -1808,7 +1808,7 @@ class Call_To_Action extends Base_Widget {
 					</div>
 				<# } #>
 				<# if ( settings.title ) { #>
-					<# var titleTag = elementorPro.validateHTMLTag( settings.title_tag ) #>
+					<# var titleTag = elementor.helpers.validateHTMLTag( settings.title_tag ) #>
 					<{{ titleTag }} {{{ view.getRenderAttributeString( 'title' ) }}}>{{{ settings.title }}}</{{ titleTag }}>
 				<# } #>
 

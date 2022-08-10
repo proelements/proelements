@@ -16,7 +16,7 @@ export default function AddNew() {
 	const HoverElement = ( props ) => {
 		return (
 			<a href={ props.urls.create } className="eps-card__image-overlay eps-add-new__overlay">
-				<AddNewButton hideText={true}/>
+				<AddNewButton hideText={ true } />
 			</a>
 		);
 	};
@@ -28,8 +28,8 @@ export default function AddNew() {
 	return (
 		<section className="e-site-editor__add-new">
 			<header className="e-site-editor__header">
-				{ hasTemplates && <BackButton/> }
-				<Heading variant="h1">{__( 'Start customizing every part of your site', 'elementor-pro' )}</Heading>
+				{ hasTemplates && <BackButton /> }
+				<Heading variant="h1">{ __( 'Start customizing every part of your site', 'elementor-pro' ) }</Heading>
 			</header>
 			<SiteParts hoverElement={ HoverElement } />
 		</section>

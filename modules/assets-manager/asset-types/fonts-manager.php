@@ -309,7 +309,7 @@ class Fonts_Manager {
 			$custom_fonts = $this->get_font_types();
 		}
 
-		return array_merge( $custom_fonts, $fonts );
+		return array_replace( $custom_fonts, $fonts );
 	}
 
 	public function register_fonts_groups( $font_groups ) {
@@ -319,7 +319,7 @@ class Fonts_Manager {
 			$new_groups[ $type ] = $instance->get_name();
 		}
 
-		return array_merge( $new_groups, $font_groups );
+		return array_replace( $new_groups, $font_groups );
 	}
 
 	/**
@@ -377,8 +377,8 @@ class Fonts_Manager {
 			if ( false === $font_type ) {
 				continue;
 			}
-			$font_types = array_merge( $font_types, $font_type->get_font_family_type( $font->ID, $font->post_title ) );
-			$new_fonts = array_merge( $new_fonts, $font_type->get_font_data( $font->ID, $font->post_title ) );
+			$font_types = array_replace( $font_types, $font_type->get_font_family_type( $font->ID, $font->post_title ) );
+			$new_fonts = array_replace( $new_fonts, $font_type->get_font_data( $font->ID, $font->post_title ) );
 		}
 
 		update_option( self::FONTS_NAME_TYPE_OPTION_NAME, $font_types );

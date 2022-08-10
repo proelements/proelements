@@ -202,7 +202,7 @@ class Settings_Woocommerce extends Tab_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'error_message_link_typography',
-				'selector' => '.e-wc-error-notice .woocommerce-error a.wc-backward',
+				'selector' => 'body.e-wc-error-notice .woocommerce-error a.wc-backward',
 			]
 		);
 
@@ -273,7 +273,7 @@ class Settings_Woocommerce extends Tab_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'notice_message_link_typography',
-				'selector' => '.e-wc-message-notice .woocommerce-message .restore-item, .e-wc-message-notice .woocommerce-message a:not([class])',
+				'selector' => 'body.e-wc-message-notice .woocommerce-message .restore-item, body.e-wc-message-notice .woocommerce-message a:not([class])',
 			]
 		);
 
@@ -379,18 +379,25 @@ class Settings_Woocommerce extends Tab_Base {
 	}
 
 	private function get_notice_button_selectors( $prefix ) {
+		$button_hover_background_selector = 'body.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button:hover';
+
+		if ( 'info' === $prefix ) {
+			// Override styling from the My Account widget.
+			$button_hover_background_selector .= ', body.e-wc-info-notice .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-info .woocommerce-Button:hover';
+		}
+
 		return [
-			$prefix . '_button_typography' => '.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button',
+			$prefix . '_button_typography' => 'body.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button',
 			$prefix . '_button_text_shadow' => '.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button',
 			$prefix . '_buttons_normal_text_color' => [
 				'.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix => '--' . $prefix . '-buttons-normal-text-color: {{VALUE}};',
 			],
-			$prefix . '_buttons_normal_background' => '.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button',
+			$prefix . '_buttons_normal_background' => 'body.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button',
 			$prefix . '_buttons_normal_box_shadow' => '.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button',
 			$prefix . '_buttons_hover_text_color' => [
 				'.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix => '--' . $prefix . '-buttons-hover-text-color: {{VALUE}};',
 			],
-			$prefix . '_buttons_hover_background' => '.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button:hover',
+			$prefix . '_buttons_hover_background' => $button_hover_background_selector,
 			$prefix . '_buttons_focus_box_shadow' => '.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button:hover',
 			$prefix . '_buttons_hover_border_color' => [
 				'.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix => '--' . $prefix . '-buttons-hover-border-color: {{VALUE}};',
@@ -402,7 +409,7 @@ class Settings_Woocommerce extends Tab_Base {
 				'.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix => '--' . $prefix . '-border-type: {{VALUE}};',
 			],
 			$prefix . '_buttons_border_width' => [
-				'.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'body.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix . ' .button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			],
 			$prefix . '_buttons_border_color' => [
 				'.e-wc-' . $prefix . '-notice .woocommerce-' . $prefix => '--' . $prefix . '-border-color: {{VALUE}};',

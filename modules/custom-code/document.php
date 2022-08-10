@@ -43,6 +43,14 @@ class Document extends Theme_Document {
 		}
 	}
 
+	public static function get_create_url() {
+		$query_args = [
+			'post_type' => Module::CPT,
+		];
+
+		return add_query_arg( $query_args, admin_url( 'post-new.php' ) );
+	}
+
 	private function print_snippet_with_elementor_comment( $content ) {
 		echo implode( PHP_EOL, [
 			'',

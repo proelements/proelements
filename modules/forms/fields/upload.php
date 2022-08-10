@@ -198,7 +198,7 @@ class Upload extends Field_Base {
 	}
 
 	/**
-	 * a set of black listed file extensions
+	 * A blacklist of file extensions.
 	 *
 	 * @return array
 	 */
@@ -208,13 +208,17 @@ class Upload extends Field_Base {
 			$blacklist = [ 'php', 'php3', 'php4', 'php5', 'php6', 'phps', 'php7', 'phtml', 'shtml', 'pht', 'swf', 'html', 'asp', 'aspx', 'cmd', 'csh', 'bat', 'htm', 'hta', 'jar', 'exe', 'com', 'js', 'lnk', 'htaccess', 'htpasswd', 'phtml', 'ps1', 'ps2', 'py', 'rb', 'tmp', 'cgi' ];
 
 			/**
-			 * Forms file types black list.
+			 * Elementor forms blacklisted file extensions.
 			 *
-			 * Filters the black list of  file types that won’t be uploaded using the forms.
+			 * Filters the list of file types that won't be uploaded using Elementor forms.
+			 *
+			 * By default Elementor forms doesn't upload some file types for security reasons.
+			 * This hook allows developers to alter this list, either add more file types to
+			 * strengthen the security or remove file types to increase flexibility.
 			 *
 			 * @since 1.0.0
 			 *
-			 * @param array $blacklist A black list of file types.
+			 * @param array $blacklist A blacklist of file extensions.
 			 */
 			$blacklist = apply_filters( 'elementor_pro/forms/filetypes/blacklist', $blacklist );
 		}
@@ -306,13 +310,16 @@ class Upload extends Field_Base {
 		$path = $wp_upload_dir['basedir'] . '/elementor/forms';
 
 		/**
-		 * Upload file path.
+		 * Elementor forms upload file path.
 		 *
 		 * Filters the path to a file uploaded using Elementor forms.
 		 *
+		 * By default Elementor forms defines a path to uploaded file. This
+		 * hook allows developers to alter this path.
+		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $url File URL.
+		 * @param string $path Path to uploaded files.
 		 */
 		$path = apply_filters( 'elementor_pro/forms/upload_path', $path );
 
@@ -331,14 +338,17 @@ class Upload extends Field_Base {
 		$url = $wp_upload_dir['baseurl'] . '/elementor/forms/' . $file_name;
 
 		/**
-		 * Upload file URL.
+		 * Elementor forms upload file URL.
 		 *
 		 * Filters the URL to a file uploaded using Elementor forms.
 		 *
+		 * By default Elementor forms defines a URL to uploaded file. This
+		 * hook allows developers to alter this URL.
+		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $url       File URL.
-		 * @param string $file_name File name.
+		 * @param string $url       Upload file URL.
+		 * @param string $file_name Upload file name.
 		 */
 		$url = apply_filters( 'elementor_pro/forms/upload_url', $url, $file_name );
 

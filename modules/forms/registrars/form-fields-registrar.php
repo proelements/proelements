@@ -41,9 +41,14 @@ class Form_Fields_Registrar extends Registrar {
 
 		/**
 		 * Elementor Pro form fields registration.
-		 * Passes the Fields_Registrar as a parameter in order to register new fields using `$registrar->register()`.
+		 *
+		 * Fires when a new form field is registered. This hook allows developers to
+		 * register new form fields.
 		 *
 		 * @since 3.5.0
+		 *
+		 * @param Form_Actions_Registrar $this An instance of form fields registration
+		 *                                     manager.
 		 */
 		do_action( 'elementor_pro/forms/fields/register', $this );
 	}

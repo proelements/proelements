@@ -188,6 +188,9 @@ class Price_Table extends Base_Widget {
 			[
 				'label' => esc_html__( 'Period', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Monthly', 'elementor-pro' ),
 			]
 		);
@@ -208,6 +211,9 @@ class Price_Table extends Base_Widget {
 			[
 				'label' => esc_html__( 'Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'List Item', 'elementor-pro' ),
 			]
 		);
@@ -1678,7 +1684,7 @@ class Price_Table extends Base_Widget {
 			<# if ( settings.heading || settings.sub_heading ) { #>
 				<div class="elementor-price-table__header">
 					<# if ( settings.heading ) { #>
-						<# var headingTag = elementorPro.validateHTMLTag( settings.heading_tag ) #>
+						<# var headingTag = elementor.helpers.validateHTMLTag( settings.heading_tag ) #>
 						<{{ headingTag }} {{{ view.getRenderAttributeString( 'heading' ) }}}>{{{ settings.heading }}}</{{ headingTag }}>
 					<# } #>
 					<# if ( settings.sub_heading ) { #>

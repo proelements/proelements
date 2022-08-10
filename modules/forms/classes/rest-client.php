@@ -21,13 +21,13 @@ class Rest_Client {
 			 ->add_headers( 'User-Agent', $this->user_agent );
 
 		/**
-		 * Elementor form Rest Client Init
+		 * Initiate Elementor form REST API client.
 		 *
-		 * Fires on client init
+		 * Fires when Elementor forms are initiated on REST API client.
 		 *
 		 * @since 2.4.0
 		 *
-		 * @param Rest_Client $this
+		 * @param Rest_Client $this An instance of form REST API client.
 		 */
 		do_action( 'elementor-pro/forms/rest_client/init', $this );
 
@@ -35,7 +35,8 @@ class Rest_Client {
 	}
 
 	/**
-	 * set base url
+	 * Set REST API base url.
+	 *
 	 * @param string $url
 	 */
 	public function set_base_url( $url ) {
@@ -43,7 +44,8 @@ class Rest_Client {
 	}
 
 	/**
-	 * get base url
+	 * Get REST API base url.
+	 *
 	 * @return string
 	 */
 	public function get_base_url() {
@@ -51,10 +53,12 @@ class Rest_Client {
 	}
 
 	/**
-	 * @param $key
-	 * @param $value
+	 * Add headers to REST API.
 	 *
-	 * @return $this
+	 * @param $key   Header key.
+	 * @param $value Optional. Header value. Default is null.
+	 *
+	 * @return $this An instance of REST API client.
 	 */
 	public function add_headers( $key, $value = null ) {
 		if ( ! is_array( $key ) ) {
@@ -70,10 +74,12 @@ class Rest_Client {
 	}
 
 	/**
-	 * @param string $name
-	 * @param null   $value
+	 * Set REST API request arguments.
 	 *
-	 * @return $this
+	 * @param string $name  Optional. Request argument name. Default is ''.
+	 * @param null   $value Optional. Request argument value. Default is null.
+	 *
+	 * @return $this An instance of REST API client.
 	 */
 	public function set_request_arg( $name = '', $value = null ) {
 		$this->request_args[ $name ] = $value;
@@ -84,8 +90,8 @@ class Rest_Client {
 	/**
 	 * @uses request
 	 *
-	 * @param string $endpoint
-	 * @param null   $data
+	 * @param string $endpoint Optional. Default is ''.
+	 * @param null   $data     Optional. Default is null.
 	 *
 	 * @return array|mixed
 	 * @throws \Exception
@@ -99,8 +105,8 @@ class Rest_Client {
 	/**
 	 * @uses request
 	 *
-	 * @param string $endpoint
-	 * @param null   $data
+	 * @param string $endpoint Optional. Default is ''.
+	 * @param null   $data     Optional. Default is null.
 	 *
 	 * @return array|mixed
 	 * @throws \Exception
@@ -110,10 +116,10 @@ class Rest_Client {
 	}
 
 	/**
-	 * @param string $method
-	 * @param string $endpoint
-	 * @param null   $request_body
-	 * @param int    $valid_response_code
+	 * @param string $method              Optional. Default is 'GET'.
+	 * @param string $endpoint            Optional. Default is ''.
+	 * @param null   $request_body        Optional. Default is null.
+	 * @param int    $valid_response_code Optional. Default is '200'.
 	 *
 	 * @return array
 	 * @throws \Exception

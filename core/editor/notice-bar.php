@@ -2,6 +2,7 @@
 namespace ElementorPro\Core\Editor;
 
 use Elementor\Core\Editor\Notice_Bar as Base_Notice_Bar;
+use ElementorPro\License\Admin;
 use ElementorPro\License\API as License_API;
 use ElementorPro\Plugin;
 
@@ -48,10 +49,21 @@ class Notice_Bar extends Base_Notice_Bar {
 		if ( License_API::is_license_expired() ) {
 			return [
 				'option_key' => self::ELEMENTOR_PRO_EDITOR_RENEW_LICENSE_NOTICE_DISMISSED,
-				'message' => esc_html__( 'Renew Elementor Pro and enjoy updates, support and Pro templates for another year.', 'elementor-pro' ),
-				'action_title' => esc_html__( 'Renew Now', 'elementor-pro' ),
+				'icon' => 'eicon-lock',
+				'message' => esc_html__(
+					'Renew to unlock all Elementor Pro features',
+					'elementor-pro'
+				),
+				'action_title' => esc_html__( 'Renew now', 'elementor-pro' ),
 				'action_url' => 'https://go.elementor.com/editor-notice-bar-renew/',
-				'muted_period' => 30,
+				'secondary_message' => esc_html__(
+					'Already renewed?',
+					'elementor-pro'
+				),
+				'secondary_action_title' => esc_html__( 'Reload Editor', 'elementor-pro' ),
+				'secondary_action_url' => Admin::get_url() . '&redirect-to-document=' . Plugin::elementor()->documents->get_current()->get_id(),
+				'secondary_action_target' => '_self',
+				'muted_period' => 0,
 			];
 		}
 
@@ -78,17 +90,26 @@ class Notice_Bar extends Base_Notice_Bar {
 		}
 
 		if ( isset( $license_data['renewal_discount'] ) && 0 < $license_data['renewal_discount'] ) {
-			$message = sprintf( esc_html__( 'Oh-oh... Looks like your Elementor Pro license is about to expire. Renew now and get an exclusive, time-limited %s discount.', 'elementor-pro' ), $license_data['renewal_discount'] . '&#37;' );
+			$message = sprintf(
+				esc_html__(
+					'Your Elementor Pro license is about to expire. Renew now and get an exclusive, time-limited %s discount.',
+					'elementor-pro'
+				),
+				$license_data['renewal_discount'] . '&#37;'
+			);
 		} else {
-			$message = esc_html__( 'Oh-oh! Your Elementor Pro license is about to expire. Renew now and enjoy updates, support and Pro templates for another year.', 'elementor-pro' );
+			$message = esc_html__(
+				'Your Elementor Pro license is about to expire. Renew now and get updates, support, Pro widgets & templates for another year.',
+				'elementor-pro'
+			);
 		}
 
 		return [
 			'option_key' => self::ELEMENTOR_PRO_EDITOR_RENEW_ABOUT_TO_EXPIRE_LICENSE_NOTICE_DISMISSED,
 			'message' => $message,
-			'action_title' => esc_html__( 'Renew Now', 'elementor-pro' ),
+			'action_title' => esc_html__( 'Renew now', 'elementor-pro' ),
 			'action_url' => 'https://go.elementor.com/editor-notice-bar-renew/',
-			'muted_period' => 10,
+			'muted_period' => 1,
 		];
 	}
 }

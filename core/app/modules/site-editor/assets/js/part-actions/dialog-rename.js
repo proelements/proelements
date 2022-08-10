@@ -41,6 +41,7 @@ export default function DialogRename( props ) {
 			<input
 				type="text"
 				className="eps-input eps-input-text eps-input--block"
+				// eslint-disable-next-line jsx-a11y/no-autofocus
 				autoFocus
 				value={ title }
 				onChange={ ( e ) => setTitle( e.target.value ) }

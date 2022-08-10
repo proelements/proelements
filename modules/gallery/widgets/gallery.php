@@ -272,6 +272,9 @@ class Gallery extends Base_Widget {
 					'link_to' => 'custom',
 				],
 				'frontend_available' => true,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -335,6 +338,9 @@ class Gallery extends Base_Widget {
 				'default' => esc_html__( 'All', 'elementor-pro' ),
 				'condition' => [
 					'show_all_galleries' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);

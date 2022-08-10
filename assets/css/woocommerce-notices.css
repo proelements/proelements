@@ -1,120 +1,142 @@
-/*! pro-elements - v3.6.4 - 15-03-2022 */
+/*! pro-elements - v3.7.3 - 31-07-2022 */
 .elementor-editor-preview .woocommerce-notices-wrapper {
-  padding: 2em 2em 0.3em 2em; }
-  .elementor-editor-preview .woocommerce-notices-wrapper.elementor-loading {
-    opacity: .3; }
+  padding: 2em 2em 0.3em 2em;
+}
+.elementor-editor-preview .woocommerce-notices-wrapper.elementor-loading {
+  opacity: 0.3;
+}
 
 .e-wc-message-notice .woocommerce-message {
   border: 0px solid #000000;
   background-color: #FAFBF5;
   color: var(--message-message-text-color, #55595c);
-  border-radius: var(--message-box-border-radius, 0); }
-  .e-wc-message-notice .woocommerce-message a:not([class]),
-  .e-wc-message-notice .woocommerce-message .restore-item {
-    color: var(--notice-message-normal-links-color, #55595c);
-    text-decoration: underline;
-    font-size: 16px;
-    line-height: 24px;
-    font-family: Roboto;
-    font-weight: 400;
-    line-height: 24px;
-    text-transform: none;
-    text-shadow: none;
-    font-style: normal;
-    letter-spacing: 0px; }
-    .e-wc-message-notice .woocommerce-message a:not([class]):hover,
-    .e-wc-message-notice .woocommerce-message .restore-item:hover {
-      color: var(--notice-message-hover-links-color, #55595c); }
-  .e-wc-message-notice .woocommerce-message .button {
-    border-style: var(--message-border-type, solid);
-    border-color: var(--message-border-color, #95AC3C);
-    border-width: 1px;
-    color: var(--message-buttons-normal-text-color, #95AC3C);
-    background-color: transparent;
-    padding: var(--message-buttons-padding, 6px 12px);
-    font-size: 14px;
-    border-radius: var(--message-buttons-border-radius, 0);
-    line-height: 1;
-    font-weight: 400;
-    -webkit-transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
-         -o-transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
-            transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
-    -webkit-transition-property: color, background, -webkit-box-shadow;
-    transition-property: color, background, -webkit-box-shadow;
-    -o-transition-property: color, background, box-shadow;
-    transition-property: color, background, box-shadow;
-    transition-property: color, background, box-shadow, -webkit-box-shadow;
-    text-transform: none;
-    text-shadow: none;
-    font-style: normal;
-    letter-spacing: 0px;
-    font-family: Roboto, sans-serif; }
-    .e-wc-message-notice .woocommerce-message .button:hover {
-      color: var(--message-buttons-hover-text-color, #95AC3C);
-      border-color: var(--message-buttons-hover-border-color, #95AC3C);
-      background-color: transparent; }
-  .e-wc-message-notice .woocommerce-message::before {
-    color: var(--message-message-icon-color, #95AC3C); }
-
+  border-radius: var(--message-box-border-radius, 0);
+}
+.e-wc-message-notice .woocommerce-message a:not([class]),
+.e-wc-message-notice .woocommerce-message .restore-item {
+  color: var(--notice-message-normal-links-color, #55595c);
+  text-decoration: underline;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: 24px;
+  text-transform: none;
+  text-shadow: none;
+  font-style: normal;
+  letter-spacing: 0px;
+}
+.e-wc-message-notice .woocommerce-message a:not([class]):hover,
+.e-wc-message-notice .woocommerce-message .restore-item:hover {
+  color: var(--notice-message-hover-links-color, #55595c);
+}
+.e-wc-message-notice .woocommerce-message .button {
+  border-style: var(--message-border-type, solid);
+  border-color: var(--message-border-color, #95AC3C);
+  border-width: 1px;
+  color: var(--message-buttons-normal-text-color, #95AC3C);
+  background-color: transparent;
+  padding: var(--message-buttons-padding, 6px 12px);
+  font-size: 14px;
+  border-radius: var(--message-buttons-border-radius, 0);
+  line-height: 1;
+  font-weight: 400;
+  -webkit-transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
+       -o-transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
+          transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
+  -webkit-transition-property: color, background, -webkit-box-shadow;
+  transition-property: color, background, -webkit-box-shadow;
+  -o-transition-property: color, background, box-shadow;
+  transition-property: color, background, box-shadow;
+  transition-property: color, background, box-shadow, -webkit-box-shadow;
+  text-transform: none;
+  text-shadow: none;
+  font-style: normal;
+  letter-spacing: 0px;
+  font-family: Roboto, sans-serif;
+}
+.e-wc-message-notice .woocommerce-message .button:hover {
+  color: var(--message-buttons-hover-text-color, #95AC3C);
+  border-color: var(--message-buttons-hover-border-color, #95AC3C);
+  background-color: transparent;
+}
+.e-wc-message-notice .woocommerce-message::before {
+  color: var(--message-message-icon-color, #95AC3C);
+}
+.e-wc-info-notice {
+  /* Need to override some 'Links' styling from My Account Widget */
+}
+.e-wc-info-notice .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-info .woocommerce-Button {
+  color: var(--info-buttons-normal-text-color, #3F84B9);
+}
 .e-wc-info-notice .woocommerce-info {
   border: 0px solid #000000;
   background-color: #F6F9FB;
   color: var(--info-message-text-color, #55595c);
-  border-radius: var(--info-box-border-radius, 0); }
-  .e-wc-info-notice .woocommerce-info .button {
-    border-style: var(--info-border-type, solid);
-    border-color: var(--info-border-color, #3F84B9);
-    border-width: 1px;
-    color: var(--info-buttons-normal-text-color, #3F84B9);
-    background-color: transparent;
-    padding: var(--info-buttons-padding, 6px 12px);
-    font-size: 14px;
-    border-radius: var(--info-buttons-border-radius, 0);
-    line-height: 1;
-    font-weight: 400;
-    -webkit-transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
-         -o-transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
-            transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
-    -webkit-transition-property: color, background, -webkit-box-shadow;
-    transition-property: color, background, -webkit-box-shadow;
-    -o-transition-property: color, background, box-shadow;
-    transition-property: color, background, box-shadow;
-    transition-property: color, background, box-shadow, -webkit-box-shadow;
-    text-transform: none;
-    text-shadow: none;
-    font-style: normal;
-    letter-spacing: 0px;
-    font-family: Roboto, sans-serif; }
-    .e-wc-info-notice .woocommerce-info .button:hover {
-      color: var(--info-buttons-hover-text-color, #3F84B9);
-      border-color: var(--info-buttons-hover-border-color, #3F84B9);
-      background-color: transparent; }
-  .e-wc-info-notice .woocommerce-info::before {
-    color: var(--info-message-icon-color, #3F84B9); }
-
+  border-radius: var(--info-box-border-radius, 0);
+}
+.e-wc-info-notice .woocommerce-info .button {
+  border-style: var(--info-border-type, solid);
+  border-color: var(--info-border-color, #3F84B9);
+  border-width: 1px;
+  color: var(--info-buttons-normal-text-color, #3F84B9);
+  background-color: transparent;
+  padding: var(--info-buttons-padding, 6px 12px);
+  font-size: 14px;
+  border-radius: var(--info-buttons-border-radius, 0);
+  line-height: 1;
+  font-weight: 400;
+  -webkit-transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
+       -o-transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
+          transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
+  -webkit-transition-property: color, background, -webkit-box-shadow;
+  transition-property: color, background, -webkit-box-shadow;
+  -o-transition-property: color, background, box-shadow;
+  transition-property: color, background, box-shadow;
+  transition-property: color, background, box-shadow, -webkit-box-shadow;
+  text-transform: none;
+  text-shadow: none;
+  font-style: normal;
+  letter-spacing: 0px;
+  font-family: Roboto, sans-serif;
+}
+.e-wc-info-notice .woocommerce-info .button:hover {
+  color: var(--info-buttons-hover-text-color, #3F84B9);
+  border-color: var(--info-buttons-hover-border-color, #3F84B9);
+  background-color: transparent;
+}
+.e-wc-info-notice .woocommerce-info::before {
+  color: var(--info-message-icon-color, #3F84B9);
+}
 .e-wc-error-notice {
-  /* Need to override some styling from the My Account Widget */ }
-  .e-wc-error-notice .elementor-widget-woocommerce-my-account .woocommerce .woocommerce-error strong {
-    color: var(--error-message-text-color, #55595c); }
-  .e-wc-error-notice .woocommerce-error {
-    border: 0px solid #000000;
-    background-color: #F9F2F5;
-    color: var(--error-message-text-color, #55595c);
-    border-radius: var(--error-box-border-radius, 0); }
-    .e-wc-error-notice .woocommerce-error .wc-backward {
-      color: var(--error-message-normal-links-color, #55595c);
-      text-decoration: underline;
-      font-size: 16px;
-      line-height: 24px;
-      font-family: Roboto;
-      font-weight: 400;
-      line-height: 1;
-      text-transform: none;
-      text-shadow: none;
-      font-style: normal;
-      letter-spacing: 0px; }
-      .e-wc-error-notice .woocommerce-error .wc-backward:hover {
-        color: var(--error-message-hover-links-color, #55595c); }
-    .e-wc-error-notice .woocommerce-error::before {
-      color: var(--error-message-icon-color, #b81c23); }
+  /* Need to override some styling from the My Account Widget */
+}
+.e-wc-error-notice .elementor-widget-woocommerce-my-account .woocommerce .woocommerce-error strong {
+  color: var(--error-message-text-color, #55595c);
+}
+.e-wc-error-notice .woocommerce-error {
+  border: 0px solid #000000;
+  background-color: #F9F2F5;
+  color: var(--error-message-text-color, #55595c);
+  border-radius: var(--error-box-border-radius, 0);
+}
+.e-wc-error-notice .woocommerce-error .wc-backward {
+  color: var(--error-message-normal-links-color, #55595c);
+  text-decoration: underline;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: none;
+  text-shadow: none;
+  font-style: normal;
+  letter-spacing: 0px;
+}
+.e-wc-error-notice .woocommerce-error .wc-backward:hover {
+  color: var(--error-message-hover-links-color, #55595c);
+}
+.e-wc-error-notice .woocommerce-error::before {
+  color: var(--error-message-icon-color, #b81c23);
+}
 /*# sourceMappingURL=woocommerce-notices.css.map */

@@ -99,7 +99,10 @@ abstract class Icon_Set_Base {
 		/**
 		 * Upload file URL.
 		 *
-		 * Filters the URL to a file uploaded using Elementor forms.
+		 * Filters the URL to a file uploaded using custom icons.
+		 *
+		 * By default URL to a file uploaded is set to `/elementor/custom-icons/{file_name}`
+		 * inside the WordPress uploads folder. This hook allows developers to change this URL.
 		 *
 		 * @since 1.0.0
 		 *
@@ -118,11 +121,15 @@ abstract class Icon_Set_Base {
 		/**
 		 * Upload file path.
 		 *
-		 * Filters the path for custom icons file uploads using custom icons.
+		 * Filters the path to a folder uploaded using custom icons.
 		 *
-		 * @param string $path .
+		 * By default the folder path to custom icon files is set to `/elementor/custom-icons`
+		 * inside the WordPress uploads folder. This hook allows developers to change this path.
+		 *
+		 * @param string $path Path to custom icons uploads directory.
 		 */
 		$path = apply_filters( 'elementor_pro/icons_manager/custom_icons/dir', $path );
+
 		Utils::get_ensure_upload_dir( $path );
 		return $path;
 	}
@@ -138,8 +145,7 @@ abstract class Icon_Set_Base {
 	public function move_files( $post_id ) {
 		// @todo: save only needed files
 		$wp_filesystem = Custom_Icons::get_wp_filesystem();
-		$unique_name = $this->get_unique_name();
-		$to = $this->get_ensure_upload_dir( $unique_name ) . '/';
+		$to = $this->get_ensure_upload_dir( $this->dir_name ) . '/';
 
 		foreach ( $wp_filesystem->dirlist( $this->directory, false, true ) as $file ) {
 			$full_path = $this->directory . $file['name'];
@@ -160,7 +166,6 @@ abstract class Icon_Set_Base {
 
 		$this->cleanup_temp_files( $wp_filesystem );
 		update_post_meta( $post_id, '_elementor_icon_set_path', $to );
-		$this->dir_name = $unique_name;
 		$this->directory = $to;
 	}
 
@@ -190,7 +195,9 @@ abstract class Icon_Set_Base {
 		return ! is_dir( $this->get_icon_sets_dir() . '/' . $name );
 	}
 
-	abstract protected function get_url( $filename = '' );
+	protected function get_url( $filename = '' ) {
+		return $this->get_file_url( $this->dir_name . $filename );
+	}
 
 	protected function get_stylesheet() {
 		return '';
@@ -205,10 +212,9 @@ abstract class Icon_Set_Base {
 	}
 
 	public function build_config() {
-		$name = $this->get_name();
 		$icon_set_config = [
-			'name' => $name,
-			'label' => ucwords( str_replace( [ '-', '_' ], ' ', $name ) ),
+			'name' => $this->dir_name,
+			'label' => ucwords( str_replace( [ '-', '_' ], ' ', $this->dir_name ) ),
 			'url' => $this->get_stylesheet(),
 			'enqueue' => $this->get_enqueue(),
 			'prefix' => $this->get_prefix(),

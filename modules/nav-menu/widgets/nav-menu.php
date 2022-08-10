@@ -398,6 +398,126 @@ class Nav_Menu extends Base_Widget {
 			]
 		);
 
+		$this->start_controls_tabs( 'nav_icon_options' );
+
+		$this->start_controls_tab( 'nav_icon_normal_options', [
+			'label' => esc_html__( 'Normal', 'elementor-pro' ),
+			'condition' => [
+				'toggle' => 'burger',
+			],
+		] );
+
+		$this->add_control(
+			'toggle_icon_normal',
+			[
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'fa4compatibility' => 'icon',
+				'skin' => 'inline',
+				'label_block' => false,
+				'skin_settings' => [
+					'inline' => [
+						'none' => [
+							'label' => esc_html__( 'Default', 'elementor-pro' ),
+							'icon' => 'eicon-menu-bar',
+						],
+						'icon' => [
+							'icon' => 'eicon-star',
+						],
+					],
+				],
+				'recommended' => [
+					'fa-solid' => [
+						'plus-square',
+						'plus',
+						'plus-circle',
+						'bars',
+					],
+					'fa-regular' => [
+						'plus-square',
+					],
+				],
+				'condition' => [
+					'toggle' => 'burger',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab( 'nav_icon_hover_options', [
+			'label' => esc_html__( 'Hover', 'elementor-pro' ),
+			'condition' => [
+				'toggle' => 'burger',
+			],
+		] );
+
+		$this->add_control(
+			'toggle_icon_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'elementor-pro' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'frontend_available' => true,
+				'render_type' => 'template',
+				'condition' => [
+					'toggle' => 'burger',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab( 'nav_icon_active_options', [
+			'label' => esc_html__( 'Active', 'elementor-pro' ),
+			'condition' => [
+				'toggle' => 'burger',
+			],
+		] );
+
+		$this->add_control(
+			'toggle_icon_active',
+			[
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'fa4compatibility' => 'icon',
+				'skin' => 'inline',
+				'label_block' => false,
+				'skin_settings' => [
+					'inline' => [
+						'none' => [
+							'label' => esc_html__( 'Default', 'elementor-pro' ),
+							'icon' => 'eicon-close',
+						],
+						'icon' => [
+							'icon' => 'eicon-star',
+						],
+					],
+				],
+				'recommended' => [
+					'fa-solid' => [
+						'window-close',
+						'times-circle',
+						'times',
+						'minus-square',
+						'minus-circle',
+						'minus',
+					],
+					'fa-regular' => [
+						'window-close',
+						'times-circle',
+						'minus-square',
+					],
+				],
+				'condition' => [
+					'toggle' => 'burger',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
 		$this->add_control(
 			'toggle_align',
 			[
@@ -430,6 +550,7 @@ class Nav_Menu extends Base_Widget {
 					'toggle!' => '',
 					'dropdown!' => 'none',
 				],
+				'separator' => 'before',
 			]
 		);
 
@@ -1146,7 +1267,7 @@ class Nav_Menu extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-menu-toggle' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}}' => '--nav-menu-icon-size: {{SIZE}}{{UNIT}}',
 				],
 				'separator' => 'before',
 			]
@@ -1308,29 +1429,60 @@ class Nav_Menu extends Base_Widget {
 		?>
 		<div <?php $this->print_render_attribute_string( 'menu-toggle' ); ?>>
 			<?php
-				Icons_Manager::render_icon(
-					[
-						'library' => 'eicons',
-						'value' => 'eicon-menu-bar',
-					],
-					[
-						'aria-hidden' => 'true',
-						'role' => 'presentation',
-						'class' => 'elementor-menu-toggle__icon--open',
-					]
-				);
+			$toggle_icon_hover_animation = ! empty( $settings['toggle_icon_hover_animation'] )
+			? ' elementor-animation-' . $settings['toggle_icon_hover_animation']
+			: '';
 
-				Icons_Manager::render_icon(
-					[
-						'library' => 'eicons',
-						'value' => 'eicon-close',
-					],
-					[
-						'aria-hidden' => 'true',
-						'role' => 'presentation',
-						'class' => 'elementor-menu-toggle__icon--close',
-					]
-				);
+			$open_class = 'elementor-menu-toggle__icon--open' . $toggle_icon_hover_animation;
+			$close_class = 'elementor-menu-toggle__icon--close' . $toggle_icon_hover_animation;
+
+			$normal_icon = ! empty( $settings['toggle_icon_normal']['value'] )
+				? $settings['toggle_icon_normal']
+				: [
+					'library' => 'eicons',
+					'value' => 'eicon-menu-bar',
+				];
+
+			if ( 'svg' === $settings['toggle_icon_normal']['library'] ) {
+				echo '<span class="' . esc_attr( $open_class ) . '">';
+			}
+
+			Icons_Manager::render_icon(
+				$normal_icon,
+				[
+					'aria-hidden' => 'true',
+					'role' => 'presentation',
+					'class' => $open_class,
+				]
+			);
+
+			if ( 'svg' === $settings['toggle_icon_normal']['library'] ) {
+				echo '</span>';
+			}
+
+			$active_icon = ! empty( $settings['toggle_icon_active']['value'] )
+				? $settings['toggle_icon_active']
+				: [
+					'library' => 'eicons',
+					'value' => 'eicon-close',
+				];
+
+			if ( 'svg' === $settings['toggle_icon_active']['library'] ) {
+				echo '<span class="' . esc_attr( $close_class ) . '">';
+			}
+
+			Icons_Manager::render_icon(
+				$active_icon,
+				[
+					'aria-hidden' => 'true',
+					'role' => 'presentation',
+					'class' => $close_class,
+				]
+			);
+
+			if ( 'svg' === $settings['toggle_icon_active']['library'] ) {
+				echo '</span>';
+			}
 			?>
 			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'elementor-pro' ); ?></span>
 		</div>

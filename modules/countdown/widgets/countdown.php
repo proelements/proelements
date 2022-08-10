@@ -78,6 +78,9 @@ class Countdown extends Base_Widget {
 				'condition' => [
 					'countdown_type' => 'evergreen',
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -90,6 +93,9 @@ class Countdown extends Base_Widget {
 				'placeholder' => esc_html__( 'Minutes', 'elementor-pro' ),
 				'condition' => [
 					'countdown_type' => 'evergreen',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -187,6 +193,9 @@ class Countdown extends Base_Widget {
 					'custom_labels!' => '',
 					'show_days' => 'yes',
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -201,6 +210,9 @@ class Countdown extends Base_Widget {
 					'show_labels!' => '',
 					'custom_labels!' => '',
 					'show_hours' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -217,6 +229,9 @@ class Countdown extends Base_Widget {
 					'custom_labels!' => '',
 					'show_minutes' => 'yes',
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -231,6 +246,9 @@ class Countdown extends Base_Widget {
 					'show_labels!' => '',
 					'custom_labels!' => '',
 					'show_seconds' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);

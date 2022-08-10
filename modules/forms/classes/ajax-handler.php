@@ -172,6 +172,15 @@ class Ajax_Handler {
 
 			$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
 
+			/**
+			 * After form actions run.
+			 *
+			 * Fires after Elementor forms run actions. This hook allows
+			 * developers to add functionality after certain actions run.
+			 *
+			 * @param Action_Base     $action    An instance of form action.
+			 * @param \Exception|null $exception An instance of the exception.
+			 */
 			do_action( 'elementor_pro/forms/actions/after_run', $action, $exception );
 		}
 
@@ -188,7 +197,8 @@ class Ajax_Handler {
 		/**
 		 * New Elementor form record.
 		 *
-		 * Fires before a new form record is send by ajax.
+		 * Fires before a new form record is sent by ajax. This hook allows
+		 * developers to add functionality before a new form record is sent.
 		 *
 		 * @since 1.0.0
 		 *

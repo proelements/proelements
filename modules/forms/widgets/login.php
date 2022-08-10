@@ -81,6 +81,9 @@ class Login extends Base_Widget {
 			[
 				'label' => esc_html__( 'Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Log In', 'elementor-pro' ),
 			]
 		);
@@ -255,6 +258,9 @@ class Login extends Base_Widget {
 			[
 				'label' => esc_html__( 'Username Label', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Username or Email Address', 'elementor-pro' ),
 				'conditions' => [
 					'relation' => 'or',
@@ -283,6 +289,9 @@ class Login extends Base_Widget {
 				'condition' => [
 					'custom_labels' => 'yes',
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -291,6 +300,9 @@ class Login extends Base_Widget {
 			[
 				'label' => esc_html__( 'Password Label', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Password', 'elementor-pro' ),
 				'conditions' => [
 					'relation' => 'or',
@@ -318,6 +330,9 @@ class Login extends Base_Widget {
 				'default' => esc_html__( 'Password', 'elementor-pro' ),
 				'condition' => [
 					'custom_labels' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -725,7 +740,7 @@ class Login extends Base_Widget {
 	}
 
 	private function form_fields_render_attributes() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 
 		if ( ! empty( $settings['button_size'] ) ) {
 			$this->add_render_attribute( 'button', 'class', 'elementor-size-' . $settings['button_size'] );

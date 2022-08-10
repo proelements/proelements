@@ -63,7 +63,7 @@ export default function SiteTemplates( props ) {
 
 	return (
 		<section className="e-site-editor__site-templates">
-			<PartActionsDialogs/>
+			<PartActionsDialogs />
 			{
 				action.error &&
 					<Dialog
@@ -83,7 +83,7 @@ export default function SiteTemplates( props ) {
 							key={ item.id }
 							{ ... item }
 							{ ... siteTemplateConfig }
-							isSelected={ parseInt( props.id ) === item.id }/>,
+							isSelected={ parseInt( props.id ) === item.id } />,
 					)
 				}
 			</CssGrid>

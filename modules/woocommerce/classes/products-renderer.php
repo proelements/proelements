@@ -9,10 +9,13 @@ class Products_Renderer extends Base_Products_Renderer {
 
 	private $settings = [];
 	private $is_added_product_filter = false;
+
 	const QUERY_CONTROL_NAME = 'query'; //Constraint: the class that uses the renderer, must use the same name
 	const DEFAULT_COLUMNS_AND_ROWS = 4;
+	private $settings_key_prefix;
 
 	public function __construct( $settings = [], $type = 'products' ) {
+		$this->settings_key_prefix = static::QUERY_CONTROL_NAME . '_';
 		$this->settings = $settings;
 		$this->type = $type;
 		$this->attributes = $this->parse_attributes( [
@@ -44,7 +47,6 @@ class Products_Renderer extends Base_Products_Renderer {
 	}
 
 	protected function parse_query_args() {
-		$prefix = self::QUERY_CONTROL_NAME . '_';
 		$settings = &$this->settings;
 
 		$query_args = [
@@ -52,8 +54,8 @@ class Products_Renderer extends Base_Products_Renderer {
 			'post_status' => 'publish',
 			'ignore_sticky_posts' => true,
 			'no_found_rows' => false === wc_string_to_bool( $this->attributes['paginate'] ),
-			'orderby' => $settings[ $prefix . 'orderby' ],
-			'order' => strtoupper( $settings[ $prefix . 'order' ] ),
+			'orderby' => $settings[ $this->settings_key_prefix . 'orderby' ],
+			'order' => strtoupper( $settings[ $this->settings_key_prefix . 'order' ] ),
 		];
 
 		$query_args['meta_query'] = WC()->query->get_meta_query();
@@ -124,11 +126,10 @@ class Products_Renderer extends Base_Products_Renderer {
 	}
 
 	protected function set_ids_query_args( &$query_args ) {
-		$prefix = self::QUERY_CONTROL_NAME . '_';
 
-		switch ( $this->settings[ $prefix . 'post_type' ] ) {
+		switch ( $this->settings[ $this->settings_key_prefix . 'post_type' ] ) {
 			case 'by_id':
-				$post__in = $this->settings[ $prefix . 'posts_ids' ];
+				$post__in = $this->settings[ $this->settings_key_prefix . 'posts_ids' ];
 				break;
 			case 'sale':
 				$post__in = wc_get_product_ids_on_sale();
@@ -142,20 +143,19 @@ class Products_Renderer extends Base_Products_Renderer {
 	}
 
 	private function set_terms_query_args( &$query_args ) {
-		$prefix = self::QUERY_CONTROL_NAME . '_';
 
-		$query_type = $this->settings[ $prefix . 'post_type' ];
+		$query_type = $this->settings[ $this->settings_key_prefix . 'post_type' ];
 
 		if ( 'by_id' === $query_type || 'current_query' === $query_type ) {
 			return;
 		}
 
-		if ( empty( $this->settings[ $prefix . 'include' ] ) || empty( $this->settings[ $prefix . 'include_term_ids' ] ) || ! in_array( 'terms', $this->settings[ $prefix . 'include' ], true ) ) {
+		if ( empty( $this->settings[ $this->settings_key_prefix . 'include' ] ) || empty( $this->settings[ $this->settings_key_prefix . 'include_term_ids' ] ) || ! in_array( 'terms', $this->settings[ $this->settings_key_prefix . 'include' ], true ) ) {
 			return;
 		}
 
 		$terms = [];
-		foreach ( $this->settings[ $prefix . 'include_term_ids' ] as $id ) {
+		foreach ( $this->settings[ $this->settings_key_prefix . 'include_term_ids' ] as $id ) {
 			$term_data = get_term_by( 'term_taxonomy_id', $id );
 			$taxonomy = $term_data->taxonomy;
 			$terms[ $taxonomy ][] = $id;
@@ -177,8 +177,7 @@ class Products_Renderer extends Base_Products_Renderer {
 	}
 
 	protected function set_featured_query_args( &$query_args ) {
-		$prefix = self::QUERY_CONTROL_NAME . '_';
-		if ( 'featured' === $this->settings[ $prefix . 'post_type' ] ) {
+		if ( 'featured' === $this->settings[ $this->settings_key_prefix . 'post_type' ] ) {
 			$product_visibility_term_ids = wc_get_product_visibility_term_ids();
 
 			$query_args['tax_query'][] = [
@@ -190,27 +189,24 @@ class Products_Renderer extends Base_Products_Renderer {
 	}
 
 	protected function set_sale_products_query_args( &$query_args ) {
-		$prefix = self::QUERY_CONTROL_NAME . '_';
-		if ( 'sale' === $this->settings[ $prefix . 'post_type' ] ) {
+		if ( 'sale' === $this->settings[ $this->settings_key_prefix . 'post_type' ] ) {
 			parent::set_sale_products_query_args( $query_args );
 		}
 	}
 
 	protected function set_exclude_query_args( &$query_args ) {
-		$prefix = self::QUERY_CONTROL_NAME . '_';
-
-		if ( empty( $this->settings[ $prefix . 'exclude' ] ) ) {
+		if ( empty( $this->settings[ $this->settings_key_prefix . 'exclude' ] ) ) {
 			return;
 		}
 		$post__not_in = [];
-		if ( in_array( 'current_post', $this->settings[ $prefix . 'exclude' ] ) ) {
+		if ( in_array( 'current_post', $this->settings[ $this->settings_key_prefix . 'exclude' ] ) ) {
 			if ( is_singular() ) {
 				$post__not_in[] = get_queried_object_id();
 			}
 		}
 
-		if ( in_array( 'manual_selection', $this->settings[ $prefix . 'exclude' ] ) && ! empty( $this->settings[ $prefix . 'exclude_ids' ] ) ) {
-			$post__not_in = array_merge( $post__not_in, $this->settings[ $prefix . 'exclude_ids' ] );
+		if ( in_array( 'manual_selection', $this->settings[ $this->settings_key_prefix . 'exclude' ] ) && ! empty( $this->settings[ $this->settings_key_prefix . 'exclude_ids' ] ) ) {
+			$post__not_in = array_merge( $post__not_in, $this->settings[ $this->settings_key_prefix . 'exclude_ids' ] );
 		}
 
 		$query_args['post__not_in'] = empty( $query_args['post__not_in'] ) ? $post__not_in : array_merge( $query_args['post__not_in'], $post__not_in );
@@ -219,13 +215,13 @@ class Products_Renderer extends Base_Products_Renderer {
 		 * WC populates `post__in` with the ids of the products that are on sale.
 		 * Since WP_Query ignores `post__not_in` once `post__in` exists, the ids are filtered manually, using `array_diff`.
 		 */
-		if ( 'sale' === $this->settings[ $prefix . 'post_type' ] ) {
+		if ( 'sale' === $this->settings[ $this->settings_key_prefix . 'post_type' ] ) {
 			$query_args['post__in'] = array_diff( $query_args['post__in'], $query_args['post__not_in'] );
 		}
 
-		if ( in_array( 'terms', $this->settings[ $prefix . 'exclude' ] ) && ! empty( $this->settings[ $prefix . 'exclude_term_ids' ] ) ) {
+		if ( in_array( 'terms', $this->settings[ $this->settings_key_prefix . 'exclude' ] ) && ! empty( $this->settings[ $this->settings_key_prefix . 'exclude_term_ids' ] ) ) {
 			$terms = [];
-			foreach ( $this->settings[ $prefix . 'exclude_term_ids' ] as $to_exclude ) {
+			foreach ( $this->settings[ $this->settings_key_prefix . 'exclude_term_ids' ] as $to_exclude ) {
 				$term_data = get_term_by( 'term_taxonomy_id', $to_exclude );
 				$terms[ $term_data->taxonomy ][] = $to_exclude;
 			}

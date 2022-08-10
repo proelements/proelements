@@ -197,7 +197,8 @@ class Module extends Module_Base {
 			/**
 			 * Elementor form submitted.
 			 *
-			 * Fires when the form is submitted.
+			 * Fires when the form is submitted. This hook allows developers
+			 * to add functionality after form submission.
 			 *
 			 * @since 2.0.0
 			 *

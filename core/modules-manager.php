@@ -30,6 +30,7 @@ final class Modules_Manager {
 			'screenshots',
 			'compatibility-tag',
 			'admin-top-bar',
+			'notes',
 
 			// Modules with Widgets.
 			'theme-builder',

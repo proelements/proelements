@@ -7,7 +7,7 @@ export const Indicator = ( props ) => {
 		className += ` ${ className }--active`;
 	}
 
-	return <i className={ className }/>;
+	return <i className={ className } />;
 };
 
 Indicator.propTypes = {

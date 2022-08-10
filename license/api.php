@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class API {
+
+	const PRODUCT_NAME = 'Elementor Pro';
+
+	const STORE_URL = 'https://my.elementor.com/api/v1/licenses/';
+	const RENEW_URL = 'https://go.elementor.com/renew/';
+
 	// License Statuses
 	const STATUS_VALID = 'valid';
 	const STATUS_INVALID = 'invalid';
@@ -30,12 +36,18 @@ class API {
 	 * @return \stdClass|\WP_Error
 	 */
 	private static function remote_post( $body_args = [] ) {
+		$use_home_url = true;
+
 		/**
-		 * Allow third party plugins to set the url to get_site_url() instead of home_url().
+		 * The license API uses `home_url()` function to retrieve the URL. This hook allows
+		 * developers to use `get_site_url()` instead of `home_url()` to set the URL.
 		 *
-		 * @param boolean Whether to use home_url() or get_site_url().
+		 * When set to `true` (default) it uses `home_url()`.
+		 * When set to `false` it uses `get_site_url()`.
+		 *
+		 * @param boolean $use_home_url Whether to use `home_url()` or `get_site_url()`.
 		 */
-		$use_home_url = apply_filters( 'elementor_pro/license/api/use_home_url', true );
+		$use_home_url = apply_filters( 'elementor_pro/license/api/use_home_url', $use_home_url );
 
 		$body_args = wp_parse_args(
 			$body_args,
@@ -185,15 +197,6 @@ class API {
 		return $info_data;
 	}
 
-	/**
-	 * @param $version
-	 *
-	 * @deprecated 2.7.0 Use `API::get_plugin_package_url()` method instead.
-	 */
-	public static function get_previous_package_url( $version ) {
-		return self::get_plugin_package_url( $version );
-	}
-
 	public static function get_plugin_package_url( $version ) {
 		$url = 'https://my.elementor.com/api/v1/pro-downloads/';
 
@@ -272,16 +275,19 @@ class API {
 	public static function get_errors() {
 		return [
 			'no_activations_left' => sprintf(
-				/* translators: 1: Bold text Open Tag, 2: Bold text closing tag, 3: Link open tag, 4: Link closing tag. */
+			/* translators: 1: Bold text Open Tag, 2: Bold text closing tag, 3: Link open tag, 4: Link closing tag. */
 				esc_html__( '%1$sYou have no more activations left.%2$s %3$sPlease upgrade to a more advanced license%4$s (you\'ll only need to cover the difference).', 'elementor-pro' ),
 				'<strong>',
 				'</strong>',
 				'<a href="https://go.elementor.com/upgrade/" target="_blank">',
 				'</a>'
 			),
-			'expired' => sprintf(
+			'expired' => printf(
 			/* translators: 1: Bold text Open Tag, 2: Bold text closing tag, 3: Link open tag, 4: Link closing tag. */
-				esc_html__( '%1$sYour License Has Expired.%2$s %3$sRenew your license today%4$s to keep getting feature updates, premium support and unlimited access to the template library.', 'elementor-pro' ),
+				esc_html__(
+					'%1$sOh no! Your Elementor Pro license has expired.%2$s Want to keep creating secure and high-performing websites? Renew your subscription to regain access to all of the Elementor Pro widgets, templates, updates & more. %3$sRenew now%4$s',
+					'elementor-pro'
+				),
 				'<strong>',
 				'</strong>',
 				'<a href="https://go.elementor.com/renew/" target="_blank">',
@@ -289,7 +295,7 @@ class API {
 			),
 			'missing' => esc_html__( 'Your license is missing. Please check your key again.', 'elementor-pro' ),
 			'revoked' => sprintf(
-				/* translators: 1: Bold text Open Tag, 2: Bold text closing tag. */
+			/* translators: 1: Bold text Open Tag, 2: Bold text closing tag. */
 				esc_html__( '%1$sYour license key has been cancelled%2$s (most likely due to a refund request). Please consider acquiring a new license.', 'elementor-pro' ),
 				'<strong>',
 				'</strong>'
@@ -331,6 +337,20 @@ class API {
 
 		return ! empty( $license_data['features'] )
 			&& in_array( $feature_name, $license_data['features'], true );
+	}
+
+	public static function is_license_about_to_expire() {
+		$license_data = self::get_license_data();
+
+		if ( ! empty( $license_data['subscriptions'] ) && 'enable' === $license_data['subscriptions'] ) {
+			return false;
+		}
+
+		if ( 'lifetime' === $license_data['expires'] ) {
+			return false;
+		}
+
+		return time() > strtotime( '-28 days', strtotime( $license_data['expires'] ) );
 	}
 
 	/**

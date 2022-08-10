@@ -44,6 +44,16 @@ class Elementor_Related_Query extends Elementor_Post_Query {
 	protected function get_fallback_query( $original_query ) {
 		$this->set_fallback_query_args();
 		$this->set_fallback_arg_by_settings( 'posts_per_page', $original_query->query_vars['posts_per_page'] );
+
+		/**
+		 * Fallback query arguments.
+		 *
+		 * Filters the query arguments for the fallback query. This hook allows
+		 * developers to alter those arguments.
+		 *
+		 * @param array       $fallback_args An array of WordPress query arguments.
+		 * @param Widget_Base $widget        An instance of Elementor widget.
+		 */
 		$this->fallback_args = apply_filters( 'elementor/query/fallback_query_args', $this->fallback_args, $this->widget );
 
 		$this->fallback_args['no_found_rows'] = true;

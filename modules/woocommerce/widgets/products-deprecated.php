@@ -11,6 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+/**
+ * Class Products_Deprecated
+ *
+ * @deprecated 2.4.1 use Products
+ */
 class Products_Deprecated extends Products_Base {
 
 	/**

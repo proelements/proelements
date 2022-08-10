@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Utils {
+
 	public static function get_public_post_types( $args = [] ) {
 		$post_type_args = [
 			// Default is the value $public.
@@ -31,15 +32,21 @@ class Utils {
 		}
 
 		/**
-		 * Public Post types
+		 * Supported post types.
 		 *
-		 * Allow 3rd party plugins to filters the public post types elementor should work on
+		 * Filters the allowed post types Elementor should work on.
+		 *
+		 * By default Elementor can be applied on publicly available post
+		 * types. This hook allows developers to alter those post types to
+		 * add new and remove existing types.
 		 *
 		 * @since 2.3.0
 		 *
-		 * @param array $post_types Elementor supported public post types.
+		 * @param array $post_types Elementor supported post types.
 		 */
-		return apply_filters( 'elementor_pro/utils/get_public_post_types', $post_types );
+		$post_types = apply_filters( 'elementor_pro/utils/get_public_post_types', $post_types );
+
+		return $post_types;
 	}
 
 	public static function get_client_ip() {
@@ -196,13 +203,17 @@ class Utils {
 		} // End if().
 
 		/**
-		 * The archive title.
+		 * Page title.
 		 *
-		 * Filters the archive title.
+		 * Filters the title of the page.
+		 *
+		 * By default different pages have different titles depending of the page
+		 * context (archive, singular, 404 etc.). This hook allows developers to
+		 * alter those titles.
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $title Archive title to be displayed.
+		 * @param string $title Page title to be displayed.
 		 */
 		$title = apply_filters( 'elementor/utils/get_the_archive_title', $title );
 
@@ -313,5 +324,38 @@ class Utils {
 		}
 
 		return $text;
+	}
+
+	/**
+	 * Get a user option with default value as fallback.
+	 * TODO: Use `\Elementor\User::get_user_option_with_default()` after this PR is merged:
+	 *  https://github.com/elementor/elementor/pull/17745
+	 *
+	 * @param string $option  - Option key.
+	 * @param int    $user_id - User ID
+	 * @param mixed  $default - Default fallback value.
+	 *
+	 * @return mixed
+	 */
+	public static function get_user_option_with_default( $option, $user_id, $default ) {
+		$value = get_user_option( $option, $user_id );
+
+		return ( false === $value ) ? $default : $value;
+	}
+
+	/**
+	 * TODO: Use core method instead (after merging PR of the original function in core).
+	 *  PR URL: https://github.com/elementor/elementor/pull/18670.
+	 *
+	 * @param $file
+	 * @param mixed ...$args
+	 * @return false|string
+	 */
+	public static function _unstable_file_get_contents( $file, ...$args ) {
+		if ( ! is_file( $file ) || ! is_readable( $file ) ) {
+			return false;
+		}
+
+		return file_get_contents( $file, ...$args );
 	}
 }

@@ -62,11 +62,14 @@ class Form_Actions_Registrar extends Registrar {
 
 		/**
 		 * Elementor Pro form actions registration.
-		 * Passes the Actions_Registrar as a parameter in order to register new actions using `$registrar->register()`.
+		 *
+		 * Fires when a new form action is registered. This hook allows developers to
+		 * register new form actions.
 		 *
 		 * @since 3.5.0
 		 *
-		 * @param Form_Actions_Registrar $this An instance of form actions registrar.
+		 * @param Form_Actions_Registrar $this An instance of form actions registration
+		 *                                     manager.
 		 */
 		do_action( 'elementor_pro/forms/actions/register', $this );
 

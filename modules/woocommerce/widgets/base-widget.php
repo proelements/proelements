@@ -80,8 +80,6 @@ abstract class Base_Widget extends \ElementorPro\Base\Base_Widget {
 				return function_exists( 'wc_coupons_enabled' ) && wc_coupons_enabled();
 			case 'signup_and_login_from_checkout':
 				return 'yes' === get_option( 'woocommerce_enable_signup_and_login_from_checkout' );
-			case 'additional_options':
-				return ! wc_ship_to_billing_address_only();
 			case 'ship_to_billing_address_only':
 				return wc_ship_to_billing_address_only();
 		}

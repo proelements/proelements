@@ -1,5 +1,115 @@
 # PRO Elements - by PROElements.org
 
+#### 3.7.3 - 2022-07-31
+* Tweak: Improved license mechanism for correct validation
+* Fix: Sticky option causes unexpected results when using the Container ([#18357](https://github.com/elementor/elementor/issues/18357))
+* Fix: Price list, Portfolio, Flip Box and Gallery widgets disappear when the direction is set to column in Container ([#18880](https://github.com/elementor/elementor/issues/18880))
+* Fix: Quotes characher is showing up as `&quot;` when editing a note in Notes
+
+#### 3.7.2 - 2022-06-15
+
+* Tweak: Applied optimized file handling in various modules
+* Fix: Related posts query options are missing in Posts widget ([#18633](https://github.com/elementor/elementor/issues/18633), [#18641](https://github.com/elementor/elementor/issues/18641))
+* Fix: Menu Cart Icon is not being displayed on all browsers when Inline Font Icons Experiment is active ([#17705](https://github.com/elementor/elementor/issues/17705))
+* Fix: Gallery widget is not working as expected in Container element ([#18408](https://github.com/elementor/elementor/issues/18408))
+* Fix: Flip box is not visible when the direction is set to Row in Container element ([#18413](https://github.com/elementor/elementor/issues/18413))
+* Fix: Portfolio widget is not visible when dragged into "Row" direction Container element ([#17653](https://github.com/elementor/elementor/issues/17653))
+* Fix: Menu cart is open automatically in Cart widget ([#18629](https://github.com/elementor/elementor/issues/18629))
+* Fix: PHP error is being shown the license is expired in License screen
+
+#### 3.7.1 - 2022-05-16
+
+* Fix: Notes icon appears as an empty square in admin top bar for users with permissions lower than Editor
+* Fix: Notes experiment causes a PHP fatal error on some cases
+* Fix: UI glitches in Notes feature
+
+#### 3.7.0 - 2022-05-10
+
+* New: Introducing Notes - Work collaboratively directly within Elementor
+* New: Stripe Button widget - Collect Stripe payments directly from your site ([#14748](https://github.com/elementor/elementor/issues/14748))
+* New: Meet WooCommerce Add to Cart dynamic tag - add products to cart from every widget ([#10607](https://github.com/elementor/elementor/issues/10607), [#11801](https://github.com/elementor/elementor/issues/11801))
+* New: Added WooCommerce Product Content dynamic tag ([#16367](https://github.com/elementor/elementor/issues/16367))
+* Tweak: Added Related, Upsells and Cross-Sells query sources to Products widget ([#8071](https://github.com/elementor/elementor/issues/8071))
+* Tweak: Added custom icon control to Nav Menu widget ([#18007](https://github.com/elementor/elementor/issues/18007), [#14357](https://github.com/elementor/elementor/issues/14357), [#13151](https://github.com/elementor/elementor/issues/13151), [#11361](https://github.com/elementor/elementor/issues/11361))
+* Tweak: Added an option to minimize on Desktop device in Table of Contents widget ([#9933](https://github.com/elementor/elementor/issues/9933))
+* Tweak: Added dynamic tag controls to Share Buttons widget ([#10729](https://github.com/elementor/elementor/issues/10729))
+* Tweak: Added dynamic tag controls to Media Carousel widget ([#10314](https://github.com/elementor/elementor/issues/10314))
+* Tweak: Added dynamic tag controls to Form widget ([#6327](https://github.com/elementor/elementor/issues/6327), [#6691](https://github.com/elementor/elementor/issues/6691), [#11774](https://github.com/elementor/elementor/issues/11774), [#9051](https://github.com/elementor/elementor/issues/9051))
+* Tweak: Added dynamic tag controls to Posts widget ([#6327](https://github.com/elementor/elementor/issues/6327))
+* Tweak: Added dynamic tag controls to Slides widget ([#5760](https://github.com/elementor/elementor/issues/5760), [#9774](https://github.com/elementor/elementor/issues/9774))
+* Tweak: Added align button to bottom option in various Product widgets ([#10263](https://github.com/elementor/elementor/issues/10263))
+* Tweak: Added align button to bottom control in Posts and Archive Posts widgets
+* Tweak: Added the ability to hide and show the coupon section in WooCommerce Cart widget
+* Tweak: Added the ability to hide and show the coupon section in WooCommerce Checkout widget
+* Tweak: Added alignment option to various buttons in WooCommerce Cart widget
+* Tweak: Added alignment option to various buttons in WooCommerce Checkout widget
+* Tweak: Added percentage unit to padding control in Additional Information customize section in WooCommerce Checkout widget
+* Tweak: Added quick link to create new theme parts directly from the Finder
+* Tweak: Added the option to add a custom template to Dashboard screen in My Account widget
+* Tweak: Added spacing control to view cart button in various product widgets
+* Tweak: Added the option to add a custom template to empty cart state in Cart widget
+* Tweak: Adjusted the layout of the Payment Methods screen in the My Account widget
+* Tweak: Added lazy load option to Media Carousel, Reviews and Testimonial Carousel widgets
+* Tweak: Added Site Identity quick link to Logo widget
+* Tweak: Added Site Identity quick link to Site Title widget
+* Tweak: Created an attribute that allows disabling page transition for specific links
+* Tweak: Added dynamic tag controls to Gallery widget
+* Tweak: Added dynamic tag controls to Countdown widget
+* Tweak: Added dynamic tag controls to Portfolio widget
+* Tweak: Added dynamic tag controls to Price Table widget
+* Tweak: Added dynamic tag controls to Login widget
+* Tweak: Added dynamic tag controls to Blockquote widget
+* Tweak: Added dynamic tag controls to Facebook Comments widget
+* Tweak: Added dynamic tag controls to Post Navigation widget
+* Tweak: Added dynamic tag controls to Search Form widget
+* Tweak: Added dynamic tag controls to Author Box widget
+* Tweak: Added dynamic tag controls to Post info widget
+* Tweak: Added dynamic tag controls to Archive Posts widget
+* Tweak: Added dynamic tag controls to Product Meta widget
+* Tweak: Added dynamic tag controls to Archive Products widget
+* Tweak: Added dynamic tag controls to Sitemap widget
+* Tweak: Added dynamic tag controls to Reviews widget
+* Tweak: Added dynamic tag controls to Code Highlight widget
+* Tweak: Added dynamic tag controls to PayPal Button widget
+* Tweak: Added dynamic tag controls to WooCommerce Checkout widget
+* Tweak: Added missing PHP documentation to hooks
+* Fix: Scrolling glitches on mobile devices when Sticky Effect is enabled ([#17767](https://github.com/elementor/elementor/issues/17767), [#18330](https://github.com/elementor/elementor/issues/18330))
+* Fix: Only 1st honypot field is validated when using multiple honeypot fields in Forms widget ([#18136](https://github.com/elementor/elementor/issues/18136))
+* Fix: Checkout button background color is not working as expected in Cart widget ([#18289](https://github.com/elementor/elementor/issues/18289))
+* Fix: Button labels are not accessible for screen readers in Share buttons widget ([#8615](https://github.com/elementor/elementor/issues/8615))
+* Fix: Downloads titles controls are not working in responsive in WooCommerce Purchase Summary widget
+* Fix: Excerpt length is not working as expected in Posts and Archive Posts widgets
+* Fix: Titles & Totals weight is not working in WooCommerce Checkout widget
+* Fix: Product image is not appearing on Single Product Page on template load
+* Fix: Additional Information title not editable in some scenarios in WooCommerce Checkout widget
+* Fix: Cart is not updating automatically on mobile in Cart widget
+* Fix: UI Glitch in Masonry control in Portfolio widget
+* Fix: Custom breakpoints experiment didn't work on Single post and page templates
+* Fix: Testimonial carousel & Reviews widgets disregards the `alt` attribute
+* Fix: Playlist widget deeplink didn't send user directly to the widget in the page
+* Fix: Masonry option causes the images to disappear in the Editor in Posts widget
+* Fix: Scrollbar appears after clicking on the dropdown toggle in Nav Menu widget
+* Fix: Custom icons disappear on frontend if the pack name contains numbers
+* Fix: Custom Font disappears if the name contains only numbers
+* Fix: `end-section()` is missing from Progress Tracker and Facebook Embed widgets
+* Tweak: Added a filter for conditions cache query in Theme Builder
+* Fix: Customizations lost on Ajax refresh in WooCommerce Cart widget
+* Fix: Hello theme Header and Footer experiment is not working when WooCommerce plugin is active
+* Fix: Color controls are not working as expected in Checkout widget
+* Fix: Color controls are not working as expected in My Account widget
+* Fix: Empty state widget preview in the editor is disappearing in various widgets
+* Fix: Cart is not updating automatically on mobile in WooCommerce Cart widget
+* Deprecated: See all deprecations to this version in our [Developers Deprecations Post](https://developers.elementor.com/v3-7-planned-deprecations/)
+
+#### 3.6.5 - 2022-04-12
+
+* Fix: Compatibility issues for several widgets in iOS 14 and macOS 13 devices ([#18090](https://github.com/elementor/elementor/issues/18090), [#15910](https://github.com/elementor/elementor/issues/15910))
+* Fix: Button Alignment doesn't work in Custom Add To Cart widget ([#17810](https://github.com/elementor/elementor/issues/17810))
+* Fix: PHP warning is thrown in some cases in PayPal button widget
+* Fix: PHP 8.1 throws errors and notices in some cases
+* Fix: PHP notice was thrown when Kit Import process initiated without display conditions
+* Fix: Create Account button always opens on the Sign Up screen even if the user has an account in Onboarding process
+
 #### 3.6.4 - 2022-03-15
 
 * Tweak: Kit import dynamic reference support for templates and dynamic tags

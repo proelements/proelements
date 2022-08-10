@@ -22,11 +22,11 @@ export default function ConditionsRows( props ) {
 			<div className="e-site-editor-conditions__row">
 				<div
 					className={ `e-site-editor-conditions__row-controls ${ condition.conflictErrors.length && 'e-site-editor-conditions__row-controls--error' }` }>
-					<ConditionType { ...condition } updateConditions={ update }/>
+					<ConditionType { ...condition } updateConditions={ update } />
 					<div className="e-site-editor-conditions__row-controls-inner">
-						<ConditionName { ...condition } updateConditions={ update }/>
-						<ConditionSub { ...condition } updateConditions={ update }/>
-						<ConditionSubId { ...condition } updateConditions={ update }/>
+						<ConditionName { ...condition } updateConditions={ update } />
+						<ConditionSub { ...condition } updateConditions={ update } />
+						<ConditionSubId { ...condition } updateConditions={ update } />
 					</div>
 				</div>
 				<Button
@@ -37,7 +37,7 @@ export default function ConditionsRows( props ) {
 					onClick={ () => remove( condition.id ) }
 				/>
 			</div>
-			<ConditionConflicts conflicts={ condition.conflictErrors }/>
+			<ConditionConflicts conflicts={ condition.conflictErrors } />
 		</div>,
 	);
 

@@ -16,7 +16,7 @@ export default function Conditions( props ) {
 
 	return (
 		<section className="e-site-editor-conditions">
-			<BackButton/>
+			<BackButton />
 			<div className="e-site-editor-conditions__header">
 				<img
 					className="e-site-editor-conditions__header-image"
@@ -28,12 +28,12 @@ export default function Conditions( props ) {
 				</Heading>
 				<Text variant="p">
 					{ __( 'Set the conditions that determine where your template is used throughout your site.', 'elementor-pro' ) }
-					<br/>
+					<br />
 					{ __( 'For example, choose \'Entire Site\' to display the template across your site.', 'elementor-pro' ) }
 				</Text>
 			</div>
 			<ConditionsProvider currentTemplate={ template } onConditionsSaved={ updateTemplateItemState }>
-				<ConditionsRows onAfterSave={() => history.back()} />
+				<ConditionsRows onAfterSave={ () => history.back() } />
 			</ConditionsProvider>
 		</section>
 	);

@@ -67,6 +67,7 @@ class Form_Snapshot extends Base_Object implements \JsonSerializable {
 	 *
 	 * @return array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return [
 			'id' => $this->id,

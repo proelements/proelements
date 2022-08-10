@@ -125,7 +125,7 @@ class Facebook_Page extends Base_Widget {
 	}
 
 	public function render() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 
 		if ( empty( $settings['url'] ) ) {
 			echo $this->get_title() . ': ' . esc_html__( 'Please enter a valid URL', 'elementor-pro' ); // XSS ok.

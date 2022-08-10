@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Payments\Widgets;
 
+use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Plugin;
 use Elementor\Utils;
@@ -201,7 +202,7 @@ class Paypal_Button extends Payment_Button {
 
 			$this->add_render_attribute( 'button', 'type', 'submit' );
 			$this->add_render_attribute( 'button', 'class', 'elementor-paypal-legacy' );
-			parent::render_button( 'button' );
+			parent::render_button( null, 'button' );
 
 			foreach ( $this->get_errors() as $type => $message ) {
 				?>
@@ -216,7 +217,7 @@ class Paypal_Button extends Payment_Button {
 	}
 
 	// Render the payment button.
-	protected function render_button( $tag = 'a' ) {
+	protected function render_button( Widget_Base $instance = null, $tag = 'a' ) {
 		switch ( $this->get_api_method() ) {
 			case 'legacy':
 				$this->render_legacy_form();
@@ -282,6 +283,36 @@ class Paypal_Button extends Payment_Button {
 		$this->register_product_controls();
 
 		$this->end_controls_section();
+	}
+
+	/**
+	 * Updates Button tab controls in 'Style' tab
+	 *
+	 * @since 3.7.0
+	 */
+	public function register_paypal_button_controls() {
+		parent::register_controls();
+
+		$this->update_control( 'selected_icon', [
+			'default' => [
+				'value' => 'fab fa-paypal',
+				'library' => 'fa-brands',
+			],
+		] );
+
+		$this->update_control( 'background_color', [
+			'default' => '#032E82',
+		] );
+	}
+
+	/**
+	 * Edit button control initial UI
+	 *
+	 * @since 3.7.0
+	 *
+	 */
+	protected function register_controls() {
+		$this->register_paypal_button_controls();
 	}
 
 	// Custom sandbox controls.

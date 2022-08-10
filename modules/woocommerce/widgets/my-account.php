@@ -9,6 +9,8 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Background;
+use ElementorPro\Modules\QueryControl\Module as QueryControlModule;
+use Elementor\Core\Base\Document;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -227,6 +229,96 @@ class My_Account extends Base_Widget {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
+			'section_additional_options',
+			[
+				'label' => esc_html__( 'Additional Options', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'customize_dashboard_check',
+			[
+				'label' => esc_html__( 'Customize Dashboard', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'elementor-pro' ),
+				'label_off' => esc_html__( 'No', 'elementor-pro' ),
+				'frontend_available' => true,
+				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'customize_dashboard_description',
+			[
+				'raw' => sprintf(
+					/* translators: %1$s: HTML <a> opening tag. %2$s: HTML </a> closing tag */
+					esc_html__( 'Replaces the default WooCommerce customer dashboard screen with a custom template. (Don\'t have one? Head over to %1$sSaved Templates%2$s.)', 'elementor-pro' ),
+					'<a href="' . admin_url( 'edit.php?post_type=elementor_library&tabs_group=library#add_new' ) . '" target="_blank">',
+					'</a>'
+				),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-control-field-description elementor-descriptor elementor-descriptor-subtle',
+				'condition' => [
+					'customize_dashboard_check' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'customize_dashboard_select_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Choose template', 'elementor-pro' ),
+				'condition' => [
+					'customize_dashboard_check' => 'yes',
+				],
+			]
+		);
+
+		$document_types = Plugin::elementor()->documents->get_document_types( [
+			'show_in_library' => true,
+		] );
+
+		$this->add_control(
+			'customize_dashboard_select',
+			[
+				'type' => QueryControlModule::QUERY_CONTROL_ID,
+				'label_block' => true,
+				'show_label' => false,
+				'autocomplete' => [
+					'object' => QueryControlModule::QUERY_OBJECT_LIBRARY_TEMPLATE,
+					'query' => [
+						'meta_query' => [
+							[
+								'key' => Document::TYPE_META_KEY,
+								'value' => array_keys( $document_types ),
+								'compare' => 'IN',
+							],
+						],
+					],
+				],
+				'condition' => [
+					'customize_dashboard_check' => 'yes',
+				],
+				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'edit_button',
+			[
+				'raw' => sprintf( '<a href="#" target="_blank" class="elementor-button elementor-button-default elementor-edit-template" style="margin-top:0px;"><i class="eicon-pencil" style="margin-left:10px;"></i>%s</a>', esc_html__( 'Edit Template', 'elementor-pro' ) ),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-edit-template-wrapper',
+				'condition' => [
+					'customize_dashboard_check' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
 			'tabs_style',
 			[
 				'label' => esc_html__( 'Tabs', 'elementor-pro' ),
@@ -238,7 +330,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tabs_typography',
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation ul li a',
+				'selector' => '{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li a',
 			]
 		);
 
@@ -250,7 +342,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'tabs_normal_background',
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation ul li a',
+				'selector' => '{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li:not(.is-active) a',
 			]
 		);
 
@@ -259,7 +351,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'tabs_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation ul li a',
+				'selector' => '{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li:not(.is-active) a',
 			]
 		);
 
@@ -282,7 +374,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'tabs_hover_background',
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation ul li a:hover',
+				'selector' => '{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li a:hover',
 			]
 		);
 
@@ -291,7 +383,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'tabs_hover_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation ul li a:hover',
+				'selector' => '{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li a:hover',
 			]
 		);
 
@@ -328,7 +420,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'tabs_active_background',
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation ul li.is-active a',
+				'selector' => '{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li.is-active a',
 			]
 		);
 
@@ -390,7 +482,7 @@ class My_Account extends Base_Widget {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation ul li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'tabs_border_type!' => 'none',
@@ -513,7 +605,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'my_account_sections_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .e-my-account-tab__dashboard .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__orders .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__downloads .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} address, {{WRAPPER}} .e-my-account-tab__edit-account .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__view-order .order_details, {{WRAPPER}} .woocommerce-form-login, {{WRAPPER}} .woocommerce-form-register, {{WRAPPER}} .woocommerce-ResetPassword',
+				'selector' => '{{WRAPPER}} .e-my-account-tab__dashboard:not(.e-my-account-tab__dashboard--custom) .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__orders .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__downloads .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} address, {{WRAPPER}} .e-my-account-tab__edit-account .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__view-order .order_details, {{WRAPPER}} .woocommerce-form-login, {{WRAPPER}} .woocommerce-form-register, {{WRAPPER}} .woocommerce-ResetPassword, {{WRAPPER}} .e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper',
 			]
 		);
 
@@ -536,7 +628,7 @@ class My_Account extends Base_Widget {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-my-account-tab__dashboard .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__orders .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__downloads .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} address, {{WRAPPER}} .e-my-account-tab__edit-account .woocommerce-MyAccount-content-wrapper, {{WRAPPER}} .e-my-account-tab__view-order .order_details, {{WRAPPER}} .woocommerce-form-login, {{WRAPPER}} .woocommerce-form-register, {{WRAPPER}} .woocommerce-ResetPassword, {{WRAPPER}} .e-my-account-tab__edit-address .woocommerce-address-fields' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}' => '--sections-border-top-width: {{TOP}}{{UNIT}}; --sections-border-right-width: {{RIGHT}}{{UNIT}}; --sections-border-bottom-width: {{BOTTOM}}{{UNIT}}; --sections-border-left-width: {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'sections_border_type!' => 'none',
@@ -618,7 +710,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'section_titles_typography',
-				'selector' => '{{WRAPPER}} h2, {{WRAPPER}} h3',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) h2, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) h3',
 			]
 		);
 
@@ -627,7 +719,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'section_titles_typography_text_shadow',
 				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} h2, {{WRAPPER}} h3',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) h2, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) h3',
 			]
 		);
 
@@ -699,7 +791,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'login_messages_typography',
-				'selector' => '{{WRAPPER}} .woocommerce-privacy-policy-text, {{WRAPPER}} em, {{WRAPPER}} .register p',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .register p:not([class]), {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce em',
 			]
 		);
 
@@ -727,6 +819,34 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'checkboxes_typography',
 				'selector' => '{{WRAPPER}} .woocommerce-form__label-for-checkbox span',
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_radio_buttons_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Radio Buttons', 'elementor-pro' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_radio_buttons_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--payment-methods-radio-buttons-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'payment_methods_radio_buttons_typography',
+				'selector' => '{{WRAPPER}} .woocommerce-PaymentMethod .input-radio + label',
 			]
 		);
 
@@ -844,7 +964,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'forms_label_typography',
-				'selector' => '{{WRAPPER}} .woocommerce-form-row label',
+				'selector' => '{{WRAPPER}} .woocommerce-form-row label, {{WRAPPER}} .woocommerce-address-fields label',
 			]
 		);
 
@@ -879,7 +999,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'forms_field_typography',
-				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} select, {{WRAPPER}} ::placeholder, {{WRAPPER}} .select2-container--default .select2-selection--single, .select2-results__option',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row .input-text, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row select, {{WRAPPER}} ::placeholder, {{WRAPPER}} .select2-container--default .select2-selection--single, .select2-results__option, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]',
 
 			]
 		);
@@ -906,7 +1026,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'forms_fields_normal_background',
-				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} select, {{WRAPPER}} .select2-container--default .select2-selection--single, .select2-results__option',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row .input-text, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row select, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default .select2-selection--single, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default, .select2-results__option, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]',
 			]
 		);
 
@@ -915,7 +1035,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'forms_fields_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} select, {{WRAPPER}} .select2-container--default .select2-selection--single',
+				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} select, {{WRAPPER}} .select2-container--default .select2-selection--single, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]',
 			]
 		);
 
@@ -939,7 +1059,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'forms_fields_focus_background',
-				'selector' => '{{WRAPPER}} .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .select2-container--default .select2-selection--single:focus',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row .input-text:focus, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row select:focus, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default.select2-container--focus .select2-selection--single, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default.select2-container--focus, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]:focus',
 			]
 		);
 
@@ -948,7 +1068,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'forms_fields_focus_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .select2-container--default .select2-selection--single:focus',
+				'selector' => '{{WRAPPER}} .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .select2-container--default .select2-selection--single:focus, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]:focus',
 			]
 		);
 
@@ -958,7 +1078,7 @@ class My_Account extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}}' => '--forms-fields-focus-border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row .input-text:focus, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row select:focus, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default.select2-container--focus, .select2-results__option:focus, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]:focus' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'forms_fields_border_border!' => '',
@@ -991,7 +1111,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'forms_fields_border',
-				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} select, {{WRAPPER}} .select2-container--default .select2-selection--single, .select2-results__option',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row .input-text, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .form-row select, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default, {{WRAPPER}} .e-my-account-tab__payment-methods input[type=text]',
 				'separator' => 'before',
 			]
 		);
@@ -1017,9 +1137,9 @@ class My_Account extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-fields-padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					// style select2
-					'{{WRAPPER}} .select2-container--default .select2-selection--single .select2-selection__rendered' => 'line-height: calc( ({{TOP}}{{UNIT}}*2) + 16px ); padding-left: {{LEFT}}{{UNIT}}; padding-right: {{RIGHT}}{{UNIT}};',
-					'{{WRAPPER}} .select2-container--default .select2-selection--single .select2-selection__arrow' => 'height: calc( ({{TOP}}{{UNIT}}*2) + 16px ); right: {{RIGHT}}{{UNIT}};',
-					'{{WRAPPER}} .select2-container--default .select2-selection--single' => 'height: auto;',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default .select2-selection--single .select2-selection__rendered' => 'line-height: calc( ({{TOP}}{{UNIT}}*2) + 16px ); padding-left: {{LEFT}}{{UNIT}}; padding-right: {{RIGHT}}{{UNIT}};',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default .select2-selection--single .select2-selection__arrow' => 'height: calc( ({{TOP}}{{UNIT}}*2) + 16px ); right: {{RIGHT}}{{UNIT}};',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .select2-container--default .select2-selection--single' => 'height: auto;',
 				],
 			]
 		);
@@ -1036,7 +1156,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'forms_button_typography',
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} button.button, {{WRAPPER}} #add_payment_method #payment #place_order',
 			]
 		);
 
@@ -1045,7 +1165,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'forms_button_text_shadow',
 				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} button.button, {{WRAPPER}} #add_payment_method #payment #place_order',
 			]
 		);
 
@@ -1068,7 +1188,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'forms_buttons_background',
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-EditAccountForm .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-address-fields .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .login .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .register .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-ResetPassword .button, {{WRAPPER}} #add_payment_method #payment #place_order',
 			]
 		);
 
@@ -1077,7 +1197,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'forms_buttons_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-EditAccountForm .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-address-fields .button, {{WRAPPER}} button.button, {{WRAPPER}} #add_payment_method #payment #place_order',
 			]
 		);
 
@@ -1100,7 +1220,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'forms_buttons_hover_background',
-				'selector' => '{{WRAPPER}} button.button:hover',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-EditAccountForm .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-address-fields .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .login .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .register .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-ResetPassword .button:hover, {{WRAPPER}} #add_payment_method #payment #place_order:hover',
 			]
 		);
 
@@ -1109,7 +1229,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'forms_buttons_focus_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} button.button:hover',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-EditAccountForm .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-address-fields .button:hover, {{WRAPPER}} button.button:hover, {{WRAPPER}} #add_payment_method #payment #place_order:hover',
 			]
 		);
 
@@ -1119,7 +1239,7 @@ class My_Account extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} button.button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-EditAccountForm .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-address-fields .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .login .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .register .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-ResetPassword .button:hover, {{WRAPPER}} #add_payment_method #payment #place_order:hover' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'forms_buttons_border_border!' => '',
@@ -1162,7 +1282,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'forms_buttons_border',
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-EditAccountForm .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-address-fields .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .login .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .register .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-ResetPassword .button, {{WRAPPER}} #add_payment_method #payment #place_order',
 				'separator' => 'before',
 			]
 		);
@@ -1280,7 +1400,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tables_items_typography',
-				'selector' => '{{WRAPPER}} .e-my-account-tab__orders tbody td, {{WRAPPER}} .e-my-account-tab__downloads tbody td, {{WRAPPER}} .product-quantity, {{WRAPPER}} .woocommerce-table--order-downloads tbody td, {{WRAPPER}} .woocommerce-table--order-details td a, {{WRAPPER}} td.product-total',
+				'selector' => '{{WRAPPER}} .e-my-account-tab__orders tbody td, {{WRAPPER}} .e-my-account-tab__downloads tbody td, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .product-quantity, {{WRAPPER}} .woocommerce-table--order-downloads tbody td, {{WRAPPER}} .woocommerce-table--order-details td a, {{WRAPPER}} td.product-total, {{WRAPPER}} td.payment-method-method, {{WRAPPER}} td.payment-method-expires',
 			]
 		);
 
@@ -1422,7 +1542,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tables_button_typography',
-				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button',
+				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button, {{WRAPPER}} .e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button',
 			]
 		);
 
@@ -1431,7 +1551,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'tables_button_text_shadow',
 				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button',
+				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button, {{WRAPPER}} .e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button',
 			]
 		);
 
@@ -1454,7 +1574,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'tables_button_normal_background',
-				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .shop_table .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .order-again .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-pagination .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom).e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button',
 			]
 		);
 
@@ -1463,7 +1583,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'tables_button_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button',
+				'selector' => '{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button, {{WRAPPER}} .e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button',
 			]
 		);
 
@@ -1477,7 +1597,7 @@ class My_Account extends Base_Widget {
 				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}}' => '--tables-button-hover-text-color: {{VALUE}};',
+					'{{WRAPPER}} .shop_table .button:hover, {{WRAPPER}} .woocommerce-pagination .button:hover, {{WRAPPER}} .order-again .button:hover, {{WRAPPER}} .e-my-account-tab__payment-methods .woocommerce .woocommerce-MyAccount-content-wrapper .button:hover' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1486,7 +1606,7 @@ class My_Account extends Base_Widget {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'tables_button_hover_background',
-				'selector' => '{{WRAPPER}} .shop_table .button:hover, {{WRAPPER}} .order-again .button:hover, {{WRAPPER}} .woocommerce-pagination .button:hover',
+				'selector' => '{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .shop_table .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .order-again .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-pagination .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom).e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button:hover',
 			]
 		);
 
@@ -1495,7 +1615,7 @@ class My_Account extends Base_Widget {
 			[
 				'name' => 'tables_button_hover_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
-				'selector' => '{{WRAPPER}} .shop_table .button:hover, {{WRAPPER}} .order-again .button:hover, {{WRAPPER}} .woocommerce-pagination .button:hover',
+				'selector' => '{{WRAPPER}} .shop_table .button:hover, {{WRAPPER}} .order-again .button:hover, {{WRAPPER}} .woocommerce-pagination .button:hover, {{WRAPPER}} .e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button:hover',
 			]
 		);
 
@@ -1505,7 +1625,7 @@ class My_Account extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .shop_table .button:hover, {{WRAPPER}} .order-again .button:hover, {{WRAPPER}} .woocommerce-pagination .button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .shop_table .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .order-again .button:hover, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce-pagination .button:hover, {{WRAPPER}} .e-my-account-tab__payment-methods:not(.e-my-account-tab__dashboard--custom) .woocommerce-MyAccount-content-wrapper .button:hover' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'tables_button_border_type!' => 'none',
@@ -1564,7 +1684,7 @@ class My_Account extends Base_Widget {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .shop_table .button, {{WRAPPER}} .order-again .button, {{WRAPPER}} .woocommerce-pagination .button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .shop_table .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .order-again .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom) .woocommerce .woocommerce-pagination .button, {{WRAPPER}} .e-my-account-tab:not(.e-my-account-tab__dashboard--custom).e-my-account-tab__payment-methods .woocommerce-MyAccount-content-wrapper .button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'tables_button_border_type!' => 'none',
@@ -1663,7 +1783,6 @@ class My_Account extends Base_Widget {
 	}
 
 	protected function render() {
-
 		// Add actions & filters before displaying our Widget.
 		add_action( 'woocommerce_account_navigation', [ $this, 'woocommerce_account_navigation' ], 1 );
 		add_filter( 'woocommerce_account_menu_items', [ $this, 'modify_menu_items' ], 10, 2 );
@@ -1671,6 +1790,11 @@ class My_Account extends Base_Widget {
 		add_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		add_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
 		add_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+
+		if ( $this->has_custom_template() && 'dashboard' === $this->get_current_endpoint() ) {
+			remove_action( 'woocommerce_account_content', 'woocommerce_account_content', 10 );
+			add_action( 'woocommerce_account_content', [ $this, 'display_custom_template' ], 10 );
+		}
 
 		// Display our Widget.
 		if ( ! Plugin::elementor()->editor->is_edit_mode() ) {
@@ -1686,6 +1810,11 @@ class My_Account extends Base_Widget {
 		remove_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		remove_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
 		remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+
+		if ( $this->has_custom_template() && 'dashboard' === $this->get_current_endpoint() ) {
+			remove_action( 'woocommerce_account_content', [ $this, 'display_custom_template' ], 10 );
+			add_action( 'woocommerce_account_content', 'woocommerce_account_content', 10 );
+		}
 	}
 
 	/**
@@ -1718,6 +1847,7 @@ class My_Account extends Base_Widget {
 
 		if ( $support_payment_methods ) {
 			$pages['payment-methods'] = '';
+			$pages['add-payment-method'] = '';
 		}
 
 		// Edit account.
@@ -1776,8 +1906,12 @@ class My_Account extends Base_Widget {
 	 */
 	private function render_html_front_end() {
 		$current_endpoint = $this->get_current_endpoint();
-		?>
-		<div class="e-my-account-tab e-my-account-tab__<?php echo sanitize_html_class( $current_endpoint ); ?>">
+		$custom_dashboard_class = '';
+		if ( 'dashboard' === $current_endpoint && $this->has_custom_template() && is_user_logged_in() ) {
+			$custom_dashboard_class = 'e-my-account-tab__dashboard--custom';
+		}
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="e-my-account-tab e-my-account-tab__' . sanitize_html_class( $current_endpoint ) . ' ' . $custom_dashboard_class . '">'; ?>
 			<span class="elementor-hidden">[[woocommerce_my_account]]</span>
 			<?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
 		</div>
@@ -1798,8 +1932,14 @@ class My_Account extends Base_Widget {
 		$settings = $this->get_settings_for_display();
 		// Add .e-my-account-tab__dashboard as the default class when the editor loads.
 		// This class will be replaced with JS when tabs are switched.
+
+		$custom_dashboard_class = '';
+		if ( $this->has_custom_template() && is_user_logged_in() ) {
+			$custom_dashboard_class = 'e-my-account-tab__dashboard--custom';
+		}
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="e-my-account-tab e-my-account-tab__dashboard ' . $custom_dashboard_class . '">';
 		?>
-		<div class="e-my-account-tab e-my-account-tab__dashboard">
 			<span class="elementor-hidden">[[woocommerce_my_account]]</span>
 			<div class="woocommerce">
 			<?php
@@ -1832,12 +1972,16 @@ class My_Account extends Base_Widget {
 					<div class="<?php echo sanitize_html_class( $wrapper_class ); ?>">
 						<?php
 						if ( 'dashboard' === $page ) {
-							wc_get_template(
-								'myaccount/dashboard.php',
-								[
-									'current_user' => get_user_by( 'id', get_current_user_id() ),
-								]
-							);
+							if ( ! $this->has_custom_template() ) {
+								wc_get_template(
+									'myaccount/dashboard.php',
+									[
+										'current_user' => get_user_by( 'id', get_current_user_id() ),
+									]
+								);
+							} else {
+								$this->display_custom_template();
+							}
 						} else {
 							do_action( 'woocommerce_account_' . $page . '_endpoint', $page_value );
 						}
@@ -1876,10 +2020,29 @@ class My_Account extends Base_Widget {
 	}
 
 	/**
+	 * Check if the My Account dashboard intro content is replaced with a custom Elementor template
+	 *
+	 * Conditions:
+	 * 1. Customize Dashboard = Show
+	 * 2. A Template ID has been set
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return boolean
+	 */
+	public function has_custom_template() {
+		$template_id = intval( $this->get_dashboard_template_id() );
+
+		return 0 < $template_id;
+	}
+
+	/**
 	 * Get Account Content Wrapper
 	 *
 	 * This function will determine the wrapper class around the main content.
-	 * There are different wrappers depending on if orders/downloads exist or not.
+	 * There are different wrappers depending on the following scenarios:
+	 * 1. Are there orders/downloads or not.
+	 * 2. A custom template been selected for the dashboard intro or not
 	 *
 	 * @since 3.5.0
 	 *
@@ -1890,6 +2053,7 @@ class My_Account extends Base_Widget {
 		$num_orders = wc_get_customer_order_count( $user_id );
 		$num_downloads = count( wc_get_customer_available_downloads( $user_id ) );
 		$class = 'woocommerce-MyAccount-content-wrapper';
+		$current_endpoint = $this->get_current_endpoint();
 
 		/* we need to render a different css class if there are no orders/downloads to display
 		 * as the no orders/downloads screen should not have the default padding and border
@@ -1922,6 +2086,43 @@ class My_Account extends Base_Widget {
 		$wrapper_class = $this->get_account_content_wrapper( [ 'context' => 'frontend' ] );
 
 		echo '<div class="' . sanitize_html_class( $wrapper_class ) . '">';
+	}
+
+	/**
+	 * Get Dashboard Template ID
+	 *
+	 * Get the template_id for the dashboard intro section if a custom template should be displayed
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return int
+	 */
+	public function get_dashboard_template_id() {
+		$settings = $this->get_settings_for_display();
+		if ( 'yes' === $settings['customize_dashboard_check'] ) {
+			$template_id = intval( $settings['customize_dashboard_select'] );
+		} else {
+			$template_id = 0;
+		}
+
+		return $template_id;
+	}
+
+	/**
+	 * Display a custom template inside the My Account dashboard section
+	 *
+	 * @since 3.7.0
+	 */
+	public function display_custom_template() {
+		$template_id = intval( $this->get_dashboard_template_id() );
+
+		if ( 0 < $template_id ) {
+			echo do_shortcode( '[elementor-template id="' . $template_id . '"]' );
+
+			do_action( 'woocommerce_account_dashboard' );
+			do_action( 'woocommerce_before_my_account' );
+			do_action( 'woocommerce_after_my_account' );
+		}
 	}
 
 	/**

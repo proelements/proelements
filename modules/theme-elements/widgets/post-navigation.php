@@ -61,6 +61,9 @@ class Post_Navigation extends Base {
 			[
 				'label' => esc_html__( 'Previous Label', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Previous', 'elementor-pro' ),
 				'condition' => [
 					'show_label' => 'yes',
@@ -76,6 +79,9 @@ class Post_Navigation extends Base {
 				'default' => esc_html__( 'Next', 'elementor-pro' ),
 				'condition' => [
 					'show_label' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -488,7 +494,7 @@ class Post_Navigation extends Base {
 	}
 
 	protected function render() {
-		$settings = $this->get_active_settings();
+		$settings = $this->get_settings_for_display();
 
 		$prev_label = '';
 		$next_label = '';

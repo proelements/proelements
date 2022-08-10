@@ -1,4 +1,4 @@
-/*! pro-elements - v3.6.4 - 15-03-2022 */
+/*! pro-elements - v3.7.3 - 31-07-2022 */
 .elementor-document-handle {
   display: none;
   -webkit-box-align: center;
@@ -17,44 +17,57 @@
   font-size: 11px;
   color: #fff;
   border-radius: 0 0 3px 3px;
-  cursor: pointer; }
-  .elementor-document-handle:before, .elementor-document-handle:after {
-    content: '';
-    position: absolute;
-    border: solid transparent; }
-  .elementor-document-handle:before {
-    right: calc(100% - 1px);
-    border-right-color: #fcb92c;
-    border-width: 0 14px 23px 0; }
-  .elementor-document-handle:after {
-    left: calc(100% - 1px);
-    border-left-color: #fcb92c;
-    border-width: 0 0 23px 14px; }
-  .elementor-document-handle .eicon-edit {
-    margin-right: 5px; }
+  cursor: pointer;
+}
+.elementor-document-handle:before, .elementor-document-handle:after {
+  content: "";
+  position: absolute;
+  border: solid transparent;
+}
+.elementor-document-handle:before {
+  right: calc(100% - 1px);
+  border-right-color: #fcb92c;
+  border-width: 0 14px 23px 0;
+}
+.elementor-document-handle:after {
+  left: calc(100% - 1px);
+  border-left-color: #fcb92c;
+  border-width: 0 0 23px 14px;
+}
+.elementor-document-handle .eicon-edit {
+  margin-right: 5px;
+}
 
 .elementor-editor-active .elementor {
-  position: relative; }
-  .elementor-editor-active .elementor:not(.elementor-edit-mode):hover {
-    -webkit-box-shadow: 0 0 0 1px #fcb92c;
-            box-shadow: 0 0 0 1px #fcb92c; }
-    .elementor-editor-active .elementor:not(.elementor-edit-mode):hover .elementor-document-handle {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      line-height: initial; }
-  .elementor-editor-active .elementor.loading {
-    opacity: 0.5; }
-  .elementor-editor-active .elementor[data-elementor-type="single"] > .elementor-document-handle {
-    -webkit-transform: translateX(-50%) translateY(-100%);
-        -ms-transform: translateX(-50%) translateY(-100%);
-            transform: translateX(-50%) translateY(-100%);
-    border-radius: 3px 3px 0 0; }
-    .elementor-editor-active .elementor[data-elementor-type="single"] > .elementor-document-handle:before {
-      border-width: 23px 14px 0 0; }
-    .elementor-editor-active .elementor[data-elementor-type="single"] > .elementor-document-handle:after {
-      border-width: 23px 0 0 14px; }
+  position: relative;
+}
+.elementor-editor-active .elementor:not(.elementor-edit-mode):hover {
+  -webkit-box-shadow: 0 0 0 1px #fcb92c;
+          box-shadow: 0 0 0 1px #fcb92c;
+}
+.elementor-editor-active .elementor:not(.elementor-edit-mode):hover .elementor-document-handle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: initial;
+}
+.elementor-editor-active .elementor.loading {
+  opacity: 0.5;
+}
+.elementor-editor-active .elementor[data-elementor-type=single] > .elementor-document-handle {
+  -webkit-transform: translateX(-50%) translateY(-100%);
+      -ms-transform: translateX(-50%) translateY(-100%);
+          transform: translateX(-50%) translateY(-100%);
+  border-radius: 3px 3px 0 0;
+}
+.elementor-editor-active .elementor[data-elementor-type=single] > .elementor-document-handle:before {
+  border-width: 23px 14px 0 0;
+}
+.elementor-editor-active .elementor[data-elementor-type=single] > .elementor-document-handle:after {
+  border-width: 23px 0 0 14px;
+}
 
 .elementor-embedded-editor.elementor-location-header .elementor-section-wrap:not(:empty) + #elementor-add-new-section {
-  display: none; }
+  display: none;
+}
 /*# sourceMappingURL=preview.css.map */

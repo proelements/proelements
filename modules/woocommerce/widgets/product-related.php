@@ -203,6 +203,11 @@ class Product_Related extends Products_Base {
 
 		$settings = $this->get_settings_for_display();
 
+		// Add a wrapper class to the Add to Cart & View Items elements if the automically_align_buttons switch has been selected.
+		if ( 'yes' === $settings['automatically_align_buttons'] ) {
+			add_filter( 'woocommerce_loop_add_to_cart_link', [ $this, 'add_to_cart_wrapper' ], 10, 1 );
+		}
+
 		$args = [
 			'posts_per_page' => 4,
 			'columns' => 4,
@@ -236,6 +241,9 @@ class Product_Related extends Products_Base {
 			echo wp_kses_post( $related_products_html );
 		}
 
+		if ( 'yes' === $settings['automatically_align_buttons'] ) {
+			remove_filter( 'woocommerce_loop_add_to_cart_link', [ $this, 'add_to_cart_wrapper' ] );
+		}
 	}
 
 	public function render_plain_content() {}

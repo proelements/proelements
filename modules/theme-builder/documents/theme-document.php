@@ -230,39 +230,43 @@ abstract class Theme_Document extends Library_Document {
 		/** @var Module $theme_builder */
 		$theme_builder = Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
 
-		$condition = $data['import_settings']['conditions'][0];
+		$conditions = isset( $data['import_settings']['conditions'] ) ? $data['import_settings']['conditions'] : [];
 
-		$condition = rtrim( implode( '/', $condition ), '/' );
+		if ( ! empty( $conditions ) ) {
+			$condition = $conditions[0];
 
-		$conflicts = $theme_builder->get_conditions_manager()->get_conditions_conflicts_by_location( $condition, $this->get_location() );
+			$condition = rtrim( implode( '/', $condition ), '/' );
 
-		if ( $conflicts ) {
-			/** @var Import_Export_Module $import_export_module */
-			$import_export_module = Plugin::elementor()->app->get_component( 'import-export' );
+			$conflicts = $theme_builder->get_conditions_manager()->get_conditions_conflicts_by_location( $condition, $this->get_location() );
 
-			$override_conditions = $import_export_module->import->get_settings( 'overrideConditions' );
+			if ( $conflicts ) {
+				/** @var Import_Export_Module $import_export_module */
+				$import_export_module = Plugin::elementor()->app->get_component( 'import-export' );
 
-			if ( ! $override_conditions || ! in_array( $data['id'], $override_conditions, true ) ) {
-				return;
-			}
+				$override_conditions = $import_export_module->import->get_settings( 'overrideConditions' );
 
-			foreach ( $conflicts as $template ) {
-				/** @var Theme_Document $template_document */
-				$template_document = Plugin::elementor()->documents->get( $template['template_id'] );
-
-				$template_conditions = $theme_builder->get_conditions_manager()->get_document_conditions( $template_document );
-
-				foreach ( $template_conditions as $index => $template_condition ) {
-					if ( ! $template_conditions['sub_id'] && ! $template_conditions['sub_name'] ) {
-						unset( $template_conditions[ $index ] );
-					}
+				if ( ! $override_conditions || ! in_array( $data['id'], $override_conditions, true ) ) {
+					return;
 				}
 
-				$theme_builder->get_conditions_manager()->save_conditions( $template_document->get_main_id(), $template_conditions );
+				foreach ( $conflicts as $template ) {
+					/** @var Theme_Document $template_document */
+					$template_document = Plugin::elementor()->documents->get( $template['template_id'] );
+
+					$template_conditions = $theme_builder->get_conditions_manager()->get_document_conditions( $template_document );
+
+					foreach ( $template_conditions as $index => $template_condition ) {
+						if ( ! $template_condition['sub_id'] && ! $template_condition['sub_name'] ) {
+							unset( $template_conditions[ $index ] );
+						}
+					}
+
+					$theme_builder->get_conditions_manager()->save_conditions( $template_document->get_main_id(), $template_conditions );
+				}
 			}
 		}
 
-		$theme_builder->get_conditions_manager()->save_conditions( $this->get_main_id(), $data['import_settings']['conditions'] );
+		$theme_builder->get_conditions_manager()->save_conditions( $this->get_main_id(), $conditions );
 	}
 
 	protected function register_controls() {
@@ -390,7 +394,7 @@ abstract class Theme_Document extends Library_Document {
 
 		// Only proceed if the inheriting document has optional wrapper HTML tags to replace 'div'
 		if ( $has_wrapper_tags ) {
-			$wrapper_tag = $settings['content_wrapper_html_tag'];
+			$wrapper_tag = Utils::validate_html_tag( $settings['content_wrapper_html_tag'] );
 		}
 
 		if ( ! $elements_data ) {
@@ -533,7 +537,8 @@ abstract class Theme_Document extends Library_Document {
 		 *
 		 * @since 2.0.0
 		 *
-		 * @param Theme_Document $this An instance of the theme document.
+		 * @param string        $preview_url Document preview URL.
+		 * @param Theme_Document $this       An instance of the theme document.
 		 */
 		$preview_url = apply_filters( 'elementor/document/wp_preview_url', $preview_url, $this );
 

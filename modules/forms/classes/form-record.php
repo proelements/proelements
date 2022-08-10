@@ -50,9 +50,8 @@ class Form_Record {
 			/**
 			 * Elementor form field validation.
 			 *
-			 * Fires when a single form field is being validated.
-			 *
-			 * It allows developers to validate individual field types.
+			 * Fires when a single form field is being validated. This hook allows developers
+			 * to validate individual field types.
 			 *
 			 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
 			 *
@@ -68,7 +67,8 @@ class Form_Record {
 		/**
 		 * Elementor form validation.
 		 *
-		 * Fires when form fields are being validated.
+		 * Fires when form fields are being validated. This hook allows developers
+		 * to validate all form fields.
 		 *
 		 * @since 2.0.0
 		 *
@@ -91,9 +91,8 @@ class Form_Record {
 			/**
 			 * Elementor form field process.
 			 *
-			 * Fires when a single form field is being processed.
-			 *
-			 * It allows developers to process individual field types.
+			 * Fires when a single form field is being processed. This hook allows developers
+			 * to process individual field types.
 			 *
 			 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
 			 *
@@ -109,7 +108,8 @@ class Form_Record {
 		/**
 		 * Elementor form process.
 		 *
-		 * Fires when form fields are being processed.
+		 * Fires when form fields are being processed. This hook allows developers
+		 * to process all form fields.
 		 *
 		 * @since 2.0.0
 		 *
@@ -279,7 +279,8 @@ class Form_Record {
 				/**
 				 * Sanitize field value.
 				 *
-				 * Filters the value of the form field for sanitization purpose.
+				 * Filters the value of the form field for sanitization purpose. This hook allows
+				 * developers to add custom sanitization for field values.
 				 *
 				 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
 				 *

@@ -43,7 +43,7 @@ export class ConditionsConfig {
 	/**
 	 * Get the sub options for the select.
 	 *
-	 * @param {string} itemName
+	 * @param {string}  itemName
 	 * @param {boolean} isSubItem
 	 * @return {Array} -
 	 */

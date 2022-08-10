@@ -2,8 +2,7 @@ import { Dialog } from '@elementor/app-ui';
 import { Context as TemplatesContext } from '../context/templates';
 
 export default function DialogDelete( props ) {
-	const { deleteTemplate, findTemplateItemInState } = React.useContext( TemplatesContext ),
-		template = findTemplateItemInState( props.id );
+	const { deleteTemplate, findTemplateItemInState } = React.useContext( TemplatesContext );
 
 	const closeDialog = ( shouldUpdate ) => {
 		props.setId( null );
@@ -17,6 +16,7 @@ export default function DialogDelete( props ) {
 		return '';
 	}
 
+	const template = findTemplateItemInState( props.id );
 	return (
 		<Dialog
 			title={ __( 'Move Item To Trash', 'elementor-pro' ) }

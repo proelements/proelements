@@ -157,6 +157,9 @@ class Media_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -180,6 +183,9 @@ class Media_Carousel extends Base {
 			'image_link_to',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'show_external' => 'true',
 				'condition' => [
@@ -196,6 +202,9 @@ class Media_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Video Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Enter your video link', 'elementor-pro' ),
 				'description' => esc_html__( 'YouTube or Vimeo link', 'elementor-pro' ),
 				'options' => false,
@@ -271,8 +280,18 @@ class Media_Carousel extends Base {
 
 		$this->add_render_attribute( $element_key . '-image', [
 			'class' => 'elementor-carousel-image',
-			'style' => 'background-image: url(' . $this->get_slide_image_url( $slide, $settings ) . ')',
 		] );
+
+		$img_src = $this->get_slide_image_url( $slide, $settings );
+
+		if ( 'yes' === $settings['lazyload'] ) {
+			$img_attribute['class'] = 'swiper-lazy';
+			$img_attribute['data-background'] = $img_src;
+		} else {
+			$img_attribute['style'] = 'background-image: url(' . $img_src . ')';
+		}
+
+		$this->add_render_attribute( $element_key . '-image', $img_attribute );
 
 		$image_link_to = $this->get_image_link_to( $slide );
 
@@ -315,6 +334,11 @@ class Media_Carousel extends Base {
 	protected function print_slide_image( array $slide, $element_key, array $settings ) {
 		?>
 		<div <?php $this->print_render_attribute_string( $element_key . '-image' ); ?>>
+
+			<?php if ( 'yes' === $settings['lazyload'] ) : ?>
+				<div class="swiper-lazy-preloader"></div>
+			<?php endif; ?>
+
 			<?php if ( 'video' === $slide['type'] && $settings['video_play_icon'] ) : ?>
 				<div class="elementor-custom-embed-play">
 					<?php

@@ -27,6 +27,7 @@ In addition, it has some abstract functions to make sure that every payment butt
   
   See `widgets/paypal-button.php` for reference. 
 
+- Use the `after_custom_messages_toggle()` function when you need to add something after the `custom_messages` control. 
 
 - The currencies list **defaults to PayPal's supported currencies**, so when you extend it, make sure that this list
   is also supported in the payment method you are using, or override it with the appropriate one.

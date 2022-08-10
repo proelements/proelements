@@ -165,6 +165,8 @@ class Facebook_Embed extends Base_Widget {
 				],
 			]
 		);
+
+		$this->end_controls_section();
 	}
 
 	public function render() {

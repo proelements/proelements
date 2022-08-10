@@ -58,7 +58,8 @@ class Menu_Cart extends Base_Widget {
 					'bag-solid' => esc_html__( 'Bag', 'elementor-pro' ) . ' ' . esc_html__( 'Solid', 'elementor-pro' ),
 				],
 				'default' => 'cart-medium',
-				'prefix_class' => 'toggle-icon--',
+				'prefix_class' => 'toggle-icon--', // Prefix class not used anymore, but kept for BC reasons.
+				'render_type' => 'template',
 			]
 		);
 
@@ -2103,8 +2104,10 @@ class Menu_Cart extends Base_Widget {
 	}
 
 	protected function render() {
+		$settings = $this->get_settings_for_display();
+
 		$this->maybe_use_mini_cart_template();
-		Module::render_menu_cart();
+		Module::render_menu_cart( $settings );
 	}
 
 	public function render_plain_content() {}

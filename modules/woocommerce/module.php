@@ -9,9 +9,12 @@ use ElementorPro\Modules\Woocommerce\Documents\Product;
 use ElementorPro\Modules\Woocommerce\Documents\Product_Post;
 use ElementorPro\Modules\Woocommerce\Documents\Product_Archive;
 use Elementor\Utils;
+use ElementorPro\Core\Utils as ProUtils;
 use Elementor\Core\Documents_Manager;
 use Elementor\Settings;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
+use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -22,6 +25,7 @@ class Module extends Module_Base {
 	const WOOCOMMERCE_GROUP = 'woocommerce';
 	const TEMPLATE_MINI_CART = 'cart/mini-cart.php';
 	const OPTION_NAME_USE_MINI_CART = 'use_mini_cart_template';
+	const MENU_CART_FRAGMENTS_ACTION = 'elementor-menu-cart-fragments';
 
 	protected $docs_types = [];
 	protected $use_mini_cart_template;
@@ -97,6 +101,7 @@ class Module extends Module_Base {
 			'Product_Price',
 			'Product_Rating',
 			'Product_Sale',
+			'Product_Content',
 			'Product_Short_Description',
 			'Product_SKU',
 			'Product_Stock',
@@ -147,19 +152,25 @@ class Module extends Module_Base {
 		}
 	}
 
-	public static function render_menu_cart_toggle_button() {
+	public static function render_menu_cart_toggle_button( $settings ) {
 		if ( null === WC()->cart ) {
 			return;
 		}
 		$product_count = WC()->cart->get_cart_contents_count();
 		$sub_total = WC()->cart->get_cart_subtotal();
 		$counter_attr = 'data-counter="' . $product_count . '"';
+		$icon = ! empty( $settings['icon'] ) ? $settings['icon'] : 'cart-medium';
 		?>
 		<div class="elementor-menu-cart__toggle elementor-button-wrapper">
 			<a id="elementor-menu-cart__toggle_button" href="#" class="elementor-menu-cart__toggle_button elementor-button elementor-size-sm" aria-expanded="false">
 				<span class="elementor-button-text"><?php echo $sub_total; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 				<span class="elementor-button-icon" <?php echo $counter_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-					<i class="eicon"></i>
+					<?php
+					Icons_Manager::render_icon( [
+						'library' => 'eicons',
+						'value' => 'eicon-' . $icon,
+					] );
+					?>
 					<span class="elementor-screen-only"><?php esc_html_e( 'Cart', 'elementor-pro' ); ?></span>
 				</span>
 			</a>
@@ -175,7 +186,7 @@ class Module extends Module_Base {
 	 * When in the editor we populate this on page load as we can't rely on the woocoommerce js to re-add the fragments
 	 * each time a widget us re-rendered.
 	 */
-	public static function render_menu_cart() {
+	public static function render_menu_cart( $settings ) {
 		if ( null === WC()->cart ) {
 			return;
 		}
@@ -196,7 +207,7 @@ class Module extends Module_Base {
 							</div>
 						</div>
 					</div>
-					<?php self::render_menu_cart_toggle_button(); ?>
+					<?php self::render_menu_cart_toggle_button( $settings ); ?>
 				</div>
 			<?php endif; ?>
 		</div> <!-- close elementor-menu-cart__wrapper -->
@@ -204,25 +215,137 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * Refresh the Menu Cart button and items counter.
-	 * The mini-cart itself will be rendered by WC functions.
+	 * Menu cart fragments.
 	 *
-	 * @param $fragments
+	 * Ajax action to create fragments for the menu carts in a page.
 	 *
+	 * @return void
+	 */
+	public function menu_cart_fragments() {
+		$all_fragments = [];
+
+		if (
+			! isset( $_POST['_nonce'] )
+			|| ! wp_verify_nonce( $_POST['_nonce'], self::MENU_CART_FRAGMENTS_ACTION )
+			|| ! is_array( $_POST['templates'] )
+		) {
+			wp_send_json( [] );
+		}
+
+		if ( 'true' === $_POST['is_editor'] ) {
+			Plugin::elementor()->editor->set_edit_mode( true );
+		}
+
+		foreach ( $_POST['templates'] as $id ) {
+			$this->get_all_fragments( $id, $all_fragments );
+		}
+
+		wp_send_json( [ 'fragments' => $all_fragments ] );
+	}
+
+	/**
+	 * Get All Fragments.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @param $id
+	 * @param $all_fragments
+	 * @return void
+	 */
+	public function get_all_fragments( $id, &$all_fragments ) {
+		$fragments_in_document = $this->get_fragments_in_document( $id );
+
+		if ( $fragments_in_document ) {
+			$all_fragments += $fragments_in_document;
+		}
+	}
+
+	/**
+	 * Get Fragments In Document.
+	 *
+	 * A general function that will return any needed fragments for a Post.
+	 *
+	 * @since 3.7.0
+	 * @access public
+	 *
+	 * @param int $id
+	 *
+	 * @return mixed $fragments
+	 */
+	public function get_fragments_in_document( $id ) {
+		$document = Plugin::elementor()->documents->get( $id );
+
+		if ( ! is_object( $document ) ) {
+			return false;
+		}
+
+		$fragments = [];
+
+		$data = $document->get_elements_data();
+
+		Plugin::elementor()->db->iterate_data(
+			$data,
+			$this->get_fragments_handler( $fragments )
+		);
+
+		return ! empty( $fragments ) ? $fragments : false;
+	}
+
+	/**
+	 * Get Fragments Handler.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @param array $fragments
+	 * @return void
+	 */
+	public function get_fragments_handler( array &$fragments ) {
+		return function ( $element ) use ( &$fragments ) {
+			if ( ! isset( $element['widgetType'] ) ) {
+				return;
+			}
+
+			$fragment_data = $this->get_fragment_data( $element );
+
+			if ( ! empty( $fragment_data['html'] ) ) {
+				$fragments[ $fragment_data['selector'] ] = $fragment_data['html'];
+			}
+		};
+	}
+
+	/**
+	 * Empty Cart Fragments
+	 *
+	 * When the Cart is emptied, the selected 'Empty Cart Template' needs to be added as an item
+	 * in the WooCommerce `$fragments` array, so that WC will push the custom Template content into the DOM.
+	 * This is done to prevent the need for a page refresh after the cart is cleared.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @param array $fragments
 	 * @return array
 	 */
-	public function menu_cart_fragments( $fragments ) {
-		$has_cart = is_a( WC()->cart, 'WC_Cart' );
-		if ( ! $has_cart || ! $this->use_mini_cart_template ) {
+	public function empty_cart_fragments( $fragments ) {
+		// Only do this when the cart is empty.
+		if ( WC()->cart->get_cart_contents_count() !== 0 ) {
 			return $fragments;
 		}
 
-		ob_start();
-		self::render_menu_cart_toggle_button();
-		$menu_cart_toggle_button_html = ob_get_clean();
+		$document = Plugin::elementor()->documents->get( url_to_postid( wp_get_referer() ) );
 
-		if ( ! empty( $menu_cart_toggle_button_html ) ) {
-			$fragments['body div.elementor-widget.elementor-widget-woocommerce-menu-cart div.elementor-menu-cart__toggle'] = $menu_cart_toggle_button_html;
+		if ( is_object( $document ) ) {
+			$data = $document->get_elements_data();
+
+			Plugin::elementor()->db->iterate_data( $data, function( $element ) use ( &$fragments ) {
+				if (
+					isset( $element['widgetType'] )
+					&& 'woocommerce-cart' === $element['widgetType']
+					&& ( isset( $element['settings']['additional_template_switch'] ) && 'active' === $element['settings']['additional_template_switch'] )
+					&& ( isset( $element['settings']['additional_template_select'] ) && 0 < $element['settings']['additional_template_select'] )
+				) {
+					$fragments[ 'div.elementor-element-' . $element['id'] . ' .elementor-widget-container' ] = '<div class="elementor-widget-container">' . do_shortcode( '[elementor-template id="' . $element['settings']['additional_template_select'] . '"]' ) . '</div>';
+				}
+			} );
 		}
 
 		return $fragments;
@@ -247,6 +370,7 @@ class Module extends Module_Base {
 			$settings['woocommerce']['menu_cart'] = [
 				'cart_page_url' => wc_get_cart_url(),
 				'checkout_page_url' => wc_get_checkout_url(),
+				'fragments_nonce' => wp_create_nonce( self::MENU_CART_FRAGMENTS_ACTION ),
 			];
 		}
 		return $settings;
@@ -333,27 +457,67 @@ class Module extends Module_Base {
 	}
 
 	/**
+	 * Add Query Arg to WC Ajax Endpoint.
+	 *
+	 * Adds the `elementor_page_id` query arg to the WooCommerce ajax endpoint, so we always know what page
+	 * an ajax call is coming from - used to load widgets before loading some WC content by ajax.
+	 * e.g. `?wc-ajax=%%endpoint%%&elementor_page_id=160`
+	 *
+	 * @since 3.6.0
+	 *
+	 * @param $url
+	 * @return string
+	 */
+	public function add_query_arg_to_wc_ajax_endpoint( $url ) {
+		$url_components = wp_parse_url( $url );
+		parse_str( $url_components['query'], $url_query );
+		$url_query['elementor_page_id'] = get_queried_object_id();
+		return add_query_arg( $url_query, $url_components['path'] );
+	}
+
+	/**
 	 * Load Widget Before WooCommerce Ajax.
 	 *
 	 * When outputting the complex WooCommerce shortcodes (which we use in our widgets) e.g. Checkout, Cart, etc. WC
 	 * immediately does more ajax calls and retrieves updated html fragments based on the data in the forms that may
 	 * be autofilled by the current user's browser e.g. the Payment section holding the "Place order" button.
 	 *
-	 * This function can be hooked before any of these ajax calls and will look for the `elementorPostId` and
-	 * `elementorWidgetId` querysring we've appended to the forms `_wp_http_referer` url field and load the related
-	 * Elementor Widget before it starts to compile the html to be returned and added to the page.
+	 * This function runs before these ajax calls. Using the `elementorPageId` and `elementorWidgetId` querystring
+	 * appended to the forms `_wp_http_referer` url field, or the `elementor_page_id` querystring added to the
+	 * wc-ajax endpoint, it loads the relevant Elementor widget. The rendered Elementor widget replaces the
+	 * default WooCommerce template used to refresh WooCommerce elements in the page.
 	 *
 	 * This is necessary for example in the Checkout Payment section where we modify the Terms & Conditions text
-	 * using settings from the widget.
+	 * using settings from the widget or when updating shipping methods on the Cart.
 	 *
 	 * @since 3.5.0
 	 */
 	public function load_widget_before_wc_ajax() {
-		check_ajax_referer( 'update-order-review', 'security' );
+		// Make sure is a WooCommerce ajax call.
+		if ( ! isset( $_GET['wc-ajax'] ) ) {
+			return;
+		}
 
-		$post_id = false;
-		$element_id = false;
+		// Only handle relevant WC AJAX calls
+		if ( ! in_array( $_GET['wc-ajax'], [ 'update_order_review', 'update_shipping_method' ], true ) ) {
+			return;
+		}
 
+		// Security checks.
+		switch ( $_GET['wc-ajax'] ) {
+			case 'update_order_review':
+				check_ajax_referer( 'update-order-review', 'security' );
+				break;
+			case 'update_shipping_method':
+				check_ajax_referer( 'update-shipping-method', 'security' );
+				break;
+		}
+
+		$page_id = false;
+		$widget_id = false;
+
+		// Try to get the `$page_id` and `$widget_id` we added as a query string to `_wp_http_referer` in `post_data`.
+		// This is only available when a form is submitted.
 		if ( isset( $_POST['post_data'] ) ) {
 			parse_str( $_POST['post_data'], $post_data );
 
@@ -363,31 +527,64 @@ class Module extends Module_Base {
 				$wp_http_referer_query_string = wp_parse_url( $wp_http_referer, PHP_URL_QUERY );
 				parse_str( $wp_http_referer_query_string, $wp_http_referer_query_string );
 
-				if ( isset( $wp_http_referer_query_string['elementorPostId'] ) ) {
-					$post_id = $wp_http_referer_query_string['elementorPostId'];
+				if ( isset( $wp_http_referer_query_string['elementorPageId'] ) ) {
+					$page_id = $wp_http_referer_query_string['elementorPageId'];
 				}
 
 				if ( isset( $wp_http_referer_query_string['elementorWidgetId'] ) ) {
-					$element_id = $wp_http_referer_query_string['elementorWidgetId'];
+					$widget_id = $wp_http_referer_query_string['elementorWidgetId'];
 				}
 			}
 		}
 
-		if ( ! $post_id || ! $element_id ) {
+		// If the page ID is not found in the referrer query string, the page ID is fetched from the `elementor_page_id` query string we added to WooCommerce ajax endpoint.
+		// e.g. `?wc-ajax=update_shipping_method&elementor_page_id=160`
+		if ( ! $page_id ) {
+			if ( isset( $_GET['elementor_page_id'] ) ) {
+				$page_id = $_GET['elementor_page_id'];
+			}
+		}
+
+		// Bail if no `$page_id`.
+		if ( ! $page_id ) {
 			return;
 		}
 
-		$document = Plugin::elementor()->documents->get( $post_id );
+		// Get Elementor document from `$page_id`.
+		$document = Plugin::elementor()->documents->get_doc_for_frontend( $page_id );
 
-		if ( $document ) {
-			$widget = Utils::find_element_recursive( $document->get_elements_data(), $element_id );
+		// Bail if not Elementor page.
+		if ( ! $document ) {
+			return;
+		}
 
-			if ( $widget ) {
-				$widget = Plugin::elementor()->elements_manager->create_element_instance( $widget );
-				$widget->get_raw_data( false );
-				if ( method_exists( $widget, 'add_render_hooks' ) ) {
-					$widget->add_render_hooks();
+		// Setup `elementor_page_id` as the WP global $post, so is available to our widgets.
+		$post = get_post( $page_id, OBJECT );
+		setup_postdata( $post );
+
+		$widget_data = false;
+		if ( $widget_id ) {
+			// If we did manage to pass `$widget_id` to this ajax call we get the widget data by its ID.
+			$widget_data = Utils::find_element_recursive( $document->get_elements_data(), $widget_id );
+		} else {
+			// If we didn't manage to pass `$widget_id` to this ajax call we use this alternate method and get the first
+			// of the type of widget used on the WC endpoint pages responsible for these ajax calls - cart or checkout widget.
+			$woocommerce_widgets = [ 'woocommerce-cart', 'woocommerce-checkout-page' ];
+
+			$document_data = $document->get_elements_data();
+			Plugin::elementor()->db->iterate_data( $document_data, function( $element ) use ( $woocommerce_widgets, &$widget_data ) {
+				if ( $widget_data && ( ! isset( $element['widgetType'] ) || ! in_array( $element['widgetType'], $woocommerce_widgets, true ) ) ) {
+					return;
 				}
+				$widget_data = $element;
+			} );
+		}
+
+		// If we found a widget then run `add_render_hooks()` widget method.
+		if ( $widget_data ) {
+			$widget_instance = Plugin::elementor()->elements_manager->create_element_instance( $widget_data );
+			if ( method_exists( $widget_instance, 'add_render_hooks' ) ) {
+				$widget_instance->add_render_hooks();
 			}
 		}
 	}
@@ -441,23 +638,6 @@ class Module extends Module_Base {
 
 		echo wp_json_encode( $response );
 		wp_die();
-	}
-
-	/**
-	 * Print Woocommerce Shipping Message
-	 *
-	 * Format the shipping messages that will be displayed on the Cart and Checkout Widgets.
-	 * This will add extra classes to those messages so that we can target certain messages
-	 * with certain style controls.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @param string $html the original HTML from WC
-	 * @param string $classes the classes we will surround $html with
-	 * @return string the final formatted HTML that will be rendered
-	 */
-	private function print_woocommerce_shipping_message( $html, $classes ) {
-		return '<span class="' . wp_sprintf( '%s', $classes ) . '">' . $html . '</span>';
 	}
 
 	/**
@@ -603,11 +783,209 @@ class Module extends Module_Base {
 	}
 
 	public function e_notices_body_classes( $classes ) {
-		foreach ( $this->woocommerce_notices_elements as $notice_element ) {
-			$classes[] = 'e-' . str_replace( '_', '-', $notice_element ) . '-notice ';
+		if ( $this->should_load_wc_notices_styles() ) {
+			foreach ( $this->woocommerce_notices_elements as $notice_element ) {
+				$classes[] = 'e-' . str_replace( '_', '-', $notice_element ) . '-notice';
+			}
 		}
 
 		return $classes;
+	}
+
+	public function e_notices_css( $classes ) {
+		if ( $this->should_load_wc_notices_styles() ) {
+			wp_enqueue_style(
+				'e-woocommerce-notices',
+				ELEMENTOR_PRO_URL . 'assets/css/woocommerce-notices.min.css',
+				[],
+				ELEMENTOR_PRO_VERSION
+			);
+		}
+	}
+
+	public function get_order_received_endpoint_url( $url, $endpoint, $value ) {
+		$order_received_endpoint = get_option( 'woocommerce_checkout_order_received_endpoint', 'order-received' );
+
+		if ( $order_received_endpoint === $endpoint ) {
+			$woocommerce_purchase_summary_page_id = get_option( 'elementor_woocommerce_purchase_summary_page_id' );
+			$order = wc_get_order( $value );
+
+			if ( $woocommerce_purchase_summary_page_id && $order ) {
+				$url = trailingslashit( trailingslashit( trailingslashit( get_permalink( $woocommerce_purchase_summary_page_id ) ) . $order_received_endpoint ) . $order->get_id() );
+			}
+		}
+
+		return $url;
+	}
+
+	public function maybe_define_woocommerce_checkout() {
+		$woocommerce_purchase_summary_page_id = get_option( 'elementor_woocommerce_purchase_summary_page_id' );
+
+		if ( $woocommerce_purchase_summary_page_id && intval( $woocommerce_purchase_summary_page_id ) === get_queried_object_id() ) {
+			if ( ! defined( 'WOOCOMMERCE_CHECKOUT' ) ) {
+				define( 'WOOCOMMERCE_CHECKOUT', true );
+			}
+		}
+	}
+
+	/**
+	 * Products Query Sources Fragments.
+	 *
+	 * Since we introduced additional query sources to the Products Widget,
+	 * some of these query sources can now be used outside of the Single Product template.
+	 *
+	 * For example the Related Products and Cross-Sells.
+	 *
+	 * But now we'll need to make those sections also update when the Cart is updated. So
+	 * we'll do this by creating fragments for each of these.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @param array $fragments
+	 *
+	 * @return array
+	 */
+	public function products_query_sources_fragments( $fragments ) {
+		if ( WC()->cart->get_cart_contents_count() !== 0 ) {
+			$document = Plugin::elementor()->documents->get( url_to_postid( wp_get_referer() ) );
+
+			if ( is_object( $document ) ) {
+				$data = $document->get_elements_data();
+
+				Plugin::elementor()->db->iterate_data( $data, function( $element ) use ( &$fragments ) {
+					if (
+						isset( $element['widgetType'] )
+						&& 'woocommerce-products' === $element['widgetType']
+					) {
+						$settings = $element['settings'];
+						if ( isset( $settings[ Products_Renderer::QUERY_CONTROL_NAME . '_post_type' ] ) ) {
+							$query_type = $settings[ Products_Renderer::QUERY_CONTROL_NAME . '_post_type' ];
+							$query_types_to_check = [ 'related', 'upsells', 'cross_sells' ];
+
+							if ( in_array( $query_type, $query_types_to_check, true ) ) {
+								switch ( $query_type ) {
+									case 'related':
+										$content = self::get_products_related_content( $settings );
+										break;
+									case 'upsells':
+										$content = self::get_upsells_content( $settings );
+										break;
+									case 'cross_sells':
+										$content = self::get_cross_sells_content( $settings );
+										break;
+									default:
+										$content = null;
+								}
+
+								if ( $content ) {
+									$fragments[ 'div.elementor-element-' . $element['id'] . ' div.elementor-widget-container' ] = '<div class="elementor-widget-container">' . $content . '</div>';
+								}
+							}
+						}
+					}
+				} );
+			}
+		} else {
+			$fragments['div.elementor-widget-container .woocommerce .cross-sells'] = '<div class="cross-sells"></div>';
+
+			$fragments['div.elementor-widget-container .woocommerce section.up-sells'] = '<section class="up-sells upsells products"></section>';
+		}
+
+		return $fragments;
+	}
+
+	/**
+	 * Get Products Related Content.
+	 *
+	 * A function to return content for the 'related' products query type in the Products widget.
+	 * This function is declared in the Module file so it can be accessed during a WC fragment refresh
+	 * and also be used in the Product widget's render method.
+	 *
+	 * @since 3.7.0
+	 * @access public
+	 *
+	 * @param array $settings
+	 *
+	 * @return mixed The content or false
+	 */
+	public static function get_products_related_content( $settings ) {
+		global $product;
+
+		$product = wc_get_product();
+
+		if ( ! $product ) {
+			return;
+		}
+
+		return self::get_product_widget_content(
+			$settings,
+			'related',
+			'woocommerce_product_related_products_heading',
+			'products_related_title_text'
+		);
+	}
+
+	/**
+	 * Get Upsells Content.
+	 *
+	 * A function to return content for the 'upsell' query type in the Products widget.
+	 * This function is declared in the Module file so it can be accessed during a WC fragment refresh
+	 * and also be used in the Product widget's render method.
+	 *
+	 * @since 3.7.0
+	 * @access public
+	 *
+	 * @param array $settings
+	 *
+	 * @return mixed The content or false
+	 */
+	public static function get_upsells_content( $settings ) {
+		return self::get_product_widget_content(
+			$settings,
+			'upsells',
+			'woocommerce_product_upsells_products_heading',
+			'products_upsells_title_text'
+		);
+	}
+
+	/**
+	 * Get Cross Sells Content.
+	 *
+	 * A function to return content for the 'cross_sells' query type in the Products widget.
+	 * This function is declared in the Module file so it can be accessed during a WC fragment refresh
+	 * and also be used in the Product widget's render method.
+	 *
+	 * @since 3.7.0
+	 * @access public
+	 *
+	 * @param array $settings
+	 *
+	 * @return mixed The content or false
+	 */
+	public static function get_cross_sells_content( $settings ) {
+		return self::get_product_widget_content(
+			$settings,
+			'cross_sells',
+			'woocommerce_product_cross_sells_products_heading',
+			'products_cross_sells_title_text'
+		);
+	}
+
+	/**
+	 * Print Woocommerce Shipping Message
+	 *
+	 * Format the shipping messages that will be displayed on the Cart and Checkout Widgets.
+	 * This will add extra classes to those messages so that we can target certain messages
+	 * with certain style controls.
+	 *
+	 * @since 3.5.0
+	 *
+	 * @param string $html the original HTML from WC
+	 * @param string $classes the classes we will surround $html with
+	 * @return string the final formatted HTML that will be rendered
+	 */
+	private function print_woocommerce_shipping_message( $html, $classes ) {
+		return '<span class="' . wp_sprintf( '%s', $classes ) . '">' . $html . '</span>';
 	}
 
 	/**
@@ -647,29 +1025,135 @@ class Module extends Module_Base {
 		return false;
 	}
 
-	public function get_order_received_endpoint_url( $url, $endpoint, $value ) {
-		$order_received_endpoint = get_option( 'woocommerce_checkout_order_received_endpoint', 'order-received' );
+	/**
+	 * Get Product Widget Content.
+	 *
+	 * A general function to create markup for the new query types in the Products widget.
+	 *
+	 * @since 3.7.0
+	 * @access private
+	 *
+	 * @param array $settings The widget settings.
+	 * @param string $type The query type to create content for.
+	 * @param string $title_hook The hook name to filter in the widget title.
+	 * @param string $title_key The control ID for the section title.
+	 *
+	 * @return mixed The content or false
+	 */
+	private static function get_product_widget_content( $settings, $type, $title_hook, $title_key = '' ) {
+		add_filter( $title_hook, function ( $heading ) use ( $settings, $title_key ) {
+			$title_text = isset( $settings[ $title_key ] ) ? $settings[ $title_key ] : '';
 
-		if ( $order_received_endpoint === $endpoint ) {
-			$woocommerce_purchase_summary_page_id = get_option( 'elementor_woocommerce_purchase_summary_page_id' );
-			$order = wc_get_order( $value );
-
-			if ( $woocommerce_purchase_summary_page_id && $order ) {
-				$url = trailingslashit( trailingslashit( trailingslashit( get_permalink( $woocommerce_purchase_summary_page_id ) ) . $order_received_endpoint ) . $order->get_id() );
+			if ( ! empty( $title_text ) ) {
+				return $title_text;
 			}
+
+			return $heading;
+		}, 10, 1 );
+
+		ob_start();
+
+		$args = self::parse_product_widget_args( $settings, $type );
+
+		if ( 'related' === $type ) {
+			woocommerce_related_products( $args );
+		} elseif ( 'upsells' === $type ) {
+			woocommerce_upsell_display( $args['limit'], $args['columns'], $args['orderby'], $args['order'] );
+		} else {
+			/**
+			 * We need to wrap this content in the 'woocommerce' class for the layout to have the correct styling.
+			 * Because this will only be used as a separate widget on the Cart page,
+			 * the normal 'woocommerce' div from the cart widget will be closed before this content.
+			 */
+			echo '<div class="woocommerce">';
+				woocommerce_cross_sell_display( $args['limit'], $args['columns'], $args['orderby'], $args['order'] );
+			echo '</div>';
 		}
 
-		return $url;
+		$products_html = ob_get_clean();
+
+		remove_filter( $title_hook, function(){}, 10 );
+
+		if ( $products_html ) {
+			$products_html = str_replace( '<ul class="products', '<ul class="products elementor-grid', $products_html );
+
+			return wp_kses_post( $products_html );
+		}
+
+		return false;
 	}
 
-	public function maybe_define_woocommerce_checkout() {
-		$woocommerce_purchase_summary_page_id = get_option( 'elementor_woocommerce_purchase_summary_page_id' );
+	/**
+	 * Parse Product Widget Args.
+	 *
+	 * A general function to construct an arguments array for the new query types in the
+	 * Products widget according to the widget's settings.
+	 * These arguments will later be passed to the WooCommerce template functions.
+	 *
+	 * @since 3.7.0
+	 * @access private
+	 *
+	 * @param array $settings The widget settings.
+	 * @param string $type The query type to create arguments for.
+	 *
+	 * @return array $args
+	 */
+	private static function parse_product_widget_args( $settings, $type = 'related' ) {
+		$limit_key = 'related' === $type ? 'posts_per_page' : 'limit';
 
-		if ( $woocommerce_purchase_summary_page_id && intval( $woocommerce_purchase_summary_page_id ) === get_queried_object_id() ) {
-			if ( ! defined( 'WOOCOMMERCE_CHECKOUT' ) ) {
-				define( 'WOOCOMMERCE_CHECKOUT', true );
-			}
+		$args = [
+			$limit_key => '-1',
+			'columns' => ! empty( $settings['columns'] ) ? $settings['columns'] : 4,
+			'orderby' => ! empty( $settings['orderby'] ) ? $settings['orderby'] : 'rand',
+			'order' => ! empty( $settings['order'] ) ? $settings['order'] : 'desc',
+		];
+
+		if ( ! empty( $settings['rows'] ) ) {
+			$args[ $limit_key ] = $args['columns'] * $settings['rows'];
 		}
+
+		return $args;
+	}
+
+	/**
+	 * Get Fragment Data.
+	 *
+	 * A function that will return the selector and HTML for WC fragments.
+	 *
+	 * @since 3.7.0
+	 * @access private
+	 *
+	 * @param array $element
+	 *
+	 * @return array $fragment_data
+	 */
+	private function get_fragment_data( $element ) {
+		$fragment_data = [];
+
+		if ( 'woocommerce-menu-cart' === $element['widgetType'] ) {
+			ob_start();
+			self::render_menu_cart_toggle_button( $element['settings'] );
+			$fragment_data['html'] = ob_get_clean();
+
+			$fragment_data['selector'] = 'div.elementor-element-' . $element['id'] . ' div.elementor-menu-cart__toggle';
+		}
+
+		return $fragment_data;
+	}
+
+	/**
+	 * Is Preview
+	 *
+	 * Helper to check if we are doing either:
+	 * - Viewing the WP Preview page - also used as the Elementor preview page when clicking "Preview Changes" in the editor
+	 * - Viewing the page in the editor, but not the active page being edited e.g. if you click Edit Header while editing a page
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return bool
+	 */
+	public static function is_preview() {
+		return Plugin::elementor()->preview->is_preview_mode() || is_preview();
 	}
 
 	public function __construct() {
@@ -692,12 +1176,19 @@ class Module extends Module_Base {
 		add_action( 'wp_ajax_elementor_woocommerce_checkout_login_user', [ $this, 'elementor_woocommerce_checkout_login_user' ] );
 		add_action( 'wp_ajax_nopriv_elementor_woocommerce_checkout_login_user', [ $this, 'elementor_woocommerce_checkout_login_user' ] );
 
+		add_action( 'wp_ajax_elementor_menu_cart_fragments', [ $this, 'menu_cart_fragments' ] );
+		add_action( 'wp_ajax_nopriv_elementor_menu_cart_fragments', [ $this, 'menu_cart_fragments' ] );
+
 		add_filter( 'elementor/theme/need_override_location', [ $this, 'theme_template_include' ], 10, 2 );
 
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localized_settings_frontend' ] );
 
+		// Add `elementor_page_id` query arg to WC Ajax Endpoint.
+		add_filter( 'woocommerce_ajax_get_endpoint', [ $this, 'add_query_arg_to_wc_ajax_endpoint' ] );
+
 		// Load our widget Before WooCommerce Ajax. See the variable's PHPDoc for details.
 		add_action( 'woocommerce_checkout_update_order_review', [ $this, 'load_widget_before_wc_ajax' ] );
+		add_action( 'woocommerce_before_calculate_totals', [ $this, 'load_widget_before_wc_ajax' ] );
 
 		// On Editor - Register WooCommerce frontend hooks before the Editor init.
 		// Priority = 5, in order to allow plugins remove/add their wc hooks on init.
@@ -715,8 +1206,13 @@ class Module extends Module_Base {
 		}
 
 		if ( $this->use_mini_cart_template ) {
-			add_filter( 'woocommerce_add_to_cart_fragments', [ $this, 'menu_cart_fragments' ] );
 			add_filter( 'woocommerce_locate_template', [ $this, 'woocommerce_locate_template' ], 10, 3 );
+		}
+
+		if ( ! empty( $_REQUEST['wc-ajax'] ) && 'get_refreshed_fragments' === $_REQUEST['wc-ajax'] ) {
+			add_action( 'woocommerce_add_to_cart_fragments', [ $this, 'products_query_sources_fragments' ] );
+			// Render the Empty Cart Template on WC fragment refresh
+			add_action( 'woocommerce_add_to_cart_fragments', [ $this, 'empty_cart_fragments' ] );
 		}
 
 		add_filter( 'elementor/widgets/wordpress/widget_args', [ $this, 'woocommerce_wordpress_widget_css_class' ], 10, 2 );
@@ -760,16 +1256,7 @@ class Module extends Module_Base {
 		add_action( 'woocommerce_add_to_cart', [ $this, 'localize_added_to_cart_on_product_single' ] );
 
 		// WooCommerce Notice Site Settings
-		if ( $this->should_load_wc_notices_styles() ) {
-			add_filter( 'body_class', [ $this, 'e_notices_body_classes' ] );
-
-			// WooCommerce Notices CSS
-			wp_enqueue_style(
-				'e-woocommerce-notices',
-				ELEMENTOR_PRO_URL . 'assets/css/woocommerce-notices.min.css',
-				[],
-				ELEMENTOR_PRO_VERSION
-			);
-		}
+		add_filter( 'body_class', [ $this, 'e_notices_body_classes' ] );
+		add_filter( 'wp_enqueue_scripts', [ $this, 'e_notices_css' ] );
 	}
 }

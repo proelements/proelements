@@ -106,12 +106,26 @@ class Conditions_Cache {
 			}
 		}
 
-		$query = new \WP_Query( [
+		$query_args = [
 			'posts_per_page' => -1,
 			'post_type' => $post_types,
 			'fields' => 'ids',
 			'meta_key' => '_elementor_conditions',
-		] );
+		];
+
+		/**
+		 * Query args for regenerating conditions cache.
+		 *
+		 * Filters the query arguments used for regenerating conditions cache. This hook
+		 * allows developers to alter those arguments.
+		 *
+		 * @since 3.7.0
+		 *
+		 * @param array $query_args An array of WordPress query arguments.
+		 */
+		$query_args = apply_filters( 'elementor/theme/conditions/cache/regenerate/query_args', $query_args );
+
+		$query = new \WP_Query( $query_args );
 
 		foreach ( $query->posts as $post_id ) {
 			$document = Module::instance()->get_document( $post_id );

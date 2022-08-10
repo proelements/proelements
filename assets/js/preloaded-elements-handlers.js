@@ -1,4 +1,4 @@
-/*! pro-elements - v3.6.4 - 15-03-2022 */
+/*! pro-elements - v3.7.3 - 31-07-2022 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
@@ -115,19 +115,20 @@ exports.close = close;
 /*!********************************************************!*\
   !*** ../assets/dev/js/frontend/utils/icons/manager.js ***!
   \********************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
 
-class IconsManager {
-  static symbolsContainer;
-  static iconsUsageList = [];
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 
+class IconsManager {
   constructor(elementsPrefix) {
     this.prefix = `${elementsPrefix}-`;
 
@@ -174,6 +175,8 @@ class IconsManager {
 }
 
 exports["default"] = IconsManager;
+(0, _defineProperty2.default)(IconsManager, "symbolsContainer", void 0);
+(0, _defineProperty2.default)(IconsManager, "iconsUsageList", []);
 
 /***/ }),
 
@@ -390,13 +393,14 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     var self = this,
         settings = self.getSettings(),
         classes = settings.classes,
-        letterSelector = '.' + classes.dynamicLetter,
-        animationType = self.getElementSettings('animation_type'),
-        nextWord = self.getNextWord($word);
+        letterSelector = '.' + classes.dynamicLetter;
 
     if (!this.isLoopMode && $word.is(':last-child')) {
       return;
     }
+
+    var animationType = self.getElementSettings('animation_type'),
+        nextWord = self.getNextWord($word);
 
     if ('typing' === animationType) {
       self.elements.$dynamicWrapper.addClass(classes.typeSelected);
@@ -681,6 +685,13 @@ class CarouselBase extends elementorModules.frontend.handlers.SwiperBase {
       handleElementorBreakpoints: true
     };
 
+    if ('yes' === elementSettings.lazyload) {
+      swiperOptions.lazy = {
+        loadPrevNext: true,
+        loadPrevNextAmount: 1
+      };
+    }
+
     if (elementSettings.show_arrows) {
       swiperOptions.navigation = {
         prevEl: '.elementor-swiper-button-prev',
@@ -748,7 +759,6 @@ class CarouselBase extends elementorModules.frontend.handlers.SwiperBase {
 
   async onInit() {
     elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
-    const elementSettings = this.getElementSettings();
 
     if (1 >= this.getSlidesCount()) {
       return;
@@ -756,6 +766,7 @@ class CarouselBase extends elementorModules.frontend.handlers.SwiperBase {
 
     const Swiper = elementorFrontend.utils.swiper;
     this.swiper = await new Swiper(this.elements.$swiperContainer, this.getSwiperOptions());
+    const elementSettings = this.getElementSettings();
 
     if ('yes' === elementSettings.pause_on_hover) {
       this.togglePauseOnHover(true);
@@ -1006,6 +1017,14 @@ class MediaCarousel extends _base.default {
       breakpoints: breakpointsSettings,
       handleElementorBreakpoints: true
     };
+
+    if ('yes' === elementSettings.lazyload) {
+      thumbsSliderOptions.lazy = {
+        loadPrevNext: true,
+        loadPrevNextAmount: 1
+      };
+    }
+
     const Swiper = elementorFrontend.utils.swiper;
     this.swiper.controller.control = this.thumbsSwiper = await new Swiper(this.elements.$thumbsSwiper, thumbsSliderOptions); // Expose the swiper instance in the frontend
 
@@ -3289,8 +3308,8 @@ class lottieHandler extends elementorModules.frontend.handlers.Base {
     this.addSessionEventListener($widgetArea, 'mouseenter', this.listeners.elements.$widgetArea.triggerAnimationHoverIn);
   }
   /**
-   * @param {jQuery} $el
-   * @param {string} event - event type
+   * @param {jQuery}   $el
+   * @param {string}   event    - event type
    * @param {Function} callback
    */
 
@@ -3855,6 +3874,7 @@ class _default extends elementorModules.frontend.Document {
   }
 
   showModal(avoidMultiple) {
+    // eslint-disable-next-line @wordpress/no-unused-vars-before-return
     const settings = this.getDocumentSettings();
 
     if (!this.isEdit) {
@@ -3945,7 +3965,17 @@ class _default extends elementorModules.frontend.Document {
       if (!modal) {
         const settings = this.getDocumentSettings(),
               id = this.getSettings('id'),
-              triggerPopupEvent = eventType => elementorFrontend.elements.$document.trigger('elementor/popup/' + eventType, [id, this]);
+              triggerPopupEvent = eventType => {
+          const event = 'elementor/popup/' + eventType;
+          elementorFrontend.elements.$document.trigger(event, [id, this]); // TODO: Use `elementorFrontend.utils.events.dispatch` when it's in master.
+
+          window.dispatchEvent(new CustomEvent(event, {
+            detail: {
+              id,
+              instance: this
+            }
+          }));
+        };
 
         let classes = 'elementor-popup-modal';
 
@@ -5437,13 +5467,8 @@ var _default = _posts.default.extend({
         settings = self.getSettings(),
         $activeItems = self.elements.$posts.filter('.' + settings.classes.active),
         $inactiveItems = self.elements.$posts.not('.' + settings.classes.active),
-        $shownItems = self.elements.$posts.filter(':visible'),
-        $activeOrShownItems = $activeItems.add($shownItems),
-        $activeShownItems = $activeItems.filter(':visible'),
         $activeHiddenItems = $activeItems.filter(':hidden'),
-        $inactiveShownItems = $inactiveItems.filter(':visible'),
-        itemWidth = $shownItems.outerWidth(),
-        itemHeight = $shownItems.outerHeight();
+        $inactiveShownItems = $inactiveItems.filter(':visible');
     self.elements.$posts.css('transition-duration', settings.transitionDuration + 'ms');
     self.showItems($activeHiddenItems);
 
@@ -5465,6 +5490,11 @@ var _default = _posts.default.extend({
       opacity: 0,
       transform: 'scale3d(0.2, 0.2, 1)'
     });
+    const $shownItems = self.elements.$posts.filter(':visible'),
+          $activeOrShownItems = $activeItems.add($shownItems),
+          $activeShownItems = $activeItems.filter(':visible'),
+          itemWidth = $shownItems.outerWidth(),
+          itemHeight = $shownItems.outerHeight();
     $activeShownItems.each(function () {
       var $item = $(this),
           currentOffset = self.getOffset($activeOrShownItems.index($item), itemWidth, itemHeight),
@@ -5647,12 +5677,13 @@ var _default = elementorModules.frontend.handlers.Base.extend({
         self = this,
         itemRatio = getComputedStyle(this.$element[0], ':after').content,
         settings = this.getSettings();
-    this.elements.$postsContainer.toggleClass(settings.classes.hasItemRatio, !!itemRatio.match(/\d/));
 
     if (self.isMasonryEnabled()) {
+      this.elements.$postsContainer.removeClass(settings.classes.hasItemRatio);
       return;
     }
 
+    this.elements.$postsContainer.toggleClass(settings.classes.hasItemRatio, !!itemRatio.match(/\d/));
     this.elements.$posts.each(function () {
       var $post = $(this),
           $image = $post.find(settings.selectors.postThumbnailImage);
@@ -5721,7 +5752,7 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       container: elements.$postsContainer,
       items: elements.$posts.filter(':visible'),
       columnsCount: this.getSettings('colsCount'),
-      verticalSpaceBetween
+      verticalSpaceBetween: verticalSpaceBetween || 0
     });
     masonry.run();
   },
@@ -6018,10 +6049,7 @@ class SlidesHandler extends elementorModules.frontend.handlers.SwiperBase {
   }
 
   async initSlider() {
-    const $slider = this.elements.$swiperContainer,
-          settings = this.getSettings(),
-          elementSettings = this.getElementSettings(),
-          animation = $slider.data(settings.attributes.dataAnimation);
+    const $slider = this.elements.$swiperContainer;
 
     if (!$slider.length) {
       return;
@@ -6038,10 +6066,14 @@ class SlidesHandler extends elementorModules.frontend.handlers.SwiperBase {
     // since it depends on an additional class besides 'elementor-ken-burns--active'
 
     this.handleKenBurns();
+    const elementSettings = this.getElementSettings();
 
     if (elementSettings.pause_on_hover) {
       this.togglePauseOnHover(true);
     }
+
+    const settings = this.getSettings();
+    const animation = $slider.data(settings.attributes.dataAnimation);
 
     if (!animation) {
       return;
@@ -6329,8 +6361,7 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   }
 
   getContainer() {
-    const settings = this.getSettings(),
-          elementSettings = this.getElementSettings(); // If there is a custom container defined by the user, use it as the headings-scan container
+    const elementSettings = this.getElementSettings(); // If there is a custom container defined by the user, use it as the headings-scan container
 
     if (elementSettings.container) {
       return jQuery(elementSettings.container);
@@ -6344,6 +6375,7 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     } // If the TOC container is anything other than a popup, scan only the post/page content for headings
 
 
+    const settings = this.getSettings();
     return jQuery(settings.selectors.postContentContainer);
   }
 
@@ -6586,17 +6618,31 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   }
 
   handleNoHeadingsFound() {
-    let noHeadingsText = __('No headings were found on this page.', 'elementor-pro');
+    const noHeadingsText = __('No headings were found on this page.', 'elementor-pro');
 
     return this.elements.$tocBody.html(noHeadingsText);
   }
 
-  collapseOnInit() {
+  collapseBodyListener() {
+    const activeBreakpoints = elementorFrontend.breakpoints.getActiveBreakpointsList({
+      withDesktop: true
+    });
     const minimizedOn = this.getElementSettings('minimized_on'),
-          currentDeviceMode = elementorFrontend.getCurrentDeviceMode();
+          currentDeviceMode = elementorFrontend.getCurrentDeviceMode(),
+          isCollapsed = this.$element.hasClass(this.getSettings('classes.collapsed')); // If minimizedOn value is set to desktop, it applies for widescreen as well.
 
-    if ('tablet' === minimizedOn && 'desktop' !== currentDeviceMode || 'mobile' === minimizedOn && 'mobile' === currentDeviceMode) {
-      this.collapseBox();
+    if ('desktop' === minimizedOn || activeBreakpoints.indexOf(minimizedOn) >= activeBreakpoints.indexOf(currentDeviceMode)) {
+      if (!isCollapsed) {
+        this.collapseBox();
+      }
+    } else if (isCollapsed) {
+      this.expandBox();
+    }
+  }
+
+  onElementChange(settings) {
+    if ('minimized_on' === settings) {
+      this.collapseBodyListener();
     }
   }
 
@@ -6652,7 +6698,7 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     this.populateTOC();
 
     if (this.getElementSettings('minimize_box')) {
-      this.collapseOnInit();
+      this.collapseBodyListener();
     }
   }
 
@@ -7158,6 +7204,21 @@ class Base extends elementorModules.frontend.handlers.Base {
       });
     }
   }
+  /**
+   * `elementorPageId` and `elementorWidgetId` are added to the url in the `_wp_http_referer` input which is then
+   * received when WooCommerce does its cart and checkout ajax requests e.g `update_order_review` and `update_cart`.
+   * These query strings are extracted from the url and used in our `load_widget_before_wc_ajax` method.
+   */
+
+
+  updateWpReferers() {
+    const selectors = this.getSettings('selectors'),
+          wpHttpRefererInputs = this.$element.find(selectors.wpHttpRefererInputs),
+          url = new URL(document.location);
+    url.searchParams.set('elementorPageId', elementorFrontend.config.post.id);
+    url.searchParams.set('elementorWidgetId', this.getID());
+    wpHttpRefererInputs.attr('value', url);
+  }
 
 }
 
@@ -7214,15 +7275,22 @@ class Cart extends _base.default {
     elementorFrontend.elements.$body.on('wc_fragments_refreshed', () => this.applyButtonsHoverAnimation());
 
     if ('yes' === this.getElementSettings('update_cart_automatically')) {
-      this.$element.on('click', selectors.quantityInput, () => this.updateCart());
+      this.$element.on('input', selectors.quantityInput, () => this.updateCart());
     }
 
-    if (elementorFrontend.isEditMode() || elementorFrontend.isWPPreviewMode()) {
-      elementorFrontend.elements.$body.on('wc_fragments_loaded wc_fragments_refreshed', () => {
-        this.modifyWpHttpReferer();
+    elementorFrontend.elements.$body.on('wc_fragments_loaded wc_fragments_refreshed', () => {
+      this.updateWpReferers();
+
+      if (elementorFrontend.isEditMode() || elementorFrontend.isWPPreviewMode()) {
         this.disableActions();
-      });
-    }
+      }
+    });
+    elementorFrontend.elements.$body.on('added_to_cart', function (e, data) {
+      // We do not want the page to reload in the Editor after we triggered the 'added_to_cart' event.
+      if (data.e_manually_triggered) {
+        return false;
+      }
+    });
   }
 
   onInit() {
@@ -7235,9 +7303,9 @@ class Cart extends _base.default {
     }
 
     this.applyButtonsHoverAnimation();
+    this.updateWpReferers();
 
     if (elementorFrontend.isEditMode() || elementorFrontend.isWPPreviewMode()) {
-      this.modifyWpHttpReferer();
       this.disableActions();
     }
   }
@@ -7269,6 +7337,10 @@ class Cart extends _base.default {
     if ('sticky_right_column' === propertyName) {
       this.toggleStickyRightColumn();
     }
+
+    if ('additional_template_select' === propertyName) {
+      elementorPro.modules.woocommerce.onTemplateIdChange('additional_template_select');
+    }
   }
 
   onDestroy() {
@@ -7281,7 +7353,7 @@ class Cart extends _base.default {
     clearTimeout(this._debounce);
     this._debounce = setTimeout(() => {
       this.$element.find(selectors.updateCartButton).trigger('click');
-    }, 600);
+    }, 1500);
   }
 
   applyButtonsHoverAnimation() {
@@ -7311,14 +7383,6 @@ class Cart extends _base.default {
       if (this.elements.$hiddenInput) {
         this.elements.$hiddenInput.parent('.form-row').addClass('elementor-hidden');
       }
-    }
-  }
-
-  modifyWpHttpReferer() {
-    const selectors = this.getSettings('selectors');
-
-    if (elementorFrontend.isEditMode()) {
-      this.$element.find(selectors.wpHttpRefererInputs).attr('value', elementor.documents.getCurrent().config.urls.wp_preview);
     }
   }
 
@@ -7451,11 +7515,13 @@ class Checkout extends _base.default {
 
     this.startProcessing(this.elements.$couponBox);
     const data = {
+      // eslint-disable-next-line camelcase
       security: wc_checkout_params.apply_coupon_nonce,
       coupon_code: this.elements.$couponBox.find('input[name="coupon_code"]').val()
     };
     jQuery.ajax({
       type: 'POST',
+      // eslint-disable-next-line camelcase
       url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
       context: this,
       data,
@@ -7527,21 +7593,6 @@ class Checkout extends _base.default {
         opacity: 0.6
       }
     });
-  }
-  /**
-   * `elementorPostId` and `elementorWidgetId` are added to the url in the `_wp_http_referer` input which is then
-   * received when WooCommerce does it's `update_order_review` ajax, and extracted from this url and used with our
-   * `load_widget_before_wc_ajax` method.
-   */
-
-
-  updateWpReferers() {
-    const selectors = this.getSettings('selectors'),
-          wpHttpRefererInputs = this.$element.find(selectors.wpHttpRefererInputs),
-          url = new URL(document.location);
-    url.searchParams.set('elementorPostId', elementorFrontend.config.post.id);
-    url.searchParams.set('elementorWidgetId', this.getID());
-    wpHttpRefererInputs.attr('value', url);
   }
 
 }
@@ -7635,6 +7686,45 @@ class _default extends elementorModules.frontend.handlers.Base {
     }
   }
 
+  refreshFragments(eventType) {
+    let data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+    if (elementorFrontend.isEditMode() && elementorPro.modules.woocommerce.didManuallyTriggerAddToCartEvent(data)) {
+      return false;
+    }
+
+    const templatesInPage = [];
+    jQuery.each(elementorFrontend.documentsManager.documents, index => {
+      templatesInPage.push(index);
+    });
+    jQuery.ajax({
+      type: 'POST',
+      url: elementorProFrontend.config.ajaxurl,
+      context: this,
+      data: {
+        action: 'elementor_menu_cart_fragments',
+        templates: templatesInPage,
+        _nonce: ElementorProFrontendConfig.woocommerce.menu_cart.fragments_nonce,
+        is_editor: elementorFrontend.isEditMode()
+      },
+
+      success(successData) {
+        if (successData?.fragments) {
+          jQuery.each(successData.fragments, (key, value) => {
+            jQuery(key).replaceWith(value);
+          });
+        }
+      },
+
+      complete() {
+        if ('added_to_cart' === eventType) {
+          this.automaticallyOpenCart();
+        }
+      }
+
+    });
+  }
+
   bindEvents() {
     const menuCart = elementorProFrontend.config.woocommerce.menu_cart,
           noQueryParams = -1 === menuCart.cart_page_url.indexOf('?'),
@@ -7642,9 +7732,7 @@ class _default extends elementorModules.frontend.handlers.Base {
           cartUrl = menuCart.cart_page_url,
           isCart = menuCart.cart_page_url === currentUrl,
           isCheckout = menuCart.checkout_page_url === currentUrl,
-          selectors = this.getSettings('selectors'),
-          settings = this.getElementSettings(),
-          classes = this.getSettings('classes'); // If on cart page or checkout page don't open cart, rather stay on, or go to cart page, and bail from init.
+          selectors = this.getSettings('selectors'); // If on cart page or checkout page don't open cart, rather stay on, or go to cart page, and bail from init.
 
     if (isCart && isCheckout) {
       this.$element.find(selectors.toggleButton).attr('href', cartUrl);
@@ -7652,7 +7740,9 @@ class _default extends elementorModules.frontend.handlers.Base {
     } // Cache cart open state.
 
 
+    const classes = this.getSettings('classes');
     this.isCartOpen = this.$element.hasClass(classes.isShown);
+    const settings = this.getElementSettings();
 
     if ('mouseover' === settings.open_cart) {
       // Enable opening of mini-cart and side-cart by hover (include click so we can `preventDefault()` page-top jump on click).
@@ -7694,9 +7784,8 @@ class _default extends elementorModules.frontend.handlers.Base {
       if (ESC_KEY === event.keyCode) {
         this.hideCart();
       }
-    }); // Option to open cart on add to cart.
-
-    elementorFrontend.elements.$body.on('added_to_cart', () => this.automaticallyOpenCart()); // Govern the height of the mini-cart dropdown.
+    });
+    elementorFrontend.elements.$body.on('wc_fragments_refreshed removed_from_cart added_to_cart', (event, data) => this.refreshFragments(event.type, data)); // Govern the height of the mini-cart dropdown.
 
     elementorFrontend.addListenerOnce(this.getUniqueHandlerID() + '_window_resize_dropdown', 'resize', () => this.governDropdownHeight());
     elementorFrontend.elements.$body.on('wc_fragments_loaded wc_fragments_refreshed', () => this.governDropdownHeight());
@@ -7722,8 +7811,7 @@ class _default extends elementorModules.frontend.handlers.Base {
   }
 
   governDropdownHeight() {
-    const settings = this.getElementSettings(),
-          selectors = this.getSettings('selectors'); // Only do this for mini-cart.
+    const settings = this.getElementSettings(); // Only do this for mini-cart.
 
     if ('mini-cart' !== settings.cart_type) {
       return;
@@ -7731,6 +7819,7 @@ class _default extends elementorModules.frontend.handlers.Base {
     // and cart contents in our widget when the cart changes e.g. adding products to the cart.
 
 
+    const selectors = this.getSettings('selectors');
     const $productList = this.$element.find(selectors.productList),
           $toggle = this.$element.find(selectors.toggle); // Make sure required elements exist.
 
@@ -7788,7 +7877,8 @@ class MyAccountHandler extends _base.default {
         tabWrapper: '.e-my-account-tab',
         tabItem: '.woocommerce-MyAccount-navigation li',
         allPageElements: '[e-my-account-page]',
-        purchasenote: 'tr.product-purchase-note'
+        purchasenote: 'tr.product-purchase-note',
+        contentWrapper: '.woocommerce-MyAccount-content-wrapper'
       }
     };
   }
@@ -7804,7 +7894,8 @@ class MyAccountHandler extends _base.default {
       $tabWrapper: this.$element.find(selectors.tabWrapper),
       $tabItem: this.$element.find(selectors.tabItem),
       $allPageElements: this.$element.find(selectors.allPageElements),
-      $purchasenote: this.$element.find(selectors.purchasenote)
+      $purchasenote: this.$element.find(selectors.purchasenote),
+      $contentWrapper: this.$element.find(selectors.contentWrapper)
     };
   }
 
@@ -7853,10 +7944,15 @@ class MyAccountHandler extends _base.default {
 
   toggleEndpointClasses() {
     const wcPages = ['dashboard', 'orders', 'view-order', 'downloads', 'edit-account', 'edit-address', 'payment-methods'];
-    this.elements.$tabWrapper.removeClass('e-my-account-tab__' + wcPages.join(' e-my-account-tab__'));
+    let wrapperClass = '';
+    this.elements.$tabWrapper.removeClass('e-my-account-tab__' + wcPages.join(' e-my-account-tab__') + ' e-my-account-tab__dashboard--custom');
+
+    if ('dashboard' === this.currentPage && this.elements.$contentWrapper.find('.elementor').length) {
+      wrapperClass = ' e-my-account-tab__dashboard--custom';
+    }
 
     if (wcPages.includes(this.currentPage)) {
-      this.elements.$tabWrapper.addClass('e-my-account-tab__' + this.currentPage);
+      this.elements.$tabWrapper.addClass('e-my-account-tab__' + this.currentPage + wrapperClass);
     }
   }
 
@@ -7864,7 +7960,7 @@ class MyAccountHandler extends _base.default {
     const elementSettings = this.getElementSettings();
 
     if (elementSettings.forms_buttons_hover_animation) {
-      this.$element.find('.woocommerce button.button').addClass('elementor-animation-' + elementSettings.forms_buttons_hover_animation);
+      this.$element.find('.woocommerce button.button,  #add_payment_method #payment #place_order').addClass('elementor-animation-' + elementSettings.forms_buttons_hover_animation);
     }
 
     if (elementSettings.tables_button_hover_animation) {
@@ -7889,6 +7985,10 @@ class MyAccountHandler extends _base.default {
 
     if (0 === propertyName.indexOf('forms_rows_gap')) {
       this.removePaddingBetweenPurchaseNote(this.elements.$purchasenote);
+    }
+
+    if ('customize_dashboard_select' === propertyName) {
+      elementorPro.modules.woocommerce.onTemplateIdChange('customize_dashboard_select');
     }
   }
 

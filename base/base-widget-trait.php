@@ -10,10 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 trait Base_Widget_Trait {
 	public function is_editable() {
-		if ( License_API::is_license_active() ) {
-			return true;
-		}
-		return License_API::is_license_expired() && ! License_API::is_licence_pro_trial();
+		return License_API::is_license_active();
 	}
 
 	public function get_categories() {
@@ -41,11 +38,6 @@ trait Base_Widget_Trait {
 				'file_url' => $file_url,
 			],
 		];
-	}
-
-	// TODO: Remove this method when the minimum core version is 3.3.1.
-	public function get_css_config() {
-		return $this->get_widget_css_config( $this->get_group_name() );
 	}
 
 	public function get_responsive_widgets_config() {

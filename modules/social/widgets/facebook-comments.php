@@ -47,6 +47,9 @@ class Facebook_Comments extends Base_Widget {
 				'max' => 100,
 				'default' => '10',
 				'description' => esc_html__( 'Minimum number of comments: 5', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -110,7 +113,7 @@ class Facebook_Comments extends Base_Widget {
 	}
 
 	public function render() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 
 		if ( Module::URL_TYPE_CURRENT_PAGE === $settings['url_type'] ) {
 			$permalink = Facebook_SDK_Manager::get_permalink( $settings );

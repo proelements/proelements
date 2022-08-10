@@ -178,8 +178,8 @@ export class ConditionsProvider extends BaseContext {
 	/**
 	 * Update state of specific condition item.
 	 *
-	 * @param {any} id
-	 * @param {any} args
+	 * @param {any}     id
+	 * @param {any}     args
 	 * @param {boolean} shouldCheckConflicts
 	 */
 	updateConditionItemState( id, args, shouldCheckConflicts = true ) {

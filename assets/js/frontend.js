@@ -1,21 +1,5 @@
-/*! pro-elements - v3.6.4 - 15-03-2022 */
+/*! pro-elements - v3.7.3 - 31-07-2022 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
-
-/***/ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js":
-/*!***********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
-  \***********************************************************************/
-/***/ ((module) => {
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
 
 /***/ "../assets/dev/js/frontend/frontend.js":
 /*!*********************************************!*\
@@ -63,8 +47,11 @@ class ElementorProFrontend extends elementorModules.ViewModule {
       payments: _frontend5.default,
       progressTracker: _frontend6.default
     }; // Keep this line before applying filter on the handlers.
+    // TODO: BC - Deprecated since 3.7.0
 
-    elementorProFrontend.trigger('elementor-pro/modules/init:before');
+    elementorProFrontend.trigger('elementor-pro/modules/init:before'); // TODO: Use this instead.
+
+    elementorProFrontend.trigger('elementor-pro/modules/init/before');
     handlers = elementorFrontend.hooks.applyFilters('elementor-pro/frontend/handlers', handlers);
     jQuery.each(handlers, (moduleName, ModuleClass) => {
       this.modules[moduleName] = new ModuleClass();
@@ -712,17 +699,29 @@ exports["default"] = _default;
 /*!******************************************************************************!*\
   !*** ../modules/motion-fx/assets/js/frontend/motion-fx/interactions/base.js ***!
   \******************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
 
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
+
 class _default extends elementorModules.ViewModule {
+  constructor() {
+    super(...arguments);
+    (0, _defineProperty2.default)(this, "onInsideViewport", () => {
+      this.run();
+      this.animationFrameRequest = requestAnimationFrame(this.onInsideViewport);
+    });
+  }
+
   __construct(options) {
     this.motionFX = options.motionFX;
 
@@ -745,11 +744,6 @@ class _default extends elementorModules.ViewModule {
     const observedElement = 'page' === this.motionFX.getSettings('range') ? elementorFrontend.elements.$body[0] : this.motionFX.elements.$parent[0];
     this.intersectionObserver.observe(observedElement);
   }
-
-  onInsideViewport = () => {
-    this.run();
-    this.animationFrameRequest = requestAnimationFrame(this.onInsideViewport);
-  };
 
   runCallback() {
     const callback = this.getSettings('callback');
@@ -1154,6 +1148,7 @@ class _default extends elementorModules.Module {
   constructor() {
     super();
     elementorFrontend.elementsHandler.attachHandler('paypal-button', () => __webpack_require__.e(/*! import() | paypal-button */ "paypal-button").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/paypal-button */ "../modules/payments/assets/js/frontend/handlers/paypal-button.js")));
+    elementorFrontend.elementsHandler.attachHandler('stripe-button', () => __webpack_require__.e(/*! import() | stripe-button */ "stripe-button").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/stripe-button */ "../modules/payments/assets/js/frontend/handlers/stripe-button.js")));
   }
 
 }
@@ -1235,12 +1230,15 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 
 var _default = elementorModules.frontend.handlers.Base.extend({
+  currentConfig: {},
+  debouncedReactivate: null,
+
   bindEvents() {
-    elementorFrontend.addListenerOnce(this.getUniqueHandlerID() + 'sticky', 'resize', this.refresh);
+    elementorFrontend.addListenerOnce(this.getUniqueHandlerID() + 'sticky', 'resize', this.reactivateOnResize);
   },
 
   unbindEvents() {
-    elementorFrontend.removeListeners(this.getUniqueHandlerID() + 'sticky', 'resize', this.refresh);
+    elementorFrontend.removeListeners(this.getUniqueHandlerID() + 'sticky', 'resize', this.reactivateOnResize);
   },
 
   isStickyInstanceActive() {
@@ -1271,9 +1269,9 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     });
   },
 
-  activate() {
-    var elementSettings = this.getElementSettings(),
-        stickyOptions = {
+  getConfig() {
+    const elementSettings = this.getElementSettings(),
+          stickyOptions = {
       to: elementSettings.sticky,
       offset: this.getResponsiveSetting('sticky_offset'),
       effectsOffset: this.getResponsiveSetting('sticky_effects_offset'),
@@ -1282,9 +1280,13 @@ var _default = elementorModules.frontend.handlers.Base.extend({
         stickyActive: 'elementor-sticky--active elementor-section--handles-inside',
         stickyEffects: 'elementor-sticky--effects',
         spacer: 'elementor-sticky__spacer'
-      }
+      },
+      isRTL: elementorFrontend.config.is_rtl,
+      // In edit mode, since the preview is an iframe, the scrollbar is on the left. The scrollbar width is
+      // compensated for in this case.
+      handleScrollbarWidth: elementorFrontend.isEditMode()
     },
-        $wpAdminBar = elementorFrontend.elements.$wpAdminBar;
+          $wpAdminBar = elementorFrontend.elements.$wpAdminBar;
 
     if (elementSettings.sticky_parent) {
       stickyOptions.parent = '.e-container, .elementor-widget-wrap';
@@ -1294,7 +1296,18 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       stickyOptions.offset += $wpAdminBar.height();
     }
 
-    this.$element.sticky(stickyOptions);
+    if (this.$element[0].parentElement?.classList.contains('e-container')) {
+      stickyOptions.relativeTarget = 'document';
+    } else {
+      stickyOptions.relativeTarget = 'parent';
+    }
+
+    return stickyOptions;
+  },
+
+  activate() {
+    this.currentConfig = this.getConfig();
+    this.$element.sticky(this.currentConfig);
   },
 
   deactivate() {
@@ -1325,8 +1338,24 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     }
   },
 
-  refresh() {
-    this.run(true);
+  /**
+   * Reactivate the sticky instance on resize only if the new sticky config is different from the current active one,
+   * in order to avoid re-initializing the sticky when not needed, and avoid layout shifts.
+   * The config can be different between devices, so this need to be checked on each screen resize to make sure that
+   * the current screen size uses the appropriate Sticky config.
+   *
+   * @return {void}
+   */
+  reactivateOnResize() {
+    clearTimeout(this.debouncedReactivate);
+    this.debouncedReactivate = setTimeout(() => {
+      const config = this.getConfig(),
+            isDifferentConfig = JSON.stringify(config) !== JSON.stringify(this.currentConfig);
+
+      if (isDifferentConfig) {
+        this.run(true);
+      }
+    }, 300);
   },
 
   reactivate() {
@@ -1357,7 +1386,7 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     // The `run` function requests the current device mode from the CSS so it's not ready immediately.
     // (need to wait for the `deviceMode` event to change the CSS).
     // See `elementorFrontend.getCurrentDeviceMode()` for reference.
-    setTimeout(this.refresh);
+    setTimeout(() => this.run(true));
   },
 
   onInit() {
@@ -1414,6 +1443,47 @@ class _default extends elementorModules.Module {
 }
 
 exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/defineProperty.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/*!***********************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \***********************************************************************/
+/***/ ((module) => {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ })
 

@@ -7,7 +7,7 @@ export const SiteTemplateHeader = ( props ) => {
 		title = props.title + status,
 		ActionButtons = () => (
 			<>
-				<Button text={__( 'Edit', 'elementor-pro' )} icon="eicon-edit" className="e-site-template__edit-btn" size="sm" url={ props.editURL } />
+				<Button text={ __( 'Edit', 'elementor-pro' ) } icon="eicon-edit" className="e-site-template__edit-btn" size="sm" url={ props.editURL } />
 				<PartActionsButtons { ... props } />
 			</>
 		),
@@ -26,10 +26,10 @@ export const SiteTemplateHeader = ( props ) => {
 
 	return (
 		<CardHeader>
-			<Indicator active={ props.isActive }/>
+			<Indicator active={ props.isActive } />
 			<Heading tag="h1" title={ title } variant="text-sm" className="eps-card__headline">{ title }</Heading>
-			{ props.extended && <MetaData/> }
-			{ props.extended && <ActionButtons/> }
+			{ props.extended && <MetaData /> }
+			{ props.extended && <ActionButtons /> }
 		</CardHeader>
 	);
 };

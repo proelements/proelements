@@ -53,6 +53,15 @@ class Module extends BaseModule {
 			'source' => 'generic',
 		] );
 
+		$onboarding_settings['urls']['signUp'] = $activate->get_admin_url( 'authorize', [
+			'utm_source' => 'editor-app',
+			'utm_campaign' => 'connect-account',
+			'utm_medium' => 'wp-dash',
+			'utm_term' => Core_Onboarding_Module::VERSION,
+			'source' => 'generic',
+			'screen_hint' => 'signup',
+		] );
+
 		$app->set_settings( 'onboarding', $onboarding_settings );
 	}
 

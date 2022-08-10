@@ -50,7 +50,7 @@ export default function Import() {
 						onClose={ resetActionState }
 					/>
 			}
-			<BackButton/>
+			<BackButton />
 			<DropZone
 				heading={ __( 'Import Template To Your Library', 'elementor-pro' ) }
 				text={ __( 'Drag & Drop your .JSON or .zip template file', 'elementor-pro' ) }

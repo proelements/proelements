@@ -70,6 +70,9 @@ abstract class Posts_Base extends Base_Widget {
 				'condition' => [
 					'pagination_type' => 'load_more_on_click',
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -80,6 +83,9 @@ abstract class Posts_Base extends Base_Widget {
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'pagination_type' => 'load_more_infinite_scroll',
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -194,6 +200,9 @@ abstract class Posts_Base extends Base_Widget {
 			'pagination_prev_label',
 			[
 				'label' => esc_html__( 'Previous Label', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( '&laquo; Previous', 'elementor-pro' ),
 				'condition' => [
 					'pagination_type' => [
@@ -214,6 +223,9 @@ abstract class Posts_Base extends Base_Widget {
 						'prev_next',
 						'numbers_and_prev_next',
 					],
+				],
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -323,6 +335,9 @@ abstract class Posts_Base extends Base_Widget {
 						'load_more_infinite_scroll',
 					],
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -390,6 +405,9 @@ abstract class Posts_Base extends Base_Widget {
 					'load_more_no_posts_message_switcher' => 'yes',
 				],
 				'label_block' => true,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -563,7 +581,7 @@ abstract class Posts_Base extends Base_Widget {
 	abstract public function query_posts();
 
 	public function get_current_page() {
-		if ( '' === $this->get_settings( 'pagination_type' ) ) {
+		if ( '' === $this->get_settings_for_display( 'pagination_type' ) ) {
 			return 1;
 		}
 
@@ -621,17 +639,17 @@ abstract class Posts_Base extends Base_Widget {
 				$next_page = 1;
 			}
 
-			$return['prev'] = sprintf( $link_template, 'prev', $this->get_wp_link_page( $next_page ), $this->get_settings( 'pagination_prev_label' ) );
+			$return['prev'] = sprintf( $link_template, 'prev', $this->get_wp_link_page( $next_page ), $this->get_settings_for_display( 'pagination_prev_label' ) );
 		} else {
-			$return['prev'] = sprintf( $disabled_template, 'prev', $this->get_settings( 'pagination_prev_label' ) );
+			$return['prev'] = sprintf( $disabled_template, 'prev', $this->get_settings_for_display( 'pagination_prev_label' ) );
 		}
 
 		$next_page = intval( $paged ) + 1;
 
 		if ( $next_page <= $page_limit ) {
-			$return['next'] = sprintf( $link_template, 'next', $this->get_wp_link_page( $next_page ), $this->get_settings( 'pagination_next_label' ) );
+			$return['next'] = sprintf( $link_template, 'next', $this->get_wp_link_page( $next_page ), $this->get_settings_for_display( 'pagination_next_label' ) );
 		} else {
-			$return['next'] = sprintf( $disabled_template, 'next', $this->get_settings( 'pagination_next_label' ) );
+			$return['next'] = sprintf( $disabled_template, 'next', $this->get_settings_for_display( 'pagination_next_label' ) );
 		}
 
 		return $return;

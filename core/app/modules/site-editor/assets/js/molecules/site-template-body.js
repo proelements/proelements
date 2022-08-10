@@ -7,13 +7,13 @@ export const SiteTemplateBody = ( props ) => {
 		<CardBody>
 			{
 				props.extended
-					? <PreviewIFrame src={ props.previewUrl } templateType={ props.type }/>
+					? <PreviewIFrame src={ props.previewUrl } templateType={ props.type } />
 					: <SiteTemplateThumbnail
-						id={props.id}
-						title={props.title}
-						type={props.type}
-						thumbnail={props.thumbnail}
-						placeholder={props.placeholderUrl}
+							id={ props.id }
+							title={ props.title }
+							type={ props.type }
+							thumbnail={ props.thumbnail }
+							placeholder={ props.placeholderUrl }
 					/>
 			}
 		</CardBody>

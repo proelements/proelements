@@ -263,6 +263,14 @@ class Conditions_Manager {
 	public function register_conditions() {
 		$this->register_condition( 'general' );
 
+		/**
+		 * Elementor theme conditions registration.
+		 *
+		 * Fires when a new theme condition is registered. This hook allows developers
+		 * to register new theme conditions.
+		 *
+		 * @param Conditions_Manager $this An instance of conditions manager.
+		 */
 		do_action( 'elementor/theme/register_conditions', $this );
 	}
 
@@ -307,6 +315,13 @@ class Conditions_Manager {
 		$excludes = [];
 
 		foreach ( $conditions_groups as $theme_template_id => $conditions ) {
+			/**
+			 * Template ID for theme location templates.
+			 *
+			 * Filters the template ID for theme location templates.
+			 *
+			 * @param int $theme_template_id Template ID.
+			 */
 			$theme_template_id = apply_filters( 'elementor/theme/get_location_templates/template_id', $theme_template_id );
 
 			foreach ( $conditions as $condition ) {

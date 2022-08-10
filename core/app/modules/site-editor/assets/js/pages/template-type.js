@@ -13,13 +13,13 @@ export default function TemplateType( props ) {
 	}
 
 	return (
-		<section className={`e-site-editor__templates e-site-editor__templates--type-${ props.type }`}>
+		<section className={ `e-site-editor__templates e-site-editor__templates--type-${ props.type }` }>
 			<Grid className="page-header" container justify="space-between">
 				<Heading variant="h1">{ currentType.page_title }</Heading>
 				<AddNewButton url={ currentType.urls.create } text={ __( 'Add New', 'elementor-pro' ) } />
 			</Grid>
-			<hr className="eps-separator"/>
-			<SiteTemplates type={ currentType.type } id={props.id} />
+			<hr className="eps-separator" />
+			<SiteTemplates type={ currentType.type } id={ props.id } />
 		</section>
 	);
 }

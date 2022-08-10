@@ -1,6 +1,8 @@
 <?php
 namespace ElementorPro\Modules\AssetsManager\AssetTypes\Icons\IconSets;
 
+use ElementorPro\Core\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -13,6 +15,7 @@ class Icomoon extends Icon_Set_Base {
 	protected $allowed_webfont_extensions = [ 'woff', 'ttf', 'svg', 'eot' ];
 
 	protected function prepare() {
+		$this->dir_name = $this->get_unique_name();
 		return [];
 	}
 
@@ -28,7 +31,7 @@ class Icomoon extends Icon_Set_Base {
 	}
 
 	private function get_json() {
-		return json_decode( file_get_contents( $this->directory . $this->data_file ) );
+		return json_decode( Utils::_unstable_file_get_contents( $this->directory . $this->data_file ) );
 	}
 
 	protected function extract_icon_list() {
@@ -41,10 +44,6 @@ class Icomoon extends Icon_Set_Base {
 			$icons[] = $icon->properties->name;
 		}
 		return $icons;
-	}
-
-	protected function get_url( $filename = '' ) {
-		return $this->get_file_url( $this->get_name() . $filename );
 	}
 
 	protected function get_prefix() {
@@ -72,10 +71,6 @@ class Icomoon extends Icon_Set_Base {
 	}
 
 	protected function get_stylesheet() {
-		$name = $this->get_name();
-		if ( ! $name ) {
-			return false; //  missing name
-		}
 		return $this->get_url( '/' . $this->stylesheet_file );
 	}
 }

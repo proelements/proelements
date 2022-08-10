@@ -181,6 +181,12 @@ class Product_Upsell extends Products_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		// Add a wrapper class to the Add to Cart & View Items elements if the automically_align_buttons switch has been selected.
+		if ( 'yes' === $settings['automatically_align_buttons'] ) {
+			add_filter( 'woocommerce_loop_add_to_cart_link', [ $this, 'add_to_cart_wrapper' ], 10, 1 );
+		}
+
 		$limit = '-1';
 		$columns = 4;
 		$orderby = 'rand';
@@ -208,6 +214,10 @@ class Product_Upsell extends Products_Base {
 			$upsells_html = str_replace( '<ul class="products', '<ul class="products elementor-grid', $upsells_html );
 
 			echo wp_kses_post( $upsells_html );
+		}
+
+		if ( 'yes' === $settings['automatically_align_buttons'] ) {
+			remove_filter( 'woocommerce_loop_add_to_cart_link', [ $this, 'add_to_cart_wrapper' ] );
 		}
 	}
 

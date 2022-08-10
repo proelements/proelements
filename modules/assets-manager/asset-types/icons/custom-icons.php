@@ -141,7 +141,22 @@ class Custom_Icons extends  Assets_Base {
 			'fontello' => __NAMESPACE__ . '\IconSets\Fontello',
 			'icomoon' => __NAMESPACE__ . '\IconSets\Icomoon',
 		];
-		return array_merge( apply_filters( 'elementor_pro/icons_manager/custom_icons/additional_supported_types', [] ), $icon_sets );
+
+		$additional_icon_sets = [];
+
+		/**
+		 * Additional icon sets.
+		 *
+		 * Filters the icon types supported by Elementor Pro.
+		 *
+		 * By default Elementor Pro supports 'fontastic', 'fontello' and 'icomoon'.
+		 * This hook allows developers to add additional icon sets.
+		 *
+		 * @param array $additional_icon_sets Additional icon sets.
+		 */
+		$additional_icon_sets = apply_filters( 'elementor_pro/icons_manager/custom_icons/additional_supported_types', $additional_icon_sets );
+
+		return array_merge( $additional_icon_sets, $icon_sets );
 	}
 
 	private function get_active_icon_sets() {
@@ -299,7 +314,6 @@ class Custom_Icons extends  Assets_Base {
 				continue;
 			}
 			$icon_set_handler->handle_new_icon_set();
-			$name = $icon_set_handler->get_name();
 			$icon_set_handler->move_files( $this->current_post_id );
 			$config = $icon_set_handler->build_config();
 
@@ -396,7 +410,7 @@ class Custom_Icons extends  Assets_Base {
 	}
 
 	public function register_icon_libraries_control( $additional_sets ) {
-		return array_merge( $additional_sets, self::get_custom_icons_config() );
+		return array_replace( $additional_sets, self::get_custom_icons_config() );
 	}
 
 	public function add_custom_icon_templates( $current_screen ) {

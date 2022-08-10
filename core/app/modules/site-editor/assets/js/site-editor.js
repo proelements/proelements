@@ -32,15 +32,15 @@ function SiteEditor() {
 		const { templates } = React.useContext( TemplatesContext );
 
 		if ( Object.keys( templates ).length ) {
-			return <Redirect from={'/'} to={'/site-editor/templates'} noThrow={ true }/>;
+			return <Redirect from={ '/' } to={ '/site-editor/templates' } noThrow={ true } />;
 		}
 
-		return <Redirect from={'/'} to={'/site-editor/add-new'} noThrow={ true } />;
+		return <Redirect from={ '/' } to={ '/site-editor/add-new' } noThrow={ true } />;
 	};
 
 	return (
 		<ErrorBoundary
-			title={__( 'Theme Builder could not be loaded', 'elementor-pro' )}
+			title={ __( 'Theme Builder could not be loaded', 'elementor-pro' ) }
 			learnMoreUrl="https://go.elementor.com/app-theme-builder-load-issue"
 		>
 			<Layout allPartsButton={ <AllPartsButton url="/site-editor" /> } headerButtons={ headerButtons }>
@@ -62,8 +62,8 @@ function SiteEditor() {
 					</Grid>
 					<Grid item className="e-site-editor__content_container_secondary">
 						<Button
-							text={ __( 'Switch to table view', 'elementor-pro' )}
-							url={elementorAppProConfig[ 'site-editor' ]?.urls?.legacy_view}
+							text={ __( 'Switch to table view', 'elementor-pro' ) }
+							url={ elementorAppProConfig[ 'site-editor' ]?.urls?.legacy_view }
 						/>
 					</Grid>
 				</Grid>
