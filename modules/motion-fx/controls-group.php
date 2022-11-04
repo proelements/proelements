@@ -71,22 +71,6 @@ class Controls_Group extends Group_Control_Base {
 			],
 		];
 
-		if ( version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ) {
-
-			$css_transform_controls = [
-				[
-					'name' => 'transform_x_anchor_point',
-					'value' => '',
-				],
-				[
-					'name' => 'transform_y_anchor_point',
-					'value' => '',
-				],
-			];
-
-			$transform_origin_conditions['terms'] = array_merge( $transform_origin_conditions['terms'], $css_transform_controls );
-		}
-
 		$fields['transform_origin_x'] = [
 			'label' => esc_html__( 'X Anchor Point', 'elementor-pro' ),
 			'type' => Controls_Manager::CHOOSE,

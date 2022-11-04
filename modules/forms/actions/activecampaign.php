@@ -291,8 +291,8 @@ class Activecampaign extends Integration_Base {
 					'label' => esc_html__( 'API URL', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'url',
-						/* translators: 1: Link open tag, 2: Link closing tag. */
 						'desc' => sprintf(
+							/* translators: 1: Link opening tag, 2: Link closing tag. */
 							esc_html__( 'To integrate with our forms you need an %1$sAPI Key%2$s.', 'elementor-pro' ),
 							'<a href="https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API" target="_blank">',
 							'</a>'

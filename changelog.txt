@@ -1,10 +1,52 @@
 # PRO Elements - by PROElements.org
 
+#### 3.8.0 - 2022-10-30
+* New: Introducing Loop Builder as a beta status experiment - Create powerful & repeating loop templates and populate each one with dynamic content and design flexibility ([#4440](https://github.com/elementor/elementor/issues/4440))
+* Tweak: Add `wp_body_open()` to header in Header template ([#11562](https://github.com/elementor/elementor/issues/11562), [#15828](https://github.com/elementor/elementor/issues/15828), [#13089](https://github.com/elementor/elementor/issues/13089))
+* Tweak: Added support border-radius option to the Code Highlight widget ([#14316](https://github.com/elementor/elementor/issues/14316))
+* Tweak: Import/Export CLI and UI mechanisms were merged into a unified service
+* Tweak: User with no permission to Notes cannot be mentioned in a note
+* Tweak: User with no permission to view a post cannot be mentioned in a note
+* Tweak: Notes was added to the right click context-menu
+* Tweak: Notes panel can be resizable
+* Tweak: Notes panel can be dragged outside of the canvas in responsive mode in the editor
+* Tweak: Updated form validation messages translation strings in Form widget
+* Tweak: Updated translators comments
+* Tweak: Theme Builder logo and Title should be clickable
+* Tweak: Reduced API requests and DB calls on non-write setup
+* Tweak: Added media queries to the Table of Contents widget
+* Fix: Sticky option is not working as expected in various scenarios in Container ([#18357](https://github.com/elementor/elementor/issues/18357), [#19540](https://github.com/elementor/elementor/issues/19540), [#19618](https://github.com/elementor/elementor/issues/19618), [#19777](https://github.com/elementor/elementor/issues/19777), [#19827](https://github.com/elementor/elementor/issues/19827))
+* Fix: Mixed Content errors on HTTPS in Video Playlist Widget ([#18895](https://github.com/elementor/elementor/issues/18895), [#18945](https://github.com/elementor/elementor/issues/18945))
+* Fix: Note's timestamp is being updated according to the last activity in Notes ([#19123](https://github.com/elementor/elementor/issues/19123))
+* Fix: Accessibility attribute `role=navigation` is redundant in Nav Menu widget ([#17582](https://github.com/elementor/elementor/issues/17582))
+* Fix: Accessibility attribute `role=navigation` is redundant in pagination in Posts widget
+* Fix: Share buttons is accessible with keyboard but not clickable
+* Fix: Sub-items icons style is missing in preview with Inline Font Icons experiment in Nav Menu widget
+* Fix: Quotes are appearing as HTML when editing a note in Notes
+* Fix: Label's Icon height increases when Inline Font Icons experiment is active in Hotspot Widget
+* Fix: Sub conditions of templates are not overridden when importing a Kit
+* Fix: X/Y Anchor Point controls were not visible for Scale and Rotate effects
+* Fix: PHP warning notice appears in some situations when using motion effects
+
+#### 3.7.7 - 2022-09-20
+* Fix: Default Flex Grow affects the layout when the container is set to direction Column in various widgets
+
+#### 3.7.6 - 2022-09-14
+* Fix: Submissions menu item appears at the bottom of Elementor section in WordPress dashboard
+
+#### 3.7.5 - 2022-08-31
+* Fix: Error message appears on front if WooCommerce is activated ([#19553](https://github.com/elementor/elementor/issues/19553))
+
+#### 3.7.4 - 2022-08-29
+* Tweak: PHP 5.6 Is deprecated
+* Fix: Triangle icon is not being displayed in the Select field when Inline Font Icons Experiment is active in Form widget ([#18598](https://github.com/elementor/elementor/issues/18598), [#19495](https://github.com/elementor/elementor/issues/19495))
+* Fix: The page jumps or flickers to the video playlist on page reload in Video Playlist Widget
+
 #### 3.7.3 - 2022-07-31
 * Tweak: Improved license mechanism for correct validation
 * Fix: Sticky option causes unexpected results when using the Container ([#18357](https://github.com/elementor/elementor/issues/18357))
 * Fix: Price list, Portfolio, Flip Box and Gallery widgets disappear when the direction is set to column in Container ([#18880](https://github.com/elementor/elementor/issues/18880))
-* Fix: Quotes characher is showing up as `&quot;` when editing a note in Notes
+* Fix: Quotes character is showing up as `&quot;` when editing a note in Notes
 
 #### 3.7.2 - 2022-06-15
 
@@ -176,7 +218,7 @@
 * Fix: Global widget changes are not reflected on frontend ([#16820](https://github.com/elementor/elementor/issues/16820))
 * Fix: JS Error console message when using the Load More functionality and Post Per Page option in Posts widget
 * Fix: Heading styling is not being loaded when Inline CSS experiment is active in Post and Page Title widgets
-* Fix: Sticky offset not working as expected when changing device mode on the browser 
+* Fix: Sticky offset not working as expected when changing device mode on the browser
 * Fix: Scroll Snap functionality wasn't applied on Templates and Archives
 * Fix: Toggle icon color didn't work on hover state when Inline Font Icons experiment is activated in Nav Menu widget
 * Fix: Variations style controls are not working as expected in WooCommerce Add to Cart widget
@@ -194,7 +236,7 @@
 #### 3.5.1 - 2021-11-10
 * Fix: Inline HTML elements appear as plain text in Animated Headline widget ([#16816](https://github.com/elementor/elementor/issues/16816))
 * Fix: Dropdown items inherited values from Main Menu space between control in Nav Menu widget ([#16815]((https://github.com/elementor/elementor/issues/16815))
-* Fix: Order Summary titles style controls not applying on various devices in Cart widget 
+* Fix: Order Summary titles style controls not applying on various devices in Cart widget
 * Fix: Panel "Need Help" link is not correct in WooCommerce section in Site Settings
 
 #### 3.5.0 - 2021-11-01
@@ -341,7 +383,7 @@
 * Fix: Populating fields with options programmatically doesn't appear in Submissions screen ([#10671](https://github.com/elementor/elementor/issues/10671))
 * Fix: Large images are not shown on the Image Carousel widget when set via Toolset dynamic tag
 * Fix: Enable inline editing to the inner content tabs in Video Playlist widget
-* Fix: Clicking on the video list doesn't play videos properly in Video Playlist widget 
+* Fix: Clicking on the video list doesn't play videos properly in Video Playlist widget
 * Fix: Hide Play Icon control when Image overlay is toggled off in Video Playlist widget
 * Fix: Removed extra space below the player when viewing from mobile view in Video Playlist widget
 * Fix: Import button is not working properly in Theme Builder interface

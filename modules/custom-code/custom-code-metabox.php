@@ -64,12 +64,14 @@ class Custom_Code_Metabox extends Assets_Base {
 		return [
 			self::OPTION_LOCATION_HEAD => '<head>',
 			self::OPTION_LOCATION_BODY_START => sprintf(
-			/* translators: %s: Body open tag. */
-				esc_html__( '%s - Start', 'elementor-pro' ), '<body>'
+				/* translators: %s: Body opening tag. */
+				esc_html__( '%s - Start', 'elementor-pro' ),
+				'<body>'
 			),
 			self::OPTION_LOCATION_BODY_END => sprintf(
-			/* translators: %s: Body end tag. */
-				esc_html__( '%s - End', 'elementor-pro' ), '</body>'
+				/* translators: %s: Body closing tag. */
+				esc_html__( '%s - End', 'elementor-pro' ),
+				'</body>'
 			),
 		];
 	}

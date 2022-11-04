@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1477,9 +1477,9 @@ exports["default"] = ConditionSubId;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 
-__webpack_require__(/*! core-js/modules/es.string.sub.js */ "../node_modules/core-js/modules/es.string.sub.js");
-
 __webpack_require__(/*! core-js/modules/es.object.keys.js */ "../node_modules/core-js/modules/es.object.keys.js");
+
+__webpack_require__(/*! core-js/modules/es.string.sub.js */ "../node_modules/core-js/modules/es.string.sub.js");
 
 var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
 
@@ -1491,14 +1491,13 @@ var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
  * @class
  */
 function ConditionSubId(props) {
-  if (!props.sub || !Object.keys(props.subIdAutocomplete).length) {
-    return '';
-  } // eslint-disable-next-line react-hooks/rules-of-hooks
-
-
   var settings = _react["default"].useMemo(function () {
-    return getSettings(props.subIdAutocomplete);
+    return Object.keys(props.subIdAutocomplete).length ? getSettings(props.subIdAutocomplete) : null;
   }, [props.subIdAutocomplete]);
+
+  if (!props.sub || !settings) {
+    return '';
+  }
 
   var onChange = function onChange(e) {
     return props.updateConditions(props.id, {

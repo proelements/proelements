@@ -69,6 +69,7 @@ class Archive extends Archive_Single_Base {
 			$post_type_object = get_post_type_object( $post_type );
 
 			if ( $post_type_object->has_archive ) {
+				/* translators: %s: Post type label. */
 				$post_type_archives[ 'post_type_archive/' . $post_type ] = sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $post_type_object->label );
 			}
 
@@ -80,6 +81,7 @@ class Archive extends Archive_Single_Base {
 			] );
 
 			foreach ( $post_type_taxonomies as $slug => $object ) {
+				/* translators: %s: Taxonomy label. */
 				$taxonomies[ 'taxonomy/' . $slug ] = sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $object->label );
 			}
 		}

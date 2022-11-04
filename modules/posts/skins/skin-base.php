@@ -870,7 +870,6 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		wp_reset_postdata();
 
 		$this->render_loop_footer();
-
 	}
 
 	public function filter_excerpt_length() {
@@ -1011,12 +1010,16 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		<?php
 	}
 
-	protected function render_loop_header() {
-		$classes = [
+	protected function get_loop_header_widget_classes() {
+		return [
 			'elementor-posts-container',
 			'elementor-posts',
 			$this->get_container_class(),
 		];
+	}
+
+	protected function render_loop_header() {
+		$classes = $this->get_loop_header_widget_classes();
 
 		/** @var \WP_Query $wp_query */
 		$wp_query = $this->parent->get_query();
@@ -1043,16 +1046,22 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	}
 
 	protected function render_loop_footer() {
-		$parent_settings = $this->parent->get_settings();
+		?>
+		</div>
+		<?php
+		$parent_settings = $this->parent->get_settings_for_display();
+
+		// If the skin has no pagination, there's nothing to render in the loop footer.
+		if ( ! isset( $parent_settings['pagination_type'] ) ) {
+			return;
+		}
+
 		$using_ajax_pagination = in_array( $parent_settings['pagination_type'], [
 			Posts_Base::LOAD_MORE_ON_CLICK,
 			Posts_Base::LOAD_MORE_INFINITE_SCROLL,
 		], true);
-		?>
-		</div>
 
-
-		<?php if ( $using_ajax_pagination && ! empty( $parent_settings['load_more_spinner']['value'] ) ) : ?>
+		if ( $using_ajax_pagination && ! empty( $parent_settings['load_more_spinner']['value'] ) ) : ?>
 			<span class="e-load-more-spinner">
 				<?php Icons_Manager::render_icon( $parent_settings['load_more_spinner'], [ 'aria-hidden' => 'true' ] ); ?>
 			</span>
@@ -1140,7 +1149,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		// PHPCS - Seems that `$links` is safe.
 		?>
-		<nav class="elementor-pagination" role="navigation" aria-label="<?php esc_attr_e( 'Pagination', 'elementor-pro' ); ?>">
+		<nav class="elementor-pagination" aria-label="<?php esc_attr_e( 'Pagination', 'elementor-pro' ); ?>">
 			<?php echo implode( PHP_EOL, $links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</nav>
 		<?php
@@ -1255,9 +1264,5 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->render_read_more();
 		$this->render_text_footer();
 		$this->render_post_footer();
-	}
-
-	public function render_amp() {
-
 	}
 }

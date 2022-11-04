@@ -34,10 +34,12 @@ class Post_Type_Archive extends Condition_Base {
 	}
 
 	public function get_label() {
+		/* translators: %s: Post type label. */
 		return sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $this->post_type->label );
 	}
 
 	public function get_all_label() {
+		/* translators: %s: Post type label. */
 		return sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $this->post_type->label );
 	}
 

@@ -127,7 +127,7 @@ class Module extends Module_Base {
 			'custom_css_description',
 			[
 				'raw' => sprintf(
-				/* translators: 1: Break line tag. */
+					/* translators: 1: Break line tag. */
 					esc_html__( 'Use "selector" to target wrapper element. Examples:%1$sselector {color: red;} // For main element%1$sselector .child-element {margin: 10px;} // For child element%1$s.my-class {text-align: center;} // Or use any custom selector', 'elementor-pro' ),
 					'<br>'
 				),

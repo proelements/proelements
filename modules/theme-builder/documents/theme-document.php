@@ -2,10 +2,11 @@
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\App\Modules\ImportExport\Module as Import_Export_Module;
+use Elementor\App\Modules\ImportExport\Module as Import_Export_Module;
 use Elementor\Modules\Library\Documents\Library_Document;
 use Elementor\TemplateLibrary\Source_Local;
 use Elementor\Utils;
+use ElementorPro\Core\Behaviors\Feature_Lock;
 use ElementorPro\Modules\QueryControl\Module as QueryModule;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Plugin;
@@ -62,6 +63,7 @@ abstract class Theme_Document extends Library_Document {
 				'thumbnail' => static::get_site_editor_thumbnail_url(),
 			],
 			'tooltip_data' => static::get_site_editor_tooltip_data(),
+			'show_instances' => true,
 		];
 	}
 
@@ -103,6 +105,12 @@ abstract class Theme_Document extends Library_Document {
 
 	public function get_name() {
 		return static::get_type();
+	}
+
+	public static function get_lock_behavior_v2() {
+		return new Feature_Lock( [
+			'type' => static::get_type(),
+		] );
 	}
 
 	public function get_location_label() {
@@ -256,7 +264,7 @@ abstract class Theme_Document extends Library_Document {
 					$template_conditions = $theme_builder->get_conditions_manager()->get_document_conditions( $template_document );
 
 					foreach ( $template_conditions as $index => $template_condition ) {
-						if ( ! $template_condition['sub_id'] && ! $template_condition['sub_name'] ) {
+						if ( in_array( $template_condition, $conditions, true ) ) {
 							unset( $template_conditions[ $index ] );
 						}
 					}
@@ -621,15 +629,11 @@ abstract class Theme_Document extends Library_Document {
 				}
 				break;
 			case 'single':
-				$post = get_post( $preview_id );
-				if ( ! $post ) {
-					break;
-				}
-
 				$query_args = [
-					'p' => $post->ID,
-					'post_type' => $post->post_type,
+					'post_type' => $preview_object_type,
+					'p' => $preview_id,
 				];
+				break;
 		} // End switch().
 
 		if ( empty( $query_args ) ) {

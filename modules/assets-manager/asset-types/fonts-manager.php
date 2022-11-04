@@ -1,8 +1,13 @@
 <?php
 namespace ElementorPro\Modules\AssetsManager\AssetTypes;
 
+use Elementor\Core\Admin\Menu\Admin_Menu_Manager;
 use Elementor\Utils;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use ElementorPro\Core\Behaviors\Feature_Lock;
+use ElementorPro\License\API;
+use ElementorPro\Modules\AssetsManager\AssetTypes\AdminMenuItems\Custom_Fonts_Menu_Item;
+use ElementorPro\Modules\AssetsManager\AssetTypes\AdminMenuItems\Custom_Fonts_Promotion_Menu_Item;
 use ElementorPro\Modules\AssetsManager\Classes;
 use Elementor\Settings;
 
@@ -21,6 +26,10 @@ class Fonts_Manager {
 	const FONTS_OPTION_NAME = 'elementor_fonts_manager_fonts';
 
 	const FONTS_NAME_TYPE_OPTION_NAME = 'elementor_fonts_manager_font_types';
+
+	const MENU_SLUG = 'edit.php?post_type=' . self::CPT;
+
+	const PROMOTION_MENU_SLUG = 'e-custom-fonts';
 
 	private $post_type_object;
 
@@ -132,7 +141,7 @@ class Fonts_Manager {
 			2 => esc_html__( 'Custom field updated.', 'elementor-pro' ),
 			3 => esc_html__( 'Custom field deleted.', 'elementor-pro' ),
 			4 => esc_html__( 'Font updated.', 'elementor-pro' ),
-			/* translators: %s: date and time of the revision */
+			/* translators: %s: Date and time of the revision. */
 			5 => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Font restored to revision from %s', 'elementor-pro' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 			6 => esc_html__( 'Font saved.', 'elementor-pro' ),
 			7 => esc_html__( 'Font saved.', 'elementor-pro' ),
@@ -176,20 +185,30 @@ class Fonts_Manager {
 	/**
 	 * Add Font manager link to admin menu
 	 */
-	public function register_admin_menu() {
-		$menu_title = _x( 'Custom Fonts', 'Elementor Font', 'elementor-pro' );
-		add_submenu_page(
-			Settings::PAGE_ID,
-			$menu_title,
-			$menu_title,
-			self::CAPABILITY,
-			'edit.php?post_type=' . self::CPT
-		);
+	private function register_admin_menu( Admin_Menu_Manager $admin_menu_manager ) {
+		if ( $this->can_use_custom_fonts() ) {
+			$admin_menu_manager->register( static::MENU_SLUG, new Custom_Fonts_Menu_Item() );
+		} else {
+			$admin_menu_manager->register( static::PROMOTION_MENU_SLUG, new Custom_Fonts_Promotion_Menu_Item() );
+		}
+	}
+
+	private function can_use_custom_fonts() {
+		return ( API::is_license_active() || $this->has_fonts() );
+	}
+
+	private function has_fonts() {
+		$fonts = get_posts( [
+			'post_type' => static::CPT,
+			'posts_per_page' => 1, // Avoid fetching too much data
+		] );
+
+		return ! empty( $fonts );
 	}
 
 	public function redirect_admin_old_page_to_new() {
 		if ( ! empty( $_GET['page'] ) && 'elementor_custom_fonts' === $_GET['page'] ) {
-			wp_safe_redirect( admin_url( 'edit.php?post_type=' . self::CPT ) );
+			wp_safe_redirect( admin_url( static::MENU_SLUG ) );
 			die;
 		}
 	}
@@ -495,9 +514,15 @@ class Fonts_Manager {
 		$categories['settings']['items']['custom-fonts'] = [
 			'title' => esc_html__( 'Custom Fonts', 'elementor-pro' ),
 			'icon' => 'typography',
-			'url' => admin_url( 'edit.php?post_type=' . self::CPT ),
+			'url' => admin_url( static::MENU_SLUG ),
 			'keywords' => [ 'custom', 'fonts', 'elementor' ],
 		];
+
+		if ( ! $this->can_use_custom_fonts() ) {
+			$lock = new Feature_Lock( [ 'type' => 'custom-font' ] );
+
+			$categories['settings']['items']['custom-fonts']['lock'] = $lock->get_config();
+		}
 
 		return $categories;
 	}
@@ -510,10 +535,32 @@ class Fonts_Manager {
 
 		if ( is_admin() ) {
 			add_action( 'init', [ $this, 'redirect_admin_old_page_to_new' ] );
-			add_action( 'admin_menu', [ $this, 'register_admin_menu' ], 50 );
+
+			add_action( 'elementor/admin/menu/register', function ( Admin_Menu_Manager $admin_menu_manager ) {
+				$this->register_admin_menu( $admin_menu_manager );
+			} );
+
+			// TODO: BC - Remove after `Admin_Menu_Manager` will be the standard.
+			add_action( 'admin_menu', function () {
+				if ( did_action( 'elementor/admin/menu/register' ) ) {
+					return;
+				}
+
+				$menu_title = _x( 'Custom Fonts', 'Elementor Font', 'elementor-pro' );
+
+				add_submenu_page(
+					Settings::PAGE_ID,
+					$menu_title,
+					$menu_title,
+					self::CAPABILITY,
+					static::MENU_SLUG
+				);
+			}, 50 );
+
 			add_action( 'admin_head', [ $this, 'clean_admin_listing_page' ] );
 		}
 
+		// TODO: Maybe just ignore all of those when the user can't use custom fonts?
 		add_filter( 'post_row_actions', [ $this, 'post_row_actions' ], 10, 2 );
 		add_filter( 'manage_' . self::CPT . '_posts_columns', [ $this, 'manage_columns' ], 100 );
 		add_action( 'save_post_' . self::CPT, [ $this, 'save_post_meta' ], 10, 3 );

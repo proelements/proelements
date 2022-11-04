@@ -304,7 +304,7 @@ class Table_Of_Contents extends Base_Widget {
 			}
 
 			$minimized_on_options[ $breakpoint_key ] = sprintf(
-				/* translators: 1: `<` character, 2: Breakpoint value. */
+				/* translators: 1: Breakpoint label, 2: `<` character, 3: Breakpoint value. */
 				esc_html__( '%1$s (%2$s %3$dpx)', 'elementor-pro' ),
 				$breakpoint->get_label(),
 				'<',

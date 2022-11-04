@@ -13,13 +13,14 @@ import Component from './data/component';
 import './site-editor.scss';
 
 function SiteEditor() {
+	const basePath = 'site-editor';
 	const headerButtons = [
 		{
 			id: 'import',
 			text: __( 'import', 'elementor-pro' ),
 			hideText: true,
 			icon: 'eicon-download-circle-o',
-			onClick: () => router.appHistory.navigate( 'site-editor/import' ),
+			onClick: () => router.appHistory.navigate( basePath + '/import' ),
 		},
 	];
 
@@ -32,10 +33,10 @@ function SiteEditor() {
 		const { templates } = React.useContext( TemplatesContext );
 
 		if ( Object.keys( templates ).length ) {
-			return <Redirect from={ '/' } to={ '/site-editor/templates' } noThrow={ true } />;
+			return <Redirect from={ '/' } to={ '/' + basePath + '/templates' } noThrow={ true } />;
 		}
 
-		return <Redirect from={ '/' } to={ '/site-editor/add-new' } noThrow={ true } />;
+		return <Redirect from={ '/' } to={ '/' + basePath + '/add-new' } noThrow={ true } />;
 	};
 
 	return (
@@ -43,18 +44,18 @@ function SiteEditor() {
 			title={ __( 'Theme Builder could not be loaded', 'elementor-pro' ) }
 			learnMoreUrl="https://go.elementor.com/app-theme-builder-load-issue"
 		>
-			<Layout allPartsButton={ <AllPartsButton url="/site-editor" /> } headerButtons={ headerButtons }>
+			<Layout allPartsButton={ <AllPartsButton url={ '/' + basePath } /> } headerButtons={ headerButtons } titleRedirectRoute={ '/' + basePath }>
 				<Grid container className="e-site-editor__content_container">
 					<Grid item className="e-site-editor__content_container_main">
 						<TemplatesProvider>
 							<LocationProvider history={ router.appHistory }>
 								<Router>
-									<SiteEditorDefault path="/site-editor" />
-									<Templates path="site-editor/templates" />
-									<TemplateType path="site-editor/templates/:type/*id" />
-									<AddNew path="site-editor/add-new" />
-									<Conditions path="site-editor/conditions/:id" />
-									<Import path="site-editor/import" />
+									<SiteEditorDefault path={ basePath } />
+									<Templates path={ basePath + '/templates' } />
+									<TemplateType path={ basePath + '/templates/:type/*id' } />
+									<AddNew path={ basePath + '/add-new' } />
+									<Conditions path={ basePath + '/conditions/:id' } />
+									<Import path={ basePath + '/import' } />
 									<NotFound default />
 								</Router>
 							</LocationProvider>

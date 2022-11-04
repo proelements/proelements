@@ -154,11 +154,14 @@ class Module extends App {
 		$this->set_settings( 'current_user_can', [
 			'create' => current_user_can( Capabilities::CREATE_NOTES ),
 			'create_users' => current_user_can( 'create_users' ),
+			'edit_users' => current_user_can( 'edit_users' ),
 		] );
 
 		$this->set_settings( 'urls', [
 			'admin_url_create_user' => get_admin_url( null, 'user-new.php' ),
+			'admin_url_edit_user' => get_admin_url( null, 'user-edit.php' ),
 			'avatar_defaults' => User::generate_avatars_urls( 0 ),
+			'help_notes_features' => 'https://go.elementor.com/app-notes',
 		] );
 	}
 

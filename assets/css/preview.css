@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 .elementor-document-handle {
   display: none;
   -webkit-box-align: center;
@@ -38,36 +38,137 @@
   margin-right: 5px;
 }
 
-.elementor-editor-active .elementor {
-  position: relative;
-}
-.elementor-editor-active .elementor:not(.elementor-edit-mode):hover {
+.elementor-editor-active .elementor:not(.elementor-edit-mode):hover, .elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover {
   -webkit-box-shadow: 0 0 0 1px #fcb92c;
           box-shadow: 0 0 0 1px #fcb92c;
 }
-.elementor-editor-active .elementor:not(.elementor-edit-mode):hover .elementor-document-handle {
+.elementor-editor-active *[data-editable-elementor-document] {
+  position: relative;
+}
+.elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover > .elementor-document-handle:not(.elementor-document-save-back-handle) {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   line-height: initial;
 }
-.elementor-editor-active .elementor.loading {
+.elementor-editor-active *[data-editable-elementor-document].loading {
   opacity: 0.5;
 }
-.elementor-editor-active .elementor[data-elementor-type=single] > .elementor-document-handle {
+.elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle {
   -webkit-transform: translateX(-50%) translateY(-100%);
       -ms-transform: translateX(-50%) translateY(-100%);
           transform: translateX(-50%) translateY(-100%);
   border-radius: 3px 3px 0 0;
 }
-.elementor-editor-active .elementor[data-elementor-type=single] > .elementor-document-handle:before {
+.elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle:before {
   border-width: 23px 14px 0 0;
 }
-.elementor-editor-active .elementor[data-elementor-type=single] > .elementor-document-handle:after {
+.elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle:after {
   border-width: 23px 0 0 14px;
+}
+
+.elementor-widget.elementor-sticky--effects .elementor-editor-widget-settings {
+  right: -14px;
 }
 
 .elementor-embedded-editor.elementor-location-header .elementor-section-wrap:not(:empty) + #elementor-add-new-section {
   display: none;
+}
+
+.elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-element-overlay,
+.elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-empty,
+.elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-add-section,
+.elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-add-section-inline,
+.elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-empty-view,
+.elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-widget-empty {
+  display: initial;
+}
+.elementor-document-handle.elementor-document-save-back-handle {
+  top: -23px;
+}
+.elementor-document-handle.elementor-document-save-back-handle:before {
+  border-width: 23px 14px 0px 0px;
+}
+.elementor-document-handle.elementor-document-save-back-handle:after {
+  border-width: 23px 0px 0px 14px;
+}
+.elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-left,
+.elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-right {
+  margin-right: 5px;
+}
+.elementor-widget-loop-grid .elementor-edit-area-active[data-editable-elementor-document] {
+  border: 1px solid #fcb92c;
+}
+.elementor-widget-loop-grid .elementor-edit-area-active .elementor-document-save-back-handle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: initial;
+  white-space: nowrap;
+}
+.elementor-widget-loop-grid #elementor-add-new-section {
+  margin: 30px auto;
+}
+.elementor-widget-loop-grid .elementor-add-section-inner {
+  padding: 15px 0;
+}
+.elementor-loop-container > div.elementor-edit-area-active:first-of-type {
+  border: 1px solid #fcb92c;
+}
+
+.elementor-edit-area-active[data-elementor-type=loop-item] .elementor-add-template-button {
+  display: none;
+}
+.elementor-edit-area-active[data-elementor-type=loop-item] .elementor-add-section-button {
+  -webkit-margin-start: 0;
+          margin-inline-start: 0;
+}
+.elementor-edit-area-active[data-elementor-type=loop-item] .elementor-section-wrap {
+  /* Overwrite the 25px min-height from the default .elementor-section-wrap:empty, as this causes unnecessary
+  white space between the "Drag widget here" box and the document handles for in-place editing, making
+  it look like this area is not vertically aligned on a new empty state. */
+}
+.elementor-edit-area-active[data-elementor-type=loop-item] .elementor-section-wrap:not(:empty) + #elementor-add-new-section {
+  display: none;
+}
+.elementor-edit-area-active[data-elementor-type=loop-item] .elementor-section-wrap:empty {
+  min-height: 0;
+}
+
+.elementor-editor-active .elementor-widget-loop-grid .elementor:not([data-editable-elementor-document]):hover {
+  -webkit-box-shadow: initial;
+          box-shadow: initial;
+}
+
+.elementor-editor-active .elementor-widget-loop-grid:hover [data-editable-elementor-document] {
+  -webkit-box-shadow: 0 0 0 1px #fcb92c;
+          box-shadow: 0 0 0 1px #fcb92c;
+}
+.elementor-editor-active .elementor-widget-loop-grid:hover .elementor-document-handle:not(.elementor-document-save-back-handle) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: initial;
+  white-space: nowrap;
+}
+
+.e-loop-template-canvas {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+}
+.e-loop-template-canvas [data-elementor-type=loop-item].e-loop-item {
+  max-width: var(--preview-width, 410px);
+  width: var(--preview-width, 410px);
+}
+.e-loop-template-canvas [data-elementor-type=loop-item].e-loop-item #elementor-add-new-section {
+  width: var(--preview-width, 410px);
 }
 /*# sourceMappingURL=preview.css.map */

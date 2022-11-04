@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/frontend.js":
@@ -1286,20 +1286,25 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       // compensated for in this case.
       handleScrollbarWidth: elementorFrontend.isEditMode()
     },
-          $wpAdminBar = elementorFrontend.elements.$wpAdminBar;
-
-    if (elementSettings.sticky_parent) {
-      stickyOptions.parent = '.e-container, .elementor-widget-wrap';
-    }
+          $wpAdminBar = elementorFrontend.elements.$wpAdminBar,
+          hasParentContainer = this.isContainerElement(this.$element[0].parentElement),
+          isNestedContainer = this.isContainerElement(this.$element[0]) && hasParentContainer,
+          isWidget = this.$element[0].classList.contains('elementor-widget');
 
     if ($wpAdminBar.length && 'top' === elementSettings.sticky && 'fixed' === $wpAdminBar.css('position')) {
       stickyOptions.offset += $wpAdminBar.height();
     }
 
-    if (this.$element[0].parentElement?.classList.contains('e-container')) {
+    if (hasParentContainer) {
       stickyOptions.relativeTarget = 'document';
     } else {
       stickyOptions.relativeTarget = 'parent';
+    } // The `stickyOptions.parent` value should only be applied to inner elements, and not to top level containers.
+
+
+    if (elementSettings.sticky_parent && (isNestedContainer || isWidget)) {
+      // TODO: The e-container classes should be removed in the next update.
+      stickyOptions.parent = '.e-container, .e-container__inner, .e-con, .e-con-inner, .elementor-widget-wrap';
     }
 
     return stickyOptions;
@@ -1402,6 +1407,19 @@ var _default = elementorModules.frontend.handlers.Base.extend({
   onDestroy() {
     elementorModules.frontend.handlers.Base.prototype.onDestroy.apply(this, arguments);
     this.deactivate();
+  },
+
+  /**
+   *
+   * @param {HTMLElement|null|undefined} element
+   * @return {boolean} Is the passed element a container.
+   */
+  isContainerElement(element) {
+    const containerClasses = [// TODO: The e-container classes should be removed in the next update.
+    'e-container', 'e-container__inner', 'e-con', 'e-con-inner'];
+    return containerClasses.some(containerClass => {
+      return element?.classList.contains(containerClass);
+    });
   }
 
 });

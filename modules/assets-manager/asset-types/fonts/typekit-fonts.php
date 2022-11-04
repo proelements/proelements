@@ -169,7 +169,7 @@ class Typekit_Fonts extends Font_Base {
 					'field_args' => [
 						'type' => 'text',
 						'desc' => sprintf(
-							/* translators: 1: Link open tag, 2: Link closing tag. */
+							/* translators: 1: Link opening tag, 2: Link closing tag. */
 							esc_html__( 'Enter Your %1$sTypeKit Project ID%2$s.', 'elementor-pro' ),
 							'<a href="https://fonts.adobe.com/typekit" target="_blank">',
 							'</a>'

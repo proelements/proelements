@@ -181,6 +181,7 @@ class Templates extends Base_Endpoint {
 			'placeholderUrl' => $site_editor_config['urls']['thumbnail'],
 			'pageLayout' => $site_editor_config['page_layout'],
 			'supportsSiteEditor' => true,
+			'showInstances' => $site_editor_config['show_instances'],
 		] );
 
 		/**

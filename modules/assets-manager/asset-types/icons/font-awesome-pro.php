@@ -109,7 +109,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 					'field_args' => [
 						'type' => 'text',
 						'desc' => sprintf(
-							/* translators: 1: Link open tag, 2: Link closing tag. */
+							/* translators: 1: Link opening tag, 2: Link closing tag. */
 							esc_html__( 'Enter Your %1$sFont Awesome Pro Kit ID%2$s.', 'elementor-pro' ),
 							'<a href="https://fontawesome.com/kits" target="_blank">',
 							'</a>'

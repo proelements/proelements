@@ -1,13 +1,14 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
+use ElementorPro\Base\MarkerInterfaces\Archive_Template_Interface;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-abstract class Archive_Single_Base extends Theme_Page_Document {
+abstract class Archive_Single_Base extends Theme_Page_Document implements Archive_Template_Interface {
 
 	/**
 	 * Document sub type meta key.

@@ -1,6 +1,11 @@
 <?php
 namespace ElementorPro\Modules\AssetsManager\AssetTypes;
 
+use Elementor\Core\Admin\Menu\Admin_Menu_Manager;
+use ElementorPro\Core\Behaviors\Feature_Lock;
+use ElementorPro\License\API;
+use ElementorPro\Modules\AssetsManager\AssetTypes\AdminMenuItems\Custom_Icons_Menu_Item;
+use ElementorPro\Modules\AssetsManager\AssetTypes\AdminMenuItems\Custom_Icons_Promotion_Menu_Item;
 use ElementorPro\Modules\AssetsManager\Classes;
 use Elementor\Settings;
 
@@ -17,6 +22,10 @@ class Icons_Manager {
 	const FONTS_OPTION_NAME = 'elementor_fonts_manager_fonts';
 
 	const FONTS_NAME_TYPE_OPTION_NAME = 'elementor_fonts_manager_font_types';
+
+	const MENU_SLUG = 'edit.php?post_type=' . self::CPT;
+
+	const PROMOTION_MENU_SLUG = 'e-custom-icons';
 
 	private $post_type_object;
 
@@ -96,7 +105,7 @@ class Icons_Manager {
 			2 => esc_html__( 'Custom field updated.', 'elementor-pro' ),
 			3 => esc_html__( 'Custom field deleted.', 'elementor-pro' ),
 			4 => esc_html__( 'Icon Set updated.', 'elementor-pro' ),
-			/* translators: %s: date and time of the revision */
+			/* translators: %s: Date and time of the revision. */
 			5 => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Icon Set restored to revision from %s', 'elementor-pro' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 			6 => esc_html__( 'Icon Set saved.', 'elementor-pro' ),
 			7 => esc_html__( 'Icon Set saved.', 'elementor-pro' ),
@@ -111,20 +120,30 @@ class Icons_Manager {
 	/**
 	 * Add Font manager link to admin menu
 	 */
-	public function register_admin_menu() {
-		$menu_title = _x( 'Custom Icons', 'Elementor Font', 'elementor-pro' );
-		add_submenu_page(
-			Settings::PAGE_ID,
-			$menu_title,
-			$menu_title,
-			self::CAPABILITY,
-			'edit.php?post_type=' . self::CPT
-		);
+	private function register_admin_menu( Admin_Menu_Manager $admin_menu_manager ) {
+		if ( $this->can_use_custom_icons() ) {
+			$admin_menu_manager->register( static::MENU_SLUG, new Custom_Icons_Menu_Item() );
+		} else {
+			$admin_menu_manager->register( static::PROMOTION_MENU_SLUG, new Custom_Icons_Promotion_Menu_Item() );
+		}
+	}
+
+	private function can_use_custom_icons() {
+		return ( API::is_license_active() || $this->has_icons() );
+	}
+
+	private function has_icons() {
+		$icons = get_posts( [
+			'post_type' => static::CPT,
+			'posts_per_page' => 1, // Avoid fetching too much data
+		] );
+
+		return ! empty( $icons );
 	}
 
 	public function redirect_admin_old_page_to_new() {
 		if ( ! empty( $_GET['page'] ) && 'elementor_custom_icons' === $_GET['page'] ) {
-			wp_safe_redirect( admin_url( 'edit.php?post_type=' . self::CPT ) );
+			wp_safe_redirect( admin_url( static::MENU_SLUG ) );
 			die;
 		}
 	}
@@ -157,9 +176,15 @@ class Icons_Manager {
 		$categories['settings']['items']['custom-icons'] = [
 			'title' => esc_html__( 'Custom Icons', 'elementor-pro' ),
 			'icon' => 'favorite',
-			'url' => admin_url( 'edit.php?post_type=' . self::CPT ),
+			'url' => admin_url( static::MENU_SLUG ),
 			'keywords' => [ 'custom', 'icons', 'elementor' ],
 		];
+
+		if ( ! $this->can_use_custom_icons() ) {
+			$lock = new Feature_Lock( [ 'type' => 'custom-icon' ] );
+
+			$categories['settings']['items']['custom-icons']['lock'] = $lock->get_config();
+		}
 
 		return $categories;
 	}
@@ -172,10 +197,32 @@ class Icons_Manager {
 
 		if ( is_admin() ) {
 			add_action( 'init', [ $this, 'redirect_admin_old_page_to_new' ] );
-			add_action( 'admin_menu', [ $this, 'register_admin_menu' ], 50 );
+
+			add_action( 'elementor/admin/menu/register', function ( Admin_Menu_Manager $admin_menu_manager ) {
+				$this->register_admin_menu( $admin_menu_manager );
+			} );
+
+			// TODO: BC - Remove after `Admin_Menu_Manager` will be the standard.
+			add_action( 'admin_menu', function () {
+				if ( did_action( 'elementor/admin/menu/register' ) ) {
+					return;
+				}
+
+				$menu_title = _x( 'Custom Icons', 'Elementor Font', 'elementor-pro' );
+
+				add_submenu_page(
+					Settings::PAGE_ID,
+					$menu_title,
+					$menu_title,
+					self::CAPABILITY,
+					static::MENU_SLUG
+				);
+			}, 50 );
+
 			add_action( 'admin_head', [ $this, 'clean_admin_listing_page' ] );
 		}
 
+		// TODO: Maybe just ignore all of those when the user can't use custom icons?
 		add_filter( 'post_updated_messages', [ $this, 'post_updated_messages' ] );
 		add_filter( 'post_row_actions', [ $this, 'post_row_actions' ], 10, 2 );
 

@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\Forms\Classes;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Modules\Forms\Module;
+use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -68,6 +69,7 @@ abstract class Form_Base extends Base_Widget {
 					'class' => [
 						'elementor-field',
 						'elementor-select-wrapper',
+						'remove-before',
 						esc_attr( $item['css_classes'] ),
 					],
 				],
@@ -102,6 +104,18 @@ abstract class Form_Base extends Base_Widget {
 		ob_start();
 		?>
 		<div <?php $this->print_render_attribute_string( 'select-wrapper' . $i ); ?>>
+			<div class="select-caret-down-wrapper">
+				<?php
+				if ( ! $item['allow_multiple'] ) {
+					$icon = [
+						'library' => 'eicons',
+						'value' => 'eicon-caret-down',
+						'position' => 'right',
+					];
+					Icons_Manager::render_icon( $icon, [ 'aria-hidden' => 'true' ] );
+				}
+				?>
+			</div>
 			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
 				<?php
 				foreach ( $options as $key => $option ) {

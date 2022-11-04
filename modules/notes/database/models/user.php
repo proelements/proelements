@@ -6,14 +6,13 @@ use ElementorPro\Core\Database\Model_Base;
 use ElementorPro\Core\Notifications\Traits\Notifiable;
 use ElementorPro\Core\Utils\Collection;
 use ElementorPro\Modules\Notes\Database\Query\User_Query_Builder;
-use ElementorPro\Modules\Notes\User\Capabilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 // TODO: Should be in Core.
-class User extends Model_Base implements \JsonSerializable {
+class User extends Model_Base {
 
 	use Notifiable;
 
@@ -127,27 +126,5 @@ class User extends Model_Base implements \JsonSerializable {
 	 */
 	public function get_avatars() {
 		return static::generate_avatars_urls( $this->ID );
-	}
-
-	/**
-	 * Return a JSON serialized representation of the User.
-	 *
-	 * @return array
-	 */
-	public function jsonSerialize() {
-		// TODO: This serialized response might be visible to unauthorized users.
-		//  DON'T INCLUDE ANY SENSITIVE DATA.
-		return [
-			'id' => $this->ID,
-			'name' => $this->display_name,
-			'url' => $this->user_url,
-			'slug' => $this->user_nicename,
-			'avatar_urls' => $this->get_avatars(),
-			'capabilities' => [
-				'notes' => [
-					'can_read' => user_can( $this->ID, Capabilities::READ_NOTES ),
-				],
-			],
-		];
 	}
 }

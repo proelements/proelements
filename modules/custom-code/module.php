@@ -1,7 +1,11 @@
 <?php
 namespace ElementorPro\Modules\CustomCode;
 
+use Elementor\Core\Admin\Menu\Admin_Menu_Manager;
 use Elementor\Core\Documents_Manager;
+use ElementorPro\License\API;
+use ElementorPro\Modules\CustomCode\AdminMenuItems\Custom_Code_Menu_Item;
+use ElementorPro\Modules\CustomCode\AdminMenuItems\Custom_Code_Promotion_Menu_Item;
 use ElementorPro\Plugin;
 use Elementor\Settings;
 use Elementor\TemplateLibrary\Source_Local;
@@ -21,6 +25,9 @@ class Module extends Module_Base {
 	const DOCUMENT_TYPE = 'code_snippet';
 
 	const ADDITIONAL_COLUMN_INSTANCES = 'instances';
+
+	const MENU_SLUG = 'edit.php?post_type=' . self::CPT;
+	const PROMOTION_MENU_SLUG = 'e-custom-code';
 
 	/**
 	 * @var \ElementorPro\Modules\CustomCode\Custom_Code_Metabox
@@ -42,6 +49,7 @@ class Module extends Module_Base {
 	}
 
 	private function actions() {
+		// TODO: Maybe just ignore all of those when the user can't use custom code?
 		add_action( 'elementor/documents/register', function ( $documents_manager ) {
 			return $this->register_documents( $documents_manager );
 		} );
@@ -50,8 +58,24 @@ class Module extends Module_Base {
 			return $this->register_location( $location_manager );
 		} );
 
+		add_action( 'elementor/admin/menu/register', function ( Admin_Menu_Manager $admin_menu_manager ) {
+			$this->add_admin_menu( $admin_menu_manager );
+		} );
+
+		// TODO: BC - Remove after `Admin_Menu_Manager` will be the standard.
 		add_action( 'admin_menu', function () {
-			return $this->add_admin_menu();
+			if ( did_action( 'elementor/admin/menu/register' ) ) {
+				return;
+			}
+
+			$menu_title = esc_html__( 'Custom Code', 'elementor-pro' );
+			add_submenu_page(
+				Settings::PAGE_ID,
+				$menu_title,
+				$menu_title,
+				self::CAPABILITY,
+				static::MENU_SLUG
+			);
 		}, /* After custom icons */  51 );
 
 		add_action( 'current_screen', function () {
@@ -155,7 +179,8 @@ class Module extends Module_Base {
 					__( 'Custom code saved.', 'elementor-pro' ),
 					__( 'Custom code submitted.', 'elementor-pro' ),
 					sprintf(
-						__( 'Custom code scheduled for: %1$s.', 'elementor-pro' ),
+						/* translators: %s: The scheduled date. */
+						__( 'Custom code scheduled for %s.', 'elementor-pro' ),
 						'<strong>' . date_i18n( esc_html__( 'M j, Y @ G:i', 'elementor-pro' ), strtotime( $post->post_date ) ) . '</strong>'
 					),
 					__( 'Custom code draft updated.', 'elementor-pro' ),
@@ -284,15 +309,25 @@ class Module extends Module_Base {
 		}, 10, 2 );
 	}
 
-	private function add_admin_menu() {
-		$menu_title = esc_html__( 'Custom Code', 'elementor-pro' );
-		add_submenu_page(
-			Settings::PAGE_ID,
-			$menu_title,
-			$menu_title,
-			self::CAPABILITY,
-			'edit.php?post_type=' . self::CPT
-		);
+	private function add_admin_menu( Admin_Menu_Manager $admin_menu_manager ) {
+		if ( $this->can_use_custom_code() ) {
+			$admin_menu_manager->register( static::MENU_SLUG, new Custom_Code_Menu_Item() );
+		} else {
+			$admin_menu_manager->register( static::PROMOTION_MENU_SLUG, new Custom_Code_Promotion_Menu_Item() );
+		}
+	}
+
+	private function can_use_custom_code() {
+		return API::is_license_active() || $this->has_custom_code_snippets();
+	}
+
+	private function has_custom_code_snippets() {
+		$existing_snippets = get_posts( [
+			'posts_per_page' => 1, // Avoid fetching too much data
+			'post_type' => static::CPT,
+		] );
+
+		return ! empty( $existing_snippets );
 	}
 
 	private function register_documents( Documents_Manager $documents_manager ) {

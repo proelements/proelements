@@ -5,6 +5,7 @@ use Elementor\Data\V2\Base\Endpoint;
 use ElementorPro\Modules\Notes\Database\Models\User;
 use ElementorPro\Modules\Notes\Database\Query\User_Query_Builder;
 use ElementorPro\Modules\Notes\User\Capabilities;
+use ElementorPro\Modules\Notes\Database\Transformers\User_Transformer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -88,8 +89,17 @@ class Users_Endpoint extends Endpoint {
 			}
 		}
 
+		$transformer = new User_Transformer();
+		$transform_dependencies = [];
+
+		if ( ! empty( $_GET['post_id'] ) ) {
+			$transform_dependencies['post_id'] = (int) $_GET['post_id'];
+		}
+
 		return [
-			'data' => $users->get(),
+			'data' => $users->get()->map( function ( User $user ) use ( $transformer, $transform_dependencies ) {
+				return $transformer->transform( $user, $transform_dependencies );
+			} ),
 			'meta' => [],
 		];
 	}

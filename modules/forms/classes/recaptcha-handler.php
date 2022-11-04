@@ -52,7 +52,7 @@ class Recaptcha_Handler {
 			'label' => esc_html__( 'reCAPTCHA', 'elementor-pro' ),
 			'callback' => function () {
 				echo sprintf(
-					/* translators: 1: Link open tag, 2: Link closing tag. */
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( '%1$sreCAPTCHA%2$s is a free service by Google that protects your website from spam and abuse. It does this while letting your valid users pass through with ease.', 'elementor-pro' ),
 					'<a href="https://www.google.com/recaptcha/" target="_blank">',
 					'</a>'
@@ -169,7 +169,7 @@ class Recaptcha_Handler {
 		$result = json_decode( $body, true );
 
 		if ( ! $this->validate_result( $result, $field ) ) {
-			$message = esc_html__( 'Invalid Form - reCAPTCHA validation failed', 'elementor-pro' );
+			$message = esc_html__( 'Invalid form, reCAPTCHA validation failed.', 'elementor-pro' );
 
 			if ( isset( $result['error-codes'] ) ) {
 				$result_errors = array_flip( $result['error-codes'] );

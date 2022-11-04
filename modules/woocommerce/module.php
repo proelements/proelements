@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Woocommerce;
 
+use Elementor\Widget_Base;
 use ElementorPro\Plugin;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Modules\ThemeBuilder\Classes\Conditions_Manager;
@@ -9,11 +10,11 @@ use ElementorPro\Modules\Woocommerce\Documents\Product;
 use ElementorPro\Modules\Woocommerce\Documents\Product_Post;
 use ElementorPro\Modules\Woocommerce\Documents\Product_Archive;
 use Elementor\Utils;
-use ElementorPro\Core\Utils as ProUtils;
 use Elementor\Core\Documents_Manager;
 use Elementor\Settings;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
+use ElementorPro\Modules\Woocommerce\Widgets\Products as Products_Widget;
 use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,6 +27,7 @@ class Module extends Module_Base {
 	const TEMPLATE_MINI_CART = 'cart/mini-cart.php';
 	const OPTION_NAME_USE_MINI_CART = 'use_mini_cart_template';
 	const MENU_CART_FRAGMENTS_ACTION = 'elementor-menu-cart-fragments';
+	const LOOP_PRODUCT_SKIN_ID = 'product';
 
 	protected $docs_types = [];
 	protected $use_mini_cart_template;
@@ -79,6 +81,20 @@ class Module extends Module_Base {
 			'Notices',
 		];
 	}
+
+	const RECOMMENDED_POSTS_WIDGET_NAMES = [
+		'theme-post-featured-image',
+		'woocommerce-product-title',
+		'wc-add-to-cart',
+		'woocommerce-product-price',
+		'woocommerce-product-rating',
+		'woocommerce-product-stock',
+		'woocommerce-product-meta',
+		'woocommerce-product-short-description',
+		'woocommerce-product-content',
+		'woocommerce-product-data-tabs',
+		'woocommerce-product-additional-information',
+	];
 
 	public function add_product_post_class( $classes ) {
 		$classes[] = 'product';
@@ -384,6 +400,15 @@ class Module extends Module_Base {
 		return $need_override_location;
 	}
 
+	public function add_loop_recommended_widgets( $config, $post_id ) {
+		if ( ! $this->is_source_set_to_products( $post_id ) ) {
+			return $config;
+		}
+
+		$config = $this->add_woocommerce_widgets_to_recommended( $config );
+		return $this->hide_woocommerce_widgets_in_loop_document( $config );
+	}
+
 	/**
 	 * Add plugin path to wc template search path.
 	 * Based on: https://www.skyverge.com/blog/override-woocommerce-template-file-within-a-plugin/
@@ -606,8 +631,12 @@ class Module extends Module_Base {
 
 		if ( ! wp_verify_nonce( $_POST['nonce'], 'woocommerce-login' ) ) {
 			$error = true;
-			/* translators: %s: Error. */
-			$error_message = sprintf( esc_html__( '%s Sorry, the nonce security check didn’t pass. Please reload the page and try again. You may want to try clearing your browser cache as a last attempt.', 'elementor-pro' ), '<strong>Error:</strong>' );
+			$error_message = sprintf(
+				/* translators: 1: Bold text opening tag, 2: Bold text closing tag. */
+				esc_html__( '%1$sError:%2$s The nonce security check didn’t pass. Please reload the page and try again. You may want to try clearing your browser cache as a last attempt.', 'elementor-pro' ),
+				'<strong>',
+				'</strong>'
+			);
 		} else {
 			$info = [
 				'user_login' => trim( $_POST['username'] ),
@@ -657,7 +686,6 @@ class Module extends Module_Base {
 
 	public function woocommerce_mock_notices( $data ) {
 		if ( in_array( 'wc_error', $data['notice_elements'], true ) ) {
-			/* translators: 1: Error notice text, 2: Error notice link. */
 			$notice_message = sprintf(
 				'%1$s <a href="#" class="wc-backward">%2$s</a>',
 				esc_html__( 'Oops, this is how an error notice would look.', 'elementor-pro' ),
@@ -667,7 +695,6 @@ class Module extends Module_Base {
 		}
 
 		if ( in_array( 'wc_message', $data['notice_elements'], true ) ) {
-			/* translators: 1: Message notice button, 2: Message notice text, 3: Message notice link. */
 			$notice_message = sprintf(
 				'<a href="#" tabindex="1" class="button wc-forward">%1$s</a> %2$s <a href="#" class="restore-item">%3$s</a>',
 				esc_html__( 'Button', 'elementor-pro' ),
@@ -678,7 +705,6 @@ class Module extends Module_Base {
 		}
 
 		if ( in_array( 'wc_info', $data['notice_elements'], true ) ) {
-			/* translators: 1: Info notice button, 2: Info notice text. */
 			$notice_message = sprintf(
 				'<a href="#" tabindex="1" class="button wc-forward">%1$s</a> %2$s',
 				esc_html__( 'Button', 'elementor-pro' ),
@@ -705,6 +731,37 @@ class Module extends Module_Base {
 
 	public function init_site_settings( \Elementor\Core\Kits\Documents\Kit $kit ) {
 		$kit->register_tab( 'settings-woocommerce', \ElementorPro\Modules\Woocommerce\Settings\Settings_Woocommerce::class );
+	}
+
+	public function add_products_type_to_template_popup( $form ) {
+		$this->add_products_to_options( $form, '_elementor_source' );
+	}
+
+	public function add_products_type_to_loop_settings_query( $form ) {
+		$this->add_products_to_options( $form, 'source' );
+	}
+
+	/**
+	 * @param $form
+	 * @param $control_name
+	 * @return void
+	 */
+	protected function add_products_to_options( $form, $control_name ) {
+		if ( empty( $form ) ) {
+			return;
+		}
+
+		$controls = $form->get_controls( $control_name );
+		if ( ! $controls || ! isset( $controls['options'] ) ) {
+			return;
+		}
+
+		$options = $controls['options'];
+		$options[ self::LOOP_PRODUCT_SKIN_ID ] = esc_html__( 'Products', 'elementor-pro' );
+
+		$form->update_control($control_name, [
+			'options' => $options,
+		]);
 	}
 
 	/**
@@ -860,11 +917,11 @@ class Module extends Module_Base {
 						$settings = $element['settings'];
 						if ( isset( $settings[ Products_Renderer::QUERY_CONTROL_NAME . '_post_type' ] ) ) {
 							$query_type = $settings[ Products_Renderer::QUERY_CONTROL_NAME . '_post_type' ];
-							$query_types_to_check = [ 'related', 'upsells', 'cross_sells' ];
+							$query_types_to_check = [ 'related_products', 'upsells', 'cross_sells' ];
 
 							if ( in_array( $query_type, $query_types_to_check, true ) ) {
 								switch ( $query_type ) {
-									case 'related':
+									case 'related_products':
 										$content = self::get_products_related_content( $settings );
 										break;
 									case 'upsells':
@@ -919,7 +976,7 @@ class Module extends Module_Base {
 
 		return self::get_product_widget_content(
 			$settings,
-			'related',
+			'related_products',
 			'woocommerce_product_related_products_heading',
 			'products_related_title_text'
 		);
@@ -1055,7 +1112,7 @@ class Module extends Module_Base {
 
 		$args = self::parse_product_widget_args( $settings, $type );
 
-		if ( 'related' === $type ) {
+		if ( 'related_products' === $type ) {
 			woocommerce_related_products( $args );
 		} elseif ( 'upsells' === $type ) {
 			woocommerce_upsell_display( $args['limit'], $args['columns'], $args['orderby'], $args['order'] );
@@ -1098,8 +1155,8 @@ class Module extends Module_Base {
 	 *
 	 * @return array $args
 	 */
-	private static function parse_product_widget_args( $settings, $type = 'related' ) {
-		$limit_key = 'related' === $type ? 'posts_per_page' : 'limit';
+	private static function parse_product_widget_args( $settings, $type = 'related_products' ) {
+		$limit_key = 'related_products' === $type ? 'posts_per_page' : 'limit';
 
 		$args = [
 			$limit_key => '-1',
@@ -1181,6 +1238,8 @@ class Module extends Module_Base {
 
 		add_filter( 'elementor/theme/need_override_location', [ $this, 'theme_template_include' ], 10, 2 );
 
+		add_filter( 'elementor/document/config', [ $this, 'add_loop_recommended_widgets' ], 11, 2 );
+
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localized_settings_frontend' ] );
 
 		// Add `elementor_page_id` query arg to WC Ajax Endpoint.
@@ -1258,5 +1317,92 @@ class Module extends Module_Base {
 		// WooCommerce Notice Site Settings
 		add_filter( 'body_class', [ $this, 'e_notices_body_classes' ] );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'e_notices_css' ] );
+
+		add_filter( 'elementor/query/query_args', function( $query_args, $widget ) {
+			return $this->loop_query( $query_args, $widget );
+		}, 10, 2 );
+	}
+
+	public function loop_query( $query_args, $widget ) {
+		if ( ! $this->is_product_query( $widget ) ) {
+			return $query_args;
+		}
+
+		return $this->parse_loop_query_args( $widget );
+	}
+
+	private function is_product_query( $widget ) {
+		return ( 'loop-grid' === $widget->get_name() && 'product' === $widget->get_current_skin_id() );
+	}
+
+	private function parse_loop_query_args( $widget ) {
+		$settings = $this->adjust_setting_for_product_renderer( $widget );
+
+		// For Products_Renderer.
+		if ( ! isset( $GLOBALS['post'] ) ) {
+			$GLOBALS['post'] = null; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		}
+
+		$shortcode = Products_Widget::get_shortcode_object( $settings );
+
+		$query_args = $shortcode->parse_query_args();
+		unset( $query_args['fields'] );
+
+		return $query_args;
+	}
+
+	private function adjust_setting_for_product_renderer( $widget ) {
+		$settings = $widget->get_settings_for_display();
+
+		$query_name = $widget->get_query_name();
+
+		$unique_query_settings = array_filter( $settings, function( $key ) use ( $query_name ) {
+			return 0 === strpos( $key, $query_name );
+		}, ARRAY_FILTER_USE_KEY );
+
+		$query_settings = [];
+
+		foreach ( $unique_query_settings as $key => $value ) {
+			$query_settings[ 'query' . str_replace( $query_name, '', $key ) ] = $value;
+		}
+
+		$settings = array_merge( $settings, $query_settings );
+
+		$settings['rows'] = ceil( $settings['posts_per_page'] / $settings['columns'] );
+		$settings['paginate'] = 'yes';
+		$settings['allow_order'] = 'no';
+		$settings['show_result_count'] = 'no';
+		$settings['query_fields'] = false;
+
+		return $settings;
+	}
+
+	/**
+	 * @param $post_id
+	 * @return bool
+	 */
+	private function is_source_set_to_products( $post_id ) {
+		return 'product' === get_post_meta( $post_id, '_elementor_source', true );
+	}
+
+	/**
+	 * @param array $config
+	 * @return array
+	 */
+	private function add_woocommerce_widgets_to_recommended( array $config ) {
+		foreach ( static::RECOMMENDED_POSTS_WIDGET_NAMES as $recommended_posts_widget_name ) {
+			$config['panel']['widgets_settings'][ $recommended_posts_widget_name ] = [
+				'categories' => [ 'recommended' ],
+				'show_in_panel' => true,
+			];
+		}
+		return $config;
+	}
+
+	private function hide_woocommerce_widgets_in_loop_document( array $config ) {
+		$config['panel']['widgets_settings']['woocommerce-product-images'] = [
+			'show_in_panel' => false,
+		];
+		return $config;
 	}
 }

@@ -490,17 +490,15 @@ class Cart extends Base_Widget {
 			]
 		);
 
-		/* translators: 1: Additional Template link <a> opening tag, 2: <a> closing tag. */
-		$additional_template_description_message = sprintf(
-			esc_html__( 'Replaces the default WooCommerce Empty Cart screen with a custom template. (Don’t have one? Head over to %1$sSaved Templates%2$s)', 'elementor-pro' ),
-			'<a href="' . esc_url( admin_url( 'edit.php?post_type=elementor_library&tabs_group=library#add_new' ) ) . '" target="_blank">',
-			'</a>'
-		);
-
 		$this->add_control(
 			'additional_template_description',
 			[
-				'raw' => $additional_template_description_message,
+				'raw' => sprintf(
+					/* translators: 1: Saved templates link opening tag, 2: Link closing tag. */
+					esc_html__( 'Replaces the default WooCommerce Empty Cart screen with a custom template. (Don’t have one? Head over to %1$sSaved Templates%2$s)', 'elementor-pro' ),
+					sprintf( '<a href="%s" target="_blank">', admin_url( 'edit.php?post_type=elementor_library&tabs_group=library#add_new' ) ),
+					'</a>'
+				),
 				'type' => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-descriptor elementor-descriptor-subtle',
 				'condition' => [

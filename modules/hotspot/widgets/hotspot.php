@@ -318,7 +318,7 @@ class Hotspot extends Widget_Image {
 				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
 				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'default' => 'no',
-				'description' => sprintf( esc_html__( 'Set custom Tooltip opening that will only affect this specific hotspot.', 'elementor-pro' ), '<code>|</code>' ),
+				'description' => esc_html__( 'Set custom Tooltip opening that will only affect this specific hotspot.', 'elementor-pro' ),
 			]
 		);
 

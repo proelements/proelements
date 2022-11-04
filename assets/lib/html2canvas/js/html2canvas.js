@@ -2364,16 +2364,13 @@
 			this.enabled = enabled;
 			this.start = Date.now();
 		}
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		Logger.prototype.debug = function () {
 			var args = [];
 			for (var _i = 0; _i < arguments.length; _i++) {
 				args[_i] = arguments[_i];
 			}
 			if (this.enabled) {
-				// eslint-disable-next-line no-console
 				if (typeof window !== 'undefined' && window.console && typeof console.debug === 'function') {
-					// eslint-disable-next-line no-console
 					console.debug.apply(console, [this.id, this.getTime() + "ms"].concat(args));
 				}
 				else {
@@ -2397,30 +2394,24 @@
 			}
 			return instance;
 		};
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		Logger.prototype.info = function () {
 			var args = [];
 			for (var _i = 0; _i < arguments.length; _i++) {
 				args[_i] = arguments[_i];
 			}
 			if (this.enabled) {
-				// eslint-disable-next-line no-console
 				if (typeof window !== 'undefined' && window.console && typeof console.info === 'function') {
-					// eslint-disable-next-line no-console
 					console.info.apply(console, [this.id, this.getTime() + "ms"].concat(args));
 				}
 			}
 		};
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		Logger.prototype.error = function () {
 			var args = [];
 			for (var _i = 0; _i < arguments.length; _i++) {
 				args[_i] = arguments[_i];
 			}
 			if (this.enabled) {
-				// eslint-disable-next-line no-console
 				if (typeof window !== 'undefined' && window.console && typeof console.error === 'function') {
-					// eslint-disable-next-line no-console
 					console.error.apply(console, [this.id, this.getTime() + "ms"].concat(args));
 				}
 				else {
@@ -2499,7 +2490,6 @@
 			}
 			return result;
 		};
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		Cache.prototype.match = function (src) {
 			return this._cache[src];
 		};
@@ -4122,7 +4112,6 @@
 		}
 		return CSSParsedCounterDeclaration;
 	}());
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	var parse = function (descriptor, style) {
 		var tokenizer = new Tokenizer();
 		var value = style !== null && typeof style !== 'undefined' ? style.toString() : descriptor.initialValue;

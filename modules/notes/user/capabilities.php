@@ -20,6 +20,8 @@ class Capabilities {
 	const READ_NOTES = 'read_notes_elementor-pro';
 	const READ_OTHERS_PRIVATE_NOTES = 'read_others_private_notes_elementor-pro';
 
+	const EDIT_POST = 'edit_post';
+
 	/**
 	 * All the capabilities includes the admin permissions
 	 *
@@ -125,7 +127,7 @@ class Capabilities {
 
 		?>
 		<br/>
-		<h2><?php echo esc_html__( 'Elementor Notes', 'elementor-pro' ); ?></h2>
+		<h2 id="e-notes"><?php echo esc_html__( 'Elementor Notes', 'elementor-pro' ); ?></h2>
 		<table class="form-table" role="presentation">
 			<tr>
 				<th>
@@ -246,5 +248,32 @@ class Capabilities {
 		}
 
 		return $caps;
+	}
+
+	/**
+	 * Check whether a user has access to Notes.
+	 *
+	 * @param int $user_id
+	 *
+	 * @return bool
+	 */
+	public static function can_read_notes( $user_id ) {
+		return user_can( $user_id, static::READ_NOTES );
+	}
+
+	/**
+	 * Check whether a user has edit access to specific post.
+	 *
+	 * @param int $user_id
+	 * @param int $post_id
+	 *
+	 * @return bool
+	 */
+	public static function can_edit_post( $user_id, $post_id ) {
+		if ( empty( $user_id ) || empty( $post_id ) ) {
+			return false;
+		}
+
+		return user_can( $user_id, static::EDIT_POST, $post_id );
 	}
 }

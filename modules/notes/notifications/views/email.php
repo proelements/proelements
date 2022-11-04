@@ -79,15 +79,10 @@
 
 			<?php
 			echo sprintf(
-				esc_html__(
-					'Contact the site admin or turn off notifications for Notes in your %s.',
-					'elementor-pro'
-				),
-				sprintf(
-					'<a href="%1$s" rel="noopener noreferrer" style="text-decoration: underline; color: #000;">%2$s</a>',
-					esc_url( admin_url( 'profile.php' ) ),
-					esc_html__( 'user profile', 'elementor-pro' )
-				)
+				/* translators: 1: Link opening tag, 2: Link closing tag. */
+				esc_html__( 'Contact the site admin or turn off notifications for Notes in your %1$suser profile%2$s.', 'elementor-pro' ),
+				sprintf( '<a href="%1$s" rel="noopener noreferrer" style="text-decoration: underline; color: #000;">', esc_url( admin_url( 'profile.php' ) ) ),
+				'</a>'
 			);
 			?>
 		</p>

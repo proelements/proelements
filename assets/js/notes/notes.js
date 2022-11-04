@@ -309,6 +309,8 @@ var Note = /*#__PURE__*/function (_BaseModel) {
 
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "_formattedLastActivityAt", '');
 
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "_formattedCreatedAt", '');
+
     return _this;
   }
 
@@ -326,6 +328,21 @@ var Note = /*#__PURE__*/function (_BaseModel) {
       }
 
       return this._formattedLastActivityAt;
+    }
+    /**
+     * TODO: Change to WP site settings format.
+     *
+     * @return {string} Created at date formatted.
+     */
+
+  }, {
+    key: "getFormattedCreatedAt",
+    value: function getFormattedCreatedAt() {
+      if (!this._formattedCreatedAt) {
+        this._formattedCreatedAt = this.createdAt.toLocaleString();
+      }
+
+      return this._formattedCreatedAt;
     }
     /**
      * Get the note deep link.
@@ -506,7 +523,7 @@ var User = /*#__PURE__*/function (_BaseModel) {
      * @param {Object} data
      */
     function createFromResponse(data) {
-      var _data$capabilities, _data$capabilities$no;
+      var _data$capabilities, _data$capabilities$no, _data$capabilities2, _data$capabilities2$p;
 
       return new User().init({
         id: data.id,
@@ -516,6 +533,9 @@ var User = /*#__PURE__*/function (_BaseModel) {
         capabilities: {
           notes: {
             read: (_data$capabilities = data.capabilities) === null || _data$capabilities === void 0 ? void 0 : (_data$capabilities$no = _data$capabilities.notes) === null || _data$capabilities$no === void 0 ? void 0 : _data$capabilities$no.can_read
+          },
+          post: {
+            edit: (_data$capabilities2 = data.capabilities) === null || _data$capabilities2 === void 0 ? void 0 : (_data$capabilities2$p = _data$capabilities2.post) === null || _data$capabilities2$p === void 0 ? void 0 : _data$capabilities2$p.can_edit
           }
         }
       });
@@ -1247,6 +1267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _commands___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./commands/ */ "../assets/js/commands/index.js");
 /* harmony import */ var _data_commands___WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data-commands/ */ "../assets/js/data-commands/index.js");
 /* harmony import */ var _hooks___WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./hooks/ */ "../assets/js/hooks/index.js");
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 
 
 
@@ -1299,6 +1320,8 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
       if (!_this.isInEditor()) {
         window.top.$e.extras.hashCommands.runOnce();
       }
+
+      _this.contextMenuNotesGroup();
     }); // Toggle notes mode when clicking the admin-bar item (initiated in `module.php`).
 
     window.addEventListener('DOMContentLoaded', function () {
@@ -1568,6 +1591,71 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
     key: "getPreviewFrame",
     value: function getPreviewFrame() {
       return this.isInEditor() ? elementor.$preview[0].contentWindow : window;
+    }
+  }, {
+    key: "contextMenuNotesGroup",
+    value: function contextMenuNotesGroup() {
+      var _this3 = this;
+
+      if (!this.isInEditor()) {
+        return;
+      }
+
+      var elTypes = ['widget', 'section', 'column', 'container'];
+      elTypes.forEach(function (type) {
+        elementor.hooks.addFilter("elements/".concat(type, "/contextMenuGroups"), _this3.contextMenuAddGroup);
+      });
+    }
+    /**
+     * Enable the 'Notes' context menu item
+     *
+     * @since 3.8.0
+     *
+     * @param {Array} groups
+     * @return {Array} The updated groups.
+     */
+
+  }, {
+    key: "contextMenuAddGroup",
+    value: function contextMenuAddGroup(groups) {
+      var notesGroup = _.findWhere(groups, {
+        name: 'notes'
+      }),
+          notesGroupIndex = groups.indexOf(notesGroup),
+          notesActionItem = {
+        name: 'open_notes',
+        title: __('Notes', 'elementor-pro'),
+        shortcut: '⇧+C',
+        isEnabled: function isEnabled() {
+          return true;
+        },
+        callback: function callback() {
+          return $e.route('notes');
+        }
+      }; // Create the Notes group if it doesn't exist
+
+
+      if (-1 === notesGroupIndex) {
+        var deleteGroup = _.findWhere(groups, {
+          name: 'delete'
+        }),
+            deleteGroupIndex = groups.indexOf(deleteGroup),
+            newGroupPosition = -1 !== deleteGroupIndex ? deleteGroupIndex : groups.length;
+
+        groups.splice(newGroupPosition, 0, {
+          name: 'notes',
+          actions: [notesActionItem]
+        });
+        return groups;
+      }
+
+      var openNotesAction = _.findWhere(notesGroup.actions, {
+        name: 'open_notes'
+      }),
+          openNotesActionIndex = notesGroup.actions.indexOf(openNotesAction);
+
+      groups[notesGroupIndex].actions[openNotesActionIndex] = notesActionItem;
+      return groups;
     }
   }]);
 

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2538,7 +2538,7 @@ var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runt
 var _React = _react["default"],
     useState = _React.useState,
     useRef = _React.useRef,
-    useCallback = _React.useCallback; // in milliseconds
+    useCallback = _React.useCallback; // In milliseconds
 
 var DEFAULT_DEBOUNCE_TIMEOUT = 600;
 /**
@@ -2583,9 +2583,7 @@ function SearchBox(props) {
     id: "search-input",
     name: "s",
     value: localValue,
-    onChange: onChange // Using "...", not ellipsis since its already translated. If this text is changed, we can use ellipsis since we would need a new translation anyhow.
-    // eslint-disable-next-line @wordpress/i18n-ellipsis
-    ,
+    onChange: onChange,
     placeholder: __('Search...', 'elementor-pro')
   }));
 }
@@ -2769,25 +2767,24 @@ function Acceptance(props) {
   var _useState = useState(props.value),
       _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
       localValue = _useState2[0],
-      setLocalValue = _useState2[1];
+      setLocalValue = _useState2[1],
+      id = props.field.id + '-' + props.value;
 
-  return (
-    /*#__PURE__*/
-    // eslint-disable-next-line jsx-a11y/label-has-for
-    _react["default"].createElement("label", {
-      className: "e-form-submissions-value-label"
-    }, /*#__PURE__*/_react["default"].createElement("input", {
-      type: "checkbox",
-      value: "on",
-      checked: props.isEditMode ? 'on' === localValue : 'on' === props.value,
-      onChange: function onChange(e) {
-        var value = e.target.checked ? 'on' : '';
-        setLocalValue(value);
-        props.onChange(value);
-      },
-      disabled: !props.isEditMode
-    }))
-  );
+  return /*#__PURE__*/_react["default"].createElement("label", {
+    className: "e-form-submissions-value-label",
+    htmlFor: id
+  }, /*#__PURE__*/_react["default"].createElement("input", {
+    id: id,
+    type: "checkbox",
+    value: "on",
+    checked: props.isEditMode ? 'on' === localValue : 'on' === props.value,
+    onChange: function onChange(e) {
+      var value = e.target.checked ? 'on' : '';
+      setLocalValue(value);
+      props.onChange(value);
+    },
+    disabled: !props.isEditMode
+  }));
 }
 
 Acceptance.propTypes = _objectSpread({}, _index.basePropTypes);
@@ -2880,33 +2877,32 @@ function Checkbox(props) {
   }, [localValue]);
   var options = (0, _useFormFieldOptions["default"])(props.field.options);
   return options.map(function (option) {
-    return (
-      /*#__PURE__*/
-      // eslint-disable-next-line jsx-a11y/label-has-for
-      _react["default"].createElement("label", {
-        className: "e-form-submissions-value-label",
-        key: option.value
-      }, /*#__PURE__*/_react["default"].createElement("input", {
-        type: "checkbox",
-        value: option.value,
-        checked: props.isEditMode ? localValue.includes(option.value) : value.includes(option.value),
-        onChange: function onChange(e) {
-          var checked = e.target.checked;
-          setLocalValue(function (prev) {
-            if (!checked) {
-              prev = prev.filter(function (item) {
-                return item !== option.value;
-              });
-            } else {
-              prev = [].concat((0, _toConsumableArray2["default"])(prev), [option.value]);
-            }
+    var id = props.field.id + '-' + option.value;
+    return /*#__PURE__*/_react["default"].createElement("label", {
+      className: "e-form-submissions-value-label",
+      key: option.value,
+      htmlFor: id
+    }, /*#__PURE__*/_react["default"].createElement("input", {
+      id: id,
+      type: "checkbox",
+      value: option.value,
+      checked: props.isEditMode ? localValue.includes(option.value) : value.includes(option.value),
+      onChange: function onChange(e) {
+        var checked = e.target.checked;
+        setLocalValue(function (prev) {
+          if (!checked) {
+            prev = prev.filter(function (item) {
+              return item !== option.value;
+            });
+          } else {
+            prev = [].concat((0, _toConsumableArray2["default"])(prev), [option.value]);
+          }
 
-            return prev;
-          });
-        },
-        disabled: !props.isEditMode
-      }), option.label)
-    );
+          return prev;
+        });
+      },
+      disabled: !props.isEditMode
+    }), option.label);
   });
 }
 
@@ -3157,7 +3153,7 @@ function SubmissionValue(props) {
     var _props$field;
 
     var key = (_props$field = props.field) === null || _props$field === void 0 ? void 0 : _props$field.type;
-    return components.hasOwnProperty(key) ? components[key] : defaultComponent;
+    return Object.prototype.hasOwnProperty.call(components, key) ? components[key] : defaultComponent;
   }, [props.field, props.value]);
   return /*#__PURE__*/_react["default"].createElement(Component, {
     value: props.value,
@@ -3239,23 +3235,22 @@ function Radio(props) {
 
   var options = (0, _useFormFieldOptions["default"])(props.field.options);
   return options.map(function (option) {
-    return (
-      /*#__PURE__*/
-      // eslint-disable-next-line jsx-a11y/label-has-for
-      _react["default"].createElement("label", {
-        className: "e-form-submissions-value-label",
-        key: option.value
-      }, /*#__PURE__*/_react["default"].createElement("input", {
-        type: "radio",
-        value: option.value,
-        checked: props.isEditMode ? option.value === localValue : option.value === props.value,
-        onChange: function onChange() {
-          setLocalValue(option.value);
-          props.onChange(option.value);
-        },
-        disabled: !props.isEditMode
-      }), option.label)
-    );
+    var id = props.field.id + '-' + option.value;
+    return /*#__PURE__*/_react["default"].createElement("label", {
+      className: "e-form-submissions-value-label",
+      key: option.value,
+      htmlFor: id
+    }, /*#__PURE__*/_react["default"].createElement("input", {
+      id: id,
+      type: "radio",
+      value: option.value,
+      checked: props.isEditMode ? option.value === localValue : option.value === props.value,
+      onChange: function onChange() {
+        setLocalValue(option.value);
+        props.onChange(option.value);
+      },
+      disabled: !props.isEditMode
+    }), option.label);
   });
 }
 
@@ -3495,7 +3490,7 @@ function Text(props) {
   var inputType = useMemo(function () {
     var _props$field;
 
-    return availableInputTypes.hasOwnProperty((_props$field = props.field) === null || _props$field === void 0 ? void 0 : _props$field.type) ? availableInputTypes[props.field.type] : defaultInputType;
+    return Object.prototype.hasOwnProperty.call(availableInputTypes, (_props$field = props.field) === null || _props$field === void 0 ? void 0 : _props$field.type) ? availableInputTypes[props.field.type] : defaultInputType;
   }, [props.field]);
   return props.isEditMode ? /*#__PURE__*/_react["default"].createElement("input", {
     type: inputType,
@@ -5378,7 +5373,7 @@ function useMethodsReducer(methods, initialState) {
   var init = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
 
   var _React$useReducer = React.useReducer(function (currentState, action) {
-    if (!methods.hasOwnProperty(action.type)) {
+    if (!Object.prototype.hasOwnProperty.call(methods, action.type)) {
       throw Error("The action type ".concat(action.type, " is not exists"));
     }
 
@@ -6232,7 +6227,7 @@ function Index() {
       props: function props(item) {
         return {
           to: "/".concat(item.id),
-          // override the default behavior of click event
+          // Override the default behavior of click event
           onClick: undefined
         };
       },
@@ -6452,8 +6447,6 @@ function Index() {
   });
 
   if (_useDataAction7.STATUS_SUCCESS !== fetchOptionsStatus) {
-    // Using "...", not ellipsis since its already translated. If this text is changed, we can use ellipsis since we would need a new translation anyhow.
-    // eslint-disable-next-line @wordpress/i18n-ellipsis
     return __('Loading...', 'elementor-pro');
   }
 
@@ -6759,9 +6752,7 @@ function Item(props) {
   if (!Object.keys(data).length) {
     if (error) {
       return /*#__PURE__*/_react["default"].createElement("p", null, " ", error.message || __('Not Found', 'elementor-pro'), " ");
-    } // Using "...", not ellipsis since its already translated. If this text is changed, we can use ellipsis since we would need a new translation anyhow.
-    // eslint-disable-next-line @wordpress/i18n-ellipsis
-
+    }
 
     return __('Loading...', 'elementor-pro');
   }

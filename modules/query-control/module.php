@@ -6,6 +6,7 @@ use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use Elementor\TemplateLibrary\Source_Local;
 use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Modules\QueryControl\Controls\Template_Query;
 use ElementorPro\Modules\QueryControl\Classes\Elementor_Post_Query;
 use ElementorPro\Modules\QueryControl\Classes\Elementor_Related_Query;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Posts;
@@ -830,6 +831,8 @@ class Module extends Module_Base {
 		$controls_manager->add_group_control( Group_Control_Related::get_type(), new Group_Control_Related() );
 
 		$controls_manager->register( new Query() );
+
+		$controls_manager->register( new Template_Query() );
 	}
 
 	/**

@@ -526,6 +526,10 @@ class Conditions_Manager {
 		return $this->cache;
 	}
 
+	public function clear_cache() {
+		$this->cache->clear();
+	}
+
 	public function clear_location_cache() {
 		$this->location_cache = [];
 	}

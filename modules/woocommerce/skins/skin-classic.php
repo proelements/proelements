@@ -86,8 +86,4 @@ class Skin_Classic extends Skin_Base {
 
 		Module::instance()->remove_products_post_class_filter();
 	}
-
-	public function render_amp() {
-
-	}
 }

@@ -22,11 +22,12 @@ export const SiteTemplateHeader = ( props ) => {
 				<MetaDataIcon icon="eicon-user-circle-o" content={ props.author } />
 				<MetaDataIcon icon="eicon-clock-o" content={ props.modifiedDate } />
 			</>
-		);
+		),
+		IndicatorDot = props.showInstances ? <Indicator active={ props.isActive } /> : '';
 
 	return (
 		<CardHeader>
-			<Indicator active={ props.isActive } />
+			{ IndicatorDot }
 			<Heading tag="h1" title={ title } variant="text-sm" className="eps-card__headline">{ title }</Heading>
 			{ props.extended && <MetaData /> }
 			{ props.extended && <ActionButtons /> }
@@ -42,4 +43,5 @@ SiteTemplateHeader.propTypes = {
 	modifiedDate: PropTypes.string,
 	status: PropTypes.string,
 	title: PropTypes.string,
+	showInstances: PropTypes.bool,
 };

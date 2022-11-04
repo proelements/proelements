@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -66,11 +66,11 @@ __webpack_require__(/*! core-js/modules/es.regexp.sticky.js */ "../node_modules/
 __webpack_require__(/*! core-js/modules/es.regexp.to-string.js */ "../node_modules/core-js/modules/es.regexp.to-string.js");
 
 // Ref: https://stackoverflow.com/questions/26088849/url-fragment-allowed-characters
-var urlFragmentPattern = /.*#[\w\-\/$.+()*@?~!&',;=:%]*$/;
+var urlFragmentPattern = /.*#[\w\-/$.+()*@?~!&',;=:%]*$/;
 var _default = {
   // Disable using data attribute.
   isDisabled: function isDisabled(a) {
-    return a.dataset.hasOwnProperty('eDisablePageTransition');
+    return Object.prototype.hasOwnProperty.call(a.dataset, 'eDisablePageTransition');
   },
   // Allow only links from same origin and without a URL fragment (e.g. #some-string).
   isEmptyHref: function isEmptyHref(a) {

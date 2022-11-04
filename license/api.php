@@ -30,6 +30,8 @@ class API {
 
 	const TRANSIENT_KEY_PREFIX = 'elementor_pro_remote_info_api_data_';
 
+	protected static $transient_data = [];
+
 	/**
 	 * @param array $body_args
 	 *
@@ -109,13 +111,20 @@ class API {
 			'value' => json_encode( $value ),
 		];
 
-		update_option( $cache_key, $data, false );
+		$updated = update_option( $cache_key, $data, false );
+		if ( false === $updated ) {
+			self::$transient_data[ $cache_key ] = $data;
+		}
 	}
 
 	private static function get_transient( $cache_key ) {
-		$cache = get_option( $cache_key );
+		$cache = self::$transient_data[ $cache_key ] ?? get_option( $cache_key );
 
-		if ( empty( $cache['timeout'] ) || current_time( 'timestamp' ) > $cache['timeout'] ) {
+		if ( empty( $cache['timeout'] ) ) {
+			return false;
+		}
+
+		if ( current_time( 'timestamp' ) > $cache['timeout'] && is_user_logged_in() ) {
 			return false;
 		}
 
@@ -275,7 +284,7 @@ class API {
 	public static function get_errors() {
 		return [
 			'no_activations_left' => sprintf(
-			/* translators: 1: Bold text Open Tag, 2: Bold text closing tag, 3: Link open tag, 4: Link closing tag. */
+				/* translators: 1: Bold text opening tag, 2: Bold text closing tag, 3: Link opening tag, 4: Link closing tag. */
 				esc_html__( '%1$sYou have no more activations left.%2$s %3$sPlease upgrade to a more advanced license%4$s (you\'ll only need to cover the difference).', 'elementor-pro' ),
 				'<strong>',
 				'</strong>',
@@ -283,11 +292,8 @@ class API {
 				'</a>'
 			),
 			'expired' => printf(
-			/* translators: 1: Bold text Open Tag, 2: Bold text closing tag, 3: Link open tag, 4: Link closing tag. */
-				esc_html__(
-					'%1$sOh no! Your Elementor Pro license has expired.%2$s Want to keep creating secure and high-performing websites? Renew your subscription to regain access to all of the Elementor Pro widgets, templates, updates & more. %3$sRenew now%4$s',
-					'elementor-pro'
-				),
+				/* translators: 1: Bold text opening tag, 2: Bold text closing tag, 3: Link opening tag, 4: Link closing tag. */
+				esc_html__( '%1$sOh no! Your Elementor Pro license has expired.%2$s Want to keep creating secure and high-performing websites? Renew your subscription to regain access to all of the Elementor Pro widgets, templates, updates & more. %3$sRenew now%4$s', 'elementor-pro' ),
 				'<strong>',
 				'</strong>',
 				'<a href="https://go.elementor.com/renew/" target="_blank">',
@@ -295,7 +301,7 @@ class API {
 			),
 			'missing' => esc_html__( 'Your license is missing. Please check your key again.', 'elementor-pro' ),
 			'revoked' => sprintf(
-			/* translators: 1: Bold text Open Tag, 2: Bold text closing tag. */
+				/* translators: 1: Bold text opening tag, 2: Bold text closing tag. */
 				esc_html__( '%1$sYour license key has been cancelled%2$s (most likely due to a refund request). Please consider acquiring a new license.', 'elementor-pro' ),
 				'<strong>',
 				'</strong>'

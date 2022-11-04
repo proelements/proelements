@@ -99,6 +99,7 @@ class Site_Logo extends Widget_Image {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => sprintf(
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'To edit the logo of your site, go to %1$sSite Identity%2$s.', 'elementor-pro' ),
 					'<a href="#" onclick="elementorPro.modules.themeBuilder.openSiteIdentity( event )" >',
 					'</a>'

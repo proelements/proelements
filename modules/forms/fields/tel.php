@@ -32,7 +32,7 @@ class Tel extends Field_Base {
 			return;
 		}
 		if ( preg_match( '/^[0-9()#&+*-=.]+$/', $field['value'] ) !== 1 ) {
-			$ajax_handler->add_error( $field['id'], esc_html__( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
+			$ajax_handler->add_error( $field['id'], esc_html__( 'The field accepts only numbers and phone characters (#, -, *, etc).', 'elementor-pro' ) );
 		}
 	}
 }

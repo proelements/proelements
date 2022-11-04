@@ -445,7 +445,7 @@ class Mailchimp extends Integration_Base {
 					'field_args' => [
 						'type' => 'text',
 						'desc' => sprintf(
-							/* translators: 1: Link open tag, 2: Link closing tag. */
+							/* translators: 1: Link opening tag, 2: Link closing tag. */
 							esc_html__( 'To integrate with our forms you need an %1$sAPI Key%2$s.', 'elementor-pro' ),
 							'<a href="https://kb.mailchimp.com/integrations/api-integrations/about-api-keys" target="_blank">',
 							'</a>'

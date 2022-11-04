@@ -48,16 +48,43 @@ class Posts extends Posts_Base {
 		$this->register_pagination_section_controls();
 	}
 
-	public function query_posts() {
+	/**
+	 * Get Query Name
+	 *
+	 * Returns the query control name used in the widget's main query.
+	 *
+	 * @since 3.8.0
+	 *
+	 * @return string
+	 */
+	public function get_query_name() {
+		return $this->get_name();
+	}
 
+	public function query_posts() {
 		$query_args = [
-			'posts_per_page' => $this->get_current_skin()->get_instance_value( 'posts_per_page' ),
+			'posts_per_page' => $this->get_posts_per_page_value(),
 			'paged' => $this->get_current_page(),
 		];
 
 		/** @var Module_Query $elementor_query */
 		$elementor_query = Module_Query::instance();
-		$this->query = $elementor_query->get_query( $this, 'posts', $query_args, [] );
+		$this->query = $elementor_query->get_query( $this, $this->get_query_name(), $query_args, [] );
+	}
+
+	/**
+	 * Get Posts Per Page Value
+	 *
+	 * Returns the value of the Posts Per Page control of the widget. This method was created because in some cases,
+	 * the control is registered in the widget, and in some cases, it is registered in a widget skin.
+	 *
+	 * @since 3.8.0
+	 * @access protected
+	 *
+	 * @return mixed
+	 */
+	protected function get_posts_per_page_value() {
+		return $this->get_current_skin()->get_instance_value( 'posts_per_page' );
 	}
 
 	protected function register_query_section_controls() {
@@ -82,5 +109,4 @@ class Posts extends Posts_Base {
 
 		$this->end_controls_section();
 	}
-
 }

@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\Notes\Data;
 
 use Elementor\Core\Utils\Collection;
 use ElementorPro\Modules\Notes\Data\Endpoints\Users_Endpoint;
+use ElementorPro\Modules\Notes\Database\Transformers\User_Transformer;
 use ElementorPro\Modules\Notes\Utils;
 use Elementor\Data\V2\Base\Controller as Base_Controller;
 use Elementor\Data\V2\Base\Exceptions\Data_Exception;
@@ -26,6 +27,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Controller extends Base_Controller {
 	public function get_name() {
 		return 'notes';
+	}
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->user_transformer = new User_Transformer();
 	}
 
 	public function register_endpoints() {
@@ -320,6 +327,8 @@ class Controller extends Base_Controller {
 
 		$notes = $notes_query->get()->filter( function ( Note $note ) {
 			return current_user_can( Capabilities::READ_NOTES, $note );
+		} )->map( function ( Note $note ) {
+			return $this->transform_users( $note );
 		} );
 
 		return [
@@ -360,12 +369,41 @@ class Controller extends Base_Controller {
 			throw new Error_404();
 		}
 
+		$note = $this->transform_users( $note );
 		$note->attach_user_capabilities( $user_id );
 
 		return [
 			'data' => $note,
 			'meta' => [],
 		];
+	}
+
+	/**
+	 * Run all user models in the note through user transformer.
+	 *
+	 * @param Note $note
+	 *
+	 * @return Note
+	 */
+	protected function transform_users( Note $note ) {
+		if ( ! empty( $note->author ) ) {
+			$note->author = $this->user_transformer->transform( $note->author );
+		}
+
+		if ( ! empty( $note->readers ) ) {
+			$note->readers = $note->readers->map( function ( User $user ) {
+				return $this->user_transformer->transform( $user );
+			} );
+		}
+
+		// If the note has replies, recursively run the function for each reply note.
+		if ( ! empty( $note->replies ) ) {
+			$note->replies = $note->replies->map( function ( Note $reply ) {
+				return $this->transform_users( $reply );
+			} );
+		}
+
+		return $note;
 	}
 
 	/**
@@ -655,6 +693,7 @@ class Controller extends Base_Controller {
 		if ( $note->is_resolved === $request->get_param( 'is_resolved' ) ) {
 			throw new Data_Exception(
 				sprintf(
+					/* translators: %s: Resolved note. */
 					esc_html__( '\'is_resolved\' is already set to `%s`.', 'elementor-pro' ),
 					$note->is_resolved
 				),

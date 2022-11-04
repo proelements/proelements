@@ -1,12 +1,15 @@
 <?php
 namespace ElementorPro\Core\App\Modules\SiteEditor;
 
+use Elementor\Core\Admin\Menu\Admin_Menu_Manager;
 use Elementor\Core\Experiments\Manager;
 use Elementor\TemplateLibrary\Source_Local;
 use Elementor\Core\Frontend\Render_Mode_Manager;
 use ElementorPro\Core\App\Modules\SiteEditor\Data\Controller;
 use Elementor\Core\Base\Module as BaseModule;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use ElementorPro\Modules\ThemeBuilder\AdminMenuItems\Theme_Builder_Menu_Item;
+use ElementorPro\Modules\ThemeBuilder\Module as Theme_Builder_Table_View;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
 
@@ -112,6 +115,19 @@ class Module extends BaseModule {
 		);
 	}
 
+	private function register_admin_menu( Admin_Menu_Manager $admin_menu_manager ) {
+		if ( ! Plugin::elementor()->experiments->is_feature_active( 'theme_builder_v2' ) ) {
+			return;
+		}
+
+		$admin_menu_manager->unregister( add_query_arg( 'tabs_group', ThemeBuilderModule::ADMIN_LIBRARY_TAB_GROUP, Source_Local::ADMIN_MENU_SLUG ) );
+
+		$admin_menu_manager->register(
+			Plugin::elementor()->app->get_base_url() . '#/site-editor',
+			new Theme_Builder_Menu_Item()
+		);
+	}
+
 	private function add_finder_item( array $categories ) {
 		if ( ! Plugin::elementor()->experiments->is_feature_active( 'theme_builder_v2' ) ) {
 			return $categories;
@@ -143,7 +159,16 @@ class Module extends BaseModule {
 			$this->add_default_new_site_editor_experiments( $manager );
 		} );
 
+		add_action( 'elementor/admin/menu/register', function ( Admin_Menu_Manager $admin_menu ) {
+			$this->register_admin_menu( $admin_menu );
+		}, Theme_Builder_Table_View::ADMIN_MENU_PRIORITY + 1 );
+
+		// TODO: BC - Remove after `Admin_Menu_Manager` will be the standard.
 		add_action( 'admin_menu', function () {
+			if ( did_action( 'elementor/admin/menu/register' ) ) {
+				return;
+			}
+
 			$this->register_site_editor_menu();
 		}, 23 /* After old theme builder */ );
 

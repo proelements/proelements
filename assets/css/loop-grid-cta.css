@@ -1,0 +1,82 @@
+/*! pro-elements - v3.8.0 - 30-10-2022 */
+.e-loop-empty-view__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+}
+.e-loop-empty-view__box {
+  min-height: 413px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.e-loop-empty-view__box-inner {
+  border: 1px dashed #d5dadf;
+  margin: 10px;
+  width: 100%;
+  padding: 10px;
+  font-size: 12px;
+  color: #a4afb7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-family: Roboto, sans-serif;
+}
+.e-loop-empty-view__box-inner img {
+  max-height: 99px;
+  margin-bottom: 28px;
+}
+.e-loop-empty-view__box-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.e-loop-empty-view__box-description {
+  margin-bottom: 12px;
+}
+.e-loop-empty-view__box-cta {
+  color: #ffffff;
+  background-color: #a4afb7;
+  padding: 6px 8px;
+  border-radius: 3px;
+  -webkit-transition-property: background, color, opacity, -webkit-box-shadow;
+  transition-property: background, color, opacity, -webkit-box-shadow;
+  -o-transition-property: background, color, box-shadow, opacity;
+  transition-property: background, color, box-shadow, opacity;
+  transition-property: background, color, box-shadow, opacity, -webkit-box-shadow;
+  -webkit-transition-duration: 0.3s;
+       -o-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+.e-loop-empty-view__box-cta:hover {
+  background-color: #6d7882;
+  color: #ffffff;
+}
+.e-loop-empty-view__box--active {
+  border: 2px solid #fcb92c;
+}
+
+.elementor-widget-loop-grid .elementor-grid.e-loop-empty-view__container {
+  grid-column-gap: calc(var(--grid-column-gap) - 20px);
+}
+/*# sourceMappingURL=loop-grid-cta.css.map */

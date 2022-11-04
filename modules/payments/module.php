@@ -389,8 +389,8 @@ class Module extends Module_Base {
 					'label' => esc_html__( 'Test Secret key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						/* translators: 1: Link to stripe api key explanation, 2: Link closing tag. */
 						'desc' => sprintf(
+							/* translators: 1: Link to stripe api key explanation, 2: Link closing tag. */
 							esc_html__( 'Enter your test secret key %1$slink%2$s.', 'elementor-pro' ),
 							'<a href=" ' . self::WP_DASH_STRIPE_API_KEYS_LINK . ' " target="_blank">',
 							'</a>'
@@ -407,8 +407,8 @@ class Module extends Module_Base {
 					'label' => esc_html__( 'Live Secret key', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						/* translators: %1$s: Link to stripe api key explanation, %2$s: Link closing tag. */
 						'desc' => sprintf(
+							/* translators: 1: Link to stripe api key explanation, 2: Link closing tag. */
 							esc_html__( 'Enter your Live secret key %1$slink%2$s.', 'elementor-pro' ),
 							'<a href=" ' . self::WP_DASH_STRIPE_API_KEYS_LINK . ' " target="_blank">',
 							'</a>'
@@ -424,9 +424,9 @@ class Module extends Module_Base {
 				'stripe_legal_disclaimer' => [
 					'field_args' => [
 						'type' => 'raw_html',
-						/* translators: %1$s: <br />. */
 						'html' => sprintf(
-							esc_html__( ' Please note: The Stripe name and logos are trademarks or service marks of Stripe, Inc.or its affiliates in the U.S. and other countries.  %1$s Other names may be trademarks of their respective owners.', 'elementor-pro' ),
+							/* translators: %s: <br />. */
+							esc_html__( ' Please note: The Stripe name and logos are trademarks or service marks of Stripe, Inc. or its affiliates in the U.S. and other countries. %s Other names may be trademarks of their respective owners.', 'elementor-pro' ),
 							'<br />'
 						),
 					],

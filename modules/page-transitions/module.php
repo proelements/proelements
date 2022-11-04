@@ -111,8 +111,12 @@ class Module extends Module_Base {
 		// (since the `add_page_transitions_controls` registers the same section ID).
 		remove_action( 'elementor/element/after_section_end', [ $this, 'register_controls' ] );
 
-		$link = sprintf( '<a href="%s" target="_blank">%s</a>', admin_url( 'admin.php?page=elementor#tab-experiments' ), esc_html__( 'Experiments', 'elementor-pro' ) );
-		$message = sprintf( esc_html__( 'This feature is currently an experiment, you can turn it on in Elementor --> Settings --> %s.', 'elementor-pro' ), $link );
+		$message = sprintf(
+			/* translators: 1: Link opening tag, 2: Link closing tag. */
+			esc_html__( 'This feature is currently an experiment, you can turn it on in Elementor > Settings > %1$sExperiments%2$s.', 'elementor-pro' ),
+			sprintf( '<a href="%s" target="_blank">', admin_url( 'admin.php?page=elementor#tab-experiments' ) ),
+			'</a>'
+		);
 
 		Plugin::elementor()->controls_manager->add_page_transitions_controls( $controls_stack, Settings_Page_Transitions::TAB_ID, [ $message ] );
 	}

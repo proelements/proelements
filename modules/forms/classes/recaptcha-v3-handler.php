@@ -57,7 +57,7 @@ class Recaptcha_V3_Handler extends Recaptcha_Handler {
 			'label' => esc_html__( 'reCAPTCHA V3', 'elementor-pro' ),
 			'callback' => function() {
 				echo sprintf(
-					/* translators: 1: Link open tag, 2: Link closing tag. */
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( '%1$sreCAPTCHA V3%2$s is a free service by Google that protects your website from spam and abuse. It does this while letting your valid users pass through with ease.', 'elementor-pro' ),
 					'<a href="https://www.google.com/recaptcha/intro/v3.html" target="_blank">',
 					'</a>'

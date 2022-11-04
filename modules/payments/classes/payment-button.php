@@ -343,7 +343,11 @@ abstract class Payment_Button extends Widget_Button {
 			'open_in_new_window',
 			[
 				'type' => Controls_Manager::SWITCHER,
-				'label' => sprintf( esc_html__( 'Open %s In New Tab', 'elementor-pro' ), $this->get_merchant_name() ),
+				'label' => sprintf(
+					/* translators: %s: Merchant name. */
+					esc_html__( 'Open %s In New Tab', 'elementor-pro' ),
+					$this->get_merchant_name()
+				),
 				'default' => 'yes',
 				'label_off' => esc_html__( 'No', 'elementor-pro' ),
 				'label_on' => esc_html__( 'Yes', 'elementor-pro' ),
@@ -383,7 +387,11 @@ abstract class Payment_Button extends Widget_Button {
 		$this->add_control(
 			'error_message_' . self::ERROR_MESSAGE_PAYMENT_METHOD,
 			[
-				'label' => sprintf( esc_html__( '%s Not Connected', 'elementor-pro' ), $this->get_merchant_name() ),
+				'label' => sprintf(
+					/* translators: %s: Merchant name. */
+					esc_html__( '%s Not Connected', 'elementor-pro' ),
+					$this->get_merchant_name()
+				),
 				'type' => Controls_Manager::TEXT,
 				'default' => $error_messages[ self::ERROR_MESSAGE_PAYMENT_METHOD ],
 				'placeholder' => $error_messages[ self::ERROR_MESSAGE_PAYMENT_METHOD ],
@@ -466,7 +474,11 @@ abstract class Payment_Button extends Widget_Button {
 		$this->add_control(
 			'message_color_' . self::ERROR_MESSAGE_PAYMENT_METHOD,
 			[
-				'label' => sprintf( esc_html__( '%s Not Connected Color', 'elementor-pro' ), $this->get_merchant_name() ),
+				'label' => sprintf(
+					/* translators: %s: Merchant name. */
+					esc_html__( '%s Not Connected Color', 'elementor-pro' ),
+					$this->get_merchant_name()
+				),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-message.elementor-error-message-' . self::ERROR_MESSAGE_PAYMENT_METHOD => 'color: {{COLOR}};',

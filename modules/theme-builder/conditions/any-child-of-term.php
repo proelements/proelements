@@ -14,6 +14,7 @@ class Any_Child_Of_Term extends Child_Of_Term {
 	}
 
 	public function get_label() {
+		/* translators: %s: Singular taxonomy label. */
 		return sprintf( esc_html__( 'Any Child %s Of', 'elementor-pro' ), $this->taxonomy->labels->singular_name );
 	}
 

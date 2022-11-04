@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -195,12 +195,12 @@ var CustomAssetsBase = /*#__PURE__*/function (_elementorModules$Vie) {
     value: function handleSubmit(event) {
       var _this = this;
 
-      // if we know there is a file already, return to continue submission normally
+      // If we know there is a file already, return to continue submission normally
       if (this.fileWasUploaded) {
         return;
       }
 
-      var hasValue = this.checkInputsForValues(); // method exists in the child classes
+      var hasValue = this.checkInputsForValues(); // Method exists in the child classes
       // If the file input is not empty, continue the submission process
 
       if (hasValue) {
@@ -209,15 +209,15 @@ var CustomAssetsBase = /*#__PURE__*/function (_elementorModules$Vie) {
         return;
       }
 
-      event.preventDefault(); // prevent new asset submission
+      event.preventDefault(); // Prevent new asset submission
       // If no value was found, stop submission and display a notice modal
 
       this.showAlertDialog('noData', this.getSettings('notice'), function () {
         return _this.onDialogDismiss();
-      }, // onConfirm
+      }, // OnConfirm
       function () {
         return _this.onDialogDismiss();
-      } // onHide
+      } // OnHide
       );
       return false;
     }
@@ -485,7 +485,7 @@ var CustomIcons = /*#__PURE__*/function (_CustomAssetsBase) {
     value: function onSuccess(data) {
       var _this3 = this;
 
-      // it is possible to add a `dropzoneElement` param to this method for implementing upload progress bar
+      // It is possible to add a `dropzoneElement` param to this method for implementing upload progress bar
       if (data.data.errors) {
         var id, message;
         jQuery.each(data.data.errors, function (errorId, errorMessage) {
@@ -1010,9 +1010,9 @@ var DropZoneField = /*#__PURE__*/function (_elementorModules$Vie) {
         enctype: 'multipart/form-data',
         contentType: false,
         processData: false,
-        //TODO: Do something with upload progress
+        // TODO: Do something with upload progress
 
-        /*xhr: () => {
+        /* xhr: () => {
         	const xhr = jQuery.ajaxSettings.xhr();
         	xhr.upload.onprogress = ( evt ) => {
         		if ( evt.lengthComputable ) {
@@ -1125,7 +1125,7 @@ module.exports = {
         id = $btn.data('template-id'),
         repeaterBlock;
 
-    if (!self.counters.hasOwnProperty(id)) {
+    if (!Object.prototype.hasOwnProperty.call(self.counters, id)) {
       self.counters[id] = self.countBlocks($btn);
     }
 
@@ -1181,7 +1181,7 @@ module.exports = {
 
       if ($table.find(selector).length) {
         value = $table.find(selector).val();
-      } //filter hook
+      } // Filter hook
 
 
       var computedLabel = self.triggerHandler('repeaterComputedLabel', [$table, $toggleLabel, value]); // For some browsers, `attr` is undefined; for others,  `attr` is false.  Check for both.
@@ -1306,7 +1306,7 @@ module.exports = {
       _wpPluploadSettings.defaults.filters.mime_types[0].extensions = ext;
     });
     frame.on('close', function () {
-      // restore allowed upload extensions
+      // Restore allowed upload extensions
       _wpPluploadSettings.defaults.filters.mime_types[0].extensions = oldExtensions;
       self.replaceButtonClass(self.$btn);
     });

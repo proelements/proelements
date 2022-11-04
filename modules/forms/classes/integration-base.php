@@ -18,7 +18,7 @@ abstract class Integration_Base extends Action_Base {
 	public static function global_api_control( $widget, $api_key = '', $label = '', $condition = [], $id = '' ) {
 		if ( empty( $api_key ) ) {
 			$html = sprintf(
-				/* translators: 1: Integration label, 2: Link open tag, 3: Link closing tag. */
+				/* translators: 1: Integration label, 2: Link opening tag, 3: Link closing tag. */
 				esc_html__( 'Set your %1$s in the %2$sIntegrations Settings%3$s.', 'elementor-pro' ),
 				$label,
 				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
@@ -27,7 +27,7 @@ abstract class Integration_Base extends Action_Base {
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-warning';
 		} else {
 			$html = sprintf(
-				/* translators: 1: Integration label, 2: Link open tag, 3: Link closing tag. */
+				/* translators: 1: Integration label, 2: Link opening tag, 3: Link closing tag. */
 				esc_html__( 'You are using %1$s set in the %2$sIntegrations Settings%3$s.', 'elementor-pro' ),
 				$label,
 				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
@@ -36,7 +36,7 @@ abstract class Integration_Base extends Action_Base {
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-info';
 		}
 
-		/* translators: %s: Integration label */
+		/* translators: %s: Integration label. */
 		$html .= ' ' . sprintf( esc_html__( 'You can also set a different %s by choosing "Custom".', 'elementor-pro' ), $label );
 
 		$widget->add_control(

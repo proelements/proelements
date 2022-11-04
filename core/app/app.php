@@ -6,6 +6,7 @@ use ElementorPro\Plugin;
 use ElementorPro\Core\App\Modules\SiteEditor\Module as SiteEditor;
 use ElementorPro\Core\App\Modules\KitLibrary\Module as KitLibrary;
 use ElementorPro\Core\App\Modules\Onboarding\Module as Onboarding;
+use ElementorPro\Core\App\Modules\ImportExport\Module as ImportExport;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -85,6 +86,7 @@ class App extends BaseApp {
 		$this->add_component( 'site-editor', new SiteEditor() );
 		$this->add_component( 'kit-library', new KitLibrary() );
 		$this->add_component( 'onboarding', new Onboarding() );
+		$this->add_component( 'import-export', new ImportExport() );
 
 		add_action( 'elementor/app/init', [ $this, 'init' ] );
 

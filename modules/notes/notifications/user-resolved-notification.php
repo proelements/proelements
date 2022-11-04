@@ -11,6 +11,7 @@ class User_Resolved_Notification extends Base_Notes_Notification {
 
 	protected function create_email_message( $notifiable ) {
 		$subject = sprintf(
+			/* translators: 1: Note ID, 2: Site name, 3: Page name. */
 			esc_html__( 'Note #%1$s resolved on %2$s - %3$s', 'elementor-pro' ),
 			$this->note->get_thread_id(),
 			get_bloginfo( 'name' ),

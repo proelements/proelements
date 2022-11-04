@@ -37,16 +37,16 @@ class Facebook_SDK_Manager {
 	 */
 	public static function add_app_id_control( $widget ) {
 		if ( ! self::get_app_id() ) {
-			/* translators: 1: Setting Page link open tag, 2: Link closing tag. */
 			$html = sprintf(
+				/* translators: 1: Setting Page Link opening tag, 2: Link closing tag. */
 				esc_html__( 'Set your Facebook App ID in the %1$sIntegrations Settings%2$s', 'elementor-pro' ),
 				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
 				'</a>'
 			);
 			$content_classes = 'elementor-panel-alert elementor-panel-alert-warning';
 		} else {
-			/* translators: 1: App ID, 2: Setting Page link open tag, 3: Link closing tag. */
 			$html = sprintf(
+				/* translators: 1: App ID, 2: Setting Page Link opening tag, 3: Link closing tag. */
 				esc_html__( 'You are connected to Facebook App %1$s, %2$sChange App%3$s', 'elementor-pro' ),
 				self::get_app_id(),
 				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
@@ -69,7 +69,7 @@ class Facebook_SDK_Manager {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => sprintf(
-					/* translators: 1: Link open tag, 2: Link close tag. */
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'For visitors from the EU, Facebook widgets will only work for site visitors if they have logged into Facebook and consented to cookies. %1$sLearn more%2$s', 'elementor-pro' ),
 					sprintf( '<a href="%s" target="_blank">', 'https://developers.facebook.com/docs/plugins/' ),
 					'</a>'
@@ -119,7 +119,7 @@ class Facebook_SDK_Manager {
 				echo '<hr><h2>' . esc_html__( 'Facebook SDK', 'elementor-pro' ) . '</h2>';
 
 				echo sprintf(
-					/* translators: 1: Link open tag, 2: Link closing tag. */
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'Facebook SDK lets you connect to your %1$sdedicated application%2$s so you can track the Facebook Widgets analytics on your site.', 'elementor-pro' ),
 					'<a href="https://developers.facebook.com/docs/apps/register/" target="_blank">',
 					'</a>'
@@ -133,8 +133,8 @@ class Facebook_SDK_Manager {
 					'label' => esc_html__( 'App ID', 'elementor-pro' ),
 					'field_args' => [
 						'type' => 'text',
-						/* translators: 1: Link open tag, 2: Link closing tag. */
 						'desc' => sprintf(
+							/* translators: 1: Link opening tag, 2: Link closing tag. */
 							esc_html__( 'Remember to add the domain to your %1$sApp Domains%2$s', 'elementor-pro' ),
 							sprintf( '<a href="%s" target="_blank">', $this->get_app_settings_url() ),
 							'</a>'

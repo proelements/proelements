@@ -1,12 +1,18 @@
 <?php
 namespace ElementorPro\Modules\Popup;
 
+use Elementor\Core\Admin\Menu\Admin_Menu_Manager;
 use Elementor\Core\Admin\Menu\Main as MainMenu;
+use Elementor\Core\Base\Document as DocumentBase;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use Elementor\Core\Documents_Manager;
 use Elementor\Core\DynamicTags\Manager as DynamicTagsManager;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Core\Behaviors\Feature_Lock;
+use ElementorPro\License\API;
+use ElementorPro\Modules\Popup\AdminMenuItems\Popups_Menu_Item;
+use ElementorPro\Modules\Popup\AdminMenuItems\Popups_Promotion_Menu_Item;
 use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 use ElementorPro\Plugin;
 
@@ -17,9 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Module extends Module_Base {
 	const DOCUMENT_TYPE = 'popup';
 
+	const PROMOTION_MENU_SLUG = 'e-popups';
+
 	public function __construct() {
 		parent::__construct();
 
+		// TODO: Maybe just ignore all of those when the user can't use popups?
 		add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
 		add_action( 'elementor/theme/register_locations', [ $this, 'register_location' ] );
 		add_action( 'elementor/dynamic_tags/register', [ $this, 'register_tag' ] );
@@ -33,9 +42,18 @@ class Module extends Module_Base {
 				$this->register_admin_menu( $menu );
 			} );
 		} else {
+			add_action( 'elementor/admin/menu/register', function( Admin_Menu_Manager $admin_menu_manager ) {
+				if ( $this->can_use_popups() ) {
+					$admin_menu_manager->register( $this->get_admin_url( true ), new Popups_Menu_Item() );
+				} else {
+					$admin_menu_manager->register( static::PROMOTION_MENU_SLUG, new Popups_Promotion_Menu_Item() );
+				}
+			} );
+
+			// TODO: BC - Remove in the future.
 			add_action( 'admin_menu', function() {
 				$this->register_admin_menu_legacy();
-			} );
+			}, 21 /* After `Admin_Menu_Manager` */ );
 		}
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
@@ -125,6 +143,10 @@ class Module extends Module_Base {
 	 * @access private
 	 */
 	private function register_admin_menu_legacy() {
+		if ( did_action( 'elementor/admin/menu/register' ) ) {
+			return;
+		}
+
 		add_submenu_page(
 			Source_Local::ADMIN_MENU_SLUG,
 			'',
@@ -142,18 +164,13 @@ class Module extends Module_Base {
 			'keywords' => [ 'template', 'popup', 'library' ],
 		];
 
-		// Backwards compatibility - Remove after ED-4826 is merged.
-		if ( empty( $categories['create']['items']['popup'] ) ) {
-			$categories['create']['items']['popups'] = [
-				'title' => esc_html__( 'Add New Popup', 'elementor-pro' ),
-				'icon' => 'plus-circle-o',
-				'url' => $this->get_admin_url() . '#add_new',
-				'keywords' => [ 'template', 'theme', 'popup', 'new', 'create' ],
-			];
+		if ( ! $this->can_use_popups() ) {
+			$lock = new Feature_Lock( [ 'type' => 'popup' ] );
+
+			$categories['general']['items']['popups']['lock'] = $lock->get_config();
 		}
 
 		return $categories;
-
 	}
 
 	private function get_admin_url( $relative = false ) {
@@ -169,5 +186,26 @@ class Module extends Module_Base {
 			],
 			$base_url
 		);
+	}
+
+	private function can_use_popups() {
+		return ( API::is_license_active() || $this->has_popups() );
+	}
+
+	private function has_popups() {
+		$existing_popups = get_posts( [
+			'post_type' => Source_Local::CPT,
+			'posts_per_page' => 1, // Avoid fetching too much data
+			'post_status' => 'any',
+			'meta_query' => [
+				[
+					'key' => DocumentBase::TYPE_META_KEY,
+					'value' => Document::get_type(),
+				],
+			],
+			'meta_key' => DocumentBase::TYPE_META_KEY,
+		] );
+
+		return ! empty( $existing_popups );
 	}
 }

@@ -685,6 +685,9 @@ https://prismjs.com/download.html#themes=prism-twilight&prism-tomorrow&prism-sol
   white-space: pre-wrap !important;
 }
 
+.elementor-widget-code-highlight .elementor-widget-container {
+  overflow: hidden;
+}
 .elementor-widget-code-highlight pre {
   direction: ltr;
 }

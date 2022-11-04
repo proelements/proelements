@@ -91,17 +91,12 @@ class Notice_Bar extends Base_Notice_Bar {
 
 		if ( isset( $license_data['renewal_discount'] ) && 0 < $license_data['renewal_discount'] ) {
 			$message = sprintf(
-				esc_html__(
-					'Your Elementor Pro license is about to expire. Renew now and get an exclusive, time-limited %s discount.',
-					'elementor-pro'
-				),
+				/* translators: %s: Renewal discount. */
+				esc_html__( 'Your Elementor Pro license is about to expire. Renew now and get an exclusive, time-limited %s discount.', 'elementor-pro' ),
 				$license_data['renewal_discount'] . '&#37;'
 			);
 		} else {
-			$message = esc_html__(
-				'Your Elementor Pro license is about to expire. Renew now and get updates, support, Pro widgets & templates for another year.',
-				'elementor-pro'
-			);
+			$message = esc_html__( 'Your Elementor Pro license is about to expire. Renew now and get updates, support, Pro widgets & templates for another year.', 'elementor-pro' );
 		}
 
 		return [

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -181,6 +181,245 @@ module.exports = elementorModules.editor.views.ControlsStack.extend({
     };
   }
 });
+
+/***/ }),
+
+/***/ "../assets/dev/js/preview/utils/document-handle.js":
+/*!*********************************************************!*\
+  !*** ../assets/dev/js/preview/utils/document-handle.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
+
+
+__webpack_require__(/*! core-js/modules/es.object.define-property.js */ "../node_modules/core-js/modules/es.object.define-property.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.createElement = createElement;
+exports["default"] = addDocumentHandle;
+
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "../node_modules/@babel/runtime/regenerator/index.js"));
+
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "../node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
+
+var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/toConsumableArray.js"));
+
+__webpack_require__(/*! core-js/modules/es.error.cause.js */ "../node_modules/core-js/modules/es.error.cause.js");
+
+__webpack_require__(/*! core-js/modules/es.error.to-string.js */ "../node_modules/core-js/modules/es.error.to-string.js");
+
+__webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "../node_modules/core-js/modules/es.regexp.exec.js");
+
+__webpack_require__(/*! core-js/modules/es.string.replace.js */ "../node_modules/core-js/modules/es.string.replace.js");
+
+__webpack_require__(/*! core-js/modules/es.array.for-each.js */ "../node_modules/core-js/modules/es.array.for-each.js");
+
+__webpack_require__(/*! core-js/modules/es.object.to-string.js */ "../node_modules/core-js/modules/es.object.to-string.js");
+
+__webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "../node_modules/core-js/modules/web.dom-collections.for-each.js");
+
+__webpack_require__(/*! core-js/modules/es.parse-int.js */ "../node_modules/core-js/modules/es.parse-int.js");
+
+__webpack_require__(/*! core-js/modules/es.promise.js */ "../node_modules/core-js/modules/es.promise.js");
+
+__webpack_require__(/*! core-js/modules/es.promise.finally.js */ "../node_modules/core-js/modules/es.promise.finally.js");
+
+var EDIT_HANDLE_CLASS_NAME = 'elementor-document-handle';
+var EDIT_MODE_CLASS_NAME = 'elementor-edit-mode';
+var EDIT_CONTEXT = 'edit';
+var SAVE_HANDLE_CLASS_NAME = 'elementor-document-save-back-handle';
+var SAVE_CONTEXT = 'save';
+/**
+ * @param {Object}        handleTarget
+ * @param {HTMLElement}   handleTarget.element
+ * @param {string|number} handleTarget.id      - Document ID.
+ * @param {string}        handleTarget.title
+ * @param {string}        context              - Edit/Save
+ * @param {Function|null} onCloseDocument      - Callback to run when outgoing document is closed.
+ */
+
+function addDocumentHandle(_ref) {
+  var element = _ref.element,
+      id = _ref.id,
+      _ref$title = _ref.title,
+      title = _ref$title === void 0 ? __('Template', 'elementor-pro') : _ref$title;
+  var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : EDIT_CONTEXT;
+  var onCloseDocument = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  if (EDIT_CONTEXT === context) {
+    if (!id || !element) {
+      throw Error('`id` and `element` are required.');
+    }
+
+    if (isCurrentlyEditing(element) || hasHandle(element)) {
+      return;
+    }
+  }
+
+  var handleElement = createHandleElement({
+    title: title,
+    onClick: function onClick() {
+      return onDocumentClick(id, context, onCloseDocument);
+    }
+  }, context);
+  element.prepend(handleElement);
+
+  if (EDIT_CONTEXT === context) {
+    element.dataset.editableElementorDocument = id;
+  }
+}
+/**
+ * @param {HTMLElement} element
+ *
+ * @return {boolean} Whether the element is currently being edited.
+ */
+
+
+function isCurrentlyEditing(element) {
+  return element.classList.contains(EDIT_MODE_CLASS_NAME);
+}
+/**
+ * @param {HTMLElement} element
+ *
+ * @return {boolean} Whether the element has a handle.
+ */
+
+
+function hasHandle(element) {
+  return !!element.querySelector(":scope > .".concat(EDIT_HANDLE_CLASS_NAME));
+}
+/**
+ * @param {Object}   handleProperties
+ * @param {string}   handleProperties.title
+ * @param {Function} handleProperties.onClick
+ * @param {string}   context
+ *
+ * @return {HTMLElement} The newly generated Handle element
+ */
+
+
+function createHandleElement(_ref2, context) {
+  var title = _ref2.title,
+      onClick = _ref2.onClick;
+  var element = createElement({
+    tag: 'div',
+    classNames: EDIT_CONTEXT === context ? [EDIT_HANDLE_CLASS_NAME] : [EDIT_HANDLE_CLASS_NAME, SAVE_HANDLE_CLASS_NAME],
+    children: [createElement({
+      tag: 'i',
+      classNames: [getHandleIcon(context)]
+    }), createElement({
+      tag: 'div',
+      classNames: ["".concat(EDIT_CONTEXT === context ? EDIT_HANDLE_CLASS_NAME : SAVE_HANDLE_CLASS_NAME, "__title")],
+      children: [document.createTextNode(EDIT_CONTEXT === context ? __('Edit %s', 'elementor-pro').replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
+    })]
+  });
+  element.addEventListener('click', onClick);
+  return element;
+}
+
+function getHandleIcon(context) {
+  var icon = 'eicon-edit';
+
+  if (SAVE_CONTEXT === context) {
+    icon = elementorFrontend.config.is_rtl ? 'eicon-arrow-right' : 'eicon-arrow-left';
+  }
+
+  return icon;
+}
+/**
+ * Util for creating HTML element.
+ *
+ * @param {Object}        elementProperties
+ * @param {string}        elementProperties.tag
+ * @param {string[]}      elementProperties.classNames
+ * @param {HTMLElement[]} elementProperties.children
+ *
+ * @return {HTMLElement} Generated Element
+ */
+
+
+function createElement(_ref3) {
+  var _element$classList;
+
+  var tag = _ref3.tag,
+      _ref3$classNames = _ref3.classNames,
+      classNames = _ref3$classNames === void 0 ? [] : _ref3$classNames,
+      _ref3$children = _ref3.children,
+      children = _ref3$children === void 0 ? [] : _ref3$children;
+  var element = document.createElement(tag);
+
+  (_element$classList = element.classList).add.apply(_element$classList, (0, _toConsumableArray2["default"])(classNames));
+
+  children.forEach(function (child) {
+    return element.appendChild(child);
+  });
+  return element;
+}
+/**
+ * @param {string|number} id
+ * @param {string}        context
+ * @param {Function|null} onCloseDocument
+ *
+ * @return {Promise<void>}
+ */
+
+
+function onDocumentClick(_x, _x2) {
+  return _onDocumentClick.apply(this, arguments);
+}
+
+function _onDocumentClick() {
+  _onDocumentClick = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(id, context) {
+    var onCloseDocument,
+        _args = arguments;
+    return _regenerator["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            onCloseDocument = _args.length > 2 && _args[2] !== undefined ? _args[2] : null;
+
+            if (!(EDIT_CONTEXT === context)) {
+              _context.next = 8;
+              break;
+            }
+
+            window.top.$e.internal('panel/state-loading');
+            _context.next = 5;
+            return window.top.$e.run('editor/documents/switch', {
+              id: parseInt(id),
+              onClose: onCloseDocument
+            });
+
+          case 5:
+            window.top.$e.internal('panel/state-ready');
+            _context.next = 10;
+            break;
+
+          case 8:
+            elementorCommon.api.internal('panel/state-loading');
+            elementorCommon.api.run('editor/documents/switch', {
+              id: elementor.config.initial_document.id,
+              mode: 'save',
+              shouldScroll: false
+            })["finally"](function () {
+              return elementorCommon.api.internal('panel/state-ready');
+            });
+
+          case 10:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _onDocumentClick.apply(this, arguments);
+}
 
 /***/ }),
 
@@ -1579,10 +1818,9 @@ var FormFieldsSanitizeCustomId = /*#__PURE__*/function (_$e$modules$hookData$) {
       var _args$containers = args.containers,
           containers = _args$containers === void 0 ? [args.container] : _args$containers,
           settings = args.settings,
-          custom_id = settings.custom_id; // eslint-disable-line camelcase
-      // eslint-disable-next-line camelcase
+          customId = settings.custom_id;
 
-      if (custom_id.match(this.ID_SANITIZE_FILTER)) {
+      if (customId.match(this.ID_SANITIZE_FILTER)) {
         // Re-render with old settings.
         containers.forEach(function (container) {
           var panelView = container.panel.getControlView('form_fields'),
@@ -1819,7 +2057,7 @@ var FormFieldsAddFirstStep = /*#__PURE__*/function (_$e$modules$hookData$) {
 
         $e.run('document/repeater/insert', {
           container: container.parent.parent,
-          // widget
+          // Widget
           name: 'form_fields',
           model: {
             field_type: 'step'
@@ -1936,11 +2174,9 @@ var FormSanitizeId = /*#__PURE__*/function (_$e$modules$hookData$) {
     value: function apply(args) {
       var container = args.container,
           settings = args.settings;
-      var form_id = settings.form_id; // eslint-disable-line camelcase
-      // Re-render with old settings.
-      // eslint-disable-next-line camelcase
+      var formId = settings.form_id; // Re-render with old settings.
 
-      if (form_id.match(this.ID_SANITIZE_FILTER)) {
+      if (formId.match(this.ID_SANITIZE_FILTER)) {
         var formIdView = container.panel.getControlView('form_id');
         formIdView.render();
         formIdView.$el.find('input').trigger('focus'); // Hook-Break.
@@ -2280,7 +2516,7 @@ module.exports = BaseIntegrationModule.extend({
     }];
 
     for (var field in this.fields) {
-      if (this.fields.hasOwnProperty(field)) {
+      if (Object.prototype.hasOwnProperty.call(this.fields, field)) {
         remoteFields.push(this.fields[field]);
       }
     }
@@ -2865,7 +3101,7 @@ module.exports = BaseIntegrationModule.extend({
     }];
 
     for (var field in this.fields) {
-      if (this.fields.hasOwnProperty(field)) {
+      if (Object.prototype.hasOwnProperty.call(this.fields, field)) {
         remoteFields.push(this.fields[field]);
       }
     }
@@ -5525,6 +5761,205 @@ module.exports = function () {
 
 /***/ }),
 
+/***/ "../modules/loop-builder/assets/js/editor/module.js":
+/*!**********************************************************!*\
+  !*** ../modules/loop-builder/assets/js/editor/module.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.reflect.to-string-tag.js */ "../node_modules/core-js/modules/es.reflect.to-string-tag.js");
+
+__webpack_require__(/*! core-js/modules/es.reflect.construct.js */ "../node_modules/core-js/modules/es.reflect.construct.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "../node_modules/@babel/runtime/regenerator/index.js"));
+
+__webpack_require__(/*! core-js/modules/es.function.bind.js */ "../node_modules/core-js/modules/es.function.bind.js");
+
+__webpack_require__(/*! core-js/modules/web.timers.js */ "../node_modules/core-js/modules/web.timers.js");
+
+__webpack_require__(/*! core-js/modules/es.array.for-each.js */ "../node_modules/core-js/modules/es.array.for-each.js");
+
+__webpack_require__(/*! core-js/modules/es.object.to-string.js */ "../node_modules/core-js/modules/es.object.to-string.js");
+
+__webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "../node_modules/core-js/modules/web.dom-collections.for-each.js");
+
+__webpack_require__(/*! core-js/modules/es.object.entries.js */ "../node_modules/core-js/modules/es.object.entries.js");
+
+__webpack_require__(/*! core-js/modules/es.array.find.js */ "../node_modules/core-js/modules/es.array.find.js");
+
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "../node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
+
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/slicedToArray.js"));
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "../node_modules/@babel/runtime/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "../node_modules/@babel/runtime/helpers/createClass.js"));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ "../node_modules/@babel/runtime/helpers/inherits.js"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js"));
+
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "../node_modules/@babel/runtime/helpers/getPrototypeOf.js"));
+
+var _documentHandle = _interopRequireDefault(__webpack_require__(/*! elementor-pro/preview/utils/document-handle */ "../assets/dev/js/preview/utils/document-handle.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var loopBuilderModule = /*#__PURE__*/function (_elementorModules$edi) {
+  (0, _inherits2["default"])(loopBuilderModule, _elementorModules$edi);
+
+  var _super = _createSuper(loopBuilderModule);
+
+  function loopBuilderModule() {
+    (0, _classCallCheck2["default"])(this, loopBuilderModule);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(loopBuilderModule, [{
+    key: "onElementorFrontendInit",
+    value: function onElementorFrontendInit() {
+      var _this = this;
+
+      elementorFrontend.elements.$body.on('click', '.e-loop-empty-view__box-cta', function () {
+        _this.createTemplate();
+      });
+      this.createDocumentSaveHandles();
+      elementor.on('document:loaded', this.createDocumentSaveHandles.bind(this));
+    }
+  }, {
+    key: "createTemplate",
+    value: function createTemplate() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        elementor.getPanelView().getCurrentPageView().activateSection('section_layout')._renderChildren();
+
+        _this2.getEditorControlView('template_id').createTemplate();
+      });
+    }
+  }, {
+    key: "createDocumentSaveHandles",
+    value: function createDocumentSaveHandles() {
+      var _elementorFrontend$co, _elementorFrontend$co2;
+
+      Object.entries((_elementorFrontend$co = elementorFrontend.config) === null || _elementorFrontend$co === void 0 ? void 0 : (_elementorFrontend$co2 = _elementorFrontend$co.elements) === null || _elementorFrontend$co2 === void 0 ? void 0 : _elementorFrontend$co2.data).forEach(function (_ref) {
+        var _element$attributes;
+
+        var _ref2 = (0, _slicedToArray2["default"])(_ref, 2),
+            cid = _ref2[0],
+            element = _ref2[1];
+
+        if ('loop-grid' !== (element === null || element === void 0 ? void 0 : (_element$attributes = element.attributes) === null || _element$attributes === void 0 ? void 0 : _element$attributes.widgetType)) {
+          return;
+        }
+
+        var md = elementorFrontend.elements.$body.find('[data-model-cid="' + cid + '"]');
+
+        if (!md.length) {
+          return;
+        }
+
+        var masterItem = md.find('[data-elementor-type="loop-item"]').first();
+
+        if (masterItem) {
+          (0, _documentHandle["default"])({
+            element: masterItem,
+            id: 0,
+            title: '& Back'
+          }, 'save');
+        }
+      });
+    }
+  }, {
+    key: "onElementorLoaded",
+    value: function onElementorLoaded() {
+      elementor.on('document:loaded', this.onDocumentLoaded.bind(this));
+      elementor.on('document:unload', this.onDocumentUnloaded.bind(this));
+      this.onApplySourceChange = this.onApplySourceChange.bind(this);
+    }
+  }, {
+    key: "onDocumentLoaded",
+    value: function onDocumentLoaded(document) {
+      if (!document.config.theme_builder) {
+        return;
+      }
+
+      elementor.channels.editor.on('elementorLoopBuilder:ApplySourceChange', this.onApplySourceChange);
+    }
+  }, {
+    key: "onDocumentUnloaded",
+    value: function onDocumentUnloaded(document) {
+      if (!document.config.theme_builder) {
+        return;
+      }
+
+      elementor.channels.editor.off('elementorLoopBuilder:ApplySourceChange', this.onApplySourceChange);
+    }
+  }, {
+    key: "onApplySourceChange",
+    value: function onApplySourceChange() {
+      this.saveAndRefresh().then(function () {
+        location.reload();
+      });
+    }
+  }, {
+    key: "saveAndRefresh",
+    value: function () {
+      var _saveAndRefresh = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return $e.run('document/save/update', {
+                  force: true
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function saveAndRefresh() {
+        return _saveAndRefresh.apply(this, arguments);
+      }
+
+      return saveAndRefresh;
+    }()
+  }, {
+    key: "getCtaStyles",
+    value: function getCtaStyles() {
+      var ctaStyle = document.createElement('link');
+      ctaStyle.setAttribute('rel', 'stylesheet');
+      ctaStyle.setAttribute('href', "".concat(elementorAppProConfig.baseUrl, "/assets/css/loop-grid-cta.css"));
+      return ctaStyle;
+    }
+  }, {
+    key: "getCtaContent",
+    value: function getCtaContent() {
+      var ctaContent = document.createElement('div');
+      ctaContent.classList.add('e-loop-empty-view__container', 'elementor-grid');
+      ctaContent.innerHTML = Marionette.Renderer.render('#tmpl-loop-grid-cta');
+      return ctaContent;
+    }
+  }]);
+  return loopBuilderModule;
+}(elementorModules.editor.utils.Module);
+
+module.exports = loopBuilderModule;
+
+/***/ }),
+
 /***/ "../modules/motion-fx/assets/js/editor/editor.js":
 /*!*******************************************************!*\
   !*** ../modules/motion-fx/assets/js/editor/editor.js ***!
@@ -6944,9 +7379,23 @@ module.exports = PopupModule;
 "use strict";
 
 
+__webpack_require__(/*! core-js/modules/es.array.iterator.js */ "../node_modules/core-js/modules/es.array.iterator.js");
+
+__webpack_require__(/*! core-js/modules/es.object.to-string.js */ "../node_modules/core-js/modules/es.object.to-string.js");
+
+__webpack_require__(/*! core-js/modules/es.promise.js */ "../node_modules/core-js/modules/es.promise.js");
+
+__webpack_require__(/*! core-js/modules/es.string.iterator.js */ "../node_modules/core-js/modules/es.string.iterator.js");
+
+__webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "../node_modules/core-js/modules/web.dom-collections.iterator.js");
+
 module.exports = elementorModules.editor.utils.Module.extend({
   onElementorPreviewLoaded: function onElementorPreviewLoaded() {
     elementor.addControlView('Query', __webpack_require__(/*! ./editor/query-control */ "../modules/query-control/assets/js/editor/query-control.js"));
+    __webpack_require__.e(/*! import() */ "modules_query-control_assets_js_editor_template-query-control_js").then(__webpack_require__.bind(__webpack_require__, /*! ./editor/template-query-control */ "../modules/query-control/assets/js/editor/template-query-control.js")).then(function (_ref) {
+      var TemplateQueryControl = _ref["default"];
+      return elementor.addControlView('template_query', TemplateQueryControl);
+    });
   }
 });
 
@@ -10093,7 +10542,7 @@ var WoocommerceCreateWidgetActivateSettingsModal = /*#__PURE__*/function (_$e$mo
   }, {
     key: "getConditions",
     value: function getConditions(args, container) {
-      return elementorPro.modules.woocommerce.pageSettingsWidgets.hasOwnProperty(container.model.get('widgetType'));
+      return Object.prototype.hasOwnProperty.call(elementorPro.modules.woocommerce.pageSettingsWidgets, container.model.get('widgetType'));
     }
   }, {
     key: "apply",
@@ -10174,7 +10623,7 @@ var WoocommerceDeleteWidgetDeactivateSettingsModal = /*#__PURE__*/function (_$e$
   }, {
     key: "getConditions",
     value: function getConditions(args, container) {
-      return elementorPro.modules.woocommerce.pageSettingsWidgets.hasOwnProperty(container.model.get('widgetType'));
+      return Object.prototype.hasOwnProperty.call(elementorPro.modules.woocommerce.pageSettingsWidgets, container.model.get('widgetType'));
     }
   }, {
     key: "apply",
@@ -17200,6 +17649,60 @@ setSpecies(PROMISE);
 
 /***/ }),
 
+/***/ "../node_modules/core-js/modules/es.promise.finally.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/core-js/modules/es.promise.finally.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
+var NativePromiseConstructor = __webpack_require__(/*! ../internals/promise-native-constructor */ "../node_modules/core-js/internals/promise-native-constructor.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
+var speciesConstructor = __webpack_require__(/*! ../internals/species-constructor */ "../node_modules/core-js/internals/species-constructor.js");
+var promiseResolve = __webpack_require__(/*! ../internals/promise-resolve */ "../node_modules/core-js/internals/promise-resolve.js");
+var defineBuiltIn = __webpack_require__(/*! ../internals/define-built-in */ "../node_modules/core-js/internals/define-built-in.js");
+
+var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
+
+// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
+var NON_GENERIC = !!NativePromiseConstructor && fails(function () {
+  // eslint-disable-next-line unicorn/no-thenable -- required for testing
+  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
+});
+
+// `Promise.prototype.finally` method
+// https://tc39.es/ecma262/#sec-promise.prototype.finally
+$({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+  'finally': function (onFinally) {
+    var C = speciesConstructor(this, getBuiltIn('Promise'));
+    var isFunction = isCallable(onFinally);
+    return this.then(
+      isFunction ? function (x) {
+        return promiseResolve(C, onFinally()).then(function () { return x; });
+      } : onFinally,
+      isFunction ? function (e) {
+        return promiseResolve(C, onFinally()).then(function () { throw e; });
+      } : onFinally
+    );
+  }
+});
+
+// makes sure that native promise-based APIs `Promise#finally` properly works with patched `Promise#then`
+if (!IS_PURE && isCallable(NativePromiseConstructor)) {
+  var method = getBuiltIn('Promise').prototype['finally'];
+  if (NativePromisePrototype['finally'] !== method) {
+    defineBuiltIn(NativePromisePrototype, 'finally', method, { unsafe: true });
+  }
+}
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/modules/es.promise.js":
 /*!*****************************************************!*\
   !*** ../node_modules/core-js/modules/es.promise.js ***!
@@ -19520,6 +20023,7 @@ try {
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".251266d9830e868aa1cf.bundle.js";
+/******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "e861d21c4c1f2400d90f.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
@@ -19745,6 +20249,8 @@ var _module8 = _interopRequireDefault(__webpack_require__(/*! modules/scroll-sna
 
 var _module9 = _interopRequireDefault(__webpack_require__(/*! modules/payments/assets/js/editor/module */ "../modules/payments/assets/js/editor/module.js"));
 
+var _module10 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/editor/module */ "../modules/loop-builder/assets/js/editor/module.js"));
+
 var ElementorPro = Marionette.Application.extend({
   config: {},
   modules: {},
@@ -19774,6 +20280,7 @@ var ElementorPro = Marionette.Application.extend({
       screenshots: new _module5["default"](),
       woocommerce: new _module7["default"](),
       stripe: new _module9["default"](),
+      loopBuilder: new _module10["default"](),
       // Popup is depended on Theme Builder.
       popup: new _module["default"](),
       videoPlaylistModule: new _module6["default"](),
@@ -19827,7 +20334,6 @@ var ElementorPro = Marionette.Application.extend({
     elementor.hooks.addFilter('elementor/editor/template-library/template/action-button', function (viewID, templateData) {
       var _elementor$config, _elementor$config$lib;
 
-      // eslint-disable-next-line camelcase
       if (templateData.accessLevel === undefined || ((_elementor$config = elementor.config) === null || _elementor$config === void 0 ? void 0 : (_elementor$config$lib = _elementor$config.library_connect) === null || _elementor$config$lib === void 0 ? void 0 : _elementor$config$lib.current_access_level) === undefined) {
         // BC support.
         return templateData.isPro && !elementorPro.config.isActive ? '#tmpl-elementor-pro-template-library-activate-license-button' : '#tmpl-elementor-template-library-insert-button';

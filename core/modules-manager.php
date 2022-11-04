@@ -34,6 +34,7 @@ final class Modules_Manager {
 
 			// Modules with Widgets.
 			'theme-builder',
+			'loop-builder',
 			'posts',
 			'gallery',
 			'forms',

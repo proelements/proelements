@@ -2,14 +2,15 @@
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
 use Elementor\DB;
+use ElementorPro\Base\MarkerInterfaces\Template_With_Post_Content_Interface;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+abstract class Single_Base extends Archive_Single_Base  implements Template_With_Post_Content_Interface {
 
-abstract class Single_Base extends Archive_Single_Base {
 
 	public static function get_properties() {
 		$properties = parent::get_properties();
@@ -169,9 +170,9 @@ abstract class Single_Base extends Archive_Single_Base {
 		$depended_widget_title = $this->get_depended_widget()->get_title();
 
 		wp_localize_script( 'elementor-frontend', 'elementorPreviewErrorArgs', [
-			/* translators: %s: is the widget name. */
+			/* translators: %s: Widget name. */
 			'headerMessage' => sprintf( esc_html__( 'The %s Widget was not found in your template.', 'elementor-pro' ), $depended_widget_title ),
-			/* translators: %1$s: is the widget name. %2$s: is the template name.  */
+			/* translators: 1: Widget name, 2: Template name.  */
 			'message' => sprintf( esc_html__( 'You must include the %1$s Widget in your template (%2$s), in order for Elementor to work on this page.', 'elementor-pro' ), $depended_widget_title, '<strong>' . static::get_title() . '</strong>' ),
 			'strings' => [
 				'confirm' => esc_html__( 'Edit Template', 'elementor-pro' ),

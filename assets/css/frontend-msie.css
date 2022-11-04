@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 @charset "UTF-8";
 .elementor-bg-transform .elementor-bg {
   will-change: transform;
@@ -254,10 +254,16 @@
   z-index: 99;
 }
 
-.e-container .elementor-element.elementor-sticky {
+.e-container .e-container.elementor-sticky,
+.e-container .e-con.elementor-sticky,
+.e-con .e-container.elementor-sticky,
+.e-con .e-con.elementor-sticky {
   /* Fix for sticky effect inside containers */
 }
-.e-container .elementor-element.elementor-sticky--active {
+.e-container .e-container.elementor-sticky--active,
+.e-container .e-con.elementor-sticky--active,
+.e-con .e-container.elementor-sticky--active,
+.e-con .e-con.elementor-sticky--active {
   padding-left: var(--padding-left);
   padding-right: var(--padding-right);
 }
@@ -356,6 +362,11 @@
 .elementor-motion-effects-perspective {
   -webkit-perspective: 1200px;
           perspective: 1200px;
+}
+.elementor-motion-effects-element {
+  -webkit-transform-origin: var(--e-transform-origin-y) var(--e-transform-origin-x);
+      -ms-transform-origin: var(--e-transform-origin-y) var(--e-transform-origin-x);
+          transform-origin: var(--e-transform-origin-y) var(--e-transform-origin-x);
 }
 
 body.woocommerce #content div.product .elementor-widget-woocommerce-product-images div.images,
@@ -5626,10 +5637,8 @@ body.elementor-editor-active .elementor-posts--show-thumbnail .elementor-post__t
   list-style-type: none;
 }
 
-.e-container .elementor-widget-portfolio {
-  --flex-grow: 1;
-}
-.e-container > .elementor-widget-portfolio {
+.e-con > .elementor-widget-portfolio,
+.e-con-inner > .elementor-widget-portfolio {
   width: var(--container-widget-width, 100%);
 }
 
@@ -5645,60 +5654,60 @@ body.elementor-editor-active .elementor-posts--show-thumbnail .elementor-post__t
 .elementor-widget-posts.load-more-align-justify .elementor-button, .elementor-widget-archive-posts.load-more-align-justify .elementor-button {
   width: 100%;
 }
-.elementor-widget-posts .e-load-more-spinner, .elementor-widget-archive-posts .e-load-more-spinner {
+.elementor-widget-posts.e-load-more-pagination-loading > .elementor-widget-container, .elementor-widget-archive-posts.e-load-more-pagination-loading > .elementor-widget-container {
+  cursor: default;
+}
+.elementor-widget-posts.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner, .elementor-widget-archive-posts.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner {
+  margin-top: var(--load-more—spacing, 30px);
+}
+.elementor-widget-posts.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner i,
+.elementor-widget-posts.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner svg, .elementor-widget-archive-posts.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner i,
+.elementor-widget-archive-posts.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner svg {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.elementor-widget-posts .e-load-more-spinner i,
-.elementor-widget-posts .e-load-more-spinner svg, .elementor-widget-archive-posts .e-load-more-spinner i,
-.elementor-widget-archive-posts .e-load-more-spinner svg {
+.elementor-widget-posts.e-load-more-pagination-loading > .elementor-widget-container > .elementor-button-wrapper .elementor-button-content-wrapper, .elementor-widget-archive-posts.e-load-more-pagination-loading > .elementor-widget-container > .elementor-button-wrapper .elementor-button-content-wrapper {
+  visibility: hidden;
+}
+.elementor-widget-posts.e-load-more-pagination-end > .elementor-widget-container > .elementor-button-wrapper, .elementor-widget-archive-posts.e-load-more-pagination-end > .elementor-widget-container > .elementor-button-wrapper {
+  display: none;
+}
+.elementor-widget-posts.e-load-more-pagination-end > .elementor-widget-container > .e-load-more-message, .elementor-widget-archive-posts.e-load-more-pagination-end > .elementor-widget-container > .e-load-more-message {
+  display: block;
+}
+.elementor-widget-posts.e-load-more-no-spinner > .elementor-widget-container > .elementor-button-wrapper .elementor-button-content-wrapper, .elementor-widget-archive-posts.e-load-more-no-spinner > .elementor-widget-container > .elementor-button-wrapper .elementor-button-content-wrapper {
+  visibility: visible;
+}
+.elementor-widget-posts > .elementor-widget-container .e-load-more-spinner, .elementor-widget-archive-posts > .elementor-widget-container .e-load-more-spinner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.elementor-widget-posts > .elementor-widget-container .e-load-more-spinner i,
+.elementor-widget-posts > .elementor-widget-container .e-load-more-spinner svg, .elementor-widget-archive-posts > .elementor-widget-container .e-load-more-spinner i,
+.elementor-widget-archive-posts > .elementor-widget-container .e-load-more-spinner svg {
   margin: 0 auto;
   display: none;
 }
-.elementor-widget-posts .e-load-more-spinner i, .elementor-widget-archive-posts .e-load-more-spinner i {
+.elementor-widget-posts > .elementor-widget-container .e-load-more-spinner i, .elementor-widget-archive-posts > .elementor-widget-container .e-load-more-spinner i {
   color: var(--load-more-spinner-color);
 }
-.elementor-widget-posts .e-load-more-spinner svg, .elementor-widget-archive-posts .e-load-more-spinner svg {
+.elementor-widget-posts > .elementor-widget-container .e-load-more-spinner svg, .elementor-widget-archive-posts > .elementor-widget-container .e-load-more-spinner svg {
   fill: var(--load-more-spinner-color);
   height: 1em;
   width: 1em;
 }
-.elementor-widget-posts .e-load-more-message, .elementor-widget-archive-posts .e-load-more-message {
+.elementor-widget-posts > .elementor-widget-container .e-load-more-message, .elementor-widget-archive-posts > .elementor-widget-container .e-load-more-message {
   color: var(--load-more-message-color);
   text-align: var(--load-more-message-alignment, center);
   display: none;
   margin-top: var(--load-more—spacing, 30px);
 }
-.elementor-widget-posts.e-load-more-pagination-loading, .elementor-widget-archive-posts.e-load-more-pagination-loading {
-  cursor: default;
-}
-.elementor-widget-posts.e-load-more-pagination-loading .e-load-more-spinner, .elementor-widget-archive-posts.e-load-more-pagination-loading .e-load-more-spinner {
+.elementor-widget-posts > .elementor-widget-container > .elementor-button-wrapper, .elementor-widget-archive-posts > .elementor-widget-container > .elementor-button-wrapper {
   margin-top: var(--load-more—spacing, 30px);
 }
-.elementor-widget-posts.e-load-more-pagination-loading .e-load-more-spinner i,
-.elementor-widget-posts.e-load-more-pagination-loading .e-load-more-spinner svg, .elementor-widget-archive-posts.e-load-more-pagination-loading .e-load-more-spinner i,
-.elementor-widget-archive-posts.e-load-more-pagination-loading .e-load-more-spinner svg {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.elementor-widget-posts.e-load-more-pagination-loading .elementor-button-content-wrapper, .elementor-widget-archive-posts.e-load-more-pagination-loading .elementor-button-content-wrapper {
-  visibility: hidden;
-}
-.elementor-widget-posts.e-load-more-pagination-end .elementor-button-wrapper, .elementor-widget-archive-posts.e-load-more-pagination-end .elementor-button-wrapper {
-  display: none;
-}
-.elementor-widget-posts.e-load-more-pagination-end .e-load-more-message, .elementor-widget-archive-posts.e-load-more-pagination-end .e-load-more-message {
-  display: block;
-}
-.elementor-widget-posts.e-load-more-no-spinner .elementor-button-content-wrapper, .elementor-widget-archive-posts.e-load-more-no-spinner .elementor-button-content-wrapper {
-  visibility: visible;
-}
-.elementor-widget-posts .elementor-button-wrapper, .elementor-widget-archive-posts .elementor-button-wrapper {
-  margin-top: var(--load-more—spacing, 30px);
-}
-.elementor-widget-posts .elementor-button-wrapper .e-load-more-spinner, .elementor-widget-archive-posts .elementor-button-wrapper .e-load-more-spinner {
+.elementor-widget-posts > .elementor-widget-container > .elementor-button-wrapper .e-load-more-spinner, .elementor-widget-archive-posts > .elementor-widget-container > .elementor-button-wrapper .e-load-more-spinner {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -5707,7 +5716,7 @@ body.elementor-editor-active .elementor-posts--show-thumbnail .elementor-post__t
           transform: translate(-50%, -50%);
   margin: inherit;
 }
-.elementor-widget-posts .elementor-button-wrapper .elementor-button, .elementor-widget-archive-posts .elementor-button-wrapper .elementor-button {
+.elementor-widget-posts > .elementor-widget-container > .elementor-button-wrapper .elementor-button, .elementor-widget-archive-posts > .elementor-widget-container > .elementor-button-wrapper .elementor-button {
   cursor: pointer;
   position: relative;
 }
@@ -5963,6 +5972,31 @@ the source property is coming from element/dev/scss...
 }
 .elementor-form .elementor-button .e-font-icon-svg {
   height: 1em;
+}
+
+.elementor-select-wrapper .select-caret-down-wrapper {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  inset-inline-end: 10px;
+  pointer-events: none;
+  font-size: 11px;
+}
+.elementor-select-wrapper .select-caret-down-wrapper svg {
+  display: unset;
+  width: 1em;
+  aspect-ratio: unset;
+  fill: currentColor;
+}
+.elementor-select-wrapper .select-caret-down-wrapper i {
+  font-size: 19px;
+  line-height: 2;
+}
+
+.elementor-select-wrapper.remove-before::before {
+  content: "" !important;
 }
 
 .elementor-widget-price-list .elementor-price-list {
@@ -6228,7 +6262,8 @@ the source property is coming from element/dev/scss...
   background-color: #f7f7f7;
 }
 
-.e-container > .elementor-widget-price-list {
+.e-con > .elementor-widget-price-list,
+.e-con-inner > .elementor-widget-price-list {
   width: var(--container-widget-width, 100%);
 }
 
@@ -6521,12 +6556,8 @@ the source property is coming from element/dev/scss...
   opacity: 1;
 }
 
-.e-container .elementor-widget-flip-box {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-}
-.e-container > .elementor-widget-flip-box {
+.e-con > .elementor-widget-flip-box,
+.e-con-inner > .elementor-widget-flip-box {
   width: var(--container-widget-width, 100%);
 }
 
@@ -9754,8 +9785,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
           align-items: center;
 }
 .e-hotspot__icon svg, .e-hotspot__label svg {
-  width: var(--hotspot-size, 18px);
-  height: auto;
+  height: var(--hotspot-size, 18px);
+  width: auto;
+  aspect-ratio: 1;
 }
 .e-hotspot__button {
   cursor: pointer;
@@ -10354,12 +10386,13 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
   border-style: solid dashed dashed dashed;
   border-color: #494c4f transparent transparent transparent;
 }
-.elementor-nav-menu--main .elementor-nav-menu--dropdown .sub-arrow i {
+.elementor-nav-menu--main .elementor-nav-menu--dropdown .sub-arrow i, .elementor-nav-menu--main .elementor-nav-menu--dropdown .sub-arrow .e-font-icon-svg {
   -webkit-transform: rotate(-90deg);
       -ms-transform: rotate(-90deg);
           transform: rotate(-90deg);
 }
 .elementor-nav-menu--main .elementor-nav-menu--dropdown .sub-arrow .e-font-icon-svg {
+  fill: currentColor;
   height: 1em;
   width: 1em;
 }
@@ -10931,12 +10964,8 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
   color: var(--gallery-title-color-active);
 }
 
-.e-container .elementor-widget-gallery {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-}
-.e-container > .elementor-widget-gallery {
+.e-con > .elementor-widget-gallery,
+.e-con-inner > .elementor-widget-gallery {
   width: var(--container-widget-width, 100%);
 }
 
@@ -11743,6 +11772,376 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 .elementor-scrolling-tracker-alignment-right {
   margin-left: auto;
   margin-right: 0;
+}
+
+.elementor-widget-loop-grid-1 .elementor-grid {
+  grid-template-columns: repeat(1, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-2 .elementor-grid {
+  grid-template-columns: repeat(2, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-3 .elementor-grid {
+  grid-template-columns: repeat(3, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-4 .elementor-grid {
+  grid-template-columns: repeat(4, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-5 .elementor-grid {
+  grid-template-columns: repeat(5, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-6 .elementor-grid {
+  grid-template-columns: repeat(6, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-7 .elementor-grid {
+  grid-template-columns: repeat(7, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-8 .elementor-grid {
+  grid-template-columns: repeat(8, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-9 .elementor-grid {
+  grid-template-columns: repeat(9, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-10 .elementor-grid {
+  grid-template-columns: repeat(10, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-11 .elementor-grid {
+  grid-template-columns: repeat(11, minmax(0px, 1fr));
+}
+.elementor-widget-loop-grid-12 .elementor-grid {
+  grid-template-columns: repeat(12, minmax(0px, 1fr));
+}
+@media (min-width: -1px) {
+  .elementor-widget-loop-grid-widescreen-1 .elementor-grid {
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-2 .elementor-grid {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-3 .elementor-grid {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-4 .elementor-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-5 .elementor-grid {
+    grid-template-columns: repeat(5, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-6 .elementor-grid {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-7 .elementor-grid {
+    grid-template-columns: repeat(7, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-8 .elementor-grid {
+    grid-template-columns: repeat(8, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-9 .elementor-grid {
+    grid-template-columns: repeat(9, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-10 .elementor-grid {
+    grid-template-columns: repeat(10, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-11 .elementor-grid {
+    grid-template-columns: repeat(11, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-widescreen-12 .elementor-grid {
+    grid-template-columns: repeat(12, minmax(0px, 1fr));
+  }
+}
+@media (max-width: -1px) {
+  .elementor-widget-loop-grid-laptop-1 .elementor-grid {
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-2 .elementor-grid {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-3 .elementor-grid {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-4 .elementor-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-5 .elementor-grid {
+    grid-template-columns: repeat(5, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-6 .elementor-grid {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-7 .elementor-grid {
+    grid-template-columns: repeat(7, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-8 .elementor-grid {
+    grid-template-columns: repeat(8, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-9 .elementor-grid {
+    grid-template-columns: repeat(9, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-10 .elementor-grid {
+    grid-template-columns: repeat(10, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-11 .elementor-grid {
+    grid-template-columns: repeat(11, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-laptop-12 .elementor-grid {
+    grid-template-columns: repeat(12, minmax(0px, 1fr));
+  }
+}
+@media (max-width: -1px) {
+  .elementor-widget-loop-grid-tablet_extra-1 .elementor-grid {
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-2 .elementor-grid {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-3 .elementor-grid {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-4 .elementor-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-5 .elementor-grid {
+    grid-template-columns: repeat(5, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-6 .elementor-grid {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-7 .elementor-grid {
+    grid-template-columns: repeat(7, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-8 .elementor-grid {
+    grid-template-columns: repeat(8, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-9 .elementor-grid {
+    grid-template-columns: repeat(9, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-10 .elementor-grid {
+    grid-template-columns: repeat(10, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-11 .elementor-grid {
+    grid-template-columns: repeat(11, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet_extra-12 .elementor-grid {
+    grid-template-columns: repeat(12, minmax(0px, 1fr));
+  }
+}
+@media (max-width: 1024px) {
+  .elementor-widget-loop-grid-tablet-1 .elementor-grid {
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-2 .elementor-grid {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-3 .elementor-grid {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-4 .elementor-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-5 .elementor-grid {
+    grid-template-columns: repeat(5, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-6 .elementor-grid {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-7 .elementor-grid {
+    grid-template-columns: repeat(7, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-8 .elementor-grid {
+    grid-template-columns: repeat(8, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-9 .elementor-grid {
+    grid-template-columns: repeat(9, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-10 .elementor-grid {
+    grid-template-columns: repeat(10, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-11 .elementor-grid {
+    grid-template-columns: repeat(11, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-tablet-12 .elementor-grid {
+    grid-template-columns: repeat(12, minmax(0px, 1fr));
+  }
+}
+@media (max-width: -1px) {
+  .elementor-widget-loop-grid-mobile_extra-1 .elementor-grid {
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-2 .elementor-grid {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-3 .elementor-grid {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-4 .elementor-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-5 .elementor-grid {
+    grid-template-columns: repeat(5, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-6 .elementor-grid {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-7 .elementor-grid {
+    grid-template-columns: repeat(7, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-8 .elementor-grid {
+    grid-template-columns: repeat(8, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-9 .elementor-grid {
+    grid-template-columns: repeat(9, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-10 .elementor-grid {
+    grid-template-columns: repeat(10, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-11 .elementor-grid {
+    grid-template-columns: repeat(11, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile_extra-12 .elementor-grid {
+    grid-template-columns: repeat(12, minmax(0px, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .elementor-widget-loop-grid-mobile-1 .elementor-grid {
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-2 .elementor-grid {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-3 .elementor-grid {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-4 .elementor-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-5 .elementor-grid {
+    grid-template-columns: repeat(5, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-6 .elementor-grid {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-7 .elementor-grid {
+    grid-template-columns: repeat(7, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-8 .elementor-grid {
+    grid-template-columns: repeat(8, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-9 .elementor-grid {
+    grid-template-columns: repeat(9, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-10 .elementor-grid {
+    grid-template-columns: repeat(10, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-11 .elementor-grid {
+    grid-template-columns: repeat(11, minmax(0px, 1fr));
+  }
+  .elementor-widget-loop-grid-mobile-12 .elementor-grid {
+    grid-template-columns: repeat(12, minmax(0px, 1fr));
+  }
+}
+.elementor-widget-loop-grid .elementor-grid {
+  grid-column-gap: var(--grid-column-gap, 30px);
+  grid-row-gap: var(--grid-row-gap, 30px);
+}
+.elementor-widget-loop-grid .e-loop__load-more {
+  text-align: var(--load-more-button-align);
+}
+.elementor-widget-loop-grid .e-loop__load-more .elementor-button {
+  width: var(--load-more-button-width);
+}
+.elementor-widget-loop-grid.e-load-more-pagination-loading > .elementor-widget-container {
+  cursor: default;
+}
+.elementor-widget-loop-grid.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner {
+  margin-top: var(--load-more—spacing, 30px);
+}
+.elementor-widget-loop-grid.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner i,
+.elementor-widget-loop-grid.e-load-more-pagination-loading > .elementor-widget-container .e-load-more-spinner svg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.elementor-widget-loop-grid.e-load-more-pagination-loading > .elementor-widget-container > .elementor-button-wrapper .elementor-button-content-wrapper {
+  visibility: hidden;
+}
+.elementor-widget-loop-grid.e-load-more-pagination-end > .elementor-widget-container > .elementor-button-wrapper {
+  display: none;
+}
+.elementor-widget-loop-grid.e-load-more-pagination-end > .elementor-widget-container > .e-load-more-message {
+  display: block;
+}
+.elementor-widget-loop-grid.e-load-more-no-spinner > .elementor-widget-container > .elementor-button-wrapper .elementor-button-content-wrapper {
+  visibility: visible;
+}
+.elementor-widget-loop-grid > .elementor-widget-container .e-load-more-spinner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.elementor-widget-loop-grid > .elementor-widget-container .e-load-more-spinner i,
+.elementor-widget-loop-grid > .elementor-widget-container .e-load-more-spinner svg {
+  margin: 0 auto;
+  display: none;
+}
+.elementor-widget-loop-grid > .elementor-widget-container .e-load-more-spinner i {
+  color: var(--load-more-spinner-color);
+}
+.elementor-widget-loop-grid > .elementor-widget-container .e-load-more-spinner svg {
+  fill: var(--load-more-spinner-color);
+  height: 1em;
+  width: 1em;
+}
+.elementor-widget-loop-grid > .elementor-widget-container .e-load-more-message {
+  color: var(--load-more-message-color);
+  text-align: var(--load-more-message-alignment, center);
+  display: none;
+  margin-top: var(--load-more—spacing, 30px);
+}
+.elementor-widget-loop-grid > .elementor-widget-container > .elementor-button-wrapper {
+  margin-top: var(--load-more—spacing, 30px);
+}
+.elementor-widget-loop-grid > .elementor-widget-container > .elementor-button-wrapper .e-load-more-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  margin: inherit;
+}
+.elementor-widget-loop-grid > .elementor-widget-container > .elementor-button-wrapper .elementor-button {
+  cursor: pointer;
+  position: relative;
+}
+
+.elementor-loop-container.elementor-posts-masonry {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.elementor-loop-container:not(.elementor-posts-masonry) {
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+.e-loop-template-canvas {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+}
+.e-loop-template-canvas [data-elementor-type=loop-item].e-loop-item {
+  max-width: var(--preview-width, 410px);
+  width: var(--preview-width, 410px);
+}
+.e-loop-template-canvas [data-elementor-type=loop-item].e-loop-item #elementor-add-new-section {
+  width: var(--preview-width, 410px);
 }
 
 .elementor-msie .elementor-element.elementor-wc-products.elementor-products-columns-1 ul.products li.product {

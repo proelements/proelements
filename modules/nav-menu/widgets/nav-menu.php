@@ -87,6 +87,7 @@ class Nav_Menu extends Base_Widget {
 					'save_default' => true,
 					'separator' => 'after',
 					'description' => sprintf(
+						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'elementor-pro' ),
 						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php' ) ),
 						'</a>'
@@ -100,7 +101,7 @@ class Nav_Menu extends Base_Widget {
 					'type' => Controls_Manager::RAW_HTML,
 					'raw' => '<strong>' . esc_html__( 'There are no menus in your site.', 'elementor-pro' ) . '</strong><br>' .
 							sprintf(
-								/* translators: 1: Link open tag, 2: Link closing tag. */
+								/* translators: 1: Link opening tag, 2: Link closing tag. */
 								esc_html__( 'Go to the %1$sMenus screen%2$s to create one.', 'elementor-pro' ),
 								sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
 								'</a>'
@@ -323,7 +324,7 @@ class Nav_Menu extends Base_Widget {
 			}
 
 			$dropdown_options[ $breakpoint_key ] = sprintf(
-				/* translators: 1: Breakpoint label, 2: `>` character, 3: Breakpoint value */
+				/* translators: 1: Breakpoint label, 2: `>` character, 3: Breakpoint value. */
 				esc_html__( '%1$s (%2$s %3$dpx)', 'elementor-pro' ),
 				$breakpoint_instance->get_label(),
 				'>',
@@ -1396,8 +1397,6 @@ class Nav_Menu extends Base_Widget {
 		$this->add_render_attribute( 'main-menu', [
 			'migration_allowed' => Icons_Manager::is_migration_allowed() ? '1' : '0',
 			'migrated' => $is_migrated ? '1' : '0',
-			// Accessibility
-			'role' => 'navigation',
 		] );
 
 		if ( 'dropdown' !== $settings['layout'] ) :
@@ -1486,7 +1485,7 @@ class Nav_Menu extends Base_Widget {
 			?>
 			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'elementor-pro' ); ?></span>
 		</div>
-			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true">
+			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
 				<?php
 					// PHPCS - escaped by WordPress with "wp_nav_menu"
 					echo $dropdown_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -76,6 +76,7 @@ class Site_Title extends Widget_Heading {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => sprintf(
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'To edit the title of your site, go to %1$sSite Identity%2$s.', 'elementor-pro' ),
 					'<a href="#" onclick="elementorPro.modules.themeBuilder.openSiteIdentity( event )" >',
 					'</a>'

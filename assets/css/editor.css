@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 #elementor-panel-get-pro-elements {
   display: none;
 }
@@ -674,5 +674,19 @@
   background-size: contain;
   display: inline-block;
   vertical-align: top;
+}
+
+.elementor-template-query-control-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 15px;
+  gap: 15px;
 }
 /*# sourceMappingURL=editor.css.map */

@@ -251,9 +251,9 @@ class My_Account extends Base_Widget {
 			'customize_dashboard_description',
 			[
 				'raw' => sprintf(
-					/* translators: %1$s: HTML <a> opening tag. %2$s: HTML </a> closing tag */
+					/* translators: 1: Saved templates link opening tag. 2: Link closing tag. */
 					esc_html__( 'Replaces the default WooCommerce customer dashboard screen with a custom template. (Don\'t have one? Head over to %1$sSaved Templates%2$s.)', 'elementor-pro' ),
-					'<a href="' . admin_url( 'edit.php?post_type=elementor_library&tabs_group=library#add_new' ) . '" target="_blank">',
+					sprintf( '<a href="%s" target="_blank">', admin_url( 'edit.php?post_type=elementor_library&tabs_group=library#add_new' ) ),
 					'</a>'
 				),
 				'type' => Controls_Manager::RAW_HTML,

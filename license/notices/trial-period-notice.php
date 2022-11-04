@@ -30,7 +30,7 @@ class Trial_Period_Notice extends Base_Notice {
 		$license_data = API::get_license_data();
 
 		$title = sprintf(
-		/* translators: %s: Days left to the trial */
+			/* translators: %s: Days left to trial expiration. */
 			esc_html__( 'Your trial expires in %s', 'elementor-pro' ),
 			human_time_diff(
 				current_time( 'timestamp' ),

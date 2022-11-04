@@ -797,7 +797,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _ui_textarea__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui/textarea */ "../assets/js/app/components/ui/textarea.js");
 /* harmony import */ var _hooks_use_auto_focus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/use-auto-focus */ "../assets/js/app/hooks/use-auto-focus.js");
-/* harmony import */ var _mentions_user_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mentions-user-list */ "../assets/js/app/components/mentions-user-list.js");
+/* harmony import */ var _mentions_mentions_user_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mentions/mentions-user-list */ "../assets/js/app/components/mentions/mentions-user-list.js");
 /* harmony import */ var _ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/typeahead/typeahead */ "../assets/js/app/components/ui/typeahead/typeahead.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var react_query__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-query */ "../../../node_modules/react-query/es/index.js");
@@ -821,17 +821,13 @@ var _templateObject;
 var Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_9__["default"])(_ui_div_base__WEBPACK_IMPORTED_MODULE_8__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  position: relative;\n"])));
 function MarksNoteTextarea(props) {
   var ref = (0,_hooks_use_auto_focus__WEBPACK_IMPORTED_MODULE_3__["default"])(props.defaultValue),
-      placeholder = props.isReply // Using "...", not ellipsis since its already translated. If this text is changed, we can use ellipsis since we would need a new translation anyhow.
-  // eslint-disable-next-line @wordpress/i18n-ellipsis
-  ? __('Type your reply. Use @ to mention...', 'elementor-pro') // Using "...", not ellipsis since its already translated. If this text is changed, we can use ellipsis since we would need a new translation anyhow.
-  // eslint-disable-next-line @wordpress/i18n-ellipsis
-  : __('Type a note. Use @ to mention...', 'elementor-pro');
+      placeholder = props.isReply ? __('Type your reply. Use @ to mention...', 'elementor-pro') : __('Type a note. Use @ to mention...', 'elementor-pro');
 
   var fragment = function fragment(_ref) {
     var search = _ref.search;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_query__WEBPACK_IMPORTED_MODULE_6__.QueryClientProvider, {
       client: _query_client__WEBPACK_IMPORTED_MODULE_7__["default"]
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mentions_user_list__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mentions_mentions_user_list__WEBPACK_IMPORTED_MODULE_4__["default"], {
       search: search
     }));
   };
@@ -1007,7 +1003,7 @@ function MarksNoteView(props) {
     size: 'sm',
     lineHeight: 1.5,
     muted: true
-  }, props.note.getFormattedLastActivityAt())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(HeaderActions, null, !isEditMode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_marks_note_actions__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, props.note.getFormattedCreatedAt())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(HeaderActions, null, !isEditMode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_marks_note_actions__WEBPACK_IMPORTED_MODULE_4__["default"], {
     note: props.note,
     setIsEditMode: setIsEditMode
   }))), !isEditMode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_shared_note_content__WEBPACK_IMPORTED_MODULE_7__["default"], null, noteContent), isEditMode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_marks_edit_note_form__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -1409,10 +1405,114 @@ function Marks() {
 
 /***/ }),
 
-/***/ "../assets/js/app/components/mentions-user-list.js":
-/*!*********************************************************!*\
-  !*** ../assets/js/app/components/mentions-user-list.js ***!
-  \*********************************************************/
+/***/ "../assets/js/app/components/mentions/mentions-user-disabled.js":
+/*!**********************************************************************!*\
+  !*** ../assets/js/app/components/mentions/mentions-user-disabled.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MentionsUserDisabled)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "../../../node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/user */ "../assets/js/app/models/user.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/use-notes-config */ "../assets/js/app/hooks/use-notes-config.js");
+/* harmony import */ var _hooks_use_user_can__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../hooks/use-user-can */ "../assets/js/app/hooks/use-user-can.js");
+/* harmony import */ var _ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ui/tooltip/tooltip */ "../assets/js/app/components/ui/tooltip/tooltip.js");
+/* harmony import */ var _ui_icon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ui/icon */ "../assets/js/app/components/ui/icon.js");
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
+
+
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
+
+
+
+
+
+
+
+
+var UserDisabledTooltip = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tdisplay: flex !important;\n\tposition: absolute !important;\n\twidth: 100% !important;\n\theight: 100% !important;\n\tinset-inline-start: 0 !important;\n\tmargin: 0 !important;\n\tpadding: 0 !important;\n\tfont-size: 11px !important;\n\n\t// Fixes bug with the position of Popover with portalled=false inside another Popover\n\t// @see https://github.com/radix-ui/primitives/issues/370\n\t[data-radix-popper-content-wrapper] {\n\t\ttransform: translateY(-100%) !important;\n\t\ttop: 10px !important;\n\t\tinset-inline-start: auto !important;\n\t\tinset-inline-end: -10px !important;\n\t}\n"])));
+var TooltipShadow = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\toverflow: hidden !important;\n\tposition: relative !important;\n\tflex: 1 !important;\n\theight: 100% !important;\n\n\t&::before {\n\t\tcontent: '' !important;\n\t\tposition: absolute !important;\n\t\twidth: 100vw !important;\n\t\theight: 100vh !important;\n\t\ttop: 50% !important;\n\t\ttransform: translateY(-50%) !important;\n\t\tinset-inline-end: 0 !important;\n\t\tbox-shadow: inset 0 0 60px 40px #f1f3f5 !important;\n\t}\n"])));
+var TooltipTriggerText = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tdisplay: inline-flex !important;\n\talign-items: center !important;\n\twhite-space: pre-wrap !important;\n\tpadding: 10px !important;\n\tbackground: #f1f3f5 !important;\n"])));
+var SetPermissionsLink = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].a.attrs(function () {
+  return {
+    target: '_blank',
+    rel: 'noreferrer'
+  };
+})(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tcolor: #6d7882 !important;\n\tbackground: #f1f3f5 !important;\n\tpadding: 10px !important;\n\tdisplay: inline-flex !important;\n\talign-items: center !important;\n\n\t&:hover,\n\t&:focus {\n\t\tcolor: #58d0f5 !important;\n\t\ttext-decoration: none !important;\n\t}\n"])));
+var TooltipContent = (0,styled_components__WEBPACK_IMPORTED_MODULE_7__["default"])(_ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_5__["default"].Content)(_templateObject5 || (_templateObject5 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tbackground: #ffffff !important;\n\tcolor: #6d7882 !important;\n\tline-height: 1.3 !important;\n\tfont-style: italic !important;\n\tpadding: 12px !important;\n\tbox-shadow: 0 1px 20px rgba(0, 0, 0, 0.15) !important;\n\tmax-width: 262px !important;\n\tbox-sizing: border-box !important;\n\n\t&::after {\n\t\tcontent: '' !important;\n\t\tposition: absolute !important;\n\t\twidth: 10px !important;\n\t\theight: 10px !important;\n\t\tborder: 5px solid transparent !important;\n\t\tborder-top-color: #ffffff !important;\n\t\tbottom: -9px !important;\n\t\tinset-inline-end: 20px !important;\n\t}\n"])));
+var LearnMoreLink = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].a.attrs(function () {
+  return {
+    target: '_blank'
+  };
+})(_templateObject6 || (_templateObject6 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\tdisplay: block !important;\n\ttext-decoration: none !important;\n\tcolor: #58d0f5 !important;\n\n\t&:hover,\n\t&:focus {\n\t\ttext-decoration: underline !important;\n\t}\n"])));
+function MentionsUserDisabled(props) {
+  var _useNotesConfig = (0,_hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_3__["default"])(),
+      urls = _useNotesConfig.urls,
+      mentionedUserCanEditPost = props.user.capabilities.post.edit,
+      currentUserCanEditUsers = (0,_hooks_use_user_can__WEBPACK_IMPORTED_MODULE_4__["default"])(_hooks_use_user_can__WEBPACK_IMPORTED_MODULE_4__.CAPABILITY_EDIT_USERS),
+      currentUserCanFixPermissions = currentUserCanEditUsers && mentionedUserCanEditPost;
+
+  var tooltipLink = currentUserCanEditUsers ? urls.help_notes_features : '';
+  var tooltipLabel = currentUserCanFixPermissions ? __('Give access to Notes', 'elementor-pro') : __("Can't mention them", 'elementor-pro');
+  var tooltipMessage = useTooltipMessage(props.user.capabilities);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(UserDisabledTooltip, {
+    role: "tooltip",
+    "aria-label": tooltipLabel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(TooltipShadow, null), currentUserCanFixPermissions ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(SetPermissionsLink, {
+    href: "".concat(urls.admin_url_edit_user, "?user_id=").concat(props.user.id, "#e-notes")
+  }, tooltipLabel + ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_icon__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    className: "eicon-editor-external-link"
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    delayDuration: 0
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_5__["default"].Trigger, {
+    asChild: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(TooltipTriggerText, {
+    "aria-label": tooltipMessage
+  }, tooltipLabel + ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_icon__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    className: "eicon-help-o"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(TooltipContent, {
+    portalled: false
+  }, tooltipMessage, tooltipLink && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(LearnMoreLink, {
+    href: tooltipLink
+  }, __('Learn more', 'elementor-pro')))))));
+}
+MentionsUserDisabled.propTypes = {
+  user: PropTypes.instanceOf(_models_user__WEBPACK_IMPORTED_MODULE_2__["default"]).isRequired
+};
+
+function useTooltipMessage(capabilities) {
+  var mentionedUserCanReadNotes = capabilities.notes.read,
+      mentionedUserCanEditPost = capabilities.post.edit,
+      currentUserCanEditUsers = (0,_hooks_use_user_can__WEBPACK_IMPORTED_MODULE_4__["default"])(_hooks_use_user_can__WEBPACK_IMPORTED_MODULE_4__.CAPABILITY_EDIT_USERS);
+
+  if (!currentUserCanEditUsers) {
+    return __('Contact the site admin to give this person the right permissions.', 'elementor-pro');
+  }
+
+  if (!mentionedUserCanEditPost) {
+    if (!mentionedUserCanReadNotes) {
+      return __('This person needs: (1) permission to view this post, as well as (2) access to use Notes.', 'elementor-pro');
+    }
+
+    return __('They need permission to view this post.', 'elementor-pro');
+  }
+
+  return '';
+}
+
+/***/ }),
+
+/***/ "../assets/js/app/components/mentions/mentions-user-list.js":
+/*!******************************************************************!*\
+  !*** ../assets/js/app/components/mentions/mentions-user-list.js ***!
+  \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1423,13 +1523,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "../../../node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _hooks_use_users__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/use-users */ "../assets/js/app/hooks/use-users.js");
-/* harmony import */ var _ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/typeahead/typeahead */ "../assets/js/app/components/ui/typeahead/typeahead.js");
-/* harmony import */ var _ui_avatar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/avatar */ "../assets/js/app/components/ui/avatar.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var _hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../hooks/use-notes-config */ "../assets/js/app/hooks/use-notes-config.js");
-/* harmony import */ var _hooks_use_user_can__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../hooks/use-user-can */ "../assets/js/app/hooks/use-user-can.js");
-/* harmony import */ var _ui_div_base__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/div-base */ "../assets/js/app/components/ui/div-base.js");
+/* harmony import */ var _hooks_use_users__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/use-users */ "../assets/js/app/hooks/use-users.js");
+/* harmony import */ var _ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/typeahead/typeahead */ "../assets/js/app/components/ui/typeahead/typeahead.js");
+/* harmony import */ var _ui_avatar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ui/avatar */ "../assets/js/app/components/ui/avatar.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../hooks/use-notes-config */ "../assets/js/app/hooks/use-notes-config.js");
+/* harmony import */ var _hooks_use_user_can__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../hooks/use-user-can */ "../assets/js/app/hooks/use-user-can.js");
+/* harmony import */ var _ui_div_base__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../ui/div-base */ "../assets/js/app/components/ui/div-base.js");
+/* harmony import */ var _mentions_user_disabled__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./mentions-user-disabled */ "../assets/js/app/components/mentions/mentions-user-disabled.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
 
@@ -1450,31 +1551,36 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
+
 var defaultParams = {
   limit: 5,
   order_by: 'user_registered',
   order: 'desc'
 };
-var List = (0,styled_components__WEBPACK_IMPORTED_MODULE_9__["default"])(_ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__["default"].List)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tposition: absolute !important;\n\ttop: 100% !important;\n"])));
-var UserContainer = (0,styled_components__WEBPACK_IMPORTED_MODULE_9__["default"])(_ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__["default"].ListItem)(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tdisplay: flex !important;\n\tflex-direction: row !important;\n\talign-items: center !important;\n\tgap: 12px !important;\n"])));
-var UserDetails = (0,styled_components__WEBPACK_IMPORTED_MODULE_9__["default"])(_ui_div_base__WEBPACK_IMPORTED_MODULE_8__["default"])(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tdisplay: flex !important;\n\tflex-direction: column !important;\n\tjustify-content: space-between !important;\n\tgap: 2px !important;\n\n\t&::before,\n\t&::after {\n\t\tdisplay: none !important;\n\t}\n"])));
-var UserName = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].span(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tall: revert;\n\n\tpadding: 0 !important;\n\tmargin: 0 !important;\n\tfont-size: 12px !important;\n\tfont-weight: 500 !important;\n\tcolor: inherit !important;\n"])));
-var UserSlug = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].span(_templateObject5 || (_templateObject5 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tfont-size: 10px !important;\n\tcolor: #a4afb6 !important;\n"])));
-var Link = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].a.attrs(function () {
+var List = (0,styled_components__WEBPACK_IMPORTED_MODULE_10__["default"])(_ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__["default"].List)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tposition: absolute !important;\n\ttop: 100% !important;\n"])));
+var UserDetails = (0,styled_components__WEBPACK_IMPORTED_MODULE_10__["default"])(_ui_div_base__WEBPACK_IMPORTED_MODULE_8__["default"])(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tdisplay: flex !important;\n\tflex-direction: column !important;\n\tjustify-content: space-between !important;\n\tgap: 2px !important;\n\n\t&::before,\n\t&::after {\n\t\tdisplay: none !important;\n\t}\n"])));
+var UserContainer = (0,styled_components__WEBPACK_IMPORTED_MODULE_10__["default"])(_ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__["default"].ListItem)(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tdisplay: flex !important;\n\tflex-direction: row !important;\n\talign-items: center !important;\n\tgap: 10px !important;\n\tposition: relative !important;\n\n\t&[aria-disabled='true'] {\n\t\topacity: 1 !important;\n\n\t\t&:hover {\n\t\t\tbackground-color: #f1f3f5 !important;\n\t\t}\n\n\t\t", " {\n\t\t\topacity: .5 !important;\n\t\t}\n\n\t\t&:not(:hover) {\n\t\t\t> [role='tooltip'] {\n\t\t\t\tdisplay: none !important;\n\t\t\t}\n\t\t}\n\t}\n"])), UserDetails);
+var UserName = styled_components__WEBPACK_IMPORTED_MODULE_10__["default"].span(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tall: revert;\n\n\tpadding: 0 !important;\n\tmargin: 0 !important;\n\tfont-size: 12px !important;\n\tfont-weight: 500 !important;\n\tcolor: inherit !important;\n"])));
+var UserSlug = styled_components__WEBPACK_IMPORTED_MODULE_10__["default"].span(_templateObject5 || (_templateObject5 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tfont-size: 10px !important;\n\tcolor: #a4afb6 !important;\n"])));
+var Link = styled_components__WEBPACK_IMPORTED_MODULE_10__["default"].a.attrs(function () {
   return {
     target: '_blank',
     rel: 'noreferrer'
   };
 })(_templateObject6 || (_templateObject6 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tall: revert;\n\n\tcolor: #58d0f5 !important;\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 1em !important;\n\tfont-weight: normal !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: underline !important;\n\tline-height: normal !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n\n\t&:hover,\n\t&:focus {\n\t\tcolor: #6d7882 !important;\n\t\ttext-decoration: underline; // Repeat in order to override theme styles.\n\t}\n"])));
-var FooterTitle = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].strong(_templateObject7 || (_templateObject7 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n  font-weight: 500 !important;\n"])));
+var FooterTitle = styled_components__WEBPACK_IMPORTED_MODULE_10__["default"].strong(_templateObject7 || (_templateObject7 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n  font-weight: 500 !important;\n"])));
 function MentionsUserList(props) {
+  var _route$post_id;
+
   var _useNotesConfig = (0,_hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+      route = _useNotesConfig.route,
       urls = _useNotesConfig.urls,
       canCreateUsers = (0,_hooks_use_user_can__WEBPACK_IMPORTED_MODULE_7__["default"])(_hooks_use_user_can__WEBPACK_IMPORTED_MODULE_7__.CAPABILITY_CREATE_USERS);
 
   var _useUsers = (0,_hooks_use_users__WEBPACK_IMPORTED_MODULE_3__["default"])({
     params: _objectSpread(_objectSpread({}, defaultParams), {}, {
-      search: props.search
+      search: props.search,
+      post_id: (_route$post_id = route.post_id) !== null && _route$post_id !== void 0 ? _route$post_id : null
     })
   }),
       _useUsers$data = _useUsers.data,
@@ -1482,15 +1588,17 @@ function MentionsUserList(props) {
       isSuccess = _useUsers.isSuccess;
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(List, null, data.map(function (user) {
+    var isUserDisabled = !user.capabilities.notes.read || !user.capabilities.post.edit;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserContainer, {
       key: user.id,
-      value: user.slug // TODO: For future use, in order to disable the item when the user doesn't have permissions.
-      // disabled={ ! user.capabilities.notes.read }
-
+      value: user.slug,
+      disabled: isUserDisabled
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_avatar__WEBPACK_IMPORTED_MODULE_5__["default"], {
       size: 'md',
       src: user.avatarUrls['48']
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserDetails, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserName, null, user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserSlug, null, user.slug)));
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserDetails, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserName, null, user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(UserSlug, null, user.slug)), isUserDisabled && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_mentions_user_disabled__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      user: user
+    }));
   }), isSuccess && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_typeahead_typeahead__WEBPACK_IMPORTED_MODULE_4__["default"].ListFooter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(FooterTitle, null, __("Can't find someone?", 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("span", null, canCreateUsers ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement((react__WEBPACK_IMPORTED_MODULE_2___default().Fragment), null, __('Add them from the', 'elementor-pro'), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(Link, {
     href: urls.admin_url_create_user
   }, __('WP Dashboard', 'elementor-pro'))) : __('Ask the site admin to add them', 'elementor-pro'))));
@@ -1725,7 +1833,7 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 
 
-var _templateObject, _templateObject2, _templateObject3, _templateObject4;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5;
 
 
 
@@ -1735,10 +1843,16 @@ var Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_u
 var IconContainer = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_ui_div_base__WEBPACK_IMPORTED_MODULE_2__["default"])(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tfont-size: 30px !important;\n\tcolor: #a4afb6 !important;\n\tmargin: 0 0 20px 0 !important;\n"])));
 var Heading = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].h4(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 16px !important;\n\tfont-weight: 700 !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: none !important;\n\tline-height: 1.4 !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n\tcolor: #6d7882 !important;\n\tmargin: 0 0 12px 0 !important;\n  \tpadding: 0 15px !important;\n\n\t&::before, &::after {\n\t\tdisplay: none;\n\t}\n"])));
 var Text = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].p(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 11px !important;\n\tfont-weight: normal !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: none !important;\n\tline-height: 1.5 !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n\tmargin: 0 !important;\n\tcolor: #6d7882 !important;\n"])));
+var Link = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].a(_templateObject5 || (_templateObject5 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tdisplay: inline-flex !important;\n\tjustify-content: center !important;\n\talign-item: center !important;\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 12px !important;\n\tfont-weight: 500 !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: none !important;\n\tline-height: 1.4 !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n\tmargin: 42px 0 0 0 !important;\n\tcolor: #6d7882 !important;\n\n\t> i {\n\t\tcolor: #a4afb7 !important;\n\t\tfont-size: 18px !important;\n\t\tmargin-inline-start: 4px !important;\n\t}\n\n\t&:hover {\n\t\ti::before {\n\t\t\tcolor: #58d0f5;\n\t\t\tcontent: '\\e926'; // eicon-info-circle\n\t\t}\n\t}\n"], ["\n\tall: revert;\n\n\tdisplay: inline-flex !important;\n\tjustify-content: center !important;\n\talign-item: center !important;\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 12px !important;\n\tfont-weight: 500 !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: none !important;\n\tline-height: 1.4 !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n\tmargin: 42px 0 0 0 !important;\n\tcolor: #6d7882 !important;\n\n\t> i {\n\t\tcolor: #a4afb7 !important;\n\t\tfont-size: 18px !important;\n\t\tmargin-inline-start: 4px !important;\n\t}\n\n\t&:hover {\n\t\ti::before {\n\t\t\tcolor: #58d0f5;\n\t\t\tcontent: '\\\\e926'; // eicon-info-circle\n\t\t}\n\t}\n"])));
 function PanelEmpty() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(IconContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_icon__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: "eicon-commenting-o"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Heading, null, __('Share your thoughts with a Note', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Text, null, __('Select an element on the page to leave a comment, ask a question, etc.', 'elementor-pro'))));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Heading, null, __('Share your thoughts with a Note', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Text, null, __('Select an element on the page to leave a comment, ask a question, etc.', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Link, {
+    href: "https://go.elementor.com/app-notes/",
+    target: "_blank"
+  }, __('Learn More', 'elementor-pro'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_icon__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    className: "eicon-info"
+  }))));
 }
 
 /***/ }),
@@ -1908,7 +2022,7 @@ function PanelNoteItem(props) {
     variant: props.isActive || props.note.isUnreadThread() ? 'solid' : 'ghost',
     size: 'sm',
     muted: props.note.isResolved
-  }, props.note.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(ContentCol, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Title, null, props.note.author.name, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Date, null, props.note.getFormattedLastActivityAt())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(NoteContent, {
+  }, props.note.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(ContentCol, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Title, null, props.note.author.name, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Date, null, props.note.getFormattedCreatedAt())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(NoteContent, {
     disableInteractions: true
   }, noteContent), props.note.repliesCount > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(RepliesCount, null, __('%s replies', 'elementor-pro').replace('%s', props.note.repliesCount))));
 }
@@ -1972,7 +2086,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_label_label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/label/label */ "../assets/js/app/components/ui/label/label.js");
 /* harmony import */ var _ui_popover_popover__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/popover/popover */ "../assets/js/app/components/ui/popover/popover.js");
 /* harmony import */ var _ui_radio_radio__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui/radio/radio */ "../assets/js/app/components/ui/radio/radio.js");
-/* harmony import */ var _ui_sperator_separator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/sperator/separator */ "../assets/js/app/components/ui/sperator/separator.js");
+/* harmony import */ var _ui_separator_separator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/separator/separator */ "../assets/js/app/components/ui/separator/separator.js");
 /* harmony import */ var _hooks_use_notes_filters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../hooks/use-notes-filters */ "../assets/js/app/hooks/use-notes-filters.js");
 /* harmony import */ var _hooks_use_notes_or_notes_summary__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../hooks/use-notes-or-notes-summary */ "../assets/js/app/hooks/use-notes-or-notes-summary.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
@@ -2029,7 +2143,7 @@ function PanelPopover(props) {
     value: _hooks_use_notes_or_notes_summary__WEBPACK_IMPORTED_MODULE_10__.VIEW_NOTES
   }), __('Current page', 'elementor-pro'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_label_label__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_radio_radio__WEBPACK_IMPORTED_MODULE_7__["default"], {
     value: _hooks_use_notes_or_notes_summary__WEBPACK_IMPORTED_MODULE_10__.VIEW_NOTES_SUMMARY
-  }), __('All site', 'elementor-pro')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_sperator_separator__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_radio_radio__WEBPACK_IMPORTED_MODULE_7__["default"].Group, {
+  }), __('All site', 'elementor-pro')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_separator_separator__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_radio_radio__WEBPACK_IMPORTED_MODULE_7__["default"].Group, {
     value: filters.only_relevant ? '1' : '0',
     onValueChange: function onValueChange(value) {
       return setFilters({
@@ -2041,7 +2155,7 @@ function PanelPopover(props) {
     value: "0"
   }), __('All notes', 'elementor-pro'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_label_label__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_radio_radio__WEBPACK_IMPORTED_MODULE_7__["default"], {
     value: "1"
-  }), __('Only yours', 'elementor-pro')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_sperator_separator__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_label_label__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), __('Only yours', 'elementor-pro')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_separator_separator__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_label_label__WEBPACK_IMPORTED_MODULE_5__["default"], {
     htmlFor: "notes-filter-show-resolved"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ui_checkbox_checkbox__WEBPACK_IMPORTED_MODULE_3__["default"], {
     id: "notes-filter-show-resolved",
@@ -2123,6 +2237,10 @@ function Panel() {
     defaultPosition: {
       x: 'rtl' === direction ? -50 : 50,
       y: 50
+    },
+    defaultSize: {
+      width: 240,
+      height: 400
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_panel_panel__WEBPACK_IMPORTED_MODULE_6__["default"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_panel_panel__WEBPACK_IMPORTED_MODULE_6__["default"].HeaderSideCol, {
     align: "start"
@@ -3562,19 +3680,162 @@ Marker.defaultProps = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ PanelBody)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "../../../node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var _div_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../div-base */ "../assets/js/app/components/ui/div-base.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _div_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../div-base */ "../assets/js/app/components/ui/div-base.js");
+/* harmony import */ var _panel_resizer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./panel-resizer */ "../assets/js/app/components/ui/panel/panel-resizer.js");
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
 
 
 var _templateObject;
 
 
 
-var PanelBody = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_1__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  overflow-y: auto;\n  flex-grow: 1;\n  position: relative;\n"])));
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PanelBody);
+
+
+var StyledPanelBody = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_2__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  position: relative !important;\n  display: flex !important;\n  flex-direction: column !important;\n  overflow: hidden !important;\n"])));
+function PanelBody(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(StyledPanelBody, props, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_panel_resizer__WEBPACK_IMPORTED_MODULE_3__["default"], null, props.children));
+}
+PanelBody.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)])
+};
+
+/***/ }),
+
+/***/ "../assets/js/app/components/ui/panel/panel-draggable.js":
+/*!***************************************************************!*\
+  !*** ../assets/js/app/components/ui/panel/panel-draggable.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PanelDraggable)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../../../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-draggable */ "../../../node_modules/react-draggable/build/cjs/cjs.js");
+/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_draggable__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_use_debounced_callback__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../hooks/use-debounced-callback */ "../assets/js/app/hooks/use-debounced-callback.js");
+/* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./panel */ "../assets/js/app/components/ui/panel/panel.js");
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
+
+
+
+
+
+
+function PanelDraggable(props) {
+  var _usePanelContext = (0,_panel__WEBPACK_IMPORTED_MODULE_4__.usePanelContext)(),
+      _usePanelContext$size = _usePanelContext.size,
+      defaultWidth = _usePanelContext$size.defaultWidth,
+      defaultHeight = _usePanelContext$size.defaultHeight,
+      _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+      bounds = _useState2[0],
+      setBounds = _useState2[1],
+      _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(props.defaultPosition),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
+      position = _useState4[0],
+      setPosition = _useState4[1],
+      positionRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)({});
+
+  positionRef.current = position;
+
+  var onStopDrag = function onStopDrag(event, dragElement) {
+    var x = dragElement.x,
+        y = dragElement.y;
+    setPosition({
+      x: x,
+      y: y
+    });
+  };
+  /**
+   * Reset the position of the panel if it is outside the bounds of the window after resize.
+   */
+
+
+  var resetPosition = function resetPosition() {
+    var _positionRef$current = positionRef.current,
+        currentX = _positionRef$current.x,
+        currentY = _positionRef$current.y;
+    var _props$defaultPositio = props.defaultPosition,
+        defaultX = _props$defaultPositio.x,
+        defaultY = _props$defaultPositio.y;
+
+    if (currentX === defaultX && currentY === defaultY) {
+      return;
+    }
+
+    var newX = currentX < bounds.left || currentX > bounds.right ? defaultX : currentX;
+    var newY = currentY < bounds.top || currentY > bounds.bottom ? defaultY : currentY;
+
+    if (newX === currentX && newY === currentY) {
+      return;
+    }
+
+    setPosition({
+      x: newX,
+      y: newY
+    });
+  };
+  /**
+   * Disallow dragging the panel outside the window bounds.
+   * Show at least 15% of the panel on the left and right sides of the window.
+   * Show at least the panel handle on the bottom of the window.
+   */
+
+
+  var calculateBounds = (0,_hooks_use_debounced_callback__WEBPACK_IMPORTED_MODULE_3__["default"])(function () {
+    var _props$nodeRef$curren, _props$nodeRef$curren2;
+
+    var _window = window,
+        windowWidth = _window.innerWidth,
+        windowHeight = _window.innerHeight;
+    setBounds({
+      top: 0,
+      left: 0 - defaultWidth * 0.85,
+      right: windowWidth - defaultWidth * 0.15,
+      bottom: windowHeight - (((_props$nodeRef$curren = props.nodeRef.current) === null || _props$nodeRef$curren === void 0 ? void 0 : (_props$nodeRef$curren2 = _props$nodeRef$curren.querySelector(props.handleClass)) === null || _props$nodeRef$curren2 === void 0 ? void 0 : _props$nodeRef$curren2.offsetHeight) || 0)
+    });
+  }, 100);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    resetPosition();
+  }, [bounds]);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    calculateBounds();
+    window.addEventListener('resize', calculateBounds);
+    return function () {
+      window.removeEventListener('resize', calculateBounds);
+    };
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_draggable__WEBPACK_IMPORTED_MODULE_2___default()), {
+    handle: props.handleClass,
+    defaultPosition: props.defaultPosition,
+    nodeRef: props.nodeRef,
+    bounds: bounds,
+    position: positionRef.current,
+    onStop: onStopDrag
+  }, props.children);
+}
+PanelDraggable.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
+  handleClass: PropTypes.string,
+  defaultPosition: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number
+  }),
+  nodeRef: PropTypes.shape({
+    current: PropTypes.object
+  }),
+  isFloating: PropTypes.bool
+};
 
 /***/ }),
 
@@ -3597,7 +3858,7 @@ var _templateObject;
 
 
 
-var PanelFooter = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_1__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  background: #fff !important;\n  min-height: 14px !important;\n"])));
+var PanelFooter = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_1__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  background: #fff !important;\n"])));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PanelFooter);
 
 /***/ }),
@@ -3651,7 +3912,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 
 
-var PanelHeaderTitle = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].h3(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 13px !important;\n\tfont-weight: 400 !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: none !important;\n\tline-height: 24px !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n  \tcolor: #6d7882 !important;\n  \ttext-align: center !important;\n  \tflex-grow: 1 !important;\n  \tmargin: 0 !important;\n\n\t&::before, &::after {\n\t\tdisplay: none !important;\n\t}\n"])));
+var PanelHeaderTitle = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].h3(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tfont-family: Roboto, sans-serif !important;\n\tfont-size: 13px !important;\n\tfont-weight: 400 !important;\n\ttext-transform: none !important;\n\tfont-style: normal !important;\n\ttext-decoration: none !important;\n\tline-height: 24px !important;\n\tletter-spacing: normal !important;\n\tword-spacing: normal !important;\n  \tcolor: #6d7882 !important;\n  \ttext-align: center !important;\n  \tflex-grow: 1 !important;\n  \tmargin: 0 !important;\n  \tuser-select: none !important;\n\n\t&::before, &::after {\n\t\tdisplay: none !important;\n\t}\n"])));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PanelHeaderTitle);
 
 /***/ }),
@@ -3742,6 +4003,116 @@ PanelLoading.propTypes = {
 
 /***/ }),
 
+/***/ "../assets/js/app/components/ui/panel/panel-resizer.js":
+/*!*************************************************************!*\
+  !*** ../assets/js/app/components/ui/panel/panel-resizer.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PanelResizer)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "../../../node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _div_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../div-base */ "../assets/js/app/components/ui/div-base.js");
+/* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./panel */ "../assets/js/app/components/ui/panel/panel.js");
+/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
+
+
+var _templateObject, _templateObject2, _templateObject3;
+
+
+
+
+
+
+var Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_2__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  flex: 1 1 auto !important;\n  inset: 0 !important;\n  display: inline-flex !important;\n  flex-direction: column !important;\n  overflow: hidden !important;\n\n  &.resizing {\n    user-select: none;\n  }\n"])));
+var Children = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_2__["default"])(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  overflow-y: auto !important;\n  flex-grow: 1 !important;\n  flex-shrink: 1 !important;\n"])));
+var handleProps = {
+  height: 20
+};
+var Handle = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_2__["default"])(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  flex: 0 0 ", "px !important;\n  display: inline-flex !important;\n  justify-content: center !important;\n  align-items: center !important;\n  background-color: #fff !important;\n  margin-top: 1px !important;\n  cursor: row-resize !important;\n"])), handleProps.height);
+function PanelResizer(props) {
+  var _usePanelContext = (0,_panel__WEBPACK_IMPORTED_MODULE_3__.usePanelContext)(),
+      _usePanelContext$size = _usePanelContext.size,
+      defaultWidth = _usePanelContext$size.defaultWidth,
+      defaultHeight = _usePanelContext$size.defaultHeight;
+
+  var resizableRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  var childrenRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  var handleRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  var minHeight = 0,
+      maxHeight,
+      currentHeight,
+      currentY = 0;
+
+  var onMouseMove = function onMouseMove(e) {
+    resizableRef.current.classList.add('resizing');
+    var delta = e.clientY - currentY;
+    currentHeight = currentHeight + delta;
+
+    if (currentHeight < minHeight) {
+      currentHeight = minHeight;
+    }
+
+    if (currentHeight > maxHeight) {
+      currentHeight = maxHeight;
+    }
+
+    currentY = e.clientY;
+    setCurrentHeight();
+  };
+
+  var onMouseUp = function onMouseUp() {
+    document.removeEventListener('mousemove', onMouseMove);
+    resizableRef.current.classList.remove('resizing');
+  };
+
+  var onMouseDown = function onMouseDown(e) {
+    currentY = e.clientY;
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
+  var calculateMinMax = function calculateMinMax() {
+    currentHeight = defaultHeight;
+    setCurrentHeight();
+    minHeight += handleProps.height;
+    maxHeight = window.innerHeight;
+  };
+
+  var setCurrentHeight = function setCurrentHeight() {
+    resizableRef.current.style.height = "".concat(currentHeight, "px");
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    calculateMinMax();
+    handleRef.current.addEventListener('mousedown', onMouseDown);
+    return function () {
+      if (handleRef.current) {
+        handleRef.current.removeEventListener('mousedown', onMouseDown);
+      }
+    };
+  }, [props.children]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Container, {
+    ref: resizableRef
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Children, {
+    ref: childrenRef
+  }, props.children), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Handle, {
+    ref: handleRef
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("i", {
+    className: "eicon-ellipsis-h"
+  })));
+}
+PanelResizer.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)])
+};
+
+/***/ }),
+
 /***/ "../assets/js/app/components/ui/panel/panel.js":
 /*!*****************************************************!*\
   !*** ../assets/js/app/components/ui/panel/panel.js ***!
@@ -3758,8 +4129,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _div_base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../div-base */ "../assets/js/app/components/ui/div-base.js");
-/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-draggable */ "../../../node_modules/react-draggable/build/cjs/cjs.js");
-/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_draggable__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _panel_draggable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./panel-draggable */ "../assets/js/app/components/ui/panel/panel-draggable.js");
 /* harmony import */ var _panel_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./panel-body */ "../assets/js/app/components/ui/panel/panel-body.js");
 /* harmony import */ var _panel_footer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./panel-footer */ "../assets/js/app/components/ui/panel/panel-footer.js");
 /* harmony import */ var _panel_header__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./panel-header */ "../assets/js/app/components/ui/panel/panel-header.js");
@@ -3772,7 +4142,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _templateObject, _templateObject2;
+var _templateObject, _templateObject2, _templateObject3;
 
 
 
@@ -3786,36 +4156,50 @@ var _templateObject, _templateObject2;
 
 
 
-var StyledPanel = (0,styled_components__WEBPACK_IMPORTED_MODULE_12__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_3__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n  display: flex !important;\n  flex-direction: column !important;\n  background: #e6e9ec !important;\n  width: 240px !important;\n  height: 440px !important;\n  overflow: hidden !important;\n  border-radius: 3px !important;\n  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;\n\n  ", "\n\n  *:focus {\n    outline: none;\n  }\n"])), function (_ref) {
-  var isFloating = _ref.isFloating;
-  return isFloating && (0,styled_components__WEBPACK_IMPORTED_MODULE_12__.css)(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tposition: fixed !important;\n\ttop: 0 !important;\n\tinset-inline-start: 0 !important;\n\tz-index: ", " !important;\n  "])), _utils__WEBPACK_IMPORTED_MODULE_11__.MAX_Z_INDEX);
+var StyledPanel = (0,styled_components__WEBPACK_IMPORTED_MODULE_12__["default"])(_div_base__WEBPACK_IMPORTED_MODULE_3__["default"])(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n  display: flex !important;\n  flex-direction: column !important;\n  background: #e6e9ec !important;\n  overflow: hidden !important;\n  border-radius: 3px !important;\n  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;\n\n  ", "\n\n  ", "\n\n  // The class comes from the react-draggable component.\n  &:not(.react-draggable-dragging) {\n    transition: transform 0.3s ease-out !important;\n  }\n\n  *:focus {\n    outline: none;\n  }\n"])), function (_ref) {
+  var defaultSize = _ref.defaultSize;
+  return defaultSize && (0,styled_components__WEBPACK_IMPORTED_MODULE_12__.css)(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\twidth: ", "px !important;\n\tmax-height: 100vh !important;\n  "])), defaultSize.width);
+}, function (_ref2) {
+  var isFloating = _ref2.isFloating;
+  return isFloating && (0,styled_components__WEBPACK_IMPORTED_MODULE_12__.css)(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_1__["default"])(["\n\tposition: fixed !important;\n\ttop: 0 !important;\n\tinset-inline-start: 0 !important;\n\tz-index: ", " !important;\n  "])), _utils__WEBPACK_IMPORTED_MODULE_11__.MAX_Z_INDEX);
 });
 var PanelContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.createContext)({});
 function Panel(props) {
   var panelRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
-  var value = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(function () {
+  var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(function () {
     return {
       floating: {
         active: !!props.isFloating,
         handleClassName: 'floating-handle'
+      },
+      size: {
+        defaultWidth: props.defaultSize.width,
+        defaultHeight: props.defaultSize.height
       }
     };
   }, [props.isFloating]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(PanelContext.Provider, {
-    value: value
-  }, props.isFloating ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement((react_draggable__WEBPACK_IMPORTED_MODULE_4___default()), {
-    handle: ".".concat(value.floating.handleClassName),
+    value: contextValue
+  }, props.isFloating ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_panel_draggable__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    handleClass: ".".concat(contextValue.floating.handleClassName),
     defaultPosition: props.defaultPosition,
     nodeRef: panelRef
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(StyledPanel, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, props, {
-    ref: panelRef
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(StyledPanel, props));
+    ref: panelRef,
+    defaultSize: props.defaultSize
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(StyledPanel, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, props, {
+    defaultSize: props.defaultSize
+  })));
 }
 Panel.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
   defaultPosition: PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number
+  }),
+  defaultSize: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number
   }),
   isFloating: PropTypes.bool
 };
@@ -4006,10 +4390,10 @@ Radio.Group = _radix_ui_react_radio_group__WEBPACK_IMPORTED_MODULE_5__.RadioGrou
 
 /***/ }),
 
-/***/ "../assets/js/app/components/ui/sperator/separator.js":
-/*!************************************************************!*\
-  !*** ../assets/js/app/components/ui/sperator/separator.js ***!
-  \************************************************************/
+/***/ "../assets/js/app/components/ui/separator/separator.js":
+/*!*************************************************************!*\
+  !*** ../assets/js/app/components/ui/separator/separator.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -4271,7 +4655,7 @@ var _templateObject;
 
 
 
-var ToastViewport = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_3__.ToastViewport)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  display: flex !important;\n  flex-direction: column !important;\n  gap: 12px !important;\n  position: fixed !important;\n  max-width: 960px !important;\n  left: 50% !important;\n  bottom: 10px !important;\n  transform: translateX( -50% ) !important;\n  z-index: ", " !important;\n"])), _utils__WEBPACK_IMPORTED_MODULE_1__.MAX_Z_INDEX);
+var ToastViewport = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_3__.ToastViewport)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  display: flex !important;\n  flex-direction: column !important;\n  gap: 12px !important;\n  position: fixed !important;\n  max-width: 960px !important;\n  width: 100% !important;\n  left: 50% !important;\n  bottom: 10px !important;\n  padding-inline: 0 10px !important;\n  transform: translateX( -50% ) !important;\n  z-index: ", " !important;\n"])), _utils__WEBPACK_IMPORTED_MODULE_1__.MAX_Z_INDEX);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ToastViewport);
 
 /***/ }),
@@ -4337,7 +4721,7 @@ var colorsMap = {
     action: '#b92136'
   }
 };
-var Toast = (0,styled_components__WEBPACK_IMPORTED_MODULE_8__["default"])(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_9__.Toast)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  display: flex !important;\n  gap: 8px !important;\n  align-items: center !important;\n  width: 100% !important;\n  box-sizing: border-box !important;\n  padding: 12px 16px !important;\n  font-size: 14px !important;\n  color: #3a3f45 !important;\n  text-align: start !important;\n  border-radius: 6px !important;\n  box-shadow: 0 0 15px 0 rgba( 0,0,0,.2 ) !important;\n  animation-duration: 400ms !important;\n  animation-timing-function: cubic-bezier( 0.16, 1, 0.3, 1 ) !important;\n  background-color: ", " !important;\n\n\t&[data-state=\"open\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t&[data-state=\"closed\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n"])), function (_ref) {
+var Toast = (0,styled_components__WEBPACK_IMPORTED_MODULE_8__["default"])(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_9__.Toast)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  display: flex !important;\n  gap: 8px !important;\n  align-items: center !important;\n  width: 100% !important;\n  box-sizing: border-box !important;\n  padding: 12px 16px !important;\n  font-size: 14px !important;\n  line-height: normal !important;\n  color: #3a3f45 !important;\n  text-align: start !important;\n  border-radius: 6px !important;\n  box-shadow: 0 0 15px 0 rgba( 0,0,0,.2 ) !important;\n  animation-duration: 400ms !important;\n  animation-timing-function: cubic-bezier( 0.16, 1, 0.3, 1 ) !important;\n  background-color: ", " !important;\n\n\t&[data-state=\"open\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t&[data-state=\"closed\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n"])), function (_ref) {
   var variant = _ref.variant;
   return colorsMap[variant].background;
 }, _styles_animation__WEBPACK_IMPORTED_MODULE_7__.slideUpAndFade, _styles_animation__WEBPACK_IMPORTED_MODULE_7__.fadeOut, _toast_icon__WEBPACK_IMPORTED_MODULE_4__["default"], function (_ref2) {
@@ -4537,7 +4921,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 
 
-var TypeaheadList = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].ul(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tpadding: 0 !important;\n\tmargin: 0 !important;\n\tlist-style: none !important;\n\twidth: 220px !important;\n\tz-index: 1 !important; // Just needs any 'z-index' value in order to appear above other things.\n\tbackground: #ffffff !important;\n\tborder-radius: 3px !important;\n\tbox-shadow: 0 1px 20px rgba(0, 0, 0, 0.15) !important;\n"])));
+var TypeaheadList = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].ul(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\tall: revert;\n\n\tpadding: 0 !important;\n\tmargin: 0 !important;\n\tlist-style: none !important;\n\twidth: 272px !important;\n\tz-index: 1 !important; // Just needs any 'z-index' value in order to appear above other things.\n\tbackground: #ffffff !important;\n\tborder-radius: 3px !important;\n\tbox-shadow: 0 1px 20px rgba(0, 0, 0, 0.15) !important;\n"])));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TypeaheadList);
 
 /***/ }),
@@ -5506,10 +5890,8 @@ function useResolveMutation() {
     onSuccess: function onSuccess(note) {
       // Invalidate only the queries that do filter by is_resolved.
       var listPredicate = function listPredicate(_ref10) {
-        var _queryKey$;
-
         var queryKey = _ref10.queryKey;
-        return (_queryKey$ = queryKey[1]) === null || _queryKey$ === void 0 ? void 0 : _queryKey$.hasOwnProperty('is_resolved');
+        return Object.prototype.hasOwnProperty.call(queryKey[1] || {}, 'is_resolved');
       };
 
       return Promise.all([invalidateSingle({
@@ -5566,10 +5948,8 @@ function useReadMutation() {
 
 
       var listPredicate = function listPredicate(_ref14) {
-        var _queryKey$2;
-
         var queryKey = _ref14.queryKey;
-        return (_queryKey$2 = queryKey[1]) === null || _queryKey$2 === void 0 ? void 0 : _queryKey$2.hasOwnProperty('only_unread');
+        return Object.prototype.hasOwnProperty.call(queryKey[1] || {}, 'only_unread');
       };
 
       return Promise.all([invalidateSingle({
@@ -6033,6 +6413,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CAPABILITY_CREATE_USERS": () => (/* binding */ CAPABILITY_CREATE_USERS),
 /* harmony export */   "CAPABILITY_DELETE": () => (/* binding */ CAPABILITY_DELETE),
 /* harmony export */   "CAPABILITY_EDIT": () => (/* binding */ CAPABILITY_EDIT),
+/* harmony export */   "CAPABILITY_EDIT_USERS": () => (/* binding */ CAPABILITY_EDIT_USERS),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
@@ -6044,6 +6425,7 @@ var CAPABILITY_CREATE = 'create';
 var CAPABILITY_EDIT = 'edit';
 var CAPABILITY_DELETE = 'delete';
 var CAPABILITY_CREATE_USERS = 'create_users';
+var CAPABILITY_EDIT_USERS = 'edit_users';
 
 var useUserCan = function useUserCan(capability) {
   var note = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -6546,6 +6928,8 @@ var Note = /*#__PURE__*/function (_BaseModel) {
 
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "_formattedLastActivityAt", '');
 
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "_formattedCreatedAt", '');
+
     return _this;
   }
 
@@ -6563,6 +6947,21 @@ var Note = /*#__PURE__*/function (_BaseModel) {
       }
 
       return this._formattedLastActivityAt;
+    }
+    /**
+     * TODO: Change to WP site settings format.
+     *
+     * @return {string} Created at date formatted.
+     */
+
+  }, {
+    key: "getFormattedCreatedAt",
+    value: function getFormattedCreatedAt() {
+      if (!this._formattedCreatedAt) {
+        this._formattedCreatedAt = this.createdAt.toLocaleString();
+      }
+
+      return this._formattedCreatedAt;
     }
     /**
      * Get the note deep link.
@@ -6742,7 +7141,7 @@ var User = /*#__PURE__*/function (_BaseModel) {
      * @param {Object} data
      */
     function createFromResponse(data) {
-      var _data$capabilities, _data$capabilities$no;
+      var _data$capabilities, _data$capabilities$no, _data$capabilities2, _data$capabilities2$p;
 
       return new User().init({
         id: data.id,
@@ -6752,6 +7151,9 @@ var User = /*#__PURE__*/function (_BaseModel) {
         capabilities: {
           notes: {
             read: (_data$capabilities = data.capabilities) === null || _data$capabilities === void 0 ? void 0 : (_data$capabilities$no = _data$capabilities.notes) === null || _data$capabilities$no === void 0 ? void 0 : _data$capabilities$no.can_read
+          },
+          post: {
+            edit: (_data$capabilities2 = data.capabilities) === null || _data$capabilities2 === void 0 ? void 0 : (_data$capabilities2$p = _data$capabilities2.post) === null || _data$capabilities2$p === void 0 ? void 0 : _data$capabilities2$p.can_edit
           }
         }
       });
@@ -7934,7 +8336,7 @@ var Url = /*#__PURE__*/function (_BaseToken) {
      * @return {RegExp} pattern
      */
     function getPattern() {
-      return /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&\/=]*)/;
+      return /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)/;
     }
   }]);
 

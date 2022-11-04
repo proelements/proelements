@@ -1,4 +1,4 @@
-/*! pro-elements - v3.7.3 - 31-07-2022 */
+/*! pro-elements - v3.8.0 - 30-10-2022 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -46,6 +46,8 @@ var _frontend16 = _interopRequireDefault(__webpack_require__(/*! modules/theme-e
 
 var _frontend17 = _interopRequireDefault(__webpack_require__(/*! modules/woocommerce/assets/js/frontend/frontend */ "../modules/woocommerce/assets/js/frontend/frontend.js"));
 
+var _frontend18 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/frontend/frontend */ "../modules/loop-builder/assets/js/frontend/frontend.js"));
+
 const extendDefaultHandlers = defaultHandlers => {
   const handlers = {
     animatedText: _frontend.default,
@@ -64,7 +66,8 @@ const extendDefaultHandlers = defaultHandlers => {
     themeBuilder: _frontend15.default,
     themeElements: _frontend16.default,
     woocommerce: _frontend17.default,
-    tableOfContents: _frontend14.default
+    tableOfContents: _frontend14.default,
+    loopBuilder: _frontend18.default
   };
   return { ...defaultHandlers,
     ...handlers
@@ -325,6 +328,32 @@ class _default extends elementorModules.Module {
   constructor() {
     super();
     elementorFrontend.elementsHandler.attachHandler('hotspot', () => __webpack_require__.e(/*! import() | hotspot */ "hotspot").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/hotspot */ "../modules/hotspot/assets/js/frontend/handlers/hotspot.js")));
+  }
+
+}
+
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/loop-builder/assets/js/frontend/frontend.js":
+/*!**************************************************************!*\
+  !*** ../modules/loop-builder/assets/js/frontend/frontend.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    elementorFrontend.elementsHandler.attachHandler('loop-grid', () => __webpack_require__.e(/*! import() | load-more */ "load-more").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/load-more */ "../modules/loop-builder/assets/js/frontend/handlers/load-more.js")), 'post');
+    elementorFrontend.elementsHandler.attachHandler('loop-grid', () => __webpack_require__.e(/*! import() | loop */ "loop").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/loop-grid */ "../modules/loop-builder/assets/js/frontend/handlers/loop-grid.js")), 'post');
   }
 
 }

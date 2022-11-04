@@ -85,7 +85,7 @@ class Time extends Field_Base {
 		}
 
 		if ( preg_match( '/^(([0-1][0-9])|(2[0-3])):[0-5][0-9]$/', $field['value'] ) !== 1 ) {
-			$ajax_handler->add_error( $field['id'], esc_html__( 'Invalid Time, Time should be in HH:MM format!', 'elementor-pro' ) );
+			$ajax_handler->add_error( $field['id'], esc_html__( 'The field should be in HH:MM format.', 'elementor-pro' ) );
 		}
 	}
 }
