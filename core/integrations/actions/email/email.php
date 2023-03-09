@@ -92,7 +92,7 @@ class Email extends Action_Base {
 			if ( empty( $payload->{$field} ) ) {
 				throw new Action_Validation_Failed_Exception(
 					static::class,
-					"`Email_Message::$${field}` is required."
+					"`Email_Message::\${$field}` is required."
 				);
 			}
 		}

@@ -28,6 +28,7 @@ class Shortcode extends Tag {
 			Module::NUMBER_CATEGORY,
 			Module::URL_CATEGORY,
 			Module::POST_META_CATEGORY,
+			Module::DATETIME_CATEGORY,
 		];
 	}
 

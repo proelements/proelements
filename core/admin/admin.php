@@ -6,6 +6,7 @@ use Elementor\Rollback;
 use Elementor\Settings;
 use Elementor\Tools;
 use Elementor\Utils;
+use ElementorPro\Core\Utils as ProUtils;
 use ElementorPro\License\API;
 use ElementorPro\Plugin;
 
@@ -192,11 +193,13 @@ class Admin extends App {
 		check_admin_referer( 'elementor_pro_rollback' );
 
 		$rollback_versions = $this->get_rollback_versions();
-		if ( empty( $_GET['version'] ) || ! in_array( $_GET['version'], $rollback_versions, true ) ) {
+		$version = ProUtils::_unstable_get_super_global_value( $_GET, 'version' );
+
+		if ( ! $version || ! in_array( $version, $rollback_versions, true ) ) {
 			wp_die( esc_html__( 'Error occurred, The version selected is invalid. Try selecting different version.', 'elementor-pro' ) );
 		}
 
-		$package_url = API::get_plugin_package_url( $_GET['version'] );
+		$package_url = API::get_plugin_package_url( $version );
 		if ( is_wp_error( $package_url ) ) {
 			wp_die( $package_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
@@ -204,7 +207,7 @@ class Admin extends App {
 		$plugin_slug = basename( ELEMENTOR_PRO__FILE__, '.php' );
 
 		$rollback = new Rollback( [
-			'version' => $_GET['version'],
+			'version' => $version,
 			'plugin_name' => ELEMENTOR_PRO_PLUGIN_BASE,
 			'plugin_slug' => $plugin_slug,
 			'package_url' => $package_url,
@@ -296,5 +299,8 @@ class Admin extends App {
 
 		add_filter( 'elementor/tracker/send_tracking_data_params', [ $this, 'change_tracker_params' ], 200 );
 		add_action( 'admin_post_elementor_pro_rollback', [ $this, 'post_elementor_pro_rollback' ] );
+		add_action( 'in_plugin_update_message-' . ELEMENTOR_PRO_PLUGIN_BASE, function( $plugin_data ) {
+			Plugin::elementor()->admin->version_update_warning( ELEMENTOR_PRO_VERSION, $plugin_data['new_version'] );
+		} );
 	}
 }

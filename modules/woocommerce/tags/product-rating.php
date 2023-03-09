@@ -2,7 +2,6 @@
 namespace ElementorPro\Modules\Woocommerce\Tags;
 
 use Elementor\Controls_Manager;
-use ElementorPro\Modules\Woocommerce\Tags\Traits\Tag_Product_Id;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -33,12 +32,15 @@ class Product_Rating extends Base_Tag {
 	}
 
 	public function render() {
-		$product = wc_get_product( $this->get_settings( 'product_id' ) );
+		$settings = $this->get_settings_for_display();
+
+		$product = $this->get_product( $settings['product_id'] );
+
 		if ( ! $product ) {
 			return '';
 		}
 
-		$field = $this->get_settings( 'field' );
+		$field = $settings['field'];
 		$value = '';
 		switch ( $field ) {
 			case 'average_rating':

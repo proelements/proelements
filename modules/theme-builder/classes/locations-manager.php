@@ -445,8 +445,10 @@ class Locations_Manager {
 	}
 
 	public function filter_add_location_meta_on_create_new_post( $meta ) {
-		if ( ! empty( $_GET['meta_location'] ) ) {
-			$meta[ Theme_Document::LOCATION_META_KEY ] = $_GET['meta_location'];
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here.
+		$meta_location = Utils::_unstable_get_super_global_value( $_GET, 'meta_location' );
+		if ( $meta_location ) {
+			$meta[ Theme_Document::LOCATION_META_KEY ] = $meta_location;
 		}
 
 		return $meta;

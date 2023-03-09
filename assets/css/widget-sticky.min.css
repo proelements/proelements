@@ -1,2 +1,2 @@
-/*! pro-elements - v3.8.0 - 30-10-2022 */
-.elementor-sticky--active{z-index:99}.e-con .e-con.elementor-sticky--active,.e-con .e-container.elementor-sticky--active,.e-container .e-con.elementor-sticky--active,.e-container .e-container.elementor-sticky--active{padding-left:var(--padding-left);padding-right:var(--padding-right)}
+/*! elementor-pro - v3.11.3 - 26-02-2023 */
+.elementor-sticky--active{z-index:99}.e-con.elementor-sticky--active,.e-container.elementor-sticky--active{z-index:var(--z-index,99)}.e-con .e-con.elementor-sticky--active,.e-con .e-container.elementor-sticky--active,.e-container .e-con.elementor-sticky--active,.e-container .e-container.elementor-sticky--active{padding-left:var(--padding-left);padding-right:var(--padding-right)}

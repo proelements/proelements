@@ -254,8 +254,10 @@ class Group_Control_Posts extends Group_Control_Base {
 		$post__not_in = [];
 		if ( ! empty( $settings['exclude'] ) ) {
 			if ( in_array( 'current_post', $settings['exclude'], true ) ) {
-				if ( wp_doing_ajax() && ! empty( $_REQUEST['post_id'] ) ) {
-					$post__not_in[] = $_REQUEST['post_id'];
+				$post_id = Utils::_unstable_get_super_global_value( $_REQUEST, 'post_id' );
+
+				if ( wp_doing_ajax() && $post_id ) {
+					$post__not_in[] = $post_id;
 				} elseif ( is_singular() ) {
 					$post__not_in[] = get_queried_object_id();
 				}

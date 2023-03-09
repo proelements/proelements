@@ -2,14 +2,13 @@
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
 use Elementor\DB;
-use ElementorPro\Base\MarkerInterfaces\Template_With_Post_Content_Interface;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-abstract class Single_Base extends Archive_Single_Base  implements Template_With_Post_Content_Interface {
+abstract class Single_Base extends Archive_Single_Base {
 
 
 	public static function get_properties() {

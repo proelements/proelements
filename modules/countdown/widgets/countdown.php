@@ -65,6 +65,9 @@ class Countdown extends Base_Widget {
 				'condition' => [
 					'countdown_type' => 'due_date',
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -371,7 +374,7 @@ class Countdown extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -661,9 +664,9 @@ class Countdown extends Base_Widget {
 		if ( 'evergreen' === $instance['countdown_type'] ) {
 			$this->add_render_attribute( 'div', 'data-evergreen-interval', $this->get_evergreen_interval( $instance ) );
 		} else {
-			// Handle timezone ( we need to set GMT time )
-			$gmt = get_gmt_from_date( $due_date . ':00' );
-			$due_date = strtotime( $gmt );
+			$wp_timezone = new \DateTimeZone( wp_timezone_string() );
+			$due_date = new \DateTime( $due_date, $wp_timezone );
+			$due_date = $due_date->getTimestamp();
 		}
 
 		$actions = false;

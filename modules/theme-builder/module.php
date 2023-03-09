@@ -153,6 +153,7 @@ class Module extends Module_Base {
 
 	public function register_controls( Controls_Manager $controls_manager ) {
 		$controls_manager->register( new Classes\Conditions_Repeater() );
+		$controls_manager->register( new Classes\Control_Media_Preview() );
 	}
 
 	public function create_new_dialog_types( $types ) {

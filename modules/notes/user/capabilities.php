@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\Notes\User;
 use ElementorPro\Plugin;
 use ElementorPro\Core\Utils\Collection;
 use ElementorPro\Modules\Notes\Database\Models\Note;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -90,7 +91,9 @@ class Capabilities {
 	 * @param $user_id
 	 */
 	public function update_user_capabilities( $user_id ) {
-		$verified_nonce = ! empty( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'update-user_' . $user_id );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified in `wp_verify_nonce`
+		$wpnonce = Utils::_unstable_get_super_global_value( $_POST, '_wpnonce' );
+		$verified_nonce = wp_verify_nonce( $wpnonce, 'update-user_' . $user_id );
 
 		if ( ! $verified_nonce ) {
 			return;

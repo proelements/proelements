@@ -2,7 +2,6 @@
 namespace ElementorPro\Modules\Woocommerce\Tags;
 
 use Elementor\Controls_Manager;
-use ElementorPro\Modules\Woocommerce\Tags\Traits\Tag_Product_Id;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -28,7 +27,10 @@ class Product_Sale extends Base_Tag {
 	}
 
 	public function render() {
-		$product = wc_get_product( $this->get_settings( 'product_id' ) );
+		$settings = $this->get_settings_for_display();
+
+		$product = $this->get_product( $settings['product_id'] );
+
 		if ( ! $product ) {
 			return;
 		}
@@ -36,7 +38,7 @@ class Product_Sale extends Base_Tag {
 		$value = '';
 
 		if ( $product->is_on_sale() ) {
-			$value = $this->get_settings( 'text' );
+			$value = $settings['text'];
 		}
 
 		echo wp_kses_post( $value );

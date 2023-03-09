@@ -413,7 +413,7 @@ class Module extends Module_Base {
 	 */
 	public function ajax_posts_filter_autocomplete_deprecated( $data ) {
 		if ( empty( $data['filter_type'] ) || empty( $data['q'] ) ) {
-			throw new \Exception( 'Bad Request' );
+			throw new \Exception( 'Bad request.' );
 		}
 
 		$results = [];

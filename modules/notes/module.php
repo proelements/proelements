@@ -135,7 +135,8 @@ class Module extends App {
 
 		$route = [
 			'title' => Utils::get_clean_document_title(),
-			'url' => Utils::clean_url( $_SERVER['REQUEST_URI'] ),
+			// PHPCS - The url cleaned inside the clear_url method.
+			'url' => Utils::clean_url( $_SERVER['REQUEST_URI'] ?? '' ), // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			'note_url_pattern' => Note::generate_url(),
 			'post_id' => null,
 			'is_elementor_library' => false,

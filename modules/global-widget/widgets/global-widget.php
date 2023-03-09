@@ -54,7 +54,7 @@ class Global_Widget extends Base_Widget {
 			);
 
 			if ( ! $original_widget_type ) {
-				throw new \Exception( 'Original Widget Type not found.' );
+				throw new \Exception( 'Original widget type not found.' );
 			}
 
 			// If it saved as draft it already have the recent settings.

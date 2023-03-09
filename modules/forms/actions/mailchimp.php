@@ -393,7 +393,7 @@ class Mailchimp extends Integration_Base {
 			wp_send_json_error();
 		}
 		try {
-			new Mailchimp_Handler( $_POST['api_key'] );
+			new Mailchimp_Handler( $_POST['api_key'] ); // phpcs:ignore -- No need to sanitize to support special characters.
 		} catch ( \Exception $exception ) {
 			wp_send_json_error();
 		}
@@ -414,7 +414,7 @@ class Mailchimp extends Integration_Base {
 		}
 
 		if ( empty( $api_key ) ) {
-			throw new \Exception( '`api_key` is required', 400 );
+			throw new \Exception( '`api_key` is required.', 400 );
 		}
 
 		$handler = new Mailchimp_Handler( $api_key );

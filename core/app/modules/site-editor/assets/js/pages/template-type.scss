@@ -1,6 +1,10 @@
 .e-site-editor__templates {
 	.page-header {
-		margin-bottom: spacing(10)
+		margin-bottom: spacing(10);
+
+		> a {
+			align-self: baseline;
+		}
 	}
 
 	.eps-separator {

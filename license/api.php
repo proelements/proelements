@@ -2,6 +2,7 @@
 namespace ElementorPro\License;
 
 use Elementor\Core\Common\Modules\Connect\Module as ConnectModule;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -11,15 +12,41 @@ class API {
 
 	const PRODUCT_NAME = 'Elementor Pro';
 
+	/**
+	 * @deprecated 3.8.0
+	 */
 	const STORE_URL = 'https://my.elementor.com/api/v1/licenses/';
+
+	const BASE_URL = 'https://my.elementor.com/api/v2/';
+
 	const RENEW_URL = 'https://go.elementor.com/renew/';
 
 	// License Statuses
-	const STATUS_VALID = 'valid';
-	const STATUS_INVALID = 'invalid';
 	const STATUS_EXPIRED = 'expired';
 	const STATUS_SITE_INACTIVE = 'site_inactive';
+	const STATUS_CANCELLED = 'cancelled';
+	const STATUS_REQUEST_LOCKED = 'request_locked';
+	const STATUS_MISSING = 'missing';
+	const STATUS_HTTP_ERROR = 'http_error';
+
+	/**
+	 * @deprecated 3.8.0
+	 */
+	const STATUS_VALID = 'valid';
+	/**
+	 * @deprecated 3.8.0
+	 */
+	const STATUS_INVALID = 'invalid';
+
+	/**
+	 * @deprecated 3.8.0
+	 */
 	const STATUS_DISABLED = 'disabled';
+
+	/**
+	 * @deprecated 3.8.0
+	 */
+	const STATUS_REVOKED = 'revoked';
 
 	// Features
 	const FEATURE_PRO_TRIAL = 'pro_trial';
@@ -32,12 +59,7 @@ class API {
 
 	protected static $transient_data = [];
 
-	/**
-	 * @param array $body_args
-	 *
-	 * @return \stdClass|\WP_Error
-	 */
-	private static function remote_post( $body_args = [] ) {
+	private static function remote_post( $endpoint, $body_args = [] ) {
 		$use_home_url = true;
 
 		/**
@@ -61,18 +83,13 @@ class API {
 			]
 		);
 
-		$response = wp_remote_post( self::STORE_URL, [
+		$response = wp_remote_post( self::BASE_URL . $endpoint, [
 			'timeout' => 40,
 			'body' => $body_args,
 		] );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
-		}
-
-		$response_code = wp_remote_retrieve_response_code( $response );
-		if ( 200 !== (int) $response_code ) {
-			return new \WP_Error( $response_code, esc_html__( 'HTTP Error', 'elementor-pro' ) );
 		}
 
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -85,22 +102,20 @@ class API {
 
 	public static function activate_license( $license_key ) {
 		$body_args = [
-			'edd_action' => 'activate_license',
 			'license' => $license_key,
 		];
 
-		$license_data = self::remote_post( $body_args );
+		$license_data = self::remote_post( 'license/activate', $body_args );
 
 		return $license_data;
 	}
 
 	public static function deactivate_license() {
 		$body_args = [
-			'edd_action' => 'deactivate_license',
 			'license' => Admin::get_license_key(),
 		];
 
-		$license_data = self::remote_post( $body_args );
+		$license_data = self::remote_post( 'license/deactivate', $body_args );
 
 		return $license_data;
 	}
@@ -163,7 +178,7 @@ class API {
 	}
 
 	public static function get_license_data( $force_request = false ) {
-		$license_data['license'] = self::STATUS_VALID;
+		$license_data['success'] = true;
 		return $license_data;
 	}
 
@@ -173,7 +188,15 @@ class API {
 		$info_data = self::get_transient( $cache_key );
 
 		if ( $force_update || false === $info_data ) {
-			$updater = Admin::get_updater_instance();
+			if ( self::is_request_running( 'get_version' ) ) {
+				if ( false !== $info_data ) {
+					return $info_data;
+				}
+
+				return new \WP_Error( esc_html__( 'Another check is in progress.', 'elementor-pro' ) );
+			}
+
+			$updater = Plugin::instance()->updater;
 
 			$translations = wp_get_installed_translations( 'plugins' );
 			$plugin_translations = [];
@@ -184,7 +207,6 @@ class API {
 			$locales = array_values( get_available_languages() );
 
 			$body_args = [
-				'edd_action' => 'get_version',
 				'name' => $updater->plugin_name,
 				'slug' => $updater->plugin_slug,
 				'version' => $updater->plugin_version,
@@ -194,11 +216,11 @@ class API {
 				'beta' => 'yes' === get_option( 'elementor_beta', 'no' ),
 			];
 
-			if ( self::is_request_running( 'get_version' ) ) {
-				return new \WP_Error( esc_html__( 'Another check is in progress.', 'elementor-pro' ) );
-			}
+			$info_data = self::remote_post( 'pro/info', $body_args );
 
-			$info_data = self::remote_post( $body_args );
+			if ( is_wp_error( $info_data ) || empty( $info_data['new_version'] ) ) {
+				return new \WP_Error( esc_html__( 'HTTP Error', 'elementor-pro' ) );
+			}
 
 			self::set_transient( $cache_key, $info_data );
 		}
@@ -291,7 +313,7 @@ class API {
 				'<a href="https://go.elementor.com/upgrade/" target="_blank">',
 				'</a>'
 			),
-			'expired' => printf(
+			'expired' => sprintf(
 				/* translators: 1: Bold text opening tag, 2: Bold text closing tag, 3: Link opening tag, 4: Link closing tag. */
 				esc_html__( '%1$sOh no! Your Elementor Pro license has expired.%2$s Want to keep creating secure and high-performing websites? Renew your subscription to regain access to all of the Elementor Pro widgets, templates, updates & more. %3$sRenew now%4$s', 'elementor-pro' ),
 				'<strong>',
@@ -300,7 +322,7 @@ class API {
 				'</a>'
 			),
 			'missing' => esc_html__( 'Your license is missing. Please check your key again.', 'elementor-pro' ),
-			'revoked' => sprintf(
+			'cancelled' => sprintf(
 				/* translators: 1: Bold text opening tag, 2: Bold text closing tag. */
 				esc_html__( '%1$sYour license key has been cancelled%2$s (most likely due to a refund request). Please consider acquiring a new license.', 'elementor-pro' ),
 				'<strong>',
@@ -325,13 +347,13 @@ class API {
 	public static function is_license_active() {
 		$license_data = self::get_license_data();
 
-		return self::STATUS_VALID === $license_data['license'];
+		return (bool) $license_data['success'];
 	}
 
 	public static function is_license_expired() {
 		$license_data = self::get_license_data();
 
-		return self::STATUS_EXPIRED === $license_data['license'];
+		return ! empty( $license_data['error'] ) && self::STATUS_EXPIRED === $license_data['error'];
 	}
 
 	public static function is_licence_pro_trial() {
@@ -348,7 +370,7 @@ class API {
 	public static function is_license_about_to_expire() {
 		$license_data = self::get_license_data();
 
-		if ( ! empty( $license_data['subscriptions'] ) && 'enable' === $license_data['subscriptions'] ) {
+		if ( ! empty( $license_data['recurring'] ) ) {
 			return false;
 		}
 

@@ -86,6 +86,7 @@ class Document extends Model_Base {
 	 *
 	 * @return array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return [
 			'id' => $this->ID,

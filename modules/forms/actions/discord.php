@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\Forms\Classes\Action_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -141,7 +142,9 @@ class Discord extends Action_Base {
 		}
 
 		// PHPCS - The form is a visitor action and doesn't require a nonce.
-		$page_url = isset( $_POST['referrer'] ) ? esc_url( $_POST['referrer'] ) : site_url(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$referrer = Utils::_unstable_get_super_global_value( $_POST, 'referrer' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		$page_url = $referrer ? esc_url( $referrer ) : site_url();
 		$color = isset( $settings['discord_webhook_color'] ) ? hexdec( ltrim( $settings['discord_webhook_color'], '#' ) ) : hexdec( '9c0244' );
 
 		// Build discord  webhook data
@@ -196,7 +199,7 @@ class Discord extends Action_Base {
 		]);
 
 		if ( 204 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-			throw new \Exception( esc_html__( 'Webhook Error', 'elementor-pro' ) );
+			throw new \Exception( 'Webhook error.' );
 		}
 	}
 }

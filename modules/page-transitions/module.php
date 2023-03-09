@@ -560,17 +560,10 @@ class Module extends Module_Base {
 			[
 				'label' => esc_html__( 'Rotate', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'deg' ],
+				'size_units' => [ 'deg', 'grad', 'rad', 'turn' ],
 				'default' => [
 					'unit' => 'deg',
 					'size' => 0,
-				],
-				'range' => [
-					'deg' => [
-						'min' => 0,
-						'max' => 360,
-						'step' => 10,
-					],
 				],
 				'condition' => [
 					$this->get_control_id( 'preloader_type' ) => 'icon',

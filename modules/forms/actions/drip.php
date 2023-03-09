@@ -159,7 +159,7 @@ class Drip extends Integration_Base {
 		$subscriber = $this->create_subscriber_object( $record );
 
 		if ( ! $subscriber ) {
-			throw new \Exception( esc_html__( 'Integration requires an email field', 'elementor-pro' ) );
+			throw new \Exception( 'Integration requires an email field.' );
 		}
 
 		if ( 'default' === $form_settings['drip_api_token_source'] ) {
@@ -269,7 +269,7 @@ class Drip extends Integration_Base {
 		}
 
 		if ( empty( $api_key ) ) {
-			throw new \Exception( '`api_token` is required', 400 );
+			throw new \Exception( '`api_token` is required.', 400 );
 		}
 
 		$handler = new Drip_Handler( $api_key );
@@ -314,7 +314,7 @@ class Drip extends Integration_Base {
 			wp_send_json_error();
 		}
 		try {
-			new Drip_Handler( $_POST['api_key'] );
+			new Drip_Handler( $_POST['api_key'] ); // phpcs:ignore -- No need to sanitize to support special characters.
 		} catch ( \Exception $exception ) {
 			wp_send_json_error();
 		}

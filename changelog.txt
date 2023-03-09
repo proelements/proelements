@@ -1,5 +1,116 @@
 # PRO Elements - by PROElements.org
 
+#### 3.11.3 - 2023-02-26
+
+* Fix: Error message appears when submitting a form placed below Loop Grid and Loop Carousel widgets ([#21432](https://github.com/elementor/elementor/issues/21432))
+* Fix: PHP 8.x compatibility issues in various places
+
+#### 3.11.2 - 2023-02-22
+
+* Fix: Save & Back handle becomes inaccessible in various scenarios cases in Loop Carousel widget ([#21316](https://github.com/elementor/elementor/issues/21316))
+* Fix: Can't edit page when using 'Content Tabs' and 'Section' options in Video Playlist widget
+
+#### 3.11.1 - 2023-02-15
+
+* Fix: Featured Image dynamic tag is not working in Background images ([#21313](https://github.com/elementor/elementor/issues/21313))
+* Fix: Time zone is not correct in Countdown widget ([#17485](https://github.com/elementor/elementor/issues/17485))
+* Fix: File upload field is not working in Form widget ([#21341](https://github.com/elementor/elementor/issues/21341))
+* Fix: Post Image Attachments dynamic tag is not working in various widgets ([#21314](https://github.com/elementor/elementor/issues/21314))
+
+#### 3.11.0 - 2023-02-13
+
+* New: Introducing Loop Carousel widget - Create powerful & repeating loop templates and populate each one with dynamic content ([#219](https://github.com/elementor/elementor/issues/219))
+* New: Added Date and Time Range option to Advanced Rules in Popup
+* Tweak: Improved accessibility when opening and closing a popup ([#9788](https://github.com/elementor/elementor/issues/9788))
+* Tweak: Improved accessibility of full-screen mode in Search Form widget ([#19907](https://github.com/elementor/elementor/issues/19907))
+* Tweak: Added keyboard accessibility support to Flip Box widget ([#5861](https://github.com/elementor/elementor/issues/5861))
+* Tweak: Add `aria-label` to read more link in Posts widget ([#13784](https://github.com/elementor/elementor/issues/13784))
+* Tweak: Use `aspect-ratio` property instead of CSS trick in Media Carousel widget
+* Tweak: Updated translation string in Stripe widget
+* Fix: Masonry and Columns controls are not working as expected with responsive in Posts and Loop Grid widgets ([#20670](https://github.com/elementor/elementor/issues/20670))
+* Fix: Invalid attributes names in Nav Menu widget ([#17400](https://github.com/elementor/elementor/issues/17400))
+* Fix: Post Image Attachments dynamic tag is not working as expected in various widgets
+* Fix: Form fields order is not presented correctly when exported to CSV in Form Submissions
+* Fix: Dynamic background image and video are not working with ACF in Loop Grid widget
+
+#### 3.10.3 - 2023-01-29
+
+* Tweak: Added introduction video to loop item information modal in Theme Builder
+* Fix: PHP 8.x throws errors and notices in some cases ([#21087](https://github.com/elementor/elementor/issues/21087))
+* Fix: Infinite Scroll and Load on click pagination are not working as expected in Archive template
+* Fix: Show row even when values do not exist in Form Submissions
+
+#### 3.10.2 - 2023-01-17
+
+* Fix: Updated compatibility tag for Elementor v3.10
+
+#### 3.10.1 - 2023-01-09
+
+Fix: Preview Could not be loaded error message appears on pages containing the Loop Grid in a header or footer templates
+
+#### 3.10.0 - 2023-01-09
+
+* New: Added new dynamic tag for due date in Countdown widget ([#7737](https://github.com/elementor/elementor/issues/7737))
+* Tweak: Added `modified` and `comment_count` to Order By in posts query control ([#11159](https://github.com/elementor/elementor/issues/11159))
+* Tweak: Replaced `footer` tag in Blockquote and Comments widgets for better semantics
+* Fix: Compatibility issue in Imagify Media Library filters due to `_elementor_is_screenshot` meta filter ([#19988](https://github.com/elementor/elementor/issues/19988))
+* Fix: Hotspot Widget label icon height issues when Inline Font Icons experiment is active
+* Fix: Editing glitch when using two loop grid widgets on the same page with the same loop item template
+* Fix: Equal height is not working when using sections in Loop Grid widget
+* Fix: Large amount of menu items are not appearing correctly on a mobile device in Nav Menu widget
+* Fix: Featured Image does not change dynamically when using infinite/click pagination in Loop Grid widget
+* Fix: Removed action call of non-existent `display_empty_cart_template()` method in Cart widget
+
+#### 3.9.2 - 2022-12-21
+
+* Fix: JS events do not trigger in Popups ([#20708](https://github.com/elementor/elementor/issues/20708))
+* Fix: PHP Errors appear when not using the toggle menu in Nav Menu widget ([#18636](https://github.com/elementor/elementor/issues/18636))
+* Fix: Popups' backgrounds disappear when using Lazy Load Background Images experiment
+
+#### 3.9.1 - 2022-12-14
+
+* Fix: WooCommerce Product Gallery dynamic tag is not working in Basic Gallery, Gallery and Image Carousel widgets ([#20678](https://github.com/elementor/elementor/issues/20678))
+* Fix: Hide Empty option is not working in Menu Cart widget
+* Fix: The Stripe Button widget doesn't work in Templates
+
+#### 3.9.0 - 2022-12-06
+
+* New: Added support for WooCommerce to Loop Builder ([#20020](https://github.com/elementor/elementor/issues/20020))
+* Tweak: Added more options to 'Show up to X times' advanced rule in Popups ([#8187](https://github.com/elementor/elementor/issues/8187))
+* Tweak: Allow saving and reloading a page while editing in-place loop item template ([#19882](https://github.com/elementor/elementor/issues/19882))
+* Tweak: Added `$location param` to `elementor/theme/get_location_templates/template_id` hook ([#18453](https://github.com/elementor/elementor/issues/18453))
+* Tweak: Removed redundant labels from group controls ([#11666](https://github.com/elementor/elementor/issues/11666))
+* Tweak: Added support to use sections and columns as the layout structure of a Loop item template
+* Tweak: Disabled movement when a repeater item is in focus in edit mode
+* Tweak: Upgrade the autoprefixer package to better minify CSS files
+* Tweak: Removed duplicate SQL queries on every page for better performance
+* Tweak: Improved License validation mechanism to avoid limitations
+* Tweak: Added more units options to Border Width control in various elements
+* Tweak: Added `em` units to Border Radius control in various elements
+* Tweak: Added 'Equal height' functionality to Loop Grid widget
+* Fix: Issue with Related Products widget and WooCommerce Pixel Manager plugin ([#16934](https://github.com/elementor/elementor/issues/16934))
+* Fix: My Account widget gets hidden when using a single page template with post content ([#19627](https://github.com/elementor/elementor/issues/19627))
+* Fix: Cart is not updated when cache enabled in Menu Cart widget ([#19312](https://github.com/elementor/elementor/issues/19312))
+* Fix: Entrance animations are not working as expected with Infinite Loop and Load on CLick pagination in Loop Grid widget ([#20293](https://github.com/elementor/elementor/issues/20293))
+* Fix: Loading page issues in Form Submissions screen ([#19973](https://github.com/elementor/elementor/issues/19973))
+* Fix: Recently Edited date and time not working as expected in Elementor Overview plugin in WordPress dashboard ([#17966](https://github.com/elementor/elementor/issues/17966))
+* Fix: Recurring license mismatch error message when using translators plugins
+* Fix: Submenu items triggers page transition instead of opening in Nav Menu widget
+* Fix: Query values of Posts widget are not imported correctly when importing a Kit
+* Fix: Loop items are exceeding the widget boundaries in Loop Grid widget
+* Fix: Order by option is not working as expected when choosing Upsells, Cross-Sells and Related Products query in Products widget
+* Fix: Various widgets disappear in certain scenarios when choosing direction Row or Column in Container
+
+#### 3.8.2 - 2022-11-20
+* Fix: Z-index issues when applying sticky to Container
+* Fix: Error message appears on front with Editor and Shop Manager roles when using the Loop Builder widget
+
+#### 3.8.1 - 2022-11-06
+* Fix: Sticky inner section is not staying in the column when applying sticky option in Sections ([#20203](https://github.com/elementor/elementor/issues/20203))
+* Fix: Post Title widget located in a loop item template disappears when enabling the hide title option inside page settings ([#20207](https://github.com/elementor/elementor/issues/20207), [#20255](https://github.com/elementor/elementor/issues/20255))
+* Fix: ACF Dynamic data not rendering correctly in various scenarios ([#20235](https://github.com/elementor/elementor/issues/20235), [#20258](https://github.com/elementor/elementor/issues/20258), [#20277](https://github.com/elementor/elementor/issues/20277))
+* Fix: Z-index issues when applying sticky to Container ([#20227](https://github.com/elementor/elementor/issues/20227))
+
 #### 3.8.0 - 2022-10-30
 * New: Introducing Loop Builder as a beta status experiment - Create powerful & repeating loop templates and populate each one with dynamic content and design flexibility ([#4440](https://github.com/elementor/elementor/issues/4440))
 * Tweak: Add `wp_body_open()` to header in Header template ([#11562](https://github.com/elementor/elementor/issues/11562), [#15828](https://github.com/elementor/elementor/issues/15828), [#13089](https://github.com/elementor/elementor/issues/13089))

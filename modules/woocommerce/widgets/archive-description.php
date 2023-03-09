@@ -95,7 +95,6 @@ class Archive_Description extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'text_typography',
-				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .term-description',
 			]
 		);

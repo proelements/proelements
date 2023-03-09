@@ -1,4 +1,4 @@
-/*! pro-elements - v3.8.0 - 30-10-2022 */
+/*! pro-elements - v3.11.3 - 26-02-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -81,7 +81,6 @@ var __webpack_exports__ = {};
 
 
 var _editor = __webpack_require__(/*! ./editor/editor */ "../tests/qunit/editor/editor.js");
-
 new _editor.EditorBootstrapPro();
 })();
 

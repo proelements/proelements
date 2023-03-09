@@ -6,6 +6,7 @@ use ElementorPro\Modules\Forms\Classes;
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\Forms\Widgets\Form;
 use ElementorPro\Plugin;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -134,11 +135,11 @@ class Upload extends Field_Base {
 			'error',
 			'size',
 		];
-		$files = $_FILES['form_fields'];
+		$files = $_FILES['form_fields']; // phpcs:ignore -- escaped when processing the file later on.
 		// iterate over each uploaded file
 		foreach ( $files as $key => $part ) {
 			$key = (string) $key;
-			if ( in_array( $key, $names ) && is_array( $part ) ) {
+			if ( in_array( $key, $names, true ) && is_array( $part ) ) {
 				foreach ( $part as $position => $value ) {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $index => $inner_val ) {
@@ -254,9 +255,10 @@ class Upload extends Field_Base {
 		}
 
 		$id = $field['id'];
+		$files = Utils::_unstable_get_super_global_value( $_FILES, 'form_fields' );
 
 		if ( ! empty( $field['max_files'] ) ) {
-			if ( count( $_FILES['form_fields'][ $id ] ) > $field['max_files'] ) {
+			if ( count( $files[ $id ] ) > $field['max_files'] ) {
 				$error_message = sprintf(
 					/* translators: %d: The number of allowed files. */
 					_n( 'You can upload only %d file.', 'You can upload up to %d files.', intval( $field['max_files'] ), 'elementor-pro' ),
@@ -268,7 +270,7 @@ class Upload extends Field_Base {
 			}
 		}
 
-		foreach ( $_FILES['form_fields'][ $id ] as $index => $file ) {
+		foreach ( $files[ $id ] as $index => $file ) {
 			// not uploaded
 			if ( ! $field['required'] && UPLOAD_ERR_NO_FILE === $file['error'] ) {
 				return;
@@ -425,7 +427,8 @@ class Upload extends Field_Base {
 	 */
 	public function process_field( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {
 		$id = $field['id'];
-		foreach ( $_FILES['form_fields'][ $id ] as $index => $file ) {
+		$files = Utils::_unstable_get_super_global_value( $_FILES, 'form_fields' );
+		foreach ( $files[ $id ] as $index => $file ) {
 			if ( UPLOAD_ERR_NO_FILE === $file['error'] ) {
 				continue;
 			}

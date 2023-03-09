@@ -34,6 +34,17 @@ class Base extends Posts {
 		return $skin_id . '_' . Module::QUERY_ID;
 	}
 
+	protected function get_initial_config() {
+		$config = parent::get_initial_config();
+
+		$config['is_loop'] = true;
+		$config['add_parent_render_header'] = true;
+		$config['add_parent_render_footer'] = true;
+		$config['edit_handle_selector'] = '[data-elementor-type="loop-item"]';
+
+		return $config;
+	}
+
 	/**
 	 * Get Posts Per Page Value
 	 *
@@ -55,9 +66,16 @@ class Base extends Posts {
 	protected function register_controls() {
 		$this->register_layout_section();
 		$this->register_query_section();
+
+		// Carousel
+		$this->register_settings_section_controls();
+		$this->register_navigation_section_controls();
+
 		$this->register_pagination_section_controls();
 
 		$this->register_design_layout_controls();
+		$this->register_design_navigation_controls();
+		$this->register_design_pagination_controls();
 
 		// The `_skins` control determines the Loop's query source, so it is renamed for this to be clearer to the user.
 		$this->update_control( '_skin', [
@@ -113,38 +131,6 @@ class Base extends Posts {
 					],
 				],
 				'frontend_available' => true,
-			]
-		);
-
-		$this->add_responsive_control(
-			'columns',
-			[
-				'label' => esc_html__( 'Columns', 'elementor-pro' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => '3',
-				'tablet_default' => '2',
-				'mobile_default' => '1',
-				'min' => 1,
-				'max' => 12,
-				'prefix_class' => 'elementor-grid%s-',
-				'frontend_available' => true,
-				'separator' => 'before',
-				'condition' => [
-					'template_id!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'posts_per_page',
-			[
-				'label' => esc_html__( 'Items Per Page', 'elementor-pro' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 6,
-				'min' => 1,
-				'condition' => [
-					'template_id!' => '',
-				],
 			]
 		);
 
@@ -236,50 +222,25 @@ class Base extends Posts {
 		);
 	}
 
-	protected function register_design_layout_controls() {
-		$this->start_controls_section(
-			'section_design_layout',
-			[
-				'label' => esc_html__( 'Layout', 'elementor-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
+	protected function register_design_layout_controls() {}
 
-		$this->add_responsive_control(
-			'column_gap',
-			[
-				'label' => esc_html__( 'Gap between columns', 'elementor-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}}' => '--grid-column-gap: {{SIZE}}{{UNIT}}',
-				],
-			]
-		);
+	protected function register_design_navigation_controls() {}
 
-		$this->add_responsive_control(
-			'row_gap',
-			[
-				'label' => esc_html__( 'Gap between rows', 'elementor-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'frontend_available' => true,
-				'selectors' => [
-					'{{WRAPPER}}' => '--grid-row-gap: {{SIZE}}{{UNIT}}',
-				],
-			]
-		);
+	protected function register_design_pagination_controls() {}
 
-		$this->end_controls_section();
+	public function register_settings_section_controls() {}
+
+	public function register_navigation_section_controls() {}
+
+	public function get_loop_header_widget_classes(): array {
+		return [];
 	}
+
+	public function render_loop_header() {}
+
+	public function render_loop_footer() {}
+
+	public function before_skin_render() {}
+
+	public function after_skin_render() {}
 }

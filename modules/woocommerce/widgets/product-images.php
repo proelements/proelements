@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\Woocommerce\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
+use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -75,7 +76,7 @@ class Product_Images extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-product-gallery__trigger + .woocommerce-product-gallery__wrapper,
 					.woocommerce {{WRAPPER}} .flex-viewport' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
@@ -117,7 +118,7 @@ class Product_Images extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .flex-control-thumbs img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
@@ -141,16 +142,18 @@ class Product_Images extends Base_Widget {
 	}
 
 	public function render() {
-		$settings = $this->get_settings_for_display();
 		global $product;
 
-		$product = wc_get_product();
+		$product = $this->get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product ) {
 			return;
 		}
 
-		$is_library_preview = isset( $_GET['elementor_library'] ) && isset( $_GET['preview_id'] );
+		$settings = $this->get_settings_for_display();
+
+		$is_library_preview = Utils::_unstable_get_super_global_value( $_GET, 'elementor_library' )
+			&& Utils::_unstable_get_super_global_value( $_GET, 'preview_id' );
 
 		if ( $is_library_preview ) {
 			// We need to enqueue these scripts manually on the Library preview.

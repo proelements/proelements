@@ -13,17 +13,17 @@ class Activecampaign_Handler {
 
 	public function __construct( $api_key, $base_url ) {
 		if ( empty( $api_key ) ) {
-			throw new \Exception( 'Invalid API key' );
+			throw new \Exception( 'Invalid API key.' );
 		}
 
 		if ( empty( $base_url ) ) {
-			throw new \Exception( 'Invalid API key' );
+			throw new \Exception( 'Invalid API URL.' );
 		}
 
 		$this->init_rest_client( $api_key, $base_url );
 
 		if ( ! $this->is_valid_api_key() ) {
-			throw new \Exception( 'Invalid API key or URL' );
+			throw new \Exception( 'Invalid API key or URL.' );
 		}
 	}
 

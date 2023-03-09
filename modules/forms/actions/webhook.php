@@ -114,7 +114,7 @@ class Webhook extends Action_Base {
 		do_action( 'elementor_pro/forms/webhooks/response', $response, $record );
 
 		if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-			throw new \Exception( esc_html__( 'Webhook Error', 'elementor-pro' ) );
+			throw new \Exception( 'Webhook error.' );
 		}
 	}
 }

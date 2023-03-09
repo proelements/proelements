@@ -68,7 +68,8 @@ class Single_Elements extends Base_Widget {
 
 	private function get_element() {
 		global $product;
-		$product = wc_get_product();
+		$product = $this->get_product();
+
 		$settings = $this->get_settings();
 		$html = '';
 

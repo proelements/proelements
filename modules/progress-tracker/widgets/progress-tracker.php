@@ -584,11 +584,6 @@ class ProgressTracker extends Base_Widget {
 			[
 				'name' => 'percentage_text_shadow',
 				'selector' => '{{WRAPPER}} .current-progress-percentage',
-				'fields_options' => [
-					'text_shadow_type' => [
-						'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
-					],
-				],
 			]
 		);
 

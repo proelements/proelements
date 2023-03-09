@@ -294,8 +294,7 @@ class Custom_Code_Metabox extends Assets_Base {
 		$fields = $this->get_fields();
 
 		if ( ! empty( $_REQUEST['action'] ) && 'edit' == $_REQUEST['action'] ) {
-			$post = get_post( $_REQUEST['post'] );
-
+			$post = get_post( \ElementorPro\Core\Utils::_unstable_get_super_global_value( $_REQUEST, 'post' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here.
 			foreach ( self::INPUT_FIELDS as $input_field ) {
 				$field_meta = get_post_meta( $post->ID, "_elementor_$input_field", true );
 
@@ -365,8 +364,7 @@ class Custom_Code_Metabox extends Assets_Base {
 
 				foreach ( self::INPUT_OPTIONS as $input_option ) {
 					$key = self::FILED_EXTRA_OPTIONS . '_' . $input_option;
-					// PHP - The request is safe.
-					$input_option_value = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : null; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$input_option_value = \ElementorPro\Core\Utils::_unstable_get_super_global_value( $post_data, $key );
 
 					if ( 'on' === $input_option_value ) {
 						$input_options [] = $input_option;

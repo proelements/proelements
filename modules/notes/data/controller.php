@@ -648,7 +648,7 @@ class Controller extends Base_Controller {
 
 		if ( $parent->is_reply() ) {
 			throw new Data_Exception(
-				esc_html__( 'Cannot create reply on reply', 'elementor-pro' ),
+				'Cannot create reply on reply.',
 				'rest_invalid_param',
 				[ 'status' => Http_Status::BAD_REQUEST ]
 			);
@@ -656,7 +656,7 @@ class Controller extends Base_Controller {
 
 		if ( $request->has_param( 'is_public' ) ) {
 			throw new Data_Exception(
-				esc_html__( 'Cannot update \'is_public\' on reply.', 'elementor-pro' ),
+				"Cannot update 'is_public' on reply.",
 				'rest_invalid_param',
 				[ 'status' => Http_Status::BAD_REQUEST ]
 			);
@@ -683,7 +683,7 @@ class Controller extends Base_Controller {
 
 		if ( $note->is_reply() && $has_invalid_reply_attributes ) {
 			throw new Data_Exception(
-				esc_html__( 'Cannot update \'is_resolved\' or \'is_public\' on reply.', 'elementor-pro' ),
+				"Cannot update 'is_resolved' or 'is_public' on reply.",
 				'rest_invalid_param',
 				[ 'status' => Http_Status::BAD_REQUEST ]
 			);
@@ -692,11 +692,7 @@ class Controller extends Base_Controller {
 		// For notifications - To make sure that there are no redundant resolve notifications.
 		if ( $note->is_resolved === $request->get_param( 'is_resolved' ) ) {
 			throw new Data_Exception(
-				sprintf(
-					/* translators: %s: Resolved note. */
-					esc_html__( '\'is_resolved\' is already set to `%s`.', 'elementor-pro' ),
-					$note->is_resolved
-				),
+				"'is_resolved' was already set on '{$note->is_resolved}'.",
 				'rest_invalid_param',
 				[ 'status' => Http_Status::BAD_REQUEST ]
 			);

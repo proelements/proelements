@@ -5,6 +5,7 @@ use Elementor\Core\Files\CSS\Post;
 use Elementor\Core\Files\CSS\Post as Post_CSS;
 use Elementor\Core\Files\CSS\Post_Preview;
 use Elementor\Icons_Manager;
+use ElementorPro\Modules\LoopBuilder\Documents\Loop;
 use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
 use ElementorPro\Modules\LoopBuilder\Module;
 use ElementorPro\Modules\LoopBuilder\Widgets\Base as Loop_Widget_Base;
@@ -56,34 +57,55 @@ class Skin_Loop_Base extends Skin_Base {
 		);
 	}
 
+	private function maybe_add_load_more_wrapper_class() {
+		$settings = $this->parent->get_settings_for_display();
+		/** @var Loop_Widget_Base $widget */
+		$widget = $this->parent;
+
+		if ( isset( $settings['pagination_type'] ) && 'load_more_on_click' === $settings['pagination_type'] ) {
+			// If Pagination is enabled with the Load More On Click option, a class is needed for targeting.
+			// The 'wrapper' element tag is used by the Button Widget Trait.
+			$widget->add_render_attribute( 'wrapper', 'class', 'e-loop__load-more' );
+		}
+	}
+
 	public function render() {
 		$settings = $this->parent->get_settings_for_display();
 		$is_edit_mode = Plugin::elementor()->editor->is_edit_mode();
+		/** @var Loop_Widget_Base $widget */
+		$widget = $this->parent;
+		$current_document = Plugin::elementor()->documents->get_current();
 
 		if ( ! empty( $settings['template_id'] ) ) {
-			if ( 'load_more_on_click' === $settings['pagination_type'] ) {
-				// If Pagination is enabled with the Load More On Click option, a class is needed for targeting.
-				// The 'wrapper' element tag is used by the Button Widget Trait.
-				$this->parent->add_render_attribute( 'wrapper', 'class', 'e-loop__load-more' );
-			}
+			$this->maybe_add_load_more_wrapper_class();
+
+			$widget->before_skin_render();
 
 			parent::render();
 
-			if ( $is_edit_mode ) {
-				// Render SVG symbols for any icons that are rendered outside of edit mode within the loop.
-				Icons_Manager::render_svg_symbols();
-			}
+			$widget->after_skin_render();
 		} else if ( $is_edit_mode ) {
 			$this->render_empty_view();
+		}
+
+		if ( $current_document ) {
+			Plugin::elementor()->documents->switch_to_document( $current_document );
 		}
 	}
 
 	protected function get_loop_header_widget_classes() {
-		return [ 'elementor-loop-container' ];
+		/** @var Loop_Widget_Base $widget */
+		$widget = $this->parent;
+
+		$classes = $widget->get_loop_header_widget_classes();
+
+		$classes[] = 'elementor-loop-container';
+
+		return $classes;
 	}
 
 	protected function _register_controls_actions() {
-		add_action( 'elementor/element/loop-grid/section_query/after_section_start', [ $this, 'register_query_controls' ] );
+		add_action( 'elementor/element/' . $this->parent->get_name() . '/section_query/after_section_start', [ $this, 'register_query_controls' ] );
 	}
 
 	/**
@@ -109,6 +131,14 @@ class Skin_Loop_Base extends Skin_Base {
 	}
 
 	protected function print_dynamic_css( $post_id, $post_id_for_data ) {
+		$document = Plugin::elementor()->documents->get_doc_for_frontend( $post_id_for_data );
+
+		if ( ! $document ) {
+			return;
+		}
+
+		Plugin::elementor()->documents->switch_to_document( $document );
+
 		$css_file = Loop_Dynamic_CSS::create( $post_id, $post_id_for_data );
 		$post_css = $css_file->get_content();
 
@@ -121,6 +151,32 @@ class Skin_Loop_Base extends Skin_Base {
 		$css = sprintf( '<style id="%s">%s</style>', 'loop-dynamic-' . $post_id_for_data, $css );
 
 		echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		Plugin::elementor()->documents->restore_document();
+	}
+
+	protected function render_loop_header() {
+		/** @var Loop_Widget_Base $widget */
+		$widget = $this->parent;
+		$config = $widget->get_config();
+
+		if ( $config['add_parent_render_header'] ) {
+			parent::render_loop_header();
+		}
+
+		$widget->render_loop_header();
+	}
+
+	protected function render_loop_footer() {
+		/** @var Loop_Widget_Base $widget */
+		$widget = $this->parent;
+		$config = $widget->get_config();
+
+		if ( $config['add_parent_render_footer'] ) {
+			parent::render_loop_footer();
+		}
+
+		$widget->render_loop_footer();
 	}
 
 	/**

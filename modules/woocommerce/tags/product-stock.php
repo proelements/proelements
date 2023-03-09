@@ -2,7 +2,6 @@
 namespace ElementorPro\Modules\Woocommerce\Tags;
 
 use Elementor\Controls_Manager;
-use ElementorPro\Modules\Woocommerce\Tags\Traits\Tag_Product_Id;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -18,12 +17,15 @@ class Product_Stock extends Base_Tag {
 	}
 
 	public function render() {
-		$product = wc_get_product( $this->get_settings( 'product_id' ) );
+		$settings = $this->get_settings_for_display();
+
+		$product = $this->get_product( $settings['product_id'] );
+
 		if ( ! $product ) {
 			return;
 		}
 
-		if ( 'yes' === $this->get_settings( 'show_text' ) ) {
+		if ( 'yes' === $settings['show_text'] ) {
 			$value = wc_get_stock_html( $product );
 		} else {
 			$value = (int) $product->get_stock_quantity();

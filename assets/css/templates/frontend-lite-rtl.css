@@ -178,6 +178,10 @@
   z-index: 99;
 }
 
+.e-container.elementor-sticky--active,
+.e-con.elementor-sticky--active {
+  z-index: var(--z-index, 99);
+}
 .e-container .e-container.elementor-sticky,
 .e-container .e-con.elementor-sticky,
 .e-con .e-container.elementor-sticky,

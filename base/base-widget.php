@@ -10,4 +10,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Base_Widget extends Widget_Base {
 
 	use Base_Widget_Trait;
+	use On_Import_Trait;
 }

@@ -4,6 +4,10 @@ namespace ElementorPro\Modules\Woocommerce\Traits;
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Query;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 trait Products_Trait {
 
 	private $product_query_types = [

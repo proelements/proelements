@@ -442,7 +442,7 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -698,6 +698,7 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -829,6 +830,7 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Icon Rotate', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'deg', 'grad', 'rad', 'turn' ],
 				'default' => [
 					'size' => 0,
 					'unit' => 'deg',
@@ -848,6 +850,15 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
+				'range' => [
+					'px' => [
+						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
+					],
+				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-icon' => 'border-width: {{SIZE}}{{UNIT}}',
 				],
@@ -863,7 +874,7 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -1356,10 +1367,13 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
 					],
 				],
 				'selectors' => [
@@ -1377,6 +1391,7 @@ class Flip_Box extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -1444,7 +1459,7 @@ class Flip_Box extends Base_Widget {
 		$is_new = empty( $settings['icon'] ) && $migration_allowed;
 
 		?>
-		<div class="elementor-flip-box">
+		<div class="elementor-flip-box" tabindex="0">
 			<div class="elementor-flip-box__layer elementor-flip-box__front">
 				<div class="elementor-flip-box__layer__overlay">
 					<div class="elementor-flip-box__layer__inner">
@@ -1550,7 +1565,7 @@ class Flip_Box extends Base_Widget {
 			migrated = elementor.helpers.isIconMigrated( settings, 'selected_icon' );
 		#>
 
-		<div class="elementor-flip-box">
+		<div class="elementor-flip-box" tabindex="0">
 			<div class="elementor-flip-box__layer elementor-flip-box__front">
 				<div class="elementor-flip-box__layer__overlay">
 					<div class="elementor-flip-box__layer__inner">
@@ -1581,22 +1596,22 @@ class Flip_Box extends Base_Widget {
 				</div>
 			</div>
 			<{{ wrapperTag }} class="elementor-flip-box__layer elementor-flip-box__back">
-			<div class="elementor-flip-box__layer__overlay">
-				<div class="elementor-flip-box__layer__inner">
-					<# if ( settings.title_text_b ) { #>
-					<h3 class="elementor-flip-box__layer__title">{{{ settings.title_text_b }}}</h3>
-					<# } #>
+				<div class="elementor-flip-box__layer__overlay">
+					<div class="elementor-flip-box__layer__inner">
+						<# if ( settings.title_text_b ) { #>
+						<h3 class="elementor-flip-box__layer__title">{{{ settings.title_text_b }}}</h3>
+						<# } #>
 
-					<# if ( settings.description_text_b ) { #>
-					<div class="elementor-flip-box__layer__description">{{{ settings.description_text_b }}}</div>
-					<# } #>
+						<# if ( settings.description_text_b ) { #>
+						<div class="elementor-flip-box__layer__description">{{{ settings.description_text_b }}}</div>
+						<# } #>
 
-					<# if ( settings.button_text ) { #>
-					<{{ buttonTag }} href="#" class="{{ btnClasses }}">{{{ settings.button_text }}}</{{ buttonTag }}>
-				<# } #>
-			</div>
-		</div>
-		</{{ wrapperTag }}>
+						<# if ( settings.button_text ) { #>
+						<{{ buttonTag }} href="#" class="{{ btnClasses }}">{{{ settings.button_text }}}</{{ buttonTag }}>
+						<# } #>
+					</div>
+				</div>
+			</{{ wrapperTag }}>
 		</div>
 		<?php
 	}

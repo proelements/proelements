@@ -274,8 +274,6 @@ class Media_Carousel extends Base {
 	protected function print_slide( array $slide, array $settings, $element_key ) {
 		if ( ! empty( $settings['thumbs_slider'] ) ) {
 			$settings['video_play_icon'] = false;
-
-			$this->add_render_attribute( $element_key . '-image', 'class', 'elementor-fit-aspect-ratio' );
 		}
 
 		$this->add_render_attribute( $element_key . '-image', [
@@ -288,7 +286,7 @@ class Media_Carousel extends Base {
 			$img_attribute['class'] = 'swiper-lazy';
 			$img_attribute['data-background'] = $img_src;
 		} else {
-			$img_attribute['style'] = 'background-image: url(' . $img_src . ')';
+			$img_attribute['style'] = "background-image: url('" . $img_src . "')";
 		}
 
 		$this->add_render_attribute( $element_key . '-image', $img_attribute );
@@ -679,16 +677,24 @@ class Media_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Ratio', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => '219',
 				'options' => [
 					'169' => '16:9',
 					'219' => '21:9',
 					'43' => '4:3',
 					'11' => '1:1',
 				],
-				'prefix_class' => 'elementor-aspect-ratio-',
+				'selectors_dictionary' => [
+					'169' => '16 / 9',
+					'219' => '21 / 9',
+					'43' => '4 / 3',
+					'11' => '1 / 1',
+				],
+				'default' => '219',
 				'condition' => [
 					'skin' => 'slideshow',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-thumbnails-swiper .elementor-carousel-image' => 'aspect-ratio: {{VALUE}}',
 				],
 			]
 		);

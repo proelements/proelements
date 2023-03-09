@@ -78,7 +78,7 @@ class Screenshot {
 	 */
 	public function upload() {
 		if ( ! $this->base64_image ) {
-			throw new \Exception( 'Cannot upload an image with out base64_image' );
+			throw new \Exception( 'Cannot upload an image with out base64_image.' );
 		}
 
 		$file_content = substr( $this->base64_image, strlen( 'data:image/png;base64,' ) );
@@ -233,7 +233,7 @@ class Screenshot {
 	 */
 	protected function get_upload_bits() {
 		if ( ! $this->upload_bits ) {
-			throw new \Exception( 'File was not uploaded yet' );
+			throw new \Exception( 'File was not uploaded yet.' );
 		}
 
 		return $this->upload_bits;

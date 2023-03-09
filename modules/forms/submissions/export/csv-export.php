@@ -106,8 +106,6 @@ class CSV_Export extends Base_Object {
 			->merge( $base_headers )
 			->all();
 
-		ksort( $headers );
-
 		return [ implode( ',', $headers ) ];
 	}
 
@@ -141,8 +139,6 @@ class CSV_Export extends Base_Object {
 				} )
 				->merge( $base_values )
 				->all();
-
-			ksort( $row );
 
 			return implode( ',', $row );
 		} )->all();

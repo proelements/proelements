@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 use Elementor\Plugin;
 use Elementor\Utils;
+use ElementorPro\Core\Utils as ProUtils;
 use ElementorPro\Modules\Payments\Classes\Payment_Button;
 use ElementorPro\Modules\Payments\Module;
 
@@ -247,9 +248,8 @@ class Stripe_Button extends Payment_Button {
 		<form class="elementor-stripe-form">
 			<input type="hidden" name="url" value="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>">
 			<input type="hidden" name="action" value="submit_stripe_form"/>
-			<input type="hidden" name="post_id" value="<?php echo get_the_ID(); ?>"/>
 			<input type="hidden" name="widget_id" value="<?php echo esc_attr( $this->get_id() ); ?>"/>
-			<input type="hidden" name="current_url" value="<?php echo esc_attr( $_SERVER['PHP_SELF'] ); ?>"/>
+			<input type="hidden" name="current_url" value="<?php echo esc_attr( ProUtils::_unstable_get_super_global_value( $_SERVER, 'PHP_SELF' ) ); ?>"/>
 			<input type="hidden" name="custom_error_msg" value="<?php echo esc_attr( $settings['custom_messages'] ); ?>" />
 			<input type="hidden" name="custom_error_msg_global" value="<?php echo esc_attr( $settings['error_message_global'] ); ?>" />
 			<input type="hidden" name="custom_error_msg_payment" value="<?php echo esc_attr( $settings['error_message_payment'] ); ?>" />
@@ -531,6 +531,3 @@ class Stripe_Button extends Payment_Button {
 		$this->remove_control( 'sandbox_email' );
 	}
 }
-
-
-

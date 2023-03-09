@@ -584,7 +584,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => $this->get_main_woocommerce_sections_selectors(),
 			]
 		);
@@ -710,7 +709,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'sections_titles_text_shadow',
-				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
 				'selector' => $this->get_main_woocommerce_sections_title_selectors(),
 			]
 		);
@@ -1102,7 +1100,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'forms_fields_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} #customer_details .input-text, {{WRAPPER}}  #customer_details .form-row textarea, {{WRAPPER}} .woocommerce form #customer_details select, {{WRAPPER}} .e-woocommerce-login-anchor .input-text, {{WRAPPER}} #coupon_code, {{WRAPPER}} .select2-container--default .select2-selection--single',
 			]
 		);
@@ -1137,7 +1134,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'forms_fields_focus_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} #customer_details .input-text:focus, {{WRAPPER}} #customer_details textarea:focus, {{WRAPPER}} #customer_details select:focus, {{WRAPPER}} .e-woocommerce-login-anchor .input-text:focus, {{WRAPPER}} #coupon_code:focus, {{WRAPPER}} .select2-container--default .select2-selection--single:focus',
 			]
 		);
@@ -1235,7 +1231,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'forms_button_text_shadow',
-				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-button',
 			]
 		);
@@ -1269,7 +1264,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'forms_buttons_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-button',
 			]
 		);
@@ -1303,7 +1297,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'forms_buttons_focus_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-button:hover',
 			]
 		);
@@ -1614,7 +1607,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'purchase_button_text_shadow',
-				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce #payment #place_order',
 			]
 		);
@@ -1648,7 +1640,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'purchase_button_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} #place_order',
 			]
 		);
@@ -1682,7 +1673,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'purchase_button_hover_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} #place_order:hover',
 			]
 		);
@@ -1856,7 +1846,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'returning_customers_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .e-woocommerce-login-section',
 			]
 		);
@@ -2103,7 +2092,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'billing_details_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .e-checkout__column-start .col2-set .col-1',
 			]
 		);
@@ -2218,7 +2206,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'billing_details_titles_text_shadow',
-				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-billing-fields h3',
 			]
 		);
@@ -2286,7 +2273,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'additional_information_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-additional-fields',
 			]
 		);
@@ -2402,7 +2388,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'additional_information_titles_text_shadow',
-				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-additional-fields h3',
 			]
 		);
@@ -2451,7 +2436,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'order_summary_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .e-checkout__order_review',
 			]
 		);
@@ -2566,7 +2550,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'order_summary_titles_text_shadow',
-				'label' => esc_html__( 'Text Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} h3#order_review_heading',
 			]
 		);
@@ -2661,7 +2644,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'payment_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-checkout #payment',
 			]
 		);
@@ -3364,7 +3346,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'shipping_address_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .woocommerce-shipping-fields .shipping_address',
 			]
 		);
@@ -3514,7 +3495,6 @@ class Checkout extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'coupon_section_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .e-coupon-box',
 			]
 		);

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.8.0 - 30-10-2022 */
+/*! elementor-pro - v3.11.3 - 26-02-2023 */
 .wrap.elementor-admin-page-license form.elementor-license-box {
   max-width: 600px;
   background: white;
@@ -9,20 +9,12 @@
   border-bottom: 1px solid #eee;
   padding: 20px;
   margin: -20px -20px 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box h3 span {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
   padding-right: 5px;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box h3 small {
@@ -45,30 +37,18 @@
   margin: 10px 0;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box .e-row-stretch {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box .e-row-divider-bottom {
   padding-bottom: 15px;
   border-bottom: 1px solid #eeeeee;
 }
 .wrap.elementor-admin-page-license .elementor-box-action {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  justify-content: flex-end;
+  align-items: flex-end;
   margin-top: 30px;
 }
 .wrap.elementor-admin-page-license .elementor-box-action .elementor-manually-link {
@@ -197,17 +177,12 @@ span.font-variations-count {
 .elementor-metabox-content .row-font-label {
   padding: 0;
   margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   text-transform: capitalize;
 }
 .elementor-metabox-content .row-font-label li {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  box-sizing: border-box;
+  flex-grow: 1;
   width: 100%;
   margin: 0;
 }
@@ -226,18 +201,13 @@ span.font-variations-count {
   margin: 0;
 }
 .elementor-metabox-content .repeater-content .repeater-content-top {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin-bottom: 20px;
   line-height: 28px;
 }
 .elementor-metabox-content .repeater-content .repeater-content-top > div {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  box-sizing: border-box;
+  flex-grow: 1;
 }
 .elementor-metabox-content .repeater-content .repeater-content-top p {
   margin: 0;
@@ -260,28 +230,20 @@ span.font-variations-count {
   margin: 0 -20px;
 }
 .elementor-metabox-content .repeater-content .repeater-content-bottom .elementor-field {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   background-color: #ffffff;
   padding: 10px 20px;
   margin-bottom: 10px;
-  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
 }
 .elementor-metabox-content .repeater-content .repeater-content-bottom .elementor-field:last-child {
   margin-bottom: 0;
 }
 .elementor-metabox-content .repeater-content .repeater-content-bottom .elementor-field p,
 .elementor-metabox-content .repeater-content .repeater-content-bottom .elementor-field input {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  box-sizing: border-box;
+  flex-grow: 1;
   width: 100%;
   margin: 0;
 }
@@ -296,8 +258,7 @@ span.font-variations-count {
   font-size: 12px;
   width: 100%;
   background: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   color: #495157;
   border: 1px solid;
   outline: none;
@@ -330,14 +291,8 @@ span.font-variations-count {
   padding: 10px 20px;
   outline: none;
   border: none;
-  -webkit-transition-property: background, color, opacity, -webkit-box-shadow;
-  transition-property: background, color, opacity, -webkit-box-shadow;
-  -o-transition-property: background, color, box-shadow, opacity;
   transition-property: background, color, box-shadow, opacity;
-  transition-property: background, color, box-shadow, opacity, -webkit-box-shadow;
-  -webkit-transition-duration: 0.3s;
-       -o-transition-duration: 0.3s;
-          transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .elementor-metabox-content .elementor-button:hover, .elementor-metabox-content .elementor-button:focus, .elementor-metabox-content .elementor-button:visited {
   color: #fff;
@@ -347,13 +302,11 @@ span.font-variations-count {
 }
 .elementor-metabox-content .elementor-button:hover {
   background-color: #6d7882;
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
   border: none;
 }
 .elementor-metabox-content .elementor-button:active {
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.1);
 }
 .elementor-metabox-content .elementor-button:not([disabled]) {
   cursor: pointer;
@@ -394,16 +347,13 @@ span.font-variations-count {
 .elementor-metabox-content input.button.add-repeater-row {
   margin-top: 18px;
   border: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
 .elementor-metabox-content .elementor-repeater-tool-btn {
   color: #a4afb7;
   cursor: pointer;
   padding: 0 20px;
   font-size: 12px;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 .elementor-metabox-content .elementor-repeater-tool-btn i {
@@ -487,16 +437,9 @@ span.font-variations-count {
 }
 .post-type-elementor_icons div#elementor-custom-icons-metabox .box__input {
   padding: 180px 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 .post-type-elementor_icons div#elementor-custom-icons-metabox .elementor-field-dropzone {
   outline: 2px dashed #d5dadf;
@@ -519,18 +462,11 @@ span.font-variations-count {
   height: 50px;
   color: #6d7882;
   background-color: #fff;
-  -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
-          box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
   padding: 0 35px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
 }
 @media (max-width: 1025px) {
   .post-type-elementor_icons div#elementor-custom-icons-metabox.elementor--has-icons .elementor-icon-set-header {
@@ -579,8 +515,6 @@ span.font-variations-count {
   color: #556068;
   opacity: 0.6;
   cursor: pointer;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 .post-type-elementor_icons div#elementor-custom-icons-metabox.elementor--has-icons .elementor-icon-set-header-meta-remove i {
@@ -615,29 +549,19 @@ span.font-variations-count {
   height: 0;
   padding-bottom: 100%;
   background-color: #fff;
-  -webkit-box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
   border-radius: 3px;
   overflow: hidden;
 }
 .post-type-elementor_icons div#elementor-custom-icons-metabox ul li div.icon {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   padding: 1px;
 }
 .post-type-elementor_icons div#elementor-custom-icons-metabox ul li div.icon-name {
@@ -647,8 +571,7 @@ span.font-variations-count {
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 @media (max-width: 479px) {
   .post-type-elementor_icons div#elementor-custom-icons-metabox ul li div.icon-name {

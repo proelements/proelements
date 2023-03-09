@@ -4,6 +4,7 @@ namespace ElementorPro;
 use ElementorPro\Core\Admin\Admin;
 use ElementorPro\Core\App\App;
 use ElementorPro\Core\Connect;
+use ElementorPro\Core\Compatibility\Compatibility;
 use Elementor\Core\Responsive\Files\Frontend as FrontendFile;
 use Elementor\Utils;
 use ElementorPro\Core\Editor\Editor;
@@ -461,6 +462,8 @@ class Plugin {
 	 */
 	private function __construct() {
 		spl_autoload_register( [ $this, 'autoload' ] );
+
+		Compatibility::register_actions();
 
 		new Connect\Manager();
 

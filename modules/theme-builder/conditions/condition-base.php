@@ -24,7 +24,7 @@ abstract class Condition_Base extends Controls_Stack {
 	}
 
 	public static function get_type() {
-		throw new \Exception( 'Please overwrite the method', Exceptions::INTERNAL_SERVER_ERROR );
+		throw new \Exception( 'Please overwrite the method.', Exceptions::INTERNAL_SERVER_ERROR );
 	}
 
 	public function check( $args ) {

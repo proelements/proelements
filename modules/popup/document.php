@@ -36,6 +36,7 @@ class Document extends Theme_Section_Document {
 		$properties['location'] = 'popup';
 		$properties['support_kit'] = true;
 		$properties['support_site_editor'] = false;
+		$properties['support_lazyload'] = false;
 
 		return $properties;
 	}
@@ -446,7 +447,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .dialog-widget-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
@@ -746,6 +747,17 @@ class Document extends Theme_Section_Document {
 				'label' => esc_html__( 'Avoid Multiple Popups', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'description' => esc_html__( 'If the user has seen another popup on the page hide this popup', 'elementor-pro' ),
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'a11y_navigation',
+			[
+				'label' => esc_html__( 'Accessible navigation', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'description' => esc_html__( 'Allow keyboard tab navigation for accessibility', 'elementor-pro' ),
 				'frontend_available' => true,
 			]
 		);

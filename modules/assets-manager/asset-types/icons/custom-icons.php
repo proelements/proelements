@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\AssetsManager\AssetTypes\Icons;
 
 use Elementor\Core\Utils\Exceptions;
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\AssetsManager\Classes\Assets_Base;
 use ElementorPro\Modules\AssetsManager\AssetTypes\Icons_Manager;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
@@ -114,7 +115,10 @@ class Custom_Icons extends  Assets_Base {
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! wp_verify_nonce( $_POST[ Icons_Manager::CPT . '_nonce' ], Icons_Manager::CPT ) ) {
+		if ( ! wp_verify_nonce(
+			Utils::_unstable_get_super_global_value( $_POST, Icons_Manager::CPT . '_nonce' ),
+			Icons_Manager::CPT
+		) ) {
 			return $post_id;
 		}
 
@@ -122,8 +126,8 @@ class Custom_Icons extends  Assets_Base {
 			return delete_post_meta( $post_id, self::META_KEY );
 		}
 
-		// Sanitize a little
-		$json = json_decode( stripslashes_deep( $_POST[ self::META_KEY ] ), true );
+		// PHPCS - It will be sanitized in the next line.
+		$json = json_decode( stripslashes_deep( $_POST[ self::META_KEY ] ), true ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		foreach ( $json as $property => $value ) {
 			$json[ $property ] = $this->sanitize_text_field_recursive( $value );
 		}
@@ -188,11 +192,11 @@ class Custom_Icons extends  Assets_Base {
 	}
 
 	private function upload() {
-		$file = $_FILES['zip_upload'];
-		$filename = $_FILES['zip_upload']['name'];
+		$file = Utils::_unstable_get_super_global_value( $_FILES, 'zip_upload' );
+		$filename = $file['name'];
 		$ext = pathinfo( $filename, PATHINFO_EXTENSION );
 		if ( 'zip' !== $ext ) {
-			unlink( $_FILES['zip_upload']['name'] );
+			unlink( $filename );
 			return new \WP_Error( 'unsupported_file', esc_html__( 'Only zip files are allowed', 'elementor-pro' ) );
 		}
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
@@ -201,7 +205,7 @@ class Custom_Icons extends  Assets_Base {
 		// Handler upload archive file.
 		$upload_result = wp_handle_upload( $file, [ 'test_form' => false ] );
 		if ( isset( $upload_result['error'] ) ) {
-			unlink( $_FILES['zip_upload']['name'] );
+			unlink( $filename );
 			return new \WP_Error( 'upload_error', $upload_result['error'] );
 		}
 		return $upload_result['file'];

@@ -426,6 +426,7 @@ class Search_Form extends Base {
 			[
 				'label' => esc_html__( 'Border Size', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}}:not(.elementor-search-form--skin-full_screen) .elementor-search-form__container' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}}.elementor-search-form--skin-full_screen input[type="search"].elementor-search-form__input' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -439,6 +440,7 @@ class Search_Form extends Base {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -687,9 +689,13 @@ class Search_Form extends Base {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
-						'max' => 10,
+						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
 					],
 				],
 				'selectors' => [
@@ -704,7 +710,7 @@ class Search_Form extends Base {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-search-form__toggle' => '--e-search-form-toggle-border-radius: {{SIZE}}{{UNIT}}',
 				],
@@ -756,7 +762,7 @@ class Search_Form extends Base {
 			do_action( 'elementor_pro/search_form/before_input', $this );
 			?>
 			<?php if ( 'full_screen' === $settings['skin'] ) : ?>
-			<div class="elementor-search-form__toggle">
+			<div class="elementor-search-form__toggle" tabindex="0" role="button">
 				<?php $this->render_search_icon( $icon, [ 'aria-hidden' => 'true' ] ); ?>
 				<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
 			</div>
@@ -829,7 +835,7 @@ class Search_Form extends Base {
 		#>
 		<form class="elementor-search-form" action="" role="search">
 			<# if ( 'full_screen' === settings.skin ) { #>
-				<div class="elementor-search-form__toggle">
+				<div class="elementor-search-form__toggle" tabindex="0" role="button">
 					<i class="fa fas fa-search" aria-hidden="true"></i>
 					<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
 				</div>

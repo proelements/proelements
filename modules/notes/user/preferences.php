@@ -80,7 +80,10 @@ class Preferences {
 	 * @return void
 	 */
 	protected function update_personal_options_settings( $user_id ) {
-		if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-user_' . $user_id ) ) {
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce already verified in `wp_verify_nonce`.
+		$wpnonce = Utils::_unstable_get_super_global_value( $_POST, '_wpnonce' );
+		if ( ! wp_verify_nonce( $wpnonce, 'update-user_' . $user_id ) ) {
 			return;
 		}
 

@@ -2,8 +2,10 @@
 namespace ElementorPro\Modules\Woocommerce\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -30,28 +32,103 @@ class Product_Add_To_Cart extends Base_Widget {
 	protected function render() {
 		global $product;
 
-		$product = wc_get_product();
+		$product = $this->get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product ) {
 			return;
 		}
 
-		$settings = $this->get_settings_for_display();
-
-		if ( in_array( $settings['layout'], [ 'auto', 'stacked' ] ) ) {
-			add_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
-			add_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
-		}
+		add_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
+		add_action( 'woocommerce_before_add_to_cart_button', [ $this, 'before_add_to_cart_quantity' ], 5 );
+		add_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
 		?>
 
-		<div class="elementor-add-to-cart elementor-product-<?php echo esc_attr( wc_get_product()->get_type() ); ?>">
-			<?php woocommerce_template_single_add_to_cart(); ?>
+		<div class="elementor-add-to-cart elementor-product-<?php echo esc_attr( $product->get_type() ); ?>">
+			<?php if ( $this->is_loop_item() ) {
+				$this->render_loop_add_to_cart();
+			} else {
+				woocommerce_template_single_add_to_cart();
+			} ?>
 		</div>
 
 		<?php
-		if ( in_array( $settings['layout'], [ 'auto', 'stacked' ] ) ) {
-			remove_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
-			remove_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
+		remove_action( 'woocommerce_before_add_to_cart_quantity', [ $this, 'before_add_to_cart_quantity' ], 95 );
+		remove_action( 'woocommerce_before_add_to_cart_button', [ $this, 'before_add_to_cart_quantity' ], 5 );
+		remove_action( 'woocommerce_after_add_to_cart_button', [ $this, 'after_add_to_cart_button' ], 5 );
+	}
+
+	private function render_loop_add_to_cart() {
+		$quantity_args = $this->get_loop_quantity_args();
+		$button_args = [ 'quantity' => $quantity_args['min_value'] ];
+		?>
+		<div class="e-loop-add-to-cart-form-container">
+			<form class="cart e-loop-add-to-cart-form">
+				<?php
+				$this->before_add_to_cart_quantity();
+
+				$this->render_loop_quantity_input( $quantity_args );
+				woocommerce_template_loop_add_to_cart( $button_args );
+
+				$this->after_add_to_cart_button();
+				?>
+			</form>
+		</div>
+		<?php
+	}
+
+	private function render_loop_quantity_input( $quantity_args ) {
+		global $product;
+
+		if (
+			'simple' === $product->get_type()
+			&& 'yes' === $this->get_settings_for_display( 'show_quantity' )
+		) {
+			woocommerce_quantity_input( $quantity_args );
+		}
+	}
+
+	private function get_loop_quantity_args() {
+		global $product;
+
+		$quantity_args = [
+			'min_value' => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+			'max_value' => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+			'input_value' => $product->get_min_purchase_quantity(),
+			'classes' => [ 'input-text', 'qty', 'text' ],
+		];
+
+		if ( 'no' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) ) {
+			$quantity_args['min_value'] = $product->get_min_purchase_quantity();
+			$quantity_args['input_value'] = $product->get_min_purchase_quantity();
+			$quantity_args['classes'][] = 'disabled';
+		}
+
+		return $quantity_args;
+	}
+
+	private function is_loop_item() {
+		return 'loop-item' === Plugin::elementor()->documents->get_current()->get_type();
+	}
+
+	private function is_loop_item_template_edit() {
+		return ( Plugin::elementor()->editor->is_edit_mode() && $this->is_loop_item() );
+	}
+
+	public function should_add_container() {
+		global $product;
+
+		if ( ! in_array( $this->get_settings_for_display( 'layout' ), [ 'auto', 'stacked' ], true ) ) {
+			return false;
+		}
+
+		switch ( current_action() ) {
+			case 'woocommerce_before_add_to_cart_quantity':
+				return in_array( $product->get_type(), [ 'simple', 'variable' ], true );
+			case 'woocommerce_before_add_to_cart_button':
+				return in_array( $product->get_type(), [ 'grouped', 'external' ], true );
+			case 'woocommerce_after_add_to_cart_button':
+			default:
+				return true;
 		}
 	}
 
@@ -65,6 +142,9 @@ class Product_Add_To_Cart extends Base_Widget {
 	 * @since 3.6.0
 	 */
 	public function before_add_to_cart_quantity() {
+		if ( ! $this->should_add_container() ) {
+			return;
+		}
 		?>
 		<div class="e-atc-qty-button-holder">
 		<?php
@@ -76,6 +156,9 @@ class Product_Add_To_Cart extends Base_Widget {
 	 * @since 3.6.0
 	 */
 	public function after_add_to_cart_button() {
+		if ( ! $this->should_add_container() ) {
+			return;
+		}
 		?>
 		</div>
 		<?php
@@ -156,7 +239,7 @@ class Product_Add_To_Cart extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .cart button',
+				'selector' => '{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button',
 			]
 		);
 
@@ -164,7 +247,7 @@ class Product_Add_To_Cart extends Base_Widget {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'button_border',
-				'selector' => '{{WRAPPER}} .cart button',
+				'selector' => '{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button',
 				'exclude' => [ 'color' ],
 			]
 		);
@@ -174,8 +257,9 @@ class Product_Add_To_Cart extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .cart button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -187,7 +271,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
-					'{{WRAPPER}} .cart button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -206,7 +290,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cart button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -217,7 +301,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cart button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -228,7 +312,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cart button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -247,7 +331,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cart button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .cart button:hover, {{WRAPPER}} .cart .button:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -258,7 +342,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cart button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .cart button:hover, {{WRAPPER}} .cart .button:hover' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -269,7 +353,7 @@ class Product_Add_To_Cart extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .cart button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .cart button:hover, {{WRAPPER}} .cart .button:hover' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -289,7 +373,7 @@ class Product_Add_To_Cart extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .cart button' => 'transition: all {{SIZE}}s',
+					'{{WRAPPER}} .cart button, {{WRAPPER}} .cart .button' => 'transition: all {{SIZE}}s',
 				],
 			]
 		);
@@ -298,6 +382,61 @@ class Product_Add_To_Cart extends Base_Widget {
 
 		$this->end_controls_tabs();
 
+		$this->add_control(
+			'heading_view_cart_style',
+			[
+				'label' => esc_html__( 'View Cart', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'view_cart_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .added_to_cart' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'view_cart_typography',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
+				'selector' => '{{WRAPPER}} .added_to_cart',
+			]
+		);
+
+		$this->add_responsive_control(
+			'view_cart_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+						'step' => 1,
+					],
+					'em' => [
+						'min' => 0,
+						'max' => 3.5,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--view-cart-spacing: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -305,6 +444,20 @@ class Product_Add_To_Cart extends Base_Widget {
 			[
 				'label' => esc_html__( 'Quantity', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'show_quantity',
+			[
+				'label' => esc_html__( 'Quantity', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'prefix_class' => 'e-add-to-cart--show-quantity-',
+				'render_type' => 'template',
 			]
 		);
 
@@ -317,6 +470,9 @@ class Product_Add_To_Cart extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}}' => '--button-spacing: {{SIZE}}{{UNIT}};',
 				],
+				'condition' => [
+					'show_quantity!' => '',
+				],
 			]
 		);
 
@@ -325,6 +481,9 @@ class Product_Add_To_Cart extends Base_Widget {
 			[
 				'name' => 'quantity_typography',
 				'selector' => '{{WRAPPER}} .quantity .qty',
+				'condition' => [
+					'show_quantity!' => '',
+				],
 			]
 		);
 
@@ -334,6 +493,9 @@ class Product_Add_To_Cart extends Base_Widget {
 				'name' => 'quantity_border',
 				'selector' => '{{WRAPPER}} .quantity .qty',
 				'exclude' => [ 'color' ],
+				'condition' => [
+					'show_quantity!' => '',
+				],
 			]
 		);
 
@@ -342,8 +504,12 @@ class Product_Add_To_Cart extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_quantity!' => '',
 				],
 			]
 		);
@@ -357,10 +523,19 @@ class Product_Add_To_Cart extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .quantity .qty' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'condition' => [
+					'show_quantity!' => '',
+				],
 			]
 		);
 
-		$this->start_controls_tabs( 'quantity_style_tabs' );
+		$this->start_controls_tabs( 'quantity_style_tabs',
+			[
+				'condition' => [
+					'show_quantity!' => '',
+				],
+			]
+		);
 
 		$this->start_controls_tab( 'quantity_style_normal',
 			[
@@ -596,6 +771,7 @@ class Product_Add_To_Cart extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} form.cart table.variations td.value select, .woocommerce {{WRAPPER}} form.cart table.variations td.value:before' => 'border-radius: {{SIZE}}{{UNIT}}',
 				],

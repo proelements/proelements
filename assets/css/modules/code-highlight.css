@@ -726,8 +726,7 @@ pre[data-line] {
 
 @media print {
   .line-highlight {
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 .line-highlight:before, .line-highlight[data-end]:after {

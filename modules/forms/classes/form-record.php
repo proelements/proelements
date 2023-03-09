@@ -176,21 +176,21 @@ class Form_Record {
 				case 'page_url':
 					$result['page_url'] = [
 						'title' => esc_html__( 'Page URL', 'elementor-pro' ),
-						'value' => esc_url_raw( $_POST['referrer'] ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						'value' => isset( $_POST['referrer'] ) ? esc_url_raw( wp_unslash( $_POST['referrer'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					];
 					break;
 
 				case 'page_title':
 					$result['page_title'] = [
 						'title' => esc_html__( 'Page Title', 'elementor-pro' ),
-						'value' => sanitize_text_field( $_POST['referer_title'] ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						'value' => isset( $_POST['referer_title'] ) ? sanitize_text_field( wp_unslash( $_POST['referer_title'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					];
 					break;
 
 				case 'user_agent':
 					$result['user_agent'] = [
 						'title' => esc_html__( 'User Agent', 'elementor-pro' ),
-						'value' => sanitize_textarea_field( $_SERVER['HTTP_USER_AGENT'] ),
+						'value' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_textarea_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
 					];
 					break;
 

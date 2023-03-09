@@ -383,9 +383,9 @@ class Product_Meta extends Base_Widget {
 	protected function render() {
 		global $product;
 
-		$product = wc_get_product();
+		$product = $this->get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product ) {
 			return;
 		}
 

@@ -715,7 +715,6 @@ class Menu_Cart extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'toggle_button_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .elementor-menu-cart__toggle .elementor-button',
 			]
 		);
@@ -778,7 +777,6 @@ class Menu_Cart extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'toggle_button_hover_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .elementor-menu-cart__toggle .elementor-button:hover',
 			]
 		);
@@ -792,10 +790,13 @@ class Menu_Cart extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
 					],
 				],
 				'separator' => 'before',
@@ -953,8 +954,8 @@ class Menu_Cart extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'body:not(.rtl) {{WRAPPER}} .elementor-menu-cart__toggle .elementor-button-icon[data-counter]:before' => 'right: -{{SIZE}}{{UNIT}}; top: -{{SIZE}}{{UNIT}};',
-					'body.rtl {{WRAPPER}} .elementor-menu-cart__toggle .elementor-button-icon[data-counter]:before' => 'right: {{SIZE}}{{UNIT}}; top: -{{SIZE}}{{UNIT}}; left: auto;',
+					'body:not(.rtl) {{WRAPPER}} .elementor-menu-cart__toggle .elementor-button-icon .elementor-button-icon-qty[data-counter]' => 'right: -{{SIZE}}{{UNIT}}; top: -{{SIZE}}{{UNIT}};',
+					'body.rtl {{WRAPPER}} .elementor-menu-cart__toggle .elementor-button-icon .elementor-button-icon-qty[data-counter]' => 'right: {{SIZE}}{{UNIT}}; top: -{{SIZE}}{{UNIT}}; left: auto;',
 				],
 				'condition' => [
 					'items_indicator' => 'bubble',
@@ -1048,7 +1049,6 @@ class Menu_Cart extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'cart_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .elementor-menu-cart__main',
 			]
 		);
@@ -1824,7 +1824,6 @@ class Menu_Cart extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'view_cart_button_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .elementor-button--view-cart',
 				'condition' => [
 					'view_cart_button_show!' => '',
@@ -2004,7 +2003,6 @@ class Menu_Cart extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'view_checkout_button_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'elementor-pro' ),
 				'selector' => '{{WRAPPER}} .elementor-button--checkout',
 				'condition' => [
 					'checkout_button_show!' => '',

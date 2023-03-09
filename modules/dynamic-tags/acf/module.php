@@ -5,8 +5,6 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
 use Elementor\Core\DynamicTags\Base_Tag;
 use Elementor\Modules\DynamicTags;
-use ElementorPro\Base\MarkerInterfaces\Archive_Template_Interface;
-use ElementorPro\Base\MarkerInterfaces\Template_With_Post_Content_interface;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,6 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Module extends DynamicTags\Module {
 
 	const ACF_GROUP = 'acf';
+
+	// TODO: Remove when Core 3.10.0 is released.
+	const DATETIME_CATEGORY = 'datetime';
+
+	/**
+	 * @var Dynamic_Value_Provider
+	 */
+	private static $dynamic_value_provider;
 
 	/**
 	 * @param array $types
@@ -114,51 +120,6 @@ class Module extends DynamicTags\Module {
 		);
 	}
 
-	/**
-	 * @param $field_key
-	 * @param $meta_key
-	 * @return mixed
-	 */
-	private static function get_acf_field( $field_key, $meta_key ) {
-		if ( 'options' === $field_key ) {
-			$field = get_field_object( $meta_key, $field_key );
-		} else {
-			$field = self::get_field_from_current_item( $field_key );
-		}
-		return $field;
-	}
-
-	/**
-	 * @param $field_key
-	 * @return mixed
-	 */
-	private static function get_field_from_current_item( $field_key ) {
-		$document = Plugin::elementor()->documents->get_current();
-		if ( ! empty( $document ) ) {
-			$field = self::get_field_based_on_document_type( $document, $field_key );
-		} else {
-			$field = get_field_object( $field_key );
-		}
-
-		return $field;
-	}
-
-	/**
-	 * @param Document $document
-	 * @param $field_key
-	 * @return mixed
-	 */
-	private static function get_field_based_on_document_type( Document $document, $field_key ) {
-		if ( $document instanceof Template_With_Post_Content_interface ) {
-			$field = get_field_object( $field_key );
-		} elseif ( $document instanceof Archive_Template_Interface ) {
-			$field = get_field_object( $field_key, get_queried_object() );
-		} else {
-			$field = get_field_object( $field_key, $document->get_post()->ID );
-		}
-		return $field;
-	}
-
 	public function get_tag_classes_names() {
 		return [
 			'ACF_Text',
@@ -168,6 +129,7 @@ class Module extends DynamicTags\Module {
 			'ACF_File',
 			'ACF_Number',
 			'ACF_Color',
+			'ACF_Date_Time',
 		];
 	}
 
@@ -175,12 +137,14 @@ class Module extends DynamicTags\Module {
 	public static function get_tag_value_field( Base_Tag $tag ) {
 		$key = $tag->get_settings( 'key' );
 
-		if ( ! empty( $key ) ) {
-			list( $field_key, $meta_key ) = explode( ':', $key );
-			return [ self::get_acf_field( $field_key, $meta_key ), $meta_key ];
+		// TODO: The tags should use the `Dynamic_Value_Provider::get_value()` method, but it involves
+		//  heavily refactoring them, so currently this method is just a proxy and also kept for BC.
+
+		if ( ! static::$dynamic_value_provider ) {
+			static::$dynamic_value_provider = new Dynamic_Value_Provider();
 		}
 
-		return [];
+		return static::$dynamic_value_provider->get_value( $key );
 	}
 
 	public function get_groups() {

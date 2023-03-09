@@ -61,8 +61,9 @@ class Utils {
 		];
 
 		foreach ( $server_ip_keys as $key ) {
-			if ( isset( $_SERVER[ $key ] ) && filter_var( $_SERVER[ $key ], FILTER_VALIDATE_IP ) ) {
-				return $_SERVER[ $key ];
+			$value = self::_unstable_get_super_global_value( $_SERVER, $key );
+			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
+				return $value;
 			}
 		}
 
@@ -357,5 +358,22 @@ class Utils {
 		}
 
 		return file_get_contents( $file, ...$args );
+	}
+
+	/**
+	 * TODO: Use core method instead (after Pro minimum requirements is updated).
+	 * PR URL: https://github.com/elementor/elementor/pull/20392
+	 */
+	public static function _unstable_get_super_global_value( $super_global, $key ) {
+		if ( ! isset( $super_global[ $key ] ) ) {
+			return null;
+		}
+
+		if ( $_FILES === $super_global ) {
+			$super_global[ $key ]['name'] = sanitize_file_name( $super_global[ $key ]['name'] );
+			return $super_global[ $key ];
+		}
+
+		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
 	}
 }

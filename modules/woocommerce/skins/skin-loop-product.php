@@ -30,6 +30,12 @@ class Skin_Loop_Product extends Skin_Loop_Base {
 		return esc_html__( 'Products', 'elementor-pro' );
 	}
 
+	public function render() {
+		$this->parent->add_render_attribute( '_wrapper', 'class', 'woocommerce' );
+
+		parent::render();
+	}
+
 	/**
 	 * Register Query Controls
 	 *
@@ -41,5 +47,12 @@ class Skin_Loop_Product extends Skin_Loop_Base {
 		$this->parent = $widget;
 
 		$this->add_query_controls( Loop_Module::QUERY_ID );
+	}
+
+	protected function render_post() {
+		global $product;
+		$product = wc_get_product( get_the_ID() );
+
+		parent::render_post();
 	}
 }

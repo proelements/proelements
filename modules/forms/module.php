@@ -81,14 +81,14 @@ class Module extends Module_Base {
 	 */
 	public function forms_panel_action_data( array $data ) {
 		if ( empty( $data['service'] ) ) {
-			throw new \Exception( 'service_required' );
+			throw new \Exception( 'Service required.' );
 		}
 
 		/** @var \ElementorPro\Modules\Forms\Classes\Integration_Base $integration */
 		$integration = $this->actions_registrar->get( $data['service'] );
 
 		if ( ! $integration ) {
-			throw new \Exception( 'action_not_found' );
+			throw new \Exception( 'Action not found.' );
 		}
 
 		return $integration->handle_panel_request( $data );

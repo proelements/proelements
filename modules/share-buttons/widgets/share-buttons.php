@@ -431,18 +431,16 @@ class Share_Buttons extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'default' => [
 					'size' => 2,
 				],
 				'range' => [
 					'px' => [
-						'min' => 1,
 						'max' => 20,
 					],
 					'em' => [
 						'max' => 2,
-						'step' => 0.1,
 					],
 				],
 				'selectors' => [

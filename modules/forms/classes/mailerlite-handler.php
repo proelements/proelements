@@ -21,11 +21,11 @@ class Mailerlite_Handler {
 	 */
 	public function __construct( $api_key ) {
 		if ( empty( $api_key ) ) {
-			throw new \Exception( 'Invalid API key' );
+			throw new \Exception( 'Invalid API key.' );
 		}
 		$this->init_rest_client( $api_key );
 		if ( ! $this->is_valid_api_key() ) {
-			throw new \Exception( 'Invalid API key' );
+			throw new \Exception( 'Invalid API key.' );
 		}
 	}
 

@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\DynamicTags\Tags;
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\DynamicTags\Tags\Base\Tag;
 use ElementorPro\Modules\DynamicTags\Module;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -41,16 +42,10 @@ class Request_Parameter extends Tag {
 
 		switch ( $request_type ) {
 			case 'POST':
-				if ( ! isset( $_POST[ $param_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-					return '';
-				}
-				$value = $_POST[ $param_name ]; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$value = Utils::_unstable_get_super_global_value( $_POST, $param_name ) ?? ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				break;
 			case 'GET':
-				if ( ! isset( $_GET[ $param_name ] ) ) { // phpcs:ignore
-					return '';
-				}
-				$value = $_GET[ $param_name ]; // phpcs:ignore
+				$value = Utils::_unstable_get_super_global_value( $_GET, $param_name ) ?? ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				break;
 			case 'QUERY_VAR':
 				$value = get_query_var( $param_name );

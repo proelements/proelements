@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Forms\Classes;
 
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\Forms\Module;
 use ElementorPro\Plugin;
 
@@ -266,8 +267,10 @@ class Ajax_Handler {
 			$this->add_error_message( $this->get_default_message( self::INVALID_FORM, $this->current_form['settings'] ) );
 		}
 
+		$post_id = Utils::_unstable_get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
 		$error_msg = implode( '<br>', $this->messages['error'] );
-		if ( current_user_can( 'edit_post', $_POST['post_id'] ) && ! empty( $this->messages['admin_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( current_user_can( 'edit_post', $post_id ) && ! empty( $this->messages['admin_error'] ) ) {
 			$this->add_admin_error_message( esc_html__( 'This Message is not visible for site visitors.', 'elementor-pro' ) );
 			$error_msg .= '<div class="elementor-forms-admin-errors">' . implode( '<br>', $this->messages['admin_error'] ) . '</div>';
 		}

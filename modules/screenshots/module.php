@@ -152,15 +152,21 @@ class Module extends Module_Base {
 			return;
 		}
 
-		$query->query_vars['meta_query'] = [
-			[
-				'key' => Screenshot::IS_SCREENSHOT_POST_META_KEY,
-				'compare' => 'NOT EXISTS',
-			],
+		if ( empty( $query->query_vars['meta_query'] ) ) {
+			$query->query_vars['meta_query'] = [];
+		}
+
+		$query->query_vars['meta_query'][] = [
+			'key' => Screenshot::IS_SCREENSHOT_POST_META_KEY,
+			'compare' => 'NOT EXISTS',
 		];
 	}
 
 	public function filter_screenshots_from_ajax_attachments_query( $query ) {
+		if ( empty( $query['meta_query'] ) ) {
+			$query['meta_query'] = [];
+		}
+
 		$query['meta_query'][] = [
 			'key' => Screenshot::IS_SCREENSHOT_POST_META_KEY,
 			'compare' => 'NOT EXISTS',

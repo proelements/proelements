@@ -43,12 +43,6 @@ class Nav_Menu extends Base_Widget {
 		return [ 'smartmenus' ];
 	}
 
-	public function on_export( $element ) {
-		unset( $element['settings']['menu'] );
-
-		return $element;
-	}
-
 	protected function get_nav_menu_index() {
 		return $this->nav_menu_index++;
 	}
@@ -901,7 +895,7 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-item:before' => 'border-radius: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .e--animation-shutter-in-horizontal .elementor-item:before' => 'border-radius: {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0 0',
@@ -1072,7 +1066,7 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-nav-menu--dropdown' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .elementor-nav-menu--dropdown li:first-child a' => 'border-top-left-radius: {{TOP}}{{UNIT}}; border-top-right-radius: {{RIGHT}}{{UNIT}};',
@@ -1144,9 +1138,13 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
 						'max' => 50,
+					],
+					'em' => [
+						'max' => 2,
 					],
 				],
 				'selectors' => [
@@ -1279,9 +1277,13 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
-						'max' => 10,
+						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
 					],
 				],
 				'selectors' => [
@@ -1295,7 +1297,7 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-menu-toggle' => 'border-radius: {{SIZE}}{{UNIT}}',
 				],
@@ -1378,26 +1380,7 @@ class Nav_Menu extends Base_Widget {
 			return;
 		}
 
-		$this->add_render_attribute( 'menu-toggle', [
-			'class' => 'elementor-menu-toggle',
-			'role' => 'button',
-			'tabindex' => '0',
-			'aria-label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
-			'aria-expanded' => 'false',
-		] );
-
-		if ( Plugin::elementor()->editor->is_edit_mode() ) {
-			$this->add_render_attribute( 'menu-toggle', [
-				'class' => 'elementor-clickable',
-			] );
-		}
-
 		$is_migrated = isset( $settings['__fa4_migrated']['submenu_icon'] );
-
-		$this->add_render_attribute( 'main-menu', [
-			'migration_allowed' => Icons_Manager::is_migration_allowed() ? '1' : '0',
-			'migrated' => $is_migrated ? '1' : '0',
-		] );
 
 		if ( 'dropdown' !== $settings['layout'] ) :
 			$this->add_render_attribute( 'main-menu', 'class', [
@@ -1425,66 +1408,8 @@ class Nav_Menu extends Base_Widget {
 			</nav>
 			<?php
 		endif;
+		$this->render_menu_toggle( $settings );
 		?>
-		<div <?php $this->print_render_attribute_string( 'menu-toggle' ); ?>>
-			<?php
-			$toggle_icon_hover_animation = ! empty( $settings['toggle_icon_hover_animation'] )
-			? ' elementor-animation-' . $settings['toggle_icon_hover_animation']
-			: '';
-
-			$open_class = 'elementor-menu-toggle__icon--open' . $toggle_icon_hover_animation;
-			$close_class = 'elementor-menu-toggle__icon--close' . $toggle_icon_hover_animation;
-
-			$normal_icon = ! empty( $settings['toggle_icon_normal']['value'] )
-				? $settings['toggle_icon_normal']
-				: [
-					'library' => 'eicons',
-					'value' => 'eicon-menu-bar',
-				];
-
-			if ( 'svg' === $settings['toggle_icon_normal']['library'] ) {
-				echo '<span class="' . esc_attr( $open_class ) . '">';
-			}
-
-			Icons_Manager::render_icon(
-				$normal_icon,
-				[
-					'aria-hidden' => 'true',
-					'role' => 'presentation',
-					'class' => $open_class,
-				]
-			);
-
-			if ( 'svg' === $settings['toggle_icon_normal']['library'] ) {
-				echo '</span>';
-			}
-
-			$active_icon = ! empty( $settings['toggle_icon_active']['value'] )
-				? $settings['toggle_icon_active']
-				: [
-					'library' => 'eicons',
-					'value' => 'eicon-close',
-				];
-
-			if ( 'svg' === $settings['toggle_icon_active']['library'] ) {
-				echo '<span class="' . esc_attr( $close_class ) . '">';
-			}
-
-			Icons_Manager::render_icon(
-				$active_icon,
-				[
-					'aria-hidden' => 'true',
-					'role' => 'presentation',
-					'class' => $close_class,
-				]
-			);
-
-			if ( 'svg' === $settings['toggle_icon_active']['library'] ) {
-				echo '</span>';
-			}
-			?>
-			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'elementor-pro' ); ?></span>
-		</div>
 			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
 				<?php
 					// PHPCS - escaped by WordPress with "wp_nav_menu"
@@ -1535,5 +1460,140 @@ class Nav_Menu extends Base_Widget {
 		return $classes;
 	}
 
+	private function render_menu_toggle( $settings ) {
+		if ( ! isset( $settings['toggle'] ) || 'burger' !== $settings['toggle'] ) {
+			return;
+		}
+
+		$this->add_render_attribute( 'menu-toggle', [
+			'class' => 'elementor-menu-toggle',
+			'role' => 'button',
+			'tabindex' => '0',
+			'aria-label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
+			'aria-expanded' => 'false',
+		] );
+
+		if ( Plugin::elementor()->editor->is_edit_mode() ) {
+			$this->add_render_attribute( 'menu-toggle', [
+				'class' => 'elementor-clickable',
+			] );
+		}
+
+		?>
+		<div <?php $this->print_render_attribute_string( 'menu-toggle' ); ?>>
+			<?php
+			$toggle_icon_hover_animation = ! empty( $settings['toggle_icon_hover_animation'] )
+			? ' elementor-animation-' . $settings['toggle_icon_hover_animation']
+			: '';
+
+			$open_class = 'elementor-menu-toggle__icon--open' . $toggle_icon_hover_animation;
+			$close_class = 'elementor-menu-toggle__icon--close' . $toggle_icon_hover_animation;
+
+			$normal_icon = ! empty( $settings['toggle_icon_normal']['value'] )
+				? $settings['toggle_icon_normal']
+				: [
+					'library' => 'eicons',
+					'value' => 'eicon-menu-bar',
+				];
+
+			$is_normal_icon_svg = 'svg' === $normal_icon['library'];
+
+			if ( $is_normal_icon_svg ) {
+				echo '<span class="' . esc_attr( $open_class ) . '">';
+			}
+
+			Icons_Manager::render_icon(
+				$normal_icon,
+				[
+					'aria-hidden' => 'true',
+					'role' => 'presentation',
+					'class' => $open_class,
+				]
+			);
+
+			if ( $is_normal_icon_svg ) {
+				echo '</span>';
+			}
+
+			$active_icon = ! empty( $settings['toggle_icon_active']['value'] )
+				? $settings['toggle_icon_active']
+				: [
+					'library' => 'eicons',
+					'value' => 'eicon-close',
+				];
+
+			$is_active_icon_svg = 'svg' === $active_icon['library'];
+
+			if ( $is_active_icon_svg ) {
+				echo '<span class="' . esc_attr( $close_class ) . '">';
+			}
+
+			Icons_Manager::render_icon(
+				$active_icon,
+				[
+					'aria-hidden' => 'true',
+					'role' => 'presentation',
+					'class' => $close_class,
+				]
+			);
+
+			if ( $is_active_icon_svg ) {
+				echo '</span>';
+			}
+			?>
+			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'elementor-pro' ); ?></span>
+		</div>
+		<?php
+	}
+
 	public function render_plain_content() {}
+
+	public function on_export( $element ) {
+		$slug = $element['settings']['menu'] ?? '';
+		$menu_object = wp_get_nav_menu_object( $slug );
+
+		if ( ! $menu_object instanceof \WP_Term ) {
+			unset( $element['settings']['menu'] );
+			return $element;
+		}
+
+		$menu_id = $menu_object->term_id ?? 0;
+
+		if ( ! empty( $menu_id ) ) {
+			$element['settings']['menu_id'] = $menu_id;
+		}
+
+		return $element;
+	}
+
+	/**
+	 * When importing a menu, if the menu has a slug that already exists, we add "-duplicate" to the slug of the imported menu.
+	 * Upon importing a menu widget, we replace the slug to the correct one by fetching it from the correct ID in the $data array.
+	 *
+	 * Please take note that this function overrides On_Import_Trait::on_import_update_dynamic_content().
+	 *
+	 * @param array $element_config
+	 * @param array $data
+	 * @param $controls
+	 *
+	 * @return array
+	 */
+	public static function on_import_update_dynamic_content( array $element_config, array $data, $controls = null ) : array {
+		$old_menu_id = $element_config['settings']['menu_id'] ?? 0;
+
+		if ( empty( $old_menu_id ) ) {
+			return $element_config;
+		}
+
+		$new_menu_id = $data['term_ids'][ $old_menu_id ] ?? 0;
+		$new_slug = wp_get_nav_menu_object( $new_menu_id )->slug ?? '';
+
+		if ( ! empty( $new_slug ) ) {
+			$element_config['settings']['menu'] = $new_slug;
+		}
+
+		unset( $element_config['settings']['menu_id'] );
+
+		return $element_config;
+	}
 }

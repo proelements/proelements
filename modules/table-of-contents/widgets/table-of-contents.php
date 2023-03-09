@@ -402,6 +402,15 @@ class Table_Of_Contents extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
+				'range' => [
+					'px' => [
+						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
+					],
+				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-border-width: {{SIZE}}{{UNIT}}',
 				],
@@ -413,6 +422,7 @@ class Table_Of_Contents extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-border-radius: {{SIZE}}{{UNIT}}',
 				],

@@ -1,22 +1,13 @@
-/*! pro-elements - v3.8.0 - 30-10-2022 */
+/*! elementor-pro - v3.11.3 - 26-02-2023 */
 .e-loop-empty-view__container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
 }
 .e-loop-empty-view__box {
   min-height: 413px;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 .e-loop-empty-view__box-inner {
@@ -26,20 +17,11 @@
   padding: 10px;
   font-size: 12px;
   color: #a4afb7;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   text-align: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   font-family: Roboto, sans-serif;
 }
 .e-loop-empty-view__box-inner img {
@@ -59,14 +41,9 @@
   background-color: #a4afb7;
   padding: 6px 8px;
   border-radius: 3px;
-  -webkit-transition-property: background, color, opacity, -webkit-box-shadow;
-  transition-property: background, color, opacity, -webkit-box-shadow;
-  -o-transition-property: background, color, box-shadow, opacity;
+  text-decoration: none;
   transition-property: background, color, box-shadow, opacity;
-  transition-property: background, color, box-shadow, opacity, -webkit-box-shadow;
-  -webkit-transition-duration: 0.3s;
-       -o-transition-duration: 0.3s;
-          transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .e-loop-empty-view__box-cta:hover {
   background-color: #6d7882;
@@ -78,5 +55,110 @@
 
 .elementor-widget-loop-grid .elementor-grid.e-loop-empty-view__container {
   grid-column-gap: calc(var(--grid-column-gap) - 20px);
+}
+
+.e-loop-empty-view__container.loop-carousel {
+  width: 95%;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+.e-loop-empty-view__container .e-loop-empty-view__box,
+.e-loop-empty-view__container .elementor-swiper-button,
+.e-loop-empty-view__container .swiper-pagination {
+  opacity: 1;
+}
+
+.elementor-swiper-button {
+  position: absolute;
+  display: inline-flex;
+  z-index: 1;
+  cursor: default;
+  font-size: 25px;
+  color: rgba(224, 219, 219, 0.9);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.elementor-swiper-button-prev {
+  left: 0px;
+}
+.elementor-swiper-button-next {
+  right: 0px;
+}
+.elementor-swiper-button svg {
+  fill: rgba(224, 219, 219, 0.9);
+  height: 1em;
+  width: 1em;
+}
+
+.elementor-pagination-position-outside .elementor-swiper-button {
+  top: calc(50% - 15px);
+}
+
+.screen-reader-text, .screen-reader-text span, .ui-helper-hidden-accessible, .elementor-screen-only {
+  position: absolute;
+  top: -10000em;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets,
+.swiper-horizontal > .swiper-pagination-bullets {
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+}
+.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+  margin: 0 6px;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets {
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+}
+.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+  margin: 0 6px;
+}
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  transition: 300ms;
+  transform: translate3d(0, 0, 0);
+  z-index: 10;
+}
+.swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #000;
+  opacity: 0.2;
+  pointer-events: none;
+}
+.swiper-pagination-fraction {
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+}
+.swiper-pagination-custom {
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+}
+.swiper-pagination-bullets {
+  color: #fff;
+  cursor: default;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.swiper-pagination-bullet-active {
+  opacity: 0.8;
 }
 /*# sourceMappingURL=loop-grid-cta.css.map */

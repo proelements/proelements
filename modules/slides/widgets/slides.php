@@ -10,6 +10,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -939,10 +940,13 @@ class Slides extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
 					],
 				],
 				'selectors' => [
@@ -956,6 +960,7 @@ class Slides extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -1160,6 +1165,8 @@ class Slides extends Base_Widget {
 			]
 		);
 
+		$swiper_class = Plugin::elementor()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
+
 		$this->add_control(
 			'dots_size',
 			[
@@ -1173,7 +1180,7 @@ class Slides extends Base_Widget {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .swiper-pagination-bullet' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .swiper-container-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .' . $swiper_class . '-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .swiper-pagination-fraction' => 'font-size: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
@@ -1289,9 +1296,10 @@ class Slides extends Base_Widget {
 		$show_arrows = ( in_array( $settings['navigation'], [ 'arrows', 'both' ] ) );
 
 		$slides_count = count( $settings['slides'] );
+		$swiper_class = Plugin::elementor()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
 		?>
 		<div class="elementor-swiper">
-			<div class="elementor-slides-wrapper elementor-main-swiper swiper-container" dir="<?php Utils::print_unescaped_internal_string( $direction ); ?>" data-animation="<?php echo esc_attr( $settings['content_animation'] ); ?>">
+			<div class="elementor-slides-wrapper elementor-main-swiper <?php echo esc_attr( $swiper_class ); ?>" dir="<?php Utils::print_unescaped_internal_string( $direction ); ?>" data-animation="<?php echo esc_attr( $settings['content_animation'] ); ?>">
 				<div class="swiper-wrapper elementor-slides">
 					<?php // PHPCS - Slides for each is safe. ?>
 					<?php echo implode( '', $slides ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -1336,7 +1344,7 @@ class Slides extends Base_Widget {
 				buttonSize       = settings.button_size;
 		#>
 		<div class="elementor-swiper">
-			<div class="elementor-slides-wrapper elementor-main-swiper swiper-container" dir="{{ direction }}" data-animation="{{ settings.content_animation }}">
+			<div class="elementor-slides-wrapper elementor-main-swiper {{ elementorFrontend.config.swiperClass }}" dir="{{ direction }}" data-animation="{{ settings.content_animation }}">
 				<div class="swiper-wrapper elementor-slides">
 					<# jQuery.each( settings.slides, function( index, slide ) { #>
 						<div class="elementor-repeater-item-{{ slide._id }} swiper-slide">

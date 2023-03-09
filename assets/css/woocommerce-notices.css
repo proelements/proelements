@@ -1,4 +1,4 @@
-/*! pro-elements - v3.8.0 - 30-10-2022 */
+/*! elementor-pro - v3.11.3 - 26-02-2023 */
 .elementor-editor-preview .woocommerce-notices-wrapper {
   padding: 2em 2em 0.3em 2em;
 }
@@ -41,14 +41,8 @@
   border-radius: var(--message-buttons-border-radius, 0);
   line-height: 1;
   font-weight: 400;
-  -webkit-transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
-       -o-transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
-          transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
-  -webkit-transition-property: color, background, -webkit-box-shadow;
-  transition-property: color, background, -webkit-box-shadow;
-  -o-transition-property: color, background, box-shadow;
+  transition-duration: var(--message-buttons-hover-transition-duration, 0.3s);
   transition-property: color, background, box-shadow;
-  transition-property: color, background, box-shadow, -webkit-box-shadow;
   text-transform: none;
   text-shadow: none;
   font-style: normal;
@@ -86,14 +80,8 @@
   border-radius: var(--info-buttons-border-radius, 0);
   line-height: 1;
   font-weight: 400;
-  -webkit-transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
-       -o-transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
-          transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
-  -webkit-transition-property: color, background, -webkit-box-shadow;
-  transition-property: color, background, -webkit-box-shadow;
-  -o-transition-property: color, background, box-shadow;
+  transition-duration: var(--info-buttons-hover-transition-duration, 0.3s);
   transition-property: color, background, box-shadow;
-  transition-property: color, background, box-shadow, -webkit-box-shadow;
   text-transform: none;
   text-shadow: none;
   font-style: normal;

@@ -1,16 +1,12 @@
-/*! pro-elements - v3.8.0 - 30-10-2022 */
+/*! elementor-pro - v3.11.3 - 26-02-2023 */
 .elementor-document-handle {
   display: none;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   position: absolute;
   z-index: 2147483640;
   top: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   background-color: #fcb92c;
   padding: 5px 10px;
   font-family: Roboto, Arial, Helvetica, Verdana, sans-serif;
@@ -39,15 +35,12 @@
 }
 
 .elementor-editor-active .elementor:not(.elementor-edit-mode):hover, .elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover {
-  -webkit-box-shadow: 0 0 0 1px #fcb92c;
-          box-shadow: 0 0 0 1px #fcb92c;
+  box-shadow: 0 0 0 1px #fcb92c;
 }
 .elementor-editor-active *[data-editable-elementor-document] {
   position: relative;
 }
 .elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover > .elementor-document-handle:not(.elementor-document-save-back-handle) {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   line-height: initial;
 }
@@ -55,9 +48,7 @@
   opacity: 0.5;
 }
 .elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle {
-  -webkit-transform: translateX(-50%) translateY(-100%);
-      -ms-transform: translateX(-50%) translateY(-100%);
-          transform: translateX(-50%) translateY(-100%);
+  transform: translateX(-50%) translateY(-100%);
   border-radius: 3px 3px 0 0;
 }
 .elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle:before {
@@ -96,24 +87,23 @@
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-right {
   margin-left: 5px;
 }
-.elementor-widget-loop-grid .elementor-edit-area-active[data-editable-elementor-document] {
+.elementor-loop-container > div.elementor-edit-area-active:first-of-type {
   border: 1px solid #fcb92c;
 }
-.elementor-widget-loop-grid .elementor-edit-area-active .elementor-document-save-back-handle {
-  display: -webkit-box;
-  display: -ms-flexbox;
+
+div[class*=elementor-widget-loop] .elementor-edit-area-active[data-editable-elementor-document], div[class*=elementor-widget-loop] .elementor-edit-area-active.swiper-slide-active, div[class*=elementor-widget-loop] .elementor-edit-area-active.e-loop-first-edit:first-of-type {
+  border: 1px solid #fcb92c;
+}
+div[class*=elementor-widget-loop] .elementor-edit-area-active .elementor-document-save-back-handle {
   display: flex;
   line-height: initial;
   white-space: nowrap;
 }
-.elementor-widget-loop-grid #elementor-add-new-section {
+div[class*=elementor-widget-loop] #elementor-add-new-section {
   margin: 30px auto;
 }
-.elementor-widget-loop-grid .elementor-add-section-inner {
+div[class*=elementor-widget-loop] .elementor-add-section-inner {
   padding: 15px 0;
-}
-.elementor-loop-container > div.elementor-edit-area-active:first-of-type {
-  border: 1px solid #fcb92c;
 }
 
 .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-add-template-button {
@@ -135,33 +125,23 @@
   min-height: 0;
 }
 
-.elementor-editor-active .elementor-widget-loop-grid .elementor:not([data-editable-elementor-document]):hover {
-  -webkit-box-shadow: initial;
-          box-shadow: initial;
+.elementor-editor-active [class*=elementor-widget-loop] .elementor:not([data-editable-elementor-document]):hover {
+  box-shadow: initial;
 }
 
-.elementor-editor-active .elementor-widget-loop-grid:hover [data-editable-elementor-document] {
-  -webkit-box-shadow: 0 0 0 1px #fcb92c;
-          box-shadow: 0 0 0 1px #fcb92c;
+.elementor-editor-active [class*=elementor-widget-loop]:hover [data-editable-elementor-document] {
+  box-shadow: 0 0 0 1px #fcb92c;
 }
-.elementor-editor-active .elementor-widget-loop-grid:hover .elementor-document-handle:not(.elementor-document-save-back-handle) {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.elementor-editor-active [class*=elementor-widget-loop]:hover .elementor-document-handle:not(.elementor-document-save-back-handle) {
   display: flex;
   line-height: initial;
   white-space: nowrap;
 }
 
 .e-loop-template-canvas {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
 }
 .e-loop-template-canvas [data-elementor-type=loop-item].e-loop-item {

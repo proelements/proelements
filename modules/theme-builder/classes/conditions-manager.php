@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\ThemeBuilder\Classes;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use Elementor\Core\Utils\Exceptions;
 use Elementor\TemplateLibrary\Source_Local;
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Modules\ThemeBuilder\Conditions\Condition_Base;
@@ -320,9 +321,10 @@ class Conditions_Manager {
 			 *
 			 * Filters the template ID for theme location templates.
 			 *
-			 * @param int $theme_template_id Template ID.
+			 * @param int    $theme_template_id Template ID.
+			 * @param string $location          Theme location.
 			 */
-			$theme_template_id = apply_filters( 'elementor/theme/get_location_templates/template_id', $theme_template_id );
+			$theme_template_id = apply_filters( 'elementor/theme/get_location_templates/template_id', $theme_template_id, $location );
 
 			foreach ( $conditions as $condition ) {
 				$parsed_condition = $this->parse_condition( $condition );
@@ -394,8 +396,8 @@ class Conditions_Manager {
 
 		// In case the user want to preview any page with a theme_template_id,
 		// like http://domain.com/any-post/?preview=1&theme_template_id=6453
-		if ( ! empty( $_GET['theme_template_id'] ) ) {
-			$force_template_id = $_GET['theme_template_id'];
+		$force_template_id = Utils::_unstable_get_super_global_value( $_GET, 'theme_template_id' );
+		if ( $force_template_id ) {
 			$document = $theme_builder_module->get_document( $force_template_id );
 			// e.g. header / header
 			if ( $document && $location === $document->get_location() ) {

@@ -5,6 +5,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
 use Elementor\Controls_Manager;
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\Posts\Traits\Button_Widget_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -611,8 +612,8 @@ abstract class Posts_Base extends Base_Widget {
 
 		if ( is_preview() ) {
 			if ( ( 'draft' !== $post->post_status ) && isset( $_GET['preview_id'], $_GET['preview_nonce'] ) ) {
-				$query_args['preview_id'] = wp_unslash( $_GET['preview_id'] );
-				$query_args['preview_nonce'] = wp_unslash( $_GET['preview_nonce'] );
+				$query_args['preview_id'] = Utils::_unstable_get_super_global_value( $_GET, 'preview_id' );
+				$query_args['preview_nonce'] = Utils::_unstable_get_super_global_value( $_GET, 'preview_nonce' );
 			}
 
 			$url = get_preview_post_link( $post, $query_args, $url );

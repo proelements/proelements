@@ -9,6 +9,7 @@ use ElementorPro\Plugin;
 use Elementor\Core\Base\Document;
 use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
 use Elementor\Core\Experiments\Manager;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -23,17 +24,18 @@ class Module extends Module_Base {
 	const EXPERIMENT_NAME = 'loop';
 	const LOOP_BASE_SKIN_ID = 'base';
 	const LOOP_POST_SKIN_ID = 'post';
-	const CONTAINER_EXPERIMENT = 'container';
 	const QUERY_ID = 'query';
+	const LOOP_WIDGETS = [
+		'loop-grid',
+		'loop-carousel',
+	];
 
 	public function get_name() {
 		return 'loop-builder';
 	}
 
 	protected function get_widgets() {
-		return [
-			'Loop_Grid',
-		];
+		return [ 'Loop_Grid', 'Loop_Carousel' ];
 	}
 
 	public function __construct() {
@@ -59,14 +61,48 @@ class Module extends Module_Base {
 			add_filter( 'template_include', [ $this, 'filter_template_to_canvas_view' ], 999 );
 			add_filter( 'body_class', [ $this, 'filter_body_class' ] );
 		}
+
+		// Prevent enqueue default dynamic CSS for loop item templates
+		add_filter( 'elementor/css-file/dynamic/should_enqueue',
+			function ( $should_enqueue, $post_id ) {
+				if ( static::TEMPLATE_LIBRARY_TYPE_SLUG === get_post_meta( $post_id, Document::TYPE_META_KEY, true ) ) {
+					$should_enqueue = false;
+				}
+				return $should_enqueue;
+			},
+		10, 2 );
 	}
 
 	public function filter_template_to_canvas_view() {
 		return ELEMENTOR_PATH . 'modules/page-templates/templates/canvas.php';
 	}
 
+	private function get_preview_loop_item_id() {
+		$post_id = false;
+
+		// Editor preview.
+		$post_id = Utils::_unstable_get_super_global_value( $_GET, 'elementor-preview' );
+
+		if ( ! $post_id ) {
+			$library_type = Utils::_unstable_get_super_global_value( $_GET, 'elementor_library' );
+
+			if ( 'elementor-' . self::TEMPLATE_LIBRARY_TYPE_SLUG === $library_type ) {
+				// Frontend Loop Item template preview.
+				$post_id = get_the_ID();
+			}
+		}
+
+		return $post_id;
+	}
+
 	public function filter_body_class( $classes ) {
 		$classes[] = 'e-loop-template-canvas';
+
+		$post_id = $this->get_preview_loop_item_id();
+
+		if ( $post_id && 'product' === $this->get_source_type_from_post_meta( $post_id ) ) {
+			$classes[] = 'woocommerce';
+		}
 
 		return $classes;
 	}
@@ -87,12 +123,7 @@ class Module extends Module_Base {
 				'</a>'
 			),
 			'release_status' => Manager::RELEASE_STATUS_BETA,
-			'default' => Manager::STATE_INACTIVE,
-			'new_site' => [
-				'default_active' => true,
-				'minimum_installation_version' => '3.8.0',
-			],
-			'dependencies' => [ 'container' ],
+			'default' => Manager::STATE_ACTIVE,
 		];
 	}
 
@@ -158,15 +189,23 @@ class Module extends Module_Base {
 		] );
 	}
 
+	public function get_source_type_from_post_meta( $post_id ) {
+		$source_type = get_post_meta( intval( $post_id ), '_elementor_source', true );
+		return empty( $source_type ) ? 'post' : $source_type;
+	}
+
 	private function is_editing_existing_loop_item() {
-		return isset( $_GET['elementor_library'] ) && strpos( $_GET['elementor_library'], 'elementor-' . static::TEMPLATE_LIBRARY_TYPE_SLUG ) !== false;
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
+		$elementor_library = Utils::_unstable_get_super_global_value( $_GET, 'elementor_library' );
+		return strpos( $elementor_library, 'elementor-' . static::TEMPLATE_LIBRARY_TYPE_SLUG ) !== false;
 	}
 
 	private function is_creating_new_loop_item() {
-		return isset( $_GET['post_type'] )
-			&& 'elementor_library' === $_GET['post_type']
-			&& isset( $_GET['p'] )
-			&& static::TEMPLATE_LIBRARY_TYPE_SLUG === get_post_meta( $_GET['p'], Document::TYPE_META_KEY, true );
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
+		$post_type = Utils::_unstable_get_super_global_value( $_GET, 'post_type' );
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
+		$p = Utils::_unstable_get_super_global_value( $_GET, 'p' );
+		return 'elementor_library' === $post_type && static::TEMPLATE_LIBRARY_TYPE_SLUG === get_post_meta( $p, Document::TYPE_META_KEY, true );
 	}
 
 	private function is_loop_theme_builder() {
@@ -196,7 +235,9 @@ class Module extends Module_Base {
 	}
 
 	private function manage_posts_columns( $columns ) {
-		if ( isset( $_REQUEST[ Source_Local::TAXONOMY_TYPE_SLUG ] ) && self::TEMPLATE_LIBRARY_TYPE_SLUG === $_REQUEST[ Source_Local::TAXONOMY_TYPE_SLUG ] ) {
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
+		$taxonomy_type_slug = Utils::_unstable_get_super_global_value( $_REQUEST, Source_Local::TAXONOMY_TYPE_SLUG );
+		if ( self::TEMPLATE_LIBRARY_TYPE_SLUG === $taxonomy_type_slug ) {
 			unset( $columns['instances'] );
 		}
 

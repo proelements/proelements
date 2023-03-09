@@ -2,8 +2,11 @@
 namespace ElementorPro\Modules\ThemeBuilder\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Image_Size;
+use Elementor\Utils;
 use Elementor\Widget_Image;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Modules\ThemeBuilder\Classes\Control_Media_Preview;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -48,8 +51,18 @@ class Site_Logo extends Widget_Image {
 		parent::register_controls();
 
 		$this->update_control(
+			'section_image',
+			[
+				'label' => esc_html__( 'Site Logo', 'elementor-pro' ),
+			]
+		);
+
+		$this->update_control(
 			'image',
 			[
+				'label' => esc_html__( 'Site Logo', 'elementor-pro' ),
+				'type' => Control_Media_Preview::CONTROL_TYPE,
+				'src' => $this->get_site_logo(),
 				'dynamic' => [
 					'default' => Plugin::elementor()->dynamic_tags->tag_data_to_tag_text( null, 'site-logo' ),
 				],
@@ -62,6 +75,7 @@ class Site_Logo extends Widget_Image {
 		$this->update_control(
 			'image_size',
 			[
+				'separator' => 'before',
 				'default' => 'full',
 			]
 		);
@@ -69,16 +83,13 @@ class Site_Logo extends Widget_Image {
 		$this->update_control(
 			'link_to',
 			[
-				'default' => 'custom',
-			]
-		);
-
-		$this->update_control(
-			'link',
-			[
-				'dynamic' => [
-					'default' => Plugin::elementor()->dynamic_tags->tag_data_to_tag_text( null, 'site-url' ),
+				'options' => [
+					'none' => esc_html__( 'None', 'elementor-pro' ),
+					'site_url' => esc_html__( 'Site URL', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom URL', 'elementor-pro' ),
+					'file' => esc_html__( 'Media File', 'elementor-pro' ),
 				],
+				'default' => 'site_url',
 			],
 			[
 				'recursive' => true,
@@ -95,25 +106,84 @@ class Site_Logo extends Widget_Image {
 		$this->remove_control( 'caption' );
 
 		$this->add_control(
-			'site_identity_notice',
+			'change_logo_cta',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf(
-					/* translators: 1: Link opening tag, 2: Link closing tag. */
-					esc_html__( 'To edit the logo of your site, go to %1$sSite Identity%2$s.', 'elementor-pro' ),
-					'<a href="#" onclick="elementorPro.modules.themeBuilder.openSiteIdentity( event )" >',
-					'</a>'
-				),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'type' => Controls_Manager::BUTTON,
+				'label_block' => true,
+				'show_label' => false,
+				'button_type' => 'default elementor-button-center',
+				'text' => esc_html__( 'Change Site Logo', 'elementor-pro' ),
+				'event' => 'elementorProSiteLogo:change',
 			],
 			[
 				'position' => [
 					'of' => 'image',
 					'type' => 'control',
-					'at' => 'before',
+					'at' => 'after',
 				],
 			]
 		);
+	}
+
+	/**
+	 * TODO: Remove this method when Elementor Core 3.11.0 is required.
+	 * Duplicate of render() method from Elementor\Widget_Image class, so it will use the get_link_url() method.
+	 *
+	 * @return void
+	 */
+	protected function render() {
+		$settings = $this->get_settings_for_display();
+
+		if ( empty( $settings['image']['url'] ) ) {
+			return;
+		}
+
+		if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' ) ) {
+			$this->add_render_attribute( 'wrapper', 'class', 'elementor-image' );
+		}
+
+		$has_caption = $this->has_caption( $settings );
+
+		$link = $this->get_link_url( $settings );
+
+		if ( $link ) {
+			$this->add_link_attributes( 'link', $link );
+
+			if ( Plugin::elementor()->editor->is_edit_mode() ) {
+				$this->add_render_attribute( 'link', [
+					'class' => 'elementor-clickable',
+				] );
+			}
+
+			if ( 'media' === $settings['link_to'] ) {
+				$this->add_lightbox_data_attributes( 'link', $settings['image']['id'], $settings['open_lightbox'] );
+			}
+		} ?>
+		<?php if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' ) ) { ?>
+			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+		<?php } ?>
+		<?php if ( $has_caption ) : ?>
+		<figure class="wp-caption">
+	<?php endif; ?>
+		<?php if ( $link ) : ?>
+		<a <?php $this->print_render_attribute_string( 'link' ); ?>>
+	<?php endif; ?>
+		<?php Group_Control_Image_Size::print_attachment_image_html( $settings ); ?>
+		<?php if ( $link ) : ?>
+		</a>
+	<?php endif; ?>
+		<?php if ( $has_caption ) : ?>
+			<figcaption class="widget-image-caption wp-caption-text"><?php
+				echo wp_kses_post( $this->get_caption( $settings ) );
+			?></figcaption>
+		<?php endif; ?>
+		<?php if ( $has_caption ) : ?>
+		</figure>
+	<?php endif; ?>
+		<?php if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' ) ) { ?>
+			</div>
+		<?php } ?>
+		<?php
 	}
 
 	protected function get_html_wrapper_class() {
@@ -126,5 +196,47 @@ class Site_Logo extends Widget_Image {
 		unset( $caption_source_options['custom'] );
 
 		return $caption_source_options;
+	}
+
+	protected function get_link_url( $settings ) {
+		switch ( $settings['link_to'] ) {
+			case 'none':
+				return false;
+
+			case 'custom':
+				return ( ! empty( $settings['link']['url'] ) ) ? $settings['link'] : false;
+
+			case 'site_url':
+				return [ 'url' => Plugin::elementor()->dynamic_tags->get_tag_data_content( null, 'site-url' ) ?? '' ];
+
+			default:
+				return [ 'url' => $settings['image']['url'] ];
+		}
+	}
+
+	// TODO: Remove this method when removing the render() method.
+	private function has_caption( $settings ) {
+		return ( ! empty( $settings['caption_source'] ) && 'none' !== $settings['caption_source'] );
+	}
+
+	// TODO: Remove this method when removing the render() method.
+	private function get_caption( $settings ) {
+		$caption = '';
+		if ( ! empty( $settings['caption_source'] ) ) {
+			switch ( $settings['caption_source'] ) {
+				case 'attachment':
+					$caption = wp_get_attachment_caption( $settings['image']['id'] );
+					break;
+				case 'custom':
+					$caption = ! Utils::is_empty( $settings['caption'] ) ? $settings['caption'] : '';
+			}
+		}
+		return $caption;
+	}
+
+	// Get the site logo from the dynamic tag
+	private function get_site_logo(): string {
+		$site_logo = Plugin::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );
+		return $site_logo['url'] ?? Utils::get_placeholder_image_src();
 	}
 }

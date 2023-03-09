@@ -206,14 +206,20 @@ class Product_Upsell extends Products_Base {
 
 		ob_start();
 
-		woocommerce_upsell_display( $limit, $columns, $orderby, $order );
+		woocommerce_upsell_display(
+			sanitize_text_field( $limit ),
+			sanitize_text_field( $columns ),
+			sanitize_text_field( $orderby ),
+			sanitize_text_field( $order )
+		);
 
 		$upsells_html = ob_get_clean();
 
 		if ( $upsells_html ) {
 			$upsells_html = str_replace( '<ul class="products', '<ul class="products elementor-grid', $upsells_html );
 
-			echo wp_kses_post( $upsells_html );
+			// PHPCS - Doesn't need to be escaped since it's a WooCommerce template, and 3rd party plugins might hook into it.
+			echo $upsells_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		if ( 'yes' === $settings['automatically_align_buttons'] ) {

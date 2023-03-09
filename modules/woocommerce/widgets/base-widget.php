@@ -5,12 +5,15 @@ use Elementor\Controls_Manager;
 use Elementor\Controls_Stack;
 use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
+use ElementorPro\Modules\Woocommerce\Traits\Product_Id_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 abstract class Base_Widget extends \ElementorPro\Base\Base_Widget {
+
+	use Product_Id_Trait;
 
 	protected $gettext_modifications;
 

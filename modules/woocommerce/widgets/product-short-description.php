@@ -89,7 +89,6 @@ class Product_Short_Description extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'text_typography',
-				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'selector' => '.woocommerce {{WRAPPER}} .woocommerce-product-details__short-description',
 			]
 		);
@@ -99,9 +98,9 @@ class Product_Short_Description extends Base_Widget {
 
 	protected function render() {
 		global $product;
-		$product = wc_get_product();
+		$product = $this->get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product ) {
 			return;
 		}
 

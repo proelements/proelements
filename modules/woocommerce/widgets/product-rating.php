@@ -171,9 +171,9 @@ class Product_Rating extends Base_Widget {
 		}
 
 		global $product;
-		$product = wc_get_product();
+		$product = $this->get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product ) {
 			return;
 		}
 

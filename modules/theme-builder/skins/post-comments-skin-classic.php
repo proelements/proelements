@@ -134,7 +134,7 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'placeholder' => '1',
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-comment' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -146,7 +146,7 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-comment' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -278,7 +278,6 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'reply_button_typography',
-				'label' => esc_html__( 'Typography', 'elementor-pro' ),
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -315,7 +314,7 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-comment .comment-reply-link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -426,7 +425,7 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 		?>
 		<<?php Utils::print_validated_html_tag( $tag ); ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $class, $comment ); ?>>
 		<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-			<footer class="comment-meta">
+			<div class="comment-meta">
 				<div class="comment-author vcard">
 					<?php
 					if ( 0 < $args['avatar_size'] ) {
@@ -459,7 +458,7 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 				<?php if ( '0' == $comment->comment_approved ) : ?>
 					<p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', 'elementor-pro' ); ?></p>
 				<?php endif; ?>
-			</footer><!-- .comment-meta -->
+			</div><!-- .comment-meta -->
 
 			<div class="comment-content">
 				<?php comment_text(); ?>

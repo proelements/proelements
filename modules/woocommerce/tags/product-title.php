@@ -1,8 +1,6 @@
 <?php
 namespace ElementorPro\Modules\Woocommerce\Tags;
 
-use ElementorPro\Modules\Woocommerce\Tags\Traits\Tag_Product_Id;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -21,11 +19,18 @@ class Product_Title extends Base_Tag {
 	}
 
 	public function render() {
-		$product = wc_get_product( $this->get_settings( 'product_id' ) );
+		$product = $this->get_product( $this->get_settings( 'product_id' ) );
+
 		if ( ! $product ) {
 			return;
 		}
 
-		echo wp_kses_post( $product->get_title() );
+		if ( 'variation' === $product->get_type() ) {
+			$title = $product->get_name();
+		} else {
+			$title = get_the_title( $product->get_id() );
+		}
+
+		echo wp_kses_post( $title );
 	}
 }

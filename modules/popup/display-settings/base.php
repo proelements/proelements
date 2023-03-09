@@ -38,7 +38,7 @@ abstract class Base extends Controls_Stack {
 	}
 
 	protected function add_settings_group_control( $id, array $args ) {
-		$id = $this->current_group . '_' . $id;
+		$id = $this->get_prefixed_control_id( $id );
 
 		$args['frontend_available'] = true;
 
@@ -54,5 +54,9 @@ abstract class Base extends Controls_Stack {
 		$args['condition'][ $this->current_group ] = 'yes';
 
 		return $this->add_control( $id, $args );
+	}
+
+	protected function get_prefixed_control_id( $id ) {
+		return $this->current_group . '_' . $id;
 	}
 }

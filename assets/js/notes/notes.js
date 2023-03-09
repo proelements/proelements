@@ -25,26 +25,25 @@ function useActiveThread() {
   var activeThread = (0,react_redux__WEBPACK_IMPORTED_MODULE_0__.useSelector)(function (state) {
     return state.notes.active;
   });
+
   /**
    * Set the current active thread.
    *
    * @return void
    */
-
   var setActive = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function (_ref) {
     var type = _ref.type,
-        data = _ref.data;
+      data = _ref.data;
     var allowedTypes = [THREAD, NEW_THREAD];
-
     if (!allowedTypes.includes(type)) {
       throw new Error('`setActive()` type must be one of: ' + allowedTypes.join(', '));
     }
-
     return window.top.$e.run('notes/set-active', {
       type: type,
       data: data
     });
   }, []);
+
   /**
    * Clear the current active thread state.
    *
@@ -52,19 +51,18 @@ function useActiveThread() {
    *
    * @return void
    */
-
   var clearActive = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     return window.top.$e.run('notes/clear-active', {
       id: id
     });
   }, []);
+
   /**
    * Determine of a thread is currently active.
    *
    * @return {boolean}
    */
-
   var isThreadActive = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(function (noteId) {
     return THREAD === (activeThread === null || activeThread === void 0 ? void 0 : activeThread.type) && (activeThread === null || activeThread === void 0 ? void 0 : activeThread.data.noteId) === noteId;
   }, [activeThread]);
@@ -95,12 +93,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var BaseModel = /*#__PURE__*/function () {
   function BaseModel() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, BaseModel);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(BaseModel, [{
     key: "init",
     value:
@@ -113,22 +109,18 @@ var BaseModel = /*#__PURE__*/function () {
      */
     function init() {
       var _this = this;
-
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       Object.entries(data).forEach(function (_ref) {
         var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, 2),
-            key = _ref2[0],
-            value = _ref2[1];
-
+          key = _ref2[0],
+          value = _ref2[1];
         _this[key] = value;
       });
       return this;
     }
   }]);
-
   return BaseModel;
 }();
-
 
 
 /***/ }),
@@ -159,38 +151,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-
 
 var Document = /*#__PURE__*/function (_BaseModel) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Document, _BaseModel);
-
   var _super = _createSuper(Document);
-
   function Document() {
     var _this;
-
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Document);
-
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-
     _this = _super.call.apply(_super, [this].concat(args));
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "id", void 0);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "type", void 0);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "typeTitle", void 0);
-
     return _this;
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Document, null, [{
     key: "createFromResponse",
     value:
@@ -207,10 +185,8 @@ var Document = /*#__PURE__*/function (_BaseModel) {
       });
     }
   }]);
-
   return Document;
 }(_base_model__WEBPACK_IMPORTED_MODULE_7__["default"]);
-
 
 
 /***/ }),
@@ -243,77 +219,46 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-
 
 
 
 var Note = /*#__PURE__*/function (_BaseModel) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Note, _BaseModel);
-
   var _super = _createSuper(Note);
-
   function Note() {
     var _this;
-
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Note);
-
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-
     _this = _super.call.apply(_super, [this].concat(args));
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "id", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "parentId", 0);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "elementId", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "content", '');
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "position", {
       x: 0,
       y: 0
     });
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "repliesCount", 0);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "unreadRepliesCount", 0);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "replies", []);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "author", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "readers", []);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "isRead", false);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "isResolved", false);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "routeUrl", '');
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "routeTitle", '');
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "userCan", {});
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "createdAt", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "updatedAt", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "lastActivityAt", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "_formattedLastActivityAt", '');
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "_formattedCreatedAt", '');
-
     return _this;
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Note, [{
     key: "getFormattedLastActivityAt",
     value:
@@ -326,36 +271,35 @@ var Note = /*#__PURE__*/function (_BaseModel) {
       if (!this._formattedLastActivityAt) {
         this._formattedLastActivityAt = this.lastActivityAt.toLocaleString();
       }
-
       return this._formattedLastActivityAt;
     }
+
     /**
      * TODO: Change to WP site settings format.
      *
      * @return {string} Created at date formatted.
      */
-
   }, {
     key: "getFormattedCreatedAt",
     value: function getFormattedCreatedAt() {
       if (!this._formattedCreatedAt) {
         this._formattedCreatedAt = this.createdAt.toLocaleString();
       }
-
       return this._formattedCreatedAt;
     }
+
     /**
      * Get the note deep link.
      *
      * @return {string} url
      */
-
   }, {
     key: "getURL",
     value: function getURL() {
       var id = this.isReply() ? this.parentId : this.id;
       return this.constructor.getURL(id);
     }
+
     /**
      * Get a note deep link by ID.
      *
@@ -363,7 +307,6 @@ var Note = /*#__PURE__*/function (_BaseModel) {
      *
      * @return {string} url
      */
-
   }, {
     key: "isUnreadThread",
     value:
@@ -375,23 +318,23 @@ var Note = /*#__PURE__*/function (_BaseModel) {
     function isUnreadThread() {
       return this.isThread() && (!this.isRead || this.unreadRepliesCount > 0);
     }
+
     /**
      * Determine if the Note is a Thread.
      *
      * @return {boolean} - Is thread.
      */
-
   }, {
     key: "isThread",
     value: function isThread() {
       return 0 === this.parentId;
     }
+
     /**
      * Determine if the Note is a Reply.
      *
      * @return {boolean} - Is reply.
      */
-
   }, {
     key: "isReply",
     value: function isReply() {
@@ -439,10 +382,8 @@ var Note = /*#__PURE__*/function (_BaseModel) {
       return route.note_url_pattern.replace('{{NOTE_ID}}', id);
     }
   }]);
-
   return Note;
 }(_base_model__WEBPACK_IMPORTED_MODULE_7__["default"]);
-
 
 
 /***/ }),
@@ -474,46 +415,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-
 
 var User = /*#__PURE__*/function (_BaseModel) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(User, _BaseModel);
-
   var _super = _createSuper(User);
-
   function User() {
     var _this;
-
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, User);
-
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-
     _this = _super.call.apply(_super, [this].concat(args));
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "id", null);
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "name", '');
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "slug", '');
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "avatarUrls", {
       24: null,
       48: null,
       96: null
     });
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "capabilities", {});
-
     return _this;
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(User, null, [{
     key: "createFromResponse",
     value:
@@ -524,7 +449,6 @@ var User = /*#__PURE__*/function (_BaseModel) {
      */
     function createFromResponse(data) {
       var _data$capabilities, _data$capabilities$no, _data$capabilities2, _data$capabilities2$p;
-
       return new User().init({
         id: data.id,
         name: data.name,
@@ -540,13 +464,13 @@ var User = /*#__PURE__*/function (_BaseModel) {
         }
       });
     }
+
     /**
      * A factory to create a User model when a user was deleted or not exist for some reason.
      *
      * @param {string} name
      * @return {BaseModel} user
      */
-
   }, {
     key: "createDeleted",
     value: function createDeleted() {
@@ -558,10 +482,8 @@ var User = /*#__PURE__*/function (_BaseModel) {
       });
     }
   }]);
-
   return User;
 }(_base_model__WEBPACK_IMPORTED_MODULE_7__["default"]);
-
 
 
 /***/ }),
@@ -588,37 +510,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var ClearActive = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(ClearActive, _$e$modules$CommandBa);
-
   var _super = _createSuper(ClearActive);
-
   function ClearActive() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ClearActive);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ClearActive, [{
     key: "apply",
     value: function apply() {
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref$id = _ref.id,
-          id = _ref$id === void 0 ? null : _ref$id;
-
+        _ref$id = _ref.id,
+        id = _ref$id === void 0 ? null : _ref$id;
       var store = window.top.$e.store,
-          _store$get = store.get('notes'),
-          actions = _store$get.actions;
-
+        _store$get = store.get('notes'),
+        actions = _store$get.actions;
       store.dispatch(actions.clearActive(id));
     }
   }]);
-
   return ClearActive;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ClearActive);
@@ -647,29 +559,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var Close = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Close, _$e$modules$CommandBa);
-
   var _super = _createSuper(Close);
-
   function Close() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Close);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Close, [{
     key: "apply",
     value: function apply() {
       this.component.close();
     }
   }]);
-
   return Close;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Close);
@@ -700,9 +604,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
@@ -710,18 +612,13 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 /**
  * Copy note deep link by ID.
  */
-
 var CopyLink = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(CopyLink, _$e$modules$CommandBa);
-
   var _super = _createSuper(CopyLink);
-
   function CopyLink() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, CopyLink);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(CopyLink, [{
     key: "validateArgs",
     value: function validateArgs() {
@@ -734,7 +631,6 @@ var CopyLink = /*#__PURE__*/function (_$e$modules$CommandBa) {
       return (0,_services_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__.copyToClipboard)(_app_models_note__WEBPACK_IMPORTED_MODULE_5__["default"].getURL(args.id));
     }
   }]);
-
   return CopyLink;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CopyLink);
@@ -763,25 +659,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 /**
  * Set / modify the global Notes filter state.
  */
 var Filter = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Filter, _$e$modules$CommandBa);
-
   var _super = _createSuper(Filter);
-
   function Filter() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Filter);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Filter, [{
     key: "validateArgs",
     value: function validateArgs() {
@@ -792,14 +681,12 @@ var Filter = /*#__PURE__*/function (_$e$modules$CommandBa) {
     key: "apply",
     value: function apply(args) {
       var store = window.top.$e.store,
-          _store$get = store.get('notes'),
-          actions = _store$get.actions,
-          action = args.overwrite ? actions.setFilters : actions.modifyFilters;
-
+        _store$get = store.get('notes'),
+        actions = _store$get.actions,
+        action = args.overwrite ? actions.setFilters : actions.modifyFilters;
       store.dispatch(action(args.filters));
     }
   }]);
-
   return Filter;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Filter);
@@ -864,29 +751,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 
 var Open = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Open, _$e$modules$CommandBa);
-
   var _super = _createSuper(Open);
-
   function Open() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Open);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Open, [{
     key: "apply",
     value: function apply(args) {
       window.top.$e.route(this.component.getNamespace());
-      var noteId = parseInt(args.id || '0'); // Activate a specific thread if provided.
+      var noteId = parseInt(args.id || '0');
 
+      // Activate a specific thread if provided.
       if (noteId > 0) {
         window.top.$e.run('notes/set-active', {
           type: _app_hooks_use_active_thread__WEBPACK_IMPORTED_MODULE_5__.THREAD,
@@ -905,7 +786,6 @@ var Open = /*#__PURE__*/function (_$e$modules$CommandBa) {
       };
     }
   }]);
-
   return Open;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Open);
@@ -934,22 +814,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var SetActive = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(SetActive, _$e$modules$CommandBa);
-
   var _super = _createSuper(SetActive);
-
   function SetActive() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, SetActive);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(SetActive, [{
     key: "validateArgs",
     value: function validateArgs() {
@@ -961,23 +834,19 @@ var SetActive = /*#__PURE__*/function (_$e$modules$CommandBa) {
     key: "apply",
     value: function apply(_ref) {
       var type = _ref.type,
-          data = _ref.data;
+        data = _ref.data;
       var store = window.top.$e.store;
-
       if (store.getState().notes.formsInWritingMode.length > 0) {
         return;
       }
-
       var _store$get = store.get('notes'),
-          actions = _store$get.actions;
-
+        actions = _store$get.actions;
       store.dispatch(actions.setActive({
         type: type,
         data: data
       }));
     }
   }]);
-
   return SetActive;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SetActive);
@@ -1006,22 +875,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var Toggle = /*#__PURE__*/function (_$e$modules$CommandBa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Toggle, _$e$modules$CommandBa);
-
   var _super = _createSuper(Toggle);
-
   function Toggle() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Toggle);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Toggle, [{
     key: "apply",
     value: function apply() {
@@ -1032,7 +894,6 @@ var Toggle = /*#__PURE__*/function (_$e$modules$CommandBa) {
       }
     }
   }]);
-
   return Toggle;
 }($e.modules.CommandBase);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Toggle);
@@ -1066,32 +927,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 
 
 
 var Index = /*#__PURE__*/function (_$e$modules$CommandDa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Index, _$e$modules$CommandDa);
-
   var _super = _createSuper(Index);
-
   function Index() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Index);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Index, null, [{
     key: "getEndpointFormat",
     value: function getEndpointFormat() {
       return 'notes/{id}';
     }
   }]);
-
   return Index;
 }($e.modules.CommandData);
 
@@ -1118,29 +971,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var ReadStatus = /*#__PURE__*/function (_$e$modules$CommandDa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(ReadStatus, _$e$modules$CommandDa);
-
   var _super = _createSuper(ReadStatus);
-
   function ReadStatus() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ReadStatus);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ReadStatus, null, [{
     key: "getEndpointFormat",
     value: function getEndpointFormat() {
       return 'notes/read-status';
     }
   }]);
-
   return ReadStatus;
 }($e.modules.CommandData);
 
@@ -1167,29 +1012,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var Summary = /*#__PURE__*/function (_$e$modules$CommandDa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Summary, _$e$modules$CommandDa);
-
   var _super = _createSuper(Summary);
-
   function Summary() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Summary);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Summary, null, [{
     key: "getEndpointFormat",
     value: function getEndpointFormat() {
       return 'notes/summary';
     }
   }]);
-
   return Summary;
 }($e.modules.CommandData);
 
@@ -1216,29 +1053,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var Users = /*#__PURE__*/function (_$e$modules$CommandDa) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Users, _$e$modules$CommandDa);
-
   var _super = _createSuper(Users);
-
   function Users() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Users);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Users, null, [{
     key: "getEndpointFormat",
     value: function getEndpointFormat() {
       return 'notes/users';
     }
   }]);
-
   return Users;
 }($e.modules.CommandData);
 
@@ -1277,60 +1106,49 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-
 
 
 
 var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__["default"])(EComponent, _$e$modules$Component);
-
   var _super = _createSuper(EComponent);
-
   /**
    * Config for the current components (to share across related apps).
    *
    * @type {Object}
    */
+
   function EComponent(args) {
     var _this;
-
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, EComponent);
+    _this = _super.call(this, args);
 
-    _this = _super.call(this, args); // Get config from the marks script
+    // Get config from the marks script
     // some configuration can only be known in the preview (iframe or frontend) like the 'route.title'.
-
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this), "config", {});
-
     window.addEventListener('message', function (event) {
       if (event.data.name !== 'elementor-pro/notes/config') {
         return;
       }
+      _this.config = _objectSpread(_objectSpread({}, _this.config), event.data.payload);
 
-      _this.config = _objectSpread(_objectSpread({}, _this.config), event.data.payload); // Hash commands already called in the editor.
-
+      // Hash commands already called in the editor.
       if (!_this.isInEditor()) {
         window.top.$e.extras.hashCommands.runOnce();
       }
-
       _this.contextMenuNotesGroup();
-    }); // Toggle notes mode when clicking the admin-bar item (initiated in `module.php`).
+    });
 
+    // Toggle notes mode when clicking the admin-bar item (initiated in `module.php`).
     window.addEventListener('DOMContentLoaded', function () {
       var adminBarButton = document.getElementById('wp-admin-bar-elementor_notes');
-
       if (!adminBarButton) {
         return;
       }
-
       adminBarButton.addEventListener('click', function (e) {
         e.preventDefault();
         window.top.$e.run('notes/toggle');
@@ -1338,33 +1156,30 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
     });
     return _this;
   }
+
   /**
    * @return {string} the namespace of the component
    */
-
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(EComponent, [{
     key: "getNamespace",
     value: function getNamespace() {
       return 'notes';
     }
+
     /**
      * @return {Object} All the routes of the component
      */
-
   }, {
     key: "defaultRoutes",
     value: function defaultRoutes() {
       return {
-        '': function _() {
-          /* Nothing to do, it's already rendered. */
-        }
+        '': function _() {/* Nothing to do, it's already rendered. */}
       };
     }
+
     /**
      * @return {*} All the commands of the components
      */
-
   }, {
     key: "defaultCommands",
     value: function defaultCommands() {
@@ -1374,28 +1189,28 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
       }, {});
       return _objectSpread(_objectSpread({}, this.importCommands(_commands___WEBPACK_IMPORTED_MODULE_9__)), trackingCommands);
     }
+
     /**
      * @return {*} All the data commands of the components
      */
-
   }, {
     key: "defaultData",
     value: function defaultData() {
       return this.importCommands(_data_commands___WEBPACK_IMPORTED_MODULE_10__);
     }
+
     /**
      * @return {*} All the hooks
      */
-
   }, {
     key: "defaultHooks",
     value: function defaultHooks() {
       return this.importHooks(_hooks___WEBPACK_IMPORTED_MODULE_11__);
     }
+
     /**
      * @return {Object} All the shortcuts of the component.
      */
-
   }, {
     key: "defaultShortcuts",
     value: function defaultShortcuts() {
@@ -1406,10 +1221,10 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
         }
       };
     }
+
     /**
      * @return {Object} All the states of the component.
      */
-
   }, {
     key: "defaultStates",
     value: function defaultStates() {
@@ -1461,17 +1276,13 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
             },
             clearActive: function clearActive(state) {
               var _state$active, _state$active$data;
-
               var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-                  id = _ref4.payload;
-
+                id = _ref4.payload;
               // Allow clearing active only for specific note ID.
               var shouldClear = !id || ((_state$active = state.active) === null || _state$active === void 0 ? void 0 : (_state$active$data = _state$active.data) === null || _state$active$data === void 0 ? void 0 : _state$active$data.noteId) === id;
-
               if (!shouldClear) {
                 return state;
               }
-
               return _objectSpread(_objectSpread({}, state), {}, {
                 active: null,
                 formsInWritingMode: []
@@ -1495,72 +1306,69 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
         }
       };
     }
+
     /**
      * When open the component this method will be triggered.
      *
      * @return {boolean} Should disable the opening or not.
      */
-
   }, {
     key: "open",
     value: function open() {
       if (this.isOpen) {
         return false;
       }
-
       if (this.isInEditor()) {
         this.updateEditorState(this.constructor.NOTES_MODE_OPEN);
-      } // Send event to the iframe to open the notes mode.
+      }
 
-
+      // Send event to the iframe to open the notes mode.
       this.getPreviewFrame().postMessage({
         name: 'elementor-pro/notes/open'
       }, '*');
       return true;
     }
+
     /**
      * When close the component this method will be triggered.
      *
      * @return {boolean} Should disable the closing or not.
      */
-
   }, {
     key: "close",
     value: function close() {
       if (!(0,_babel_runtime_helpers_get__WEBPACK_IMPORTED_MODULE_4__["default"])((0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(EComponent.prototype), "close", this).call(this)) {
         return false;
       }
-
       if (this.isInEditor()) {
         this.updateEditorState(this.constructor.NOTES_MODE_CLOSE);
-      } // Send event to the iframe to close the notes mode.
+      }
 
-
+      // Send event to the iframe to close the notes mode.
       this.getPreviewFrame().postMessage({
         name: 'elementor-pro/notes/close'
       }, '*');
       return true;
     }
+
     /**
      * @return {boolean} Is the current view is the editor
      */
-
   }, {
     key: "isInEditor",
     value: function isInEditor() {
       return !!window.elementor;
     }
+
     /**
      * Update the editor edit mode base on mode ('open' or 'close').
      *
      * @param {string} mode
      */
-
   }, {
     key: "updateEditorState",
     value: function updateEditorState(mode) {
       var _this2 = this;
-
       switch (mode) {
         case this.constructor.NOTES_MODE_OPEN:
           elementor.getPanelView().modeSwitcher.currentView.setMode('preview');
@@ -1568,25 +1376,22 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
             if (!_this2.isOpen) {
               return;
             }
-
             window.top.$e.run('notes/close');
           });
           break;
-
         case this.constructor.NOTES_MODE_CLOSE:
           elementor.getPanelView().modeSwitcher.currentView.setMode('editor');
           break;
-
         default:
           throw new Error("mode '".concat(mode, "' is not supported."));
       }
     }
+
     /**
      * Get the Preview frame, in edit mode it is the iframe and on the frontend it is the current window.
      *
      * @return {Window} The preview frame.
      */
-
   }, {
     key: "getPreviewFrame",
     value: function getPreviewFrame() {
@@ -1596,16 +1401,15 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
     key: "contextMenuNotesGroup",
     value: function contextMenuNotesGroup() {
       var _this3 = this;
-
       if (!this.isInEditor()) {
         return;
       }
-
       var elTypes = ['widget', 'section', 'column', 'container'];
       elTypes.forEach(function (type) {
         elementor.hooks.addFilter("elements/".concat(type, "/contextMenuGroups"), _this3.contextMenuAddGroup);
       });
     }
+
     /**
      * Enable the 'Notes' context menu item
      *
@@ -1614,58 +1418,50 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
      * @param {Array} groups
      * @return {Array} The updated groups.
      */
-
   }, {
     key: "contextMenuAddGroup",
     value: function contextMenuAddGroup(groups) {
       var notesGroup = _.findWhere(groups, {
-        name: 'notes'
-      }),
-          notesGroupIndex = groups.indexOf(notesGroup),
-          notesActionItem = {
-        name: 'open_notes',
-        title: __('Notes', 'elementor-pro'),
-        shortcut: '⇧+C',
-        isEnabled: function isEnabled() {
-          return true;
-        },
-        callback: function callback() {
-          return $e.route('notes');
-        }
-      }; // Create the Notes group if it doesn't exist
+          name: 'notes'
+        }),
+        notesGroupIndex = groups.indexOf(notesGroup),
+        notesActionItem = {
+          name: 'open_notes',
+          title: __('Notes', 'elementor-pro'),
+          shortcut: '⇧+C',
+          isEnabled: function isEnabled() {
+            return true;
+          },
+          callback: function callback() {
+            return $e.route('notes');
+          }
+        };
 
-
+      // Create the Notes group if it doesn't exist
       if (-1 === notesGroupIndex) {
         var deleteGroup = _.findWhere(groups, {
-          name: 'delete'
-        }),
-            deleteGroupIndex = groups.indexOf(deleteGroup),
-            newGroupPosition = -1 !== deleteGroupIndex ? deleteGroupIndex : groups.length;
-
+            name: 'delete'
+          }),
+          deleteGroupIndex = groups.indexOf(deleteGroup),
+          newGroupPosition = -1 !== deleteGroupIndex ? deleteGroupIndex : groups.length;
         groups.splice(newGroupPosition, 0, {
           name: 'notes',
           actions: [notesActionItem]
         });
         return groups;
       }
-
       var openNotesAction = _.findWhere(notesGroup.actions, {
-        name: 'open_notes'
-      }),
-          openNotesActionIndex = notesGroup.actions.indexOf(openNotesAction);
-
+          name: 'open_notes'
+        }),
+        openNotesActionIndex = notesGroup.actions.indexOf(openNotesAction);
       groups[notesGroupIndex].actions[openNotesActionIndex] = notesActionItem;
       return groups;
     }
   }]);
-
   return EComponent;
 }($e.modules.ComponentBase);
-
 (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(EComponent, "NOTES_MODE_OPEN", 'open');
-
 (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(EComponent, "NOTES_MODE_CLOSE", 'close');
-
 
 
 /***/ }),
@@ -1709,22 +1505,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 var NotesAddPanelMenuItem = /*#__PURE__*/function (_$e$modules$hookUI$Af) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(NotesAddPanelMenuItem, _$e$modules$hookUI$Af);
-
   var _super = _createSuper(NotesAddPanelMenuItem);
-
   function NotesAddPanelMenuItem() {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, NotesAddPanelMenuItem);
-
     return _super.apply(this, arguments);
   }
-
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(NotesAddPanelMenuItem, [{
     key: "getCommand",
     value: function getCommand() {
@@ -1748,7 +1537,6 @@ var NotesAddPanelMenuItem = /*#__PURE__*/function (_$e$modules$hookUI$Af) {
       }, 'navigate_from_page', 'finder');
     }
   }]);
-
   return NotesAddPanelMenuItem;
 }($e.modules.hookUI.After);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotesAddPanelMenuItem);
@@ -1775,20 +1563,18 @@ __webpack_require__.r(__webpack_exports__);
  */
 function canCopyToClipboard() {
   var _navigator;
-
   return !!((_navigator = navigator) !== null && _navigator !== void 0 && _navigator.clipboard);
 }
+
 /**
  * Will copy value to the clipboard
  *
  * @param {string} value
  */
-
 function copyToClipboard(value) {
   if (!canCopyToClipboard()) {
     throw new Error('Cannot copy to clipboard, please make sure you are using SSL in your website.');
   }
-
   navigator.clipboard.writeText(value);
 }
 
@@ -4029,7 +3815,7 @@ function pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, merg
 
   function handleSubsequentCalls(nextState, nextOwnProps) {
     var propsChanged = !areOwnPropsEqual(nextOwnProps, ownProps);
-    var stateChanged = !areStatesEqual(nextState, state);
+    var stateChanged = !areStatesEqual(nextState, state, nextOwnProps, ownProps);
     state = nextState;
     ownProps = nextOwnProps;
     if (propsChanged && stateChanged) return handleNewPropsAndNewState();
@@ -5279,11 +5065,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
     arr2[i] = arr[i];
   }
-
   return arr2;
 }
 
@@ -5340,7 +5124,6 @@ function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
-
   return self;
 }
 
@@ -5385,7 +5168,6 @@ function _defineProperties(target, props) {
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
-
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
@@ -5419,7 +5201,6 @@ function _defineProperty(obj, key, value) {
   } else {
     obj[key] = value;
   }
-
   return obj;
 }
 
@@ -5440,14 +5221,12 @@ function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
-
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
       }
     }
-
     return target;
   };
   return _extends.apply(this, arguments);
@@ -5476,15 +5255,12 @@ function _get() {
       var base = (0,_superPropBase_js__WEBPACK_IMPORTED_MODULE_0__["default"])(target, property);
       if (!base) return;
       var desc = Object.getOwnPropertyDescriptor(base, property);
-
       if (desc.get) {
         return desc.get.call(arguments.length < 3 ? target : receiver);
       }
-
       return desc.value;
     };
   }
-
   return _get.apply(this, arguments);
 }
 
@@ -5527,7 +5303,6 @@ function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
   }
-
   subClass.prototype = Object.create(superClass && superClass.prototype, {
     constructor: {
       value: subClass,
@@ -5573,18 +5348,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _iterableToArrayLimit(arr, i) {
   var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
   if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-
   var _s, _e;
-
   try {
     for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
-
       if (i && _arr.length === i) break;
     }
   } catch (err) {
@@ -5597,7 +5368,6 @@ function _iterableToArrayLimit(arr, i) {
       if (_d) throw _e;
     }
   }
-
   return _arr;
 }
 
@@ -5653,13 +5423,11 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   var target = {};
   var sourceKeys = Object.keys(source);
   var key, i;
-
   for (i = 0; i < sourceKeys.length; i++) {
     key = sourceKeys[i];
     if (excluded.indexOf(key) >= 0) continue;
     target[key] = source[key];
   }
-
   return target;
 }
 
@@ -5686,7 +5454,6 @@ function _possibleConstructorReturn(self, call) {
   } else if (call !== void 0) {
     throw new TypeError("Derived constructors may only return object or undefined");
   }
-
   return (0,_assertThisInitialized_js__WEBPACK_IMPORTED_MODULE_1__["default"])(self);
 }
 
@@ -5756,7 +5523,6 @@ function _superPropBase(object, property) {
     object = (0,_getPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(object);
     if (object === null) break;
   }
-
   return object;
 }
 

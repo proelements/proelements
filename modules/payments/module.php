@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\Payments;
 
 use Elementor\Settings;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Payments\Classes\Stripe_Handler;
 
@@ -82,17 +83,20 @@ class Module extends Module_Base {
 	 */
 	public function ajax_validate_secret_key() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$nonce_action = ( ! strpos( $_POST['action'], 'test' ) ? self::STRIPE_LIVE_SECRET_KEY : self::STRIPE_TEST_SECRET_KEY );
+		$action = Utils::_unstable_get_super_global_value( $_POST, 'action' );
+		$nonce_action = ( ! strpos( $action, 'test' ) ? self::STRIPE_LIVE_SECRET_KEY : self::STRIPE_TEST_SECRET_KEY );
 
-		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( $_POST['_nonce'], $nonce_action ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$nonce = Utils::_unstable_get_super_global_value( $_POST, '_nonce' );
+		if ( ! $nonce || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
 			$this->error_handler( 403, esc_html__( 'Something went wrong, please refresh the page.', 'elementor-pro' ) );
 			die();
 		}
 
-		if ( empty( $_POST['secret_key'] ) ) {
+		if ( ! Utils::_unstable_get_super_global_value( $_POST, 'secret_key' ) ) {
 			wp_send_json_error();
 		} else {
-			$this->secret_key = $_POST['secret_key'];
+			$this->secret_key = Utils::_unstable_get_super_global_value( $_POST, 'secret_key' );
 		}
 
 		$stripe_handler = new Stripe_handler();
@@ -272,16 +276,18 @@ class Module extends Module_Base {
 	 * @since 3.7.0
 	 */
 	public function submit_stripe_form() {
-		if ( ! isset( $_POST['data']['nonce'] ) || ! wp_verify_nonce( $_POST['data']['nonce'], 'stripe_form_submit' ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$data = Utils::_unstable_get_super_global_value( $_POST, 'data' );
+		if ( ! isset( $data['nonce'] ) || ! wp_verify_nonce( $data['nonce'], 'stripe_form_submit' ) ) {
 			$this->error_handler( 403, esc_html__( 'Something went wrong, please refresh the page.', 'elementor-pro' ) );
 			die();
 		}
 		$args = [];
-		$widget_id = $_POST['data']['widgetId'] ? $_POST['data']['widgetId'] : null;
-		$args['page_url'] = $_POST['data']['pageUrl'] ? $_POST['data']['pageUrl'] : null;
+		$widget_id = $data['widgetId'] ?? null;
+		$args['page_url'] = $data['pageUrl'] ?? null;
 
-		Plugin::elementor()->db->switch_to_post( $_POST['data']['postId'] );
-		$document = Plugin::elementor()->documents->get( $_POST['data']['postId'] );
+		Plugin::elementor()->db->switch_to_post( $data['postId'] );
+		$document = Plugin::elementor()->documents->get( $data['postId'] );
 
 		// Retrieve data from widget document
 		if ( $document ) {
@@ -426,7 +432,7 @@ class Module extends Module_Base {
 						'type' => 'raw_html',
 						'html' => sprintf(
 							/* translators: %s: <br />. */
-							esc_html__( ' Please note: The Stripe name and logos are trademarks or service marks of Stripe, Inc. or its affiliates in the U.S. and other countries. %s Other names may be trademarks of their respective owners.', 'elementor-pro' ),
+							esc_html__( 'Please note: The Stripe name and logos are trademarks or service marks of Stripe, Inc. or its affiliates in the U.S. and other countries. %s Other names may be trademarks of their respective owners.', 'elementor-pro' ),
 							'<br />'
 						),
 					],

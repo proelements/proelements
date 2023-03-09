@@ -348,6 +348,8 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_date' => esc_html__( 'Date', 'elementor-pro' ),
 				'post_title' => esc_html__( 'Title', 'elementor-pro' ),
 				'menu_order' => esc_html__( 'Menu Order', 'elementor-pro' ),
+				'modified' => esc_html__( 'Last Modified', 'elementor-pro' ),
+				'comment_count' => esc_html__( 'Comment Count', 'elementor-pro' ),
 				'rand' => esc_html__( 'Random', 'elementor-pro' ),
 			],
 			'condition' => [

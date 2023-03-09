@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\AssetsManager\AssetTypes\Fonts;
 
+use ElementorPro\Core\Utils;
 use ElementorPro\Modules\AssetsManager\Classes\Font_Base;
 use Elementor\Settings;
 
@@ -131,11 +132,11 @@ class Typekit_Fonts extends Font_Base {
 		$typekit_fonts = $this->get_kit_fonts();
 
 		if ( ! $typekit_fonts || ! is_array( $typekit_fonts ) ) {
-			throw new \Exception( esc_html__( 'Error with TypeKit fonts', 'elementor-pro' ) );
+			throw new \Exception( 'Error with TypeKit fonts.' );
 		}
 
 		if ( ! in_array( $font_family, array_keys( $typekit_fonts ) ) ) {
-			throw new \Exception( esc_html__( 'Font missing in Project', 'elementor-pro' ) );
+			throw new \Exception( 'Font missing in Project.' );
 		}
 
 		$kit_id = $this->get_typekit_kit_id();
@@ -225,12 +226,15 @@ class Typekit_Fonts extends Font_Base {
 
 	public function integrations_admin_ajax_handler() {
 		check_ajax_referer( self::TYPEKIT_KIT_ID_OPTION_NAME, '_nonce' );
-		if ( ! isset( $_POST['kit_id'] ) ) {
+
+		$kit_id = Utils::_unstable_get_super_global_value( $_POST, 'kit_id' );
+
+		if ( ! $kit_id ) {
 			wp_send_json_error();
 		}
 		$fonts = [];
 		try {
-			update_option( 'elementor_' . self::TYPEKIT_KIT_ID_OPTION_NAME, sanitize_text_field( $_POST['kit_id'] ) );
+			update_option( 'elementor_' . self::TYPEKIT_KIT_ID_OPTION_NAME, sanitize_text_field( $kit_id ) );
 			$fonts = $this->fetch_typekit_data();
 		} catch ( \Exception $exception ) {
 			wp_send_json_error();

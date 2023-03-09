@@ -3,18 +3,18 @@ namespace ElementorPro\Modules\LoopBuilder\Documents;
 
 use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
-use ElementorPro\Base\MarkerInterfaces\Template_With_Post_Content_interface;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop as Loop_CSS;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Preview;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Loop extends Theme_Document implements Template_With_Post_Content_interface {
+class Loop extends Theme_Document {
 
 	const DOCUMENT_TYPE = 'loop-item';
 
@@ -24,6 +24,12 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 		'theme-post-featured-image',
 		'theme-post-content',
 		'post-info',
+	];
+
+	const WIDGETS_TO_HIDE = [
+		'loop-grid',
+		'woocommerce-product-data-tabs',
+		'loop-carousel',
 	];
 
 	public static function get_type() {
@@ -48,8 +54,12 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 			'content' => esc_html__( 'A Loop is a layout you can customize to display recurring dynamic content - like listings, posts, portfolios, products, , etc.', 'elementor-pro' ),
 			'tip' => esc_html__( 'Start by creating a master item. All the other instances in the grid will match this design. Then go back to the widget in the editor panel and assign both a template and a source of content. Your grid should populate automatically.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-loop',
-			'video_url' => '',
+			'video_url' => 'https://www.youtube.com/embed/zMvY9XaE1YY',
 		];
+	}
+
+	protected static function get_site_editor_thumbnail_url() {
+		return ELEMENTOR_PRO_MODULES_URL . 'loop-builder/assets/images/loop-item.svg';
 	}
 
 	public static function get_properties() {
@@ -80,7 +90,9 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 	public function get_initial_config() {
 		$config = parent::get_initial_config();
 
-		if ( 'post' === $this->get_source_type_from_post_meta() ) {
+		$loop_builder_module = new LoopBuilderModule();
+
+		if ( 'post' === $loop_builder_module->get_source_type_from_post_meta( $this->get_main_id() ) ) {
 			foreach ( static::RECOMMENDED_POSTS_WIDGET_NAMES as $recommended_posts_widget_name ) {
 				$config['panel']['widgets_settings'][ $recommended_posts_widget_name ] = [
 					'categories' => [ 'recommended' ],
@@ -93,9 +105,13 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 			'categories' => [ 'layout' ],
 		];
 
-		$config['panel']['widgets_settings']['loop-grid'] = [
-			'show_in_panel' => false,
-		];
+		foreach ( static::WIDGETS_TO_HIDE as $widget_to_hide ) {
+			$config['panel']['widgets_settings'][ $widget_to_hide ] = [
+				'show_in_panel' => false,
+			];
+		}
+
+		$config['container_attributes'] = $this->get_container_attributes();
 
 		return $config;
 	}
@@ -225,7 +241,7 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 	 * @since 3.8.0
 	 */
 	public function get_content( $with_css = false ) {
-		$edit_mode = Plugin::elementor()->editor->is_edit_mode( $this->post->ID );
+		$edit_mode = Plugin::elementor()->editor->is_edit_mode();
 
 		add_filter( 'elementor/frontend/builder_content/before_print_css', [ $this, 'prevent_inline_css_printing' ] );
 
@@ -269,7 +285,7 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 		<div
 			data-elementor-type="<?php echo esc_attr( static::get_type() ); ?>"
 			data-elementor-id="<?php echo esc_attr( $post_id ); ?>"
-			class="elementor elementor-<?php echo esc_attr( $post_id ); ?> elementor-edit-area elementor-edit-mode elementor-edit-area-active"
+			class="elementor elementor-<?php echo esc_attr( $post_id ); ?> elementor-edit-area elementor-edit-mode elementor-edit-area-active e-loop-first-edit"
 			data-elementor-title="<?php echo esc_attr( ucfirst( static::get_type() ) ); ?>"
 		>
 			<div class="elementor-section-wrap ui-sortable"></div>
@@ -289,7 +305,8 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 			]
 		);
 
-		$source_type = $this->get_source_type_from_post_meta();
+		$loop_builder_module = new LoopBuilderModule();
+		$source_type = $loop_builder_module->get_source_type_from_post_meta( $this->get_main_id() );
 
 		$this->add_control(
 			'source',
@@ -304,7 +321,7 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 			]
 		);
 
-		do_action( 'elementor/modules/loop-builder/documents/loop/query_settings', $this );
+		do_action( 'elementor-pro/modules/loop-builder/documents/loop/query_settings', $this );
 
 		$this->add_control(
 			'apply_query_source',
@@ -366,7 +383,8 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 	 * @return void
 	 */
 	protected function update_preview_control() {
-		$source_type = $this->get_source_type_from_post_meta();
+		$loop_builder_module = new LoopBuilderModule();
+		$source_type = $loop_builder_module->get_source_type_from_post_meta( $this->get_main_id() );
 
 		$this->update_control(
 			'preview_type',
@@ -400,10 +418,5 @@ class Loop extends Theme_Document implements Template_With_Post_Content_interfac
 		$category_keys = array_keys( $existing_categories );
 		$index = array_search( 'favorites', $category_keys, true );
 		return array_splice( $existing_categories, 0, $index + 1 ) + $new_categories + array_splice( $existing_categories, $index + 1 );
-	}
-
-	private function get_source_type_from_post_meta() {
-		$source_type = get_post_meta( $this->get_main_id(), '_elementor_source', true );
-		return empty( $source_type ) ? 'post' : $source_type;
 	}
 }

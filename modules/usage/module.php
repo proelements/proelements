@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Usage;
 
 use Elementor\Core\Base\Module as BaseModule;
+use Elementor\Modules\System_Info\Module as System_Info;
 use ElementorPro\Modules\AssetsManager\AssetTypes\Fonts\Custom_Fonts;
 use ElementorPro\Modules\AssetsManager\AssetTypes\Icons\Custom_Icons;
 use ElementorPro\Plugin;
@@ -158,6 +159,18 @@ class Module extends BaseModule {
 		return $params;
 	}
 
+	public function register_system_info_reporters() {
+		System_Info::add_report( 'features', [
+			'file_name' => __DIR__ . '/features-reporter.php',
+			'class_name' => __NAMESPACE__ . '\Features_Reporter',
+		] );
+
+		System_Info::add_report( 'integrations', [
+			'file_name' => __DIR__ . '/integrations-reporter.php',
+			'class_name' => __NAMESPACE__ . '\Integrations_Reporter',
+		] );
+	}
+
 	/**
 	 * Usage module constructor.
 	 *
@@ -167,5 +180,7 @@ class Module extends BaseModule {
 	 */
 	public function __construct() {
 		add_filter( 'elementor/tracker/send_tracking_data_params', [ $this, 'add_tracking_data' ] );
+
+		add_action( 'admin_init', [ $this, 'register_system_info_reporters' ], 60 );
 	}
 }
