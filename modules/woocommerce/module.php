@@ -733,7 +733,29 @@ class Module extends Module_Base {
 	 * @param array $data
 	 */
 	public function update_page_option( $data ) {
-		update_option( $data['option_name'], $data['editor_post_id'] );
+		$is_admin = current_user_can( 'manage_options' );
+		$is_shop_manager = current_user_can( 'manage_woocommerce' );
+		$is_allowed = $is_admin || $is_shop_manager;
+
+		if ( ! $is_allowed ) {
+			return new \WP_Error( 401 );
+		}
+
+		$allowed_options = [
+			'woocommerce_checkout_page_id',
+			'woocommerce_cart_page_id',
+			'woocommerce_myaccount_page_id',
+			'elementor_woocommerce_purchase_summary_page_id',
+		];
+
+		$option_name = $data['option_name'];
+		$post_id = absint( $data['editor_post_id'] );
+
+		if ( ! in_array( $option_name, $allowed_options, true ) ) {
+			return new \WP_Error( 400 );
+		}
+
+		update_option( $option_name, $post_id );
 	}
 
 	public function init_site_settings( \Elementor\Core\Kits\Documents\Kit $kit ) {
