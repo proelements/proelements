@@ -95,6 +95,7 @@ class Module extends Module_Base {
 			[
 				'label' => esc_html__( 'Scroll Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,

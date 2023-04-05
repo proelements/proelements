@@ -514,7 +514,7 @@ class Settings_Woocommerce extends Tab_Base {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => $selectors[ $prefix . '_notice_box_border_radius' ],
 			]
 		);
@@ -661,7 +661,7 @@ class Settings_Woocommerce extends Tab_Base {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => $selectors[ $prefix . '_buttons_border_width' ],
 				'condition' => [
 					$prefix . '_buttons_border_type!' => 'none',
@@ -686,7 +686,7 @@ class Settings_Woocommerce extends Tab_Base {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => $selectors[ $prefix . '_buttons_border_radius' ],
 			]
 		);
@@ -696,7 +696,7 @@ class Settings_Woocommerce extends Tab_Base {
 			[
 				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => $selectors[ $prefix . '_buttons_padding' ],
 			]
 		);

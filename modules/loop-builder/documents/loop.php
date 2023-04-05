@@ -80,9 +80,13 @@ class Loop extends Theme_Document {
 
 	public function get_container_attributes() {
 		$attributes = Document::get_container_attributes();
+		$post_id = get_the_ID();
 
-		$attributes['class'] .= ' e-loop-item-' . get_the_ID();
 		$attributes['class'] .= ' e-loop-item';
+		$attributes['class'] .= ' e-loop-item-' . $post_id;
+		$attributes['class'] .= ' ' . esc_attr( implode( ' ', get_post_class( [], $post_id ) ) );
+
+		$attributes['data-custom-edit-handle'] = true;
 
 		return $attributes;
 	}
@@ -149,16 +153,30 @@ class Loop extends Theme_Document {
 		];
 	}
 
+	protected function get_remote_library_config() {
+		$config = parent::get_remote_library_config();
+
+		$config['type'] = self::DOCUMENT_TYPE;
+		$config['default_route'] = 'templates/loop-items';
+
+		return $config;
+	}
+
 	/**
 	 * Get Edit Url
 	 *
-	 * Temporarily disable the Library modal until we officially offer the new Loop blocks category.
+	 * Disable the Library modal for non-container (section) users.
 	 *
 	 * @return string
 	 */
 	public function get_edit_url() {
 		$url = parent::get_edit_url();
-		return str_replace( '#library', '', $url );
+
+		if ( ! Plugin::elementor()->experiments->is_feature_active( 'container' ) ) {
+			$url = str_replace( '#library', '', $url );
+		}
+
+		return $url;
 	}
 
 	protected static function get_editor_panel_categories() {
@@ -184,6 +202,8 @@ class Loop extends Theme_Document {
 		$this->inject_width_control();
 
 		$this->add_query_section();
+
+		Plugin::elementor()->controls_manager->add_custom_css_controls( $this );
 
 	}
 
@@ -230,7 +250,7 @@ class Loop extends Theme_Document {
 			$css_file = Loop_CSS::create( $this->post->ID );
 		}
 
-		$css_file->print_css();
+		$css_file->print_all_css( $this->post->ID );
 	}
 
 	/**
@@ -363,13 +383,13 @@ class Loop extends Theme_Document {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 200,
 						'max' => 1140,
 					],
 				],
-				'size_units' => [ 'px', '%' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--preview-width: {{SIZE}}{{UNIT}};',
 				],

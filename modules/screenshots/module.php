@@ -203,17 +203,29 @@ class Module extends Module_Base {
 	 * @return bool
 	 * @throws \Requests_Exception_HTTP_400
 	 * @throws \Requests_Exception_HTTP_403
+	 * @throws Status400
+	 * @throws Status403
 	 */
 	protected function is_screenshot_proxy_mode( array $query_params ) {
 		$is_proxy = isset( $query_params['screenshot_proxy'] );
 
 		if ( $is_proxy ) {
 			if ( ! wp_verify_nonce( $query_params['nonce'], self::SCREENSHOT_PROXY_NONCE_ACTION ) ) {
-				throw new \Requests_Exception_HTTP_403();
+				// WP >= 6.2-alpha
+				if ( class_exists( '\WpOrg\Requests\Exception\Http\Status403' ) ) {
+					throw new \WpOrg\Requests\Exception\Http\Status403();
+				} else {
+					throw new \Requests_Exception_HTTP_403();
+				}
 			}
 
 			if ( ! $query_params['href'] ) {
-				throw new \Requests_Exception_HTTP_400();
+				// WP >= 6.2-alpha
+				if ( class_exists( '\WpOrg\Requests\Exception\Http\Status400' ) ) {
+					throw new \WpOrg\Requests\Exception\Http\Status400();
+				} else {
+					throw new \Requests_Exception_HTTP_400();
+				}
 			}
 		}
 
@@ -222,9 +234,6 @@ class Module extends Module_Base {
 
 	/**
 	 * Module constructor.
-	 *
-	 * @throws \Requests_Exception_HTTP_400
-	 * @throws \Requests_Exception_HTTP_403
 	 */
 	public function __construct() {
 		parent::__construct();

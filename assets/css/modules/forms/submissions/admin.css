@@ -40,7 +40,7 @@
   border: none;
 }
 .e-form-submissions-main .postbox-header {
-  border: 1px solid #D4D4D4;
+  border: 1px solid #D5D8DC;
   border-bottom: none;
   padding: 8px;
 }
@@ -67,7 +67,7 @@
 }
 #e-form-submissions .e-form-submissions-item-table td:first-child {
   width: 150px;
-  background: #f7f7f7;
+  background: #F9FAFA;
   font-weight: 700;
 }
 @media screen and (max-width: 782px) {
@@ -77,7 +77,7 @@
   }
 }
 #e-form-submissions .e-form-submissions-item-table td {
-  border: 1px solid #D4D4D4;
+  border: 1px solid #D5D8DC;
   padding: 15px;
 }
 #e-form-submissions .e-form-submissions-item-table input:not([type=checkbox]):not([type=radio]), #e-form-submissions .e-form-submissions-item-table textarea, #e-form-submissions .e-form-submissions-item-table select {
@@ -137,7 +137,7 @@ input[type=search].select2-search__field {
   border-color: #d9534f;
 }
 .e-form-submissions-action-log:not(:last-child) {
-  border-bottom: 1px solid #D4D4D4;
+  border-bottom: 1px solid #D5D8DC;
 }
 .e-form-submissions-action-log__label {
   display: inline-block;
@@ -149,14 +149,14 @@ input[type=search].select2-search__field {
 }
 .e-form-submissions-action-log__date {
   font-size: 12px;
-  color: #818a91;
+  color: #69727D;
 }
 .e-form-submissions-action-log__message {
   padding: 10px;
   font-size: 12px;
-  color: #373a3c;
-  background: #eceeef;
-  border-left: 4px solid #818a91;
+  color: #1A1C1E;
+  background: #F1F2F3;
+  border-left: 4px solid #69727D;
 }
 
 .e-form-submissions-value-label:not(:last-child) {

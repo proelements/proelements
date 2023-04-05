@@ -27,6 +27,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Skin_Loop_Base extends Skin_Base {
 
+	public $already_added_border = [];
+	private $current_alternate_template_repetaer_id = null;
+
 	public function get_id() {
 		return MODULE::LOOP_BASE_SKIN_ID;
 	}
@@ -84,13 +87,106 @@ class Skin_Loop_Base extends Skin_Base {
 			parent::render();
 
 			$widget->after_skin_render();
-		} else if ( $is_edit_mode ) {
+		} elseif ( $is_edit_mode ) {
 			$this->render_empty_view();
 		}
 
 		if ( $current_document ) {
 			Plugin::elementor()->documents->switch_to_document( $current_document );
 		}
+	}
+
+	/**
+	 * @param $at
+	 * @param $current_item_index
+	 * @param int $template_id
+	 * @return int
+	 */
+	private function get_template_id_for_repeating_template( $at, $current_item_index, int $template_id ): int {
+		if ( $this->is_need_to_show_alternate_template( $at['repeat_template'], $current_item_index ) ) {
+			$template_id = $at['template_id'];
+			$this->current_alternate_template_repetaer_id = $at['_id'];
+		}
+		return $template_id;
+	}
+
+	public function add_alternate_template_border_wrapper_class( $attributes, $document ) {
+		$attributes['class'] .= ' e-loop-alternate-template';
+
+		return $attributes;
+	}
+
+	/**
+	 * @param $attributes
+	 * @param $document
+	 * @return mixed
+	 */
+	public function add_alternate_template_col_span_wrapper_class( $attributes, $document ) {
+
+		$attributes['class'] .= ' elementor-repeater-item-' . $this->current_alternate_template_repetaer_id;
+
+		return $attributes;
+	}
+
+	private function item_has_alternate_template() {
+		return isset( $this->current_alternate_template_repetaer_id );
+	}
+
+	/**
+	 * @param $at
+	 * @param $current_item_index
+	 * @param int $template_id
+	 * @return int
+	 */
+	private function get_template_id_to_show_once( $at, $current_item_index, int $template_id ): int {
+		if ( $at['repeat_template'] === $current_item_index ) {
+			$template_id = $at['template_id'];
+			$this->current_alternate_template_repetaer_id = $at['_id'];
+		}
+		return $template_id;
+	}
+
+	/**
+	 * @param $at
+	 * @param $current_item_index
+	 * @param int $template_id
+	 * @return int
+	 */
+	private function get_template_id( $at, $current_item_index, int $template_id ): int {
+		$at['repeat_template'] = (int) $at['repeat_template'];
+		$at['template_id'] = (int) $at['template_id'];
+
+		if ( $this->is_valid_template_id( $at ) ) {
+			$template_id = $this->is_show_once( $at ) ?
+					$this->get_template_id_to_show_once( $at, $current_item_index, $template_id ) :
+					$this->get_template_id_for_repeating_template( $at, $current_item_index, $template_id );
+		}
+		return $template_id;
+	}
+
+	/**
+	 * @param $repeat_template
+	 * @param $current_item_index
+	 * @return bool
+	 */
+	private function is_need_to_show_alternate_template( $repeat_template, $current_item_index ): bool {
+		return $this->is_multiple_of( $repeat_template, $current_item_index );
+	}
+
+	/**
+	 * @param $at
+	 * @return bool
+	 */
+	private function is_show_once( $at ): bool {
+		return isset( $at['show_once'] ) && 'yes' === $at['show_once'];
+	}
+
+	/**
+	 * @param $at
+	 * @return bool
+	 */
+	private function is_valid_template_id( $at ): bool {
+		return $at['repeat_template'] > 0 && $at['template_id'] > 0;
 	}
 
 	protected function get_loop_header_widget_classes() {
@@ -108,6 +204,28 @@ class Skin_Loop_Base extends Skin_Base {
 		add_action( 'elementor/element/' . $this->parent->get_name() . '/section_query/after_section_start', [ $this, 'register_query_controls' ] );
 	}
 
+	private function add_alternate_template_wrapper_classes( $template_id ) {
+		if ( $this->item_has_alternate_template() ) {
+			add_filter( 'elementor/document/wrapper_attributes', [ $this, 'add_alternate_template_col_span_wrapper_class' ], 10, 2 );
+		}
+
+		if ( $this->should_add_border_around_alternate_template( $template_id ) ) {
+			add_filter( 'elementor/document/wrapper_attributes', [ $this, 'add_alternate_template_border_wrapper_class' ], 10, 2 );
+			$this->already_added_border[] = $template_id;
+		}
+	}
+
+	private function remove_alternate_template_wrapper_classes( $template_id ) {
+		if ( $this->added_border_around_alternate_template( $template_id ) ) {
+			remove_filter( 'elementor/document/wrapper_attributes', [ $this, 'add_alternate_template_border_wrapper_class' ] );
+		}
+
+		if ( $this->item_has_alternate_template() ) {
+			remove_filter( 'elementor/document/wrapper_attributes', [ $this, 'add_alternate_template_col_span_wrapper_class' ] );
+			$this->current_alternate_template_repetaer_id = null;
+		}
+	}
+
 	/**
 	 * Render Post
 	 *
@@ -116,18 +234,71 @@ class Skin_Loop_Base extends Skin_Base {
 	 * @since 3.8.0
 	 */
 	protected function render_post() {
-		$settings = $this->parent->get_settings_for_display();
 		$loop_item_id = get_the_ID();
+		$template_id = $this->get_template_id_for_current_item();
+
+		$this->add_alternate_template_wrapper_classes( $template_id );
 
 		/** @var LoopDocument $document */
-		$document = Plugin::elementor()->documents->get( $settings['template_id'] );
+		$document = Plugin::elementor()->documents->get( $template_id );
 
 		if ( ! $document ) {
 			return;
 		}
 
-		$this->print_dynamic_css( $loop_item_id, $settings['template_id'] );
+		$this->print_dynamic_css( $loop_item_id, $template_id );
 		$document->print_content();
+
+		$this->remove_alternate_template_wrapper_classes( $template_id );
+	}
+
+	private function should_add_border_around_alternate_template( $template_id ) {
+		return $this->item_has_alternate_template()
+			&& ! in_array( $template_id, $this->already_added_border )
+			&& $this->parent->get_settings_for_display( 'template_id' ) !== $template_id
+			&& Plugin::elementor()->editor->is_edit_mode();
+	}
+
+	private function added_border_around_alternate_template( $template_id ) {
+		return in_array( $template_id, $this->already_added_border );
+	}
+
+	protected function get_template_id_for_current_item() {
+		$settings = $this->parent->get_settings_for_display();
+		$template_id = $settings['template_id'];
+
+		if ( empty( $settings['alternate_template'] ) || ! is_array( $settings['alternate_templates'] ) ) {
+			return $template_id;
+		}
+
+		$current_item_index = $this->get_current_item_index();
+
+		foreach ( $settings['alternate_templates'] as $at ) {
+			$template_id = $this->get_template_id( $at, $current_item_index, $template_id );
+		}
+
+		return $template_id;
+	}
+
+	protected function get_current_item_index() {
+		/** @var \WP_Query $query */
+		$query = $this->parent->get_query();
+
+		$current_item = 0;
+
+		if ( isset( $query->current_post ) ) {
+			$current_item += $query->current_post + 1;
+		}
+
+		if ( isset( $query->query['paged'] ) && $query->query['paged'] > 1 && isset( $query->query['posts_per_page'] ) ) {
+			$current_item += $query->query['posts_per_page'] * ( $query->query['paged'] - 1 );
+		}
+
+		return $current_item;
+	}
+
+	private function is_multiple_of( $input, $to_be_checked ) {
+		return 0 === $to_be_checked % $input;
 	}
 
 	protected function print_dynamic_css( $post_id, $post_id_for_data ) {

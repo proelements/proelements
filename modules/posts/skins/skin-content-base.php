@@ -99,6 +99,7 @@ trait Skin_Content_Base {
 			[
 				'label' => esc_html__( 'Image Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'%' => [
 						'min' => 10,
@@ -121,7 +122,6 @@ trait Skin_Content_Base {
 					'size' => 100,
 					'unit' => '%',
 				],
-				'size_units' => [ '%', 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post__thumbnail__link' => 'width: {{SIZE}}{{UNIT}};',
 				],
@@ -145,6 +145,7 @@ trait Skin_Content_Base {
 			[
 				'label' => esc_html__( 'Rows Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'size' => 35,
 				],

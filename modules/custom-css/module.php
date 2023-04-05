@@ -118,7 +118,6 @@ class Module extends Module_Base {
 				'label' => esc_html__( 'Custom CSS', 'elementor-pro' ),
 				'language' => 'css',
 				'render_type' => 'ui',
-				'show_label' => false,
 				'separator' => 'none',
 			]
 		);

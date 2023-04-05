@@ -1,4 +1,4 @@
-/*! pro-elements - v3.11.3 - 26-02-2023 */
+/*! pro-elements - v3.12.1 - 02-04-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -353,7 +353,7 @@ exports["default"] = void 0;
 class _default extends elementorModules.Module {
   constructor() {
     super();
-    elementorFrontend.elementsHandler.attachHandler('mega-menu', () => __webpack_require__.e(/*! import() | mega-menu */ "mega-menu").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/mega-menu */ "../modules/mega-menu/assets/js/frontend/handlers/mega-menu.js")));
+    elementorFrontend.elementsHandler.attachHandler('mega-menu', [() => __webpack_require__.e(/*! import() | mega-menu */ "mega-menu").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/mega-menu */ "../modules/mega-menu/assets/js/frontend/handlers/mega-menu.js")), () => __webpack_require__.e(/*! import() | mega-menu-stretch-content */ "mega-menu-stretch-content").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/stretch-menu-item-content */ "../modules/mega-menu/assets/js/frontend/handlers/stretch-menu-item-content.js"))]);
   }
 }
 exports["default"] = _default;

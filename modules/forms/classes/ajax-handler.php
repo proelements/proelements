@@ -36,11 +36,11 @@ class Ajax_Handler {
 
 	public static function get_default_messages() {
 		return [
-			self::SUCCESS => esc_html__( 'The form was sent successfully.', 'elementor-pro' ),
-			self::ERROR => esc_html__( 'An error occurred.', 'elementor-pro' ),
+			self::SUCCESS => esc_html__( 'Your submission was successful.', 'elementor-pro' ),
+			self::ERROR => esc_html__( 'Your submission failed because of an error.', 'elementor-pro' ),
 			self::FIELD_REQUIRED => esc_html__( 'This field is required.', 'elementor-pro' ),
-			self::INVALID_FORM => esc_html__( 'There\'s something wrong. The form is invalid.', 'elementor-pro' ),
-			self::SERVER_ERROR => esc_html__( 'Server error. Form not sent.', 'elementor-pro' ),
+			self::INVALID_FORM => esc_html__( 'Your submission failed because the form is invalid.', 'elementor-pro' ),
+			self::SERVER_ERROR => esc_html__( 'Your submission failed because of a server error.', 'elementor-pro' ),
 			self::SUBSCRIBER_ALREADY_EXISTS => esc_html__( 'Subscriber already exists.', 'elementor-pro' ),
 		];
 	}
@@ -55,7 +55,7 @@ class Ajax_Handler {
 
 		$default_messages = self::get_default_messages();
 
-		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : esc_html__( 'Unknown', 'elementor-pro' );
+		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : esc_html__( 'Unknown error.', 'elementor-pro' );
 	}
 
 	public function ajax_send_form() {
@@ -271,7 +271,7 @@ class Ajax_Handler {
 
 		$error_msg = implode( '<br>', $this->messages['error'] );
 		if ( current_user_can( 'edit_post', $post_id ) && ! empty( $this->messages['admin_error'] ) ) {
-			$this->add_admin_error_message( esc_html__( 'This Message is not visible for site visitors.', 'elementor-pro' ) );
+			$this->add_admin_error_message( esc_html__( 'This message is not visible to site visitors.', 'elementor-pro' ) );
 			$error_msg .= '<div class="elementor-forms-admin-errors">' . implode( '<br>', $this->messages['admin_error'] ) . '</div>';
 		}
 

@@ -1,31 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#F1F3F5;}
-	.st1{fill:none;stroke:#A4AFB7;stroke-width:1.6421;stroke-linecap:round;stroke-linejoin:round;}
-	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#A4AFB7;}
-	.st3{fill:none;stroke:#71D7F7;stroke-width:1.6421;stroke-linecap:round;stroke-linejoin:round;}
-</style>
-<g id="On-Page-Exit-Intent-Copy">
-	<g id="Group-2" transform="translate(5.000000, 7.000000)">
-		<polygon id="Rectangle-Copy-7" class="st0" points="36.5,6.9 36.5,33 10.2,33 		"/>
-		<path id="Stroke-14" class="st1" d="M37.2,30.7c0,1.8-1.4,3.2-3.2,3.2H4c-1.7,0-3.2-1.4-3.2-3.2V3.3c0-1.8,1.4-3.2,3.2-3.2h30
-			c1.7,0,3.2,1.4,3.2,3.2V30.7L37.2,30.7z"/>
-		<path id="Stroke-16" class="st1" d="M0.8,6.6h36.3"/>
-		<path id="Fill-18" class="st2" d="M4.8,3.3c0,0.4-0.4,0.8-0.8,0.8S3.2,3.8,3.2,3.3S3.6,2.5,4,2.5S4.8,2.9,4.8,3.3"/>
-		<path id="Fill-20" class="st2" d="M7.9,3.3c0,0.4-0.4,0.8-0.8,0.8S6.4,3.8,6.4,3.3s0.4-0.8,0.8-0.8S7.9,2.9,7.9,3.3"/>
-		<path id="Fill-22" class="st2" d="M11.1,3.3c0,0.4-0.4,0.8-0.8,0.8c-0.4,0-0.8-0.4-0.8-0.8s0.4-0.8,0.8-0.8
-			C10.8,2.5,11.1,2.9,11.1,3.3"/>
-		<g id="Group" transform="translate(3.000000, 9.000000)">
-			<path id="Stroke-9-Copy-2" class="st3" d="M1.1,3.1l2.7-2.7"/>
-			<path id="Stroke-9-Copy" class="st3" d="M1.1,0.5l2.7,2.7"/>
-		</g>
-		<g id="Group-79" transform="translate(11.000000, 16.000000)">
-			<path id="Stroke-822" class="st1" d="M12.7,12.8L0.1,0.2"/>
-			<polyline id="Stroke-823" class="st1" points="6.4,0.2 0.1,0.2 0.1,6.5 			"/>
-		</g>
-	</g>
-</g>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M42.1576 37.6651C42.1576 39.4415 40.7444 40.8804 38.9997 40.8804H8.99969C7.25495 40.8804 5.8418 39.4415 5.8418 37.6651V10.3349C5.8418 8.55847 7.25495 7.11961 8.99969 7.11961H38.9997C40.7444 7.11961 42.1576 8.55847 42.1576 10.3349V37.6651V37.6651Z" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.8418 13.5502H42.1576" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M9.78988 10.3349C9.78988 10.7786 9.4362 11.1388 9.00041 11.1388C8.56462 11.1388 8.21094 10.7786 8.21094 10.3349C8.21094 9.89121 8.56462 9.5311 9.00041 9.5311C9.4362 9.5311 9.78988 9.89121 9.78988 10.3349" fill="#9DA5AE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.9461 10.3349C12.9461 10.7786 12.5925 11.1388 12.1567 11.1388C11.7209 11.1388 11.3672 10.7786 11.3672 10.3349C11.3672 9.89121 11.7209 9.5311 12.1567 9.5311C12.5925 9.5311 12.9461 9.89121 12.9461 10.3349" fill="#9DA5AE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.1043 10.3349C16.1043 10.7786 15.7507 11.1388 15.3149 11.1388C14.8791 11.1388 14.5254 10.7786 14.5254 10.3349C14.5254 9.89121 14.8791 9.5311 15.3149 9.5311C15.7507 9.5311 16.1043 9.89121 16.1043 10.3349" fill="#9DA5AE"/>
+<path d="M9.09503 19.1377L11.7746 16.4582" stroke="#E879F9" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.09442 16.4582L11.774 19.1377" stroke="#E879F9" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M28.7363 35.7895L16.1047 23.1579" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.4219 23.1579H16.1061V29.4737" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

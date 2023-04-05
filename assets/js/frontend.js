@@ -1,4 +1,4 @@
-/*! pro-elements - v3.11.3 - 26-02-2023 */
+/*! pro-elements - v3.12.1 - 02-04-2023 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/frontend.js":
@@ -19,6 +19,7 @@ var _frontend4 = _interopRequireDefault(__webpack_require__(/*! ../../../../modu
 var _frontend5 = _interopRequireDefault(__webpack_require__(/*! ../../../../modules/payments/assets/js/frontend/frontend */ "../modules/payments/assets/js/frontend/frontend.js"));
 var _frontend6 = _interopRequireDefault(__webpack_require__(/*! ../../../../modules/progress-tracker/assets/js/frontend/frontend */ "../modules/progress-tracker/assets/js/frontend/frontend.js"));
 var _controls = _interopRequireDefault(__webpack_require__(/*! ./utils/controls */ "../assets/dev/js/frontend/utils/controls.js"));
+var _dropdownMenuHeightController = _interopRequireDefault(__webpack_require__(/*! ./utils/dropdown-menu-height-controller */ "../assets/dev/js/frontend/utils/dropdown-menu-height-controller.js"));
 class ElementorProFrontend extends elementorModules.ViewModule {
   onInit() {
     super.onInit();
@@ -63,7 +64,8 @@ class ElementorProFrontend extends elementorModules.ViewModule {
   }
   initOnReadyComponents() {
     this.utils = {
-      controls: new _controls.default()
+      controls: new _controls.default(),
+      DropdownMenuHeightController: _dropdownMenuHeightController.default
     };
   }
 }
@@ -159,6 +161,45 @@ class Controls {
   }
 }
 exports["default"] = Controls;
+
+/***/ }),
+
+/***/ "../assets/dev/js/frontend/utils/dropdown-menu-height-controller.js":
+/*!**************************************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/dropdown-menu-height-controller.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class DropdownMenuHeightController {
+  constructor(widgetConfig) {
+    this.widgetConfig = widgetConfig;
+  }
+  calculateStickyMenuNavHeight() {
+    const menuToggleHeight = this.widgetConfig.elements.$dropdownMenuContainer.offset().top - jQuery(window).scrollTop();
+    return elementorFrontend.elements.$window.height() - menuToggleHeight;
+  }
+  isElementSticky() {
+    return this.widgetConfig.elements.$element.hasClass('elementor-sticky') || this.widgetConfig.elements.$element.parents('.elementor-sticky').length;
+  }
+  getMenuHeight() {
+    return this.isElementSticky() ? this.calculateStickyMenuNavHeight() + 'px' : this.widgetConfig.settings.dropdownMenuContainerMaxHeight;
+  }
+  setMenuHeight(menuHeight) {
+    this.widgetConfig.elements.$dropdownMenuContainer.css(this.widgetConfig.settings.menuHeightCssVarName, menuHeight);
+  }
+  reassignMobileMenuHeight() {
+    const menuHeight = this.widgetConfig.elements.$menuToggle.hasClass(this.widgetConfig.classes.menuToggleActiveClass) ? this.getMenuHeight() : 0;
+    return this.setMenuHeight(menuHeight);
+  }
+}
+exports["default"] = DropdownMenuHeightController;
 
 /***/ }),
 
@@ -1337,9 +1378,11 @@ exports["default"] = _default;
 /*!****************************************************************!*\
   !*** ../node_modules/@babel/runtime/helpers/defineProperty.js ***!
   \****************************************************************/
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+var toPropertyKey = __webpack_require__(/*! ./toPropertyKey.js */ "../node_modules/@babel/runtime/helpers/toPropertyKey.js");
 function _defineProperty(obj, key, value) {
+  key = toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -1368,6 +1411,62 @@ function _interopRequireDefault(obj) {
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/toPrimitive.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/toPrimitive.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _typeof = (__webpack_require__(/*! ./typeof.js */ "../node_modules/@babel/runtime/helpers/typeof.js")["default"]);
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if (_typeof(res) !== "object") return res;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (hint === "string" ? String : Number)(input);
+}
+module.exports = _toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/toPropertyKey.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/toPropertyKey.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _typeof = (__webpack_require__(/*! ./typeof.js */ "../node_modules/@babel/runtime/helpers/typeof.js")["default"]);
+var toPrimitive = __webpack_require__(/*! ./toPrimitive.js */ "../node_modules/@babel/runtime/helpers/toPrimitive.js");
+function _toPropertyKey(arg) {
+  var key = toPrimitive(arg, "string");
+  return _typeof(key) === "symbol" ? key : String(key);
+}
+module.exports = _toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/typeof.js":
+/*!********************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/typeof.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+}
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ })
 

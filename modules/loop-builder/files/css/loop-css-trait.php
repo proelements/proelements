@@ -121,18 +121,29 @@ trait Loop_Css_Trait {
 		$this->print_fonts_links();
 	}
 
-	public function print_css() {
+	public function print_all_css( int $post_id ) {
 		// Avoid re-print CSS
 		if ( isset( self::$printed_with_css[ $this->get_file_handle_id() ] ) ) {
 			return;
 		}
 
-		echo '<style id="' . $this->get_file_handle_id() . '">' . $this->get_content() . '</style>'; // XSS ok.
+		$template_custom_css = $post_id > 0 ? $this->get_custom_css( $post_id ) : '';
+
+		echo '<style id="' . $this->get_file_handle_id() . '">' . esc_html( $template_custom_css ) . $this->get_content() . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		if ( Plugin::elementor()->editor->is_edit_mode() && method_exists( Plugin::elementor()->frontend, 'get_list_of_google_fonts_by_type' ) ) {
 			$this->enqueue_and_print_font_links();
 		}
 
 		// Avoid re-print CSS
 		self::$printed_with_css[ $this->get_file_handle_id() ] = true;
+	}
+
+	private function get_custom_css( $post_id ) {
+		$loop_doc = Plugin::elementor()->documents->get( $post_id );
+		return $loop_doc->get_settings( 'custom_css' );
+	}
+
+	public function print_css() {
+		$this->print_all_css( 0 );
 	}
 }

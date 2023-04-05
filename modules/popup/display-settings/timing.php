@@ -2,6 +2,7 @@
 
 namespace ElementorPro\Modules\Popup\DisplaySettings;
 
+use ElementorPro\Plugin;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -178,6 +179,19 @@ class Timing extends Base {
 
 		$this->end_settings_group();
 
+		$available_devices = [
+			'desktop' => esc_html__( 'Desktop', 'elementor-pro' ),
+		];
+
+		$default_devices = [ 'desktop' ];
+
+		$active_breakpoints = Plugin::elementor()->breakpoints->get_active_breakpoints();
+
+		foreach ( $active_breakpoints as $breakpoint_key => $breakpoint ) {
+			$available_devices[ $breakpoint_key ] = $breakpoint->get_label();
+			$default_devices[] = $breakpoint_key;
+		}
+
 		$this->start_settings_group( 'devices', esc_html__( 'Show on devices', 'elementor-pro' ) );
 
 		$this->add_settings_group_control(
@@ -185,12 +199,8 @@ class Timing extends Base {
 			[
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
-				'default' => [ 'desktop', 'tablet', 'mobile' ],
-				'options' => [
-					'desktop' => esc_html__( 'Desktop', 'elementor-pro' ),
-					'tablet' => esc_html__( 'Tablet', 'elementor-pro' ),
-					'mobile' => esc_html__( 'Mobile', 'elementor-pro' ),
-				],
+				'default' => $default_devices,
+				'options' => $available_devices,
 			]
 		);
 

@@ -179,13 +179,13 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 200,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--circular-width: {{SIZE}}{{UNIT}}; --circular-height: {{SIZE}}{{UNIT}};',
 				],
@@ -222,13 +222,13 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 400,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--circular-progress-width: {{SIZE}}{{UNIT}};',
 				],
@@ -309,7 +309,7 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--horizontal-progress-border-top-width: {{TOP}}{{UNIT}}; --horizontal-progress-border-right-width: {{RIGHT}}{{UNIT}}; --horizontal-progress-border-bottom-width: {{BOTTOM}}{{UNIT}}; --horizontal-progress-border-left-width: {{LEFT}}{{UNIT}};',
 				],
@@ -340,7 +340,7 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--progress-border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -378,13 +378,13 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 400,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--circular-background-width: {{SIZE}}{{UNIT}};',
 				],
@@ -417,6 +417,7 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -427,7 +428,6 @@ class ProgressTracker extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'size_units' => [ 'px', 'vh' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--horizontal-height: {{SIZE}}{{UNIT}}',
 				],
@@ -465,7 +465,7 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--horizontal-border-top-width: {{TOP}}{{UNIT}}; --horizontal-border-right-width: {{RIGHT}}{{UNIT}}; --horizontal-border-bottom-width: {{BOTTOM}}{{UNIT}}; --horizontal-border-left-width: {{LEFT}}{{UNIT}};',
 				],
@@ -496,7 +496,7 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -522,7 +522,7 @@ class ProgressTracker extends Base_Widget {
 			[
 				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tracker-padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

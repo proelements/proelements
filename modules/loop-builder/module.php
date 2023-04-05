@@ -71,6 +71,11 @@ class Module extends Module_Base {
 				return $should_enqueue;
 			},
 		10, 2 );
+
+		add_filter( 'elementor/editor/localize_settings', function ( $config ) {
+			$config['admin_url'] = admin_url();
+			return $config;
+		});
 	}
 
 	public function filter_template_to_canvas_view() {
@@ -115,14 +120,13 @@ class Module extends Module_Base {
 	public static function get_experimental_data() {
 		return [
 			'name' => static::EXPERIMENT_NAME,
-			'tag' => esc_html__( 'Feature', 'elementor-pro' ),
 			'title' => esc_html__( 'Loop', 'elementor-pro' ),
 			'description' => sprintf(
 				esc_html__( 'Create powerful & repeating templates and populate each one with dynamic content like text or images. Great for listings, posts, portfolios and more! %1$sLearn More%2$s', 'elementor-pro' ),
 				'<a href="https://go.elementor.com/wp-dash-loop/" target="_blank">',
 				'</a>'
 			),
-			'release_status' => Manager::RELEASE_STATUS_BETA,
+			'release_status' => Manager::RELEASE_STATUS_STABLE,
 			'default' => Manager::STATE_ACTIVE,
 		];
 	}

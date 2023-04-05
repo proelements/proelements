@@ -1,4 +1,4 @@
-/*! pro-elements - v3.11.3 - 26-02-2023 */
+/*! pro-elements - v3.12.1 - 02-04-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1424,9 +1424,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 class _default extends elementorModules.Module {
   constructor() {
-    var _elementorModules$adm;
     super();
-    if (!((_elementorModules$adm = elementorModules.admin) !== null && _elementorModules$adm !== void 0 && _elementorModules$adm.MenuHandler)) {
+    if (!elementorModules.admin?.MenuHandler) {
       return;
     }
     new elementorModules.admin.MenuHandler({

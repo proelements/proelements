@@ -27,6 +27,23 @@
                 "max_size": "",
                 "mime_types": "",
                 "preview_size": "medium"
+            },
+            {
+                "key": "field_63dcef444bbde",
+                "label": "Test Video",
+                "name": "test_video",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
             }
         ],
         "location": [

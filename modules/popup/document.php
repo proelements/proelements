@@ -165,6 +165,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 100,
@@ -175,7 +176,6 @@ class Document extends Theme_Section_Document {
 						'max' => 100,
 					],
 				],
-				'size_units' => [ 'px', 'vw' ],
 				'default' => [
 					'size' => 640,
 				],
@@ -210,6 +210,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Custom Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 100,
@@ -220,7 +221,6 @@ class Document extends Theme_Section_Document {
 						'max' => 100,
 					],
 				],
-				'size_units' => [ 'px', 'vh' ],
 				'condition' => [
 					'height_type' => 'custom',
 				],
@@ -447,7 +447,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}} .dialog-widget-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
@@ -537,7 +537,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'%' => [
 						'max' => 100,
@@ -569,7 +569,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Horizontal Position', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'%' => [
 						'max' => 100,
@@ -781,7 +781,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Margin', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} .dialog-widget-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -794,7 +794,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}} .dialog-message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

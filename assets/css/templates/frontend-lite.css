@@ -147,13 +147,17 @@
 }
 
 .elementor-editor-active .elementor.elementor-edit-mode .elementor-widget.elementor-global-widget:hover {
-  outline: 1px solid #fec449;
+  outline: 1px solid var(--e-p-border-global);
 }
 .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings {
-  background-image: linear-gradient(to top, #feb416, #fec449);
+  background-color: var(--e-p-border-global);
+}
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting {
+  background-color: var(--e-p-border-global);
+  color: var(--e-p-border-global-invert);
 }
 .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting:hover {
-  background-color: #feb416;
+  background-color: var(--e-p-border-global-hover);
 }
 .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting.elementor-editor-element-save {
   display: none;
@@ -222,11 +226,12 @@
   pointer-events: all;
 }
 .elementor-popup-modal .dialog-close-button svg {
-  fill: #373a3c;
+  fill: #1A1C1E;
   height: 1em;
   width: 1em;
 }
 .elementor-popup-modal .dialog-widget-content {
+  background-color: #FFFFFF;
   width: initial;
   overflow: visible;
   max-width: 100%;

@@ -315,7 +315,7 @@ class API {
 			),
 			'expired' => sprintf(
 				/* translators: 1: Bold text opening tag, 2: Bold text closing tag, 3: Link opening tag, 4: Link closing tag. */
-				esc_html__( '%1$sOh no! Your Elementor Pro license has expired.%2$s Want to keep creating secure and high-performing websites? Renew your subscription to regain access to all of the Elementor Pro widgets, templates, updates & more. %3$sRenew now%4$s', 'elementor-pro' ),
+				esc_html__( '%1$sYour Elementor Pro license has expired.%2$s Want to keep creating secure and high-performing websites? Renew your subscription to regain access to all of the Elementor Pro widgets, templates, updates & more. %3$sRenew now%4$s', 'elementor-pro' ),
 				'<strong>',
 				'</strong>',
 				'<a href="https://go.elementor.com/renew/" target="_blank">',

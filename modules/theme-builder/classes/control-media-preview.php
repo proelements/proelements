@@ -19,9 +19,9 @@ class Control_Media_Preview extends Control_Media {
 		?>
 		<div class="elementor-control-field elementor-control-media">
 			<label class="elementor-control-title">{{{ data.label }}}</label>
-			<div class="elementor-control-input-wrapper elementor-aspect-ratio-219">
+			<div class="elementor-control-input-wrapper">
 				<div class="elementor-control-media-area">
-					<div class="elementor-control-media__preview elementor-fit-aspect-ratio" style="background-image: url('{{ data.src }}');"></div>
+					<div class="elementor-control-media__preview" style="background-image: url('{{ data.src }}');"></div>
 				</div>
 			</div>
 			<# if ( data.description ) { #>
@@ -31,6 +31,5 @@ class Control_Media_Preview extends Control_Media {
 		</div>
 		<?php
 	}
-
 
 }

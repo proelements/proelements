@@ -390,14 +390,14 @@ class Controller extends Base_Controller {
 			$note->author = $this->user_transformer->transform( $note->author );
 		}
 
-		if ( ! empty( $note->readers ) ) {
+		if ( ! $note->readers->is_empty() ) {
 			$note->readers = $note->readers->map( function ( User $user ) {
 				return $this->user_transformer->transform( $user );
 			} );
 		}
 
 		// If the note has replies, recursively run the function for each reply note.
-		if ( ! empty( $note->replies ) ) {
+		if ( ! $note->replies->is_empty() ) {
 			$note->replies = $note->replies->map( function ( Note $reply ) {
 				return $this->transform_users( $reply );
 			} );
@@ -446,6 +446,8 @@ class Controller extends Base_Controller {
 
 		/** @var Note $note */
 		$note = Note::query()->with_author()->find( $id );
+
+		$note = $this->transform_users( $note );
 
 		$mentioned = $note->sync_mentions(
 			$request->get_param( 'mentioned_usernames' ),

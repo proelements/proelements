@@ -34,7 +34,6 @@ class Loop_Carousel extends Base {
 		$config = parent::get_initial_config();
 
 		$config['add_parent_render_footer'] = false;
-		$config['edit_handle_selector'] = '.elementor-widget-container';
 
 		return $config;
 	}
@@ -96,7 +95,7 @@ class Loop_Carousel extends Base {
 		$this->add_control(
 			'autoplay_speed',
 			[
-				'label' => esc_html__( 'Scroll Speed (ms)', 'elementor-pro' ),
+				'label' => esc_html__( 'Scroll Speed', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::NUMBER,
 				'default' => 5000,
 				'condition' => [
@@ -160,7 +159,7 @@ class Loop_Carousel extends Base {
 		$this->add_control(
 			'speed',
 			[
-				'label' => esc_html__( 'Transition Duration (ms)', 'elementor-pro' ),
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::NUMBER,
 				'default' => 500,
 				'render_type' => 'none',
@@ -173,7 +172,7 @@ class Loop_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Direction', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'ltr',
+				'default' => is_rtl() ? 'rtl' : 'ltr',
 				'options' => [
 					'ltr' => esc_html__( 'Left', 'elementor-pro' ),
 					'rtl' => esc_html__( 'Right', 'elementor-pro' ),
@@ -305,7 +304,7 @@ class Loop_Carousel extends Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'image_spacing_custom',
 			[
 				'label' => esc_html__( 'Gap between slides', 'elementor-pro' ),
@@ -357,7 +356,7 @@ class Loop_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', '%', 'rem' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 5,
@@ -469,27 +468,15 @@ class Loop_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem' ],
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 5,
-						'max' => 50,
-					],
-					'em' => [
-						'min' => 0.1,
-						'max' => 10,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'rem' => [
-						'min' => 0.1,
-						'max' => 10,
+						'max' => 200,
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => '--dots-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--swiper-pagination-size: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
 					'pagination' => 'bullets',
@@ -562,12 +549,38 @@ class Loop_Carousel extends Base {
 					'pagination' => 'bullets',
 				],
 				'separator' => 'before',
-				'selectors_dictionary' => [
-					'inside' => '0',
-					'outside' => '30px',
+			]
+		);
+
+		$this->add_responsive_control(
+			'dots_pagination_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+				],
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'pagination',
+							'operator' => '==',
+							'value' => 'bullets',
+						],
+						[
+							'name' => 'dots_position',
+							'operator' => '==',
+							'value' => 'outside',
+						],
+					],
+
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => '--swiper-padding-bottom: {{VALUE}};',
+					'{{WRAPPER}}' => '--swiper-pagination-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -587,9 +600,23 @@ class Loop_Carousel extends Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'typography_fraction',
-				'selector' => '{{WRAPPER}} .swiper-pagination-fraction',
+				'selector' => '{{WRAPPER}} .swiper-pagination',
 				'condition' => [
 					'pagination' => 'fraction',
+				],
+				'fields_options' => [
+					'font_size' => [
+						'selectors' => [
+							'{{WRAPPER}}' => '--swiper-pagination-size: {{SIZE}}{{UNIT}};',
+							'{{WRAPPER}} .swiper-pagination' => 'font-size: {{SIZE}}{{UNIT}};',
+						],
+					],
+					'line_height' => [
+						'selectors' => [
+							'{{WRAPPER}}' => '--swiper-pagination-size: {{SIZE}}{{UNIT}};',
+							'{{WRAPPER}} .swiper-pagination' => 'line-height: {{SIZE}}{{UNIT}};',
+						],
+					],
 				],
 			]
 		);
@@ -623,12 +650,38 @@ class Loop_Carousel extends Base {
 					'pagination' => 'fraction',
 				],
 				'separator' => 'before',
-				'selectors_dictionary' => [
-					'inside' => '0',
-					'outside' => '30px',
+			]
+		);
+
+		$this->add_responsive_control(
+			'fraction_pagination_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+				],
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'pagination',
+							'operator' => '==',
+							'value' => 'fraction',
+						],
+						[
+							'name' => 'fraction_position',
+							'operator' => '==',
+							'value' => 'outside',
+						],
+					],
+
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => '--swiper-padding-bottom: {{VALUE}};',
+					'{{WRAPPER}}' => '--swiper-pagination-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -649,23 +702,15 @@ class Loop_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'vh' ],
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 200,
 					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'vh' => [
-						'min' => 0,
-						'max' => 100,
-					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => '--progressbar-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--swiper-pagination-size: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'pagination' => 'progressbar',
@@ -880,6 +925,18 @@ class Loop_Carousel extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .swiper-slide > .elementor-element' => 'height: 100%',
 				],
+			]
+		);
+
+		// Location for the Edit handle.
+		$this->add_control(
+			'edit_handle_selector',
+			[
+				'label' => esc_html__( 'Edit Handle Selector', 'elementor-pro' ),
+				'type' => Controls_Manager::HIDDEN,
+				'default' => '.elementor-widget-container',
+				'render_type' => 'none',
+				'frontend_available' => true,
 			]
 		);
 

@@ -91,6 +91,7 @@ class Product_Rating extends Base_Widget {
 			[
 				'label' => esc_html__( 'Star Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'unit' => 'em',
 				],
@@ -112,7 +113,7 @@ class Product_Rating extends Base_Widget {
 			[
 				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em' ],
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'unit' => 'em',
 				],

@@ -190,6 +190,7 @@ class Categories extends Base_Widget {
 			[
 				'label'     => esc_html__( 'Columns Gap', 'elementor-pro' ),
 				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default'   => [
 					'size' => 20,
 				],
@@ -210,6 +211,7 @@ class Categories extends Base_Widget {
 			[
 				'label'     => esc_html__( 'Rows Gap', 'elementor-pro' ),
 				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default'   => [
 					'size' => 40,
 				],
@@ -273,7 +275,7 @@ class Categories extends Base_Widget {
 			[
 				'label'      => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [
 					'{{WRAPPER}} a > img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
@@ -285,7 +287,7 @@ class Categories extends Base_Widget {
 			[
 				'label'      => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em' ],
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'selectors'  => [
 					'{{WRAPPER}} a > img' => 'margin-bottom: {{SIZE}}{{UNIT}}',
 				],

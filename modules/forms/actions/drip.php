@@ -71,7 +71,7 @@ class Drip extends Integration_Base {
 				'condition' => [
 					'drip_api_token_source' => 'custom',
 				],
-				'description' => esc_html__( 'Use this field to set a custom API key for the current form', 'elementor-pro' ),
+				'description' => esc_html__( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
 			]
 		);
 

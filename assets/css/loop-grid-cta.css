@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.11.3 - 26-02-2023 */
+/*! elementor-pro - v3.12.1 - 02-04-2023 */
 .e-loop-empty-view__container {
   display: flex;
   flex-direction: row;
@@ -11,12 +11,12 @@
   display: flex;
 }
 .e-loop-empty-view__box-inner {
-  border: 1px dashed #d5dadf;
+  border: 1px dashed #D5D8DC;
   margin: 10px;
   width: 100%;
   padding: 10px;
   font-size: 12px;
-  color: #a4afb7;
+  color: #9DA5AE;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -38,7 +38,7 @@
 }
 .e-loop-empty-view__box-cta {
   color: #ffffff;
-  background-color: #a4afb7;
+  background-color: #9DA5AE;
   padding: 6px 8px;
   border-radius: 3px;
   text-decoration: none;
@@ -46,11 +46,11 @@
   transition-duration: 0.3s;
 }
 .e-loop-empty-view__box-cta:hover {
-  background-color: #6d7882;
+  background-color: #3A3F45;
   color: #ffffff;
 }
 .e-loop-empty-view__box--active {
-  border: 2px solid #fcb92c;
+  border: 2px solid #5EEAD4;
 }
 
 .elementor-widget-loop-grid .elementor-grid.e-loop-empty-view__container {
@@ -79,10 +79,10 @@
   transform: translateY(-50%);
 }
 .elementor-swiper-button-prev {
-  left: 0px;
+  left: 0;
 }
 .elementor-swiper-button-next {
-  right: 0px;
+  right: 0;
 }
 .elementor-swiper-button svg {
   fill: rgba(224, 219, 219, 0.9);

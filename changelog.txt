@@ -1,5 +1,52 @@
 # PRO Elements - by PROElements.org
 
+#### 3.12.1 - 2023-04-02
+
+* Fix: Default background colors are presented as transparent in Popup ([#21824](https://github.com/elementor/elementor/issues/21824))
+* Fix: Reverted the tweak of Form Submissions feature merged to the version ([#21821](https://github.com/elementor/elementor/issues/21821))
+* Fix: Dropdown area is not closing when hovering outside of the content area in Menu widget
+
+#### 3.12.0 - 2023-03-29
+
+* New: Introducing the Mega Menu with the new Menu widget - empowers you to achieve a much higher level of menu design, customization, and creativity
+* New: Diversify your design with a Loop Alternate template - apply another template within your Loop Grid for design creativity
+* New: Kickstart your workflow with predesigned Loop container-based templates
+* Tweak: Added custom icon controls to various locations in Menu Cart widget ([#13678](https://github.com/elementor/elementor/issues/13678), [#17941](https://github.com/elementor/elementor/issues/17941), [#19295](https://github.com/elementor/elementor/issues/19295))
+* Tweak: Added a spacing control between navigation and slides in the Loop Carousel
+* Tweak: Added responsive control to the 'Gap between slides' control in the Loop Carousel
+* Tweak: Added Custom CSS section in Loop Item template
+* Tweak: Added an Article class metadata in Loop Item template
+* Tweak: Added Lazy Load support for background images in CTA widget when using the Lazy Load Background Images experiment
+* Tweak: Added Lazy Load support for background images in Flipbox widget when using the Lazy Load Background Images experiment
+* Tweak: Added additional size units and custom units in all elements
+* Tweak: Changed Nav Menu widget name to WordPress Menu widget
+* Tweak: Added "Form Validation" control to Form widget
+* Tweak: Updated custom messages in the Form widget
+* Tweak: Improved accessibility in various elements in Gallery widget
+* Tweak: Form Submissions feature merged to version
+* Tweak: Loop feature promoted to Stable status
+* Tweak: Page Transitions feature promoted to Stable status
+* Tweak: Improved accessibility in filter bar in Gallery widget
+* Tweak: Remove unused `aspect-ratio-*` CSS classes
+* Fix: Not all active breakpoints appear under "Advanced Rules" in popup publish settings ([#17020](https://github.com/elementor/elementor/issues/17020))
+* Fix: Dynamic background image and video is not working with ACF in Loop Grid widget
+
+#### 3.11.7 - 2023-03-22
+
+* Tweak: Improved code security enforcement in WooCommerce components
+
+#### 3.11.6 - 2023-03-14
+
+* Tweak: Improved code security enforcement in Author Box and Countdown widgets
+
+#### 3.11.5 - 2023-03-12
+
+* Fix: Hamburger Menu Toggle not showing if breakpoint is set to Tablet Extra in Nav Menu widget ([#21003](https://github.com/elementor/elementor/issues/21003))
+
+#### 3.11.4 - 2023-03-07
+
+* Tweak: Prevented SVG file upload for better security enforcement in Forms widget
+
 #### 3.11.3 - 2023-02-26
 
 * Fix: Error message appears when submitting a form placed below Loop Grid and Loop Carousel widgets ([#21432](https://github.com/elementor/elementor/issues/21432))

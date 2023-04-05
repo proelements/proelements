@@ -93,7 +93,7 @@ class Module extends Module_Base {
 			</div>
 			<div class="elementor-role-go-pro__link ">
 				<a
-					class="elementor-button elementor-button-default elementor-button-go-pro"
+					class="elementor-button go-pro"
 					target="_blank"
 					href="<?php echo esc_url( $url ); ?>"
 				>

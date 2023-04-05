@@ -314,6 +314,7 @@ class Share_Buttons extends Base_Widget {
 			[
 				'label' => esc_html__( 'Columns Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'size' => 10,
 				],
@@ -330,6 +331,7 @@ class Share_Buttons extends Base_Widget {
 			[
 				'label' => esc_html__( 'Rows Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'size' => 10,
 				],
@@ -364,6 +366,7 @@ class Share_Buttons extends Base_Widget {
 			[
 				'label' => esc_html__( 'Icon Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'em' => [
 						'min' => 0.5,
@@ -384,7 +387,6 @@ class Share_Buttons extends Base_Widget {
 				'mobile_default' => [
 					'unit' => 'em',
 				],
-				'size_units' => [ 'em', 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-share-btn__icon' => '--e-share-buttons-icon-size: {{SIZE}}{{UNIT}};',
 				],
@@ -399,6 +401,7 @@ class Share_Buttons extends Base_Widget {
 			[
 				'label' => esc_html__( 'Button Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'em' => [
 						'min' => 1,
@@ -419,7 +422,6 @@ class Share_Buttons extends Base_Widget {
 				'mobile_default' => [
 					'unit' => 'em',
 				],
-				'size_units' => [ 'em', 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-share-btn' => 'height: {{SIZE}}{{UNIT}};',
 				],
@@ -429,9 +431,9 @@ class Share_Buttons extends Base_Widget {
 		$this->add_responsive_control(
 			'border_size',
 			[
-				'label' => esc_html__( 'Border Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'default' => [
 					'size' => 2,
 				],
@@ -560,7 +562,7 @@ class Share_Buttons extends Base_Widget {
 			[
 				'label' => esc_html__( 'Text Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}} a.elementor-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.11.3 - 26-02-2023 */
+/*! elementor-pro - v3.12.1 - 02-04-2023 */
 .elementor-editor-preview .woocommerce-notices-wrapper {
   padding: 2em 2em 0.3em 2em;
 }
@@ -9,12 +9,12 @@
 .e-wc-message-notice .woocommerce-message {
   border: 0px solid #000000;
   background-color: #FAFBF5;
-  color: var(--message-message-text-color, #55595c);
+  color: var(--message-message-text-color, #3A3F45);
   border-radius: var(--message-box-border-radius, 0);
 }
 .e-wc-message-notice .woocommerce-message a:not([class]),
 .e-wc-message-notice .woocommerce-message .restore-item {
-  color: var(--notice-message-normal-links-color, #55595c);
+  color: var(--notice-message-normal-links-color, #3A3F45);
   text-decoration: underline;
   font-size: 16px;
   line-height: 24px;
@@ -28,7 +28,7 @@
 }
 .e-wc-message-notice .woocommerce-message a:not([class]):hover,
 .e-wc-message-notice .woocommerce-message .restore-item:hover {
-  color: var(--notice-message-hover-links-color, #55595c);
+  color: var(--notice-message-hover-links-color, #3A3F45);
 }
 .e-wc-message-notice .woocommerce-message .button {
   border-style: var(--message-border-type, solid);
@@ -66,7 +66,7 @@
 .e-wc-info-notice .woocommerce-info {
   border: 0px solid #000000;
   background-color: #F6F9FB;
-  color: var(--info-message-text-color, #55595c);
+  color: var(--info-message-text-color, #3A3F45);
   border-radius: var(--info-box-border-radius, 0);
 }
 .e-wc-info-notice .woocommerce-info .button {
@@ -100,16 +100,16 @@
   /* Need to override some styling from the My Account Widget */
 }
 .e-wc-error-notice .elementor-widget-woocommerce-my-account .woocommerce .woocommerce-error strong {
-  color: var(--error-message-text-color, #55595c);
+  color: var(--error-message-text-color, #3A3F45);
 }
 .e-wc-error-notice .woocommerce-error {
   border: 0px solid #000000;
   background-color: #F9F2F5;
-  color: var(--error-message-text-color, #55595c);
+  color: var(--error-message-text-color, #3A3F45);
   border-radius: var(--error-box-border-radius, 0);
 }
 .e-wc-error-notice .woocommerce-error .wc-backward {
-  color: var(--error-message-normal-links-color, #55595c);
+  color: var(--error-message-normal-links-color, #3A3F45);
   text-decoration: underline;
   font-size: 16px;
   line-height: 24px;
@@ -122,7 +122,7 @@
   letter-spacing: 0px;
 }
 .e-wc-error-notice .woocommerce-error .wc-backward:hover {
-  color: var(--error-message-hover-links-color, #55595c);
+  color: var(--error-message-hover-links-color, #3A3F45);
 }
 .e-wc-error-notice .woocommerce-error::before {
   color: var(--error-message-icon-color, #b81c23);

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <script type="text/template" id="tmpl-elementor-pro-template-library-activate-license-button">
-	<a class="elementor-template-library-template-action elementor-button elementor-go-pro" href="<?php
+	<a class="elementor-template-library-template-action elementor-button go-pro" href="<?php
 	// PHPCS - the function LicenseAdmin::get_url() is safe.
 	echo LicenseAdmin::get_url(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" target="_blank">
 		<i class="eicon-external-link-square"></i>

@@ -166,7 +166,7 @@ https://prismjs.com/download.html#themes=prism-twilight&prism-tomorrow&prism-sol
 
 .prismjs-default .language-css .token.string, .prismjs-default .style .token.string, .prismjs-default .token.entity, .prismjs-default .token.operator, .prismjs-default .token.url {
   color: #9a6e3a;
-  background: hsla(0deg, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.5);
 }
 
 .prismjs-default .token.atrule, .prismjs-default .token.attr-value, .prismjs-default .token.keyword {
@@ -507,12 +507,12 @@ https://prismjs.com/download.html#themes=prism-twilight&prism-tomorrow&prism-sol
 
 .prismjs-twilight code[class*=language-] ::-moz-selection, .prismjs-twilight code[class*=language-]::-moz-selection, .prismjs-twilight pre[class*=language-] ::-moz-selection, .prismjs-twilight pre[class*=language-]::-moz-selection {
   text-shadow: none;
-  background: hsla(0deg, 0%, 93%, 0.15);
+  background: hsla(0, 0%, 93%, 0.15);
 }
 
 .prismjs-twilight code[class*=language-] ::selection, .prismjs-twilight code[class*=language-]::selection, .prismjs-twilight pre[class*=language-] ::selection, .prismjs-twilight pre[class*=language-]::selection {
   text-shadow: none;
-  background: hsla(0deg, 0%, 93%, 0.15);
+  background: hsla(0, 0%, 93%, 0.15);
 }
 
 .prismjs-twilight :not(pre) > code[class*=language-] {
@@ -582,8 +582,8 @@ https://prismjs.com/download.html#themes=prism-twilight&prism-tomorrow&prism-sol
 }
 
 .prismjs-twilight .line-highlight {
-  background: hsla(0deg, 0%, 33%, 0.25);
-  background: linear-gradient(to right, hsla(0deg, 0%, 33%, 0.1) 70%, hsla(0deg, 0%, 33%, 0));
+  background: hsla(0, 0%, 33%, 0.25);
+  background: linear-gradient(to right, hsla(0, 0%, 33%, 0.1) 70%, hsla(0, 0%, 33%, 0));
   border-bottom: 1px dashed #545454;
   border-top: 1px dashed #545454;
   left: 0;
@@ -717,8 +717,8 @@ pre[data-line] {
   right: 0;
   padding: inherit 0;
   margin-top: 1em;
-  background: hsla(24deg, 20%, 50%, 0.08);
-  background: linear-gradient(to right, hsla(24deg, 20%, 50%, 0.1) 70%, hsla(24deg, 20%, 50%, 0));
+  background: hsla(24, 20%, 50%, 0.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%, 0.1) 70%, hsla(24, 20%, 50%, 0));
   pointer-events: none;
   line-height: inherit;
   white-space: pre;
@@ -736,7 +736,7 @@ pre[data-line] {
   left: 0.6em;
   min-width: 1em;
   padding: 0 0.5em;
-  background-color: hsla(24deg, 20%, 50%, 0.4);
+  background-color: hsla(24, 20%, 50%, 0.4);
   color: #f4f1ef;
   font: bold 65%/1.5 sans-serif;
   text-align: center;

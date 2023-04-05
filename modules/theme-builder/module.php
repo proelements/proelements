@@ -356,7 +356,7 @@ class Module extends Module_Base {
 				'description' => esc_html__( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor-pro' ),
 				'button' => [
 					'text' => esc_html__( 'Try it Now', 'elementor-pro' ),
-					'class' => 'elementor-button elementor-button-success',
+					'class' => 'elementor-button e-accent',
 					'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
 				],
 			] );

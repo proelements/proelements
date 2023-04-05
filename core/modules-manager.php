@@ -58,7 +58,7 @@ final class Modules_Manager {
 			'dynamic-tags',
 			'scroll-snap',
 			'sticky',
-			//'wp-cli',
+			'wp-cli',
 			'lottie',
 			'code-highlight',
 			'video-playlist',

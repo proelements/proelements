@@ -1,4 +1,4 @@
-/*! pro-elements - v3.11.3 - 26-02-2023 */
+/*! pro-elements - v3.12.1 - 02-04-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1362,11 +1362,10 @@ var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 var _connectButton = _interopRequireDefault(__webpack_require__(/*! ../ui/connect-button */ "../core/app/assets/js/ui/connect-button.js"));
 var _utils = __webpack_require__(/*! ../utils */ "../core/app/assets/js/utils.js");
 function useFeatureLock(featureName) {
-  var _appConfig$lock, _appConfig$lock2, _appConfig$lock3;
   const appConfig = elementorAppProConfig[featureName] ?? {},
-    isLocked = ((_appConfig$lock = appConfig.lock) === null || _appConfig$lock === void 0 ? void 0 : _appConfig$lock.is_locked) ?? false;
-  const buttonText = (0, _utils.htmlDecodeTextContent)((_appConfig$lock2 = appConfig.lock) === null || _appConfig$lock2 === void 0 ? void 0 : _appConfig$lock2.button.text);
-  const buttonLink = (0, _utils.replaceUtmPlaceholders)(((_appConfig$lock3 = appConfig.lock) === null || _appConfig$lock3 === void 0 ? void 0 : _appConfig$lock3.button.url) ?? '', appConfig.utms ?? {});
+    isLocked = appConfig.lock?.is_locked ?? false;
+  const buttonText = (0, _utils.htmlDecodeTextContent)(appConfig.lock?.button.text);
+  const buttonLink = (0, _utils.replaceUtmPlaceholders)(appConfig.lock?.button.url ?? '', appConfig.utms ?? {});
   const ConnectButton = () => /*#__PURE__*/_react.default.createElement(_connectButton.default, {
     text: buttonText,
     url: buttonLink
@@ -2090,13 +2089,12 @@ class ConditionsConfig {
    * @return {{}|any} -
    */
   getSubIdAutocomplete(sub) {
-    var _controls$;
     const config = this.config[sub];
     if (!config || !('object' === typeof config.controls)) {
       return {};
     }
     const controls = Object.values(config.controls);
-    if (!(controls !== null && controls !== void 0 && (_controls$ = controls[0]) !== null && _controls$ !== void 0 && _controls$.autocomplete)) {
+    if (!controls?.[0]?.autocomplete) {
       return {};
     }
     return controls[0].autocomplete;
@@ -3873,7 +3871,6 @@ __webpack_require__(/*! ./site-editor.scss */ "../core/app/modules/site-editor/a
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function SiteEditor() {
-  var _elementorAppProConfi, _elementorAppProConfi2;
   const {
     isLocked
   } = (0, _useFeatureLock.default)('site-editor');
@@ -3944,7 +3941,7 @@ function SiteEditor() {
     className: "e-site-editor__content_container_secondary"
   }, /*#__PURE__*/_react.default.createElement(_appUi.Button, {
     text: __('Switch to table view', 'elementor-pro'),
-    url: (_elementorAppProConfi = elementorAppProConfig['site-editor']) === null || _elementorAppProConfi === void 0 ? void 0 : (_elementorAppProConfi2 = _elementorAppProConfi.urls) === null || _elementorAppProConfi2 === void 0 ? void 0 : _elementorAppProConfi2.legacy_view
+    url: elementorAppProConfig['site-editor']?.urls?.legacy_view
   })))));
 }
 class Module {

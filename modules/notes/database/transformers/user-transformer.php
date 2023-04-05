@@ -1,7 +1,6 @@
 <?php
 namespace ElementorPro\Modules\Notes\Database\Transformers;
 
-use ElementorPro\Core\Utils\Collection;
 use ElementorPro\Modules\Notes\Database\Models\User;
 use ElementorPro\Modules\Notes\User\Capabilities;
 

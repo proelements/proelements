@@ -40,7 +40,6 @@ class Base extends Posts {
 		$config['is_loop'] = true;
 		$config['add_parent_render_header'] = true;
 		$config['add_parent_render_footer'] = true;
-		$config['edit_handle_selector'] = '[data-elementor-type="loop-item"]';
 
 		return $config;
 	}

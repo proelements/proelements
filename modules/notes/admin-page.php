@@ -81,7 +81,7 @@ class Admin_Page {
 		$note = Note::query()->find( (int) $_GET['note-id'] ); // phpcs:ignore: WordPress.Security.NonceVerification.Recommended
 
 		if ( ! $note ) {
-			$message = esc_html__( 'Oops, the note you are looking for cannot be found.', 'elementor-pro' );
+			$message = esc_html__( 'The note you are looking for was not found.', 'elementor-pro' );
 
 			$go_to_dashboard = '<a href="' . esc_url( get_admin_url() ) . '">' . esc_html__( 'Go to WP Dashboard', 'elementor-pro' ) . '</a>';
 			$view_site = '<a href="' . esc_url( get_site_url() ) . '">' . esc_html__( 'View Site', 'elementor-pro' ) . '</a>';

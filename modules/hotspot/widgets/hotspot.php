@@ -141,6 +141,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Icon Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -149,7 +150,6 @@ class Hotspot extends Widget_Image {
 				],
 				'default' => [
 					'size' => '5',
-					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .e-hotspot__button' =>
@@ -178,6 +178,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -185,7 +186,6 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--hotspot-min-width: {{SIZE}}{{UNIT}}',
 				],
@@ -200,6 +200,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Min Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -207,7 +208,6 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' => '--hotspot-min-height: {{SIZE}}{{UNIT}}',
 				],
@@ -371,6 +371,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -378,7 +379,6 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .e-hotspot__tooltip' => 'min-width: {{SIZE}}{{UNIT}}',
 				],
@@ -456,7 +456,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'hotspot_sequenced_animation_duration',
 			[
-				'label' => esc_html__( 'Sequence Duration (ms)', 'elementor-pro' ),
+				'label' => esc_html__( 'Sequence Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -554,7 +554,7 @@ class Hotspot extends Widget_Image {
 		$this->add_control(
 			'tooltip_animation_duration',
 			[
-				'label' => esc_html__( 'Duration (ms)', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -691,6 +691,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'%' => [
 						'min' => 0,
@@ -701,10 +702,6 @@ class Hotspot extends Widget_Image {
 						'max' => 300,
 						'step' => 1,
 					],
-				],
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-size: {{SIZE}}{{UNIT}};',
@@ -728,6 +725,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -735,7 +733,6 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-min-width: {{SIZE}}{{UNIT}}',
 				],
@@ -747,6 +744,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Min Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -754,7 +752,6 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-min-height: {{SIZE}}{{UNIT}}',
 				],
@@ -780,6 +777,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'em' => [
 						'min' => 0,
@@ -791,12 +789,8 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-padding: {{SIZE}}{{UNIT}};',
-				],
-				'default' => [
-					'unit' => 'px',
 				],
 			]
 		);
@@ -806,12 +800,9 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--hotspot-border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'unit' => 'px',
 				],
 			]
 		);
@@ -905,6 +896,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -912,7 +904,6 @@ class Hotspot extends Widget_Image {
 						'step' => 1,
 					],
 				],
-				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tooltip-min-width: {{SIZE}}{{UNIT}}',
 				],
@@ -924,10 +915,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'default' => [
-					'unit' => 'px',
-				],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tooltip-padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -953,7 +941,7 @@ class Hotspot extends Widget_Image {
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tooltip-border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

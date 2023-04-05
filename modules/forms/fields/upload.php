@@ -206,7 +206,42 @@ class Upload extends Field_Base {
 	private function get_blacklist_file_ext() {
 		static $blacklist = false;
 		if ( ! $blacklist ) {
-			$blacklist = [ 'php', 'php3', 'php4', 'php5', 'php6', 'phps', 'php7', 'phtml', 'shtml', 'pht', 'swf', 'html', 'asp', 'aspx', 'cmd', 'csh', 'bat', 'htm', 'hta', 'jar', 'exe', 'com', 'js', 'lnk', 'htaccess', 'htpasswd', 'phtml', 'ps1', 'ps2', 'py', 'rb', 'tmp', 'cgi' ];
+			$blacklist = [
+				'php',
+				'php3',
+				'php4',
+				'php5',
+				'php6',
+				'phps',
+				'php7',
+				'phtml',
+				'shtml',
+				'pht',
+				'swf',
+				'html',
+				'asp',
+				'aspx',
+				'cmd',
+				'csh',
+				'bat',
+				'htm',
+				'hta',
+				'jar',
+				'exe',
+				'com',
+				'js',
+				'lnk',
+				'htaccess',
+				'htpasswd',
+				'phtml',
+				'ps1',
+				'ps2',
+				'py',
+				'rb',
+				'tmp',
+				'cgi',
+				'svg',
+			];
 
 			/**
 			 * Elementor forms blacklisted file extensions.

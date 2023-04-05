@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
-	function elementor_pro_render_mini_cart_item( $cart_item_key, $cart_item ) {
+	function elementor_pro_render_mini_cart_item( $cart_item_key, $cart_item, $product_remove_class = 'elementor-menu-cart__product-remove', $icon = '' ) {
 		$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 		$is_product_visible = ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_widget_cart_item_visible', true, $cart_item, $cart_item_key ) );
 
@@ -14,6 +14,7 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 		$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 		$product_price = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
 		$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+		$product_sku = $_product->get_sku();
 		?>
 		<div class="elementor-menu-cart__product woocommerce-cart-form__cart-item <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
@@ -48,18 +49,26 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 				<?php echo apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '<span class="product-quantity">%s &times;</span> %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 
-			<div class="elementor-menu-cart__product-remove product-remove">
-				<?php foreach ( [ 'elementor_remove_from_cart_button', 'remove_from_cart_button' ] as $class ) {
-					echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						'<a href="%s" class="%s" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s"></a>',
-						esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-						$class,
-						__( 'Remove this item', 'elementor-pro' ),
-						esc_attr( $product_id ),
-						esc_attr( $cart_item_key ),
-						esc_attr( $_product->get_sku() )
-					), $cart_item_key );
-				} ?>
+			<div class="<?php echo sanitize_html_class( $product_remove_class ); ?> product-remove">
+				<?php
+				$cart_item_remove_link = sprintf( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					'<a href="%s" class="e-temp-class" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s">%s</a>',
+					esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+					__( 'Remove this item', 'elementor-pro' ),
+					esc_attr( $product_id ),
+					esc_attr( $cart_item_key ),
+					esc_attr( $product_sku ),
+					$icon
+				);
+
+				foreach ( [ 'elementor_remove_from_cart_button', 'remove_from_cart_button' ] as $class ) {
+					echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						'woocommerce_cart_item_remove_link',
+						str_replace( 'e-temp-class', $class, $cart_item_remove_link ),
+						$cart_item_key
+					);
+				}
+				?>
 			</div>
 		</div>
 		<?php
@@ -67,6 +76,7 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 }
 
 $cart_items = WC()->cart->get_cart();
+$settings = isset( $args['settings'] ) ? $args['settings'] : $args;
 
 if ( empty( $cart_items ) ) { ?>
 	<div class="woocommerce-mini-cart__empty-message"><?php esc_attr_e( 'No products in the cart.', 'elementor-pro' ); ?></div>
@@ -75,8 +85,23 @@ if ( empty( $cart_items ) ) { ?>
 		<?php
 		do_action( 'woocommerce_before_mini_cart_contents' );
 
+		$has_custom_icon = ! empty( $settings['remove_item_icon_svg']['value'] );
+		$product_remove_class = 'elementor-menu-cart__product-remove';
+		$icon = '';
+
+		if ( $has_custom_icon ) {
+			$product_remove_class .= '-custom';
+
+			ob_start();
+			\Elementor\Icons_Manager::render_icon( $settings['remove_item_icon_svg'], [
+				'class' => 'e-remove-item-custom-icon',
+				'aria-hidden' => 'true',
+			] );
+			$icon = ob_get_clean();
+		}
+
 		foreach ( $cart_items as $cart_item_key => $cart_item ) {
-			elementor_pro_render_mini_cart_item( $cart_item_key, $cart_item );
+			elementor_pro_render_mini_cart_item( $cart_item_key, $cart_item, $product_remove_class, $icon );
 		}
 
 		do_action( 'woocommerce_mini_cart_contents' );

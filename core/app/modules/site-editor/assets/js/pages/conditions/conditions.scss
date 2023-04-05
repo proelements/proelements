@@ -36,7 +36,7 @@
 		background-color: var(--e-site-editor-conditions-row-controls-background);
 		display: flex;
 		width: 100%;
-		box-shadow: $e-site-editor-conditions-row-controls-shadow;
+		border: var(--e-site-editor-conditions-row-controls-border);
 		border-radius: $e-site-editor-conditions-row-controls-radius;
 
 		&--error {
@@ -151,13 +151,9 @@
 			transform: translateY(-50%);
 			@include start($e-site-editor-input-wrapper-condition-type-icon-start-spacing);
 			font-size: $e-site-editor-input-wrapper-condition-type-icon-font-size;
-			color: $e-site-editor-input-wrapper-condition-type-icon-color;
+			//color: $e-site-editor-input-wrapper-condition-type-icon-color;
 			pointer-events: none;
 			z-index: $e-site-editor-input-wrapper-condition-type-icon-z-index;
-		}
-
-		&:after {
-			color: $e-site-editor-input-wrapper-condition-type-arrow-color;
 		}
 
 		select {
@@ -165,26 +161,19 @@
 			@include padding-start($e-site-editor-input-wrapper-condition-type-start-padding);
 			width: $e-site-editor-input-wrapper-condition-type-width;
 			font-size: $e-site-editor-input-wrapper-condition-type-font-size;
-			color: $e-site-editor-input-wrapper-condition-type-color;
+			@include border-end($e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style);
+			border-color: var(--e-site-editor-input-wrapper-border-color);
 		}
 
 		&[data-elementor-condition-type="include"] {
 			&:before {
 				content: '\e8cc';
 			}
-
-			select {
-				background-color: var(--e-site-editor-input-wrapper-condition-include-background-color);
-			}
 		}
 
 		&[data-elementor-condition-type="exclude"] {
 			&:before {
 				content: '\e8cd';
-			}
-
-			select {
-				background-color: var(--e-site-editor-input-wrapper-condition-exclude-background-color);
 			}
 		}
 	}

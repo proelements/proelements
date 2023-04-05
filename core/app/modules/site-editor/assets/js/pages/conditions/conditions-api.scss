@@ -12,9 +12,11 @@ $e-site-editor-conditions-remove-condition-font-size: type(size, '18');
 $e-site-editor-conditions-row-controls-spacing-end: spacing(10);
 $e-site-editor-conditions-row-controls-background: theme-colors(light);
 $e-site-editor-conditions-row-controls-dark-background: dark-tints(600);
-$e-site-editor-conditions-row-controls-shadow: shadow('1');
 $e-site-editor-conditions-row-controls-radius: $eps-radius;
 
+$e-site-editor-conditions-row-controls-border: $eps-border-width $eps-border-style tints(100);
+$e-site-editor-conditions-row-controls-dark-border: $eps-border-width $eps-border-style tints(700);
+//$e-site-editor-conditions-row-controls-dark-border: $eps-border-width $eps-border-style tints(725); //merge after 3.12 is out
 $e-site-editor-conditions-row-controls-error-border: $eps-border-width $eps-border-style theme-colors(danger);
 
 $e-site-editor-conditions-conflict-top-spacing: spacing(5);
@@ -32,12 +34,14 @@ $e-site-editor-save-button-container-spacing: spacing(8);
 
 $e-site-editor-input-wrapper-border-width: $eps-border-width;
 $e-site-editor-input-wrapper-border-style: $eps-border-style;
-$e-site-editor-input-wrapper-border-color: tints(200);
-$e-site-editor-input-wrapper-border-dark-color: dark-tints(600);
+$e-site-editor-input-wrapper-border-color: tints(100);
+$e-site-editor-input-wrapper-border-dark-color: dark-tints(700);
+//$e-site-editor-input-wrapper-border-dark-color: dark-tints(725); //merge after 3.12 is out
 $e-site-editor-input-wrapper-select-font-size: type(size, "12");
 $e-site-editor-input-wrapper-select-height: px-to-rem(40);
 $e-site-editor-input-wrapper-select-y-padding: spacing(10);
 $e-site-editor-input-wrapper-select-color: tints(700);
+//$e-site-editor-input-wrapper-select-color: tints(725); //merge after 3.12 is out
 $e-site-editor-input-wrapper-select-dark-color: dark-tints(200);
 $e-site-editor-input-wrapper-select-arrow-font-size: type(size, "12");
 $e-site-editor-input-wrapper-select-arrow-margin-end: spacing(10);
@@ -63,6 +67,7 @@ $e-site-editor-input-select2-search-field-dark-color: theme-colors(light);
 	--e-site-editor-conditions-row-controls-background: #{$e-site-editor-conditions-row-controls-background};
 	--e-site-editor-input-wrapper-border-color: #{$e-site-editor-input-wrapper-border-color};
 	--e-site-editor-input-wrapper-select-color: #{$e-site-editor-input-wrapper-select-color};
+	--e-site-editor-conditions-row-controls-border: #{$e-site-editor-conditions-row-controls-border};
 	--e-site-editor-add-button-background-color: #{$e-site-editor-add-button-background-color};
 	--e-site-editor-add-button-color-hover-background-color: #{$e-site-editor-add-button-color-hover-background-color};
 	--e-site-editor-input-wrapper-condition-include-background-color:
@@ -78,6 +83,7 @@ $e-site-editor-input-select2-search-field-dark-color: theme-colors(light);
 	--e-site-editor-conditions-row-controls-background: #{$e-site-editor-conditions-row-controls-dark-background};
 	--e-site-editor-input-wrapper-border-color: #{$e-site-editor-input-wrapper-border-dark-color};
 	--e-site-editor-input-wrapper-select-color: #{$e-site-editor-input-wrapper-select-dark-color};
+	--e-site-editor-conditions-row-controls-border: #{$e-site-editor-conditions-row-controls-dark-border};
 	--e-site-editor-add-button-background-color: #{$e-site-editor-add-button-background-dark-color};
 	--e-site-editor-add-button-color-hover-background-color: #{$e-site-editor-add-button-color-hover-dark-background-color};
 	--e-site-editor-input-wrapper-condition-include-background-color:
