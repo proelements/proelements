@@ -104,16 +104,16 @@ class Updater {
 
 		$plugin_data = $this->get_plugin_data();
 		if ( ! isset( $this->config['plugin_name'] ) )
-			$this->config['plugin_name'] = $plugin_data['Name'];
+			$this->config['plugin_name'] = $plugin_data['Name'] ?? "ProElements";
 
 		if ( ! isset( $this->config['version'] ) )
-			$this->config['version'] = $plugin_data['Version'];
+			$this->config['version'] = $plugin_data['Version'] ?? "3.11.3";
 
 		if ( ! isset( $this->config['author'] ) )
-			$this->config['author'] = $plugin_data['Author'];
+			$this->config['author'] = $plugin_data['Author'] ?? "ProElements";
 
 		if ( ! isset( $this->config['homepage'] ) )
-			$this->config['homepage'] = $plugin_data['PluginURI'];
+			$this->config['homepage'] = $plugin_data['PluginURI'] ?? "https://github.com/proelements/proelements";
 
 		if ( ! isset( $this->config['readme'] ) )
 			$this->config['readme'] = 'README.md';
