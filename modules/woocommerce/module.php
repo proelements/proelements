@@ -291,6 +291,13 @@ class Module extends Module_Base {
 	public function menu_cart_fragments() {
 		$all_fragments = [];
 
+		// Re-add the default WooCommerce Fragment.
+		ob_start();
+		woocommerce_mini_cart();
+		$mini_cart = ob_get_clean();
+
+		$all_fragments['div.widget_shopping_cart_content'] = '<div class="widget_shopping_cart_content">' . $mini_cart . '</div>';
+
 		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['_nonce'] ), self::MENU_CART_FRAGMENTS_ACTION ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, it's used only for nonce verification
 			wp_send_json( [] );
 		}
@@ -298,7 +305,7 @@ class Module extends Module_Base {
 		$templates = ProUtils::_unstable_get_super_global_value( $_POST, 'templates' );
 
 		if ( ! is_array( $templates ) ) {
-			wp_send_json( [] );
+			wp_send_json( [ 'fragments' => $all_fragments ] );
 		}
 
 		if ( 'true' === ProUtils::_unstable_get_super_global_value( $_POST, 'is_editor' ) ) {
@@ -825,8 +832,10 @@ class Module extends Module_Base {
 		$fragments['.elementor-menu-cart__toggle_button span.elementor-button-text'] = '<span class="elementor-button-text">' . WC()->cart->get_cart_subtotal() . '</span>';
 		$fragments['.elementor-menu-cart__toggle_button span.elementor-button-icon-qty'] = '<span class="elementor-button-icon-qty" data-counter=' . $product_count . '>' . $product_count . '</span>';
 
-		// Remove the default WC Mini Cart fragments as we will be doing our own AJAX call for this.
-		unset( $fragments['div.widget_shopping_cart_content'] );
+		if ( $this->use_mini_cart_template ) {
+			// Remove the default WC Mini Cart fragments as we will be doing our own AJAX call for this.
+			unset( $fragments['div.widget_shopping_cart_content'] );
+		}
 
 		return $fragments;
 	}
