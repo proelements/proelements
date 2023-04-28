@@ -200,7 +200,8 @@ class Module extends Module_Base {
 
 	private function is_editing_existing_loop_item() {
 		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
-		$elementor_library = Utils::_unstable_get_super_global_value( $_GET, 'elementor_library' );
+		$elementor_library = Utils::_unstable_get_super_global_value( $_GET, 'elementor_library' ) ?? '';
+
 		return strpos( $elementor_library, 'elementor-' . static::TEMPLATE_LIBRARY_TYPE_SLUG ) !== false;
 	}
 

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.2 - 09-04-2023 */
+/*! pro-elements - v3.12.3 - 23-04-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -114,7 +114,7 @@
 /******/ 			if (chunkId === "product-add-to-cart") return "" + chunkId + ".39fbaae6c856c483b4b4.bundle.js";
 /******/ 			if (chunkId === "loop") return "loop.56bafc053eb8d9ec040d.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".64df59427f9aa5192019.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".20ae2ea9e778e559492a.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".62a19130f37a7b264bf7.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".5ec1f2f20bb5b5aacce1.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;

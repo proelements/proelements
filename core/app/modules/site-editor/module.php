@@ -121,7 +121,10 @@ class Module extends BaseModule {
 	}
 
 	private function register_site_editor_menu() {
-		if ( ! Plugin::elementor()->experiments->is_feature_active( 'theme_builder_v2' ) ) {
+		$experiments_manager = Plugin::elementor()->experiments;
+
+		// Unique case when the experiments manager is not initialized yet.
+		if ( ! $experiments_manager || ! $experiments_manager->is_feature_active( 'theme_builder_v2' ) ) {
 			return;
 		}
 
@@ -141,7 +144,10 @@ class Module extends BaseModule {
 	}
 
 	private function register_admin_menu( Admin_Menu_Manager $admin_menu_manager ) {
-		if ( ! Plugin::elementor()->experiments->is_feature_active( 'theme_builder_v2' ) ) {
+		$experiments_manager = Plugin::elementor()->experiments;
+
+		// Unique case when the experiments manager is not initialized yet.
+		if ( ! $experiments_manager || ! $experiments_manager->is_feature_active( 'theme_builder_v2' ) ) {
 			return;
 		}
 

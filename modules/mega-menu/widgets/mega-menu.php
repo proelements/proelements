@@ -1875,12 +1875,12 @@ class Mega_Menu extends Widget_Nested_Base {
 						menuItemWrapperKey = menuItemUid,
 						menuItemTitleKey = 'menu-item-title-' + menuItemUid,
 						menuItemTitleLinkKey = 'menu-item-title-link-' + menuItemUid,
-						menuItemId = 'e-n-menu-item-title-' + menuItemUid,
 						menuItemIconKey = 'menu-item-icon-' + menuItemUid,
 						menuItemLink = 'string' === typeof item['item_link'] ? item['item_link'] : item['item_link']['url'],
 						menuItemDropdownContent =  item['item_dropdown_content'],
 						currentPageClass = elementorPro.modules.megaMenu.getCurrentMenuItemClass( menuItemLink, permalinkUrl ),
 						menuItemClassList = ['e-n-menu-item-title','e-normal'];
+					let menuItemId = 'e-n-menu-item-title-' + menuItemUid;
 
 					settings['hover_animation'] && menuItemClassList.push( `elementor-animation-${ settings['hover_animation'] }` );
 

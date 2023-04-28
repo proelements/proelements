@@ -405,40 +405,6 @@ class Menu_Cart extends Base_Widget {
 		);
 
 		$this->add_control(
-			'remove_item_icon_svg',
-			[
-				'label' => esc_html__( 'Custom Icon', 'elementor-pro' ),
-				'type' => Controls_Manager::ICONS,
-				'fa4compatibility' => 'icon_active',
-				'skin_settings' => [
-					'inline' => [
-						'none' => [
-							'label' => 'Default',
-							'icon' => 'fas fa-times',
-						],
-						'icon' => [
-							'icon' => 'eicon-star',
-						],
-					],
-				],
-				'recommended' => [
-					'fa-regular' => [
-						'times-circle',
-					],
-					'fa-solid' => [
-						'times',
-						'times-circle',
-					],
-				],
-				'skin' => 'inline',
-				'label_block' => false,
-				'condition' => [
-					'show_remove_icon!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
 			'remove_item_button_position',
 			[
 				'label' => esc_html__( 'Icon Position', 'elementor-pro' ),

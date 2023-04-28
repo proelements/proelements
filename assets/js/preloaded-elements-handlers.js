@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.2 - 09-04-2023 */
+/*! pro-elements - v3.12.3 - 23-04-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
@@ -3709,11 +3709,10 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     if (this.shouldPositionContentAbove($contentContainer, headingsHeight)) {
       const contentContainerBoundingBox = $contentContainer[0].getBoundingClientRect();
       $contentContainer.css({
-        position: 'absolute',
-        bottom: headingsHeight + +this.getDistanceFromContentSetting(),
         width: isFitToContent ? 'max-content' : '',
         'max-width': contentContainerBoundingBox.width
       });
+      this.elements.$menuContent.addClass('content-above');
     }
   }
   getMenuItemContainerAbsolutePosition($contentContainer) {
@@ -3825,6 +3824,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       'max-width': '',
       width: 'var(--width)'
     });
+    this.elements.$menuContent.removeClass('content-above');
   }
   getTabContentFilterSelector(tabIndex) {
     return `[data-content="${tabIndex}"]`;
@@ -3861,17 +3861,12 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   isContentTallerThanItsBottomOffset(contentDimensions) {
     return window.innerHeight - contentDimensions.top < contentDimensions.height;
   }
-  getDistanceFromContentSetting() {
-    const currentDeviceMode = elementorFrontend.getCurrentDeviceMode(),
-      deviceSuffix = 'desktop' === currentDeviceMode ? '' : '_' + currentDeviceMode;
-    return this.getElementSettings('menu_item_title_distance_from_content' + deviceSuffix).size;
-  }
   onShowTabContent($requestedContent) {
     this.handleContentContainerPosition($requestedContent);
     super.onShowTabContent($requestedContent);
   }
-  onHideTabContent($activeContent) {
-    if ('absolute' === $activeContent.css('position')) {
+  onHideTabContent() {
+    if (this.elements.$menuContent.hasClass('content-above')) {
       this.resetContentContainersPosition();
     }
   }
@@ -3893,7 +3888,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.elements.$desktopTabTitles.on(this.getDesktopTabEvents());
     this.elements.$mobileTabTitles.on(this.getTabEvents());
     this.elements.$dropdownMenuToggle.on('click', this.onClickToggleDropdownMenu.bind(this));
-    this.elements.$tabContents.on(this.getTabContentEvents());
+    this.elements.$tabContents.on(this.getContentEvents());
+    this.elements.$menuContent.on(this.getContentEvents());
     elementorFrontend.addListenerOnce(this.getModelCID(), 'scroll', elementorFrontend.debounce(this.menuHeightController.reassignMobileMenuHeight.bind(this.menuHeightController), 250));
     elementorFrontend.elements.$window.on('elementor/nested-tabs/activate', this.reInitSwipers);
     this.resizeListener = this.handleContentContainerPosition.bind(this);
@@ -3923,6 +3919,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   unbindEvents() {
     this.elements.$desktopTabTitles.off();
     this.elements.$mobileTabTitles.off();
+    this.elements.$menuContent.off();
     this.elements.$tabContents.off();
     elementorFrontend.elements.$window.off('resize', this.resizeListener);
     if (elementorFrontend.isEditMode()) {
@@ -3947,7 +3944,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     const tabEvents = this.getTabEvents();
     return this.isNeedToOpenOnClick() ? tabEvents : this.replaceClickWithHover(tabEvents);
   }
-  getTabContentEvents() {
+  getContentEvents() {
     return this.isNeedToOpenOnClick() ? {} : {
       mouseleave: this.onMouseLeave.bind(this)
     };
@@ -3972,14 +3969,11 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   }
   onMouseTitleEnter(event) {
     event.preventDefault();
-    const itemsUnderMouseArray = Array.prototype.slice.call(document.querySelectorAll(':hover'));
-    if (this.isActiveMenuItem(itemsUnderMouseArray)) {
+    const isActiveTabTitle = event.currentTarget.classList.contains(this.getActiveClass());
+    if (isActiveTabTitle) {
       return;
     }
     this.changeActiveTab(event.currentTarget.getAttribute('data-tab'), true);
-  }
-  isActiveMenuItem(itemsUnderMouseArray) {
-    return itemsUnderMouseArray.some(item => item.classList.contains('e-active'));
   }
   onClickToggleDropdownMenu(show) {
     const settings = this.getSettings(),
@@ -4008,13 +4002,17 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     this.elements.$tabContents.removeClass(`animated ${openAnimation}`);
   }
-  isContainingMenuContentTab(itemsUnderMouse) {
-    return itemsUnderMouse.some(item => item.classList.contains('e-n-menu-items-content'));
+  isHoveredDropdownMenu(isMouseLeavingTabContent) {
+    const settings = this.getSettings(),
+      $widget = this.$element,
+      isMenuContentHover = 0 < $widget.find(`${settings.selectors.menuContent}:hover`).length,
+      isTabContentHover = 0 < $widget.find(`${settings.selectors.tabContent}:hover`).length;
+    return isTabContentHover || !isMouseLeavingTabContent && isMenuContentHover;
   }
   onMouseLeave(event) {
     event.preventDefault();
-    const itemsUnderMouseArray = Array.prototype.slice.call(document.querySelectorAll(':hover'));
-    if (this.isContainingMenuContentTab(itemsUnderMouseArray)) {
+    const isMouseLeavingTabContent = event.currentTarget.classList.contains('e-con');
+    if (this.isHoveredDropdownMenu(isMouseLeavingTabContent)) {
       return;
     }
     this.deactivateActiveTab();
