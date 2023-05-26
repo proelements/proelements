@@ -384,6 +384,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'label' => esc_html__( 'Separator Between', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '///',
+				'ai' => [
+					'active' => false,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post__meta-data span + span:before' => 'content: "{{VALUE}}"',
 				],

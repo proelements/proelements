@@ -37,6 +37,9 @@ class Slack extends Action_Base {
 				'label' => esc_html__( 'Webhook URL', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => 'https://hooks.slack.com/services/',
+				'ai' => [
+					'active' => false,
+				],
 				'label_block' => true,
 				'separator' => 'before',
 				'description' => esc_html__( 'Enter the webhook URL that will receive the form\'s submitted data.', 'elementor-pro' ) . ' ' . sprintf( '<a href="%s" target="_blank">%s</a>.', 'https://slack.com/apps/A0F7XDUAZ-incoming-webhooks/', esc_html__( 'Click here for Instructions', 'elementor-pro' ) ),
@@ -53,6 +56,9 @@ class Slack extends Action_Base {
 			[
 				'label' => esc_html__( 'Channel', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'dynamic' => [
 					'active' => true,
 				],
@@ -64,6 +70,9 @@ class Slack extends Action_Base {
 			[
 				'label' => esc_html__( 'Username', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'dynamic' => [
 					'active' => true,
 				],
@@ -75,6 +84,9 @@ class Slack extends Action_Base {
 			[
 				'label' => esc_html__( 'Pre Text', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'dynamic' => [
 					'active' => true,
 				],
@@ -86,6 +98,9 @@ class Slack extends Action_Base {
 			[
 				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'dynamic' => [
 					'active' => true,
 				],
@@ -97,6 +112,9 @@ class Slack extends Action_Base {
 			[
 				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'dynamic' => [
 					'active' => true,
 				],

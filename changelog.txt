@@ -1,12 +1,37 @@
 # PRO Elements - by PROElements.org
 
-#### 3.12.3 - 2023-04-23
+#### 3.13.2 - 2023-05-22
 
-* Fix: Document is not loading after assigning a CSS ID value to a menu item in Menu widget ([#21934](https://github.com/elementor/elementor/issues/21934))
-* Fix: Elementor CLI causes conflicts with other CLI commands when using PHP 8+ ([#21582](https://github.com/elementor/elementor/issues/21582))
-* Fix: Dropdown content area is not working as expected with Space Between and Margins in Menu widget
-* Fix: Reverted the option to set a custom icon to Remove Item in Menu Cart widget
-* Fix: Mini cart template appears as empty in various scenarios in Menu Cart widget
+* Fix: Hover settings not working as expected on Touch-Enabled devices in Menu widget ([#22258](https://github.com/elementor/elementor/issues/22258))
+
+#### 3.13.1 - 2023-05-11
+
+* Security Fix: Addressed security weaknesses in access management related functions
+* Fix: Excerpt content pulled from post content is showing with HTML tags in Loop Grid widget ([#22367](https://github.com/elementor/elementor/issues/22367))
+
+#### 3.13.0 - 2023-05-08
+
+* Tweak: Provided an option to assign excerpt automatically from post content in Post Excerpt dynamic tag ([#20256](https://github.com/elementor/elementor/issues/20256), [#21715](https://github.com/elementor/elementor/issues/21715))
+* Tweak: Added Display Conditions functionality in Editor Top bar ([#21675](https://github.com/elementor/elementor/issues/21675), [#22050](https://github.com/elementor/elementor/issues/22050))
+* Tweak: Removed `elementor_page_id` from request URLs in the WC AJAX calls ([#18675](https://github.com/elementor/elementor/issues/18675))
+* Tweak: Added icons to menu items in Mega Menu widget ([#21602](https://github.com/orgs/elementor/discussions/21602))
+* Tweak: Added keyboard accessibility to Toggle Button in WordPress Menu widget ([#2348](https://github.com/orgs/elementor/discussions/2348))
+* Tweak: Added 'Active item state' to top-level menu items for anchor links in the Menu widget
+* Tweak: Added keyboard accessibility to navigation arrows in Loop Carousel widget
+* Tweak: Added keyboard accessibility to navigation arrows in Slides widget
+* Tweak: Added keyboard accessibility to navigation arrows in Media, Testimonial and Reviews Carousel widgets
+* Tweak: Added keyboard accessibility to Table of Content widget
+* Tweak: Added keyboard accessibility to Search Form widget
+* Tweak: Added accessibility to images in Slides widget
+* Tweak: Added accessibility to images in Call To Action widget
+* Tweak: Added accessibility to images in Media Carousel widget
+* Tweak: Added accessibility to images in Gallery widget
+* Tweak: Added Lazy Load support for avatar image in Post Info widget
+* Tweak: Added Lazy Load support to various Elementor Editor and Admin images
+* Tweak: Added Lazy Load support for author image in Author Box widget
+* Tweak: Added Lazy Load support for images in Price List widget
+* Fix: Content width is affected by the widget's width when Content Width is set to Fit to Content in Menu widget ([#21842](https://github.com/elementor/elementor/issues/21842))
+* Fix: Empty value on Rows field causes an error in Products widget ([#21451](https://github.com/elementor/elementor/issues/21451))
 
 #### 3.12.2 - 2023-04-09
 

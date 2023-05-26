@@ -19,8 +19,8 @@ class Products_Renderer extends Base_Products_Renderer {
 		$this->settings = $settings;
 		$this->type = $type;
 		$this->attributes = $this->parse_attributes( [
-			'columns' => $settings['columns'] ?? self::DEFAULT_COLUMNS_AND_ROWS,
-			'rows' => $settings['rows'] ?? self::DEFAULT_COLUMNS_AND_ROWS,
+			'columns' => ! empty( $settings['columns'] ) ? $settings['columns'] : self::DEFAULT_COLUMNS_AND_ROWS,
+			'rows' => ! empty( $settings['rows'] ) ? $settings['rows'] : self::DEFAULT_COLUMNS_AND_ROWS,
 			'paginate' => $settings['paginate'],
 			'cache' => false,
 		] );

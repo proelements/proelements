@@ -45,6 +45,7 @@ class Module extends Module_Base {
 			'release_status' => Manager::RELEASE_STATUS_ALPHA,
 			'default' => Manager::STATE_INACTIVE,
 			'dependencies' => [
+				'container',
 				'nested-elements',
 			],
 		];

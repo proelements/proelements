@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
@@ -60,6 +60,76 @@ const extendDefaultHandlers = defaultHandlers => {
 elementorProFrontend.on('elementor-pro/modules/init:before', () => {
   elementorFrontend.hooks.addFilter('elementor-pro/frontend/handlers', extendDefaultHandlers);
 });
+
+/***/ }),
+
+/***/ "../assets/dev/js/frontend/utils/anchor-link.js":
+/*!******************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/anchor-link.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class AnchorLinks {
+  followMenuAnchors($anchorLinks, classes) {
+    $anchorLinks.each((index, anchorLink) => {
+      if (location.pathname === anchorLink.pathname && '' !== anchorLink.hash) {
+        this.followMenuAnchor(jQuery(anchorLink), classes);
+      }
+    });
+  }
+  followMenuAnchor($element, classes) {
+    const anchorSelector = $element[0].hash,
+      activeAnchorClass = classes.activeAnchorItem,
+      anchorClass = classes.anchorItem,
+      $targetElement = $element.hasClass(anchorClass) ? $element : $element.closest(`.${anchorClass}`);
+    let offset = -300,
+      $anchor;
+    try {
+      // `decodeURIComponent` for UTF8 characters in the hash.
+      $anchor = jQuery(decodeURIComponent(anchorSelector));
+    } catch (e) {
+      return;
+    }
+    if (!$anchor.length) {
+      return;
+    }
+    if (!$anchor.hasClass('elementor-menu-anchor')) {
+      const halfViewport = jQuery(window).height() / 2;
+      offset = -$anchor.outerHeight() + halfViewport;
+    }
+    elementorFrontend.waypoint($anchor, direction => {
+      if ('down' === direction) {
+        $targetElement.addClass(activeAnchorClass);
+        $element.attr('aria-current', 'location');
+      } else {
+        $targetElement.removeClass(activeAnchorClass);
+        $element.attr('aria-current', '');
+      }
+    }, {
+      offset: '50%',
+      triggerOnce: false
+    });
+    elementorFrontend.waypoint($anchor, direction => {
+      if ('down' === direction) {
+        $targetElement.removeClass(activeAnchorClass);
+        $element.attr('aria-current', '');
+      } else {
+        $targetElement.addClass(activeAnchorClass);
+        $element.attr('aria-current', 'location');
+      }
+    }, {
+      offset,
+      triggerOnce: false
+    });
+  }
+}
+exports["default"] = AnchorLinks;
 
 /***/ }),
 
@@ -3627,11 +3697,13 @@ exports["default"] = _default;
 
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
 var _utils = __webpack_require__(/*! ../utils */ "../modules/mega-menu/assets/js/frontend/utils.js");
+var _anchorLink = _interopRequireDefault(__webpack_require__(/*! ../../../../../../assets/dev/js/frontend/utils/anchor-link */ "../assets/dev/js/frontend/utils/anchor-link.js"));
 class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   constructor() {
     super(...arguments);
@@ -3652,6 +3724,9 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     settings.selectors.dropdownMenuToggle = '.e-n-menu-toggle';
     settings.selectors.menuContent = '.e-n-menu-items-content';
     settings.selectors.contentContainer = '.e-n-menu-items-content .e-con';
+    settings.selectors.anchorLink = '.e-anchor a';
+    settings.classes.anchorItem = 'e-anchor';
+    settings.classes.activeAnchorItem = 'e-current';
     return settings;
   }
   getDefaultElements() {
@@ -3664,6 +3739,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     elements.$desktopTabTitles = this.$element.find(selectors.desktopTabTitle);
     elements.$mobileTabTitles = this.$element.find(selectors.mobileTabTitle);
     elements.$contentContainers = this.$element.find(selectors.contentContainer);
+    elements.$anchorLink = this.$element.find(selectors.anchorLink);
     return elements;
   }
   dropdownMenuHeightControllerConfig() {
@@ -3702,8 +3778,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     if (isFitToContent) {
       const direction = elementorFrontend.config.is_rtl ? 'right' : 'left',
-        menuItemContainerOffset = this.getMenuItemContainerAbsolutePosition($contentContainer);
-      this.elements.$menuContent.css(direction, menuItemContainerOffset);
+        menuItemContainerOffset = 0 < this.getMenuItemContainerAbsolutePosition($contentContainer) ? this.getMenuItemContainerAbsolutePosition($contentContainer) : 0;
+      $contentContainer.css(direction, menuItemContainerOffset);
     }
     const headingsHeight = this.elements.$headingContainer[0].getBoundingClientRect().height;
     if (this.shouldPositionContentAbove($contentContainer, headingsHeight)) {
@@ -3731,7 +3807,6 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       default:
         menuItemContainerOffset = this.getCenteredContainerOffset(contentContainerWidth, titleBoundingBox);
     }
-    menuItemContainerOffset -= this.getMenuContainerOffset();
     return menuItemContainerOffset;
   }
   getCenteredContainerOffset(contentContainerWidth, titleBoundingBox) {
@@ -3844,11 +3919,21 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
         display: 'var(--display)'
       });
       $requestedContent.removeAttr('hidden display');
+      if (elementorFrontend.isEditMode()) {
+        this.activeContainerWidthListener($requestedContent);
+      }
     }
   }
   deactivateActiveTab(tabIndex) {
+    const settings = this.getSettings(),
+      activeClass = settings.classes.active,
+      activeContentFilter = tabIndex ? this.getTabContentFilterSelector(tabIndex) : '.' + activeClass,
+      $activeContent = this.elements.$tabContents.filter(activeContentFilter);
     super.deactivateActiveTab(tabIndex);
     this.removeAnimationFromContentIfNeeded();
+    if (elementorFrontend.isEditMode() && !!$activeContent.length) {
+      this.observedContainer?.unobserve($activeContent[0]);
+    }
   }
   shouldPositionContentAbove($contentContainer) {
     let offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -3954,12 +4039,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     return this.isEdit || this.isMobileDevice() || 'hover' !== elementSettings.open_on || 'dropdown' === elementSettings.item_layout;
   }
   isMobileDevice() {
-    if (elementorFrontend.utils.environment.isTouchDevice !== undefined) {
-      return elementorFrontend.utils.environment.isTouchDevice;
-    }
-    // Core 3.10 & 3.11 backward compatability
-    const nonMobileDevices = ['mobile', 'mobile_extra', 'tablet', 'tablet_extra'];
-    return nonMobileDevices.includes(elementorFrontend.getCurrentDeviceMode());
+    const mobileDevices = ['mobile', 'mobile_extra', 'tablet', 'tablet_extra'];
+    return mobileDevices.includes(elementorFrontend.getCurrentDeviceMode());
   }
   replaceClickWithHover(tabEvents) {
     delete tabEvents.click;
@@ -4043,9 +4124,27 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   onInit() {
     this.menuHeightController = new elementorProFrontend.utils.DropdownMenuHeightController(this.dropdownMenuHeightControllerConfig());
     super.onInit(...arguments);
+    if (!elementorFrontend.isEditMode()) {
+      const classes = this.getSettings('classes');
+      this.anchorLinks = new _anchorLink.default();
+      this.anchorLinks.followMenuAnchors(this.elements.$anchorLink, classes);
+    }
   }
   getPropsThatTriggerContentPositionCalculations() {
     return ['content_horizontal_position', 'content_position', 'item_position_horizontal', 'content_width', 'item_layout'];
+  }
+  activeContainerWidthListener($activeContainer) {
+    let previousWidth = 0;
+    this.observedContainer = new ResizeObserver(activeContainer => {
+      const currentWidth = activeContainer[0].borderBoxSize?.[0].inlineSize;
+      if (!!currentWidth && currentWidth !== previousWidth) {
+        previousWidth = currentWidth;
+        if (0 !== previousWidth) {
+          this.handleContentContainerPosition();
+        }
+      }
+    });
+    this.observedContainer.observe($activeContainer[0]);
   }
   onElementChange(propertyName) {
     if (this.getPropsThatTriggerContentPositionCalculations().includes(propertyName)) {
@@ -4067,7 +4166,7 @@ exports["default"] = MegaMenu;
 /*!*************************************************************************************!*\
   !*** ../modules/mega-menu/assets/js/frontend/handlers/stretch-menu-item-content.js ***!
   \*************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 
 
@@ -4075,16 +4174,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _utils = __webpack_require__(/*! ../utils */ "../modules/mega-menu/assets/js/frontend/utils.js");
 class StretchedMenuItemContent extends elementorModules.frontend.handlers.StretchedElement {
   getStretchedClass() {
     return 'elementor-widget-n-menu';
-  }
-  getStretchSettingName() {
-    return 'content_width';
-  }
-  getStretchActiveValue() {
-    return 'full_width';
   }
   getStretchElementForConfig() {
     return this.$element.find('.e-n-menu-items-content');
@@ -4100,15 +4192,8 @@ class StretchedMenuItemContent extends elementorModules.frontend.handlers.Stretc
   isStretchSettingEnabled() {
     return true;
   }
-  stretch() {
-    if (!this.isStretchSettingEnabled()) {
-      return;
-    }
-    if (this.$element.hasClass('e-fit_to_content') && !(0, _utils.isMenuInDropdownMode)(this.getElementSettings())) {
-      this.stretchElement.reset();
-      return;
-    }
-    this.stretchElement.stretch();
+  isActive() {
+    return true;
   }
 }
 exports["default"] = StretchedMenuItemContent;
@@ -4178,14 +4263,16 @@ exports["default"] = _default;
 /*!*******************************************************************!*\
   !*** ../modules/nav-menu/assets/js/frontend/handlers/nav-menu.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+var _anchorLink = _interopRequireDefault(__webpack_require__(/*! ../../../../../../assets/dev/js/frontend/utils/anchor-link */ "../assets/dev/js/frontend/utils/anchor-link.js"));
 var _default = elementorModules.frontend.handlers.Base.extend({
   stretchElement: null,
   getDefaultSettings() {
@@ -4195,6 +4282,10 @@ var _default = elementorModules.frontend.handlers.Base.extend({
         anchorLink: '.elementor-nav-menu--main .elementor-item-anchor',
         dropdownMenu: '.elementor-nav-menu__container.elementor-nav-menu--dropdown',
         menuToggle: '.elementor-menu-toggle'
+      },
+      classes: {
+        anchorItem: 'elementor-item-anchor',
+        activeAnchorItem: 'elementor-item-active'
       }
     };
   },
@@ -4231,9 +4322,9 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     if (!this.elements.$menu.length) {
       return;
     }
-    this.elements.$menuToggle.on('click', this.toggleMenu.bind(this));
+    this.elements.$menuToggle.on('click', this.toggleMenu.bind(this)).on('keyup', this.triggerClickOnEnterSpace.bind(this));
     if (this.getElementSettings('full_width')) {
-      this.elements.$dropdownMenuFinalItems.on('click', this.toggleMenu.bind(this, false));
+      this.elements.$dropdownMenuFinalItems.on('click', this.toggleMenu.bind(this, false)).on('keyup', this.triggerClickOnEnterSpace.bind(this));
     }
     elementorFrontend.addListenerOnce(this.$element.data('model-cid'), 'resize', this.stretchMenu);
     elementorFrontend.addListenerOnce(this.$element.data('model-cid'), 'scroll', elementorFrontend.debounce(this.menuHeightController.reassignMobileMenuHeight.bind(this.menuHeightController), 250));
@@ -4261,51 +4352,13 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       this.stretchElement.stretch();
     }
   },
-  followMenuAnchors() {
-    var self = this;
-    self.elements.$anchorLink.each(function () {
-      if (location.pathname === this.pathname && '' !== this.hash) {
-        self.followMenuAnchor(jQuery(this));
-      }
-    });
-  },
-  followMenuAnchor($element) {
-    const anchorSelector = $element[0].hash;
-    let offset = -300,
-      $anchor;
-    try {
-      // `decodeURIComponent` for UTF8 characters in the hash.
-      $anchor = jQuery(decodeURIComponent(anchorSelector));
-    } catch (e) {
-      return;
+  triggerClickOnEnterSpace(event) {
+    const ENTER_KEY = 13,
+      SPACE_KEY = 32;
+    if (ENTER_KEY === event.keyCode || SPACE_KEY === event.keyCode) {
+      event.currentTarget.click();
+      event.stopPropagation();
     }
-    if (!$anchor.length) {
-      return;
-    }
-    if (!$anchor.hasClass('elementor-menu-anchor')) {
-      var halfViewport = jQuery(window).height() / 2;
-      offset = -$anchor.outerHeight() + halfViewport;
-    }
-    elementorFrontend.waypoint($anchor, function (direction) {
-      if ('down' === direction) {
-        $element.addClass('elementor-item-active');
-      } else {
-        $element.removeClass('elementor-item-active');
-      }
-    }, {
-      offset: '50%',
-      triggerOnce: false
-    });
-    elementorFrontend.waypoint($anchor, function (direction) {
-      if ('down' === direction) {
-        $element.removeClass('elementor-item-active');
-      } else {
-        $element.addClass('elementor-item-active');
-      }
-    }, {
-      offset,
-      triggerOnce: false
-    });
   },
   stretchMenu() {
     if (this.getElementSettings('full_width')) {
@@ -4340,7 +4393,9 @@ var _default = elementorModules.frontend.handlers.Base.extend({
     this.initStretchElement();
     this.stretchMenu();
     if (!elementorFrontend.isEditMode()) {
-      this.followMenuAnchors();
+      const classes = this.getSettings('classes');
+      this.anchorLinks = new _anchorLink.default();
+      this.anchorLinks.followMenuAnchors(this.elements.$anchorLink, classes);
     }
   },
   onElementChange(propertyName) {
@@ -6742,8 +6797,8 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   bindEvents() {
     const elementSettings = this.getElementSettings();
     if (elementSettings.minimize_box) {
-      this.elements.$expandButton.on('click', () => this.expandBox());
-      this.elements.$collapseButton.on('click', () => this.collapseBox());
+      this.elements.$expandButton.on('click', () => this.expandBox()).on('keyup', event => this.triggerClickOnEnterSpace(event));
+      this.elements.$collapseButton.on('click', () => this.collapseBox()).on('keyup', event => this.triggerClickOnEnterSpace(event));
     }
     if (elementSettings.collapse_subitems) {
       this.elements.$listItems.on('hover', event => jQuery(event.target).slideToggle());
@@ -7014,17 +7069,27 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   expandBox() {
     const boxHeight = this.getCurrentDeviceSetting('min_height');
     this.$element.removeClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.slideDown();
+    this.elements.$tocBody.attr('aria-expanded', 'true').slideDown();
 
     // Return container to the full height in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', boxHeight.size + boxHeight.unit);
+    this.elements.$collapseButton.trigger('focus');
   }
   collapseBox() {
     this.$element.addClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.slideUp();
+    this.elements.$tocBody.attr('aria-expanded', 'false').slideUp();
 
     // Close container in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', '0px');
+    this.elements.$expandButton.trigger('focus');
+  }
+  triggerClickOnEnterSpace(event) {
+    const ENTER_KEY = 13,
+      SPACE_KEY = 32;
+    if (ENTER_KEY === event.keyCode || SPACE_KEY === event.keyCode) {
+      event.currentTarget.click();
+      event.stopPropagation();
+    }
   }
   onInit() {
     super.onInit(...arguments);
@@ -7236,33 +7301,37 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       $toggle = self.elements.$toggle,
       skin = this.getElementSettings('skin'),
       classes = this.getSettings('classes');
-    const toggleFullScreenSearch = () => {
-      $container.toggleClass(classes.isFullScreen).toggleClass(classes.lightbox);
+    const openFullScreenSearch = () => {
+      $container.addClass(classes.isFullScreen).addClass(classes.lightbox);
       $input.trigger('focus');
     };
+    const closeFullScreenSearch = () => {
+      $container.removeClass(classes.isFullScreen).removeClass(classes.lightbox);
+      $toggle.trigger('focus');
+    };
+    const triggerClickOnEnterSpace = event => {
+      const ENTER_KEY = 13,
+        SPACE_KEY = 32;
+      if (ENTER_KEY === event.keyCode || SPACE_KEY === event.keyCode) {
+        event.currentTarget.click();
+        event.stopPropagation();
+      }
+    };
     if ('full_screen' === skin) {
-      // Activate full-screen mode on mouse click.
-      $toggle.on('click', function () {
-        toggleFullScreenSearch();
-      });
+      // Activate full-screen mode on mouse click or keyboard Enter & Space keyup.
+      $toggle.on('click', () => openFullScreenSearch()).on('keyup', event => triggerClickOnEnterSpace(event));
 
-      // Activate full-screen mode on Enter keyup.
-      $toggle.on('keyup', function (event) {
-        const ENTER_KEY = 13;
-        if (ENTER_KEY === event.keyCode) {
-          toggleFullScreenSearch();
-        }
-      });
-
-      // Deactivate full-screen mode on click or on esc.
+      // Deactivate full-screen mode when clicking outside the container.
       $container.on('click', function (event) {
         if ($container.hasClass(classes.isFullScreen) && $container[0] === event.target) {
           $container.removeClass(classes.isFullScreen).removeClass(classes.lightbox);
         }
       });
-      $closeButton.on('click', function () {
-        $container.removeClass(classes.isFullScreen).removeClass(classes.lightbox);
-      });
+
+      // Deactivate full-screen mode on mouse click or keyboard Enter & Space keyup.
+      $closeButton.on('click', () => closeFullScreenSearch()).on('keyup', event => triggerClickOnEnterSpace(event));
+
+      // Deactivate full-screen mode on keyboard Esc keyup.
       elementorFrontend.elements.$document.on('keyup', function (event) {
         const ESC_KEY = 27;
         if (ESC_KEY === event.keyCode) {
@@ -8394,168 +8463,11 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-class ImageCarousel extends elementorModules.frontend.handlers.SwiperBase {
+class ImageCarousel extends elementorModules.frontend.handlers.CarouselBase {
   getDefaultSettings() {
-    return {
-      selectors: {
-        carousel: '.elementor-image-carousel-wrapper',
-        slideContent: '.swiper-slide'
-      }
-    };
-  }
-  getDefaultElements() {
-    const selectors = this.getSettings('selectors');
-    const elements = {
-      $swiperContainer: this.$element.find(selectors.carousel)
-    };
-    elements.$slides = elements.$swiperContainer.find(selectors.slideContent);
-    return elements;
-  }
-  getSwiperSettings() {
-    const elementSettings = this.getElementSettings(),
-      slidesToShow = +elementSettings.slides_to_show || 3,
-      isSingleSlide = 1 === slidesToShow,
-      elementorBreakpoints = elementorFrontend.config.responsive.activeBreakpoints,
-      defaultSlidesToShowMap = {
-        mobile: 1,
-        tablet: isSingleSlide ? 1 : 2
-      };
-    const swiperOptions = {
-      slidesPerView: slidesToShow,
-      loop: 'yes' === elementSettings.infinite,
-      speed: elementSettings.speed,
-      handleElementorBreakpoints: true
-    };
-    swiperOptions.breakpoints = {};
-    let lastBreakpointSlidesToShowValue = slidesToShow;
-    Object.keys(elementorBreakpoints).reverse().forEach(breakpointName => {
-      // Tablet has a specific default `slides_to_show`.
-      const defaultSlidesToShow = defaultSlidesToShowMap[breakpointName] ? defaultSlidesToShowMap[breakpointName] : lastBreakpointSlidesToShowValue;
-      swiperOptions.breakpoints[elementorBreakpoints[breakpointName].value] = {
-        slidesPerView: +elementSettings['slides_to_show_' + breakpointName] || defaultSlidesToShow,
-        slidesPerGroup: +elementSettings['slides_to_scroll_' + breakpointName] || 1
-      };
-      if (elementSettings.image_spacing_custom) {
-        swiperOptions.breakpoints[elementorBreakpoints[breakpointName].value].spaceBetween = this.getSpaceBetween(breakpointName);
-      }
-      lastBreakpointSlidesToShowValue = +elementSettings['slides_to_show_' + breakpointName] || defaultSlidesToShow;
-    });
-    if ('yes' === elementSettings.autoplay) {
-      swiperOptions.autoplay = {
-        delay: elementSettings.autoplay_speed,
-        disableOnInteraction: 'yes' === elementSettings.pause_on_interaction
-      };
-    }
-    if (isSingleSlide) {
-      swiperOptions.effect = elementSettings.effect;
-      if ('fade' === elementSettings.effect) {
-        swiperOptions.fadeEffect = {
-          crossFade: true
-        };
-      }
-    } else {
-      swiperOptions.slidesPerGroup = +elementSettings.slides_to_scroll || 1;
-    }
-    if (elementSettings.image_spacing_custom) {
-      swiperOptions.spaceBetween = this.getSpaceBetween();
-    }
-    const showArrows = 'arrows' === elementSettings.navigation || 'both' === elementSettings.navigation,
-      showDots = 'dots' === elementSettings.navigation || 'both' === elementSettings.navigation;
-    if (showArrows) {
-      swiperOptions.navigation = {
-        prevEl: '.elementor-swiper-button-prev',
-        nextEl: '.elementor-swiper-button-next'
-      };
-    }
-    if (showDots) {
-      swiperOptions.pagination = {
-        el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true
-      };
-    }
-    if ('yes' === elementSettings.lazyload) {
-      swiperOptions.lazy = {
-        loadPrevNext: true,
-        loadPrevNextAmount: 1
-      };
-    }
-    return swiperOptions;
-  }
-  async onInit() {
-    super.onInit(...arguments);
-    if (!this.elements.$swiperContainer.length || 2 > this.elements.$slides.length) {
-      return;
-    }
-    const Swiper = elementorFrontend.utils.swiper;
-    this.swiper = await new Swiper(this.elements.$swiperContainer, this.getSwiperSettings());
-
-    // Expose the swiper instance in the frontend
-    this.elements.$swiperContainer.data('swiper', this.swiper);
-    const elementSettings = this.getElementSettings();
-    if ('yes' === elementSettings.pause_on_hover) {
-      this.togglePauseOnHover(true);
-    }
-  }
-  updateSwiperOption(propertyName) {
-    const elementSettings = this.getElementSettings(),
-      newSettingValue = elementSettings[propertyName],
-      params = this.swiper.params;
-
-    // Handle special cases where the value to update is not the value that the Swiper library accepts.
-    switch (propertyName) {
-      case 'autoplay_speed':
-        params.autoplay.delay = newSettingValue;
-        break;
-      case 'speed':
-        params.speed = newSettingValue;
-        break;
-    }
-    this.swiper.update();
-  }
-  getChangeableProperties() {
-    return {
-      pause_on_hover: 'pauseOnHover',
-      autoplay_speed: 'delay',
-      speed: 'speed',
-      arrows_position: 'arrows_position' // Not a Swiper setting.
-    };
-  }
-
-  onElementChange(propertyName) {
-    if (0 === propertyName.indexOf('image_spacing_custom')) {
-      this.updateSpaceBetween(propertyName);
-      return;
-    }
-    const changeableProperties = this.getChangeableProperties();
-    if (changeableProperties[propertyName]) {
-      // 'pause_on_hover' is implemented by the handler with event listeners, not the Swiper library.
-      if ('pause_on_hover' === propertyName) {
-        const newSettingValue = this.getElementSettings('pause_on_hover');
-        this.togglePauseOnHover('yes' === newSettingValue);
-      } else {
-        this.updateSwiperOption(propertyName);
-      }
-    }
-  }
-  onEditSettingsChange(propertyName) {
-    if ('activeItemIndex' === propertyName) {
-      this.swiper.slideToLoop(this.getEditSettings('activeItemIndex') - 1);
-    }
-  }
-  getSpaceBetween() {
-    let device = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    return elementorFrontend.utils.controls.getResponsiveControlValue(this.getElementSettings(), 'image_spacing_custom', 'size', device) || 0;
-  }
-  updateSpaceBetween(propertyName) {
-    const deviceMatch = propertyName.match('image_spacing_custom_(.*)'),
-      device = deviceMatch ? deviceMatch[1] : 'desktop',
-      newSpaceBetween = this.getSpaceBetween(device);
-    if ('desktop' !== device) {
-      this.swiper.params.breakpoints[elementorFrontend.config.responsive.activeBreakpoints[device].value].spaceBetween = newSpaceBetween;
-    }
-    this.swiper.params.spaceBetween = newSpaceBetween;
-    this.swiper.update();
+    const settings = super.getDefaultSettings();
+    settings.selectors.carousel = '.elementor-image-carousel-wrapper';
+    return settings;
   }
 }
 exports["default"] = ImageCarousel;

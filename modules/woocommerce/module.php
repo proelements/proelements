@@ -536,25 +536,6 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * Add Query Arg to WC Ajax Endpoint.
-	 *
-	 * Adds the `elementor_page_id` query arg to the WooCommerce ajax endpoint, so we always know what page
-	 * an ajax call is coming from - used to load widgets before loading some WC content by ajax.
-	 * e.g. `?wc-ajax=%%endpoint%%&elementor_page_id=160`
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param $url
-	 * @return string
-	 */
-	public function add_query_arg_to_wc_ajax_endpoint( $url ) {
-		$url_components = wp_parse_url( $url );
-		parse_str( $url_components['query'], $url_query );
-		$url_query['elementor_page_id'] = get_queried_object_id();
-		return add_query_arg( $url_query, $url_components['path'] );
-	}
-
-	/**
 	 * Load Widget Before WooCommerce Ajax.
 	 *
 	 * When outputting the complex WooCommerce shortcodes (which we use in our widgets) e.g. Checkout, Cart, etc. WC
@@ -562,9 +543,8 @@ class Module extends Module_Base {
 	 * be autofilled by the current user's browser e.g. the Payment section holding the "Place order" button.
 	 *
 	 * This function runs before these ajax calls. Using the `elementorPageId` and `elementorWidgetId` querystring
-	 * appended to the forms `_wp_http_referer` url field, or the `elementor_page_id` querystring added to the
-	 * wc-ajax endpoint, it loads the relevant Elementor widget. The rendered Elementor widget replaces the
-	 * default WooCommerce template used to refresh WooCommerce elements in the page.
+	 * appended to the forms `_wp_http_referer` url field, or the referer page ID, it loads the relevant Elementor widget.
+	 * The rendered Elementor widget replaces the default WooCommerce template used to refresh WooCommerce elements in the page.
 	 *
 	 * This is necessary for example in the Checkout Payment section where we modify the Terms & Conditions text
 	 * using settings from the widget or when updating shipping methods on the Cart.
@@ -620,10 +600,8 @@ class Module extends Module_Base {
 			}
 		}
 
-		// If the page ID is not found in the referrer query string, the page ID is fetched from the `elementor_page_id` query string we added to WooCommerce ajax endpoint.
-		// e.g. `?wc-ajax=update_shipping_method&elementor_page_id=160`
 		if ( ! $page_id ) {
-			$page_id = ProUtils::_unstable_get_super_global_value( $_GET, 'elementor_page_id' );
+			$page_id = url_to_postid( wp_get_referer() );
 		}
 
 		// Bail if no `$page_id`.
@@ -639,7 +617,7 @@ class Module extends Module_Base {
 			return;
 		}
 
-		// Setup `elementor_page_id` as the WP global $post, so is available to our widgets.
+		// Setup $page_id as the WP global $post, so is available to our widgets.
 		$post = get_post( $page_id, OBJECT );
 		setup_postdata( $post );
 
@@ -740,7 +718,12 @@ class Module extends Module_Base {
 		$ajax->register_ajax_action( 'pro_woocommerce_mock_notices', [ $this, 'woocommerce_mock_notices' ] );
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function woocommerce_mock_notices( $data ) {
+		$document = ProUtils::_unstable_get_document_for_edit( $data['editor_post_id'] );
+
 		if ( in_array( 'wc_error', $data['notice_elements'], true ) ) {
 			$notice_message = sprintf(
 				'%1$s <a href="#" class="wc-backward">%2$s</a>',
@@ -1337,9 +1320,6 @@ class Module extends Module_Base {
 		add_filter( 'elementor/document/config', [ $this, 'add_loop_recommended_widgets' ], 11, 2 );
 
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localized_settings_frontend' ] );
-
-		// Add `elementor_page_id` query arg to WC Ajax Endpoint.
-		add_filter( 'woocommerce_ajax_get_endpoint', [ $this, 'add_query_arg_to_wc_ajax_endpoint' ] );
 
 		// Load our widget Before WooCommerce Ajax. See the variable's PHPDoc for details.
 		add_action( 'woocommerce_checkout_update_order_review', [ $this, 'load_widget_before_wc_ajax' ] );

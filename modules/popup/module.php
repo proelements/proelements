@@ -10,6 +10,7 @@ use Elementor\Core\DynamicTags\Manager as DynamicTagsManager;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Core\Behaviors\Feature_Lock;
+use ElementorPro\Core\Utils;
 use ElementorPro\License\API;
 use ElementorPro\Modules\Popup\AdminMenuItems\Popups_Menu_Item;
 use ElementorPro\Modules\Popup\AdminMenuItems\Popups_Promotion_Menu_Item;
@@ -115,11 +116,14 @@ class Module extends Module_Base {
 		return [];
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function save_display_settings( $data ) {
-		/** @var Document $popup_document */
-		$popup_document = Plugin::elementor()->documents->get( $data['editor_post_id'] );
+		$document = Utils::_unstable_get_document_for_edit( $data['editor_post_id'] );
 
-		$popup_document->save_display_settings_data( $data['settings'] );
+		/** @var Document $document */
+		$document->save_display_settings_data( $data['settings'] );
 	}
 
 	/**

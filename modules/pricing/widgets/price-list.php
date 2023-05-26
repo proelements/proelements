@@ -473,7 +473,7 @@ class Price_List extends Base_Widget {
 			$image_src = $image_src[0];
 		}
 
-		return sprintf( '<img src="%s" alt="%s" />', $image_src, $item['title'] );
+		return sprintf( '<img src="%s" alt="%s" loading="lazy" />', $image_src, $item['title'] );
 	}
 
 	private function render_item_header( $item ) {
@@ -600,7 +600,7 @@ class Price_List extends Base_Widget {
 						var image_url = elementor.imagesManager.getImageUrl( image );
 
 						if ( image_url ) { #>
-							<div class="elementor-price-list-image"><img src="{{ image_url }}" alt="{{ item.title }}"></div>
+							<div class="elementor-price-list-image"><img src="{{ image_url }}" alt="{{ item.title }}" loading="lazy" /></div>
 						<# } #>
 
 					<# } #>

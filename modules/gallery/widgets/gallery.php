@@ -705,7 +705,7 @@ class Gallery extends Base_Widget {
 			[
 				'name' => 'overlay_background_hover',
 				'types' => [ 'classic', 'gradient' ],
-				'selector' => '{{WRAPPER}} .e-gallery-item:hover .elementor-gallery-item__overlay',
+				'selector' => '{{WRAPPER}} .e-gallery-item:hover .elementor-gallery-item__overlay, {{WRAPPER}} .e-gallery-item:focus .elementor-gallery-item__overlay',
 				'exclude' => [ 'image' ],
 				'fields_options' => [
 					'background' => [
@@ -1507,6 +1507,10 @@ class Gallery extends Base_Widget {
 
 				if ( $is_multiple ) {
 					$this->add_render_attribute( 'gallery_item_' . $unique_index, [ 'data-e-gallery-tags' => implode( ',', $tags ) ] );
+				}
+
+				if ( $has_title && 'div' === $gallery_item_tag ) {
+					$this->add_render_attribute( 'gallery_item_' . $unique_index, [ 'tabindex' => '0' ] );
 				}
 
 				if ( 'a' === $gallery_item_tag ) {

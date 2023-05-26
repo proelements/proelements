@@ -823,11 +823,14 @@ class Author_Box extends Base {
 		}
 
 		if ( $print_avatar ) {
-			$this->add_render_attribute( 'avatar', 'src', esc_url( $author['avatar'] ) );
-
-			if ( ! empty( $author['display_name'] ) ) {
-				$this->add_render_attribute( 'avatar', 'alt', $author['display_name'] );
-			}
+			$this->add_render_attribute(
+				'avatar',
+				[
+					'src' => esc_url( $author['avatar'] ),
+					'alt' => ( ! empty( $author['display_name'] ) ) ? $author['display_name'] : esc_html__( 'Author picture', 'elementor-pro' ),
+					'loading' => 'lazy',
+				]
+			);
 		}
 
 		?>

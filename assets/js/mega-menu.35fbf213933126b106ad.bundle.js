@@ -1,6 +1,76 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu"],{
+
+/***/ "../assets/dev/js/frontend/utils/anchor-link.js":
+/*!******************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/anchor-link.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class AnchorLinks {
+  followMenuAnchors($anchorLinks, classes) {
+    $anchorLinks.each((index, anchorLink) => {
+      if (location.pathname === anchorLink.pathname && '' !== anchorLink.hash) {
+        this.followMenuAnchor(jQuery(anchorLink), classes);
+      }
+    });
+  }
+  followMenuAnchor($element, classes) {
+    const anchorSelector = $element[0].hash,
+      activeAnchorClass = classes.activeAnchorItem,
+      anchorClass = classes.anchorItem,
+      $targetElement = $element.hasClass(anchorClass) ? $element : $element.closest(`.${anchorClass}`);
+    let offset = -300,
+      $anchor;
+    try {
+      // `decodeURIComponent` for UTF8 characters in the hash.
+      $anchor = jQuery(decodeURIComponent(anchorSelector));
+    } catch (e) {
+      return;
+    }
+    if (!$anchor.length) {
+      return;
+    }
+    if (!$anchor.hasClass('elementor-menu-anchor')) {
+      const halfViewport = jQuery(window).height() / 2;
+      offset = -$anchor.outerHeight() + halfViewport;
+    }
+    elementorFrontend.waypoint($anchor, direction => {
+      if ('down' === direction) {
+        $targetElement.addClass(activeAnchorClass);
+        $element.attr('aria-current', 'location');
+      } else {
+        $targetElement.removeClass(activeAnchorClass);
+        $element.attr('aria-current', '');
+      }
+    }, {
+      offset: '50%',
+      triggerOnce: false
+    });
+    elementorFrontend.waypoint($anchor, direction => {
+      if ('down' === direction) {
+        $targetElement.removeClass(activeAnchorClass);
+        $element.attr('aria-current', '');
+      } else {
+        $targetElement.addClass(activeAnchorClass);
+        $element.attr('aria-current', 'location');
+      }
+    }, {
+      offset,
+      triggerOnce: false
+    });
+  }
+}
+exports["default"] = AnchorLinks;
+
+/***/ }),
 
 /***/ "../modules/mega-menu/assets/js/frontend/handlers/mega-menu.js":
 /*!*********************************************************************!*\
@@ -10,11 +80,13 @@
 
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
 var _utils = __webpack_require__(/*! ../utils */ "../modules/mega-menu/assets/js/frontend/utils.js");
+var _anchorLink = _interopRequireDefault(__webpack_require__(/*! ../../../../../../assets/dev/js/frontend/utils/anchor-link */ "../assets/dev/js/frontend/utils/anchor-link.js"));
 class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   constructor() {
     super(...arguments);
@@ -35,6 +107,9 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     settings.selectors.dropdownMenuToggle = '.e-n-menu-toggle';
     settings.selectors.menuContent = '.e-n-menu-items-content';
     settings.selectors.contentContainer = '.e-n-menu-items-content .e-con';
+    settings.selectors.anchorLink = '.e-anchor a';
+    settings.classes.anchorItem = 'e-anchor';
+    settings.classes.activeAnchorItem = 'e-current';
     return settings;
   }
   getDefaultElements() {
@@ -47,6 +122,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     elements.$desktopTabTitles = this.$element.find(selectors.desktopTabTitle);
     elements.$mobileTabTitles = this.$element.find(selectors.mobileTabTitle);
     elements.$contentContainers = this.$element.find(selectors.contentContainer);
+    elements.$anchorLink = this.$element.find(selectors.anchorLink);
     return elements;
   }
   dropdownMenuHeightControllerConfig() {
@@ -85,8 +161,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     if (isFitToContent) {
       const direction = elementorFrontend.config.is_rtl ? 'right' : 'left',
-        menuItemContainerOffset = this.getMenuItemContainerAbsolutePosition($contentContainer);
-      this.elements.$menuContent.css(direction, menuItemContainerOffset);
+        menuItemContainerOffset = 0 < this.getMenuItemContainerAbsolutePosition($contentContainer) ? this.getMenuItemContainerAbsolutePosition($contentContainer) : 0;
+      $contentContainer.css(direction, menuItemContainerOffset);
     }
     const headingsHeight = this.elements.$headingContainer[0].getBoundingClientRect().height;
     if (this.shouldPositionContentAbove($contentContainer, headingsHeight)) {
@@ -114,7 +190,6 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       default:
         menuItemContainerOffset = this.getCenteredContainerOffset(contentContainerWidth, titleBoundingBox);
     }
-    menuItemContainerOffset -= this.getMenuContainerOffset();
     return menuItemContainerOffset;
   }
   getCenteredContainerOffset(contentContainerWidth, titleBoundingBox) {
@@ -227,11 +302,21 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
         display: 'var(--display)'
       });
       $requestedContent.removeAttr('hidden display');
+      if (elementorFrontend.isEditMode()) {
+        this.activeContainerWidthListener($requestedContent);
+      }
     }
   }
   deactivateActiveTab(tabIndex) {
+    const settings = this.getSettings(),
+      activeClass = settings.classes.active,
+      activeContentFilter = tabIndex ? this.getTabContentFilterSelector(tabIndex) : '.' + activeClass,
+      $activeContent = this.elements.$tabContents.filter(activeContentFilter);
     super.deactivateActiveTab(tabIndex);
     this.removeAnimationFromContentIfNeeded();
+    if (elementorFrontend.isEditMode() && !!$activeContent.length) {
+      this.observedContainer?.unobserve($activeContent[0]);
+    }
   }
   shouldPositionContentAbove($contentContainer) {
     let offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -337,12 +422,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     return this.isEdit || this.isMobileDevice() || 'hover' !== elementSettings.open_on || 'dropdown' === elementSettings.item_layout;
   }
   isMobileDevice() {
-    if (elementorFrontend.utils.environment.isTouchDevice !== undefined) {
-      return elementorFrontend.utils.environment.isTouchDevice;
-    }
-    // Core 3.10 & 3.11 backward compatability
-    const nonMobileDevices = ['mobile', 'mobile_extra', 'tablet', 'tablet_extra'];
-    return nonMobileDevices.includes(elementorFrontend.getCurrentDeviceMode());
+    const mobileDevices = ['mobile', 'mobile_extra', 'tablet', 'tablet_extra'];
+    return mobileDevices.includes(elementorFrontend.getCurrentDeviceMode());
   }
   replaceClickWithHover(tabEvents) {
     delete tabEvents.click;
@@ -426,9 +507,27 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   onInit() {
     this.menuHeightController = new elementorProFrontend.utils.DropdownMenuHeightController(this.dropdownMenuHeightControllerConfig());
     super.onInit(...arguments);
+    if (!elementorFrontend.isEditMode()) {
+      const classes = this.getSettings('classes');
+      this.anchorLinks = new _anchorLink.default();
+      this.anchorLinks.followMenuAnchors(this.elements.$anchorLink, classes);
+    }
   }
   getPropsThatTriggerContentPositionCalculations() {
     return ['content_horizontal_position', 'content_position', 'item_position_horizontal', 'content_width', 'item_layout'];
+  }
+  activeContainerWidthListener($activeContainer) {
+    let previousWidth = 0;
+    this.observedContainer = new ResizeObserver(activeContainer => {
+      const currentWidth = activeContainer[0].borderBoxSize?.[0].inlineSize;
+      if (!!currentWidth && currentWidth !== previousWidth) {
+        previousWidth = currentWidth;
+        if (0 !== previousWidth) {
+          this.handleContentContainerPosition();
+        }
+      }
+    });
+    this.observedContainer.observe($activeContainer[0]);
   }
   onElementChange(propertyName) {
     if (this.getPropsThatTriggerContentPositionCalculations().includes(propertyName)) {
@@ -473,4 +572,4 @@ function isMenuInDropdownMode(elementSettings) {
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu.62a19130f37a7b264bf7.bundle.js.map
+//# sourceMappingURL=mega-menu.35fbf213933126b106ad.bundle.js.map

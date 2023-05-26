@@ -121,6 +121,10 @@ class Mega_Menu extends Widget_Nested_Base {
 
 	protected function register_controls() {
 		$menu_mobile_and_desktop_css_selector = ':is( {{WRAPPER}} > .elementor-widget-container > .e-n-menu > .e-n-menu-items-heading, {{WRAPPER}} > .elementor-widget-container > .e-n-menu > .e-n-menu-items-content )';
+		$start = is_rtl() ? 'right' : 'left';
+		$end = is_rtl() ? 'left' : 'right';
+		$tooltip_start = is_rtl() ? esc_html__( 'Right', 'elementor-pro' ) : esc_html__( 'Left', 'elementor-pro' );
+		$tooltip_end = is_rtl() ? esc_html__( 'Left', 'elementor-pro' ) : esc_html__( 'Right', 'elementor-pro' );
 
 		$this->start_controls_section(
 			'section_layout',
@@ -167,6 +171,31 @@ class Mega_Menu extends Widget_Nested_Base {
 				'default' => 'no',
 				'description' => esc_html__( 'Click on the menu item to edit its dropdown content.', 'elementor-pro' ),
 				'frontend_available' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'item_icon',
+			[
+				'label' => esc_html__( 'Icon', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'fa4compatibility' => 'icon',
+				'skin' => 'inline',
+				'label_block' => false,
+			]
+		);
+
+		$repeater->add_control(
+			'item_icon_active',
+			[
+				'label' => esc_html__( 'Active Icon', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'fa4compatibility' => 'icon',
+				'skin' => 'inline',
+				'label_block' => false,
+				'condition' => [
+					'item_icon[value]!' => '',
+				],
 			]
 		);
 
@@ -1026,6 +1055,153 @@ class Mega_Menu extends Widget_Nested_Base {
 
 		$this->end_controls_section();
 
+		// Icon Style
+		$this->start_controls_section( 'icon_section_style', [
+			'label' => esc_html__( 'Icon', 'elementor-pro' ),
+			'tab' => Controls_Manager::TAB_STYLE,
+		] );
+
+		$this->add_responsive_control( 'icon_position', [
+			'label' => esc_html__( 'Position', 'elementor-pro' ),
+			'type' => Controls_Manager::CHOOSE,
+			'options' => [
+				'top' => [
+					'title' => esc_html__( 'Top', 'elementor-pro' ),
+					'icon' => 'eicon-v-align-top',
+				],
+				'end' => [
+					'title' => $tooltip_end,
+					'icon' => 'eicon-h-align-' . $end,
+				],
+				'bottom' => [
+					'title' => esc_html__( 'Bottom', 'elementor-pro' ),
+					'icon' => 'eicon-v-align-bottom',
+				],
+				'start' => [
+					'title' => $tooltip_start,
+					'icon' => 'eicon-h-align-' . $start,
+				],
+			],
+			'selectors_dictionary' => [
+				'top' => '--n-menu-title-direction: column; --n-menu-icon-order: initial; --n-menu-item-title-justify-content: center; --n-menu-title-align-items-toggle: initial;',
+				'end' => '--n-menu-title-direction: row; --n-menu-icon-order: 1; --n-menu-item-title-justify-content: initial; --n-menu-title-align-items-toggle: center;',
+				'bottom' => '--n-menu-title-direction: column; --n-menu-icon-order: 1; --n-menu-item-title-justify-content: center; --n-menu-title-align-items-toggle: initial;',
+				'start' => '--n-menu-title-direction: row; --n-menu-icon-order: initial; --n-menu-item-title-justify-content: initial; --n-menu-title-align-items-toggle: center;',
+			],
+			'selectors' => [
+				'{{WRAPPER}}' => '{{VALUE}}',
+			],
+		] );
+
+		$this->add_responsive_control( 'icon_size', [
+			'label' => esc_html__( 'Size', 'elementor-pro' ),
+			'type' => Controls_Manager::SLIDER,
+			'range' => [
+				'px' => [
+					'min' => 0,
+					'max' => 100,
+				],
+				'em' => [
+					'min' => 0,
+					'max' => 10,
+					'step' => 0.1,
+				],
+				'rem' => [
+					'min' => 0,
+					'max' => 10,
+					'step' => 0.1,
+				],
+			],
+			'default' => [
+				'unit' => 'px',
+				'size' => 16,
+			],
+			'size_units' => [ 'px', 'em', 'rem' ],
+			'selectors' => [
+				'{{WRAPPER}}' => '--n-menu-icon-size: {{SIZE}}{{UNIT}}',
+			],
+		] );
+
+		$this->add_responsive_control( 'icon_spacing', [
+			'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+			'type' => Controls_Manager::SLIDER,
+			'range' => [
+				'px' => [
+					'min' => 0,
+					'max' => 400,
+				],
+				'vw' => [
+					'min' => 0,
+					'max' => 50,
+					'step' => 0.1,
+				],
+			],
+			'default' => [
+				'unit' => 'px',
+			],
+			'size_units' => [ 'px', 'vw' ],
+			'selectors' => [
+				'{{WRAPPER}}' => '--n-menu-icon-gap: {{SIZE}}{{UNIT}}',
+			],
+		] );
+
+		$this->start_controls_tabs( 'icon_style_states' );
+
+		$this->start_controls_tab(
+			'icon_section_normal',
+			[
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control( 'icon_color', [
+			'label' => esc_html__( 'Color', 'elementor-pro' ),
+			'type' => Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}}' => '--n-menu-icon-color: {{VALUE}};',
+			],
+		] );
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'icon_section_hover',
+			[
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control( 'icon_color_hover', [
+			'label' => esc_html__( 'Color', 'elementor-pro' ),
+			'type' => Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}}' => '--n-menu-icon-color-hover: {{VALUE}};',
+			],
+		] );
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'icon_section_active',
+			[
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control( 'icon_color_active', [
+			'label' => esc_html__( 'Color', 'elementor-pro' ),
+			'type' => Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}}' => '--n-menu-icon-color-active: {{VALUE}};',
+			],
+		] );
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
 		$this->start_controls_section( 'section_menu_toggle_style', [
 			'label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
 			'tab' => Controls_Manager::TAB_STYLE,
@@ -1736,6 +1912,11 @@ class Mega_Menu extends Widget_Nested_Base {
 		$item_dropdown_content = $settings['menu_items'][ $index ]['item_dropdown_content'];
 		$menu_item_id = empty( $item['element_id'] ) ? 'e-n-menu-item-title-' . $id_int . $display_index : $item['element_id'];
 		$key = $this->get_repeater_setting_key( $args['setting_key'], 'menu_items', $display_index );
+		$menu_item = $settings['menu_items'][ $index ];
+		$menu_item_icon = Icons_Manager::try_get_icon_html( $menu_item['item_icon'], [ 'aria-hidden' => 'true' ] );
+		$menu_item_active_icon = $this->is_active_icon_exist( $menu_item )
+			? Icons_Manager::try_get_icon_html( $item['item_icon_active'], [ 'aria-hidden' => 'true' ] )
+			: $menu_item_icon;
 
 		if ( ! empty( $settings['hover_animation'] ) ) {
 			$args['class'][] = 'elementor-animation-' . $settings['hover_animation'];
@@ -1746,20 +1927,20 @@ class Mega_Menu extends Widget_Nested_Base {
 		ob_start();
 		?>
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?> >
-				<span class="e-n-menu-item-title-text" >
-					<?php
-					$allowed_html = [
-						'a' => [
-							'href' => [],
-							'class' => [],
-							'aria-current' => [],
-							'rel' => [],
-							'target' => [],
-						],
-					];
-					echo wp_kses( $this->get_item_title( $item ), $allowed_html );
-					?>
-				</span>
+				<?php echo $this->get_title_container_opening_tag( $item, $item['item_link']['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php if ( $menu_item_icon ) { ?>
+						<span class="e-n-menu-icon">
+							<span class="icon-active"><?php echo $menu_item_active_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+							<span class="icon-inactive" ><?php echo $menu_item_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						</span>
+					<?php } ?>
+					<span class="e-n-menu-item-title-text" >
+						<?php
+						echo $item['item_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						?>
+					</span>
+				<?php echo $this->get_title_container_closing_tag( $item['item_link']['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+
 				<?php if ( 'yes' === $item_dropdown_content ) { ?>
 					<span class="e-n-menu-item-icon">
 						<span class="e-n-menu-item-icon-opened" ><?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -1788,30 +1969,13 @@ class Mega_Menu extends Widget_Nested_Base {
 		] );
 	}
 
-	protected function get_item_title( $item ) {
-		$link_id = 'e-n-menu-item-title-' . $item['_id'];
-		$current_class = $this->get_current_menu_item_class( $item['item_link']['url'] );
-
-		$this->remove_render_attribute( $link_id );
-		$this->add_render_attribute( $link_id, 'class', 'e-n-menu-item-title-link' );
-
-		if ( ! empty( $current_class ) ) {
-			$this->add_render_attribute( $link_id, 'aria-current', 'page' );
-		}
-
-		$this->add_link_attributes( $link_id, $item['item_link'] );
-
-		$title = $item['item_title'];
-
-		if ( $item['item_link']['url'] ) {
-			$title = '<a ' . $this->get_render_attribute_string( $link_id ) . '>' . $item['item_title'] . ' </a>';
-		}
-
-		return $title;
-	}
-
 	protected function get_current_menu_item_class( $menu_link_url ) {
 		$menu_link_url = trim( $menu_link_url );
+
+		if ( str_contains( $menu_link_url, '#' ) ) {
+			return 'e-anchor';
+		}
+
 		$permalink_url = $this->get_permalink_for_current_page();
 
 		if ( empty( $menu_link_url ) || empty( $permalink_url ) ) {
@@ -1858,6 +2022,48 @@ class Mega_Menu extends Widget_Nested_Base {
 		return ! empty( $children[ $index ] ) && ! empty( $elements ) && 'yes' === $item_dropdown_content;
 	}
 
+	private function get_title_container_opening_tag( $item, $url ) {
+		$link_id = 'e-n-menu-item-title-container-' . $item['_id'];
+		$this->remove_render_attribute( $link_id );
+		$this->add_render_attribute( $link_id, 'class', [
+			'e-n-menu-item-title-container',
+			'e-link',
+		] );
+		$this->add_link_attributes( $link_id, $item['item_link'] );
+		$current_class = $this->get_current_menu_item_class( $item['item_link']['url'] );
+		$opening_tag = '<div class="e-n-menu-item-title-container">';
+
+		if ( ! empty( $current_class ) ) {
+			$this->add_render_attribute( $link_id, 'aria-current', 'page' );
+		}
+
+		$tag_content = $this->get_render_attribute_string( $link_id );
+
+		if ( $url ) {
+			$opening_tag = '<a ' . $tag_content . '>';
+		}
+
+		return $opening_tag;
+	}
+
+	private function get_title_container_closing_tag( $url ) {
+		$closing_tag = '</div>';
+
+		if ( $url ) {
+			$closing_tag = '</a>';
+		}
+
+		return $closing_tag;
+	}
+
+	/**
+	 * @param $item
+	 * @return bool
+	 */
+	private function is_active_icon_exist( $item ) {
+		return array_key_exists( 'item_icon_active', $item ) && ! empty( $item['item_icon_active'] ) && ! empty( $item['item_icon_active']['value'] );
+	}
+
 	protected function content_template() {
 		?>
 		<nav class="e-n-menu" role="tablist" aria-orientation="vertical">
@@ -1874,8 +2080,12 @@ class Mega_Menu extends Widget_Nested_Base {
 						menuItemUid = elementUid + menuItemCount,
 						menuItemWrapperKey = menuItemUid,
 						menuItemTitleKey = 'menu-item-title-' + menuItemUid,
-						menuItemTitleLinkKey = 'menu-item-title-link-' + menuItemUid,
+						menuItemTitleContainerLinkKey = 'e-n-menu-item-title-container-' + menuItemUid,
 						menuItemIconKey = 'menu-item-icon-' + menuItemUid,
+						menuIcon = elementor.helpers.renderIcon( view, item.item_icon, { 'aria-hidden': true }, 'i' , 'object' ) ?? '',
+						menuIconActive = '' === item.item_icon_active.value
+							? menuIcon
+							: elementor.helpers.renderIcon( view, item.item_icon_active, { 'aria-hidden': true }, 'i' , 'object' ),
 						menuItemLink = 'string' === typeof item['item_link'] ? item['item_link'] : item['item_link']['url'],
 						menuItemDropdownContent =  item['item_dropdown_content'],
 						currentPageClass = elementorPro.modules.megaMenu.getCurrentMenuItemClass( menuItemLink, permalinkUrl ),
@@ -1916,20 +2126,36 @@ class Mega_Menu extends Widget_Nested_Base {
 						'data-binding-index': menuItemCount,
 					} );
 
-					view.addRenderAttribute( menuItemTitleLinkKey, {
-						'class': [ 'e-n-menu-item-title-link' ],
+					view.addRenderAttribute( menuItemTitleContainerLinkKey, {
+						'class': [ 'e-n-menu-item-title-container', 'e-link' ],
 						'aria-current': 'page',
 					} );
 				#>
 
 				<div {{{ view.getRenderAttributeString( menuItemWrapperKey ) }}}>
-					<span {{{ view.getRenderAttributeString( menuItemTitleKey ) }}}>
-						<# if ( menuItemLink ) { #>
-							<a {{{ view.getRenderAttributeString( menuItemTitleLinkKey ) }}}>{{{ item.item_title }}}</a>
-						<# } else { #>
-							{{{ item.item_title }}}
+					<# if ( menuItemLink ) { #>
+						<a {{{ view.getRenderAttributeString( menuItemTitleContainerLinkKey ) }}}>
+					<# } else { #>
+						<div class="e-n-menu-item-title-container">
+					<# } #>
+
+						<# if (menuIcon.value) { #>
+							<span class="e-n-menu-icon">
+								<span class="icon-active" >{{{ menuIconActive.value }}}</span>
+								<span class="icon-inactive">{{{ menuIcon.value }}}</span>
+							</span>
 						<# } #>
-					</span>
+
+						<span {{{ view.getRenderAttributeString( menuItemTitleKey ) }}}>
+							{{{ item.item_title }}}
+						</span>
+
+					<# if ( menuItemLink ) { #>
+						</a>
+					<# } else { #>
+						</div>
+					<# } #>
+
 					<# if ( 'yes' === menuItemDropdownContent ) { #>
 						<span class="e-n-menu-item-icon">
 							<span class="e-n-menu-item-icon-closed">{{{ menuItemIcon.value }}}</span>

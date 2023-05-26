@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6966,7 +6966,7 @@ module.exports = _interopRequireDefault, module.exports.__esModule = true, modul
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".930bfd9119ee62d5ccd6.bundle.js";
-/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".df12ed5ed5e2a972f28b.bundle.js";
+/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".de9dd6d5a71e58af98ef.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "e1314d8e113e32e00c20.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;

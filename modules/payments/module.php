@@ -130,14 +130,17 @@ class Module extends Module_Base {
 	 * from here the tax rates array is implemented in
 	 * tax rates select control
 	 *
-	 * @since 3.7.0
-	 *
 	 * @param array $data
 	 *
 	 * @return array - returns to js ajax function.
 	 *
+	 * @throws \Exception
+	 * @since 3.7.0
+	 *
 	 */
 	public function get_stripe_tax_rates( array $data ) {
+		Utils::_unstable_check_document_permissions( $data['editor_post_id'] );
+
 		$tax_rates_lists = [];
 		$tax_rates_lists['live_api_key'] = $this->get_tax_rates( $this->get_global_stripe_live_secret_key() );
 		$tax_rates_lists['test_api_key'] = $this->get_tax_rates( $this->get_global_stripe_test_secret_key() );

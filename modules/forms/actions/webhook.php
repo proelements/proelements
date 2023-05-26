@@ -35,6 +35,9 @@ class Webhook extends Action_Base {
 				'label' => esc_html__( 'Webhook URL', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => esc_html__( 'https://your-webhook-url.com', 'elementor-pro' ),
+				'ai' => [
+					'active' => false,
+				],
 				'label_block' => true,
 				'separator' => 'before',
 				'description' => esc_html__( 'Enter the integration URL (like Zapier) that will receive the form\'s submitted data.', 'elementor-pro' ),

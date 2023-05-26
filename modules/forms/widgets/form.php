@@ -760,6 +760,9 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Button ID', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
+				'ai' => [
+					'active' => false,
+				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-pro' ),
 				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
 				'separator' => 'before',
@@ -909,6 +912,9 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'Form ID', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'placeholder' => 'new_form_id',
 				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
 				'separator' => 'after',

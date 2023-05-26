@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <script type="text/template" id="tmpl-elementor-panel-global-widget">
 	<div id="elementor-global-widget-locked-header" class="elementor-nerd-box elementor-panel-nerd-box">
-		<img class="elementor-nerd-box-icon" src="<?php echo ELEMENTOR_ASSETS_URL . 'images/information.svg'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
+		<img class="elementor-nerd-box-icon" src="<?php echo ELEMENTOR_ASSETS_URL . 'images/information.svg'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" loading="lazy" />
 		<div class="elementor-nerd-box-title elementor-panel-nerd-box-title"><?php echo esc_html__( 'Your Global Widget is locked', 'elementor-pro' ); ?></div>
 		<div class="elementor-nerd-box-message elementor-panel-nerd-box-message"><?php echo esc_html__( 'Edit this global widget to simultaneously update every place you used it, or unlink it so it gets back to being regular widget.', 'elementor-pro' ); ?></div>
 	</div>
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </script>
 
 <script type="text/template" id="tmpl-elementor-panel-global-widget-no-templates">
-	<img src="<?php echo ELEMENTOR_ASSETS_URL . 'images/information.svg'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" alt="Elementor Information Nerd Icon" />
+	<img src="<?php echo ELEMENTOR_ASSETS_URL . 'images/information.svg'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" alt="Elementor Information Nerd Icon" loading="lazy" />
 	<div class="elementor-nerd-box-title elementor-panel-nerd-box-title"><?php echo esc_html__( 'Save Your First Global Widget', 'elementor-pro' ); ?></div>
 	<div class="elementor-nerd-box-message elementor-panel-nerd-box-message"><?php echo esc_html__( 'Save a widget as global, then add it to multiple areas. All areas will be editable from one single place.', 'elementor-pro' ); ?></div>
 </script>

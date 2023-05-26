@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Carousel\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Control_Media;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Embed;
 use Elementor\Group_Control_Text_Shadow;
@@ -279,6 +280,8 @@ class Media_Carousel extends Base {
 
 		$this->add_render_attribute( $element_key . '-image', [
 			'class' => 'elementor-carousel-image',
+			'role' => 'img',
+			'aria-label' => Control_Media::get_image_alt( $slide['image'] ),
 		] );
 
 		$img_src = $this->get_slide_image_url( $slide, $settings );

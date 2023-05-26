@@ -393,6 +393,9 @@ class Group_Control_Query extends Group_Control_Base {
 			'label' => esc_html__( 'Query ID', 'elementor-pro' ),
 			'type' => Controls_Manager::TEXT,
 			'default' => '',
+			'ai' => [
+				'active' => false,
+			],
 			'description' => esc_html__( 'Give your Query a custom unique id to allow server side filtering', 'elementor-pro' ),
 			'separator' => 'before',
 			'dynamic' => [

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2469,6 +2469,17 @@ module.exports = React;
 
 /***/ }),
 
+/***/ "elementor-ai-admin":
+/*!**********************************************!*\
+  !*** external "__UNSTABLE__elementorAI.App" ***!
+  \**********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = __UNSTABLE__elementorAI.App;
+
+/***/ }),
+
 /***/ "@elementor/app-ui":
 /*!*********************************************!*\
   !*** external "elementorAppPackages.appUi" ***!
@@ -2576,6 +2587,7 @@ exports["default"] = void 0;
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 var _component = _interopRequireDefault(__webpack_require__(/*! elementor-pro-app-modules/site-editor/assets/js/data/component */ "../core/app/modules/site-editor/assets/js/data/component.js"));
 var _conditionsModal = _interopRequireDefault(__webpack_require__(/*! ./publish-metabox/conditions-modal */ "../modules/custom-code/assets/js/admin/publish-metabox/conditions-modal.js"));
+var _elementorAiAdmin = _interopRequireDefault(__webpack_require__(/*! elementor-ai-admin */ "elementor-ai-admin"));
 class CustomCode extends elementorModules.Module {
   constructor() {
     super();
@@ -2587,6 +2599,7 @@ class CustomCode extends elementorModules.Module {
     this.addTipsyToFields();
     this.addDescription();
     this.addLocationChangeHandler();
+    this.addOpenAIButton();
     this.setOptionsPlacementVisibility('elementor_body_end' === jQuery('#location').val());
   }
   addTipsyToFields() {
@@ -2605,6 +2618,27 @@ class CustomCode extends elementorModules.Module {
     jQuery('#location').on('change', e => {
       this.setOptionsPlacementVisibility('elementor_body_end' === e.target.value);
     });
+  }
+  addOpenAIButton() {
+    const $buttonOpenAI = jQuery(`<button class="e-ai-button"><i class="eicon-ai"></i> ${__('Write me code', 'elementor-pro')}</button>`);
+    $buttonOpenAI.on('click', event => {
+      event.preventDefault();
+      const rootElement = document.createElement('div');
+      document.body.append(rootElement);
+      ReactDOM.render( /*#__PURE__*/_react.default.createElement(_elementorAiAdmin.default, {
+        type: 'code',
+        getControlValue: () => document.querySelector('.CodeMirror').CodeMirror.getValue(),
+        setControlValue: value => document.querySelector('.CodeMirror').CodeMirror.setValue(value),
+        additionalOptions: {
+          codeLanguage: 'html'
+        },
+        onClose: () => {
+          ReactDOM.unmountComponentAtNode(rootElement);
+          rootElement.parentNode.removeChild(rootElement);
+        }
+      }), rootElement);
+    });
+    jQuery('.elementor-field.location.elementor-field-select').after($buttonOpenAI);
   }
   setOptionsPlacementVisibility(state) {
     const $optionsPlacement = jQuery('.elementor-custom-code-options-placement');

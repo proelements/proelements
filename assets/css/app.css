@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! elementor-pro - v3.13.2 - 22-05-2023 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05);
 }
@@ -126,7 +126,7 @@
 :root {
   --e-site-editor-conditions-row-controls-background: #ffffff;
   --e-site-editor-input-wrapper-border-color: #D5D8DC;
-  --e-site-editor-input-wrapper-select-color: #3A3F45;
+  --e-site-editor-input-wrapper-select-color: #3f444b;
   --e-site-editor-conditions-row-controls-border: 1px solid #D5D8DC;
   --e-site-editor-add-button-background-color: #69727D;
   --e-site-editor-add-button-color-hover-background-color: #515962;
@@ -140,9 +140,9 @@
 .eps-theme-dark {
   --select2-selection-background-color: tints(600);
   --e-site-editor-conditions-row-controls-background: #515962;
-  --e-site-editor-input-wrapper-border-color: #3A3F45;
+  --e-site-editor-input-wrapper-border-color: #3f444b;
   --e-site-editor-input-wrapper-select-color: #BABFC5;
-  --e-site-editor-conditions-row-controls-border: 1px solid #3A3F45;
+  --e-site-editor-conditions-row-controls-border: 1px solid #3f444b;
   --e-site-editor-add-button-background-color: #69727D;
   --e-site-editor-add-button-color-hover-background-color: #515962;
   --e-site-editor-input-wrapper-condition-include-background-color:

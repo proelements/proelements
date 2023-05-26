@@ -37,6 +37,9 @@ class Redirect extends Action_Base {
 				'label' => esc_html__( 'Redirect To', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
+				'ai' => [
+					'active' => false,
+				],
 				'dynamic' => [
 					'active' => true,
 					'categories' => [

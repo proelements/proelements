@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["search-form"],{
 
@@ -55,33 +55,37 @@ var _default = elementorModules.frontend.handlers.Base.extend({
       $toggle = self.elements.$toggle,
       skin = this.getElementSettings('skin'),
       classes = this.getSettings('classes');
-    const toggleFullScreenSearch = () => {
-      $container.toggleClass(classes.isFullScreen).toggleClass(classes.lightbox);
+    const openFullScreenSearch = () => {
+      $container.addClass(classes.isFullScreen).addClass(classes.lightbox);
       $input.trigger('focus');
     };
+    const closeFullScreenSearch = () => {
+      $container.removeClass(classes.isFullScreen).removeClass(classes.lightbox);
+      $toggle.trigger('focus');
+    };
+    const triggerClickOnEnterSpace = event => {
+      const ENTER_KEY = 13,
+        SPACE_KEY = 32;
+      if (ENTER_KEY === event.keyCode || SPACE_KEY === event.keyCode) {
+        event.currentTarget.click();
+        event.stopPropagation();
+      }
+    };
     if ('full_screen' === skin) {
-      // Activate full-screen mode on mouse click.
-      $toggle.on('click', function () {
-        toggleFullScreenSearch();
-      });
+      // Activate full-screen mode on mouse click or keyboard Enter & Space keyup.
+      $toggle.on('click', () => openFullScreenSearch()).on('keyup', event => triggerClickOnEnterSpace(event));
 
-      // Activate full-screen mode on Enter keyup.
-      $toggle.on('keyup', function (event) {
-        const ENTER_KEY = 13;
-        if (ENTER_KEY === event.keyCode) {
-          toggleFullScreenSearch();
-        }
-      });
-
-      // Deactivate full-screen mode on click or on esc.
+      // Deactivate full-screen mode when clicking outside the container.
       $container.on('click', function (event) {
         if ($container.hasClass(classes.isFullScreen) && $container[0] === event.target) {
           $container.removeClass(classes.isFullScreen).removeClass(classes.lightbox);
         }
       });
-      $closeButton.on('click', function () {
-        $container.removeClass(classes.isFullScreen).removeClass(classes.lightbox);
-      });
+
+      // Deactivate full-screen mode on mouse click or keyboard Enter & Space keyup.
+      $closeButton.on('click', () => closeFullScreenSearch()).on('keyup', event => triggerClickOnEnterSpace(event));
+
+      // Deactivate full-screen mode on keyboard Esc keyup.
       elementorFrontend.elements.$document.on('keyup', function (event) {
         const ESC_KEY = 27;
         if (ESC_KEY === event.keyCode) {
@@ -115,4 +119,4 @@ exports["default"] = _default;
 /***/ })
 
 }]);
-//# sourceMappingURL=search-form.357fb2d20c2058fac04e.bundle.js.map
+//# sourceMappingURL=search-form.c2e702ac2599755b6b91.bundle.js.map

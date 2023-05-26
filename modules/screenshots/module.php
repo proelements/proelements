@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\Screenshots;
 
 use ElementorPro\Base\Module_Base;
 use Elementor\Core\Frontend\Render_Mode_Manager;
+use ElementorPro\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -55,6 +56,10 @@ class Module extends Module_Base {
 			return false;
 		}
 
+		if ( ! $this->can_user_manage_screenshots( $data['post_id'] ) ) {
+			return false;
+		}
+
 		$screenshot = new Screenshot( $data['post_id'], $data['screenshot'] );
 
 		$screenshot
@@ -79,6 +84,10 @@ class Module extends Module_Base {
 			return false;
 		}
 
+		if ( ! $this->can_user_manage_screenshots( $data['post_id'] ) ) {
+			return false;
+		}
+
 		$screenshot = new Screenshot( $data['post_id'] );
 
 		$screenshot
@@ -98,6 +107,10 @@ class Module extends Module_Base {
 	 */
 	public function ajax_screenshot_failed( $data ) {
 		if ( empty( $data['post_id'] ) ) {
+			return false;
+		}
+
+		if ( ! $this->can_user_manage_screenshots( $data['post_id'] ) ) {
 			return false;
 		}
 
@@ -230,6 +243,16 @@ class Module extends Module_Base {
 		}
 
 		return $is_proxy;
+	}
+
+	/**
+	 * @param $post_id
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	private function can_user_manage_screenshots( $post_id ) {
+		return Utils::_unstable_get_document_for_edit( $post_id ) && current_user_can( 'upload_files' );
 	}
 
 	/**

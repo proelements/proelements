@@ -941,10 +941,17 @@ class Post_Info extends Base {
 			<?php
 			if ( ! empty( $item_data['image'] ) ) :
 				$image_data = 'image_' . $repeater_index;
-				$this->add_render_attribute( $image_data, 'src', $item_data['image'] );
-				$this->add_render_attribute( $image_data, 'alt', $item_data['text'] );
+				$this->add_render_attribute(
+					$image_data,
+					[
+						'class' => 'elementor-avatar',
+						'src' => $item_data['image'],
+						'alt' => $item_data['text'],
+						'loading' => 'lazy',
+					]
+				);
 				?>
-					<img class="elementor-avatar" <?php $this->print_render_attribute_string( $image_data ); ?>>
+					<img <?php $this->print_render_attribute_string( $image_data ); ?>>
 				<?php elseif ( $show_icon ) : ?>
 					<?php if ( $is_new || $migrated ) :
 						Icons_Manager::render_icon( $item_data['selected_icon'], [ 'aria-hidden' => 'true' ] );

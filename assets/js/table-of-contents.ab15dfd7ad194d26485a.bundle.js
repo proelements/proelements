@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["table-of-contents"],{
 
@@ -76,8 +76,8 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   bindEvents() {
     const elementSettings = this.getElementSettings();
     if (elementSettings.minimize_box) {
-      this.elements.$expandButton.on('click', () => this.expandBox());
-      this.elements.$collapseButton.on('click', () => this.collapseBox());
+      this.elements.$expandButton.on('click', () => this.expandBox()).on('keyup', event => this.triggerClickOnEnterSpace(event));
+      this.elements.$collapseButton.on('click', () => this.collapseBox()).on('keyup', event => this.triggerClickOnEnterSpace(event));
     }
     if (elementSettings.collapse_subitems) {
       this.elements.$listItems.on('hover', event => jQuery(event.target).slideToggle());
@@ -348,17 +348,27 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   expandBox() {
     const boxHeight = this.getCurrentDeviceSetting('min_height');
     this.$element.removeClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.slideDown();
+    this.elements.$tocBody.attr('aria-expanded', 'true').slideDown();
 
     // Return container to the full height in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', boxHeight.size + boxHeight.unit);
+    this.elements.$collapseButton.trigger('focus');
   }
   collapseBox() {
     this.$element.addClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.slideUp();
+    this.elements.$tocBody.attr('aria-expanded', 'false').slideUp();
 
     // Close container in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', '0px');
+    this.elements.$expandButton.trigger('focus');
+  }
+  triggerClickOnEnterSpace(event) {
+    const ENTER_KEY = 13,
+      SPACE_KEY = 32;
+    if (ENTER_KEY === event.keyCode || SPACE_KEY === event.keyCode) {
+      event.currentTarget.click();
+      event.stopPropagation();
+    }
   }
   onInit() {
     super.onInit(...arguments);
@@ -388,4 +398,4 @@ exports["default"] = TOCHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=table-of-contents.efa4ec72fb5fbf81390d.bundle.js.map
+//# sourceMappingURL=table-of-contents.ab15dfd7ad194d26485a.bundle.js.map

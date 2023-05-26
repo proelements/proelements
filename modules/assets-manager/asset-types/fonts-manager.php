@@ -249,6 +249,8 @@ class Fonts_Manager {
 	 * @throws \Exception
 	 */
 	public function assets_manager_panel_action_data( array $data ) {
+		$document = Pro_Utils::_unstable_get_document_for_edit( $data['editor_post_id'] );
+
 		if ( empty( $data['type'] ) ) {
 			throw new \Exception( 'Font type is required.' );
 		}

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! elementor-pro - v3.13.2 - 22-05-2023 */
 .e-loop-empty-view__container {
   display: flex;
   flex-direction: row;
@@ -46,7 +46,7 @@
   transition-duration: 0.3s;
 }
 .e-loop-empty-view__box-cta:hover {
-  background-color: #3A3F45;
+  background-color: #3f444b;
   color: #ffffff;
 }
 .e-loop-empty-view__box--active {

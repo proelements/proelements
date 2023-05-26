@@ -40,7 +40,15 @@ class Module extends BaseModule {
 		return 'site-editor';
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function get_template_types() {
+		// Same as admin menu capabilities.
+		if ( ! current_user_can( 'publish_posts' ) ) {
+			throw new \Exception( 'Access denied' );
+		}
+
 		$document_types = Plugin::elementor()->documents->get_document_types( [
 			'support_site_editor' => true,
 		] );

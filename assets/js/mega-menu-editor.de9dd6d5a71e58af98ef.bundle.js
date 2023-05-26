@@ -1,4 +1,4 @@
-/*! pro-elements - v3.12.3 - 23-04-2023 */
+/*! pro-elements - v3.13.2 - 22-05-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu-editor"],{
 
@@ -117,23 +117,6 @@ class View extends $e.components.get('nested-elements').exports.NestedView {
     child.attributes.dataIndex = index + 1;
     return true;
   }
-
-  /**
-   * Function renderHTML().
-   *
-   * The `renderHTML()` method is overridden as it causes redundant renders when removing focus from mega-menu.
-   * This is because the original `renderHTML()` method sets `editModel.renderOnLeave = true;`.
-   */
-  renderHTML() {
-    const templateType = this.getTemplateType(),
-      editModel = this.getEditModel();
-    if ('js' === templateType) {
-      editModel.setHtmlCache();
-      this.render();
-    } else {
-      editModel.renderRemoteServer();
-    }
-  }
   onAddChild(childView) {
     childView.$el.attr('data-content', childView.model.attributes.dataIndex);
   }
@@ -143,4 +126,4 @@ exports["default"] = View;
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu-editor.df12ed5ed5e2a972f28b.bundle.js.map
+//# sourceMappingURL=mega-menu-editor.de9dd6d5a71e58af98ef.bundle.js.map

@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\CallToAction\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Control_Media;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
@@ -1569,7 +1570,14 @@ class Call_To_Action extends Base_Widget {
 			$this->add_render_attribute( 'wrapper', 'data-e-bg-lazyload', '.elementor-bg' );
 		}
 
-		$this->add_render_attribute( 'background_image', 'style', $background_selector );
+		$this->add_render_attribute(
+			'background_image',
+			[
+				'style' => $background_selector,
+				'role' => 'img',
+				'aria-label' => Control_Media::get_image_alt( $settings['bg_image'] ),
+			]
+		);
 
 		$this->add_render_attribute( 'title', 'class', [
 			'elementor-cta__title',
@@ -1798,12 +1806,19 @@ class Call_To_Action extends Base_Widget {
 				view.addRenderAttribute( 'graphic_element', 'class', animationClass );
 			}
 
-			view.addRenderAttribute( 'background_image', 'style', 'background-image: url(' + bgImageUrl + ');' );
+			view.addRenderAttribute(
+				'background_image',
+				{
+					'style': 'background-image: url(' + bgImageUrl + ');',
+					'role': 'img',
+					'aria-label': '',
+				}
+			);
+
 			view.addRenderAttribute( 'title', 'class', [ 'elementor-cta__title', 'elementor-cta__content-item', 'elementor-content-item' ] );
 			view.addRenderAttribute( 'description', 'class', [ 'elementor-cta__description', 'elementor-cta__content-item', 'elementor-content-item' ] );
 			view.addRenderAttribute( 'button', 'class', [ 'elementor-cta__button', 'elementor-button', btnSizeClass ] );
 			view.addRenderAttribute( 'graphic_element', 'class', [ 'elementor-cta__content-item', 'elementor-content-item' ] );
-
 
 			view.addInlineEditingAttributes( 'title' );
 			view.addInlineEditingAttributes( 'description' );

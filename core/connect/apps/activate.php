@@ -101,8 +101,6 @@ class Activate extends Common_App {
 
 		License\API::set_license_data( $data );
 
-		$this->request( 'set_site_owner' );
-
 		$this->add_notice( esc_html__( 'License has been activated successfully.', 'elementor-pro' ) );
 
 		$this->redirect_to_admin_page( License\Admin::get_url() );

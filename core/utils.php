@@ -376,4 +376,22 @@ class Utils {
 
 		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
 	}
+
+	/**
+	 * TODO: Use a core method instead (after Pro minimum requirements is updated).
+	 * @throws \Exception
+	 */
+	public static function _unstable_get_document_for_edit( $id ) {
+		$document = Plugin::elementor()->documents->get( $id );
+
+		if ( ! $document ) {
+			throw new \Exception( 'Not found.' );
+		}
+
+		if ( ! $document->is_editable_by_current_user() ) {
+			throw new \Exception( 'Access denied.' );
+		}
+
+		return $document;
+	}
 }
