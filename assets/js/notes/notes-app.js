@@ -3034,10 +3034,10 @@ var Button = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])(_butt
   return sizesMap[size].fontSize;
 }, function (_ref6) {
   var disabled = _ref6.disabled;
-  return disabled && (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.css)(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t\topacity: .5;\n\t\t\tpointer-events: none;\n\t\t\t--cursor: not-allowed;\n\t\t"])));
+  return disabled && (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.css)(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t\topacity: .5;\n\t\t\tpointer-events: none;\n\t\t\t--cursor: not-allowed;\n\t"])));
 }, function (_ref7) {
   var variant = _ref7.variant;
-  return 'transparent' === variant && (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.css)(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t\t--padding: 0;\n\t\t"])));
+  return 'transparent' === variant && (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.css)(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t\t--padding: 0;\n\t"])));
 }, function (_ref8) {
   var variant = _ref8.variant;
   return colorsMap[variant].backgroundHover || colorsMap[variant].background;
@@ -3444,7 +3444,7 @@ var Marker = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].span.with
   shouldForwardProp: function shouldForwardProp(prop) {
     return 'children' === prop;
   }
-})(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  all: revert;\n\n  --color-editor-info: #58d0f5;\n  --color-ghost: #fff;\n  --color-white: #fff;\n  --color-gray: #a4afb6;\n  --color-shadow: rgba(0, 0, 0, 0.2);\n  --size: ", ";\n  --position: relative;\n\n  display: grid;\n  place-items: center;\n  position: relative;\n  height: calc(var(--size) * 1px);\n  width: calc(var(--size) * 1px);\n  line-height: 2.8;\n  font-family: Roboto, sans-serif !important;\n  font-size: calc(var(--size) * .38px);\n  font-weight: 500;\n  color: var(", ");\n  isolation: isolate;\n  animation: .3s ", " both;\n  transition: .3s all;\n\n  ", "\n  &::before {\n\t--background-color: var(", ");\n\t--border-color: var( --background-color );\n\n\tcontent: '';\n\tdisplay: block;\n\tposition: absolute;\n\tz-index: -1;\n\tinset: 0;\n\tbackground-color: var( --background-color );\n\tborder: calc(var(--size) / 20 * 1px) solid var(--border-color);\n\tborder-radius: 100% 100% 25% 100%;\n\ttransform: rotate(45deg);\n\n\t", "\n\n\t", "\n  }\n"])), function (_ref) {
+})(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  all: revert;\n\n  --color-editor-info: #58d0f5;\n  --color-ghost: #fff;\n  --color-white: #fff;\n  --color-gray: #a4afb6;\n  --color-shadow: rgba(0, 0, 0, 0.2);\n  --size: ", ";\n  --position: relative;\n\n  display: grid;\n  place-items: center;\n  position: relative;\n  height: calc(var(--size) * 1px);\n  width: calc(var(--size) * 1px);\n  line-height: 2.8;\n  font-family: Roboto, sans-serif !important;\n  font-size: calc(var(--size) * .38px);\n  font-weight: 500;\n  color: var(", ");\n  isolation: isolate;\n  animation: .3s ", " both;\n  transition: .3s all;\n\n  ", "\n\n  &::before {\n\t--background-color: var(", ");\n\t--border-color: var( --background-color );\n\n\tcontent: '';\n\tdisplay: block;\n\tposition: absolute;\n\tz-index: -1;\n\tinset: 0;\n\tbackground-color: var( --background-color );\n\tborder: calc(var(--size) / 20 * 1px) solid var(--border-color);\n\tborder-radius: 100% 100% 25% 100%;\n\ttransform: rotate(45deg);\n\n\t", "\n\n\t", "\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return sizesMap[size];
 }, function (_ref2) {
@@ -3452,16 +3452,16 @@ var Marker = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].span.with
   return colorsMap[variant].text;
 }, bounce, function (_ref3) {
   var muted = _ref3.muted;
-  return muted && (0,styled_components__WEBPACK_IMPORTED_MODULE_1__.css)(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t--color-shadow: transparent;\n\n\topacity: .5 !important;\n\t"])));
+  return muted && (0,styled_components__WEBPACK_IMPORTED_MODULE_1__.css)(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t--color-shadow: transparent;\n\topacity: .5 !important;\n  "])));
 }, function (_ref4) {
   var variant = _ref4.variant;
   return colorsMap[variant].background;
 }, function (_ref5) {
   var variant = _ref5.variant;
-  return 'active' === variant && (0,styled_components__WEBPACK_IMPORTED_MODULE_1__.css)(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t  mask-image: radial-gradient(transparent 30%, #000 32%);\n\t\t"])));
+  return 'active' === variant && (0,styled_components__WEBPACK_IMPORTED_MODULE_1__.css)(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t  mask-image: radial-gradient(transparent 30%, #000 32%);\n\t"])));
 }, function (_ref6) {
   var variant = _ref6.variant;
-  return 'ghost' === variant && (0,styled_components__WEBPACK_IMPORTED_MODULE_1__.css)(_templateObject5 || (_templateObject5 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t  --border-color: var(--color-gray);\n\t\t"])));
+  return 'ghost' === variant && (0,styled_components__WEBPACK_IMPORTED_MODULE_1__.css)(_templateObject5 || (_templateObject5 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n\t\t  --border-color: var(--color-gray);\n\t"])));
 });
 Marker.propTypes = {
   variant: PropTypes.oneOf(['active', 'solid', 'ghost']).isRequired,

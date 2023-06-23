@@ -243,6 +243,10 @@ class Custom_Icons extends  Assets_Base {
 			}
 
 			$zipped_extension = pathinfo( $zipped_file_name, PATHINFO_EXTENSION );
+			// Skip files with transversal paths.
+			if ( strpos( $zipped_file_name, '..' ) !== false ) {
+				continue;
+			}
 
 			if ( in_array( $zipped_extension, $valid_field_types, true ) ) {
 				$valid_entries[] = $zipped_file_name;

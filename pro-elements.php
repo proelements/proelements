@@ -4,8 +4,8 @@
  * Description: This plugin enables GPL features of Elementor Pro: widgets, theme builder, dynamic colors & content, forms & popup builder, and more. Note that PRO Elements is not a substitute for Elementor Pro. If you need all Elementor Pro features, including access to pro templates library and dedicated support, we encourage you to <a href="https://elementor.com/pro/" target="_blank">purchase Elementor Pro</a>.
  * Plugin URI: https://proelements.org/
  * Author: PROElements.org
- * Version: 3.13.2
- * Elementor tested up to: 3.13.0
+ * Version: 3.14.0
+ * Elementor tested up to: 3.14.0
  * Author URI: https://proelements.org/
  *
  * Text Domain: elementor-pro
@@ -26,7 +26,16 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-    define( 'ELEMENTOR_PRO_VERSION', '3.13.2' );
+define( 'ELEMENTOR_PRO_VERSION', '3.14.0' );
+
+/**
+ * All versions should be `major.minor`, without patch, in order to compare them properly.
+ * Therefore, we can't set a patch version as a requirement.
+ * (e.g. Core 3.14.0-beta1 and Core 3.14.0-cloud2 should be fine when requiring 3.14, while
+ * requiring 3.14.2 is not allowed)
+ */
+define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '3.12' );
+define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '3.14' );
 
 define( 'ELEMENTOR_PRO__FILE__', __FILE__ );
 define( 'ELEMENTOR_PRO_PLUGIN_BASE', plugin_basename( ELEMENTOR_PRO__FILE__ ) );
@@ -50,19 +59,31 @@ define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
 function pro_elements_load_plugin_func() {
 	load_plugin_textdomain( 'elementor-pro' );
 
-	$elementor_version_required = '3.8.0';
-	if ( ! version_compare( ELEMENTOR_VERSION, $elementor_version_required, '>=' ) ) {
+	$core_version = ELEMENTOR_VERSION;
+	$core_version_required = ELEMENTOR_PRO_REQUIRED_CORE_VERSION;
+	$core_version_recommended = ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION;
+
+	if ( ! pro_elements_compare_major_version( $core_version, $core_version_required, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_plugin_fail_load_out_of_date' );
 
 		return;
 	}
 
-	$elementor_version_recommendation = '3.13.0';
-	if ( ! version_compare( ELEMENTOR_VERSION, $elementor_version_recommendation, '>=' ) ) {
+	if ( ! pro_elements_compare_major_version( $core_version, $core_version_recommended, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_admin_notice_upgrade_recommendation' );
 	}
 
 	require ELEMENTOR_PRO_PATH . 'plugin.php';
+}
+
+function pro_elements_compare_major_version( $left, $right, $operator ) {
+	$pattern = '/^(\d+\.\d+).*/';
+	$replace = '$1.0';
+
+	$left  = preg_replace( $pattern, $replace, $left );
+	$right = preg_replace( $pattern, $replace, $right );
+
+	return version_compare( $left, $right, $operator );
 }
 
 pro_elements_plugin_load_plugin();

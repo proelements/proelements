@@ -35,27 +35,12 @@ class Editor extends App {
 		if (!defined('IS_PRO_ELEMENTS'))
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 
-		add_filter( 'elementor/editor-v2/packages/config', function ( $config ) {
-			$config['elementor-pro-v2-theme-builder-actions'] = [
-				'handle' => 'elementor-pro-v2-theme-builder-actions',
-				'src' => $this->get_js_assets_url( 'v2-theme-builder-actions' ),
-				'i18n' => [
-					'domain' => 'elementor-pro',
-					'replace_requested_file' => false,
-				],
-				'type' => 'extension',
-				'deps' => [
-					'elementor-packages-icons',
-					'elementor-packages-documents',
-					'elementor-packages-documents-ui',
-					'elementor-packages-ui',
-					'wp-i18n',
-					'react',
-				],
-			];
+		// Loading elementor packages.
+		$loader = ELEMENTOR_PRO_ASSETS_PATH . 'js/packages/loader.php';
 
-			return $config;
-		} );
+		if ( file_exists( $loader ) ) {
+			require_once $loader;
+		}
 	}
 
 	public function get_init_settings() {

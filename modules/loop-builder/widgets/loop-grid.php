@@ -237,6 +237,9 @@ class Loop_Grid extends Base {
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => esc_html__( 'Note: Item will span across a number of columns.', 'elementor-pro' ),
 				'content_classes' => 'elementor-descriptor',
+				'condition' => [
+					'template_id!' => '',
+				],
 			]
 		);
 
@@ -252,6 +255,33 @@ class Loop_Grid extends Base {
 			]
 		);
 
+		$repeater->add_control(
+			'static_position',
+			[
+				'label' => esc_html__( 'Static item position', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
+				'condition' => [
+					'template_id!' => '',
+				],
+				'render_type' => 'template',
+			]
+		);
+
+		$repeater->add_control(
+			'static_position_note',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__( 'Note: Static Items remain in place when new items are added to grid. Other items appear according to query settings.', 'elementor-pro' ),
+				'content_classes' => 'elementor-descriptor',
+				'condition' => [
+					'static_position!' => '',
+					'template_id!' => '',
+				],
+			]
+		);
+
 		$this->add_control(
 			'alternate_templates',
 			[
@@ -261,6 +291,8 @@ class Loop_Grid extends Base {
 				'title_field' => 'Alternate Template',
 				'condition' => [
 					'alternate_template' => 'yes',
+					'posts_per_page!' => 1,
+					'template_id!' => '',
 				],
 				'default' => [
 					[

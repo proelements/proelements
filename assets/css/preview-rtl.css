@@ -1,53 +1,74 @@
-/*! elementor-pro - v3.13.2 - 22-05-2023 */
-.elementor-document-handle {
+/*! pro-elements - v3.14.0 - 18-06-2023 */
+*[data-editable-elementor-document] {
+  position: relative;
+}
+*[data-editable-elementor-document]:before, *[data-editable-elementor-document]:after {
+  content: "";
+  display: table;
+}
+*[data-editable-elementor-document] .elementor-document-handle {
+  position: absolute;
+  z-index: 2147483639;
+  cursor: pointer;
+  inset: 0;
+  display: none;
+  border: 2px solid var(--e-a-color-primary, #F3BAFD);
+}
+*[data-editable-elementor-document] .elementor-document-handle:before {
+  content: "";
+  position: absolute;
+  background: var(--e-a-color-primary, #F3BAFD);
+  opacity: 0.3;
+  inset: 0;
+}
+*[data-editable-elementor-document] .elementor-document-handle__inner {
   display: none;
   align-items: center;
   position: absolute;
-  z-index: 2147483640;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--e-p-border-global);
-  padding: 5px 10px;
-  font-family: var(--e-a-font-family);
-  font-size: 11px;
-  color: var(--e-p-border-global-invert);
+  background: var(--e-a-color-primary, #F3BAFD);
+  padding: 8px 16px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--e-p-border-global-invert, #0C0D0E);
+  gap: 8px;
   border-radius: 0 0 3px 3px;
-  cursor: pointer;
 }
-.elementor-document-handle:before, .elementor-document-handle:after {
+*[data-editable-elementor-document] .elementor-document-handle__inner:before, *[data-editable-elementor-document] .elementor-document-handle__inner:after {
   content: "";
   position: absolute;
   border: solid transparent;
 }
-.elementor-document-handle:before {
+*[data-editable-elementor-document] .elementor-document-handle__inner:before {
   right: calc(100% - 1px);
-  border-right-color: var(--e-p-border-global);
-  border-width: 0 14px 23px 0;
+  border-right-color: var(--e-a-color-primary, #F3BAFD);
+  border-width: 0 14px 30px 0;
 }
-.elementor-document-handle:after {
+*[data-editable-elementor-document] .elementor-document-handle__inner:after {
   left: calc(100% - 1px);
-  border-left-color: var(--e-p-border-global);
-  border-width: 0 0 23px 14px;
+  border-left-color: var(--e-a-color-primary, #F3BAFD);
+  border-width: 0 0 30px 14px;
 }
-.elementor-document-handle .eicon-edit {
-  margin-left: 5px;
+*[data-editable-elementor-document].e-embedded-document-active .elementor-document-handle:not(.elementor-document-save-back-handle), *[data-editable-elementor-document].elementor-widget-container .elementor-document-handle:not(.elementor-document-save-back-handle) {
+  bottom: unset;
+  border-bottom: unset;
+}
+*[data-editable-elementor-document].e-embedded-document-active .elementor-document-handle:not(.elementor-document-save-back-handle)::before, *[data-editable-elementor-document].elementor-widget-container .elementor-document-handle:not(.elementor-document-save-back-handle)::before {
+  display: none;
+  bottom: unset;
 }
 
-.elementor-editor-active .elementor:not(.elementor-edit-mode):hover,
-.elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover {
-  box-shadow: 0 0 0 1px var(--e-p-border-global);
+.elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover .elementor-document-handle:not(.elementor-document-save-back-handle) {
+  display: block;
 }
-.elementor-editor-active [data-widget_type="theme-post-content.default"] .elementor:not(.elementor-edit-mode):hover,
-.elementor-editor-active [data-widget_type="theme-post-content.default"] *[data-editable-elementor-document]:not(.elementor-edit-mode):hover {
-  box-shadow: 0 0 0 1px var(--e-p-border-section);
+.elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover .elementor-document-handle:not(.elementor-document-save-back-handle)::before {
+  display: block;
 }
-.elementor-editor-active *[data-editable-elementor-document] {
-  position: relative;
-}
-.elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover > .elementor-document-handle:not(.elementor-document-save-back-handle) {
+.elementor-editor-active *[data-editable-elementor-document]:not(.elementor-edit-mode):hover .elementor-document-handle:not(.elementor-document-save-back-handle) .elementor-document-handle__inner {
   display: flex;
-  line-height: initial;
 }
 .elementor-editor-active *[data-editable-elementor-document].loading {
   opacity: 0.5;
@@ -57,24 +78,26 @@
   border-radius: 3px 3px 0 0;
 }
 .elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle:before {
-  border-width: 23px 14px 0 0;
+  border-width: 30px 14px 0 0;
 }
 .elementor-editor-active *[data-editable-elementor-document][data-elementor-type=single] > .elementor-document-handle:after {
-  border-width: 23px 0 0 14px;
+  border-width: 30px 0 0 14px;
 }
 
-[data-widget_type="theme-post-content.default"] .elementor-document-handle {
-  background-color: var(--e-p-border-section);
-  color: var(--e-p-border-con-invert);
+[data-elementor-post-type=elementor_library] > .elementor-document-handle {
+  border: 2px solid var(--e-p-border-global, #5EEAD4);
 }
-[data-widget_type="theme-post-content.default"] .elementor-document-handle:before {
-  border-right-color: var(--e-p-border-section);
+[data-elementor-post-type=elementor_library] > .elementor-document-handle:before {
+  background-color: var(--e-p-border-global, #5EEAD4);
 }
-[data-widget_type="theme-post-content.default"] .elementor-document-handle:after {
-  border-left-color: var(--e-p-border-section);
+[data-elementor-post-type=elementor_library] > .elementor-document-handle .elementor-document-handle__inner {
+  background-color: var(--e-p-border-global, #5EEAD4);
 }
-[data-widget_type="theme-post-content.default"] .elementor-editor-preview *[data-editable-elementor-document] {
-  box-shadow: 0 0 0 1px var(--e-p-border-section);
+[data-elementor-post-type=elementor_library] > .elementor-document-handle .elementor-document-handle__inner:before {
+  border-right-color: var(--e-p-border-global, #5EEAD4);
+}
+[data-elementor-post-type=elementor_library] > .elementor-document-handle .elementor-document-handle__inner:after {
+  border-left-color: var(--e-p-border-global, #5EEAD4);
 }
 
 .elementor-widget.elementor-sticky--effects .elementor-editor-widget-settings {
@@ -93,25 +116,38 @@
 .elementor-editor-preview .elementor-edit-area-active[data-elementor-type=loop-item] .elementor-widget-empty {
   display: initial;
 }
-.elementor-document-handle.elementor-document-save-back-handle {
-  top: -23px;
+.elementor.elementor-edit-area-active .elementor-document-handle.elementor-document-save-back-handle {
+  display: block;
+  bottom: unset;
+  border: unset;
 }
-.elementor-document-handle.elementor-document-save-back-handle:before {
-  border-width: 23px 14px 0 0;
+.elementor.elementor-edit-area-active .elementor-document-handle.elementor-document-save-back-handle:before {
+  display: none;
 }
-.elementor-document-handle.elementor-document-save-back-handle:after {
-  border-width: 23px 0 0 14px;
+.elementor.elementor-edit-area-active .elementor-document-handle.elementor-document-save-back-handle > .elementor-document-handle__inner {
+  display: flex;
+  opacity: 1;
+}
+.elementor-document-handle.elementor-document-save-back-handle .elementor-document-handle__inner {
+  transform: translateX(-50%) translateY(-100%);
+  border-radius: 3px 3px 0 0;
+}
+.elementor-document-handle.elementor-document-save-back-handle .elementor-document-handle__inner:before {
+  border-width: 30px 14px 0 0;
+}
+.elementor-document-handle.elementor-document-save-back-handle .elementor-document-handle__inner:after {
+  border-width: 30px 0 0 14px;
 }
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-left,
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-right {
   margin-left: 5px;
 }
 .elementor-loop-container > div.elementor-edit-area-active:first-of-type {
-  border: 1px solid var(--e-p-border-global);
+  border: 2px solid #5EEAD4;
 }
 
 div[class*=elementor-widget-loop] .elementor-edit-area-active[data-editable-elementor-document], div[class*=elementor-widget-loop] .elementor-edit-area-active.swiper-slide-active, div[class*=elementor-widget-loop] .elementor-edit-area-active.e-loop-first-edit:first-of-type {
-  border: 1px solid var(--e-p-border-global);
+  border: 2px solid #5EEAD4;
 }
 div[class*=elementor-widget-loop] .elementor-edit-area-active .elementor-document-save-back-handle {
   display: flex;
@@ -141,13 +177,16 @@ div[class*=elementor-widget-loop] .elementor-add-section-inner {
   box-shadow: initial;
 }
 
-.elementor-editor-active [class*=elementor-widget-loop]:hover [data-editable-elementor-document] {
-  box-shadow: 0 0 0 1px #5EEAD4;
-}
 .elementor-editor-active [class*=elementor-widget-loop]:hover .elementor-document-handle:not(.elementor-document-save-back-handle) {
   display: flex;
   line-height: initial;
   white-space: nowrap;
+}
+.elementor-editor-active [class*=elementor-widget-loop]:hover .elementor-document-handle:not(.elementor-document-save-back-handle)::before {
+  display: block;
+}
+.elementor-editor-active [class*=elementor-widget-loop]:hover .elementor-document-handle:not(.elementor-document-save-back-handle) .elementor-document-handle__inner {
+  display: flex;
 }
 .elementor-editor-active [class*=elementor-widget-loop]:hover .e-loop-alternate-template {
   box-shadow: 0 0 0 1px #9DA5AE;

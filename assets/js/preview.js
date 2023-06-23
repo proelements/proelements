@@ -1,4 +1,4 @@
-/*! pro-elements - v3.13.2 - 22-05-2023 */
+/*! pro-elements - v3.14.0 - 18-06-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -55,7 +55,7 @@ function addDocumentHandle(_ref) {
   const handleElement = createHandleElement({
     title,
     onClick: () => onDocumentClick(id, context, onCloseDocument, selector)
-  }, context);
+  }, context, element);
   element.prepend(handleElement);
   if (EDIT_CONTEXT === context) {
     element.dataset.editableElementorDocument = id;
@@ -81,10 +81,11 @@ function hasHandle(element) {
 }
 
 /**
- * @param {Object}   handleProperties
- * @param {string}   handleProperties.title
- * @param {Function} handleProperties.onClick
- * @param {string}   context
+ * @param {Object}      handleProperties
+ * @param {string}      handleProperties.title
+ * @param {Function}    handleProperties.onClick
+ * @param {string}      context
+ * @param {HTMLElement} element
  *
  * @return {HTMLElement} The newly generated Handle element
  */
@@ -93,20 +94,31 @@ function createHandleElement(_ref2, context) {
     title,
     onClick
   } = _ref2;
-  const element = createElement({
+  let element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : __('Edit %s', 'elementor-pro');
+  const innerElement = createElement({
     tag: 'div',
-    classNames: EDIT_CONTEXT === context ? [EDIT_HANDLE_CLASS_NAME] : [EDIT_HANDLE_CLASS_NAME, SAVE_HANDLE_CLASS_NAME],
+    classNames: [`${EDIT_HANDLE_CLASS_NAME}__inner`],
     children: [createElement({
       tag: 'i',
       classNames: [getHandleIcon(context)]
     }), createElement({
       tag: 'div',
       classNames: [`${EDIT_CONTEXT === context ? EDIT_HANDLE_CLASS_NAME : SAVE_HANDLE_CLASS_NAME}__title`],
-      children: [document.createTextNode(EDIT_CONTEXT === context ? __('Edit %s', 'elementor-pro').replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
+      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
     })]
   });
-  element.addEventListener('click', onClick);
-  return element;
+  const classNames = [EDIT_HANDLE_CLASS_NAME];
+  if (EDIT_CONTEXT !== context) {
+    classNames.push(SAVE_HANDLE_CLASS_NAME);
+  }
+  const containerElement = createElement({
+    tag: 'div',
+    classNames,
+    children: [innerElement]
+  });
+  containerElement.addEventListener('click', onClick);
+  return containerElement;
 }
 function getHandleIcon(context) {
   let icon = 'eicon-edit';
@@ -227,6 +239,18 @@ class Preview extends elementorModules.ViewModule {
     super();
     elementorFrontend.on('components:init', () => this.onFrontendComponentsInit());
   }
+  addDocumentClass() {
+    const document = elementor.documents.getCurrent();
+    if (!document || !document.$element) {
+      return;
+    }
+    document.$element.parents('[data-elementor-id]').addClass('e-embedded-document-active');
+  }
+  removeDocumentClass() {
+    Object.values(elementorFrontend.documentsManager.documents).forEach(document => {
+      document.$element.get(0).classList.remove('e-embedded-document-active');
+    });
+  }
   createDocumentsHandles() {
     Object.values(elementorFrontend.documentsManager.documents).forEach(document => {
       const element = document.$element.get(0),
@@ -246,8 +270,16 @@ class Preview extends elementorModules.ViewModule {
     });
   }
   onFrontendComponentsInit() {
+    // Adding those functions on frontend components init, because document:loaded event is not triggered by first load.
+    this.addDocumentClass();
     this.createDocumentsHandles();
-    elementor.on('document:loaded', () => this.createDocumentsHandles());
+    elementor.on('document:loaded', () => {
+      this.addDocumentClass();
+      this.createDocumentsHandles();
+    });
+    elementor.on('document:unloaded', () => {
+      this.removeDocumentClass();
+    });
   }
 }
 exports["default"] = Preview;

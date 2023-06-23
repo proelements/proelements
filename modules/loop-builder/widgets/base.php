@@ -44,6 +44,20 @@ class Base extends Posts {
 		return $config;
 	}
 
+	public function query_posts() {
+		$skin = $this->get_current_skin();
+		$query = false;
+		if ( $skin ) {
+			$query = $skin->query_posts( $this );
+		}
+
+		if ( $query ) {
+			$this->query = $query;
+		} else {
+			parent::query_posts();
+		}
+	}
+
 	/**
 	 * Get Posts Per Page Value
 	 *
@@ -54,7 +68,7 @@ class Base extends Posts {
 	 *
 	 * @return mixed
 	 */
-	protected function get_posts_per_page_value() {
+	public function get_posts_per_page_value() {
 		return $this->get_settings_for_display( 'posts_per_page' );
 	}
 

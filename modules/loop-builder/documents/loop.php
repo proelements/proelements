@@ -304,6 +304,7 @@ class Loop extends Theme_Document {
 		?>
 		<div
 			data-elementor-type="<?php echo esc_attr( static::get_type() ); ?>"
+			data-elementor-post-type="<?php echo esc_attr( $this->get_post()->post_type ); ?>"
 			data-elementor-id="<?php echo esc_attr( $post_id ); ?>"
 			class="elementor elementor-<?php echo esc_attr( $post_id ); ?> elementor-edit-area elementor-edit-mode elementor-edit-area-active e-loop-first-edit"
 			data-elementor-title="<?php echo esc_attr( ucfirst( static::get_type() ) ); ?>"

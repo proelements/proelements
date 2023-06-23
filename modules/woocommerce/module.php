@@ -375,7 +375,7 @@ class Module extends Module_Base {
 			}
 
 			$fragment_data = $this->get_fragment_data( $element );
-			$total_fragments = count( $fragment_data );
+			$total_fragments = count( $fragment_data ) / 2;
 
 			for ( $i = 0; $i < $total_fragments; $i++ ) {
 				$fragments[ $fragment_data['selector'][ $i ] ] = $fragment_data['html'][ $i ];
@@ -1412,7 +1412,7 @@ class Module extends Module_Base {
 			return $query_args;
 		}
 
-		return $this->parse_loop_query_args( $widget );
+		return $this->parse_loop_query_args( $widget, $query_args );
 	}
 
 	private function is_product_query( $widget ) {
@@ -1421,7 +1421,7 @@ class Module extends Module_Base {
 		return ( ! empty( $widget_config['is_loop'] ) && 'product' === $widget->get_current_skin_id() );
 	}
 
-	private function parse_loop_query_args( $widget ) {
+	private function parse_loop_query_args( $widget, $query_args ) {
 		$settings = $this->adjust_setting_for_product_renderer( $widget );
 
 		// For Products_Renderer.
@@ -1431,10 +1431,15 @@ class Module extends Module_Base {
 
 		$shortcode = Products_Widget::get_shortcode_object( $settings );
 
-		$query_args = $shortcode->parse_query_args();
-		unset( $query_args['fields'] );
+		$parsed_query_args = $shortcode->parse_query_args();
 
-		return $query_args;
+		unset( $parsed_query_args['fields'] );
+
+		$override_various_query_args = array_filter( $query_args, function( $key ) {
+			return in_array( $key, [ 'posts_per_page', 'offset', 'paged' ], true );
+		}, ARRAY_FILTER_USE_KEY );
+
+		return wp_parse_args( $override_various_query_args, $parsed_query_args );
 	}
 
 	private function adjust_setting_for_product_renderer( $widget ) {

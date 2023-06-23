@@ -1,4 +1,4 @@
-/*! pro-elements - v3.13.2 - 22-05-2023 */
+/*! pro-elements - v3.14.0 - 18-06-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -30,6 +30,7 @@ var _frontend16 = _interopRequireDefault(__webpack_require__(/*! modules/theme-e
 var _frontend17 = _interopRequireDefault(__webpack_require__(/*! modules/woocommerce/assets/js/frontend/frontend */ "../modules/woocommerce/assets/js/frontend/frontend.js"));
 var _frontend18 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/frontend/frontend */ "../modules/loop-builder/assets/js/frontend/frontend.js"));
 var _frontend19 = _interopRequireDefault(__webpack_require__(/*! modules/mega-menu/assets/js/frontend/frontend */ "../modules/mega-menu/assets/js/frontend/frontend.js"));
+var _frontend20 = _interopRequireDefault(__webpack_require__(/*! modules/nested-carousel/assets/js/frontend/frontend */ "../modules/nested-carousel/assets/js/frontend/frontend.js"));
 const extendDefaultHandlers = defaultHandlers => {
   const handlers = {
     animatedText: _frontend.default,
@@ -50,7 +51,8 @@ const extendDefaultHandlers = defaultHandlers => {
     woocommerce: _frontend17.default,
     tableOfContents: _frontend14.default,
     loopBuilder: _frontend18.default,
-    megaMenu: _frontend19.default
+    megaMenu: _frontend19.default,
+    nestedCarousel: _frontend20.default
   };
   return {
     ...defaultHandlers,
@@ -385,6 +387,28 @@ class _default extends elementorModules.Module {
       }
     }
     elementorFrontend.elementsHandler.attachHandler('nav-menu', () => __webpack_require__.e(/*! import() | nav-menu */ "nav-menu").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/nav-menu */ "../modules/nav-menu/assets/js/frontend/handlers/nav-menu.js")));
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/nested-carousel/assets/js/frontend/frontend.js":
+/*!*****************************************************************!*\
+  !*** ../modules/nested-carousel/assets/js/frontend/frontend.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    elementorFrontend.elementsHandler.attachHandler('nested-carousel', () => __webpack_require__.e(/*! import() | nested-carousel */ "nested-carousel").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/nested-carousel */ "../modules/nested-carousel/assets/js/frontend/handlers/nested-carousel.js")));
   }
 }
 exports["default"] = _default;

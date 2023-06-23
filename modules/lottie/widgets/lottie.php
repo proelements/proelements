@@ -85,7 +85,7 @@ class Lottie extends Base_Widget {
 			[
 				'label' => esc_html__( 'Upload JSON File', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
-				'media_type' => 'application/json',
+				'media_types' => [ 'application/json' ],
 				'frontend_available' => true,
 				'condition' => [
 					'source' => 'media_file',

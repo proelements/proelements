@@ -201,16 +201,22 @@ class Module extends Module_Base {
 	private function is_editing_existing_loop_item() {
 		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
 		$elementor_library = Utils::_unstable_get_super_global_value( $_GET, 'elementor_library' ) ?? '';
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
+		$post_id = Utils::_unstable_get_super_global_value( $_GET, 'elementor-preview' );
 
-		return strpos( $elementor_library, 'elementor-' . static::TEMPLATE_LIBRARY_TYPE_SLUG ) !== false;
+		return ! empty( $elementor_library ) && $this->is_loop_item_document_type_meta_key( $post_id );
 	}
 
 	private function is_creating_new_loop_item() {
 		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
 		$post_type = Utils::_unstable_get_super_global_value( $_GET, 'post_type' );
 		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
-		$p = Utils::_unstable_get_super_global_value( $_GET, 'p' );
-		return 'elementor_library' === $post_type && static::TEMPLATE_LIBRARY_TYPE_SLUG === get_post_meta( $p, Document::TYPE_META_KEY, true );
+		$post_id = Utils::_unstable_get_super_global_value( $_GET, 'p' );
+		return 'elementor_library' === $post_type && $this->is_loop_item_document_type_meta_key( $post_id );
+	}
+
+	private function is_loop_item_document_type_meta_key( $post_id ) {
+		return static::TEMPLATE_LIBRARY_TYPE_SLUG === get_post_meta( $post_id, Document::TYPE_META_KEY, true );
 	}
 
 	private function is_loop_theme_builder() {

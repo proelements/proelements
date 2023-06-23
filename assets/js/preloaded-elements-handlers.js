@@ -1,4 +1,4 @@
-/*! pro-elements - v3.13.2 - 22-05-2023 */
+/*! pro-elements - v3.14.0 - 18-06-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
@@ -30,6 +30,7 @@ var _frontendLegacy16 = _interopRequireDefault(__webpack_require__(/*! modules/t
 var _frontendLegacy17 = _interopRequireDefault(__webpack_require__(/*! modules/woocommerce/assets/js/frontend/frontend-legacy */ "../modules/woocommerce/assets/js/frontend/frontend-legacy.js"));
 var _frontendLegacy18 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/frontend/frontend-legacy */ "../modules/loop-builder/assets/js/frontend/frontend-legacy.js"));
 var _frontendLegacy19 = _interopRequireDefault(__webpack_require__(/*! modules/mega-menu/assets/js/frontend/frontend-legacy */ "../modules/mega-menu/assets/js/frontend/frontend-legacy.js"));
+var _frontendLegacy20 = _interopRequireDefault(__webpack_require__(/*! modules/nested-carousel/assets/js/frontend/frontend-legacy */ "../modules/nested-carousel/assets/js/frontend/frontend-legacy.js"));
 const extendDefaultHandlers = defaultHandlers => {
   const handlers = {
     animatedText: _frontendLegacy.default,
@@ -50,7 +51,8 @@ const extendDefaultHandlers = defaultHandlers => {
     woocommerce: _frontendLegacy17.default,
     tableOfContents: _frontendLegacy14.default,
     loopBuilder: _frontendLegacy18.default,
-    megaMenu: _frontendLegacy19.default
+    megaMenu: _frontendLegacy19.default,
+    nestedCarousel: _frontendLegacy20.default
   };
   return {
     ...defaultHandlers,
@@ -224,6 +226,24 @@ exports["default"] = IconsManager;
 
 /***/ }),
 
+/***/ "../assets/dev/js/frontend/utils/run-element-handlers.js":
+/*!***************************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/run-element-handlers.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = runElementHandlers;
+function runElementHandlers(elements) {
+  [...elements].flatMap(el => [...el.querySelectorAll('.elementor-element')]).forEach(el => elementorFrontend.elementsHandler.runReadyTrigger(el));
+}
+
+/***/ }),
+
 /***/ "../assets/dev/js/frontend/utils/scroll.js":
 /*!*************************************************!*\
   !*** ../assets/dev/js/frontend/utils/scroll.js ***!
@@ -296,7 +316,7 @@ function addDocumentHandle(_ref) {
   const handleElement = createHandleElement({
     title,
     onClick: () => onDocumentClick(id, context, onCloseDocument, selector)
-  }, context);
+  }, context, element);
   element.prepend(handleElement);
   if (EDIT_CONTEXT === context) {
     element.dataset.editableElementorDocument = id;
@@ -322,10 +342,11 @@ function hasHandle(element) {
 }
 
 /**
- * @param {Object}   handleProperties
- * @param {string}   handleProperties.title
- * @param {Function} handleProperties.onClick
- * @param {string}   context
+ * @param {Object}      handleProperties
+ * @param {string}      handleProperties.title
+ * @param {Function}    handleProperties.onClick
+ * @param {string}      context
+ * @param {HTMLElement} element
  *
  * @return {HTMLElement} The newly generated Handle element
  */
@@ -334,20 +355,31 @@ function createHandleElement(_ref2, context) {
     title,
     onClick
   } = _ref2;
-  const element = createElement({
+  let element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : __('Edit %s', 'elementor-pro');
+  const innerElement = createElement({
     tag: 'div',
-    classNames: EDIT_CONTEXT === context ? [EDIT_HANDLE_CLASS_NAME] : [EDIT_HANDLE_CLASS_NAME, SAVE_HANDLE_CLASS_NAME],
+    classNames: [`${EDIT_HANDLE_CLASS_NAME}__inner`],
     children: [createElement({
       tag: 'i',
       classNames: [getHandleIcon(context)]
     }), createElement({
       tag: 'div',
       classNames: [`${EDIT_CONTEXT === context ? EDIT_HANDLE_CLASS_NAME : SAVE_HANDLE_CLASS_NAME}__title`],
-      children: [document.createTextNode(EDIT_CONTEXT === context ? __('Edit %s', 'elementor-pro').replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
+      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
     })]
   });
-  element.addEventListener('click', onClick);
-  return element;
+  const classNames = [EDIT_HANDLE_CLASS_NAME];
+  if (EDIT_CONTEXT !== context) {
+    classNames.push(SAVE_HANDLE_CLASS_NAME);
+  }
+  const containerElement = createElement({
+    tag: 'div',
+    classNames,
+    children: [innerElement]
+  });
+  containerElement.addEventListener('click', onClick);
+  return containerElement;
 }
 function getHandleIcon(context) {
   let icon = 'eicon-edit';
@@ -2734,7 +2766,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 var _loadMore = _interopRequireDefault(__webpack_require__(/*! modules/posts/assets/js/frontend/handlers/load-more */ "../modules/posts/assets/js/frontend/handlers/load-more.js"));
-var _elementHandlers = _interopRequireDefault(__webpack_require__(/*! ./utils/element-handlers */ "../modules/loop-builder/assets/js/frontend/handlers/utils/element-handlers.js"));
+var _runElementHandlers = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/run-element-handlers */ "../assets/dev/js/frontend/utils/run-element-handlers.js"));
 class LoopLoadMore extends _loadMore.default {
   getDefaultSettings() {
     const defaultSettings = super.getDefaultSettings();
@@ -2750,7 +2782,7 @@ class LoopLoadMore extends _loadMore.default {
       this.handleLazyloadBackgroundElements();
     }
     this.handleDynamicStyleElements(result);
-    (0, _elementHandlers.default)(postsElements);
+    (0, _runElementHandlers.default)(postsElements);
   }
 
   /**
@@ -2788,6 +2820,7 @@ exports["default"] = LoopLoadMore;
   \****************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
@@ -2796,7 +2829,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 var _imageCarousel = _interopRequireDefault(__webpack_require__(/*! elementor/assets/dev/js/frontend/handlers/image-carousel */ "../../elementor/assets/dev/js/frontend/handlers/image-carousel.js"));
-var _elementHandlers = _interopRequireDefault(__webpack_require__(/*! ./utils/element-handlers */ "../modules/loop-builder/assets/js/frontend/handlers/utils/element-handlers.js"));
+var _runElementHandlers = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/run-element-handlers */ "../assets/dev/js/frontend/utils/run-element-handlers.js"));
 class LoopCarousel extends _imageCarousel.default {
   getDefaultSettings() {
     const defaultSettings = super.getDefaultSettings();
@@ -2806,24 +2839,16 @@ class LoopCarousel extends _imageCarousel.default {
   getSwiperSettings() {
     const swiperOptions = super.getSwiperSettings(),
       elementSettings = this.getElementSettings(),
-      isRtl = elementorFrontend.config.is_rtl;
+      isRtl = elementorFrontend.config.is_rtl,
+      widgetSelector = `.elementor-element-${this.getID()}`;
     if ('yes' === elementSettings.arrows) {
       swiperOptions.navigation = {
-        prevEl: isRtl ? '.elementor-swiper-button-next' : '.elementor-swiper-button-prev',
-        nextEl: isRtl ? '.elementor-swiper-button-prev' : '.elementor-swiper-button-next'
+        prevEl: isRtl ? `${widgetSelector} .elementor-swiper-button-next` : `${widgetSelector} .elementor-swiper-button-prev`,
+        nextEl: isRtl ? `${widgetSelector} .elementor-swiper-button-prev` : `${widgetSelector} .elementor-swiper-button-next`
       };
     }
-    if (elementSettings.pagination) {
-      swiperOptions.pagination = {
-        el: '.swiper-pagination',
-        type: elementSettings.pagination,
-        clickable: true
-      };
-    }
-    swiperOptions.on = {
-      slideChange: () => {
-        this.handleElementHandlers();
-      }
+    swiperOptions.on.beforeInit = () => {
+      this.a11ySetSlidesAriaLabels();
     };
     return swiperOptions;
   }
@@ -2836,8 +2861,14 @@ class LoopCarousel extends _imageCarousel.default {
       return;
     }
     const newSlides = Array.from(this.swiper.slides).slice(this.swiper.activeIndex - 1, this.swiper.slides.length);
-    (0, _elementHandlers.default)(newSlides);
+    (0, _runElementHandlers.default)(newSlides);
     this.ranElementHandlers = true;
+  }
+  a11ySetSlidesAriaLabels() {
+    const slides = Array.from(this.elements.$slides);
+    slides.forEach((slide, index) => {
+      slide.setAttribute('aria-label', `${parseInt(index + 1)} ${__('of', 'elementor-pro')} ${slides.length}`);
+    });
   }
 }
 exports["default"] = LoopCarousel;
@@ -2967,24 +2998,6 @@ class Loop extends _posts.default {
   }
 }
 exports["default"] = Loop;
-
-/***/ }),
-
-/***/ "../modules/loop-builder/assets/js/frontend/handlers/utils/element-handlers.js":
-/*!*************************************************************************************!*\
-  !*** ../modules/loop-builder/assets/js/frontend/handlers/utils/element-handlers.js ***!
-  \*************************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = runElementHandlers;
-function runElementHandlers(elements) {
-  [...elements].flatMap(el => [...el.querySelectorAll('.elementor-element')]).forEach(el => elementorFrontend.elementsHandler.runReadyTrigger(el));
-}
 
 /***/ }),
 
@@ -4405,6 +4418,117 @@ var _default = elementorModules.frontend.handlers.Base.extend({
   }
 });
 exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/nested-carousel/assets/js/frontend/frontend-legacy.js":
+/*!************************************************************************!*\
+  !*** ../modules/nested-carousel/assets/js/frontend/frontend-legacy.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _nestedCarousel = _interopRequireDefault(__webpack_require__(/*! ./handlers/nested-carousel */ "../modules/nested-carousel/assets/js/frontend/handlers/nested-carousel.js"));
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    elementorFrontend.elementsHandler.attachHandler('nested-carousel', _nestedCarousel.default);
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/nested-carousel/assets/js/frontend/handlers/nested-carousel.js":
+/*!*********************************************************************************!*\
+  !*** ../modules/nested-carousel/assets/js/frontend/handlers/nested-carousel.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _runElementHandlers = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/run-element-handlers */ "../assets/dev/js/frontend/utils/run-element-handlers.js"));
+class NestedCarousel extends elementorModules.frontend.handlers.CarouselBase {
+  getDefaultSettings() {
+    const defaultSettings = super.getDefaultSettings();
+    defaultSettings.selectors.carousel = '.e-n-carousel';
+    defaultSettings.selectors.slidesWrapper = '.e-n-carousel > .swiper-wrapper';
+    return defaultSettings;
+  }
+  getSwiperSettings() {
+    const swiperOptions = super.getSwiperSettings(),
+      elementSettings = this.getElementSettings(),
+      isRtl = elementorFrontend.config.is_rtl,
+      widgetSelector = `.elementor-element-${this.getID()}`;
+    if (elementorFrontend.isEditMode()) {
+      delete swiperOptions.autoplay;
+      swiperOptions.loop = false;
+      swiperOptions.noSwipingSelector = '.swiper-slide > .e-con .elementor-element';
+    }
+    if ('yes' === elementSettings.arrows) {
+      swiperOptions.navigation = {
+        prevEl: isRtl ? `${widgetSelector} .elementor-swiper-button-next` : `${widgetSelector} .elementor-swiper-button-prev`,
+        nextEl: isRtl ? `${widgetSelector} .elementor-swiper-button-prev` : `${widgetSelector} .elementor-swiper-button-next`
+      };
+    }
+    swiperOptions.shortSwipes = false;
+    return swiperOptions;
+  }
+  async onInit() {
+    this.wrapSlideContent();
+    super.onInit(...arguments);
+    this.ranElementHandlers = false;
+  }
+  handleElementHandlers() {
+    if (this.ranElementHandlers || !this.swiper) {
+      return;
+    }
+    const duplicatedSlides = Array.from(this.swiper.slides).filter(slide => slide.classList.contains(this.swiper.params.slideDuplicateClass));
+    (0, _runElementHandlers.default)(duplicatedSlides);
+    this.ranElementHandlers = true;
+  }
+  wrapSlideContent() {
+    if (!elementorFrontend.isEditMode()) {
+      return;
+    }
+    const settings = this.getSettings(),
+      slideContentClass = settings.selectors.slideContent.replace('.', ''),
+      $widget = this.$element;
+    let index = 1;
+    this.findElement(`${settings.selectors.slidesWrapper} > .e-con`).each(function () {
+      const $currentContainer = jQuery(this),
+        hasSwiperSlideWrapper = $currentContainer.closest('div').hasClass(slideContentClass),
+        $currentSlide = $widget.find(`${settings.selectors.slidesWrapper} > .${slideContentClass}:nth-child(${index})`);
+      if (!hasSwiperSlideWrapper) {
+        $currentSlide.append($currentContainer);
+      }
+      index++;
+    });
+  }
+  togglePauseOnHover(toggleOn) {
+    if (elementorFrontend.isEditMode()) {
+      return;
+    }
+    super.togglePauseOnHover(toggleOn);
+  }
+  getChangeableProperties() {
+    return {
+      arrows_position: 'arrows_position' // Not a Swiper setting.
+    };
+  }
+}
+exports["default"] = NestedCarousel;
 
 /***/ }),
 
@@ -7008,10 +7132,10 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     // If minimizedOn value is set to desktop, it applies for widescreen as well.
     if ('desktop' === minimizedOn || activeBreakpoints.indexOf(minimizedOn) >= activeBreakpoints.indexOf(currentDeviceMode)) {
       if (!isCollapsed) {
-        this.collapseBox();
+        this.collapseBox(false);
       }
     } else if (isCollapsed) {
-      this.expandBox();
+      this.expandBox(false);
     }
   }
   onElementChange(settings) {
@@ -7067,21 +7191,27 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     }
   }
   expandBox() {
+    let changeFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     const boxHeight = this.getCurrentDeviceSetting('min_height');
     this.$element.removeClass(this.getSettings('classes.collapsed'));
     this.elements.$tocBody.attr('aria-expanded', 'true').slideDown();
 
     // Return container to the full height in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', boxHeight.size + boxHeight.unit);
-    this.elements.$collapseButton.trigger('focus');
+    if (changeFocus) {
+      this.elements.$collapseButton.trigger('focus');
+    }
   }
   collapseBox() {
+    let changeFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     this.$element.addClass(this.getSettings('classes.collapsed'));
     this.elements.$tocBody.attr('aria-expanded', 'false').slideUp();
 
     // Close container in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', '0px');
-    this.elements.$expandButton.trigger('focus');
+    if (changeFocus) {
+      this.elements.$expandButton.trigger('focus');
+    }
   }
   triggerClickOnEnterSpace(event) {
     const ENTER_KEY = 13,

@@ -22,7 +22,7 @@ function SiteEditor() {
 			id: 'import',
 			text: __( 'import', 'elementor-pro' ),
 			hideText: true,
-			icon: 'eicon-download-circle-o',
+			icon: 'eicon-upload-circle-o',
 			onClick: () => router.appHistory.navigate( basePath + '/import' ),
 		},
 	];

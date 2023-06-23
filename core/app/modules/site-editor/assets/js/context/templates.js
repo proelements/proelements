@@ -49,20 +49,19 @@ export class TemplatesProvider extends BaseContext {
 			() => $e.data.create( Templates.signature, { fileName, fileData } ),
 		).then( ( response ) => {
 			this.updateTemplatesState( ( prev ) => (
-					{
-						...prev,
-						...Object.values( response.data ).reduce(
-							( current, template ) => {
-								if ( ! template.supportsSiteEditor ) {
-									return current;
-								}
+				{
+					...prev,
+					...Object.values( response.data ).reduce(
+						( current, template ) => {
+							if ( ! template.supportsSiteEditor ) {
+								return current;
+							}
 
-								return { ...current, [ template.id ]: template };
-							}, {},
-						),
-					}
-				),
-			);
+							return { ...current, [ template.id ]: template };
+						}, {},
+					),
+				}
+			) );
 
 			return response;
 		} );

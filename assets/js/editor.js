@@ -1,4 +1,4 @@
-/*! pro-elements - v3.13.2 - 22-05-2023 */
+/*! pro-elements - v3.14.0 - 18-06-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -214,7 +214,7 @@ function addDocumentHandle(_ref) {
   const handleElement = createHandleElement({
     title,
     onClick: () => onDocumentClick(id, context, onCloseDocument, selector)
-  }, context);
+  }, context, element);
   element.prepend(handleElement);
   if (EDIT_CONTEXT === context) {
     element.dataset.editableElementorDocument = id;
@@ -240,10 +240,11 @@ function hasHandle(element) {
 }
 
 /**
- * @param {Object}   handleProperties
- * @param {string}   handleProperties.title
- * @param {Function} handleProperties.onClick
- * @param {string}   context
+ * @param {Object}      handleProperties
+ * @param {string}      handleProperties.title
+ * @param {Function}    handleProperties.onClick
+ * @param {string}      context
+ * @param {HTMLElement} element
  *
  * @return {HTMLElement} The newly generated Handle element
  */
@@ -252,20 +253,31 @@ function createHandleElement(_ref2, context) {
     title,
     onClick
   } = _ref2;
-  const element = createElement({
+  let element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : __('Edit %s', 'elementor-pro');
+  const innerElement = createElement({
     tag: 'div',
-    classNames: EDIT_CONTEXT === context ? [EDIT_HANDLE_CLASS_NAME] : [EDIT_HANDLE_CLASS_NAME, SAVE_HANDLE_CLASS_NAME],
+    classNames: [`${EDIT_HANDLE_CLASS_NAME}__inner`],
     children: [createElement({
       tag: 'i',
       classNames: [getHandleIcon(context)]
     }), createElement({
       tag: 'div',
       classNames: [`${EDIT_CONTEXT === context ? EDIT_HANDLE_CLASS_NAME : SAVE_HANDLE_CLASS_NAME}__title`],
-      children: [document.createTextNode(EDIT_CONTEXT === context ? __('Edit %s', 'elementor-pro').replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
+      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
     })]
   });
-  element.addEventListener('click', onClick);
-  return element;
+  const classNames = [EDIT_HANDLE_CLASS_NAME];
+  if (EDIT_CONTEXT !== context) {
+    classNames.push(SAVE_HANDLE_CLASS_NAME);
+  }
+  const containerElement = createElement({
+    tag: 'div',
+    classNames,
+    children: [innerElement]
+  });
+  containerElement.addEventListener('click', onClick);
+  return containerElement;
 }
 function getHandleIcon(context) {
   let icon = 'eicon-edit';
@@ -3289,14 +3301,29 @@ class Module extends elementorModules.editor.utils.Module {
       view: __webpack_require__(/*! ./views/panel-page */ "../modules/global-widget/assets/js/editor/views/panel-page.js")
     });
   }
+
+  /**
+   * @param {string} id - The ID.
+   * @deprecated since 3.5.0, use `$e.data.getCache( `document/global/global-widget/templates/${ id }` )` instead.
+   */
   getGlobalModels(id) {
     elementorCommon.helpers.softDeprecated('elementorPro.modules.globalWidget.getGlobalModels( id )', '3.5.0', '$e.data.getCache( `document/global/global-widget/templates/${ id }` )');
     return $e.data.getCache(this.component, `document/global/global-widget/templates/${id}`);
   }
+
+  /**
+   * @deprecated since 3.5.0, use `$e.internal( 'document/global/save-templates' )` instead.
+   */
   saveTemplates() {
     elementorCommon.helpers.softDeprecated('elementorPro.modules.globalWidget.saveTemplates()', '3.5.0', "$e.internal( 'document/global/save-templates' )");
     $e.internal('document/global/save-templates');
   }
+
+  /**
+   * @param {*} globalModel - global model.
+   * @param {Function} callback - A callback function.
+   * @deprecated since 3.5.0, use `$e.data.get( 'document/global/templates' )` instead.
+   */
   requestGlobalModelSettings(globalModel, callback) {
     elementorCommon.helpers.softDeprecated('elementorPro.modules.globalWidget.requestGlobalModelSettings()', '3.5.0', "$e.data.get( 'document/global/templates' )");
     $e.data.get('document/global/templates', {
@@ -4192,67 +4219,6 @@ Object.keys(_ui).forEach(function (key) {
 
 /***/ }),
 
-/***/ "../modules/popup/assets/js/editor/hooks/ui/base/base-hook-popup-after.js":
-/*!********************************************************************************!*\
-  !*** ../modules/popup/assets/js/editor/hooks/ui/base/base-hook-popup-after.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-class BaseHookPopupAfter extends $e.modules.hookUI.After {
-  run() {
-    this.component = this.component || $e.components.get('document/popup');
-    return super.run(...arguments);
-  }
-}
-exports["default"] = BaseHookPopupAfter;
-
-/***/ }),
-
-/***/ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-instructions.js":
-/*!************************************************************************************************!*\
-  !*** ../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-instructions.js ***!
-  \************************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = exports.PopupRemoveInstructions = void 0;
-var _baseHookPopupAfter = _interopRequireDefault(__webpack_require__(/*! ../../../base/base-hook-popup-after */ "../modules/popup/assets/js/editor/hooks/ui/base/base-hook-popup-after.js"));
-class PopupRemoveInstructions extends _baseHookPopupAfter.default {
-  getCommand() {
-    return 'editor/documents/unload';
-  }
-  getId() {
-    return 'elementor-pro-popup-remove-instructions';
-  }
-  getConditions(args) {
-    const {
-      document
-    } = args;
-    return 'popup' === document.config.type && !elementor.config.user.introduction.popupSettings;
-  }
-  apply() {
-    $e.components.get('panel/page-settings').off('route/close', this.component.onPageSettingsCloseHandler);
-  }
-}
-exports.PopupRemoveInstructions = PopupRemoveInstructions;
-var _default = PopupRemoveInstructions;
-exports["default"] = _default;
-
-/***/ }),
-
 /***/ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-library-tab.js":
 /*!***********************************************************************************************!*\
   !*** ../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-library-tab.js ***!
@@ -4341,71 +4307,6 @@ exports["default"] = _default;
 
 /***/ }),
 
-/***/ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-instructions.js":
-/*!********************************************************************************************!*\
-  !*** ../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-instructions.js ***!
-  \********************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = exports.PopupAddInstructions = void 0;
-var _baseHookPopupAfter = _interopRequireDefault(__webpack_require__(/*! ../../../base/base-hook-popup-after */ "../modules/popup/assets/js/editor/hooks/ui/base/base-hook-popup-after.js"));
-class PopupAddInstructions extends _baseHookPopupAfter.default {
-  getCommand() {
-    return 'editor/documents/open';
-  }
-  getId() {
-    return 'elementor-pro-popup-add-instructions';
-  }
-  getConditions(args) {
-    const document = elementor.documents.get(args.id);
-    return 'popup' === document.config.type && !elementor.config.user.introduction.popupSettings;
-  }
-  apply() {
-    // Expose for the remove hook.
-    this.component.onPageSettingsCloseHandler = this.onPageSettingsClose.bind(this);
-    $e.components.get('panel/page-settings').on('route/close', this.component.onPageSettingsCloseHandler);
-  }
-  onPageSettingsClose() {
-    const introduction = this.getIntroduction();
-    introduction.show(elementor.getPanelView().footer.currentView.ui.settings[0]);
-    introduction.setViewed();
-    $e.components.get('panel/page-settings').off('route/close', this.component.onPageSettingsCloseHandler);
-  }
-  getIntroduction() {
-    return new elementorModules.editor.utils.Introduction({
-      introductionKey: 'popupSettings',
-      dialogOptions: {
-        id: 'elementor-popup-settings-introduction',
-        headerMessage: '<i class="eicon-info"></i>' + __('Please Note', 'elementor-pro'),
-        message: __('Popup settings are accessed via the settings icon in the bottom menu', 'elementor-pro'),
-        closeButton: true,
-        closeButtonClass: 'eicon-close',
-        position: {
-          my: 'left bottom',
-          at: 'right bottom-5',
-          autoRefresh: true
-        },
-        hide: {
-          onOutsideClick: false
-        }
-      }
-    });
-  }
-}
-exports.PopupAddInstructions = PopupAddInstructions;
-var _default = PopupAddInstructions;
-exports["default"] = _default;
-
-/***/ }),
-
 /***/ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-library-tab.js":
 /*!*******************************************************************************************!*\
   !*** ../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-library-tab.js ***!
@@ -4478,7 +4379,7 @@ class PopupAddTriggers extends $e.modules.hookUI.After {
       this.addUI();
     } else {
       // First open, the panel is not available yet.
-      elementor.on('preview:loaded', this.addUI.bind(this));
+      elementor.once('preview:loaded', this.addUI.bind(this));
     }
   }
   addUI() {
@@ -4545,12 +4446,6 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-Object.defineProperty(exports, "PopupAddInstructions", ({
-  enumerable: true,
-  get: function () {
-    return _addInstructions.PopupAddInstructions;
-  }
-}));
 Object.defineProperty(exports, "PopupAddLibraryTab", ({
   enumerable: true,
   get: function () {
@@ -4561,12 +4456,6 @@ Object.defineProperty(exports, "PopupAddTriggers", ({
   enumerable: true,
   get: function () {
     return _addTriggers.PopupAddTriggers;
-  }
-}));
-Object.defineProperty(exports, "PopupRemoveInstructions", ({
-  enumerable: true,
-  get: function () {
-    return _removeInstructions.PopupRemoveInstructions;
   }
 }));
 Object.defineProperty(exports, "PopupRemoveLibraryTab", ({
@@ -4581,10 +4470,8 @@ Object.defineProperty(exports, "PopupRemoveTriggers", ({
     return _removeTriggers.PopupRemoveTriggers;
   }
 }));
-var _addInstructions = __webpack_require__(/*! ./editor/documents/open/add-instructions */ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-instructions.js");
 var _addLibraryTab = __webpack_require__(/*! ./editor/documents/open/add-library-tab */ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-library-tab.js");
 var _addTriggers = __webpack_require__(/*! ./editor/documents/open/add-triggers */ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/open/add-triggers.js");
-var _removeInstructions = __webpack_require__(/*! ./editor/documents/close/remove-instructions */ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-instructions.js");
 var _removeLibraryTab = __webpack_require__(/*! ./editor/documents/close/remove-library-tab */ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-library-tab.js");
 var _removeTriggers = __webpack_require__(/*! ./editor/documents/close/remove-triggers */ "../modules/popup/assets/js/editor/hooks/ui/editor/documents/close/remove-triggers.js");
 
@@ -6967,6 +6854,7 @@ module.exports = _interopRequireDefault, module.exports.__esModule = true, modul
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".930bfd9119ee62d5ccd6.bundle.js";
 /******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".de9dd6d5a71e58af98ef.bundle.js";
+/******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".04e1965a317cbb6d22df.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "e1314d8e113e32e00c20.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
@@ -7216,6 +7104,12 @@ var ElementorPro = Marionette.Application.extend({
       elementorCommon.elements.$window.on('elementor/nested-element-type-loaded', async () => {
         // The module should be loaded only when `nestedElements` is available.
         this.modules.megaMenu = new (await __webpack_require__.e(/*! import() | mega-menu-editor */ "mega-menu-editor").then(__webpack_require__.bind(__webpack_require__, /*! modules/mega-menu/assets/js/editor/module */ "../modules/mega-menu/assets/js/editor/module.js"))).default();
+      });
+    }
+    if (elementorCommon.config.experimentalFeatures['nested-elements']) {
+      elementorCommon.elements.$window.on('elementor/nested-element-type-loaded', async () => {
+        // The module should be loaded only when `nestedElements` is available.
+        this.modules.nestedCarousel = new (await __webpack_require__.e(/*! import() | nested-carousel-editor */ "nested-carousel-editor").then(__webpack_require__.bind(__webpack_require__, /*! modules/nested-carousel/assets/js/editor/module */ "../modules/nested-carousel/assets/js/editor/module.js"))).default();
       });
     }
   },

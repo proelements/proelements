@@ -1,5 +1,33 @@
 # PRO Elements - by PROElements.org
 
+#### 3.14.0 - 2023-06-19
+
+* New: Introducing Carousel widget - Infinite design possibilities, and nesting capabilities ([#2587](https://github.com/elementor/elementor/issues/2587), [#219](https://github.com/elementor/elementor/issues/219))
+* Tweak: Added Static Item Position functionality to Alternate template in Loop Grid widget
+* Tweak: Added visual indication of Page Parts
+* Tweak: Added dividers option between menu items in Menu widget
+* Tweak: Changed the HTML structure of Pagination and Navigation in Loop Carousel and Nested Carousel widgets
+* Tweak: Added shop page in WooCommerce Pages section in Site Settings
+* Tweak: Added Text Shadow, Box Shadow and Padding control to button in Call to Action widget
+* Tweak: Added Lazy Load support for images in Video Playlist widget
+* Tweak: Added `alt` attribute to images in Video Playlist widget
+* Tweak: Replaced select control with choose control for Flip Direction control in Flip Box widget
+* Tweak: Added keyboard accessibility to Carousel and Loop Carousel widgets
+* Tweak: Use `media_types` array in Media controls
+* Fix: Lightbox is still enabled after disabling it in the Site Settings in Gallery widget ([#11193](https://github.com/elementor/elementor/issues/11193), [#19871](https://github.com/elementor/elementor/issues/19871))
+* Fix: Responsive settings for templates don't work as expected when Additional Custom Breakpoints feature is active ([#16819](https://github.com/elementor/elementor/issues/16819), [#19394](https://github.com/elementor/elementor/issues/19394))
+* Fix: Inner containers are not presented as expected in Menu widget ([#21813](https://github.com/elementor/elementor/issues/21813))
+* Fix: Popup width does not support percentages ([#22413](https://github.com/elementor/elementor/issues/22413))
+* Fix: PHP 8.x throws errors when using WooCommerce Ajax response ([#22199](https://github.com/elementor/elementor/issues/22199))
+* Fix: Mini cart template appears as empty in various scenarios in Menu Cart widget ([#22789](https://github.com/elementor/elementor/issues/22789))
+* Fix: Order by Price doesn't work for the Latest products or Manual Selection in Products widget
+* Fix: Dropdown indicator icon is not vertically aligned to the text when using icon in Menu Widget
+* Fix: Mixed content warning in the console for Video Playlist widget
+* Fix: Preview settings are not presented as expected after first save in Loop Template
+* Fix: Not-crawlable link error in Video Playlist widget
+* Fix: Lightbox is still enabled after disabling it in the Site Settings in Logo widget
+* Fix: Focus state issue on page load when using Table of Content widget
+
 #### 3.13.2 - 2023-05-22
 
 * Fix: Hover settings not working as expected on Touch-Enabled devices in Menu widget ([#22258](https://github.com/elementor/elementor/issues/22258))

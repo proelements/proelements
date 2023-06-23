@@ -150,12 +150,10 @@ class Site_Logo extends Widget_Image {
 			$this->add_link_attributes( 'link', $link );
 
 			if ( Plugin::elementor()->editor->is_edit_mode() ) {
-				$this->add_render_attribute( 'link', [
-					'class' => 'elementor-clickable',
-				] );
+				$this->add_render_attribute( 'link', 'class', 'elementor-clickable' );
 			}
 
-			if ( 'media' === $settings['link_to'] ) {
+			if ( 'file' === $settings['link_to'] ) {
 				$this->add_lightbox_data_attributes( 'link', $settings['image']['id'], $settings['open_lightbox'] );
 			}
 		} ?>

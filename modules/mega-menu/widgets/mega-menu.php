@@ -5,6 +5,7 @@ use ElementorPro\Base\Base_Widget_Trait;
 use ElementorPro\Plugin;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Modules\NestedElements\Base\Widget_Nested_Base;
 use Elementor\Modules\NestedElements\Controls\Control_Nested_Repeater;
 use Elementor\Icons_Manager;
@@ -776,6 +777,12 @@ class Mega_Menu extends Widget_Nested_Base {
 						'{{WRAPPER}}' => '--n-menu-item-title-font-size: {{SIZE}}{{UNIT}}',
 					],
 				],
+				'line_height' => [
+					'selectors' => [
+						'{{SELECTOR}}' => '--e-global-typography-{{external._id.VALUE}}-line-height: {{SIZE}}{{UNIT}}',
+						'{{SELECTOR}}' => '--n-menu-item-title-line-height: {{SIZE}}',
+					],
+				],
 			],
 		] );
 
@@ -848,6 +855,104 @@ class Mega_Menu extends Widget_Nested_Base {
 			[
 				'name' => 'menu_item_title_box_shadow',
 				'selector' => "{$menu_mobile_and_desktop_css_selector} > .e-n-menu-item-title:not( .e-current ):not( :hover )",
+			]
+		);
+
+		$divider_condition = [
+			'menu_divider' => 'yes',
+			'item_layout' => 'horizontal',
+		];
+
+		$this->add_control(
+			'menu_divider',
+			[
+				'label' => esc_html__( 'Divider', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
+				'condition' => [
+					'item_layout' => 'horizontal',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-divider-content: "";',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'menu_divider_style',
+			[
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+				],
+				'default' => 'solid',
+				'condition' => $divider_condition,
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-divider-style: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_divider_width',
+			[
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 20,
+					],
+				],
+				'condition' => $divider_condition,
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-divider-width: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_divider_height',
+			[
+				'label' => esc_html__( 'Height', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vh', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 100,
+					],
+					'%' => [
+						'min' => 1,
+						'max' => 100,
+					],
+				],
+				'condition' => $divider_condition,
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-divider-height: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_divider_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'condition' => $divider_condition,
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-divider-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -1083,10 +1188,10 @@ class Mega_Menu extends Widget_Nested_Base {
 				],
 			],
 			'selectors_dictionary' => [
-				'top' => '--n-menu-title-direction: column; --n-menu-icon-order: initial; --n-menu-item-title-justify-content: center; --n-menu-title-align-items-toggle: initial;',
-				'end' => '--n-menu-title-direction: row; --n-menu-icon-order: 1; --n-menu-item-title-justify-content: initial; --n-menu-title-align-items-toggle: center;',
-				'bottom' => '--n-menu-title-direction: column; --n-menu-icon-order: 1; --n-menu-item-title-justify-content: center; --n-menu-title-align-items-toggle: initial;',
-				'start' => '--n-menu-title-direction: row; --n-menu-icon-order: initial; --n-menu-item-title-justify-content: initial; --n-menu-title-align-items-toggle: center;',
+				'top' => '--n-menu-title-direction: column; --n-menu-icon-order: initial; --n-menu-item-icon-align-items: flex-end; --n-menu-item-title-justify-content: center; --n-menu-title-align-items-toggle: initial;',
+				'end' => '--n-menu-title-direction: row; --n-menu-icon-order: 1; --n-menu-item-icon-align-items: initial; --n-menu-item-title-justify-content: initial; --n-menu-title-align-items-toggle: center;',
+				'bottom' => '--n-menu-title-direction: column; --n-menu-icon-order: 1; --n-menu-item-icon-align-items: flex-start; --n-menu-item-title-justify-content: center; --n-menu-title-align-items-toggle: initial;',
+				'start' => '--n-menu-title-direction: row; --n-menu-icon-order: initial; --n-menu-item-icon-align-items: initial; --n-menu-item-title-justify-content: initial; --n-menu-title-align-items-toggle: center;',
 			],
 			'selectors' => [
 				'{{WRAPPER}}' => '{{VALUE}}',
@@ -1939,7 +2044,6 @@ class Mega_Menu extends Widget_Nested_Base {
 						echo $item['item_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 					</span>
-				<?php echo $this->get_title_container_closing_tag( $item['item_link']['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 				<?php if ( 'yes' === $item_dropdown_content ) { ?>
 					<span class="e-n-menu-item-icon">
@@ -1947,6 +2051,8 @@ class Mega_Menu extends Widget_Nested_Base {
 						<span class="e-n-menu-item-icon-closed"><?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 					</span>
 				<?php } ?>
+				<?php echo $this->get_title_container_closing_tag( $item['item_link']['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+
 			</div>
 		<?php
 		if ( $args['isMobile'] ) {

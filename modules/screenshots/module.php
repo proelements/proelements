@@ -262,7 +262,7 @@ class Module extends Module_Base {
 		parent::__construct();
 
 		if ( $this->is_screenshot_proxy_mode( $_GET ) ) { // phpcs:ignore -- Checking nonce inside the method.
-			echo $this->get_proxy_data( $_GET['href'] ); // phpcs:ignore -- Nonce was checked on the above method
+			echo $this->get_proxy_data( htmlspecialchars( $_GET['href'] ) ); // phpcs:ignore -- Nonce was checked on the above method
 			die;
 		}
 

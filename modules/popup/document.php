@@ -165,7 +165,7 @@ class Document extends Theme_Section_Document {
 			[
 				'label' => esc_html__( 'Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ], // Only CSS `<length>` data-type is allowed, not `<percentage>`.
 				'range' => [
 					'px' => [
 						'min' => 100,

@@ -230,7 +230,7 @@ class Slides extends Base_Widget {
 		$repeater->add_control(
 			'heading',
 			[
-				'label' => esc_html__( 'Title & Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Slide Heading', 'elementor-pro' ),
 				'label_block' => true,
@@ -246,7 +246,6 @@ class Slides extends Base_Widget {
 				'label' => esc_html__( 'Description', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor-pro' ),
-				'show_label' => false,
 				'dynamic' => [
 					'active' => true,
 				],

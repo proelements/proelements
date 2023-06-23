@@ -941,7 +941,7 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @param \ElementorPro\Base\Base_Widget $widget
+	 * @param \Elementor\Widget_Base $widget
 	 * @param string $name
 	 * @param array $query_args
 	 * @param array $fallback_args

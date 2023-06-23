@@ -1,14 +1,14 @@
 <?php
 namespace ElementorPro\Modules\LoopBuilder\Files\Css;
 
-use Elementor\Core\Files\CSS\Post;
+use ElementorPro\Modules\ThemeBuilder\Files\CSS\Template;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Loop extends Post {
+class Loop extends Template {
 
 	use Loop_Css_Trait;
 

@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.13.2 - 22-05-2023 */
+/*! pro-elements - v3.14.0 - 18-06-2023 */
 #elementor-panel-get-pro-elements {
   display: none;
 }
@@ -486,43 +486,6 @@
 }
 #elementor-popup__timing-controls-group--browsers .elementor-control-browsers_browsers_options .elementor-control-input-wrapper {
   width: 200px;
-}
-
-#elementor-popup-settings-introduction {
-  position: absolute;
-  z-index: 1;
-  height: 110px;
-  width: 260px;
-  padding: 20px 30px;
-  border-radius: 3px;
-}
-#elementor-popup-settings-introduction:before {
-  content: "";
-  position: absolute;
-  border: solid transparent;
-  border-width: 5px 7px;
-  border-right-color: #fff;
-  left: -14px;
-  top: 83%;
-}
-#elementor-popup-settings-introduction .dialog-close-button {
-  top: 10px;
-  right: 10px;
-  font-size: 13px;
-}
-#elementor-popup-settings-introduction .dialog-header {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 500;
-}
-#elementor-popup-settings-introduction .dialog-header i {
-  color: #0A875A;
-  font-size: 23px;
-  margin-right: 10px;
-}
-#elementor-popup-settings-introduction .dialog-message {
-  margin-top: 10px;
 }
 
 #elementor-popup__timing-controls-group--times .elementor-control-field {

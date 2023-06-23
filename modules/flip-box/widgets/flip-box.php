@@ -148,7 +148,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'title_text_a',
 			[
-				'label' => esc_html__( 'Title & Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'This is the heading', 'elementor-pro' ),
 				'placeholder' => esc_html__( 'Enter your title', 'elementor-pro' ),
@@ -172,7 +172,6 @@ class Flip_Box extends Base_Widget {
 					'active' => true,
 				],
 				'rows' => 10,
-				'show_label' => false,
 			]
 		);
 
@@ -275,7 +274,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'title_text_b',
 			[
-				'label' => esc_html__( 'Title & Description', 'elementor-pro' ),
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'This is the heading', 'elementor-pro' ),
 				'placeholder' => esc_html__( 'Enter your title', 'elementor-pro' ),
@@ -298,7 +297,6 @@ class Flip_Box extends Base_Widget {
 					'active' => true,
 				],
 				'rows' => 10,
-				'show_label' => false,
 			]
 		);
 
@@ -488,14 +486,27 @@ class Flip_Box extends Base_Widget {
 			'flip_direction',
 			[
 				'label' => esc_html__( 'Flip Direction', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
+				'type' => Controls_Manager::CHOOSE,
 				'default' => 'up',
 				'options' => [
-					'left' => esc_html__( 'Left', 'elementor-pro' ),
-					'right' => esc_html__( 'Right', 'elementor-pro' ),
-					'up' => esc_html__( 'Up', 'elementor-pro' ),
-					'down' => esc_html__( 'Down', 'elementor-pro' ),
+					'left' => [
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-right',
+					],
+					'up' => [
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'down' => [
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-bottom',
+					],
 				],
+				'toggle' => false,
 				'condition' => [
 					'flip_effect!' => [
 						'fade',

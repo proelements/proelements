@@ -1,4 +1,4 @@
-/*! pro-elements - v3.13.2 - 22-05-2023 */
+/*! pro-elements - v3.14.0 - 18-06-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -21,7 +21,7 @@
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -82,29 +82,29 @@
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".bd9b459b2670f6512f56.bundle.js";
-/******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".46d8facd8ae5db005088.bundle.js";
+/******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".1eaa6f5cb62ea2d58265.bundle.js";
 /******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".0b0a646654a59ebd13a8.bundle.js";
-/******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".6525e1debdc6788d7c5b.bundle.js";
+/******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".ee06964ad9f6a53c061d.bundle.js";
 /******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".3424c0ac2b2c8da47033.bundle.js";
-/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".a72e91b4455c4435ee9c.bundle.js";
-/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".3c8f4fa31022b9a3b8af.bundle.js";
-/******/ 			if (chunkId === "carousel") return "" + chunkId + ".f3d380987af9f2d7b22d.bundle.js";
+/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".d814d12739fd7c744896.bundle.js";
+/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".a98799d9f5a454b751e1.bundle.js";
+/******/ 			if (chunkId === "carousel") return "" + chunkId + ".49e271b0dd16dd95d00b.bundle.js";
 /******/ 			if (chunkId === "countdown") return "" + chunkId + ".14ae9e6521e5309f2b20.bundle.js";
-/******/ 			if (chunkId === "hotspot") return "" + chunkId + ".a8e9728500bb65f7d480.bundle.js";
-/******/ 			if (chunkId === "form") return "form.f57ca47ad68276d319aa.bundle.js";
+/******/ 			if (chunkId === "hotspot") return "" + chunkId + ".d43ef85fb9e56c4414f4.bundle.js";
+/******/ 			if (chunkId === "form") return "form.1161490412c4fa9ebfc6.bundle.js";
 /******/ 			if (chunkId === "gallery") return "" + chunkId + ".1573e391054ea0977a1f.bundle.js";
 /******/ 			if (chunkId === "lottie") return "" + chunkId + ".e9e13c1085c8ebcf9e08.bundle.js";
-/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".1136001d12dc019bb2d1.bundle.js";
+/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".ded2ef1815c81841b6b8.bundle.js";
 /******/ 			if (chunkId === "popup") return "" + chunkId + ".397c2882052136db7ee0.bundle.js";
-/******/ 			if (chunkId === "load-more") return "" + chunkId + ".2c4819ffa05d8e7e19a3.bundle.js";
+/******/ 			if (chunkId === "load-more") return "" + chunkId + ".9ad2efa307d3ada91e86.bundle.js";
 /******/ 			if (chunkId === "posts") return "" + chunkId + ".72468c8555693b196f98.bundle.js";
 /******/ 			if (chunkId === "portfolio") return "" + chunkId + ".47c0bf4b3576c66f1b1a.bundle.js";
 /******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".a43f0e61533a54c4cf9f.bundle.js";
-/******/ 			if (chunkId === "slides") return "" + chunkId + ".ed047abad2c95958dc83.bundle.js";
+/******/ 			if (chunkId === "slides") return "" + chunkId + ".0a31b946f157107ba4a2.bundle.js";
 /******/ 			if (chunkId === "social") return "" + chunkId + ".68fec39648b9a03c6275.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".ab15dfd7ad194d26485a.bundle.js";
-/******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".c139dd16b2224fcc8171.bundle.js";
-/******/ 			if (chunkId === "search-form") return "" + chunkId + ".c2e702ac2599755b6b91.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".99cfd4713b3327d9b782.bundle.js";
+/******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".f09f53ca5b8d6f9bbe13.bundle.js";
+/******/ 			if (chunkId === "search-form") return "" + chunkId + ".416aa432fdfe2bcfe9b5.bundle.js";
 /******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".cecfa624e2d23a156519.bundle.js";
 /******/ 			if (chunkId === "woocommerce-purchase-summary") return "" + chunkId + ".40bd4441fdc065587324.bundle.js";
 /******/ 			if (chunkId === "woocommerce-checkout-page") return "" + chunkId + ".bf88689aec2ee294a5e8.bundle.js";
@@ -112,10 +112,11 @@
 /******/ 			if (chunkId === "woocommerce-my-account") return "" + chunkId + ".355b00c58fb73e92a0bb.bundle.js";
 /******/ 			if (chunkId === "woocommerce-notices") return "" + chunkId + ".d803ba1deaf96eb007fc.bundle.js";
 /******/ 			if (chunkId === "product-add-to-cart") return "" + chunkId + ".39fbaae6c856c483b4b4.bundle.js";
-/******/ 			if (chunkId === "loop") return "loop.56bafc053eb8d9ec040d.bundle.js";
-/******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".1b69b7ef8be1e8e1bebf.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".35fbf213933126b106ad.bundle.js";
+/******/ 			if (chunkId === "loop") return "loop.1d4e16e70fd7e6b89f96.bundle.js";
+/******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".bb1d12b699805ace419f.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".6a41b17ca3362b2df95d.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".749b8c1dc8bd8c9b37d2.bundle.js";
+/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".4b92d02078ce6e22f22e.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

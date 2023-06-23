@@ -2171,6 +2171,9 @@ class Menu_Cart extends Base_Widget {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+		if ( ! wp_script_is( 'wc-cart-fragments' ) ) {
+			wp_enqueue_script( 'wc-cart-fragments' );
+		}
 
 		$this->maybe_use_mini_cart_template();
 		Module::render_menu_cart( $settings );

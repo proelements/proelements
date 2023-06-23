@@ -154,7 +154,7 @@ class Video_Playlist extends Base_Widget {
 						TagsModule::MEDIA_CATEGORY,
 					],
 				],
-				'media_type' => 'video',
+				'media_types' => [ 'video' ],
 				'condition' => [
 					'type' => 'hosted',
 					'is_external_url' => '',
@@ -178,7 +178,7 @@ class Video_Playlist extends Base_Widget {
 						TagsModule::URL_CATEGORY,
 					],
 				],
-				'media_type' => 'video',
+				'media_types' => [ 'video' ],
 				'placeholder' => esc_html__( 'Enter your URL', 'elementor-pro' ),
 				'condition' => [
 					'type' => 'hosted',
@@ -1726,7 +1726,7 @@ class Video_Playlist extends Base_Widget {
 										<?php if ( $playlist_object->show_thumbnails ) : ?>
 											<div class="e-tab-thumbnail">
 												<?php if ( $item->video_thumbnail ) : ?>
-													<img src="<?php echo esc_url( $item->video_thumbnail ); ?>" />
+													<img src="<?php echo esc_url( $item->video_thumbnail ); ?>" alt="<?php echo esc_attr( $item->video_title ); ?>" loading="lazy" />
 												<?php endif; ?>
 												<span class="icon-play"><?php Icons_Manager::render_icon( $playlist_object->play_icon, [ 'aria-hidden' => 'true' ] ); ?></span>
 												<span class="icon-watched"><?php Icons_Manager::render_icon( $playlist_object->watched_icon, [ 'aria-hidden' => 'true' ] ); ?></span>
@@ -1736,7 +1736,7 @@ class Video_Playlist extends Base_Widget {
 											<span class="icon-watched"><?php Icons_Manager::render_icon( $playlist_object->watched_icon, [ 'aria-hidden' => 'true' ] ); ?></span>
 										<?php endif; ?>
 										<h4 class="e-tab-title-text" title="<?php echo esc_attr( $item->video_title ); ?>">
-											<a href="">
+											<a tabindex="0">
 												<?php // PHPCS - the main text of a widget should not be escaped. ?>
 												<?php echo $item->video_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</a>
@@ -1781,7 +1781,7 @@ class Video_Playlist extends Base_Widget {
 									<?php foreach ( $item->tabs as $tab ) :
 										if ( $tab->tab_content ) { ?>
 											<div class="e-inner-tab-title <?php Utils::print_unescaped_internal_string( $tab->tab_class ); ?>">
-												<a class="e-inner-tab-title-text" href=""><?php Utils::print_unescaped_internal_string( $tab->tab_title ); ?></a>
+												<a class="e-inner-tab-title-text" tabindex="0"><?php Utils::print_unescaped_internal_string( $tab->tab_title ); ?></a>
 											</div>
 										<?php } ?>
 									<?php endforeach; ?>
@@ -2063,7 +2063,7 @@ class Video_Playlist extends Base_Widget {
 										<span class="icon-watched">{{{ watchedIconHTML.value }}}</span>
 										<# } #>
 										<h4 class="e-tab-title-text" title="{{{ item.videoTitle }}}">
-											<a href="">{{{ item.videoTitle }}}</a>
+											<a tabindex="0">{{{ item.videoTitle }}}</a>
 										</h4>
 										<# if ( item.videoDuration ) { #>
 										<span class="e-tab-duration">{{{ item.videoDuration }}}</span>
@@ -2113,7 +2113,7 @@ class Video_Playlist extends Base_Widget {
 									<# _.each( item.tabs, function( tab ) { #>
 										<# if ( tab.tab_content ) { #>
 											<div class="e-inner-tab-title {{{ tab.tabClass }}}">
-												<a class="e-inner-tab-title-text" href=""> {{{ tab.tab_title }}} </a>
+												<a class="e-inner-tab-title-text" tabindex="0"> {{{ tab.tab_title }}} </a>
 											</div>
 										<# } #>
 									<# }); #>
