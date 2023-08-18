@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\AssetsManager\AssetTypes\Fonts;
 
 use ElementorPro\Core\Utils;
+use ElementorPro\Modules\AssetsManager\AssetTypes\Fonts_Manager;
 use ElementorPro\Modules\AssetsManager\Classes\Font_Base;
 use Elementor\Settings;
 
@@ -226,6 +227,10 @@ class Typekit_Fonts extends Font_Base {
 
 	public function integrations_admin_ajax_handler() {
 		check_ajax_referer( self::TYPEKIT_KIT_ID_OPTION_NAME, '_nonce' );
+
+		if ( ! current_user_can( Fonts_Manager::CAPABILITY ) ) {
+			wp_send_json_error( 'Permission denied' );
+		}
 
 		$kit_id = Utils::_unstable_get_super_global_value( $_POST, 'kit_id' );
 

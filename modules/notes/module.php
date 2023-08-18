@@ -43,13 +43,6 @@ class Module extends App {
 	}
 
 	/**
-	 * @return bool
-	 */
-	public static function is_active() {
-		return API::is_license_active() && API::is_licence_has_feature( static::LICENSE_FEATURE_NAME );
-	}
-
-	/**
 	 * @return string
 	 */
 	public function get_name() {
@@ -185,11 +178,12 @@ class Module extends App {
 		}
 	}
 
-	/**
-	 * Component constructor.
-	 */
-	public function __construct() {
-		parent::__construct();
+	private function on_elementor_pro_init() {
+		$is_active = API::is_license_active() && API::is_licence_has_feature( static::LICENSE_FEATURE_NAME );
+
+		if ( ! $is_active ) {
+			return;
+		}
 
 		// Things that should be happened if the feature is active (not depends on the current user)
 		$this->define_tables();
@@ -233,5 +227,13 @@ class Module extends App {
 				$this->enqueue_main_scripts();
 			} );
 		}
+	}
+
+	public function __construct() {
+		parent::__construct();
+
+		add_action( 'elementor_pro/init', function() {
+			$this->on_elementor_pro_init();
+		} );
 	}
 }

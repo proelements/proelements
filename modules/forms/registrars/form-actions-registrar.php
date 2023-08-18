@@ -51,7 +51,7 @@ class Form_Actions_Registrar extends Registrar {
 		/**
 		 * Deprecated actions registration hook.
 		 *
-		 * @deprecated 3.5.0
+		 * @deprecated 3.5.0 Use `elementor_pro/forms/actions/register` instead.
 		 */
 		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->do_deprecated_action(
 			'elementor_pro/forms/register_action',

@@ -121,7 +121,6 @@ class Module extends TagsModule {
 			'Contact_URL',
 			'User_Info',
 			'User_Profile_Picture',
-			'Woocommerce_Add_To_Cart',
 		];
 	}
 

@@ -1,6 +1,6 @@
 .#{$eps-prefix}back-button {
 	font-size: 14px;
-	margin-bottom: spacing(24);
+	margin-block-end: spacing(24);
 
 	.#{$eps-prefix}icon {
 		transform: getValueByDirection(rotate(0deg), rotate(180deg));

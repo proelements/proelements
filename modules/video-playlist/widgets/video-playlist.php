@@ -32,6 +32,9 @@ class Video_Playlist extends Base_Widget {
 	}
 
 	protected function register_controls() {
+		$start = is_rtl() ? 'right' : 'left';
+		$end = is_rtl() ? 'left' : 'right';
+
 		$this->start_controls_section(
 			'section_playlist',
 			[
@@ -517,26 +520,6 @@ class Video_Playlist extends Base_Widget {
 		);
 
 		$this->add_control(
-			'tabs_alignment',
-			[
-				'label' => esc_html__( 'Layout', 'elementor-pro' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'right',
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Left', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'end' => [
-						'title' => esc_html__( 'Right', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
-				'prefix_class' => 'elementor-layout-',
-			]
-		);
-
-		$this->add_control(
 			'heading_autoplay',
 			[
 				'label' => esc_html__( 'Autoplay', 'elementor-pro' ),
@@ -654,6 +637,26 @@ class Video_Playlist extends Base_Widget {
 			[
 				'label' => esc_html__( 'Layout', 'elementor-pro' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'tabs_alignment',
+			[
+				'label' => esc_html__( 'Video Position', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'end',
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => "eicon-h-align-$start",
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => "eicon-h-align-$end",
+					],
+				],
+				'prefix_class' => 'elementor-layout-',
 			]
 		);
 
@@ -910,13 +913,15 @@ class Video_Playlist extends Base_Widget {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
-					'min' => 10,
-					'max' => 30,
+					'px' => [
+						'min' => 10,
+						'max' => 30,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => '--playlist-item-icon-size: {{SIZE}}px',
-					'{{WRAPPER}}' => '--playlist-item-icon-size: {{SIZE}}px',
+					'{{WRAPPER}}' => '--playlist-item-icon-size: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -955,12 +960,15 @@ class Video_Playlist extends Base_Widget {
 			[
 				'label' => esc_html__( 'Weight', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
-					'min' => 0,
-					'max' => 10,
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title' => 'border-width: 0 0 {{SIZE}}px 0;',
+					'{{WRAPPER}} .e-tab-title' => 'border-width: 0 0 {{SIZE}}{{UNIT}} 0;',
 				],
 				'condition' => [
 					'normal_separator_style!' => '',
@@ -1107,13 +1115,16 @@ class Video_Playlist extends Base_Widget {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
-					'min' => 10,
-					'max' => 30,
+					'px' => [
+						'min' => 10,
+						'max' => 30,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span i' => 'font-size: {{SIZE}}px',
-					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span svg' => 'width: {{SIZE}}px; height: {{SIZE}}px;',
+					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span i' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1152,12 +1163,15 @@ class Video_Playlist extends Base_Widget {
 			[
 				'label' => esc_html__( 'Weight', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
-					'min' => 0,
-					'max' => 10,
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title.e-active' => 'border-width: 0 0 {{SIZE}}px 0;',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title.e-active' => 'border-width: 0 0 {{SIZE}}{{UNIT}} 0;',
 				],
 				'condition' => [
 					'active_separator_style!' => '',

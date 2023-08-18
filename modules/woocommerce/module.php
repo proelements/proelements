@@ -31,6 +31,14 @@ class Module extends Module_Base {
 	const OPTION_NAME_USE_MINI_CART = 'use_mini_cart_template';
 	const MENU_CART_FRAGMENTS_ACTION = 'elementor-menu-cart-fragments';
 	const LOOP_PRODUCT_SKIN_ID = 'product';
+	const WC_PERSISTENT_SITE_SETTINGS = [
+		'woocommerce_cart_page_id',
+		'woocommerce_checkout_page_id',
+		'woocommerce_myaccount_page_id',
+		'woocommerce_terms_page_id',
+		'woocommerce_purchase_summary_page_id',
+		'woocommerce_shop_page_id',
+	];
 
 	protected $docs_types = [];
 	protected $use_mini_cart_template;
@@ -130,6 +138,13 @@ class Module extends Module_Base {
 		'woocommerce-product-additional-information',
 	];
 
+	// 'WC page name' => 'Elementor widget name'
+	const WC_STATUS_PAGES_MAPPED_TO_WIDGETS = [
+		'Cart' => 'woocommerce-cart',
+		'Checkout' => 'woocommerce-checkout-page',
+		'My account' => 'woocommerce-my-account',
+	];
+
 	public function add_product_post_class( $classes ) {
 		$classes[] = 'product';
 
@@ -158,6 +173,7 @@ class Module extends Module_Base {
 			'Product_Terms',
 			'Product_Title',
 			'Category_Image',
+			'Woocommerce_Add_To_Cart',
 		];
 
 		/** @var \Elementor\Core\DynamicTags\Manager $module */
@@ -1405,6 +1421,46 @@ class Module extends Module_Base {
 		add_filter( 'elementor/query/query_args', function( $query_args, $widget ) {
 			return $this->loop_query( $query_args, $widget );
 		}, 10, 2 );
+
+		add_filter( 'woocommerce_rest_prepare_system_status', function( $response, $system_status, $request ) {
+			return $this->add_system_status_data( $response, $system_status, $request );
+		}, 10, 3 );
+
+		add_filter( 'elementor/editor/localize_settings', function ( $config ) {
+			return $this->populate_persistent_settings( $config );
+		});
+	}
+
+	public function add_system_status_data( $response, $system_status, $request ) {
+		foreach ( $response->data['pages'] as $index => $wc_page ) {
+			$this->modify_response_if_widget_exists_in_page( $wc_page, $response, $index );
+		}
+
+		return $response;
+	}
+
+	private function modify_response_if_widget_exists_in_page( $wc_page, &$response, $index ) {
+		if ( empty( $wc_page['page_name'] ) || empty( $wc_page['page_id'] ) || ! array_key_exists( $wc_page['page_name'], static::WC_STATUS_PAGES_MAPPED_TO_WIDGETS ) ) {
+			return;
+		}
+
+		if ( isset( $wc_page['shortcode_present'] ) && false !== $wc_page['shortcode_present'] ) {
+			return;
+		}
+
+		$document = Plugin::elementor()->documents->get( $wc_page['page_id'] );
+
+		if ( ! $document || ! $document->is_built_with_elementor() ) {
+			return;
+		}
+
+		$elementor_data = get_post_meta( $wc_page['page_id'], '_elementor_data', true );
+		$widget_name = static::WC_STATUS_PAGES_MAPPED_TO_WIDGETS[ $wc_page['page_name'] ];
+		$widget_exists_in_page = false !== strpos( $elementor_data, $widget_name );
+
+		if ( $widget_exists_in_page ) {
+			$response->data['pages'][ $index ]['shortcode_present'] = true;
+		}
 	}
 
 	public function loop_query( $query_args, $widget ) {
@@ -1497,6 +1553,14 @@ class Module extends Module_Base {
 		$config['panel']['widgets_settings']['woocommerce-product-images'] = [
 			'show_in_panel' => false,
 		];
+		return $config;
+	}
+
+	private function populate_persistent_settings( array $config ) {
+		$config['persistent_keys'] = array_key_exists( 'persistent_keys', $config ) ?
+				array_merge( $config['persistent_keys'], self::WC_PERSISTENT_SITE_SETTINGS ) :
+				self::WC_PERSISTENT_SITE_SETTINGS;
+
 		return $config;
 	}
 }

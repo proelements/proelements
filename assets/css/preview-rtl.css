@@ -1,4 +1,4 @@
-/*! pro-elements - v3.14.0 - 18-06-2023 */
+/*! pro-elements - v3.15.0 - 09-08-2023 */
 *[data-editable-elementor-document] {
   position: relative;
 }
@@ -44,17 +44,18 @@
 }
 *[data-editable-elementor-document] .elementor-document-handle__inner:before {
   right: calc(100% - 1px);
-  border-right-color: var(--e-a-color-primary, #F3BAFD);
+  border-inline-end-color: var(--e-a-color-primary, #F3BAFD);
   border-width: 0 14px 30px 0;
 }
 *[data-editable-elementor-document] .elementor-document-handle__inner:after {
   left: calc(100% - 1px);
-  border-left-color: var(--e-a-color-primary, #F3BAFD);
+  border-inline-start-color: var(--e-a-color-primary, #F3BAFD);
   border-width: 0 0 30px 14px;
 }
 *[data-editable-elementor-document].e-embedded-document-active .elementor-document-handle:not(.elementor-document-save-back-handle), *[data-editable-elementor-document].elementor-widget-container .elementor-document-handle:not(.elementor-document-save-back-handle) {
   bottom: unset;
-  border-bottom: unset;
+  -webkit-border-after: unset;
+          border-block-end: unset;
 }
 *[data-editable-elementor-document].e-embedded-document-active .elementor-document-handle:not(.elementor-document-save-back-handle)::before, *[data-editable-elementor-document].elementor-widget-container .elementor-document-handle:not(.elementor-document-save-back-handle)::before {
   display: none;
@@ -94,10 +95,10 @@
   background-color: var(--e-p-border-global, #5EEAD4);
 }
 [data-elementor-post-type=elementor_library] > .elementor-document-handle .elementor-document-handle__inner:before {
-  border-right-color: var(--e-p-border-global, #5EEAD4);
+  border-inline-end-color: var(--e-p-border-global, #5EEAD4);
 }
 [data-elementor-post-type=elementor_library] > .elementor-document-handle .elementor-document-handle__inner:after {
-  border-left-color: var(--e-p-border-global, #5EEAD4);
+  border-inline-start-color: var(--e-p-border-global, #5EEAD4);
 }
 
 .elementor-widget.elementor-sticky--effects .elementor-editor-widget-settings {
@@ -140,7 +141,8 @@
 }
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-left,
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-right {
-  margin-left: 5px;
+  -webkit-margin-end: 5px;
+          margin-inline-end: 5px;
 }
 .elementor-loop-container > div.elementor-edit-area-active:first-of-type {
   border: 2px solid #5EEAD4;

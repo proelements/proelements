@@ -149,10 +149,13 @@ class Nested_Carousel extends Widget_Nested_Base {
 		$this->add_carousel_settings_controls( [
 			'css_prefix' => 'e-n-carousel-',
 			'autoplay_custom_settings' => [
-				'description' => esc_html__( 'Note: The Autoplay is inactive while editing. Preview your page to see it in action.', 'elementor-pro' ),
+				'description' => esc_html__( 'The Autoplay is inactive while editing. Preview your page to see it in action.', 'elementor-pro' ),
 			],
 			'infinite_custom_settings' => [
-				'description' => esc_html__( 'Note: The Infinite scroll is inactive while editing. Preview your page to see it in action.', 'elementor-pro' ),
+				'description' => esc_html__( 'Infinite scroll is inactive while editing. Preview your page to see it in action.', 'elementor-pro' ),
+			],
+			'offset_sides_custom_settings' => [
+				'description' => esc_html__( 'Offset is inactive while editing. Preview your page to see it in action.', 'elementor-pro' ),
 			],
 		] );
 

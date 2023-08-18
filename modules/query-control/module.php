@@ -65,7 +65,7 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated use Group_Control_Query capabilities
+	 * @deprecated 2.5.0 Use `Group_Control_Query` class capabilities instead.
 	 *
 	 * @param Widget_Base $widget
 	 */
@@ -922,7 +922,7 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated use Elementor_Post_Query capabilities
+	 * @deprecated 2.5.0 Use `Elementor_Post_Query` class capabilities instead.
 	 *
 	 * @param string $control_id
 	 * @param array $settings

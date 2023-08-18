@@ -1,4 +1,4 @@
-/*! pro-elements - v3.14.0 - 18-06-2023 */
+/*! pro-elements - v3.15.0 - 09-08-2023 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05);
 }
@@ -41,7 +41,8 @@
   filter: var(--placeholder-filter, none);
 }
 .e-site-template__overlay-preview {
-  padding-top: calc(var(--card-image-aspect-ratio, 95.6%) - 1.875rem);
+  -webkit-padding-before: calc(var(--card-image-aspect-ratio, 95.6%) - 1.875rem);
+          padding-block-start: calc(var(--card-image-aspect-ratio, 95.6%) - 1.875rem);
   position: relative;
 }
 .e-site-template__overlay-preview-button {
@@ -53,7 +54,8 @@
   background-color: var(--card-background-color-hover);
   justify-content: center;
   align-items: center;
-  padding-top: 0.625rem;
+  -webkit-padding-before: 0.625rem;
+          padding-block-start: 0.625rem;
   line-height: 1.25rem;
   --button-background-color: var(--card-headline-color);
 }
@@ -64,7 +66,8 @@
   width: 100%;
   top: 0;
   left: 0;
-  padding-top: calc(var(--card-image-aspect-ratio, 95.6%) - 1.875rem);
+  -webkit-padding-before: calc(var(--card-image-aspect-ratio, 95.6%) - 1.875rem);
+          padding-block-start: calc(var(--card-image-aspect-ratio, 95.6%) - 1.875rem);
 }
 .e-site-template__overlay-preview-button > :not(:first-child) {
   -webkit-margin-start: 0.3125rem;
@@ -114,13 +117,15 @@
 }
 
 .e-site-editor__templates .page-header {
-  margin-bottom: 0.625rem;
+  -webkit-margin-after: 0.625rem;
+          margin-block-end: 0.625rem;
 }
 .e-site-editor__templates .page-header > a {
   align-self: baseline;
 }
 .e-site-editor__templates .eps-separator {
-  margin-bottom: 2.75rem;
+  -webkit-margin-after: 2.75rem;
+          margin-block-end: 2.75rem;
 }
 
 :root {
@@ -167,7 +172,8 @@
 .e-site-editor-conditions__row {
   display: flex;
   flex-grow: 1;
-  margin-top: 0.75rem;
+  -webkit-margin-before: 0.75rem;
+          margin-block-start: 0.75rem;
 }
 .e-site-editor-conditions__remove-condition {
   color: #818A96;
@@ -178,7 +184,8 @@
 }
 .e-site-editor-conditions__row-controls {
   overflow: hidden;
-  margin-right: 0.625rem;
+  -webkit-margin-end: 0.625rem;
+          margin-inline-end: 0.625rem;
   background-color: var(--e-site-editor-conditions-row-controls-background);
   display: flex;
   width: 100%;
@@ -190,7 +197,8 @@
 }
 .e-site-editor-conditions__conflict {
   text-align: center;
-  margin-top: 0.3125rem;
+  -webkit-margin-before: 0.3125rem;
+          margin-block-start: 0.3125rem;
   color: #DC2626;
 }
 .e-site-editor-conditions__row-controls-inner {
@@ -204,7 +212,8 @@
   text-align: center;
 }
 .e-site-editor-conditions__add-button {
-  margin-top: 2.75rem;
+  -webkit-margin-before: 2.75rem;
+          margin-block-start: 2.75rem;
   background-color: var(--e-site-editor-add-button-background-color);
   color: #ffffff;
   text-transform: uppercase;
@@ -221,11 +230,13 @@
   right: 0;
   left: 0;
   padding: 0.5rem;
-  border-top: 1px solid var(--hr-color);
+  -webkit-border-before: 1px solid var(--hr-color);
+          border-block-start: 1px solid var(--hr-color);
 }
 .e-site-editor-conditions__input-wrapper {
   position: relative;
-  border-left: 1px solid;
+  -webkit-padding-start: 1px solid;
+          padding-inline-start: 1px solid;
   border-color: var(--e-site-editor-input-wrapper-border-color);
 }
 .e-site-editor-conditions__input-wrapper:first-child {
@@ -286,10 +297,12 @@
 }
 .e-site-editor-conditions__input-wrapper--condition-type select {
   text-transform: uppercase;
-  padding-left: 2.125rem;
+  -webkit-padding-start: 2.125rem;
+          padding-inline-start: 2.125rem;
   width: 7.5rem;
   font-size: 0.75rem;
-  border-right: 1px solid;
+  -webkit-border-end: 1px solid;
+          border-inline-end: 1px solid;
   border-color: var(--e-site-editor-input-wrapper-border-color);
 }
 .e-site-editor-conditions__input-wrapper--condition-type[data-elementor-condition-type=include]:before {
@@ -306,7 +319,8 @@
 
 .eps-back-button {
   font-size: 14px;
-  margin-bottom: 1.5rem;
+  -webkit-margin-after: 1.5rem;
+          margin-block-end: 1.5rem;
 }
 .eps-back-button .eps-icon {
   transform: rotate(0deg);
@@ -364,6 +378,7 @@
 
 .e-site-editor__content_container_secondary {
   margin: 0 auto;
-  padding-top: 2.75rem;
+  -webkit-padding-before: 2.75rem;
+          padding-block-start: 2.75rem;
 }
 /*# sourceMappingURL=app.css.map */

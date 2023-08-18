@@ -99,6 +99,10 @@ class Module extends Module_Base {
 			$this->secret_key = Utils::_unstable_get_super_global_value( $_POST, 'secret_key' );
 		}
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Permission denied' );
+		}
+
 		$stripe_handler = new Stripe_handler();
 		$response = $stripe_handler->get( $this->secret_key, self::STRIPE_TAX_ENDPOINT_URL, [ 'limit' => 0 ] );
 		$code = $response['response']['code'];

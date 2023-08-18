@@ -6,12 +6,14 @@ use ElementorPro\Base\Module_Base;
 use ElementorPro\Modules\Posts\Data\Controller;
 use ElementorPro\Modules\Posts\Widgets\Posts_Base;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Posts\Traits\Pagination_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Module extends Module_Base {
+	use Pagination_Trait;
 
 	public function get_name() {
 		return 'posts';
@@ -50,49 +52,6 @@ class Module extends Module_Base {
 		return $this->is_valid_pagination( $document->get_elements_data(), $wp_query->query_vars['page'] );
 	}
 
-	/**
-	 * Checks a set of elements if there is a posts/archive widget that may be paginated to a specific page number.
-	 *
-	 * @param array $elements
-	 * @param       $current_page
-	 *
-	 * @return bool
-	 */
-	public function is_valid_pagination( array $elements, $current_page ) {
-		$is_valid = false;
-
-		// Get all widgets that may add pagination.
-		$widgets = Plugin::elementor()->widgets_manager->get_widget_types();
-		$posts_widgets = [];
-		foreach ( $widgets as $widget ) {
-			if ( $widget instanceof Posts_Base ) {
-				$posts_widgets[] = $widget->get_name();
-			}
-		}
-
-		Plugin::elementor()->db->iterate_data( $elements, function( $element ) use ( &$is_valid, $posts_widgets, $current_page ) {
-			if ( isset( $element['widgetType'] ) && in_array( $element['widgetType'], $posts_widgets, true ) ) {
-				// Has pagination.
-				if ( ! empty( $element['settings']['pagination_type'] ) ) {
-					$using_ajax_pagination = in_array( $element['settings']['pagination_type'], [
-						Posts_Base::LOAD_MORE_ON_CLICK,
-						Posts_Base::LOAD_MORE_INFINITE_SCROLL,
-					], true);
-
-					// No max pages limits or in load more mode.
-					if ( empty( $element['settings']['pagination_page_limit'] ) || $using_ajax_pagination ) {
-						$is_valid = true;
-					} elseif ( (int) $current_page <= (int) $element['settings']['pagination_page_limit'] ) {
-						// Has page limit but current page is less than or equal to max page limit.
-						$is_valid = true;
-					}
-				}
-			}
-		} );
-
-		return $is_valid;
-	}
-
 	public function __construct() {
 		parent::__construct();
 
@@ -102,4 +61,3 @@ class Module extends Module_Base {
 	}
 
 }
-

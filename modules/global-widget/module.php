@@ -140,7 +140,7 @@ class Module extends Module_Base {
 	 * @param array $args    Optional parameters passed to has_cap(), typically object ID.
 	 *
 	 * @return array
-	 * @deprecated 3.1.0
+	 * @deprecated 3.1.0 Use `Plugin::elementor()->documents->remove_user_edit_cap()` instead.
 	 */
 	public function remove_user_edit_cap( $allcaps, $caps, $args ) {
 		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0', 'Plugin::elementor()->documents->remove_user_edit_cap()' );

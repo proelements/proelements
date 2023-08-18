@@ -136,14 +136,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var _elementor_ui__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
 /* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
+// src/store/index.ts
+
+var initialState = {
+  entities: {}
+};
+var slice = (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+  name: "documentsExtended",
+  initialState,
+  reducers: {
+    init(state, { payload }) {
+      state.entities = payload.entities;
+    },
+    addDocument(state, { payload }) {
+      state.entities[payload.id] = payload;
+    }
+  }
+});
+
 // src/sync/sync-store.ts
 
 
-function syncStore(slice) {
-  syncInitialization(slice);
-  syncOnDocumentOpen(slice);
+function syncStore() {
+  syncInitialization();
+  syncOnDocumentOpen();
 }
-function syncInitialization(slice) {
+function syncInitialization() {
   const { init: init5 } = slice.actions;
   (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.listenTo)(
     (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.v1ReadyEvent)(),
@@ -157,7 +175,7 @@ function syncInitialization(slice) {
     }
   );
 }
-function syncOnDocumentOpen(slice) {
+function syncOnDocumentOpen() {
   const { addDocument } = slice.actions;
   (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.listenTo)(
     (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.commandEndEvent)("editor/documents/open"),
@@ -180,26 +198,6 @@ function normalizeV1Document(documentData) {
     id: documentData.id,
     locationKey: documentData.config.theme_builder?.settings?.location || null
   };
-}
-
-// src/store/index.ts
-
-var initialState = {
-  entities: {}
-};
-function createSlice() {
-  return (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.addSlice)({
-    name: "documentsExtended",
-    initialState,
-    reducers: {
-      init(state, { payload }) {
-        state.entities = payload.entities;
-      },
-      addDocument(state, { payload }) {
-        state.entities[payload.id] = payload;
-      }
-    }
-  });
 }
 
 // src/extensions/popups/index.ts
@@ -332,13 +330,14 @@ function init3() {
 }
 
 // src/init.ts
+
 function init4() {
   init3();
   initStore();
 }
 function initStore() {
-  const slice = createSlice();
-  syncStore(slice);
+  (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.registerSlice)(slice);
+  syncStore();
 }
 
 // src/index.ts

@@ -697,7 +697,6 @@ class Purchase_Summary extends Base_Widget {
 						'max' => 75,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--payment-details-space-between: {{SIZE}}{{UNIT}};',
 				],
@@ -870,7 +869,6 @@ class Purchase_Summary extends Base_Widget {
 						'max' => 75,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--bank-details-space-between: {{SIZE}}{{UNIT}};',
 				],
@@ -1096,7 +1094,6 @@ class Purchase_Summary extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--order-details-rows-gap: {{SIZE}}{{UNIT}};',
 				],

@@ -2,7 +2,7 @@ $eps-meta-icon-color: tints(400);
 $eps-meta-icon-dark-color: dark-tints(200);
 $preview-button-height: spacing(30);
 $image-aspect-ratio: var(--card-image-aspect-ratio, #{$ratio-portrait});
-$overlay-preview-padding-top: calc(#{$image-aspect-ratio} - #{$preview-button-height});
+$overlay-preview-padding-block-start: calc(#{$image-aspect-ratio} - #{$preview-button-height});
 $aspect-ratio-wide: calc(100% * 0.1235);
 
 :root {
@@ -41,7 +41,7 @@ $aspect-ratio-wide: calc(100% * 0.1235);
 	}
 
 	&__overlay-preview {
-		padding-top: $overlay-preview-padding-top;
+		padding-block-start: $overlay-preview-padding-block-start;
 		position: relative;
 
 		&-button {
@@ -53,7 +53,7 @@ $aspect-ratio-wide: calc(100% * 0.1235);
 			background-color: var(--card-background-color-hover);
 			justify-content: center;
 			align-items: center;
-			padding-top: spacing(10);
+			padding-block-start: spacing(10);
 			line-height: spacing(20);
 			--button-background-color: var(--card-headline-color);
 
@@ -64,7 +64,7 @@ $aspect-ratio-wide: calc(100% * 0.1235);
 				width: 100%;
 				top: 0;
 				left: 0;
-				padding-top: $overlay-preview-padding-top;
+				padding-block-start: $overlay-preview-padding-block-start;
 			}
 
 			& > :not(:first-child) {

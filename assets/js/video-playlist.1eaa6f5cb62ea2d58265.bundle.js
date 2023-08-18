@@ -1,4 +1,4 @@
-/*! pro-elements - v3.14.0 - 18-06-2023 */
+/*! pro-elements - v3.15.0 - 09-08-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["video-playlist"],{
 

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.14.0 - 18-06-2023 */
+/*! pro-elements - v3.15.0 - 09-08-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6855,6 +6855,7 @@ module.exports = _interopRequireDefault, module.exports.__esModule = true, modul
 /******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".930bfd9119ee62d5ccd6.bundle.js";
 /******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".de9dd6d5a71e58af98ef.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".04e1965a317cbb6d22df.bundle.js";
+/******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".b7b52289dc112ded05c0.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "e1314d8e113e32e00c20.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
@@ -7110,6 +7111,14 @@ var ElementorPro = Marionette.Application.extend({
       elementorCommon.elements.$window.on('elementor/nested-element-type-loaded', async () => {
         // The module should be loaded only when `nestedElements` is available.
         this.modules.nestedCarousel = new (await __webpack_require__.e(/*! import() | nested-carousel-editor */ "nested-carousel-editor").then(__webpack_require__.bind(__webpack_require__, /*! modules/nested-carousel/assets/js/editor/module */ "../modules/nested-carousel/assets/js/editor/module.js"))).default();
+      });
+    }
+    if (elementorCommon.config.experimentalFeatures['taxonomy-filter']) {
+      __webpack_require__.e(/*! import() | loop-filter-editor */ "loop-filter-editor").then(__webpack_require__.bind(__webpack_require__, /*! modules/loop-filter/assets/js/editor/module */ "../modules/loop-filter/assets/js/editor/module.js")).then(_ref2 => {
+        let {
+          default: LoopFilter
+        } = _ref2;
+        this.modules.loopFilter = new LoopFilter();
       });
     }
   },

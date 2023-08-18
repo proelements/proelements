@@ -7,12 +7,14 @@ use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Plugin;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
+use ElementorPro\Modules\Posts\Traits\Pagination_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 class Locations_Manager {
+	use Pagination_Trait;
 
 	protected $core_locations = [];
 	protected $locations = [];
@@ -35,6 +37,53 @@ class Locations_Manager {
 		if ( ! Module::is_preview() ) {
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 		}
+
+		add_filter( 'pre_handle_404', [ $this, 'should_allow_pagination_on_single_templates' ], 10, 2 );
+	}
+
+	/**
+	 * Fix WP 5.5 pagination issue.
+	 *
+	 * Return true to mark that it's handled and avoid WP to set it as 404.
+	 *
+	 * @see https://github.com/elementor/elementor/issues/12126
+	 * @see https://core.trac.wordpress.org/ticket/50976
+	 *
+	 * Based on the logic at \WP::handle_404.
+	 *
+	 * @param $handled - Default false.
+	 * @param $wp_query
+	 *
+	 * @return bool
+	 */
+	public function should_allow_pagination_on_single_templates( $handled, $wp_query ) {
+		if ( $handled || empty( $wp_query->query_vars['page'] ) || empty( $wp_query->post ) ) {
+			return $handled;
+		}
+
+		$current_post_id = get_the_ID();
+		$documents = Module::instance()->get_conditions_manager()->get_documents_for_location( 'single' );
+
+		if ( empty( $documents ) ) {
+			return $handled;
+		}
+
+		foreach ( $documents as $document ) {
+			$post_id = $document->get_post()->ID;
+
+			// Will be handled by the pre_handle_404 filter in the posts module.
+			if ( $current_post_id === $post_id ) {
+				continue;
+			}
+
+			$document = Plugin::elementor()->documents->get( $post_id );
+
+			if ( $this->is_valid_pagination( $document->get_elements_data(), $wp_query->query_vars['page'] ) ) {
+				$handled = true;
+			}
+		}
+
+		return $handled;
 	}
 
 	public function register_locations() {

@@ -1548,7 +1548,7 @@ class Gallery extends Base_Widget {
 							$this->add_render_attribute( 'gallery_item_' . $unique_index, 'class', 'elementor-clickable' );
 						}
 
-						$this->add_lightbox_data_attributes( 'gallery_item_' . $unique_index, $id, $settings['open_lightbox'] );
+						$this->add_lightbox_data_attributes( 'gallery_item_' . $unique_index, $id, $settings['open_lightbox'], $this->get_id() );
 					} elseif ( 'custom' === $settings['link_to'] ) {
 						$this->add_link_attributes( 'gallery_item_' . $unique_index, $settings['url'] );
 					}

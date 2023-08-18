@@ -725,7 +725,6 @@ class Checkout extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--sections-title-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -772,7 +771,6 @@ class Checkout extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--sections-secondary-title-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -819,7 +817,6 @@ class Checkout extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--sections-descriptions-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -980,7 +977,6 @@ class Checkout extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-columns-gap-padding: calc( {{SIZE}}{{UNIT}}/2 ); --forms-columns-gap-margin: calc( -{{SIZE}}{{UNIT}}/2 );',
 				],
@@ -999,7 +995,6 @@ class Checkout extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-rows-gap: {{SIZE}}{{UNIT}};',
 				],
@@ -1045,7 +1040,6 @@ class Checkout extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-label-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -1432,7 +1426,6 @@ class Checkout extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--order-summary-rows-gap-top: calc( {{SIZE}}{{UNIT}}/2 ); --order-summary-rows-gap-bottom: calc( {{SIZE}}{{UNIT}}/2 );',
 				],

@@ -40,11 +40,33 @@ class Mega_Menu extends Widget_Nested_Base {
 	}
 
 	public function get_categories() {
-		return [ 'theme-elements' ];
+		return [ 'pro-elements', 'theme-elements' ];
 	}
 
 	public function get_keywords() {
 		return [ 'Mega Menu', 'Nested Elements' ];
+	}
+
+	/**
+	 * @return array[]
+	 */
+	private function get_content_horizontal_controls(): array {
+		$horizontal_controls = [
+			'left' => [
+				'title' => esc_html__( 'Left', 'elementor-pro' ),
+				'icon' => 'eicon-h-align-left',
+			],
+			'center' => [
+				'title' => esc_html__( 'Center', 'elementor-pro' ),
+				'icon' => 'eicon-h-align-center',
+			],
+			'right' => [
+				'title' => esc_html__( 'Right', 'elementor-pro' ),
+				'icon' => 'eicon-h-align-right',
+			],
+		];
+
+		return is_rtl() ? array_reverse( $horizontal_controls ) : $horizontal_controls;
 	}
 
 	protected function get_default_children_elements() {
@@ -126,6 +148,8 @@ class Mega_Menu extends Widget_Nested_Base {
 		$end = is_rtl() ? 'left' : 'right';
 		$tooltip_start = is_rtl() ? esc_html__( 'Right', 'elementor-pro' ) : esc_html__( 'Left', 'elementor-pro' );
 		$tooltip_end = is_rtl() ? esc_html__( 'Left', 'elementor-pro' ) : esc_html__( 'Right', 'elementor-pro' );
+		$start_logical = is_rtl() ? 'end' : 'start';
+		$end_logical = is_rtl() ? 'start' : 'end';
 
 		$this->start_controls_section(
 			'section_layout',
@@ -264,20 +288,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			[
 				'label' => esc_html__( 'Content Horizontal Position', 'elementor-pro' ),
 				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
+				'options' => $this->get_content_horizontal_controls(),
 				'default' => 'center',
 				'condition' => [
 					'content_width' => 'fit_to_content',
@@ -308,19 +319,19 @@ class Mega_Menu extends Widget_Nested_Base {
 			'options' => [
 				'start' => [
 					'title' => esc_html__( 'Start', 'elementor-pro' ),
-					'icon' => 'eicon-flex eicon-align-start-h',
+					'icon' => "eicon-align-$start_logical-h",
 				],
 				'center' => [
 					'title' => esc_html__( 'Center', 'elementor-pro' ),
-					'icon' => 'eicon-h-align-center',
+					'icon' => 'eicon-align-center-h',
 				],
 				'end' => [
 					'title' => esc_html__( 'End', 'elementor-pro' ),
-					'icon' => 'eicon-flex eicon-align-end-h',
+					'icon' => "eicon-align-$end_logical-h",
 				],
 				'stretch' => [
 					'title' => esc_html__( 'Stretch', 'elementor-pro' ),
-					'icon' => 'eicon-h-align-stretch',
+					'icon' => 'eicon-align-stretch-h',
 				],
 			],
 			'selectors_dictionary' => [
@@ -343,15 +354,15 @@ class Mega_Menu extends Widget_Nested_Base {
 			'options' => [
 				'start' => [
 					'title' => esc_html__( 'Start', 'elementor-pro' ),
-					'icon' => 'eicon-flex eicon-align-start-h',
+					'icon' => "eicon-align-$start_logical-h",
 				],
 				'center' => [
 					'title' => esc_html__( 'Center', 'elementor-pro' ),
-					'icon' => 'eicon-h-align-center',
+					'icon' => 'eicon-align-center-h',
 				],
 				'end' => [
 					'title' => esc_html__( 'End', 'elementor-pro' ),
-					'icon' => 'eicon-flex eicon-align-end-h',
+					'icon' => "eicon-align-$end_logical-h",
 				],
 			],
 			'selectors_dictionary' => [
@@ -534,7 +545,7 @@ class Mega_Menu extends Widget_Nested_Base {
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Start', 'elementor-pro' ),
-						'icon' => 'eicon-flex eicon-align-start-h',
+						'icon' => "eicon-align-$start_logical-h",
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'elementor-pro' ),
@@ -542,7 +553,7 @@ class Mega_Menu extends Widget_Nested_Base {
 					],
 					'flex-end' => [
 						'title' => esc_html__( 'End', 'elementor-pro' ),
-						'icon' => 'eicon-flex eicon-align-end-h',
+						'icon' => "eicon-align-$end_logical-h",
 					],
 				],
 				'selectors' => [

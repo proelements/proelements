@@ -41,7 +41,7 @@
 }
 .e-form-submissions-main .postbox-header {
   border: 1px solid #D5D8DC;
-  border-bottom: none;
+  border-block-end: none;
   padding: 8px;
 }
 .e-form-submissions-main__header {
@@ -86,7 +86,7 @@
 }
 
 #e-form-submissions .e-export-button {
-  margin-right: 15px;
+  margin-inline-start: 15px;
 }
 @media screen and (max-width: 782px) {
   #e-form-submissions .e-export-button {
@@ -137,15 +137,15 @@ input[type=search].select2-search__field {
   border-color: #d9534f;
 }
 .e-form-submissions-action-log:not(:last-child) {
-  border-bottom: 1px solid #D5D8DC;
+  border-block-end: 1px solid #D5D8DC;
 }
 .e-form-submissions-action-log__label {
   display: inline-block;
-  padding-left: 15px;
+  padding-inline-end: 15px;
 }
 .e-form-submissions-action-log__icon {
   display: inline-block;
-  padding-left: 3px;
+  padding-inline-end: 3px;
 }
 .e-form-submissions-action-log__date {
   font-size: 12px;
@@ -156,12 +156,12 @@ input[type=search].select2-search__field {
   font-size: 12px;
   color: #1f2124;
   background: #F1F2F3;
-  border-right: 4px solid #69727D;
+  border-inline-start: 4px solid #69727D;
 }
 
 .e-form-submissions-value-label:not(:last-child) {
   display: block;
-  margin-bottom: 10px;
+  margin-block-end: 10px;
 }
 
 /*# sourceMappingURL=admin-rtl.css.map */

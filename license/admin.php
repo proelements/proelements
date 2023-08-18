@@ -20,7 +20,7 @@ class Admin {
 
 	public static function get_license_key() {
 		return '';
-		}
+	}
 
 	public function register_actions() {
 

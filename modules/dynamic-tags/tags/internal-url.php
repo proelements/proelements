@@ -34,9 +34,8 @@ class Internal_URL extends Data_Tag {
 
 	/**
 	 * @since 3.6.0
+	 * @deprecated 3.8.0 Use `On_Import_Trait::on_import_update_dynamic_content()` instead.
 	 *
-	 * @deprecated 3.8.0
-	 * On_Import_Trait::on_import_update_dynamic_content() should be used instead.
 	 * Remove in the future.
 	 */
 	public static function on_import_replace_dynamic_content( $config, $map_old_new_post_ids ) {

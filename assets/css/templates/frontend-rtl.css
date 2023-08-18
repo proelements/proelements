@@ -5101,7 +5101,7 @@ the source property is coming from element/dev/scss...
 .elementor-price-table .elementor-price-table__after-price {
   display: flex;
   flex-wrap: wrap;
-  text-align: right;
+  text-align: start;
   align-self: stretch;
   align-items: flex-start;
   flex-direction: column;
@@ -9847,6 +9847,15 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   grid-column-gap: var(--grid-column-gap, 30px);
   grid-row-gap: var(--grid-row-gap, 30px);
 }
+.elementor-widget-loop-grid .e-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  animation: loadingOpacityAnimation 1s infinite alternate;
+}
 .elementor-widget-loop-grid .e-loop__load-more {
   text-align: var(--load-more-button-align);
 }
@@ -9919,12 +9928,52 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   align-items: stretch;
 }
 
+@keyframes loadingOpacityAnimation {
+  0% {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}
 .elementor-widget-loop-carousel {
   --swiper-pagination-size: 0;
   --swiper-pagination-spacing: 10px;
   --swiper-slides-gap: 10px;
+  --swiper-offset-size: 0;
   height: fit-content;
   --swiper-padding-bottom: calc( var(--swiper-pagination-size) + var(--swiper-pagination-spacing) );
+  --arrow-prev-top-align: 50%;
+  --arrow-prev-top-position: 0px;
+  --arrow-prev-caption-spacing: 15px;
+  --arrow-next-top-align: 50%;
+  --arrow-next-top-position: 0px;
+  --arrow-next-caption-spacing: 15px;
+  --arrow-prev-left-align: 0px;
+  --arrow-prev-left-position: 0px;
+  --arrow-next-right-align: 0px;
+  --arrow-next-right-position: 0px;
+  --arrow-next-translate-x: 0px;
+  --arrow-next-translate-y: 0px;
+  --arrow-prev-translate-x: 0px;
+  --arrow-prev-translate-y: 0px;
+  --dots-vertical-position: 100%;
+  --dots-vertical-offset: 0px;
+  --dots-horizontal-position: 50%;
+  --dots-horizontal-offset: 0px;
+  --dots-horizontal-transform: -50%;
+  --dots-vertical-transform: -100%;
+  --fraction-vertical-position: 100%;
+  --fraction-vertical-offset: 0px;
+  --fraction-horizontal-position: 50%;
+  --fraction-horizontal-offset: 0px;
+  --fraction-horizontal-transform: -50%;
+  --fraction-vertical-transform: -100%;
+  --horizontal-transform-modifier: 1;
+  --horizontal-transform-modifier: -1;
 }
 .elementor-widget-loop-carousel.elementor-pagination-type-bullets {
   --swiper-pagination-size: 6px;
@@ -9935,37 +9984,60 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 .elementor-widget-loop-carousel.elementor-pagination-type-progressbar {
   --swiper-pagination-size: 4px;
 }
-.elementor-widget-loop-carousel .swiper-container > .swiper-wrapper > .swiper-slide-active.elementor-edit-area-active,
-.elementor-widget-loop-carousel .swiper > .swiper-wrapper > .swiper-slide-active.elementor-edit-area-active {
+.elementor-widget-loop-carousel .elementor-loop-container > .swiper-wrapper > .swiper-slide-active.elementor-edit-area-active {
   overflow: initial;
 }
-.elementor-widget-loop-carousel .swiper-container:not(.swiper-container-initialized) .swiper-wrapper,
-.elementor-widget-loop-carousel .swiper:not(.swiper-initialized) .swiper-wrapper {
+.elementor-widget-loop-carousel .elementor-loop-container.offset-left {
+  padding-inline-start: var(--swiper-offset-size, 0);
+}
+.elementor-widget-loop-carousel .elementor-loop-container.offset-right {
+  padding-inline-end: var(--swiper-offset-size, 0);
+}
+.elementor-widget-loop-carousel .elementor-loop-container.offset-both {
+  padding-inline-start: var(--swiper-offset-size, 0);
+  padding-inline-end: var(--swiper-offset-size, 0);
+}
+.elementor-widget-loop-carousel .swiper-container:not(.swiper-container-initialized) > .swiper-wrapper,
+.elementor-widget-loop-carousel .swiper:not(.swiper-initialized) > .swiper-wrapper {
   gap: var(--swiper-slides-gap);
   overflow: hidden;
 }
-.elementor-widget-loop-carousel .swiper-container:not(.swiper-container-initialized) .swiper-slide,
-.elementor-widget-loop-carousel .swiper:not(.swiper-initialized) .swiper-slide {
+.elementor-widget-loop-carousel .swiper-container:not(.swiper-container-initialized) > .swiper-wrapper > .swiper--slide,
+.elementor-widget-loop-carousel .swiper:not(.swiper-initialized) > .swiper-wrapper > .swiper--slide {
   --number-of-gaps: max( calc( var(--swiper-slides-to-display) - 1 ), 0 );
   --gaps-width-total: calc( var(--number-of-gaps) * var(--swiper-slides-gap) );
   max-width: calc((100% - var(--gaps-width-total)) / var(--swiper-slides-to-display, 1));
 }
 .elementor-widget-loop-carousel .e-loop-first-edit {
   min-width: 33%;
-  margin-top: 23px;
+  margin-block-start: 23px;
 }
 .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-prev, .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-next {
   font-size: var(--arrow-size, 25px);
   color: var(--arrow-normal-color, rgba(238, 238, 238, 0.9));
-}
-.elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-prev:hover, .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-next:hover {
-  color: var(--arrow-hover-color, rgba(238, 238, 238, 0.9));
+  border-style: var(--arrow-normal-border-type);
+  transition-duration: 0.25s;
+  z-index: 2;
 }
 .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-prev svg, .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-next svg {
   fill: var(--arrow-normal-color, rgba(238, 238, 238, 0.9));
 }
-.elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-prev svg:hover, .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-next svg:hover {
+.elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-prev:hover, .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-next:hover {
+  color: var(--arrow-hover-color, rgba(238, 238, 238, 0.9));
+  border-style: var(--arrow-hover-border-type);
+}
+.elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-prev:hover svg, .elementor-widget-loop-carousel .elementor-swiper-button.elementor-swiper-button-next:hover svg {
   fill: var(--arrow-hover-color, rgba(238, 238, 238, 0.9));
+}
+.elementor-widget-loop-carousel.elementor-element :is(.swiper, .swiper-container) ~ .elementor-swiper-button-next {
+  top: calc(var(--arrow-next-top-align) + var(--arrow-next-top-position) - var(--arrow-next-caption-spacing));
+  right: calc(var(--arrow-next-right-align) + var(--arrow-next-right-position));
+  transform: translate(var(--arrow-next-translate-x), var(--arrow-next-translate-y));
+}
+.elementor-widget-loop-carousel.elementor-element :is(.swiper, .swiper-container) ~ .elementor-swiper-button-prev {
+  top: calc(var(--arrow-prev-top-align) + var(--arrow-prev-top-position) - var(--arrow-prev-caption-spacing));
+  left: calc(var(--arrow-prev-left-align) + var(--arrow-prev-left-position));
+  transform: translate(var(--arrow-prev-translate-x), var(--arrow-prev-translate-y));
 }
 .elementor-widget-loop-carousel .swiper-container-horizontal ~ .swiper-pagination-progressbar,
 .elementor-widget-loop-carousel .swiper-horizontal ~ .swiper-pagination-progressbar {
@@ -9989,26 +10061,44 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   background: var(--dots-hover-color, #000000);
   opacity: 1;
 }
-.elementor-widget-loop-carousel.elementor-in-place-template-editable .swiper,
-.elementor-widget-loop-carousel.elementor-in-place-template-editable .swiper-container {
+.elementor-widget-loop-carousel.elementor-in-place-template-editable .elementor-loop-container {
   overflow: visible;
   overflow-x: clip;
 }
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-container,
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper {
-  padding-bottom: var(--swiper-padding-bottom);
-}
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-pagination,
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-pagination-fraction,
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-pagination-custom,
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-horizontal > .swiper-pagination-bullets,
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: 0;
+.elementor-widget-loop-carousel .swiper-pagination,
+.elementor-widget-loop-carousel .swiper-pagination-fraction,
+.elementor-widget-loop-carousel .swiper-pagination-custom,
+.elementor-widget-loop-carousel .swiper-horizontal > .swiper-pagination-bullets,
+.elementor-widget-loop-carousel .swiper-pagination-bullets.swiper-pagination-horizontal {
   font-size: var(--swiper-pagination-size);
   line-height: var(--swiper-pagination-size);
 }
-.elementor-widget-loop-carousel.elementor-pagination-position-outside .swiper-pagination-bullet {
+.elementor-widget-loop-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper-container,
+.elementor-widget-loop-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper {
+  padding-bottom: var(--swiper-padding-bottom);
+}
+.elementor-widget-loop-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper-container .elementor-background-slideshow,
+.elementor-widget-loop-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper .elementor-background-slideshow {
+  padding-bottom: 0px;
+}
+.elementor-widget-loop-carousel.elementor-pagination-position-outside > .elementor-widget-container .swiper-pagination-bullet {
   vertical-align: top;
+}
+.elementor-widget-loop-carousel .swiper-pagination-bullets {
+  top: calc(var(--dots-vertical-position) + var(--dots-vertical-offset));
+  right: calc(var(--dots-horizontal-position) + var(--dots-horizontal-offset));
+  transform: translate(calc(var(--dots-horizontal-transform) * var(--horizontal-transform-modifier)), var(--dots-vertical-transform));
+  width: max-content;
+  height: max-content;
+  z-index: 3;
+}
+.elementor-widget-loop-carousel .swiper-pagination-fraction {
+  top: calc(var(--fraction-vertical-position) + var(--fraction-vertical-offset));
+  right: calc(var(--fraction-horizontal-position) + var(--fraction-horizontal-offset));
+  transform: translate(calc(var(--fraction-horizontal-transform) * var(--horizontal-transform-modifier)), var(--fraction-vertical-transform));
+  width: max-content;
+  height: max-content;
+  z-index: 3;
 }
 
 .e-loop-item * {
@@ -10664,8 +10754,37 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   --e-n-carousel-swiper-slides-to-display: 3;
   --e-n-carousel-swiper-pagination-size: 0;
   --e-n-carousel-swiper-pagination-spacing: 10px;
+  --e-n-carousel-swiper-offset-size: 0;
   height: fit-content;
+  --e-n-carousel-arrow-prev-top-align: 50%;
+  --e-n-carousel-arrow-prev-top-position: 0px;
+  --e-n-carousel-arrow-prev-caption-spacing: 15px;
+  --e-n-carousel-arrow-next-top-align: 50%;
+  --e-n-carousel-arrow-next-top-position: 0px;
+  --e-n-carousel-arrow-next-caption-spacing: 15px;
+  --e-n-carousel-arrow-prev-left-align: 0px;
+  --e-n-carousel-arrow-prev-left-position: 0px;
+  --e-n-carousel-arrow-next-right-align: 0px;
+  --e-n-carousel-arrow-next-right-position: 0px;
+  --e-n-carousel-arrow-next-translate-x: 0px;
+  --e-n-carousel-arrow-next-translate-y: 0px;
+  --e-n-carousel-arrow-prev-translate-x: 0px;
+  --e-n-carousel-arrow-prev-translate-y: 0px;
   --e-n-carousel-swiper-padding-bottom: calc( var(--e-n-carousel-swiper-pagination-size) + var(--e-n-carousel-swiper-pagination-spacing) );
+  --e-n-carousel-dots-vertical-position: 100%;
+  --e-n-carousel-dots-vertical-offset: 0px;
+  --e-n-carousel-dots-horizontal-position: 50%;
+  --e-n-carousel-dots-horizontal-offset: 0px;
+  --e-n-carousel-dots-horizontal-transform: -50%;
+  --e-n-carousel-dots-vertical-transform: -100%;
+  --e-n-carousel-fraction-vertical-position: 100%;
+  --e-n-carousel-fraction-vertical-offset: 0px;
+  --e-n-carousel-fraction-horizontal-position: 50%;
+  --e-n-carousel-fraction-horizontal-offset: 0px;
+  --e-n-carousel-fraction-horizontal-transform: -50%;
+  --e-n-carousel-fraction-vertical-transform: -100%;
+  --e-n-carousel-horizontal-transform-modifier: 1;
+  --e-n-carousel-horizontal-transform-modifier: -1;
 }
 .elementor-widget-n-carousel .e-n-carousel {
   display: flex;
@@ -10674,35 +10793,59 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 .elementor-widget-n-carousel .e-n-carousel > .swiper-wrapper > .swiper-slide-active.elementor-edit-area-active {
   overflow: initial;
 }
-.elementor-widget-n-carousel .e-n-carousel .swiper-slide {
+.elementor-widget-n-carousel .e-n-carousel.offset-left {
+  padding-inline-start: var(--e-n-carousel-swiper-offset-size, 0);
+}
+.elementor-widget-n-carousel .e-n-carousel.offset-right {
+  padding-inline-end: var(--e-n-carousel-swiper-offset-size, 0);
+}
+.elementor-widget-n-carousel .e-n-carousel.offset-both {
+  padding-inline-start: var(--e-n-carousel-swiper-offset-size, 0);
+  padding-inline-end: var(--e-n-carousel-swiper-offset-size, 0);
+}
+.elementor-widget-n-carousel .e-n-carousel > .swiper-wrapper > .swiper-slide {
   flex-shrink: 0;
   height: var(--e-n-carousel-slide-height, initial);
 }
-.elementor-widget-n-carousel .e-n-carousel .swiper-slide > .e-con {
+.elementor-widget-n-carousel .e-n-carousel > .swiper-wrapper > .swiper-slide > .e-con {
   max-width: calc(100% - var(--margin-left) - var(--margin-right));
   height: var(--e-n-carousel-slide-container-height, initial);
 }
-:where(.elementor-widget-n-carousel .e-n-carousel .swiper-slide > .e-con) {
+:where(.elementor-widget-n-carousel .e-n-carousel > .swiper-wrapper > .swiper-slide > .e-con) {
   border-radius: var(--border-radius);
   padding-right: var(--padding-right);
   padding-left: var(--padding-left);
 }
-:where(.elementor-widget-n-carousel .e-n-carousel .swiper-slide > .e-con) > .e-con-inner {
+:where(.elementor-widget-n-carousel .e-n-carousel > .swiper-wrapper > .swiper-slide > .e-con) > .e-con-inner {
   padding-top: var(--padding-top);
   padding-bottom: var(--padding-bottom);
 }
 .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-prev, .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-next {
   font-size: var(--e-n-carousel-arrow-size, 25px);
   color: var(--e-n-carousel-arrow-normal-color, rgba(238, 238, 238, 0.9));
-}
-.elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-prev:hover, .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-next:hover {
-  color: var(--e-n-carousel-arrow-hover-color, rgba(238, 238, 238, 0.9));
+  border-style: var(--e-n-carousel-arrow-normal-border-type);
+  transition-duration: 0.25s;
+  z-index: 2;
 }
 .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-prev svg, .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-next svg {
   fill: var(--e-n-carousel-arrow-normal-color, rgba(238, 238, 238, 0.9));
 }
-.elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-prev svg:hover, .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-next svg:hover {
+.elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-prev:hover, .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-next:hover {
+  color: var(--e-n-carousel-arrow-hover-color, rgba(238, 238, 238, 0.9));
+  border-style: var(--e-n-carousel-arrow-hover-border-type);
+}
+.elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-prev:hover svg, .elementor-widget-n-carousel .elementor-swiper-button.elementor-swiper-button-next:hover svg {
   fill: var(--e-n-carousel-arrow-hover-color, rgba(238, 238, 238, 0.9));
+}
+.elementor-widget-n-carousel.elementor-element :is(.swiper, .swiper-container) ~ .elementor-swiper-button-next {
+  top: calc(var(--e-n-carousel-arrow-next-top-align) + var(--e-n-carousel-arrow-next-top-position) - var(--e-n-carousel-arrow-next-caption-spacing));
+  right: calc(var(--e-n-carousel-arrow-next-right-align) + var(--e-n-carousel-arrow-next-right-position));
+  transform: translate(var(--e-n-carousel-arrow-next-translate-x), var(--e-n-carousel-arrow-next-translate-y));
+}
+.elementor-widget-n-carousel.elementor-element :is(.swiper, .swiper-container) ~ .elementor-swiper-button-prev {
+  top: calc(var(--e-n-carousel-arrow-prev-top-align) + var(--e-n-carousel-arrow-prev-top-position) - var(--e-n-carousel-arrow-prev-caption-spacing));
+  left: calc(var(--e-n-carousel-arrow-prev-left-align) + var(--e-n-carousel-arrow-prev-left-position));
+  transform: translate(var(--e-n-carousel-arrow-prev-translate-x), var(--e-n-carousel-arrow-prev-translate-y));
 }
 .elementor-widget-n-carousel.elementor-pagination-type-bullets {
   --e-n-carousel-swiper-pagination-size: 6px;
@@ -10734,33 +10877,159 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   background: var(--e-n-carousel-dots-hover-color, #000000);
   opacity: 1;
 }
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-container,
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper {
-  padding-bottom: var(--e-n-carousel-swiper-padding-bottom);
-}
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-pagination,
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-pagination-fraction,
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-pagination-custom,
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-horizontal > .swiper-pagination-bullets,
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: 0;
+.elementor-widget-n-carousel .swiper-pagination,
+.elementor-widget-n-carousel .swiper-pagination-fraction,
+.elementor-widget-n-carousel .swiper-pagination-custom,
+.elementor-widget-n-carousel .swiper-horizontal > .swiper-pagination-bullets,
+.elementor-widget-n-carousel .swiper-pagination-bullets.swiper-pagination-horizontal {
   font-size: var(--e-n-carousel-swiper-pagination-size);
   line-height: var(--e-n-carousel-swiper-pagination-size);
 }
-.elementor-widget-n-carousel.elementor-pagination-position-outside .swiper-pagination-bullet {
+.elementor-widget-n-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper-container,
+.elementor-widget-n-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper {
+  padding-bottom: var(--e-n-carousel-swiper-padding-bottom);
+}
+.elementor-widget-n-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper-container .elementor-background-slideshow,
+.elementor-widget-n-carousel.elementor-pagination-position-outside > .elementor-widget-container > .swiper .elementor-background-slideshow {
+  padding-bottom: 0px;
+}
+.elementor-widget-n-carousel.elementor-pagination-position-outside > .elementor-widget-container .swiper-pagination-bullet {
   vertical-align: top;
 }
+.elementor-widget-n-carousel .swiper-pagination-bullets {
+  top: calc(var(--e-n-carousel-dots-vertical-position) + var(--e-n-carousel-dots-vertical-offset));
+  right: calc(var(--e-n-carousel-dots-horizontal-position) + var(--e-n-carousel-dots-horizontal-offset));
+  transform: translate(calc(var(--e-n-carousel-dots-horizontal-transform) * var(--e-n-carousel-horizontal-transform-modifier)), var(--e-n-carousel-dots-vertical-transform));
+  width: max-content;
+  height: max-content;
+  z-index: 3;
+}
+.elementor-widget-n-carousel .swiper-pagination-fraction {
+  top: calc(var(--e-n-carousel-fraction-vertical-position) + var(--e-n-carousel-fraction-vertical-offset));
+  right: calc(var(--e-n-carousel-fraction-horizontal-position) + var(--e-n-carousel-fraction-horizontal-offset));
+  transform: translate(calc(var(--e-n-carousel-fraction-horizontal-transform) * var(--e-n-carousel-horizontal-transform-modifier)), var(--e-n-carousel-fraction-vertical-transform));
+  width: max-content;
+  height: max-content;
+  z-index: 3;
+}
 
-.swiper-container:not(.swiper-container-initialized) .swiper-wrapper,
-.swiper:not(.swiper-initialized) .swiper-wrapper {
+.swiper-container:not(.swiper-container-initialized) > .swiper-wrapper,
+.swiper:not(.swiper-initialized) > .swiper-wrapper {
   gap: var(--e-n-carousel-swiper-slides-gap);
   overflow: hidden;
 }
-.swiper-container:not(.swiper-container-initialized) .swiper-slide,
-.swiper:not(.swiper-initialized) .swiper-slide {
+.swiper-container:not(.swiper-container-initialized) > .swiper-wrapper > .swiper--slide,
+.swiper:not(.swiper-initialized) > .swiper-wrapper > .swiper--slide {
   --e-n-carousel-number-of-gaps: max( calc( var(--e-n-carousel-swiper-slides-to-display) - 1 ), 0 );
   --e-n-carousel-gaps-width-total: calc( var(--e-n-carousel-number-of-gaps) * var(--e-n-carousel-swiper-slides-gap) );
   max-width: calc((100% - var(--e-n-carousel-gaps-width-total)) / var(--e-n-carousel-swiper-slides-to-display, 1));
+}
+
+.elementor-widget-taxonomy-filter {
+  --e-filter-display: flex;
+  --e-filter-direction: row;
+  --e-filter-justify-content: center;
+  --e-filter-wrap: wrap;
+  --e-filter-align-items: center;
+  --e-filter-item-width: initial;
+  --e-filter-item-max-width: calc(100% - calc(var( --e-filter-item-padding )*3 ) );
+  --e-filter-item-justify-content: center;
+  --e-filter-item-flex-grow: 0;
+  --e-filter-item-align-items: center;
+  --e-filter-item-border-radius: initial;
+  --e-filter-space-between: 20px;
+  --e-filter-normal-text-color: #69727D;
+  --e-filter-active-text-color: #0C0D0E;
+  --e-filter-hover-text-color: #0C0D0E;
+  --e-filter-overflow-x: initial;
+  --e-filter-white-space: nowrap;
+  --e-filter-item-align-text: center;
+  --e-filter-item-padding: 8px;
+  --e-filter-item-box-sizing: initial;
+}
+.elementor-widget-taxonomy-filter .e-filter {
+  display: var(--e-filter-display);
+  flex-direction: var(--e-filter-direction);
+  flex-shrink: 0;
+  justify-content: var(--e-filter-justify-content);
+  flex-wrap: var(--e-filter-wrap);
+  align-items: var(--e-filter-align-items);
+  gap: var(--e-filter-space-between);
+  overflow-x: var(--e-filter-overflow-x);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.elementor-widget-taxonomy-filter .e-filter::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+.elementor-widget-taxonomy-filter .e-filter.e-scroll {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+.elementor-widget-taxonomy-filter .e-filter.e-scroll-active {
+  position: relative;
+}
+.elementor-widget-taxonomy-filter .e-filter.e-scroll-active::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -1000vw;
+  z-index: 2;
+}
+.elementor-widget-taxonomy-filter .e-filter-item {
+  all: unset;
+  border-width: 1px;
+  border-style: none;
+  border-color: #69727D;
+  border-radius: var(--e-filter-item-border-radius);
+  line-height: initial;
+  color: var(--e-filter-normal-text-color);
+  padding: var(--e-filter-item-padding);
+  display: var(--e-filter-display);
+  justify-content: var(--e-filter-item-justify-content);
+  align-items: var(--e-filter-item-align-items);
+  flex-grow: var(--e-filter-item-flex-grow);
+  flex-basis: content;
+  flex-shrink: 0;
+  width: var(--e-filter-item-width);
+  max-width: var(--e-filter-item-max-width);
+  white-space: var(--e-filter-white-space);
+  text-align: var(--e-filter-item-align-text);
+  box-sizing: var(--e-filter-item-box-sizing);
+  overflow-wrap: break-word;
+  overflow: hidden;
+}
+.elementor-widget-taxonomy-filter .e-filter-item[aria-pressed=true] {
+  color: var(--e-filter-active-text-color);
+  border-color: #0C0D0E;
+}
+.elementor-widget-taxonomy-filter .e-filter-item:hover:not([aria-pressed=true]) {
+  color: var(--e-filter-hover-text-color);
+  border-color: #0C0D0E;
+}
+.elementor-widget-taxonomy-filter .e-filter-item[aria-pressed=true], .elementor-widget-taxonomy-filter .e-filter-item:hover {
+  background-color: initial;
+}
+.elementor-widget-taxonomy-filter .e-filter-item[data-filter=__all] {
+  order: -1;
+}
+.elementor-widget-taxonomy-filter .e-filter-item:focus {
+  background-color: initial;
+  outline: none;
+}
+.elementor-widget-taxonomy-filter .e-filter-item:focus-visible {
+  outline: 5px auto -webkit-focus-ring-color;
+}
+.elementor-widget-taxonomy-filter .e-filter-empty {
+  background-color: rgba(213, 216, 220, 0.8);
+  color: #0C0D0E;
+  text-align: center;
+  font-size: 1rem;
+  padding: 1rem 0;
+}
+
+.elementor-widget-loop-grid .e-loop-item.e-inactive {
+  display: none;
 }
 
 /*# sourceMappingURL=frontend-rtl.css.map */

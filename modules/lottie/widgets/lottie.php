@@ -388,6 +388,7 @@ class Lottie extends Base_Widget {
 					'animation' => esc_html__( 'Animation', 'elementor-pro' ),
 					'column' => esc_html__( 'Column', 'elementor-pro' ),
 					'section' => esc_html__( 'Section', 'elementor-pro' ),
+					'container' => esc_html__( 'Container', 'elementor-pro' ),
 				],
 				'frontend_available' => true,
 			]

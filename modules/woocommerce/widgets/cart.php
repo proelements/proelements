@@ -724,7 +724,6 @@ class Cart extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--sections-title-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -770,7 +769,6 @@ class Cart extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--sections-descriptions-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -869,7 +867,6 @@ class Cart extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-rows-gap: {{SIZE}}{{UNIT}};',
 				],
@@ -1250,7 +1247,6 @@ class Cart extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--order-summary-rows-gap-top: calc( {{SIZE}}{{UNIT}}/2 ); --order-summary-rows-gap-bottom: calc( {{SIZE}}{{UNIT}}/2 );',
 				],
@@ -1305,7 +1301,6 @@ class Cart extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--order-summary-title-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -1537,7 +1532,6 @@ class Cart extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--totals-rows-gap-top: calc( {{SIZE}}{{UNIT}}/2 ); --totals-rows-gap-bottom: calc( {{SIZE}}{{UNIT}}/2 );',
 				],

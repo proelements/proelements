@@ -98,7 +98,7 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated 3.5.0 - Use `fields_registrar->register()`.
+	 * @deprecated 3.5.0 Use `fields_registrar->register()` instead.
 	 */
 	public function add_form_field_type( $type, $instance ) {
 		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
@@ -111,7 +111,7 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated 3.5.0 - Use `actions_registrar->register()`.
+	 * @deprecated 3.5.0 Use `actions_registrar->register()` instead.
 	 */
 	public function add_form_action( $id, $instance ) {
 		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
@@ -124,7 +124,7 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated 3.5.0 - Use `actions_registrar->get()`.
+	 * @deprecated 3.5.0 Use `actions_registrar->get()` instead.
 	 */
 	public function get_form_actions( $id = null ) {
 		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(

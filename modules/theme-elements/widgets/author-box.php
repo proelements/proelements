@@ -75,6 +75,20 @@ class Author_Box extends Base {
 			]
 		);
 
+		// Used by the WordPress `get_avatar_url()` function to set the image size.
+		$this->add_control(
+			'avatar_size',
+			[
+				'label' => esc_html__( 'Picture Size', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 300,
+				'condition' => [
+					'source!' => 'custom',
+					'show_avatar' => 'yes',
+				],
+			]
+		);
+
 		//This controls for custom source
 		$this->add_control(
 			'author_avatar',
@@ -196,6 +210,7 @@ class Author_Box extends Base {
 					'source!' => 'custom',
 				],
 				'render_type' => 'template',
+				'separator' => 'before',
 			]
 		);
 
@@ -741,7 +756,7 @@ class Author_Box extends Base {
 
 		if ( 'current' === $settings['source'] ) {
 
-			$avatar_args['size'] = 300;
+			$avatar_args['size'] = $settings['avatar_size'];
 
 			$user_id = get_the_author_meta( 'ID' );
 			$author['avatar'] = get_avatar_url( $user_id, $avatar_args );

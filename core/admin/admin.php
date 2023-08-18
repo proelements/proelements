@@ -226,17 +226,7 @@ class Admin extends App {
 
 	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
 		if ( ELEMENTOR_PRO_PLUGIN_BASE === $plugin_file ) {
-			$plugin_slug = basename( ELEMENTOR_PRO__FILE__, '.php' );
-			$plugin_name = esc_html__( 'Elementor Pro', 'elementor-pro' );
-
 			$row_meta = [
-				'view-details' => sprintf( '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
-					esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' ) ),
-					/* translators: %s: Plugin name - Elementor Pro. */
-					esc_attr( sprintf( esc_html__( 'More information about %s', 'elementor-pro' ), $plugin_name ) ),
-					esc_attr( $plugin_name ),
-					__( 'View details', 'elementor-pro' )
-				),
 				'changelog' => '<a href="https://go.elementor.com/pro-changelog/" title="' . esc_attr( esc_html__( 'View Elementor Pro Changelog', 'elementor-pro' ) ) . '" target="_blank">' . esc_html__( 'Changelog', 'elementor-pro' ) . '</a>',
 			];
 

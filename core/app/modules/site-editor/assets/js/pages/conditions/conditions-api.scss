@@ -4,7 +4,7 @@ $e-site-editor-conditions-header-image-width: px-to-rem(70);
 $e-site-editor-conditions-rows-max-width: px-to-rem(700);
 $e-site-editor-conditions-rows-y-spacing: spacing(44);
 
-$e-site-editor-conditions-row-top-spacing: spacing(12);
+$e-site-editor-conditions-row-block-start-spacing: spacing(12);
 
 $e-site-editor-conditions-remove-condition-color: tints(400);
 $e-site-editor-conditions-remove-condition-font-size: type(size, '18');
@@ -19,10 +19,10 @@ $e-site-editor-conditions-row-controls-dark-border: $eps-border-width $eps-borde
 //$e-site-editor-conditions-row-controls-dark-border: $eps-border-width $eps-border-style tints(725); //merge after 3.12 is out
 $e-site-editor-conditions-row-controls-error-border: $eps-border-width $eps-border-style theme-colors(danger);
 
-$e-site-editor-conditions-conflict-top-spacing: spacing(5);
+$e-site-editor-conditions-conflict-block-start-spacing: spacing(5);
 $e-site-editor-conditions-conflict-color: theme-colors(danger);
 
-$e-site-editor-add-button-margin-top: spacing(44);
+$e-site-editor-add-button-margin-block-start: spacing(44);
 $e-site-editor-add-button-background-color: tints(500);
 $e-site-editor-add-button-background-dark-color: dark-tints(500);
 $e-site-editor-add-button-color: theme-colors(light);

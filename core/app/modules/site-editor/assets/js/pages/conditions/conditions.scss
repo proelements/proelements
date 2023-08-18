@@ -19,7 +19,7 @@
 	&__row {
 		display: flex;
 		flex-grow: 1;
-		margin-top: $e-site-editor-conditions-row-top-spacing;
+		margin-block-start: $e-site-editor-conditions-row-block-start-spacing;
 	}
 
 	&__remove-condition {
@@ -32,7 +32,7 @@
 
 	&__row-controls {
 		overflow: hidden;
-		@include margin-end($e-site-editor-conditions-row-controls-spacing-end);
+		margin-inline-end: $e-site-editor-conditions-row-controls-spacing-end;
 		background-color: var(--e-site-editor-conditions-row-controls-background);
 		display: flex;
 		width: 100%;
@@ -46,7 +46,7 @@
 
 	&__conflict {
 		text-align: center;
-		margin-top: $e-site-editor-conditions-conflict-top-spacing;
+		margin-block-start: $e-site-editor-conditions-conflict-block-start-spacing;
 		color: $e-site-editor-conditions-conflict-color;
 	}
 
@@ -64,7 +64,7 @@
 	}
 
 	&__add-button {
-		margin-top: $e-site-editor-add-button-margin-top;
+		margin-block-start: $e-site-editor-add-button-margin-block-start;
 		background-color: var(--e-site-editor-add-button-background-color);
 		color: $e-site-editor-add-button-color;
 		text-transform: uppercase;
@@ -83,12 +83,12 @@
 		right: 0;
 		left: 0;
 		padding: $e-site-editor-save-button-container-spacing;
-		border-top: 1px solid var(--hr-color);
+		border-block-start: 1px solid var(--hr-color);
 	}
 
 	&__input-wrapper {
 		position: relative;
-		@include border-start($e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style);
+		padding-inline-start: $e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style;
 		border-color: var(--e-site-editor-input-wrapper-border-color);
 
 		&:first-child {
@@ -158,10 +158,10 @@
 
 		select {
 			text-transform: uppercase;
-			@include padding-start($e-site-editor-input-wrapper-condition-type-start-padding);
+			padding-inline-start: $e-site-editor-input-wrapper-condition-type-start-padding;
 			width: $e-site-editor-input-wrapper-condition-type-width;
 			font-size: $e-site-editor-input-wrapper-condition-type-font-size;
-			@include border-end($e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style);
+			border-inline-end: $e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style;
 			border-color: var(--e-site-editor-input-wrapper-border-color);
 		}
 

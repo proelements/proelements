@@ -1,4 +1,4 @@
-/*! pro-elements - v3.14.0 - 18-06-2023 */
+/*! pro-elements - v3.15.0 - 09-08-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -3701,6 +3701,20 @@ var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
 var _templates = __webpack_require__(/*! ../context/templates */ "../core/app/modules/site-editor/assets/js/context/templates.js");
 var _backButton = _interopRequireDefault(__webpack_require__(/*! ../molecules/back-button */ "../core/app/modules/site-editor/assets/js/molecules/back-button.js"));
+var _hooks = __webpack_require__(/*! @elementor/hooks */ "@elementor/hooks");
+// The hook `useConfirmAction` comes from the core plugin, so it is possible that it is not available.
+const useConfirmActionFallback = _ref => {
+  let {
+    action
+  } = _ref;
+  return {
+    runAction: action,
+    dialog: {
+      isOpen: false
+    }
+  };
+};
+const useConfirmAction = _hooks.useConfirmAction ?? useConfirmActionFallback;
 function Import() {
   const {
       importTemplates,
@@ -3723,6 +3737,14 @@ function Import() {
       setImportedTemplate(response.data[0]);
     });
   }, []);
+  const {
+    runAction: uploadFile,
+    dialog,
+    checkbox
+  } = useConfirmAction({
+    doNotShowAgainKey: 'upload_json_warning_generic_message',
+    action: upload
+  });
   return /*#__PURE__*/_react.default.createElement("section", {
     className: "site-editor__import"
   }, importedTemplate && /*#__PURE__*/_react.default.createElement(_appUi.Dialog, {
@@ -3743,11 +3765,32 @@ function Import() {
     dismissButtonText: __('Go Back', 'elementor-pro'),
     dismissButtonOnClick: resetActionState,
     onClose: resetActionState
-  }), /*#__PURE__*/_react.default.createElement(_backButton.default, null), /*#__PURE__*/_react.default.createElement(_appUi.DropZone, {
+  }), dialog.isOpen && /*#__PURE__*/_react.default.createElement(_appUi.Dialog, {
+    title: __('Warning: JSON or ZIP files may be unsafe', 'elementor-pro'),
+    text: __('Uploading JSON or ZIP files from unknown sources can be harmful and put your site at risk. For maximum safety, upload only JSON or ZIP files from trusted sources.', 'elementor-pro'),
+    approveButtonColor: "link",
+    approveButtonText: __('Continue', 'elementor-pro'),
+    approveButtonOnClick: dialog.approve,
+    dismissButtonText: __('Cancel', 'elementor-pro'),
+    dismissButtonOnClick: dialog.dismiss,
+    onClose: dialog.dismiss
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "do-not-show-upload-json-warning-again",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px'
+    }
+  }, /*#__PURE__*/_react.default.createElement(_appUi.Checkbox, {
+    id: "do-not-show-upload-json-warning-again",
+    type: "checkbox",
+    value: checkbox.isChecked,
+    onChange: event => checkbox.setIsChecked(!!event.target.checked)
+  }), __('Do not show this message again', 'elementor-pro'))), /*#__PURE__*/_react.default.createElement(_backButton.default, null), /*#__PURE__*/_react.default.createElement(_appUi.DropZone, {
     heading: __('Import Template To Your Library', 'elementor-pro'),
     text: __('Drag & Drop your .JSON or .zip template file', 'elementor-pro'),
     secondaryText: __('or', 'elementor-pro'),
-    onFileSelect: upload,
+    onFileSelect: uploadFile,
     isLoading: isUploading,
     filetypes: ['zip', 'json']
   }));
@@ -5835,6 +5878,17 @@ module.exports = React;
 
 "use strict";
 module.exports = elementorAppPackages.appUi;
+
+/***/ }),
+
+/***/ "@elementor/hooks":
+/*!*********************************************!*\
+  !*** external "elementorAppPackages.hooks" ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = elementorAppPackages.hooks;
 
 /***/ }),
 

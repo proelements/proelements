@@ -311,7 +311,6 @@ class Products extends Products_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--products-title-spacing: {{SIZE}}{{UNIT}};',
 				],

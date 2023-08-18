@@ -243,21 +243,6 @@ class Call_To_Action extends Base_Widget {
 		);
 
 		$this->add_control(
-			'description',
-			[
-				'label' => esc_html__( 'Description', 'elementor-pro' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
-				'placeholder' => esc_html__( 'Enter your description', 'elementor-pro' ),
-				'separator' => 'none',
-				'rows' => 5,
-			]
-		);
-
-		$this->add_control(
 			'title_tag',
 			[
 				'label' => esc_html__( 'Title HTML Tag', 'elementor-pro' ),
@@ -275,6 +260,43 @@ class Call_To_Action extends Base_Widget {
 				'default' => 'h2',
 				'condition' => [
 					'title!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'description',
+			[
+				'label' => esc_html__( 'Description', 'elementor-pro' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'Enter your description', 'elementor-pro' ),
+				'separator' => 'before',
+				'rows' => 5,
+			]
+		);
+
+		$this->add_control(
+			'description_tag',
+			[
+				'label' => esc_html__( 'Description HTML Tag', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+				],
+				'default' => 'div',
+				'condition' => [
+					'description!' => '',
 				],
 			]
 		);
@@ -1568,6 +1590,8 @@ class Call_To_Action extends Base_Widget {
 
 		$wrapper_tag = 'div';
 		$button_tag = 'a';
+		$title_tag = Utils::validate_html_tag( $settings['title_tag'] );
+		$description_tag = Utils::validate_html_tag( $settings['description_tag'] );
 		$bg_image = '';
 		$content_animation = $settings['content_animation'];
 		$animation_class = '';
@@ -1715,20 +1739,16 @@ class Call_To_Action extends Base_Widget {
 					</div>
 				<?php endif; ?>
 
-				<?php
-				if ( ! empty( $settings['title'] ) ) :
-					$title_tag = Utils::validate_html_tag( $settings['title_tag'] );
-
-					echo '<' . $title_tag . ' ' . $this->get_render_attribute_string( 'title' ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					$this->print_unescaped_setting( 'title' );
-					echo '</' . $title_tag . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				endif;
-				?>
+				<?php if ( ! empty( $settings['title'] ) ) : ?>
+					<<?php Utils::print_validated_html_tag( $title_tag ); ?> <?php $this->print_render_attribute_string( 'title' ); ?>>
+						<?php $this->print_unescaped_setting( 'title' ); ?>
+					</<?php Utils::print_validated_html_tag( $title_tag ); ?>>
+				<?php endif; ?>
 
 				<?php if ( ! empty( $settings['description'] ) ) : ?>
-					<div <?php $this->print_render_attribute_string( 'description' ); ?>>
+					<<?php Utils::print_validated_html_tag( $description_tag ); ?> <?php $this->print_render_attribute_string( 'description' ); ?>>
 						<?php $this->print_unescaped_setting( 'description' ); ?>
-					</div>
+					</<?php Utils::print_validated_html_tag( $description_tag ); ?>>
 				<?php endif; ?>
 
 				<?php if ( ! empty( $settings['button'] ) ) : ?>
@@ -1769,6 +1789,8 @@ class Call_To_Action extends Base_Widget {
 		<#
 			var wrapperTag = 'div',
 				buttonTag = 'a',
+				titleTag = elementor.helpers.validateHTMLTag( settings.title_tag ),
+				descriptionTag = elementor.helpers.validateHTMLTag( settings.description_tag ),
 				contentAnimation = settings.content_animation,
 				animationClass,
 				btnSizeClass = 'elementor-size-' + settings.button_size,
@@ -1881,12 +1903,11 @@ class Call_To_Action extends Base_Widget {
 					</div>
 				<# } #>
 				<# if ( settings.title ) { #>
-					<# var titleTag = elementor.helpers.validateHTMLTag( settings.title_tag ) #>
 					<{{ titleTag }} {{{ view.getRenderAttributeString( 'title' ) }}}>{{{ settings.title }}}</{{ titleTag }}>
 				<# } #>
 
 				<# if ( settings.description ) { #>
-					<div {{{ view.getRenderAttributeString( 'description' ) }}}>{{{ settings.description }}}</div>
+					<{{ descriptionTag }} {{{ view.getRenderAttributeString( 'description' ) }}}>{{{ settings.description }}}</{{ descriptionTag }}>
 				<# } #>
 
 				<# if ( settings.button ) { #>

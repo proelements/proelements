@@ -60,7 +60,12 @@ class Slides extends Base_Widget {
 
 		$repeater->start_controls_tabs( 'slides_repeater' );
 
-		$repeater->start_controls_tab( 'background', [ 'label' => esc_html__( 'Background', 'elementor-pro' ) ] );
+		$repeater->start_controls_tab(
+			'background',
+			[
+				'label' => esc_html__( 'Background', 'elementor-pro' ),
+			]
+		);
 
 		$repeater->add_control(
 			'background_color',
@@ -225,7 +230,12 @@ class Slides extends Base_Widget {
 
 		$repeater->end_controls_tab();
 
-		$repeater->start_controls_tab( 'content', [ 'label' => esc_html__( 'Content', 'elementor-pro' ) ] );
+		$repeater->start_controls_tab(
+			'content',
+			[
+				'label' => esc_html__( 'Content', 'elementor-pro' ),
+			]
+		);
 
 		$repeater->add_control(
 			'heading',
@@ -300,7 +310,12 @@ class Slides extends Base_Widget {
 
 		$repeater->end_controls_tab();
 
-		$repeater->start_controls_tab( 'style', [ 'label' => esc_html__( 'Style', 'elementor-pro' ) ] );
+		$repeater->start_controls_tab(
+			'style',
+			[
+				'label' => esc_html__( 'Style', 'elementor-pro' ),
+			]
+		);
 
 		$repeater->add_control(
 			'custom_style',
@@ -515,6 +530,46 @@ class Slides extends Base_Widget {
 					'{{WRAPPER}} .swiper-slide' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'slides_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'div',
+			]
+		);
+
+		$this->add_control(
+			'slides_description_tag',
+			[
+				'label' => esc_html__( 'Description HTML Tag', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'div',
 			]
 		);
 
@@ -976,7 +1031,12 @@ class Slides extends Base_Widget {
 
 		$this->start_controls_tabs( 'button_tabs' );
 
-		$this->start_controls_tab( 'normal', [ 'label' => esc_html__( 'Normal', 'elementor-pro' ) ] );
+		$this->start_controls_tab(
+			'normal',
+			[
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
+			]
+		);
 
 		$this->add_control(
 			'button_text_color',
@@ -1017,7 +1077,12 @@ class Slides extends Base_Widget {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'hover', [ 'label' => esc_html__( 'Hover', 'elementor-pro' ) ] );
+		$this->start_controls_tab(
+			'hover',
+			[
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
+			]
+		);
 
 		$this->add_control(
 			'button_hover_text_color',
@@ -1231,6 +1296,9 @@ class Slides extends Base_Widget {
 			return;
 		}
 
+		$title_tag = Utils::validate_html_tag( $settings['slides_title_tag'] );
+		$description_tag = Utils::validate_html_tag( $settings['slides_description_tag'] );
+
 		$this->add_render_attribute( 'button', 'class', [ 'elementor-button', 'elementor-slide-button' ] );
 
 		if ( ! empty( $settings['button_size'] ) ) {
@@ -1264,11 +1332,11 @@ class Slides extends Base_Widget {
 			$slide_html .= '<div class="swiper-slide-contents">';
 
 			if ( $slide['heading'] ) {
-				$slide_html .= '<div class="elementor-slide-heading">' . $slide['heading'] . '</div>';
+				$slide_html .= '<' . $title_tag . ' class="elementor-slide-heading">' . $slide['heading'] . '</' . $title_tag . '>';
 			}
 
 			if ( $slide['description'] ) {
-				$slide_html .= '<div class="elementor-slide-description">' . $slide['description'] . '</div>';
+				$slide_html .= '<' . $description_tag . ' class="elementor-slide-description">' . $slide['description'] . '</' . $description_tag . '>';
 			}
 
 			if ( $slide['button_text'] ) {
@@ -1344,7 +1412,9 @@ class Slides extends Base_Widget {
 				navi             = settings.navigation,
 				showDots         = ( 'dots' === navi || 'both' === navi ),
 				showArrows       = ( 'arrows' === navi || 'both' === navi ),
-				buttonSize       = settings.button_size;
+				buttonSize       = settings.button_size,
+				titleTag         = elementor.helpers.validateHTMLTag( settings.slides_title_tag ),
+				descriptionTag   = elementor.helpers.validateHTMLTag( settings.slides_description_tag );
 		#>
 		<div class="elementor-swiper">
 			<div class="elementor-slides-wrapper elementor-main-swiper {{ elementorFrontend.config.swiperClass }}" dir="{{ direction }}" data-animation="{{ settings.content_animation }}">
@@ -1365,10 +1435,10 @@ class Slides extends Base_Widget {
 							<div class="swiper-slide-inner">
 								<div class="swiper-slide-contents">
 									<# if ( slide.heading ) { #>
-										<div class="elementor-slide-heading">{{{ slide.heading }}}</div>
+										<{{ titleTag }} class="elementor-slide-heading">{{{ slide.heading }}}</{{ titleTag }}>
 									<# }
 									if ( slide.description ) { #>
-										<div class="elementor-slide-description">{{{ slide.description }}}</div>
+										<{{descriptionTag}} class="elementor-slide-description">{{{ slide.description }}}</{{descriptionTag}}>
 									<# }
 									if ( slide.button_text ) { #>
 										<div class="elementor-button elementor-slide-button elementor-size-{{ buttonSize }}">{{{ slide.button_text }}}</div>

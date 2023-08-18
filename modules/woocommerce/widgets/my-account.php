@@ -35,6 +35,8 @@ class My_Account extends Base_Widget {
 	}
 
 	protected function register_controls() {
+		$start = is_rtl() ? 'end' : 'start';
+		$end = is_rtl() ? 'start' : 'end';
 
 		$this->start_controls_section(
 			'section_menu_icon_content',
@@ -78,19 +80,19 @@ class My_Account extends Base_Widget {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-left',
+						'icon' => "eicon-align-$start-h",
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-center',
+						'icon' => 'eicon-align-center-h',
 					],
 					'end' => [
 						'title' => esc_html__( 'End', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-right',
+						'icon' => "eicon-align-$end-h",
 					],
 					'stretch' => [
 						'title' => esc_html__( 'Stretch', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-stretch',
+						'icon' => 'eicon-align-stretch-h',
 					],
 				],
 				'condition' => [
@@ -537,7 +539,6 @@ class My_Account extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tabs-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -910,7 +911,6 @@ class My_Account extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-columns-gap-padding-right: calc( {{SIZE}}{{UNIT}}/2 ); --forms-columns-gap-padding-left: calc( {{SIZE}}{{UNIT}}/2 ); --forms-columns-gap-margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); --forms-columns-gap-margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
 				],
@@ -929,7 +929,6 @@ class My_Account extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-rows-gap: {{SIZE}}{{UNIT}};',
 				],
@@ -975,7 +974,6 @@ class My_Account extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--forms-label-spacing: {{SIZE}}{{UNIT}};',
 				],
@@ -1323,7 +1321,6 @@ class My_Account extends Base_Widget {
 						'max' => 60,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--order-summary-rows-gap-top: calc( {{SIZE}}{{UNIT}}/2 ); --order-summary-rows-gap-bottom: calc( {{SIZE}}{{UNIT}}/2 );',
 				],
@@ -1495,7 +1492,6 @@ class My_Account extends Base_Widget {
 						'max' => 100,
 					],
 				],
-				'default' => [ 'px' => 0 ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tables-divider-border-width: {{SIZE}}{{UNIT}};',
 				],

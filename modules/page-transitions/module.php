@@ -912,10 +912,7 @@ class Module extends Module_Base {
 		$experiments_manager->add_feature( [
 			'name' => self::NAME,
 			'title' => esc_html__( 'Page Transitions', 'elementor-pro' ),
-			'default' => Experiments_Manager::STATE_INACTIVE,
-			'new_site' => [
-				'default_active' => true,
-			],
+			'default' => Experiments_Manager::STATE_ACTIVE,
 			'release_status' => Experiments_Manager::RELEASE_STATUS_STABLE,
 			'description' => $description . ' ' . $learn_more,
 		] );

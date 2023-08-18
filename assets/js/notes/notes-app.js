@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_query_devtools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-query/devtools */ "../../../node_modules/react-query/devtools/index.js");
 /* harmony import */ var _context_elements__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./context/elements */ "../assets/js/app/context/elements.js");
 /* harmony import */ var _radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @radix-ui/react-toast */ "../../../node_modules/@radix-ui/react-toast/dist/index.module.js");
-/* harmony import */ var _components_ui_toast_toast__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/ui/toast/toast */ "../assets/js/app/components/ui/toast/toast.js");
+/* harmony import */ var _components_ui_toast_toast_viewport__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/ui/toast/toast-viewport */ "../assets/js/app/components/ui/toast/toast-viewport.js");
 
 
 
@@ -46,7 +46,7 @@ function App() {
     store: store
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_context_elements__WEBPACK_IMPORTED_MODULE_8__.ElementsProvider, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_10__.ToastProvider, {
     duration: Infinity
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_toast_toast__WEBPACK_IMPORTED_MODULE_9__["default"].Viewport, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_query__WEBPACK_IMPORTED_MODULE_6__.QueryClientProvider, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_toast_toast_viewport__WEBPACK_IMPORTED_MODULE_9__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_query__WEBPACK_IMPORTED_MODULE_6__.QueryClientProvider, {
     client: _query_client__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_marks__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_panel__WEBPACK_IMPORTED_MODULE_2__["default"], null), isDebug && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_query_devtools__WEBPACK_IMPORTED_MODULE_7__.ReactQueryDevtools, {
     initialIsOpen: false
@@ -1552,10 +1552,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_note__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../models/note */ "../assets/js/app/models/note.js");
 /* harmony import */ var _panel_empty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./panel-empty */ "../assets/js/app/components/panel-empty.js");
 /* harmony import */ var _ui_toast_toast__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/toast/toast */ "../assets/js/app/components/ui/toast/toast.js");
-/* harmony import */ var _hooks_use_stoppable_effect__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../hooks/use-stoppable-effect */ "../assets/js/app/hooks/use-stoppable-effect.js");
-/* harmony import */ var _hooks_use_viewable_notes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../hooks/use-viewable-notes */ "../assets/js/app/hooks/use-viewable-notes.js");
+/* harmony import */ var _ui_toast_toast_icon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/toast/toast-icon */ "../assets/js/app/components/ui/toast/toast-icon.js");
+/* harmony import */ var _ui_toast_toast_title__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/toast/toast-title */ "../assets/js/app/components/ui/toast/toast-title.js");
+/* harmony import */ var _ui_toast_toast_description__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/toast/toast-description */ "../assets/js/app/components/ui/toast/toast-description.js");
+/* harmony import */ var _ui_toast_toast_close__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ui/toast/toast-close */ "../assets/js/app/components/ui/toast/toast-close.js");
+/* harmony import */ var _hooks_use_stoppable_effect__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../hooks/use-stoppable-effect */ "../assets/js/app/hooks/use-stoppable-effect.js");
+/* harmony import */ var _hooks_use_viewable_notes__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../hooks/use-viewable-notes */ "../assets/js/app/hooks/use-viewable-notes.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
+
+
+
+
 
 
 
@@ -1580,7 +1588,7 @@ function PanelBodyCurrentRoute(props) {
     _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
     isToastOpen = _useState2[0],
     setIsToastOpen = _useState2[1],
-    _useViewableNotes = (0,_hooks_use_viewable_notes__WEBPACK_IMPORTED_MODULE_10__["default"])(props.notes),
+    _useViewableNotes = (0,_hooks_use_viewable_notes__WEBPACK_IMPORTED_MODULE_14__["default"])(props.notes),
     _useViewableNotes2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useViewableNotes, 2),
     viewableNotes = _useViewableNotes2[0],
     nonViewableNotes = _useViewableNotes2[1];
@@ -1600,7 +1608,7 @@ function PanelBodyCurrentRoute(props) {
   }, [viewableNotes, activeThread]);
 
   // Show toast only once, when there are some non-viewable notes on the page.
-  (0,_hooks_use_stoppable_effect__WEBPACK_IMPORTED_MODULE_9__["default"])(function (stop) {
+  (0,_hooks_use_stoppable_effect__WEBPACK_IMPORTED_MODULE_13__["default"])(function (stop) {
     var shouldShowToast = nonViewableNotes.length > 0;
     if (shouldShowToast) {
       setIsToastOpen(true);
@@ -1627,9 +1635,9 @@ function PanelBodyCurrentRoute(props) {
     open: isToastOpen,
     onOpenChange: setIsToastOpen,
     variant: "info"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast__WEBPACK_IMPORTED_MODULE_8__["default"].Icon, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast_icon__WEBPACK_IMPORTED_MODULE_9__["default"], {
     className: "eicon-info-circle"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast__WEBPACK_IMPORTED_MODULE_8__["default"].Title, null, __('Some notes are not shown.', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast__WEBPACK_IMPORTED_MODULE_8__["default"].Description, null, __('This page contains notes on elements that are still in draft mode.', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast__WEBPACK_IMPORTED_MODULE_8__["default"].Close, null)));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast_title__WEBPACK_IMPORTED_MODULE_10__["default"], null, __('Some notes are not shown.', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast_description__WEBPACK_IMPORTED_MODULE_11__["default"], null, __('This page contains notes on elements that are still in draft mode.', 'elementor-pro')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ui_toast_toast_close__WEBPACK_IMPORTED_MODULE_12__["default"], null)));
 }
 PanelBodyCurrentRoute.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.instanceOf(_models_note__WEBPACK_IMPORTED_MODULE_6__["default"])).isRequired
@@ -4400,22 +4408,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "../../../node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js");
-/* harmony import */ var _radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @radix-ui/react-toast */ "../../../node_modules/@radix-ui/react-toast/dist/index.module.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @radix-ui/react-toast */ "../../../node_modules/@radix-ui/react-toast/dist/index.module.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _toast_action__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toast-action */ "../assets/js/app/components/ui/toast/toast-action.js");
-/* harmony import */ var _toast_description__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toast-description */ "../assets/js/app/components/ui/toast/toast-description.js");
-/* harmony import */ var _toast_title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./toast-title */ "../assets/js/app/components/ui/toast/toast-title.js");
-/* harmony import */ var _toast_icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toast-icon */ "../assets/js/app/components/ui/toast/toast-icon.js");
-/* harmony import */ var _toast_close__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./toast-close */ "../assets/js/app/components/ui/toast/toast-close.js");
-/* harmony import */ var _toast_viewport__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./toast-viewport */ "../assets/js/app/components/ui/toast/toast-viewport.js");
-/* harmony import */ var _styles_animation__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../styles/animation */ "../assets/js/app/styles/animation.js");
+/* harmony import */ var _toast_icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toast-icon */ "../assets/js/app/components/ui/toast/toast-icon.js");
+/* harmony import */ var _styles_animation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../styles/animation */ "../assets/js/app/styles/animation.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
 
 var _templateObject;
-
-
-
-
 
 
 
@@ -4448,22 +4448,16 @@ var colorsMap = {
     action: '#b92136'
   }
 };
-var Toast = (0,styled_components__WEBPACK_IMPORTED_MODULE_8__["default"])(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_9__.Toast)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  display: flex !important;\n  gap: 8px !important;\n  align-items: center !important;\n  width: 100% !important;\n  box-sizing: border-box !important;\n  padding: 12px 16px !important;\n  font-size: 14px !important;\n  line-height: normal !important;\n  color: #3a3f45 !important;\n  text-align: start !important;\n  border-radius: 6px !important;\n  box-shadow: 0 0 15px 0 rgba( 0,0,0,.2 ) !important;\n  animation-duration: 400ms !important;\n  animation-timing-function: cubic-bezier( 0.16, 1, 0.3, 1 ) !important;\n  background-color: ", " !important;\n\n\t&[data-state=\"open\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t&[data-state=\"closed\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n"])), function (_ref) {
+var Toast = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])(_radix_ui_react_toast__WEBPACK_IMPORTED_MODULE_5__.Toast)(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  display: flex !important;\n  gap: 8px !important;\n  align-items: center !important;\n  width: 100% !important;\n  box-sizing: border-box !important;\n  padding: 12px 16px !important;\n  font-size: 14px !important;\n  line-height: normal !important;\n  color: #3a3f45 !important;\n  text-align: start !important;\n  border-radius: 6px !important;\n  box-shadow: 0 0 15px 0 rgba( 0,0,0,.2 ) !important;\n  animation-duration: 400ms !important;\n  animation-timing-function: cubic-bezier( 0.16, 1, 0.3, 1 ) !important;\n  background-color: ", " !important;\n\n\t&[data-state=\"open\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t&[data-state=\"closed\"] {\n\t  animation-name: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n\n\t", " {\n\t  --color: ", " !important;\n\t}\n"])), function (_ref) {
   var variant = _ref.variant;
   return colorsMap[variant].background;
-}, _styles_animation__WEBPACK_IMPORTED_MODULE_7__.slideUpAndFade, _styles_animation__WEBPACK_IMPORTED_MODULE_7__.fadeOut, _toast_icon__WEBPACK_IMPORTED_MODULE_4__["default"], function (_ref2) {
+}, _styles_animation__WEBPACK_IMPORTED_MODULE_3__.slideUpAndFade, _styles_animation__WEBPACK_IMPORTED_MODULE_3__.fadeOut, _toast_icon__WEBPACK_IMPORTED_MODULE_2__["default"], function (_ref2) {
   var variant = _ref2.variant;
   return colorsMap[variant].icon;
 }, _toast_action__WEBPACK_IMPORTED_MODULE_1__["default"], function (_ref3) {
   var variant = _ref3.variant;
   return colorsMap[variant].icon;
 });
-Toast.Icon = _toast_icon__WEBPACK_IMPORTED_MODULE_4__["default"];
-Toast.Title = _toast_title__WEBPACK_IMPORTED_MODULE_3__["default"];
-Toast.Description = _toast_description__WEBPACK_IMPORTED_MODULE_2__["default"];
-Toast.Action = _toast_action__WEBPACK_IMPORTED_MODULE_1__["default"];
-Toast.Close = _toast_close__WEBPACK_IMPORTED_MODULE_5__["default"];
-Toast.Viewport = _toast_viewport__WEBPACK_IMPORTED_MODULE_6__["default"];
 Toast.propTypes = {
   variant: PropTypes.oneOf(['default', 'success', 'warning', 'info', 'danger']).isRequired
 };
