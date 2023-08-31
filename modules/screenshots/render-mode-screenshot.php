@@ -41,7 +41,7 @@ class Render_Mode_Screenshot extends Render_Mode_Base {
 
 		wp_enqueue_script(
 			'dom-to-image',
-			ELEMENTOR_PRO_ASSETS_URL . "/lib/dom-to-image/js/dom-to-image{$suffix}.js",
+			ELEMENTOR_PRO_ASSETS_URL . "lib/dom-to-image/js/dom-to-image{$suffix}.js",
 			[],
 			'2.6.0',
 			true
@@ -49,7 +49,7 @@ class Render_Mode_Screenshot extends Render_Mode_Base {
 
 		wp_enqueue_script(
 			'html2canvas',
-			ELEMENTOR_PRO_ASSETS_URL . "/lib/html2canvas/js/html2canvas{$suffix}.js",
+			ELEMENTOR_PRO_ASSETS_URL . "lib/html2canvas/js/html2canvas{$suffix}.js",
 			[],
 			'1.0.0-rc.5',
 			true
@@ -57,7 +57,7 @@ class Render_Mode_Screenshot extends Render_Mode_Base {
 
 		wp_enqueue_script(
 			'elementor-screenshot',
-			ELEMENTOR_PRO_ASSETS_URL . "/js/screenshot{$suffix}.js",
+			ELEMENTOR_PRO_ASSETS_URL . "js/screenshot{$suffix}.js",
 			[ 'dom-to-image', 'html2canvas' ],
 			ELEMENTOR_PRO_VERSION,
 			true

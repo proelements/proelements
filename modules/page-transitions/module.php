@@ -822,7 +822,7 @@ class Module extends Module_Base {
 
 		wp_enqueue_script(
 			'instant-page',
-			ELEMENTOR_PRO_ASSETS_URL . "/lib/instant-page/instant-page{$suffix}.js",
+			ELEMENTOR_PRO_ASSETS_URL . "lib/instant-page/instant-page{$suffix}.js",
 			null,
 			ELEMENTOR_PRO_VERSION,
 			true
