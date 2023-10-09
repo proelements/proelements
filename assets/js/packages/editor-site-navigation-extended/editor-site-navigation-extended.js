@@ -3,22 +3,22 @@
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "@elementor/editor-site-navigation":
-/*!*************************************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","editorSiteNavigation"] ***!
-  \*************************************************************************/
+/*!*******************************************************!*\
+  !*** external ["elementorV2","editorSiteNavigation"] ***!
+  \*******************************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["editorSiteNavigation"];
+module.exports = window["elementorV2"]["editorSiteNavigation"];
 
 /***/ }),
 
 /***/ "@elementor/icons":
-/*!**********************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","icons"] ***!
-  \**********************************************************/
+/*!****************************************!*\
+  !*** external ["elementorV2","icons"] ***!
+  \****************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["icons"];
+module.exports = window["elementorV2"]["icons"];
 
 /***/ })
 
@@ -99,6 +99,6 @@ function init() {
 init();
 
 }();
-(window.__UNSTABLE__elementorPackages = window.__UNSTABLE__elementorPackages || {}).editorSiteNavigationExtended = __webpack_exports__;
+(window.elementorV2 = window.elementorV2 || {}).editorSiteNavigationExtended = __webpack_exports__;
 /******/ })()
 ;

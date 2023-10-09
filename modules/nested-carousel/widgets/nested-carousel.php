@@ -241,6 +241,13 @@ class Nested_Carousel extends Widget_Nested_Base {
 			]
 		);
 
+		$logical_dimensions_inline_start = is_rtl() ? '{{RIGHT}}{{UNIT}}' : '{{LEFT}}{{UNIT}}';
+		$logical_dimensions_inline_end = is_rtl() ? '{{LEFT}}{{UNIT}}' : '{{RIGHT}}{{UNIT}}';
+
+		// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
+		// Remove together with support for physical properties inside the container widget.
+		$padding_physical_properties = '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};';
+
 		$this->add_responsive_control(
 			'content_padding',
 			[
@@ -248,7 +255,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
-					$low_specificity_slider_container_selector => '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};',
+					$low_specificity_slider_container_selector => "$padding_physical_properties --padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
 				],
 				'separator' => 'before',
 			]
@@ -276,10 +283,16 @@ class Nested_Carousel extends Widget_Nested_Base {
 		$swiper_wrapper_class = Plugin::elementor()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
 		$direction = $settings['direction'];
 		$has_autoplay_enabled = 'yes' === $settings['autoplay'];
+		$outside_wrapper_classes = [ 'e-n-carousel', $swiper_wrapper_class ];
+		$core_version_class = $this->get_core_version_css_class();
+
+		if ( ! empty( $core_version_class ) ) {
+			$outside_wrapper_classes[] = $core_version_class;
+		}
 
 		$this->add_render_attribute( [
 			'carousel-outside-wrapper' => [
-				'class' => 'e-n-carousel ' . $swiper_wrapper_class,
+				'class' => $outside_wrapper_classes,
 			],
 			'carousel-inside-wrapper' => [
 				'class' => 'swiper-wrapper',
@@ -325,10 +338,16 @@ class Nested_Carousel extends Widget_Nested_Base {
 				carouselOutsideWrapperKey = 'carousel-' + elementUid,
 				carouselInsideWrapperKey = 'carousel-inside-' + elementUid,
 				swiperWrapperClass = elementorFrontend.config.swiperClass,
-				hasAutoplayEnabled = 'yes' === settings['autoplay'];
+				coreVersionClass = '<?php echo esc_attr( $this->get_core_version_css_class() ); ?>',
+				hasAutoplayEnabled = 'yes' === settings['autoplay'],
+				outsideWrapperClasses = ['e-n-carousel',swiperWrapperClass];
+
+			if ( !! coreVersionClass ) {
+				outsideWrapperClasses.push( coreVersionClass );
+			}
 
 			view.addRenderAttribute( carouselOutsideWrapperKey, {
-				'class': ['e-n-carousel',swiperWrapperClass],
+				'class': outsideWrapperClasses,
 			} );
 
 			view.addRenderAttribute( carouselInsideWrapperKey, {

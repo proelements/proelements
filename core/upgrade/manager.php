@@ -36,4 +36,8 @@ class Manager extends Upgrades_Manager {
 	public function get_upgrades_class() {
 		return 'ElementorPro\Core\Upgrade\Upgrades';
 	}
+
+	public static function get_install_history_meta() {
+		return 'elementor_pro_install_history';
+	}
 }

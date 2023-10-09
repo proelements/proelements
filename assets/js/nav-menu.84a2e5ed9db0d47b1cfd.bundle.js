@@ -1,4 +1,4 @@
-/*! pro-elements - v3.15.0 - 09-08-2023 */
+/*! pro-elements - v3.16.0 - 20-09-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["nav-menu"],{
 
@@ -121,8 +121,8 @@ var _default = elementorModules.frontend.handlers.Base.extend({
         $dropdownMenuContainer: this.$element.find(selectors.dropdownMenu),
         $menuToggle: this.$element.find(selectors.menuToggle)
       },
-      classes: {
-        menuToggleActiveClass: 'elementor-active'
+      attributes: {
+        menuToggleState: 'aria-expanded'
       },
       settings: {
         dropdownMenuContainerMaxHeight: '1000vmax',
@@ -222,4 +222,4 @@ exports["default"] = _default;
 /***/ })
 
 }]);
-//# sourceMappingURL=nav-menu.ded2ef1815c81841b6b8.bundle.js.map
+//# sourceMappingURL=nav-menu.84a2e5ed9db0d47b1cfd.bundle.js.map

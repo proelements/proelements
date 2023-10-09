@@ -1117,12 +1117,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__["default"])(EComponent, _$e$modules$Component);
   var _super = _createSuper(EComponent);
-  /**
-   * Config for the current components (to share across related apps).
-   *
-   * @type {Object}
-   */
-
   function EComponent(args) {
     var _this;
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, EComponent);
@@ -1130,6 +1124,11 @@ var EComponent = /*#__PURE__*/function (_$e$modules$Component) {
 
     // Get config from the marks script
     // some configuration can only be known in the preview (iframe or frontend) like the 'route.title'.
+    /**
+     * Config for the current components (to share across related apps).
+     *
+     * @type {Object}
+     */
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this), "config", {});
     window.addEventListener('message', function (event) {
       if (event.data.name !== 'elementor-pro/notes/config') {

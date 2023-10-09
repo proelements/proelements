@@ -2,6 +2,7 @@
 namespace ElementorPro\Core\Editor;
 
 use Elementor\Core\Base\App;
+use Elementor\Core\Utils\Assets_Config_Provider;
 use ElementorPro\License\Admin as License_Admin;
 use ElementorPro\License\API as License_API;
 use ElementorPro\Plugin;
@@ -11,6 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Editor extends App {
+	const EDITOR_V2_PACKAGES = [
+		'editor-documents-extended',
+		'editor-site-navigation-extended',
+	];
 
 	/**
 	 * Get app name.
@@ -35,12 +40,9 @@ class Editor extends App {
 		if (!defined('IS_PRO_ELEMENTS'))
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 
-		// Loading elementor packages.
-		$loader = ELEMENTOR_PRO_ASSETS_PATH . 'js/packages/loader.php';
-
-		if ( file_exists( $loader ) ) {
-			require_once $loader;
-		}
+		add_action( 'elementor/editor/v2/scripts/enqueue', function () {
+			$this->enqueue_editor_v2_scripts();
+		} );
 	}
 
 	public function get_init_settings() {
@@ -98,6 +100,31 @@ class Editor extends App {
 		wp_set_script_translations( 'elementor-pro', 'elementor-pro' );
 
 		$this->print_config( 'elementor-pro' );
+	}
+
+	public function enqueue_editor_v2_scripts() {
+		$assets_config = ( new Assets_Config_Provider() )
+			->set_path_resolver( function ( $name ) {
+				return ELEMENTOR_PRO_ASSETS_PATH . "js/packages/{$name}/{$name}.asset.php";
+			} );
+
+		$packages = apply_filters( 'elementor-pro/editor/v2/packages', self::EDITOR_V2_PACKAGES );
+
+		foreach ( $packages as $package ) {
+			$assets_config->load( $package );
+		}
+
+		foreach ( $assets_config->all() as $package => $config ) {
+			wp_enqueue_script(
+				$config['handle'],
+				$this->get_js_assets_url( "packages/${package}/${package}" ),
+				$config['deps'],
+				ELEMENTOR_PRO_VERSION,
+				true
+			);
+
+			wp_set_script_translations( $config['handle'], 'elementor-pro' );
+		}
 	}
 
 	public function localize_settings( array $settings ) {

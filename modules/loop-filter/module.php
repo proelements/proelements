@@ -48,9 +48,6 @@ class Module extends Module_Base {
 			),
 			'release_status' => Manager::RELEASE_STATUS_ALPHA,
 			'default' => Manager::STATE_INACTIVE,
-			'dependencies' => [
-				'loop',
-			],
 		];
 
 		return $experiment_data;
@@ -103,13 +100,15 @@ class Module extends Module_Base {
 
 		foreach ( $filter_types as $filters ) {
 			// The $filters array contains all filters of a specific type. For example, for the taxonomy filter type,
-			// it would contain all  taxonomies to be filtered - e.g. 'category', 'tag', 'product-cat', etc.
+			// it would contain all taxonomies to be filtered - e.g. 'category', 'tag', 'product-cat', etc.
 			foreach ( $filters as $filter_taxonomy => $filter ) {
 				// Sanitize request data.
 				$taxonomy = sanitize_key( $filter_taxonomy );
-				$terms = array_filter( $filter, function ( $term ) {
-					return preg_match( '/[^a-z0-9_\-]/', $term ) === 0;
-				} );
+				$terms = [];
+
+				foreach ( $filter as $term ) {
+					$terms[] = sanitize_title( $term );
+				}
 
 				if ( empty( $terms ) ) {
 					continue;
@@ -217,6 +216,105 @@ class Module extends Module_Base {
 	public function remove_rest_route_parameter( $link ) {
 		$link = remove_query_arg( 'rest_route', $link );
 		return $link;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function is_term_not_selected_for_inclusion( $loop_widget_settings, $term, $skin ) {
+		return ! empty( $loop_widget_settings[ $skin . '_query_include' ] ) &&
+			in_array( 'terms', $loop_widget_settings[ $skin . '_query_include' ] ) &&
+			isset( $loop_widget_settings[ $skin . '_query_include_term_ids' ] ) &&
+			! in_array( $term->term_id, $loop_widget_settings[ $skin . '_query_include_term_ids' ] );
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function is_term_selected_for_exclusion( $loop_widget_settings, $term, $skin ) {
+		return ! empty( $loop_widget_settings[ $skin . '_query_exclude' ] ) &&
+			in_array( 'terms', $loop_widget_settings[ $skin . '_query_exclude' ] ) &&
+			isset( $loop_widget_settings[ $skin . '_query_exclude_term_ids' ] ) &&
+			in_array( $term->term_id, $loop_widget_settings[ $skin . '_query_exclude_term_ids' ] );
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function should_exclude_term_by_manual_selection( $loop_widget_settings, $term, $user_selected_taxonomy, $skin ) {
+		if ( ! $this->loop_widget_has_manual_selection( $loop_widget_settings, $skin ) ) {
+			return false;
+		}
+
+		$terms_to_exclude_by_manual_selection = $this->get_terms_to_exclude_by_manual_selection( $loop_widget_settings[ $skin . '_query_exclude_ids' ] ?? [], $user_selected_taxonomy );
+
+		if ( in_array( $term->term_id, $terms_to_exclude_by_manual_selection ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	private function loop_widget_has_manual_selection( $loop_widget_settings, $skin ) {
+		return ! empty( $loop_widget_settings[ $skin . '_query_exclude' ] ) &&
+			in_array( 'manual_selection', $loop_widget_settings[ $skin . '_query_exclude' ] ) &&
+			! empty( $loop_widget_settings[ $skin . '_query_exclude_ids' ] );
+	}
+
+	/**
+	 * @return array
+	 */
+	private function get_terms_to_exclude_by_manual_selection( $selected_posts, $user_selected_taxonomy ) {
+		$terms_to_exclude = [];
+		$term_exclude_counts = [];
+		$term_actual_counts = [];
+
+		foreach ( $selected_posts as $post_id ) {
+			$this->calculate_post_terms_counts( $post_id, $user_selected_taxonomy, $term_exclude_counts, $term_actual_counts );
+		}
+
+		foreach ( $term_exclude_counts as $term_id => $selected_count ) {
+			$this->maybe_add_term_to_exclusion( $term_id, $selected_count, $term_actual_counts, $terms_to_exclude );
+		}
+
+		return $terms_to_exclude;
+	}
+
+	/**
+	 * @return void
+	 */
+	private function calculate_post_terms_counts( $post_id, $user_selected_taxonomy, &$term_exclude_counts, &$term_actual_counts ) {
+		$post_terms = wp_get_post_terms( $post_id, $user_selected_taxonomy );
+
+		foreach ( $post_terms as $term ) {
+			$this->calculate_term_counts( $term, $term_exclude_counts, $term_actual_counts );
+		}
+	}
+
+	/**
+	 * @return void
+	 */
+	private function calculate_term_counts( $term, &$term_exclude_counts, &$term_actual_counts ) {
+		if ( empty( $term_exclude_counts[ $term->term_id ] ) ) {
+			$term_exclude_counts[ $term->term_id ] = 0;
+		}
+
+		$term_exclude_counts[ $term->term_id ] = (int) $term_exclude_counts[ $term->term_id ] + 1;
+		$term_actual_counts[ $term->term_id ] = (int) $term->count;
+	}
+
+	/**
+	 * @return void
+	 */
+	private function maybe_add_term_to_exclusion( $term_id, $selected_count, $term_actual_counts, &$terms_to_exclude ) {
+		$user_selected_all_the_posts_for_this_term = $selected_count >= $term_actual_counts[ $term_id ];
+
+		if ( $user_selected_all_the_posts_for_this_term ) {
+			$terms_to_exclude[] = $term_id;
+		}
 	}
 
 	public function __construct() {

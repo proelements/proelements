@@ -738,7 +738,7 @@ class Module extends Module_Base {
 				foreach ( $query->posts as $post ) {
 					$document = Plugin::elementor()->documents->get( $post->ID );
 					if ( $document ) {
-						$results[ $post->ID ] = esc_html( $post->post_title ) . ' (' . $document->get_post_type_title() . ')';
+						$results[ $post->ID ] = htmlentities( esc_html( $post->post_title ) ) . ' (' . $document->get_post_type_title() . ')';
 					}
 				}
 				break;

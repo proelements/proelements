@@ -31,6 +31,7 @@ final class Modules_Manager {
 			'compatibility-tag',
 			'admin-top-bar',
 			'notes',
+			'announcements',
 
 			// Modules with Widgets.
 			'theme-builder',

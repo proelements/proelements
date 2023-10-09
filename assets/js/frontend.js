@@ -1,4 +1,4 @@
-/*! pro-elements - v3.15.0 - 09-08-2023 */
+/*! pro-elements - v3.16.0 - 20-09-2023 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/frontend.js":
@@ -182,6 +182,7 @@ class DropdownMenuHeightController {
     this.widgetConfig = widgetConfig;
   }
   calculateStickyMenuNavHeight() {
+    this.widgetConfig.elements.$dropdownMenuContainer.css(this.widgetConfig.settings.menuHeightCssVarName, '');
     const menuToggleHeight = this.widgetConfig.elements.$dropdownMenuContainer.offset().top - jQuery(window).scrollTop();
     return elementorFrontend.elements.$window.height() - menuToggleHeight;
   }
@@ -195,8 +196,21 @@ class DropdownMenuHeightController {
     this.widgetConfig.elements.$dropdownMenuContainer.css(this.widgetConfig.settings.menuHeightCssVarName, menuHeight);
   }
   reassignMobileMenuHeight() {
-    const menuHeight = this.widgetConfig.elements.$menuToggle.hasClass(this.widgetConfig.classes.menuToggleActiveClass) ? this.getMenuHeight() : 0;
+    const menuHeight = this.isToggleActive() ? this.getMenuHeight() : 0;
     return this.setMenuHeight(menuHeight);
+  }
+  isToggleActive() {
+    const $menuToggle = this.widgetConfig.elements.$menuToggle;
+
+    // New approach.
+    // Aria attributes instead of css classes.
+    if (!!this.widgetConfig.attributes?.menuToggleState) {
+      return 'true' === $menuToggle.attr(this.widgetConfig.attributes.menuToggleState);
+    }
+
+    // This can be removed once the new markup of the Mega Menu has been implemented.
+    // Previously we used state classes to indicate the active state of the menu toggle.
+    return $menuToggle.hasClass(this.widgetConfig.classes.menuToggleActiveClass);
   }
 }
 exports["default"] = DropdownMenuHeightController;

@@ -182,22 +182,25 @@
   z-index: 99;
 }
 
-.e-container.elementor-sticky--active,
 .e-con.elementor-sticky--active {
   z-index: var(--z-index, 99);
 }
-.e-container .e-container.elementor-sticky,
-.e-container .e-con.elementor-sticky,
-.e-con .e-container.elementor-sticky,
 .e-con .e-con.elementor-sticky {
   /* Fix for sticky effect inside containers */
 }
-.e-container .e-container.elementor-sticky--active,
-.e-container .e-con.elementor-sticky--active,
-.e-con .e-container.elementor-sticky--active,
 .e-con .e-con.elementor-sticky--active {
-  padding-left: var(--padding-left);
-  padding-right: var(--padding-right);
+  --bc-padding-inline-start: var(--padding-left);
+  --bc-padding-inline-end: var(--padding-right);
+  padding-inline-start: var(--bc-padding-inline-start, var(--padding-inline-start));
+  padding-inline-end: var(--bc-padding-inline-end, var(--padding-inline-end));
+}
+[dir=rtl] .e-con .e-con.elementor-sticky--active {
+  --bc-padding-inline-start: var(--padding-right);
+  --bc-padding-inline-end: var(--padding-left);
+}
+.e-con[data-core-v316-plus=true] .e-con.elementor-sticky--active {
+  --bc-padding-inline-start: initial;
+  --bc-padding-inline-end: initial;
 }
 
 [data-elementor-type=popup]:not(.elementor-edit-area) {

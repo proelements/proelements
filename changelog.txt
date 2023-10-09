@@ -1,5 +1,37 @@
 # PRO Elements - by PROElements.org
 
+#### 3.16.2 - 2023-09-20
+
+* Fix: Fit to Content dropdown position calculation is incorrect in Menu widget ([#23808](https://github.com/elementor/elementor/issues/23808))
+* Fix: Reverted hide navigation arrows when there is only one slide in the Loop or Nested carousel ([#23804](https://github.com/elementor/elementor/issues/23804))
+
+#### 3.16.1 - 2023-09-14
+
+* Fix: Dynamic tag for ACF image field is not working as expected ([#23757](https://github.com/elementor/elementor/issues/23757))
+* Fix: Sticky functionality affects padding values in Container ([#23758](https://github.com/elementor/elementor/issues/23758))
+* Fix: HTML list issues for padding and margin in Menu widget
+
+#### 3.16.0 - 2023-09-12
+
+* Tweak: Implemented accessibility improvements in Menu widget ([#23607](https://github.com/elementor/elementor/issues/23607), [#22554](https://github.com/elementor/elementor/issues/22554))
+* Fix: 'Fallback: Recent Posts' option malfunctions in the Query control ([#21436](https://github.com/elementor/elementor/issues/21436), [#23259](https://github.com/elementor/elementor/issues/23259))
+* Tweak: Hide navigation arrows when there is only one slide in the Loop or Nested carousel ([#22056](https://github.com/elementor/elementor/issues/22056))
+* Tweak: Used appropriate image `alt` in Testimonial Carousel widget ([#17680](https://github.com/elementor/elementor/issues/17680))
+* Tweak: Optimized Scroll Snap functionality when using Container widget
+* Tweak: Enhanced Elementor Role Manager functionality when using Containers
+* Tweak: Added Notes feature to the Editor Top Bar
+* Tweak: Replace CSS `float` with other layouts in the Editor
+* Tweak: Upgraded HTML Structure for the Menu widget
+* Tweak: Implemented CSS logical properties in Carousel and Menu widgets
+* Tweak: Added keyboard accessibility to a link in Posts widget
+* Tweak: Loop Builder feature merged to version
+* Fix: Addressed inconsistency in hover effect durations between icon, dropdown indicator colors, and text colors in the Menu widget ([#22376](https://github.com/elementor/elementor/issues/22376))
+* Fix: Slides break if the parent container is set to HTML A tag in Loop Carousel and Carousel widgets ([#22678](https://github.com/elementor/elementor/issues/22678))
+* Fix: The icon size setting is not affecting uploaded SVG icons in the Menu widget ([#22372](https://github.com/elementor/elementor/issues/22372))
+* Fix: Taxonomy filter does not work with slug in foreign characters ([#23315](https://github.com/elementor/elementor/issues/23315))
+* Fix: Improved code security enforcement in Dynamic Tags
+* Fix: Sticky container incorrectly adjusts its width when transitioning from a smaller breakpoint to a larger one within the Editor
+
 #### 3.15.1 - 2023-08-09
 
 * Fix: Improved code security enforcement in Table of Contents widget

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.15.0 - 09-08-2023 */
+/*! pro-elements - v3.16.0 - 20-09-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu-stretch-content"],{
 
@@ -19,7 +19,12 @@ class StretchedMenuItemContent extends elementorModules.frontend.handlers.Stretc
     return 'elementor-widget-n-menu';
   }
   getStretchElementForConfig() {
-    return this.$element.find('.e-n-menu-items-content');
+    return this.$element.find('.e-n-menu-wrapper');
+  }
+  getStretchElementConfig() {
+    const elementConfig = super.getStretchElementConfig();
+    elementConfig.cssOutput = 'variables';
+    return elementConfig;
   }
   bindEvents() {
     super.bindEvents();
@@ -41,4 +46,4 @@ exports["default"] = StretchedMenuItemContent;
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu-stretch-content.749b8c1dc8bd8c9b37d2.bundle.js.map
+//# sourceMappingURL=mega-menu-stretch-content.f944dc8ea698fb0aa2d3.bundle.js.map

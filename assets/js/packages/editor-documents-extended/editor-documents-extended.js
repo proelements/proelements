@@ -3,9 +3,9 @@
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "react":
-/*!************************!*\
-  !*** external "React" ***!
-  \************************/
+/*!**************************!*\
+  !*** external ["React"] ***!
+  \**************************/
 /***/ (function(module) {
 
 module.exports = window["React"];
@@ -13,62 +13,62 @@ module.exports = window["React"];
 /***/ }),
 
 /***/ "@elementor/editor-app-bar":
-/*!*****************************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","editorAppBar"] ***!
-  \*****************************************************************/
+/*!***********************************************!*\
+  !*** external ["elementorV2","editorAppBar"] ***!
+  \***********************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["editorAppBar"];
+module.exports = window["elementorV2"]["editorAppBar"];
 
 /***/ }),
 
 /***/ "@elementor/editor-documents":
-/*!********************************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","editorDocuments"] ***!
-  \********************************************************************/
+/*!**************************************************!*\
+  !*** external ["elementorV2","editorDocuments"] ***!
+  \**************************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["editorDocuments"];
+module.exports = window["elementorV2"]["editorDocuments"];
 
 /***/ }),
 
 /***/ "@elementor/editor-v1-adapters":
-/*!*********************************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","editorV1Adapters"] ***!
-  \*********************************************************************/
+/*!***************************************************!*\
+  !*** external ["elementorV2","editorV1Adapters"] ***!
+  \***************************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["editorV1Adapters"];
+module.exports = window["elementorV2"]["editorV1Adapters"];
 
 /***/ }),
 
 /***/ "@elementor/icons":
-/*!**********************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","icons"] ***!
-  \**********************************************************/
+/*!****************************************!*\
+  !*** external ["elementorV2","icons"] ***!
+  \****************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["icons"];
+module.exports = window["elementorV2"]["icons"];
 
 /***/ }),
 
 /***/ "@elementor/store":
-/*!**********************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","store"] ***!
-  \**********************************************************/
+/*!****************************************!*\
+  !*** external ["elementorV2","store"] ***!
+  \****************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["store"];
+module.exports = window["elementorV2"]["store"];
 
 /***/ }),
 
 /***/ "@elementor/ui":
-/*!*******************************************************!*\
-  !*** external ["__UNSTABLE__elementorPackages","ui"] ***!
-  \*******************************************************/
+/*!*************************************!*\
+  !*** external ["elementorV2","ui"] ***!
+  \*************************************/
 /***/ (function(module) {
 
-module.exports = window["__UNSTABLE__elementorPackages"]["ui"];
+module.exports = window["elementorV2"]["ui"];
 
 /***/ }),
 
@@ -344,6 +344,6 @@ function initStore() {
 init4();
 //# sourceMappingURL=index.mjs.map
 }();
-(window.__UNSTABLE__elementorPackages = window.__UNSTABLE__elementorPackages || {}).editorDocumentsExtended = __webpack_exports__;
+(window.elementorV2 = window.elementorV2 || {}).editorDocumentsExtended = __webpack_exports__;
 /******/ })()
 ;

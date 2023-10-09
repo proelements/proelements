@@ -226,6 +226,12 @@ class Module extends App {
 			add_action( 'elementor/editor/before_enqueue_scripts', function () {
 				$this->enqueue_main_scripts();
 			} );
+
+			add_filter( 'elementor-pro/editor/v2/packages', function ( $packages ) {
+				$packages[] = 'editor-notes';
+
+				return $packages;
+			} );
 		}
 	}
 

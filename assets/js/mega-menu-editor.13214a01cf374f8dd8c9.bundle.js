@@ -1,4 +1,4 @@
-/*! pro-elements - v3.15.0 - 09-08-2023 */
+/*! pro-elements - v3.16.0 - 20-09-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu-editor"],{
 
@@ -115,10 +115,20 @@ exports["default"] = void 0;
 class View extends $e.components.get('nested-elements').exports.NestedView {
   filter(child, index) {
     child.attributes.dataIndex = index + 1;
+    child.attributes.widgetId = child.id;
     return true;
   }
   onAddChild(childView) {
-    childView.$el.attr('data-content', childView.model.attributes.dataIndex);
+    const widgetNumber = childView._parent.$el.find('.e-n-menu')[0]?.dataset.widgetNumber || childView.model.attributes.widgetId,
+      index = childView.model.attributes.dataIndex,
+      tabId = childView._parent.$el.find(`.e-n-menu-item-title[data-tab-index="${index}"]`)?.attr('id') || childView.model.attributes.widgetId + ' ' + index;
+    childView.$el.attr({
+      id: 'e-n-menu-content-' + widgetNumber + '' + index,
+      role: 'menu',
+      'aria-labelledby': tabId,
+      'data-tab-index': index,
+      style: '--n-menu-title-order: ' + index + ';'
+    });
   }
 }
 exports["default"] = View;
@@ -126,4 +136,4 @@ exports["default"] = View;
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu-editor.de9dd6d5a71e58af98ef.bundle.js.map
+//# sourceMappingURL=mega-menu-editor.13214a01cf374f8dd8c9.bundle.js.map

@@ -13,19 +13,19 @@
   padding: 20px 20px;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box h3 {
-  border-block-end: 1px solid #eee;
-  padding: 20px;
-  margin: -20px -20px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0;
+  padding: 0;
+  padding-block-end: 20px;
+  border-block-end: 1px solid #eee;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box h3 span {
   flex-grow: 1;
   padding-inline-start: 5px;
 }
 .wrap.elementor-admin-page-license form.elementor-license-box h3 small {
-  float: left;
   font-size: 13px;
   font-weight: normal;
 }

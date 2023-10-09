@@ -549,7 +549,7 @@
       </wp:postmeta>
     </item>
     <item>
-      <title>T-Shirt</title>
+      <title>T-Shirt Hebrew</title>
       <link>https://woocommercecore.mystagingwebsite.com/product/t-shirt/</link>
       <pubDate>Wed, 16 Jan 2019 13:01:52 +0000</pubDate>
       <dc:creator>shopmanager</dc:creator>
@@ -571,7 +571,7 @@
       <wp:is_sticky>0</wp:is_sticky>
       <category domain="pa_color" nicename="gray"><![CDATA[Gray]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
-      <category domain="product_cat" nicename="tshirts"><![CDATA[Tshirts]]></category>
+      <category domain="product_cat" nicename="חולצות"><![CDATA[חולצות]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-tshirt]]></wp:meta_value>

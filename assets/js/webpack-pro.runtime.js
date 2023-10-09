@@ -1,4 +1,4 @@
-/*! pro-elements - v3.15.0 - 09-08-2023 */
+/*! pro-elements - v3.16.0 - 20-09-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -95,7 +95,7 @@
 /******/ 			if (chunkId === "form") return "form.1161490412c4fa9ebfc6.bundle.js";
 /******/ 			if (chunkId === "gallery") return "" + chunkId + ".1573e391054ea0977a1f.bundle.js";
 /******/ 			if (chunkId === "lottie") return "" + chunkId + ".630a998405ebf4420b6f.bundle.js";
-/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".ded2ef1815c81841b6b8.bundle.js";
+/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".84a2e5ed9db0d47b1cfd.bundle.js";
 /******/ 			if (chunkId === "popup") return "" + chunkId + ".397c2882052136db7ee0.bundle.js";
 /******/ 			if (chunkId === "load-more") return "" + chunkId + ".8f98bed743a24a6c0d3a.bundle.js";
 /******/ 			if (chunkId === "posts") return "" + chunkId + ".72468c8555693b196f98.bundle.js";
@@ -115,8 +115,9 @@
 /******/ 			if (chunkId === "product-add-to-cart") return "" + chunkId + ".39fbaae6c856c483b4b4.bundle.js";
 /******/ 			if (chunkId === "loop") return "loop.cfa59b67362d5bf08739.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".8c8c442ebf9839e07d4e.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".6a41b17ca3362b2df95d.bundle.js";
-/******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".749b8c1dc8bd8c9b37d2.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".44b2f84edff9ca08fd3e.bundle.js";
+/******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".f944dc8ea698fb0aa2d3.bundle.js";
+/******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".e2dc2ddb36cf93b671ba.bundle.js";
 /******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".bd618e5f000147859de7.bundle.js";
 /******/ 			if (chunkId === "taxonomy-filter") return "" + chunkId + ".f2f989f4cb7ee7582ee7.bundle.js";
 /******/ 			// return url for filenames based on template

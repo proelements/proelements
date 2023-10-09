@@ -42,7 +42,7 @@ class Module extends Module_Base {
 			return;
 		}
 
-		$scroll_snap_children = '.elementor-section:not(.elementor-inner-section), .elementor-location-header, .elementor-location-footer, .page-header, .site-header, .elementor-add-section, .e-con';
+		$scroll_snap_children = '.elementor-section:not(.elementor-inner-section), .elementor-location-header, .elementor-location-footer, .page-header, .site-header, .elementor-add-section, .e-con:not(.e-child)';
 
 		$controls_stack->start_controls_section(
 			'section_scroll_snap',

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.15.0 - 09-08-2023 */
+/*! pro-elements - v3.16.0 - 20-09-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6853,7 +6853,7 @@ module.exports = _interopRequireDefault, module.exports.__esModule = true, modul
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".930bfd9119ee62d5ccd6.bundle.js";
-/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".de9dd6d5a71e58af98ef.bundle.js";
+/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".13214a01cf374f8dd8c9.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".04e1965a317cbb6d22df.bundle.js";
 /******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".b7b52289dc112ded05c0.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "e1314d8e113e32e00c20.bundle.js";
