@@ -117,7 +117,7 @@ class Editor extends App {
 		foreach ( $assets_config->all() as $package => $config ) {
 			wp_enqueue_script(
 				$config['handle'],
-				$this->get_js_assets_url( "packages/${package}/${package}" ),
+				$this->get_js_assets_url( "packages/{$package}/{$package}" ),
 				$config['deps'],
 				ELEMENTOR_PRO_VERSION,
 				true
