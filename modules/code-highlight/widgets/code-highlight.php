@@ -287,9 +287,9 @@ class Code_Highlight extends Base_Widget {
 
 	protected function content_template() {
 		?>
-		<div class="prismjs-{{{ settings.theme }}} {{{settings.copy_to_clipboard}}} {{{settings.word_wrap}}}">
-			<pre data-line="{{{settings.highlight_lines }}}" class="highlight-height language-{{{ settings.language }}} {{{ settings.line_numbers }}}">
-				<code readonly="true" class="language-{{{ settings.language }}}">
+		<div class="prismjs-{{ settings.theme }} {{ settings.copy_to_clipboard }} {{ settings.word_wrap }}">
+			<pre data-line="{{ settings.highlight_lines }}" class="highlight-height language-{{ settings.language }} {{ settings.line_numbers }}">
+				<code readonly="true" class="language-{{ settings.language }}">
 					<xmp>{{{ settings.code }}}</xmp>
 				</code>
 			</pre>

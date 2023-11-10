@@ -1158,6 +1158,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				$paginate_args = $this->get_paginate_args_for_rest_request( $paginate_args );
 			}
 
+			if ( $this->parent->is_allow_to_use_custom_page_option() ) {
+				$paginate_args['format'] = $this->get_pagination_format( $paginate_args );
+			}
+
 			$links = paginate_links( $paginate_args );
 		}
 
@@ -1173,6 +1177,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			<?php echo implode( PHP_EOL, $links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</nav>
 		<?php
+	}
+
+	protected function get_pagination_format( $paginate_args ) {
+		$query_string_connector = is_preview() && ! empty( $paginate_args['base'] ) && strpos( $paginate_args['base'], '?' ) ? '&' : '?';
+		return $query_string_connector . 'e-page-' . $this->parent->get_id() . '=%#%';
 	}
 
 	protected function get_paginate_args_for_singular_post( $paginate_args ) {

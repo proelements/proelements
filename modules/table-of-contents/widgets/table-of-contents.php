@@ -738,20 +738,15 @@ class Table_Of_Contents extends Base_Widget {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+		$toc_id = 'elementor-toc__' . $this->get_id();
 
-		$this->add_render_attribute(
-			'header',
-			[
-				'class' => 'elementor-toc__header',
-				'aria-controls' => 'elementor-toc__body',
-			]
-		);
+		$this->add_render_attribute( 'header', 'class', 'elementor-toc__header' );
 
 		$this->add_render_attribute(
 			'body',
 			[
+				'id' => $toc_id,
 				'class' => 'elementor-toc__body',
-				'aria-expanded' => 'true',
 			]
 		);
 
@@ -766,6 +761,8 @@ class Table_Of_Contents extends Base_Widget {
 					'class' => 'elementor-toc__toggle-button elementor-toc__toggle-button--expand',
 					'role' => 'button',
 					'tabindex' => '0',
+					'aria-controls' => $toc_id,
+					'aria-expanded' => 'true',
 					'aria-label' => esc_html__( 'Open table of contents', 'elementor-pro' ),
 				]
 			);
@@ -775,6 +772,8 @@ class Table_Of_Contents extends Base_Widget {
 					'class' => 'elementor-toc__toggle-button elementor-toc__toggle-button--collapse',
 					'role' => 'button',
 					'tabindex' => '0',
+					'aria-controls' => $toc_id,
+					'aria-expanded' => 'true',
 					'aria-label' => esc_html__( 'Close table of contents', 'elementor-pro' ),
 				]
 			);

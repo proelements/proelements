@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 *[data-editable-elementor-document] {
   position: relative;
 }
@@ -54,8 +54,7 @@
 }
 *[data-editable-elementor-document].e-embedded-document-active .elementor-document-handle:not(.elementor-document-save-back-handle), *[data-editable-elementor-document].elementor-widget-container .elementor-document-handle:not(.elementor-document-save-back-handle) {
   bottom: unset;
-  -webkit-border-after: unset;
-          border-block-end: unset;
+  border-block-end: unset;
 }
 *[data-editable-elementor-document].e-embedded-document-active .elementor-document-handle:not(.elementor-document-save-back-handle)::before, *[data-editable-elementor-document].elementor-widget-container .elementor-document-handle:not(.elementor-document-save-back-handle)::before {
   display: none;
@@ -141,8 +140,7 @@
 }
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-left,
 .elementor-document-handle.elementor-document-save-back-handle .eicon-arrow-right {
-  -webkit-margin-end: 5px;
-          margin-inline-end: 5px;
+  margin-inline-end: 5px;
 }
 .elementor-loop-container > div.elementor-edit-area-active:first-of-type {
   border: 2px solid #5EEAD4;

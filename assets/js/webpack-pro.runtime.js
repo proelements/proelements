@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -103,7 +103,7 @@
 /******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".c958afb760bce7436ba0.bundle.js";
 /******/ 			if (chunkId === "slides") return "" + chunkId + ".0a31b946f157107ba4a2.bundle.js";
 /******/ 			if (chunkId === "social") return "" + chunkId + ".68fec39648b9a03c6275.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".a6bbe930b65f39ccb74b.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".a5b4da6c85e3d3fbaa67.bundle.js";
 /******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".2d3a4fa58002c7735240.bundle.js";
 /******/ 			if (chunkId === "search-form") return "" + chunkId + ".416aa432fdfe2bcfe9b5.bundle.js";
 /******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".cecfa624e2d23a156519.bundle.js";
@@ -115,11 +115,12 @@
 /******/ 			if (chunkId === "product-add-to-cart") return "" + chunkId + ".39fbaae6c856c483b4b4.bundle.js";
 /******/ 			if (chunkId === "loop") return "loop.cfa59b67362d5bf08739.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".8c8c442ebf9839e07d4e.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".44b2f84edff9ca08fd3e.bundle.js";
+/******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".e962b1908b2c52f7d5f4.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".9fd7c3ad1b53deb3418d.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".f944dc8ea698fb0aa2d3.bundle.js";
 /******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".e2dc2ddb36cf93b671ba.bundle.js";
 /******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".bd618e5f000147859de7.bundle.js";
-/******/ 			if (chunkId === "taxonomy-filter") return "" + chunkId + ".f2f989f4cb7ee7582ee7.bundle.js";
+/******/ 			if (chunkId === "taxonomy-filter") return "" + chunkId + ".e2a1e927256c61aed7af.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

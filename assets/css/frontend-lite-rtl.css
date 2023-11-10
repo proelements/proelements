@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 .elementor-bg-transform .elementor-bg {
   will-change: transform;
 }
@@ -192,10 +192,8 @@
 .e-con .e-con.elementor-sticky--active {
   --bc-padding-inline-start: var(--padding-left);
   --bc-padding-inline-end: var(--padding-right);
-  -webkit-padding-start: var(--bc-padding-inline-start, var(--padding-inline-start));
-          padding-inline-start: var(--bc-padding-inline-start, var(--padding-inline-start));
-  -webkit-padding-end: var(--bc-padding-inline-end, var(--padding-inline-end));
-          padding-inline-end: var(--bc-padding-inline-end, var(--padding-inline-end));
+  padding-inline-start: var(--bc-padding-inline-start, var(--padding-inline-start));
+  padding-inline-end: var(--bc-padding-inline-end, var(--padding-inline-end));
 }
 [dir=rtl] .e-con .e-con.elementor-sticky--active {
   --bc-padding-inline-start: var(--padding-right);

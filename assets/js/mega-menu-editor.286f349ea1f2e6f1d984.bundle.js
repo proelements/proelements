@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu-editor"],{
 
@@ -51,7 +51,8 @@ class Module {
     this.urlHelper = new _urlHelper.default();
   }
   getCurrentMenuItemClass(menuLinkUrl, permalinkUrl) {
-    menuLinkUrl = menuLinkUrl?.trim(menuLinkUrl);
+    var _menuLinkUrl;
+    menuLinkUrl = (_menuLinkUrl = menuLinkUrl) === null || _menuLinkUrl === void 0 ? void 0 : _menuLinkUrl.trim(menuLinkUrl);
     if (!menuLinkUrl || !permalinkUrl) {
       return '';
     }
@@ -119,9 +120,10 @@ class View extends $e.components.get('nested-elements').exports.NestedView {
     return true;
   }
   onAddChild(childView) {
-    const widgetNumber = childView._parent.$el.find('.e-n-menu')[0]?.dataset.widgetNumber || childView.model.attributes.widgetId,
+    var _childView$_parent$$e, _childView$_parent$$e2;
+    const widgetNumber = ((_childView$_parent$$e = childView._parent.$el.find('.e-n-menu')[0]) === null || _childView$_parent$$e === void 0 ? void 0 : _childView$_parent$$e.dataset.widgetNumber) || childView.model.attributes.widgetId,
       index = childView.model.attributes.dataIndex,
-      tabId = childView._parent.$el.find(`.e-n-menu-item-title[data-tab-index="${index}"]`)?.attr('id') || childView.model.attributes.widgetId + ' ' + index;
+      tabId = ((_childView$_parent$$e2 = childView._parent.$el.find(`.e-n-menu-item-title[data-tab-index="${index}"]`)) === null || _childView$_parent$$e2 === void 0 ? void 0 : _childView$_parent$$e2.attr('id')) || childView.model.attributes.widgetId + ' ' + index;
     childView.$el.attr({
       id: 'e-n-menu-content-' + widgetNumber + '' + index,
       role: 'menu',
@@ -136,4 +138,4 @@ exports["default"] = View;
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu-editor.13214a01cf374f8dd8c9.bundle.js.map
+//# sourceMappingURL=mega-menu-editor.286f349ea1f2e6f1d984.bundle.js.map

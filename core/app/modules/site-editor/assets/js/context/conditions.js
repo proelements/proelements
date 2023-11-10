@@ -66,7 +66,7 @@ export class ConditionsProvider extends BaseContext {
 	/**
 	 * Execute a request to save the template conditions.
 	 *
-	 * @return {any} -
+	 * @return {any} Saved conditions
 	 */
 	saveConditions() {
 		const conditions = Object.values( this.state.conditions )
@@ -109,7 +109,7 @@ export class ConditionsProvider extends BaseContext {
 	 * Fetching subId titles.
 	 *
 	 * @param {any} condition
-	 * @return {Promise<unknown>} -
+	 * @return {Promise<unknown>} Titles
 	 */
 	fetchSubIdsTitles( condition ) {
 		return new Promise( ( resolve ) => {
@@ -251,7 +251,7 @@ export class ConditionsProvider extends BaseContext {
 	 * Find a condition item from the conditions state.
 	 *
 	 * @param {any} id
-	 * @return {Condition|null} -
+	 * @return {Condition|null} Condition
 	 */
 	findConditionItemInState( id ) {
 		return Object.values( this.state.conditions ).find( ( c ) => c.id === id );
@@ -261,7 +261,7 @@ export class ConditionsProvider extends BaseContext {
 	 * Update the whole conditions state.
 	 *
 	 * @param {Function} callback
-	 * @return {Promise<any>} -
+	 * @return {Promise<undefined>} Conditions state
 	 */
 	updateConditionsState( callback ) {
 		return new Promise( ( resolve ) =>
@@ -272,7 +272,7 @@ export class ConditionsProvider extends BaseContext {
 	/**
 	 * Renders the provider.
 	 *
-	 * @return {any} -
+	 * @return {any} Element
 	 */
 	render() {
 		if ( this.state.action.current === ConditionsProvider.actions.FETCH_CONFIG ) {

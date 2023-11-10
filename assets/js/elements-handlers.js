@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -64,6 +64,38 @@ const extendDefaultHandlers = defaultHandlers => {
 elementorProFrontend.on('elementor-pro/modules/init:before', () => {
   elementorFrontend.hooks.addFilter('elementor-pro/frontend/handlers', extendDefaultHandlers);
 });
+
+/***/ }),
+
+/***/ "../assets/dev/js/frontend/utils/ajax-helper.js":
+/*!******************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/ajax-helper.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class AjaxHelper {
+  addLoadingAnimationOverlay(elementId) {
+    const widget = document.querySelector(`.elementor-element-${elementId}`);
+    if (!widget) {
+      return;
+    }
+    widget.classList.add('e-loading-overlay');
+  }
+  removeLoadingAnimationOverlay(elementId) {
+    const widget = document.querySelector(`.elementor-element-${elementId}`);
+    if (!widget) {
+      return;
+    }
+    widget.classList.remove('e-loading-overlay');
+  }
+}
+exports["default"] = AjaxHelper;
 
 /***/ }),
 
@@ -331,6 +363,7 @@ class _default extends elementorModules.Module {
       elementorFrontend.elementsHandler.attachHandler('loop-grid', () => __webpack_require__.e(/*! import() | loop */ "loop").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/loop */ "../modules/loop-builder/assets/js/frontend/handlers/loop.js")), skinName);
       elementorFrontend.elementsHandler.attachHandler('loop-carousel', () => __webpack_require__.e(/*! import() | loop */ "loop").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/loop */ "../modules/loop-builder/assets/js/frontend/handlers/loop.js")), skinName);
       elementorFrontend.elementsHandler.attachHandler('loop-carousel', () => __webpack_require__.e(/*! import() | loop-carousel */ "loop-carousel").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/loop-carousel */ "../modules/loop-builder/assets/js/frontend/handlers/loop-carousel.js")), skinName);
+      elementorFrontend.elementsHandler.attachHandler('loop-grid', () => __webpack_require__.e(/*! import() | ajax-pagination */ "ajax-pagination").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/ajax-pagination */ "../modules/loop-builder/assets/js/frontend/handlers/ajax-pagination.js")), skinName);
     });
   }
 }
@@ -352,6 +385,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 var _runElementHandlers = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/run-element-handlers */ "../assets/dev/js/frontend/utils/run-element-handlers.js"));
+var _ajaxHelper = _interopRequireDefault(__webpack_require__(/*! ../../../../../assets/dev/js/frontend/utils/ajax-helper */ "../assets/dev/js/frontend/utils/ajax-helper.js"));
 class BaseFilterFrontendModule extends elementorModules.Module {
   constructor() {
     super();
@@ -444,7 +478,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     }
     return queryString;
   }
-  updateURLQueryString(filterId) {
+  updateURLQueryString(widgetId, filterId) {
     const currentUrl = new URL(window.location.href),
       existingQueryString = currentUrl.searchParams,
       queryStringObject = this.getQueryStringInObjectForm(),
@@ -453,6 +487,9 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     existingQueryString.forEach((value, key) => {
       if (!key.startsWith('e-filter')) {
         updatedParams.append(key, value);
+      }
+      if (key.startsWith('e-page-' + widgetId)) {
+        updatedParams.delete(key);
       }
     });
     for (const key in queryStringObject) {
@@ -546,34 +583,17 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     div.innerHTML = widgetContainerHTMLString.trim();
     return div.firstElementChild;
   }
-  addLoadingAnimationOverlay(widgetId) {
-    const widget = document.querySelector(`.elementor-element-${widgetId}`);
-    if (!widget) {
-      return;
-    }
-    const loadingAnimationOverlay = document.createElement('div');
-    loadingAnimationOverlay.classList.add('e-loading-overlay');
-    widget.appendChild(loadingAnimationOverlay);
-  }
-  removeLoadingAnimationOverlay(widgetId) {
-    const widget = document.querySelector(`.elementor-element-${widgetId}`);
-    if (!widget) {
-      return;
-    }
-    const loadingAnimationOverlay = widget.querySelector('.e-loading-overlay');
-    if (!loadingAnimationOverlay) {
-      return;
-    }
-    loadingAnimationOverlay.remove();
-  }
   refreshLoopWidget(widgetId, filterId) {
     this.consolidateFiltersForLoopWidget(widgetId);
-    this.updateURLQueryString(filterId);
+    this.updateURLQueryString(widgetId, filterId);
     const widget = document.querySelector(`.elementor-element-${widgetId}`);
     if (!widget) {
       return;
     }
-    this.addLoadingAnimationOverlay(widgetId);
+    if (!this.ajaxHelper) {
+      this.ajaxHelper = new _ajaxHelper.default();
+    }
+    this.ajaxHelper.addLoadingAnimationOverlay(widgetId);
     const fetchUpdatedLoopWidgetMarkup = this.fetchUpdatedLoopWidgetMarkup(widgetId, filterId).then(response => {
       if (!(response instanceof Response) || !response?.ok || 400 <= response?.status) {
         return {};
@@ -594,7 +614,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
       elementorFrontend.elementsHandler.runReadyTrigger(document.querySelector(`.elementor-element-${widgetId}`));
       widget.classList.remove('e-loading');
     }).finally(() => {
-      this.removeLoadingAnimationOverlay(widgetId);
+      this.ajaxHelper.removeLoadingAnimationOverlay(widgetId);
     });
     return fetchUpdatedLoopWidgetMarkup;
 
@@ -953,7 +973,7 @@ class _default extends elementorModules.frontend.Document {
     const modal = this.getModal(),
       closeButtonPosition = this.getDocumentSettings('close_button_position'),
       $closeButton = modal.getElements('closeButton');
-    $closeButton.appendTo(modal.getElements('outside' === closeButtonPosition ? 'widget' : 'widgetContent'));
+    $closeButton.prependTo(modal.getElements('outside' === closeButtonPosition ? 'widget' : 'widgetContent'));
   }
   disable() {
     this.setStorage('disable', true);

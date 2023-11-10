@@ -102,13 +102,18 @@ class Admin extends App {
 
 	private function get_rollback_versions() {
 		$rollback_versions = get_transient( 'elementor_pro_rollback_versions_' . ELEMENTOR_PRO_VERSION );
+
 		if ( false === $rollback_versions ) {
 			$max_versions = 30;
 
-			$versions = API::get_previous_versions();
+			$versions = apply_filters( 'elementor-pro/settings/rollback/versions', [] );
 
-			if ( is_wp_error( $versions ) ) {
-				return [];
+			if ( empty( $versions ) ) {
+				$versions = API::get_previous_versions();
+
+				if ( is_wp_error( $versions ) ) {
+					return [];
+				}
 			}
 
 			$rollback_versions = [];
@@ -199,19 +204,31 @@ class Admin extends App {
 			wp_die( esc_html__( 'Error occurred, The version selected is invalid. Try selecting different version.', 'elementor-pro' ) );
 		}
 
-		$package_url = API::get_plugin_package_url( $version );
-		if ( is_wp_error( $package_url ) ) {
-			wp_die( $package_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		/**
+		 * Filter to allow override the rollback process.
+		 * Should return an instance of `Rollback` class.
+		 *
+		 * @since 3.16.0
+		 *
+		 * @param Rollback|null $rollback The rollback instance.
+		 * @param string        $version  The version to roll back to.
+		 */
+		$rollback = apply_filters( 'elementor-pro/settings/rollback', null, $version );
+
+		if ( ! ( $rollback instanceof Rollback ) ) {
+			$package_url = API::get_plugin_package_url( $version );
+
+			if ( is_wp_error( $package_url ) ) {
+				wp_die( $package_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+
+			$rollback = new Rollback( [
+				'version' => $version,
+				'plugin_name' => ELEMENTOR_PRO_PLUGIN_BASE,
+				'plugin_slug' => basename( ELEMENTOR_PRO__FILE__, '.php' ),
+				'package_url' => $package_url,
+			] );
 		}
-
-		$plugin_slug = basename( ELEMENTOR_PRO__FILE__, '.php' );
-
-		$rollback = new Rollback( [
-			'version' => $version,
-			'plugin_name' => ELEMENTOR_PRO_PLUGIN_BASE,
-			'plugin_slug' => $plugin_slug,
-			'package_url' => $package_url,
-		] );
 
 		$rollback->run();
 

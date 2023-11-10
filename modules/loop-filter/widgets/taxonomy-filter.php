@@ -12,6 +12,7 @@ use ElementorPro\Modules\LoopFilter\Traits\Hierarchical_Taxonomy_Trait;
 use ElementorPro\Plugin;
 use Elementor\Utils;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
+use ElementorPro\Modules\Posts\Traits\Pagination_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -19,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Taxonomy_Filter extends Base_Widget {
 	use Hierarchical_Taxonomy_Trait;
+	use Pagination_Trait;
 
 	public function get_name() {
 		return 'taxonomy-filter';
@@ -40,7 +42,7 @@ class Taxonomy_Filter extends Base_Widget {
 		return [ 'filter', 'loop', 'filter bar', 'taxonomy', 'categories', 'tags' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_taxonomy_filter',
 			[
@@ -776,27 +778,5 @@ class Taxonomy_Filter extends Base_Widget {
 		}
 
 		return $terms;
-	}
-
-	private function get_base_url() {
-		if ( is_page() ) {
-			// Check if it's a normal page.
-			return get_permalink();
-		} elseif ( is_archive() ) {
-			// Check if it's an archive page.
-			return get_post_type_archive_link( get_post_type() );
-		} elseif ( is_singular() && 'post' !== get_post_type() && 'page' !== get_post_type() ) {
-			// Check if it's a single post/page of a custom post type.
-			$post_type = get_post_type_object( get_post_type() );
-
-			if ( $post_type->has_archive ) {
-				return get_post_type_archive_link( get_post_type() );
-			} else {
-				return get_permalink();
-			}
-		}
-
-		// Fallback to home URL.
-		return home_url( '/' );
 	}
 }

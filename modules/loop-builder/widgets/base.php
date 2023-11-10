@@ -175,7 +175,8 @@ class Base extends Posts {
 		$this->remove_responsive_control( 'align' );
 
 		$this->start_injection( [
-			'of' => 'text',
+			'of' => 'pagination_align',
+			'at' => 'after',
 		] );
 
 		$this->add_responsive_control(
@@ -217,6 +218,61 @@ class Base extends Posts {
 			]
 		);
 
+		$this->add_control(
+			'pagination_load_type',
+			[
+				'label' => esc_html__( 'Load Type', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'page_reload',
+				'options' => [
+					'page_reload' => esc_html__( 'Page Reload', 'elementor-pro' ),
+					'ajax' => esc_html__( 'AJAX', 'elementor-pro' ),
+				],
+				'frontend_available' => true,
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'prev_next',
+						'numbers_and_prev_next',
+					],
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'auto_scroll',
+			[
+				'label' => esc_html__( 'Autoscroll', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'condition' => [
+					'pagination_load_type' => [
+						'ajax',
+					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'auto_scroll_offset',
+			[
+				'label' => esc_html__( 'Autoscroll offset', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'selectors' => [
+					'{{WRAPPER}}' => '--auto-scroll-offset: {{VALUE}}px;',
+				],
+				'condition' => [
+					'pagination_load_type' => [
+						'ajax',
+					],
+					'auto_scroll' => 'yes',
+				],
+			]
+		);
+
 		$this->end_injection();
 
 		// Remove the HTML Entity arrows inherited from the Posts widget from the prev/next pagination link labels.
@@ -231,6 +287,55 @@ class Base extends Posts {
 			'pagination_next_label',
 			[
 				'default' => esc_html__( 'Next', 'elementor-pro' ),
+			]
+		);
+
+		$this->update_control(
+			'pagination_individual_divider',
+			[
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'numbers_and_prev_next',
+						'prev_next',
+					],
+					'pagination_load_type' => [
+						'page_reload',
+					],
+				],
+			]
+		);
+
+		$this->update_control(
+			'pagination_individual_handle',
+			[
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'numbers_and_prev_next',
+						'prev_next',
+					],
+					'pagination_load_type' => [
+						'page_reload',
+					],
+				],
+			]
+		);
+
+		$this->update_control(
+			'pagination_individual_handle_message',
+			[
+				'raw' => esc_html__( 'For multiple Loop Widgets on the same page, toggle this on to control the pagination for each individually. Note: It affects the page\'s URL structure.', 'elementor-pro' ),
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'numbers_and_prev_next',
+						'prev_next',
+					],
+					'pagination_load_type' => [
+						'page_reload',
+					],
+				],
 			]
 		);
 	}

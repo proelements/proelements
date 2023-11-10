@@ -3,6 +3,7 @@ namespace ElementorPro\Core\Editor;
 
 use Elementor\Core\Base\App;
 use Elementor\Core\Utils\Assets_Config_Provider;
+use Elementor\Core\Utils\Assets_Translation_Loader;
 use ElementorPro\License\Admin as License_Admin;
 use ElementorPro\License\API as License_API;
 use ElementorPro\Plugin;
@@ -39,6 +40,16 @@ class Editor extends App {
 
 		if (!defined('IS_PRO_ELEMENTS'))
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
+
+		add_filter( 'elementor/editor/panel/get_pro_details', function( $get_pro_details ) {
+			if ( defined( '\Elementor\Modules\Apps\Module::PAGE_ID' ) ) {
+				$get_pro_details['link'] = admin_url( 'admin.php?page=' . \Elementor\Modules\Apps\Module::PAGE_ID );
+				$get_pro_details['message'] = __( 'Extend Elementor With Apps', 'elementor-pro' );
+				$get_pro_details['button_text'] = __( 'Explore Apps', 'elementor-pro' );
+			}
+
+			return $get_pro_details;
+		} );
 
 		add_action( 'elementor/editor/v2/scripts/enqueue', function () {
 			$this->enqueue_editor_v2_scripts();
@@ -124,6 +135,12 @@ class Editor extends App {
 			);
 
 			wp_set_script_translations( $config['handle'], 'elementor-pro' );
+		}
+
+		if ( class_exists( Assets_Translation_Loader::class ) ) {
+			$packages_handles = $assets_config->pluck( 'handle' )->all();
+
+			Assets_Translation_Loader::for_handles( $packages_handles );
 		}
 	}
 

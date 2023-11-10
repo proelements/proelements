@@ -2345,6 +2345,9 @@ class Form extends Form_Base {
 						var item = settings.form_fields[ i ];
 						item = elementor.hooks.applyFilters( 'elementor_pro/forms/content_template/item', item, i, settings );
 
+						item.field_type  = _.escape( item.field_type );
+						item.field_value = _.escape( item.field_value );
+
 						var options = item.field_options ? item.field_options.split( '\n' ) : [],
 							itemClasses = _.escape( item.css_classes ),
 							labelVisibility = '',
@@ -2481,6 +2484,7 @@ class Form extends Form_Base {
 								inputField = '<input size="1" type="' + item.field_type + '" value="' + item.field_value + '" class="elementor-field elementor-size-' + settings.input_size + ' ' + itemClasses + '" name="form_field_' + i + '" id="form_field_' + i + '" ' + required + ' ' + placeholder + ' >';
 								break;
 							default:
+								item.placeholder = _.escape( item.placeholder );
 								inputField = elementor.hooks.applyFilters( 'elementor_pro/forms/content_template/field/' + item.field_type, '', item, i, settings );
 						}
 

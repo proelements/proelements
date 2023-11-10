@@ -346,6 +346,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			'condition' => [
 				'item_layout' => 'horizontal',
 			],
+			'frontend_available' => true,
 		]);
 
 		$this->add_responsive_control( 'item_position_dropdown', [
@@ -690,10 +691,38 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'section_responsive_mega_menu', [
-			'label' => esc_html__( 'Responsive Settings', 'elementor-pro' ),
+			'label' => esc_html__( 'Additional Settings', 'elementor-pro' ),
 		] );
 
-		$dropdown_options = [];
+		$this->add_responsive_control(
+			'horizontal_scroll',
+			[
+				'label' => esc_html__( 'Horizontal Scroll', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'description' => esc_html__( 'Note: Scroll menu items if they don’t fit into their parent container.', 'elementor-pro' ),
+				'options' => [
+					'disable' => esc_html__( 'Disable', 'elementor-pro' ),
+					'enable' => esc_html__( 'Enable', 'elementor-pro' ),
+				],
+				'default' => 'disable',
+				'selectors_dictionary' => [
+					'disable' => '--n-menu-heading-wrap: wrap; --n-menu-heading-overflow-x: initial;',
+					'enable' => '--n-menu-heading-wrap: nowrap; --n-menu-heading-overflow-x: scroll;',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '{{VALUE}}',
+				],
+				'frontend_available' => true,
+				'condition' => [
+					'item_layout' => 'horizontal',
+				],
+			]
+		);
+
+		$dropdown_options = [
+			'none' => esc_html__( 'None', 'elementor-pro' ),
+		];
+
 		$excluded_breakpoints = [
 			'laptop',
 			'tablet_extra',

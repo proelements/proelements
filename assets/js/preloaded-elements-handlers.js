@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
 /***/ "../assets/dev/js/frontend/preloaded-elements-handlers.js":
@@ -64,6 +64,39 @@ const extendDefaultHandlers = defaultHandlers => {
 elementorProFrontend.on('elementor-pro/modules/init:before', () => {
   elementorFrontend.hooks.addFilter('elementor-pro/frontend/handlers', extendDefaultHandlers);
 });
+
+/***/ }),
+
+/***/ "../assets/dev/js/frontend/utils/ajax-helper.js":
+/*!******************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/ajax-helper.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class AjaxHelper {
+  addLoadingAnimationOverlay(elementId) {
+    const widget = document.querySelector(`.elementor-element-${elementId}`);
+    if (!widget) {
+      return;
+    }
+    widget.classList.add('e-loading-overlay');
+  }
+  removeLoadingAnimationOverlay(elementId) {
+    const widget = document.querySelector(`.elementor-element-${elementId}`);
+    if (!widget) {
+      return;
+    }
+    widget.classList.remove('e-loading-overlay');
+  }
+}
+exports["default"] = AjaxHelper;
 
 /***/ }),
 
@@ -218,7 +251,7 @@ function getChildrenWidth(children) {
   return totalWidth;
 }
 function initialScrollPosition(element, direction, justifyCSSVariable) {
-  const isRTL = elementorCommon.config.isRTL;
+  const isRTL = elementorFrontend.config.is_rtl;
   switch (direction) {
     case 'end':
       element.style.setProperty(justifyCSSVariable, 'start');
@@ -2898,6 +2931,7 @@ exports["default"] = void 0;
 var _loop = _interopRequireDefault(__webpack_require__(/*! ./handlers/loop */ "../modules/loop-builder/assets/js/frontend/handlers/loop.js"));
 var _loadMore = _interopRequireDefault(__webpack_require__(/*! ./handlers/load-more */ "../modules/loop-builder/assets/js/frontend/handlers/load-more.js"));
 var _loopCarousel = _interopRequireDefault(__webpack_require__(/*! ./handlers/loop-carousel */ "../modules/loop-builder/assets/js/frontend/handlers/loop-carousel.js"));
+var _ajaxPagination = _interopRequireDefault(__webpack_require__(/*! ./handlers/ajax-pagination */ "../modules/loop-builder/assets/js/frontend/handlers/ajax-pagination.js"));
 class _default extends elementorModules.Module {
   constructor() {
     super();
@@ -2906,10 +2940,149 @@ class _default extends elementorModules.Module {
       elementorFrontend.elementsHandler.attachHandler('loop-grid', _loop.default, skinName);
       elementorFrontend.elementsHandler.attachHandler('loop-carousel', _loop.default, skinName);
       elementorFrontend.elementsHandler.attachHandler('loop-carousel', _loopCarousel.default, skinName);
+      elementorFrontend.elementsHandler.attachHandler('loop-grid', _ajaxPagination.default, skinName);
     });
   }
 }
 exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/loop-builder/assets/js/frontend/handlers/ajax-pagination.js":
+/*!******************************************************************************!*\
+  !*** ../modules/loop-builder/assets/js/frontend/handlers/ajax-pagination.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _ajaxHelper = _interopRequireDefault(__webpack_require__(/*! ../../../../../../assets/dev/js/frontend/utils/ajax-helper */ "../assets/dev/js/frontend/utils/ajax-helper.js"));
+var _runElementHandlers = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/run-element-handlers */ "../assets/dev/js/frontend/utils/run-element-handlers.js"));
+class AjaxPagination extends elementorModules.frontend.handlers.Base {
+  getDefaultSettings() {
+    return {
+      selectors: {
+        links: 'a.page-numbers:not(.current)',
+        widgetContainer: '.elementor-widget-container',
+        postWrapperTag: '.e-loop-item'
+      }
+    };
+  }
+  getDefaultElements() {
+    const selectors = this.getSettings('selectors');
+    return {
+      links: this.$element[0].querySelectorAll(selectors.links),
+      widgetContainer: this.$element[0].querySelector(selectors.widgetContainer)
+    };
+  }
+  bindEvents() {
+    super.bindEvents();
+    this.linksEventListeners();
+  }
+  linksEventListeners() {
+    if (!this.elements.links.length) {
+      return;
+    }
+    if ('ajax' !== this.getElementSettings('pagination_load_type')) {
+      return;
+    }
+    this.elements.links.forEach(link => {
+      link.addEventListener('click', event => {
+        this.handleLinkClick(event);
+      });
+    });
+  }
+  handleLinkClick(event) {
+    event.preventDefault();
+    if (this.isLoading) {
+      return;
+    }
+    this.removeLinksListeners();
+    this.handleUiBeforeLoading();
+    const nextPageUrl = event?.target.getAttribute('href');
+    this.updateURLQueryString(nextPageUrl);
+    return fetch(nextPageUrl).then(response => response.text()).then(html => {
+      // Convert the HTML string into a document object
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      this.handleSuccessFetch(doc);
+    });
+  }
+  removeLinksListeners() {
+    if (!this.elements.links.length) {
+      return;
+    }
+    this.elements.links.forEach(link => {
+      link.removeEventListener('click', this.handleLinkClick);
+    });
+  }
+  updateURLQueryString(nextPageUrl) {
+    const currentUrl = new URL(window.location.href);
+    const currentParams = currentUrl.searchParams;
+    const targetUrl = new URL(nextPageUrl);
+    const targetParams = targetUrl.searchParams;
+    targetParams.forEach((value, key) => {
+      currentParams.set(key, value);
+    });
+
+    // Clicked on page 1.
+    if (!targetParams.has('e-page-' + this.elementId)) {
+      currentParams.delete('e-page-' + this.elementId);
+    }
+    history.pushState(null, '', currentUrl.href);
+  }
+  handleUiBeforeLoading() {
+    this.setLoading(true);
+    this.ajaxHelper.addLoadingAnimationOverlay(this.elementId);
+    this.maybeScrollToTop();
+  }
+  setLoading(loadng) {
+    this.isLoading = loadng;
+  }
+  maybeScrollToTop() {
+    if ('yes' !== this.getElementSettings('auto_scroll')) {
+      return;
+    }
+    const widget = document.querySelector(`.elementor-element-${this.elementId}`);
+    if (!widget) {
+      return;
+    }
+    widget.scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
+  handleUiAfterLoading() {
+    this.setLoading(false);
+    this.ajaxHelper.removeLoadingAnimationOverlay(this.elementId);
+  }
+  handleSuccessFetch(result) {
+    this.handleUiAfterLoading();
+    const selectors = this.getSettings('selectors');
+    const newWidgetContainer = result.querySelector(`[data-id="${this.elementId}"] ${selectors.widgetContainer}`);
+    const existingWidgetContainer = this.elements.widgetContainer;
+    this.$element[0].replaceChild(newWidgetContainer, existingWidgetContainer);
+    this.afterInsertPosts();
+  }
+  afterInsertPosts() {
+    const selectors = this.getSettings('selectors'),
+      postsElements = document.querySelectorAll(`[data-id="${this.elementId}"] ${selectors.postWrapperTag}`);
+    elementorFrontend.elementsHandler.runReadyTrigger(this.$element[0]);
+    (0, _runElementHandlers.default)(postsElements);
+  }
+  onInit() {
+    super.onInit();
+    this.setLoading(false);
+    this.elementId = this.getID();
+    this.ajaxHelper = new _ajaxHelper.default();
+  }
+}
+exports["default"] = AjaxPagination;
 
 /***/ }),
 
@@ -3211,6 +3384,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 var _runElementHandlers = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/run-element-handlers */ "../assets/dev/js/frontend/utils/run-element-handlers.js"));
+var _ajaxHelper = _interopRequireDefault(__webpack_require__(/*! ../../../../../assets/dev/js/frontend/utils/ajax-helper */ "../assets/dev/js/frontend/utils/ajax-helper.js"));
 class BaseFilterFrontendModule extends elementorModules.Module {
   constructor() {
     super();
@@ -3303,7 +3477,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     }
     return queryString;
   }
-  updateURLQueryString(filterId) {
+  updateURLQueryString(widgetId, filterId) {
     const currentUrl = new URL(window.location.href),
       existingQueryString = currentUrl.searchParams,
       queryStringObject = this.getQueryStringInObjectForm(),
@@ -3312,6 +3486,9 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     existingQueryString.forEach((value, key) => {
       if (!key.startsWith('e-filter')) {
         updatedParams.append(key, value);
+      }
+      if (key.startsWith('e-page-' + widgetId)) {
+        updatedParams.delete(key);
       }
     });
     for (const key in queryStringObject) {
@@ -3405,34 +3582,17 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     div.innerHTML = widgetContainerHTMLString.trim();
     return div.firstElementChild;
   }
-  addLoadingAnimationOverlay(widgetId) {
-    const widget = document.querySelector(`.elementor-element-${widgetId}`);
-    if (!widget) {
-      return;
-    }
-    const loadingAnimationOverlay = document.createElement('div');
-    loadingAnimationOverlay.classList.add('e-loading-overlay');
-    widget.appendChild(loadingAnimationOverlay);
-  }
-  removeLoadingAnimationOverlay(widgetId) {
-    const widget = document.querySelector(`.elementor-element-${widgetId}`);
-    if (!widget) {
-      return;
-    }
-    const loadingAnimationOverlay = widget.querySelector('.e-loading-overlay');
-    if (!loadingAnimationOverlay) {
-      return;
-    }
-    loadingAnimationOverlay.remove();
-  }
   refreshLoopWidget(widgetId, filterId) {
     this.consolidateFiltersForLoopWidget(widgetId);
-    this.updateURLQueryString(filterId);
+    this.updateURLQueryString(widgetId, filterId);
     const widget = document.querySelector(`.elementor-element-${widgetId}`);
     if (!widget) {
       return;
     }
-    this.addLoadingAnimationOverlay(widgetId);
+    if (!this.ajaxHelper) {
+      this.ajaxHelper = new _ajaxHelper.default();
+    }
+    this.ajaxHelper.addLoadingAnimationOverlay(widgetId);
     const fetchUpdatedLoopWidgetMarkup = this.fetchUpdatedLoopWidgetMarkup(widgetId, filterId).then(response => {
       if (!(response instanceof Response) || !response?.ok || 400 <= response?.status) {
         return {};
@@ -3453,7 +3613,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
       elementorFrontend.elementsHandler.runReadyTrigger(document.querySelector(`.elementor-element-${widgetId}`));
       widget.classList.remove('e-loading');
     }).finally(() => {
-      this.removeLoadingAnimationOverlay(widgetId);
+      this.ajaxHelper.removeLoadingAnimationOverlay(widgetId);
     });
     return fetchUpdatedLoopWidgetMarkup;
 
@@ -4399,6 +4559,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var _utils = __webpack_require__(/*! ../utils */ "../modules/mega-menu/assets/js/frontend/utils.js");
 var _anchorLink = _interopRequireDefault(__webpack_require__(/*! ../../../../../../assets/dev/js/frontend/utils/anchor-link */ "../assets/dev/js/frontend/utils/anchor-link.js"));
+var _flexHorizontalScroll = __webpack_require__(/*! elementor-pro/frontend/utils/flex-horizontal-scroll */ "../assets/dev/js/frontend/utils/flex-horizontal-scroll.js");
 class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   constructor() {
     super(...arguments);
@@ -4406,6 +4567,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       this.lifecycleChangeListener = null;
     }
     this.resizeListener = null;
+    this.prevMouseY = null;
   }
   getDefaultSettings() {
     const settings = super.getDefaultSettings();
@@ -4613,7 +4775,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       containerClass = settings.selectors.tabContent,
       $requestedTitle = this.elements.$tabDropdowns.filter(this.getTabTitleFilterSelector(tabIndex)),
       animationDuration = 'show' === settings.showTabFn ? 0 : 400,
-      $requestedContent = this.elements.$tabContents.filter(this.getTabContentFilterSelector(tabIndex));
+      $requestedContent = this.elements.$tabContents.filter(this.getTabContentFilterSelector(tabIndex)),
+      $menuContent = this.elements.$menuContent;
     this.addAnimationToContentIfNeeded(tabIndex);
     $requestedContent[settings.showTabFn](animationDuration, () => this.onShowTabContent($requestedContent));
     $requestedTitle.attr(this.getTitleActivationAttributes());
@@ -4623,6 +4786,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       display: 'var(--display)'
     });
     $requestedContent.removeAttr('display');
+    $menuContent.addClass(activeClass);
     if (elementorFrontend.isEditMode() && !!$requestedContent.length) {
       this.activeContainerWidthListener($requestedContent);
     }
@@ -4633,11 +4797,13 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       activeTitleFilter = settings.ariaAttributes.activeTitleSelector,
       activeContentFilter = '.' + activeClass,
       $activeTitle = this.elements.$tabDropdowns.filter(activeTitleFilter),
-      $activeContent = this.elements.$tabContents.filter(activeContentFilter);
+      $activeContent = this.elements.$tabContents.filter(activeContentFilter),
+      $menuContent = this.elements.$menuContent;
     this.setTabDeactivationAttributes($activeTitle, newTabIndex);
     $activeContent.removeClass(activeClass);
     $activeContent[settings.hideTabFn](0, () => this.onHideTabContent($activeContent));
     this.removeAnimationFromContentIfNeeded();
+    $menuContent.removeClass(activeClass);
     if (elementorFrontend.isEditMode() && !!$activeContent.length) {
       this.observedContainer?.unobserve($activeContent[0]);
     }
@@ -4720,6 +4886,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.elements.$dropdownMenuToggle.on('click', this.onClickToggleDropdownMenu.bind(this));
     this.elements.$tabContents.on(this.getContentEvents());
     this.elements.$menuContent.on(this.getContentEvents());
+    this.elements.$headingContainer.on(this.getHeadingEvents());
     elementorFrontend.addListenerOnce(this.getModelCID(), 'scroll', elementorFrontend.debounce(this.menuHeightController.reassignMobileMenuHeight.bind(this.menuHeightController), 250));
     elementorFrontend.elements.$window.on('elementor/nested-tabs/activate', this.reInitSwipers);
     elementorFrontend.elements.$window.on('elementor/nested-elements/activate-by-keyboard', this.changeActiveTabByKeyboard.bind(this));
@@ -4733,6 +4900,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.elements.$tabTitles.off();
     this.elements.$menuContent.off();
     this.elements.$tabContents.off();
+    this.elements.$headingContainer.off();
     elementorFrontend.elements.$window.off('resize');
     if (elementorFrontend.isEditMode()) {
       this.removeChildLifeCycleEventListeners();
@@ -4746,6 +4914,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.setLayoutType();
     this.setTouchMode();
     this.menuHeightController.reassignMobileMenuHeight();
+    this.setScrollPosition();
   }
 
   /**
@@ -4785,7 +4954,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   }
   getContentEvents() {
     return this.isNeedToOpenOnClick() ? {} : {
-      mouseleave: this.onMouseLeave.bind(this)
+      mouseleave: this.onMouseLeave.bind(this),
+      mousemove: this.trackMousePosition.bind(this)
     };
   }
   isNeedToOpenOnClick() {
@@ -4851,20 +5021,66 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     this.elements.$tabContents.removeClass(`animated ${openAnimation}`);
   }
-  isHoveredDropdownMenu(isMouseLeavingTabContent) {
-    const settings = this.getSettings(),
-      $widget = this.$element,
-      isMenuContentHover = 0 < $widget.find(`${settings.selectors.menuContent}:hover`).length,
-      isTabContentHover = 0 < $widget.find(`${settings.selectors.tabContent}:hover`).length;
-    return isTabContentHover || !isMouseLeavingTabContent && isMenuContentHover;
+
+  /**
+   * Store the current Y-coordinate of the mouse cursor.
+   *
+   * @param {Event} event - The mouse event object.
+   */
+  trackMousePosition(event) {
+    this.prevMouseY = event?.clientY;
   }
+
+  /**
+   * Check if the menu content is currently hovered.
+   *
+   * @return {boolean} - True if menu content is hovered, otherwise false.
+   */
+  isMenuContentHovered() {
+    const settings = this.getSettings(),
+      $widget = this.$element;
+    return $widget.find(`${settings.selectors.menuContent}:hover`).length > 0;
+  }
+
+  /**
+   * Determines whether the cursor moved sideways or downwards.
+   *
+   * @param {Event} event - The mouse event object.
+   * @return {boolean} - True if the cursor moved sideways or downwards, otherwise false.
+   */
+  didCursorMoveSidewaysOrDown(event) {
+    // Detects if the Y-coordinate of the mouse has not decreased (i.e., either remained the same or increased).
+    return this.prevMouseY !== null && event?.clientY >= this.prevMouseY;
+  }
+
+  /**
+   * Check whether the dropdown menu should remain open based on hover and cursor movement.
+   *
+   * @param {boolean} isMouseLeavingTabContent - True if the mouse is leaving the tab content.
+   * @param {Event}   event                    - The mouse event object.
+   * @return {boolean} - True if dropdown should be considered as hovered, otherwise false.
+   */
+  isHoveredDropdownMenu(isMouseLeavingTabContent, event) {
+    // If the mouse is leaving the tab content and it moved sideways or downwards, close the dropdown.
+    if (isMouseLeavingTabContent && this.didCursorMoveSidewaysOrDown(event)) {
+      return false;
+    }
+
+    // Otherwise, return true if the menu content is hovered.
+    return this.isMenuContentHovered();
+  }
+
+  /**
+   * Handle the event when the mouse leaves the dropdown.
+   *
+   * @param {Event} event - The mouse event object.
+   */
   onMouseLeave(event) {
     event.preventDefault();
     const isMouseLeavingTabContent = event?.currentTarget?.classList.contains('e-con');
-    if (this.isHoveredDropdownMenu(isMouseLeavingTabContent)) {
-      return;
+    if (!this.isHoveredDropdownMenu(isMouseLeavingTabContent, event)) {
+      this.deactivateActiveTab('', 'mouseLeave');
     }
-    this.deactivateActiveTab('', 'mouseLeave');
   }
   onInit() {
     this.menuHeightController = new elementorProFrontend.utils.DropdownMenuHeightController(this.dropdownMenuHeightControllerConfig());
@@ -4875,6 +5091,16 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       this.anchorLinks.followMenuAnchors(this.elements.$anchorLink, classes);
     }
     this.menuToggleVisibilityListener(this.elements.$dropdownMenuToggle);
+    this.setScrollPosition();
+  }
+  setScrollPosition() {
+    const settingsObject = {
+      element: this.elements.$headingContainer[0],
+      direction: this.getItemPosition(),
+      justifyCSSVariable: '--n-menu-heading-justify-content',
+      horizontalScrollStatus: this.getHorizontalScrollSetting()
+    };
+    (0, _flexHorizontalScroll.setHorizontalScrollAlignment)(settingsObject);
   }
   getPropsThatTriggerContentPositionCalculations() {
     return ['content_horizontal_position', 'content_position', 'item_position_horizontal', 'content_width', 'item_layout'];
@@ -4929,6 +5155,23 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   setLayoutType() {
     const layoutType = 'flex' === this.elements.$headingContainer.css('display') ? 'horizontal' : 'dropdown';
     this.elements.$widgetContainer.attr('data-layout', layoutType);
+  }
+  getHeadingEvents() {
+    const navigationWrapper = this.elements.$headingContainer[0];
+    return {
+      mousedown: _flexHorizontalScroll.changeScrollStatus.bind(this, navigationWrapper),
+      mouseup: _flexHorizontalScroll.changeScrollStatus.bind(this, navigationWrapper),
+      mouseleave: _flexHorizontalScroll.changeScrollStatus.bind(this, navigationWrapper),
+      mousemove: _flexHorizontalScroll.setHorizontalTitleScrollValues.bind(this, navigationWrapper, this.getHorizontalScrollSetting())
+    };
+  }
+  getHorizontalScrollSetting() {
+    const currentDevice = elementorFrontend.getCurrentDeviceMode();
+    return elementorFrontend.utils.controls.getResponsiveControlValue(this.getElementSettings(), 'horizontal_scroll', '', currentDevice);
+  }
+  getItemPosition() {
+    const currentDevice = elementorFrontend.getCurrentDeviceMode();
+    return elementorFrontend.utils.controls.getResponsiveControlValue(this.getElementSettings(), 'item_position_horizontal', '', currentDevice);
   }
 }
 exports["default"] = MegaMenu;
@@ -5664,7 +5907,7 @@ class _default extends elementorModules.frontend.Document {
     const modal = this.getModal(),
       closeButtonPosition = this.getDocumentSettings('close_button_position'),
       $closeButton = modal.getElements('closeButton');
-    $closeButton.appendTo(modal.getElements('outside' === closeButtonPosition ? 'widget' : 'widgetContent'));
+    $closeButton.prependTo(modal.getElements('outside' === closeButtonPosition ? 'widget' : 'widgetContent'));
   }
   disable() {
     this.setStorage('disable', true);
@@ -8023,9 +8266,9 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
       // We generate the icon markup in PHP and make it available via get_frontend_settings(). As a result, the
       // rendered icon is not available in the editor, so in the editor we use the regular <i> tag.
       if (elementorFrontend.config.experimentalFeatures.e_font_icon_svg && !elementorFrontend.isEditMode()) {
-        renderedIcon = icon.rendered_tag;
+        renderedIcon = typeof icon.rendered_tag !== 'undefined' ? icon.rendered_tag : '';
       } else {
-        renderedIcon = `<i class="${icon.value}"></i>`;
+        renderedIcon = icon.value ? `<i class="${icon.value}"></i>` : '';
       }
     }
 
@@ -8144,7 +8387,9 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     let changeFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     const boxHeight = this.getCurrentDeviceSetting('min_height');
     this.$element.removeClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.attr('aria-expanded', 'true').slideDown();
+    this.elements.$tocBody.slideDown();
+    this.elements.$expandButton.attr('aria-expanded', 'true');
+    this.elements.$collapseButton.attr('aria-expanded', 'true');
 
     // Return container to the full height in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', boxHeight.size + boxHeight.unit);
@@ -8155,7 +8400,9 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   collapseBox() {
     let changeFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     this.$element.addClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.attr('aria-expanded', 'false').slideUp();
+    this.elements.$tocBody.slideUp();
+    this.elements.$expandButton.attr('aria-expanded', 'false');
+    this.elements.$collapseButton.attr('aria-expanded', 'false');
 
     // Close container in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', '0px');

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["taxonomy-filter"],{
 
@@ -81,7 +81,7 @@ function getChildrenWidth(children) {
   return totalWidth;
 }
 function initialScrollPosition(element, direction, justifyCSSVariable) {
-  const isRTL = elementorCommon.config.isRTL;
+  const isRTL = elementorFrontend.config.is_rtl;
   switch (direction) {
     case 'end':
       element.style.setProperty(justifyCSSVariable, 'start');
@@ -300,4 +300,4 @@ exports["default"] = TaxonomyFilter;
 /***/ })
 
 }]);
-//# sourceMappingURL=taxonomy-filter.f2f989f4cb7ee7582ee7.bundle.js.map
+//# sourceMappingURL=taxonomy-filter.e2a1e927256c61aed7af.bundle.js.map

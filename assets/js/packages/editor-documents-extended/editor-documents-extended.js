@@ -141,7 +141,7 @@ __webpack_require__.r(__webpack_exports__);
 var initialState = {
   entities: {}
 };
-var slice = (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+var slice = (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.__createSlice)({
   name: "documentsExtended",
   initialState,
   reducers: {
@@ -163,7 +163,7 @@ function syncStore() {
 }
 function syncInitialization() {
   const { init: init5 } = slice.actions;
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.listenTo)(
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateListenTo)(
     (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.v1ReadyEvent)(),
     () => {
       const documentsManager = getV1DocumentsManager();
@@ -171,18 +171,18 @@ function syncInitialization() {
         acc[id] = normalizeV1Document(document);
         return acc;
       }, {});
-      (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.dispatch)(init5({ entities }));
+      (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.__dispatch)(init5({ entities }));
     }
   );
 }
 function syncOnDocumentOpen() {
   const { addDocument } = slice.actions;
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.listenTo)(
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateListenTo)(
     (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.commandEndEvent)("editor/documents/open"),
     () => {
       const documentsManager = getV1DocumentsManager();
       const currentDocument = normalizeV1Document(documentsManager.getCurrent());
-      (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.dispatch)(addDocument(currentDocument));
+      (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.__dispatch)(addDocument(currentDocument));
     }
   );
 }
@@ -226,14 +226,14 @@ var trigger_icon_default = TriggerIcon;
 // src/extensions/popups/hooks/use-popup-triggers-props.ts
 
 function usePopupTriggersProps() {
-  const document = (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_4__.useActiveDocument)();
+  const document = (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_4__.__useActiveDocument)();
   const visible = "popup" === document?.type.value;
   return {
     icon: trigger_icon_default,
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Triggers", "elementor-pro"),
     visible,
     onClick: () => {
-      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.openRoute)("theme-builder-publish/triggers");
+      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateOpenRoute)("theme-builder-publish/triggers");
     }
   };
 }
@@ -244,14 +244,14 @@ function usePopupTriggersProps() {
 
 
 function usePopupAdvancedRulesProps() {
-  const document = (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_4__.useActiveDocument)();
+  const document = (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_4__.__useActiveDocument)();
   const visible = "popup" === document?.type.value;
   return {
     icon: _elementor_icons__WEBPACK_IMPORTED_MODULE_7__.SettingsIcon,
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Advanced Rules", "elementor-pro"),
     visible,
     onClick: () => {
-      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.openRoute)("theme-builder-publish/timing");
+      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateOpenRoute)("theme-builder-publish/timing");
     }
   };
 }
@@ -283,8 +283,8 @@ function init() {
 
 
 function useActiveDocumentExtended() {
-  const document = (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_4__.useActiveDocument)();
-  const documentExtensions = (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.useSelector)((state) => {
+  const document = (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_4__.__useActiveDocument)();
+  const documentExtensions = (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.__useSelector)((state) => {
     if (!document) {
       return null;
     }
@@ -308,7 +308,7 @@ function useDocumentDisplayConditionsProps() {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Display Conditions", "elementor-pro"),
     visible,
     onClick: () => {
-      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.openRoute)("theme-builder-publish/conditions");
+      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateOpenRoute)("theme-builder-publish/conditions");
     }
   };
 }
@@ -336,7 +336,7 @@ function init4() {
   initStore();
 }
 function initStore() {
-  (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.registerSlice)(slice);
+  (0,_elementor_store__WEBPACK_IMPORTED_MODULE_0__.__registerSlice)(slice);
   syncStore();
 }
 

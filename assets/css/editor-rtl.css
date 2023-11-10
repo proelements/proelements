@@ -1,8 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
-#elementor-panel-get-pro-elements {
-  display: none;
-}
-
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 .elementor-panel .elementor-control .e-control-error {
   color: #F59E0B;
 }
@@ -22,8 +18,7 @@
 }
 
 #elementor-widget-template-empty-templates {
-  -webkit-margin-before: 15px;
-          margin-block-start: 15px;
+  margin-block-start: 15px;
   text-align: center;
 }
 
@@ -39,8 +34,7 @@
   color: var(--e-a-color-txt-muted);
   font-size: 13px;
   font-style: italic;
-  -webkit-margin-after: 15px;
-          margin-block-end: 15px;
+  margin-block-end: 15px;
 }
 
 #elementor-panel-global-widget {
@@ -51,20 +45,17 @@
 }
 
 #elementor-global-widget-locked-header {
-  -webkit-border-after: var(--e-a-border);
-          border-block-end: var(--e-a-border);
+  border-block-end: var(--e-a-border);
 }
 #elementor-global-widget-locked-header.elementor-nerd-box {
   padding: 40px 25px;
 }
 #elementor-global-widget-locked-header.elementor-nerd-box .elementor-nerd-box-icon {
-  -webkit-margin-before: 20px;
-          margin-block-start: 20px;
+  margin-block-start: 20px;
 }
 
 #elementor-global-widget-locked-tools {
-  -webkit-margin-before: 15px;
-          margin-block-start: 15px;
+  margin-block-start: 15px;
   padding: 0 20px;
 }
 
@@ -82,8 +73,7 @@
 }
 
 #elementor-global-widget-locked-unlink {
-  -webkit-border-before: var(--e-a-border);
-          border-block-start: var(--e-a-border);
+  border-block-start: var(--e-a-border);
 }
 
 #elementor-global-templates .elementor-element {
@@ -124,8 +114,7 @@
   padding: 0;
 }
 .elementor-panel .elementor-control-type-fields_map .elementor-repeater-fields:last-child {
-  -webkit-margin-after: 0;
-          margin-block-end: 0;
+  margin-block-end: 0;
 }
 
 .elementor-repeater-row--form-step .elementor-repeater-row-tools:hover {
@@ -167,8 +156,7 @@
   display: flex;
 }
 #elementor-publish__tabs {
-  -webkit-padding-before: 50px;
-          padding-block-start: 50px;
+  padding-block-start: 50px;
 }
 @media (max-width: 1439px) {
   #elementor-publish__tabs {
@@ -213,8 +201,7 @@
 }
 .elementor-publish__tab__content {
   text-align: start;
-  -webkit-padding-start: 15px;
-          padding-inline-start: 15px;
+  padding-inline-start: 15px;
 }
 .elementor-publish__tab__title {
   font-size: 18px;
@@ -255,8 +242,7 @@
   content: "\e8cd";
 }
 #elementor-theme-builder-conditions .elementor-control-type[data-elementor-condition-type=exclude] select, #elementor-theme-builder-conditions .elementor-control-type[data-elementor-condition-type=include] select {
-  -webkit-padding-start: 33px;
-          padding-inline-start: 33px;
+  padding-inline-start: 33px;
 }
 #elementor-theme-builder-conditions .elementor-control-type .elementor-control-input-wrapper:before {
   font-family: eicons;
@@ -269,8 +255,7 @@
 #elementor-theme-builder-conditions .elementor-theme-builder-conditions-repeater-row-controls {
   display: flex;
   flex-grow: 1;
-  -webkit-margin-end: 10px;
-          margin-inline-end: 10px;
+  margin-inline-end: 10px;
   width: 70%;
   border: var(--e-a-border-bold);
   overflow: hidden;
@@ -278,10 +263,8 @@
 }
 #elementor-theme-builder-conditions .elementor-theme-builder-conditions-repeater-row-controls .elementor-control:not(:first-child) {
   flex-grow: 1;
-  -webkit-border-start: var(--e-a-border-bold);
-          border-inline-start: var(--e-a-border-bold);
-  -webkit-margin-start: 1px;
-          margin-inline-start: 1px;
+  border-inline-start: var(--e-a-border-bold);
+  margin-inline-start: 1px;
 }
 #elementor-theme-builder-conditions .elementor-theme-builder-conditions-repeater-row-controls .elementor-control:not(:first-child) select {
   border-radius: 0;
@@ -295,8 +278,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-margin-before: 10px;
-          margin-block-start: 10px;
+  margin-block-start: 10px;
 }
 #elementor-theme-builder-conditions .elementor-control-field {
   display: block;
@@ -316,8 +298,7 @@
 }
 #elementor-theme-builder-conditions .select2-selection__rendered {
   line-height: 40px;
-  -webkit-padding-start: 15px;
-          padding-inline-start: 15px;
+  padding-inline-start: 15px;
   text-align: start;
 }
 #elementor-theme-builder-conditions .select2-selection__arrow {
@@ -325,10 +306,8 @@
 }
 #elementor-theme-builder-conditions .select2-selection__arrow b {
   border-width: 4px 4px 0 4px;
-  -webkit-margin-before: 2px;
-          margin-block-start: 2px;
-  -webkit-margin-start: -7px;
-          margin-inline-start: -7px;
+  margin-block-start: 2px;
+  margin-inline-start: -7px;
 }
 #elementor-theme-builder-conditions .elementor-repeater-tool-remove {
   font-size: 18px;
@@ -336,8 +315,7 @@
   color: var(--e-a-color-txt);
 }
 #elementor-theme-builder-conditions .elementor-button-wrapper {
-  -webkit-margin-before: 50px;
-          margin-block-start: 50px;
+  margin-block-start: 50px;
 }
 #elementor-theme-builder-conditions .elementor-repeater-add {
   padding: 12px 26px;
@@ -348,13 +326,11 @@
 }
 
 .elementor-conditions-conflict-message {
-  -webkit-margin-before: 10px;
-          margin-block-start: 10px;
+  margin-block-start: 10px;
   font-size: 11px;
   color: var(--e-a-color-warning);
   text-align: start;
-  -webkit-padding-start: 90px;
-          padding-inline-start: 90px;
+  padding-inline-start: 90px;
 }
 .elementor-conditions-conflict-message a {
   color: var(--e-a-color-warning);
@@ -367,8 +343,7 @@
   width: 100%;
 }
 .elementor-panel-footer-theme-builder-buttons-wrapper .elementor-panel-footer-sub-menu-item i {
-  -webkit-margin-end: 5px;
-          margin-inline-end: 5px;
+  margin-inline-end: 5px;
 }
 .elementor-panel-footer-theme-builder-buttons-wrapper .elementor-panel-footer-sub-menu-item > * {
   display: inline-block;
@@ -394,8 +369,7 @@
   text-align: center;
 }
 #elementor-toast.e-theme-builder-save-toaster .dialog-open_site_editor {
-  -webkit-margin-after: 10px;
-          margin-block-end: 10px;
+  margin-block-end: 10px;
 }
 
 .elementor-control.elementor-control-sitemap_items.elementor-control-type-repeater .elementor-repeater-row-tools .elementor-repeater-row-item-title span {
@@ -422,10 +396,8 @@
   align-items: center;
   height: 60px;
   border: var(--e-a-border);
-  -webkit-margin-after: 10px;
-          margin-block-end: 10px;
-  -webkit-padding-end: 20px;
-          padding-inline-end: 20px;
+  margin-block-end: 10px;
+  padding-inline-end: 20px;
   border-radius: var(--e-a-border-radius);
 }
 .elementor-popup__display-settings_controls_group:hover {
@@ -442,8 +414,7 @@
 .elementor-popup__display-settings_controls_group__icon {
   width: 60px;
   height: 60px;
-  -webkit-border-end: var(--e-a-border);
-          border-inline-end: var(--e-a-border);
+  border-inline-end: var(--e-a-border);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -466,8 +437,7 @@
   width: 75px;
 }
 .elementor-popup__display-settings_controls_group .elementor-control:not(:last-child) {
-  -webkit-margin-start: 25px;
-          margin-inline-start: 25px;
+  margin-inline-start: 25px;
 }
 .elementor-popup__display-settings_controls_group .elementor-control-type-slider .elementor-control-input-wrapper {
   display: flex;
@@ -522,8 +492,7 @@
   width: unset;
 }
 #elementor-popup__timing-controls-group--schedule .elementor-control-input-wrapper {
-  -webkit-margin-before: 5px;
-          margin-block-start: 5px;
+  margin-block-start: 5px;
 }
 #elementor-popup__timing-controls-group--schedule div[class*=elementor-control-schedule_] .elementor-control-content .elementor-control-field {
   display: block;
@@ -532,8 +501,7 @@
   width: 108px;
 }
 #elementor-popup__timing-controls-group--schedule .elementor-control-schedule_timezone {
-  -webkit-margin-start: -17px;
-          margin-inline-start: -17px;
+  margin-inline-start: -17px;
 }
 
 .elementor-control-type-raw_html .elementor-descriptor-subtle a {
@@ -549,8 +517,7 @@
   content: "";
   height: 1em;
   width: 0.8em;
-  -webkit-margin-end: 4px;
-          margin-inline-end: 4px;
+  margin-inline-end: 4px;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='13' viewBox='0 0 10 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.40554 6.20969C8.6115 6.34841 8.6115 6.65153 8.40554 6.79026L1.19553 11.6467C0.963052 11.8033 0.65 11.6368 0.65 11.3565L0.650001 1.64349C0.650001 1.36319 0.963054 1.19661 1.19553 1.3532L8.40554 6.20969Z' stroke='white' stroke-width='1.3'/%3E%3C/svg%3E%0A");
   background-repeat: no-repeat;
   background-size: contain;
@@ -563,8 +530,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-margin-before: 15px;
-          margin-block-start: 15px;
+  margin-block-start: 15px;
   gap: 15px;
 }
 /*# sourceMappingURL=editor-rtl.css.map */

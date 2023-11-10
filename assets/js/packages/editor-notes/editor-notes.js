@@ -100,13 +100,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function useNotesActionProps() {
-  const { isActive, isBlocked } = (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.useRouteStatus)("notes", {
+  const { isActive, isBlocked } = (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.__privateUseRouteStatus)("notes", {
     blockOnPreviewMode: false
   });
   return {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Notes", "elementor-pro"),
     icon: _elementor_icons__WEBPACK_IMPORTED_MODULE_3__.MessageIcon,
-    onClick: () => (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.runCommand)("notes/toggle"),
+    onClick: () => (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.__privateRunCommand)("notes/toggle"),
     selected: isActive,
     disabled: isBlocked
   };

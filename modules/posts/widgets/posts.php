@@ -65,6 +65,7 @@ class Posts extends Posts_Base {
 		$query_args = [
 			'posts_per_page' => $this->get_posts_per_page_value(),
 			'paged' => $this->get_current_page(),
+			'has_custom_pagination' => $this->is_allow_to_use_custom_page_option(),
 		];
 
 		/** @var Module_Query $elementor_query */

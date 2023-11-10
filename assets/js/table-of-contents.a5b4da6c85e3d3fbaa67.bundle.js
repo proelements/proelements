@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["table-of-contents"],{
 
@@ -230,9 +230,9 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
       // We generate the icon markup in PHP and make it available via get_frontend_settings(). As a result, the
       // rendered icon is not available in the editor, so in the editor we use the regular <i> tag.
       if (elementorFrontend.config.experimentalFeatures.e_font_icon_svg && !elementorFrontend.isEditMode()) {
-        renderedIcon = icon.rendered_tag;
+        renderedIcon = typeof icon.rendered_tag !== 'undefined' ? icon.rendered_tag : '';
       } else {
-        renderedIcon = `<i class="${icon.value}"></i>`;
+        renderedIcon = icon.value ? `<i class="${icon.value}"></i>` : '';
       }
     }
 
@@ -351,7 +351,9 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     let changeFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     const boxHeight = this.getCurrentDeviceSetting('min_height');
     this.$element.removeClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.attr('aria-expanded', 'true').slideDown();
+    this.elements.$tocBody.slideDown();
+    this.elements.$expandButton.attr('aria-expanded', 'true');
+    this.elements.$collapseButton.attr('aria-expanded', 'true');
 
     // Return container to the full height in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', boxHeight.size + boxHeight.unit);
@@ -362,7 +364,9 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
   collapseBox() {
     let changeFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     this.$element.addClass(this.getSettings('classes.collapsed'));
-    this.elements.$tocBody.attr('aria-expanded', 'false').slideUp();
+    this.elements.$tocBody.slideUp();
+    this.elements.$expandButton.attr('aria-expanded', 'false');
+    this.elements.$collapseButton.attr('aria-expanded', 'false');
 
     // Close container in case a min-height is defined by the user
     this.elements.$widgetContainer.css('min-height', '0px');
@@ -406,4 +410,4 @@ exports["default"] = TOCHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=table-of-contents.a6bbe930b65f39ccb74b.bundle.js.map
+//# sourceMappingURL=table-of-contents.a5b4da6c85e3d3fbaa67.bundle.js.map

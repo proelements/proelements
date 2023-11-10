@@ -41,7 +41,7 @@ export default function useTemplatesScreenshot( templateType = null ) {
  *
  * @param {any} template
  * @param {any} templateType
- * @return {boolean} -
+ * @return {boolean} should screenshot template
  */
 function shouldScreenshotTemplate( template, templateType = null ) {
 	if ( templateType ) {

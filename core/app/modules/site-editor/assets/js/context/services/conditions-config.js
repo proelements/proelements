@@ -10,7 +10,7 @@ export class ConditionsConfig {
 	}
 
 	/**
-	 * @return {Promise<ConditionsConfig>} -
+	 * @return {Promise<ConditionsConfig>} Conditions config
 	 */
 	static create() {
 		if ( ConditionsConfig.instance ) {
@@ -28,7 +28,7 @@ export class ConditionsConfig {
 	/**
 	 * Get main options for condition name.
 	 *
-	 * @return {Array} -
+	 * @return {Array} Condition options
 	 */
 	getOptions() {
 		return this.getSubOptions( 'general', true )
@@ -45,7 +45,7 @@ export class ConditionsConfig {
 	 *
 	 * @param {string}  itemName
 	 * @param {boolean} isSubItem
-	 * @return {Array} -
+	 * @return {Array} Sub options
 	 */
 	getSubOptions( itemName, isSubItem = false ) {
 		const config = this.config[ itemName ];
@@ -72,7 +72,7 @@ export class ConditionsConfig {
 	 * Get the autocomplete property from the conditions config
 	 *
 	 * @param {string} sub
-	 * @return {{}|any} -
+	 * @return {{}|any} Conditions autocomplete
 	 */
 	getSubIdAutocomplete( sub ) {
 		const config = this.config[ sub ];
@@ -94,7 +94,7 @@ export class ConditionsConfig {
 	 * Calculate instances from the conditions.
 	 *
 	 * @param {Array} conditions
-	 * @return {Object} -
+	 * @return {Object} Conditions Instances
 	 */
 	calculateInstances( conditions ) {
 		let instances = conditions.reduce( ( current, condition ) => {

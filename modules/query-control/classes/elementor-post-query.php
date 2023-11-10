@@ -107,6 +107,13 @@ class Elementor_Post_Query {
 			$current_query_vars = $GLOBALS['wp_query']->query_vars;
 
 			/**
+			 * Add custom paged option support. It's necessary for ajax and individual pagination support
+			 */
+			if ( ! empty( $this->query_args['has_custom_pagination'] ) && true === $this->query_args['has_custom_pagination'] ) {
+				$current_query_vars['paged'] = $this->query_args['paged'];
+			}
+
+			/**
 			 * Current query variables.
 			 *
 			 * Filters the query variables for the current query. This hook allows

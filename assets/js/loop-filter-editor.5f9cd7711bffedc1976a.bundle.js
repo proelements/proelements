@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["loop-filter-editor"],{
 
@@ -129,7 +129,7 @@ module.exports = ElementEditorModule.extend({
       this.displayErrorDialog();
       return {};
     }).then(response => {
-      let data = response?.data || response;
+      let data = (response === null || response === void 0 ? void 0 : response.data) || response;
       if (!Object.keys(data).length) {
         this.updateOptions('taxonomy', {
           '': __('No taxonomies found', 'elementor-pro')
@@ -190,4 +190,4 @@ module.exports = ElementEditorModule.extend({
 /***/ })
 
 }]);
-//# sourceMappingURL=loop-filter-editor.b7b52289dc112ded05c0.bundle.js.map
+//# sourceMappingURL=loop-filter-editor.5f9cd7711bffedc1976a.bundle.js.map

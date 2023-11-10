@@ -4,7 +4,7 @@ import { Select2 } from '@elementor/app-ui';
  * Main component.
  *
  * @param {any} props
- * @return {any} -
+ * @return {any} Element
  * @class
  */
 export default function ConditionSubId( props ) {
@@ -37,7 +37,7 @@ export default function ConditionSubId( props ) {
  * that passes as a prop
  *
  * @param {any} autocomplete
- * @return {Object} -
+ * @return {Object} Settings
  */
 function getSettings( autocomplete ) {
 	return {

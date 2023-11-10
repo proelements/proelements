@@ -2067,7 +2067,7 @@ class Video_Playlist extends Base_Widget {
 										<# if ( playlistObject.showThumbnails ) { #>
 											<div class="e-tab-thumbnail">
 												<# if ( item.videoThumbnail ) { #>
-													<img src="{{{ item.videoThumbnail }}}" />
+													<img src="{{ item.videoThumbnail }}" />
 												<# } #>
 												<span class="icon-play">{{{ playIconHTML.value }}}</span>
 												<span class="icon-watched">{{{ watchedIconHTML.value }}}</span>
@@ -2076,7 +2076,7 @@ class Video_Playlist extends Base_Widget {
 										<span class="icon-play">{{{ playIconHTML.value }}}</span>
 										<span class="icon-watched">{{{ watchedIconHTML.value }}}</span>
 										<# } #>
-										<h4 class="e-tab-title-text" title="{{{ item.videoTitle }}}">
+										<h4 class="e-tab-title-text" title="{{ item.videoTitle }}">
 											<a tabindex="0">{{{ item.videoTitle }}}</a>
 										</h4>
 										<# if ( item.videoDuration ) { #>

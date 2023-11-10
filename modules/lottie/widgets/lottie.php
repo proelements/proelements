@@ -854,7 +854,7 @@ class Lottie extends Base_Widget {
 		var widget_container = '<div class="e-lottie__container"><div class="e-lottie__animation"></div>' + widget_caption + '</div>';
 
 		if ( settings.custom_link.url && 'custom' === settings.link_to ) {
-			widget_container = '<a class="e-lottie__container__link" href="' + settings.custom_link.url + '">' + widget_container + '</a>';
+			widget_container = '<a class="e-lottie__container__link" href="' + _.escape( settings.custom_link.url ) + '">' + widget_container + '</a>';
 		}
 
 		print( widget_container );

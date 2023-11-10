@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -60,12 +60,13 @@ var _default = {
   isPopup: a => 'true' === a.getAttribute('aria-haspopup') && 'false' === a.getAttribute('aria-expanded'),
   // Disable in WooCommerce links.
   isWoocommerce: a => {
+    var _a$parentElement;
     const isAddToCart = a.href.match(/\?add-to-cart=/),
       isRemoveFromCart = a.href.match(/\?remove_item=/),
       isRestoreToCart = a.href.match(/\?undo_item=/),
       isWoocommercePagination = a.href.match(/\?product-page=/),
       isWoocommerceLogout = a.href.match(/\?elementor_wc_logout=/),
-      isWoocommerceTab = a.parentElement?.classList.contains('woocommerce-MyAccount-navigation-link');
+      isWoocommerceTab = (_a$parentElement = a.parentElement) === null || _a$parentElement === void 0 ? void 0 : _a$parentElement.classList.contains('woocommerce-MyAccount-navigation-link');
     return isAddToCart || isRemoveFromCart || isRestoreToCart || isWoocommercePagination || isWoocommerceLogout || isWoocommerceTab;
   },
   // Custom regex filter from attributes.
@@ -405,8 +406,9 @@ class PageTransition extends HTMLElement {
    * @return {Promise} - Animation sequence Promise.
    */
   animateState(state) {
+    var _this$classes;
     let delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    const className = this.classes?.[state];
+    const className = (_this$classes = this.classes) === null || _this$classes === void 0 ? void 0 : _this$classes[state];
     if (!className) {
       return new Promise((resolve, reject) => {
         reject(state);

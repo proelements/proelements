@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -148,7 +148,7 @@ class ConditionsProvider extends _baseContext.default {
   /**
    * Execute a request to save the template conditions.
    *
-   * @return {any} -
+   * @return {any} Saved conditions
    */
   saveConditions() {
     const conditions = Object.values(this.state.conditions).map(condition => condition.forDb());
@@ -185,7 +185,7 @@ class ConditionsProvider extends _baseContext.default {
    * Fetching subId titles.
    *
    * @param {any} condition
-   * @return {Promise<unknown>} -
+   * @return {Promise<unknown>} Titles
    */
   fetchSubIdsTitles(condition) {
     return new Promise(resolve => {
@@ -325,7 +325,7 @@ class ConditionsProvider extends _baseContext.default {
    * Find a condition item from the conditions state.
    *
    * @param {any} id
-   * @return {Condition|null} -
+   * @return {Condition|null} Condition
    */
   findConditionItemInState(id) {
     return Object.values(this.state.conditions).find(c => c.id === id);
@@ -335,7 +335,7 @@ class ConditionsProvider extends _baseContext.default {
    * Update the whole conditions state.
    *
    * @param {Function} callback
-   * @return {Promise<any>} -
+   * @return {Promise<undefined>} Conditions state
    */
   updateConditionsState(callback) {
     return new Promise(resolve => this.setState(prev => ({
@@ -346,7 +346,7 @@ class ConditionsProvider extends _baseContext.default {
   /**
    * Renders the provider.
    *
-   * @return {any} -
+   * @return {any} Element
    */
   render() {
     if (this.state.action.current === ConditionsProvider.actions.FETCH_CONFIG) {
@@ -465,7 +465,7 @@ class ConditionsConfig {
   }
 
   /**
-   * @return {Promise<ConditionsConfig>} -
+   * @return {Promise<ConditionsConfig>} Conditions config
    */
   static create() {
     if (ConditionsConfig.instance) {
@@ -482,7 +482,7 @@ class ConditionsConfig {
   /**
    * Get main options for condition name.
    *
-   * @return {Array} -
+   * @return {Array} Condition options
    */
   getOptions() {
     return this.getSubOptions('general', true).map(_ref => {
@@ -502,7 +502,7 @@ class ConditionsConfig {
    *
    * @param {string}  itemName
    * @param {boolean} isSubItem
-   * @return {Array} -
+   * @return {Array} Sub options
    */
   getSubOptions(itemName) {
     let isSubItem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -527,15 +527,16 @@ class ConditionsConfig {
    * Get the autocomplete property from the conditions config
    *
    * @param {string} sub
-   * @return {{}|any} -
+   * @return {{}|any} Conditions autocomplete
    */
   getSubIdAutocomplete(sub) {
+    var _controls$;
     const config = this.config[sub];
     if (!config || !('object' === typeof config.controls)) {
       return {};
     }
     const controls = Object.values(config.controls);
-    if (!controls?.[0]?.autocomplete) {
+    if (!(controls !== null && controls !== void 0 && (_controls$ = controls[0]) !== null && _controls$ !== void 0 && _controls$.autocomplete)) {
       return {};
     }
     return controls[0].autocomplete;
@@ -545,7 +546,7 @@ class ConditionsConfig {
    * Calculate instances from the conditions.
    *
    * @param {Array} conditions
-   * @return {Object} -
+   * @return {Object} Conditions Instances
    */
   calculateInstances(conditions) {
     let instances = conditions.reduce((current, condition) => {
@@ -858,7 +859,7 @@ var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
  * Main component.
  *
  * @param {any} props
- * @return {any} -
+ * @return {any} Element
  * @class
  */
 function ConditionSubId(props) {
@@ -884,7 +885,7 @@ function ConditionSubId(props) {
  * that passes as a prop
  *
  * @param {any} autocomplete
- * @return {Object} -
+ * @return {Object} Settings
  */
 function getSettings(autocomplete) {
   return {

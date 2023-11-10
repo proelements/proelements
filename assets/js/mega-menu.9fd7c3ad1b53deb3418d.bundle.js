@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu"],{
 
@@ -72,6 +72,99 @@ exports["default"] = AnchorLinks;
 
 /***/ }),
 
+/***/ "../assets/dev/js/frontend/utils/flex-horizontal-scroll.js":
+/*!*****************************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/flex-horizontal-scroll.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.changeScrollStatus = changeScrollStatus;
+exports.setHorizontalScrollAlignment = setHorizontalScrollAlignment;
+exports.setHorizontalTitleScrollValues = setHorizontalTitleScrollValues;
+function changeScrollStatus(element, event) {
+  if ('mousedown' === event.type) {
+    element.classList.add('e-scroll');
+    element.dataset.pageX = event.pageX;
+  } else {
+    element.classList.remove('e-scroll', 'e-scroll-active');
+    element.dataset.pageX = '';
+  }
+}
+
+// This function was written using this example https://codepen.io/thenutz/pen/VwYeYEE.
+function setHorizontalTitleScrollValues(element, horizontalScrollStatus, event) {
+  const isActiveScroll = element.classList.contains('e-scroll'),
+    isHorizontalScrollActive = 'enable' === horizontalScrollStatus,
+    headingContentIsWiderThanWrapper = element.scrollWidth > element.clientWidth;
+  if (!isActiveScroll || !isHorizontalScrollActive || !headingContentIsWiderThanWrapper) {
+    return;
+  }
+  event.preventDefault();
+  const previousPositionX = parseFloat(element.dataset.pageX),
+    mouseMoveX = event.pageX - previousPositionX,
+    maximumScrollValue = 5,
+    stepLimit = 20;
+  let toScrollDistanceX = 0;
+  if (stepLimit < mouseMoveX) {
+    toScrollDistanceX = maximumScrollValue;
+  } else if (stepLimit * -1 > mouseMoveX) {
+    toScrollDistanceX = -1 * maximumScrollValue;
+  } else {
+    toScrollDistanceX = mouseMoveX;
+  }
+  element.scrollLeft = element.scrollLeft - toScrollDistanceX;
+  element.classList.add('e-scroll-active');
+}
+function setHorizontalScrollAlignment(_ref) {
+  let {
+    element,
+    direction,
+    justifyCSSVariable,
+    horizontalScrollStatus
+  } = _ref;
+  if (!element) {
+    return;
+  }
+  if (isHorizontalScroll(element, horizontalScrollStatus)) {
+    initialScrollPosition(element, direction, justifyCSSVariable);
+  } else {
+    element.style.setProperty(justifyCSSVariable, '');
+  }
+}
+function isHorizontalScroll(element, horizontalScrollStatus) {
+  return element.clientWidth < getChildrenWidth(element.children) && 'enable' === horizontalScrollStatus;
+}
+function getChildrenWidth(children) {
+  let totalWidth = 0;
+  const parentContainer = children[0].parentNode,
+    computedStyles = getComputedStyle(parentContainer),
+    gap = parseFloat(computedStyles.gap) || 0; // Get the gap value or default to 0 if it's not specified
+
+  for (let i = 0; i < children.length; i++) {
+    totalWidth += children[i].offsetWidth + gap;
+  }
+  return totalWidth;
+}
+function initialScrollPosition(element, direction, justifyCSSVariable) {
+  const isRTL = elementorFrontend.config.is_rtl;
+  switch (direction) {
+    case 'end':
+      element.style.setProperty(justifyCSSVariable, 'start');
+      element.scrollLeft = isRTL ? -1 * getChildrenWidth(element.children) : getChildrenWidth(element.children);
+      break;
+    default:
+      element.style.setProperty(justifyCSSVariable, 'start');
+      element.scrollLeft = 0;
+  }
+}
+
+/***/ }),
+
 /***/ "../modules/mega-menu/assets/js/frontend/handlers/mega-menu.js":
 /*!*********************************************************************!*\
   !*** ../modules/mega-menu/assets/js/frontend/handlers/mega-menu.js ***!
@@ -87,6 +180,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var _utils = __webpack_require__(/*! ../utils */ "../modules/mega-menu/assets/js/frontend/utils.js");
 var _anchorLink = _interopRequireDefault(__webpack_require__(/*! ../../../../../../assets/dev/js/frontend/utils/anchor-link */ "../assets/dev/js/frontend/utils/anchor-link.js"));
+var _flexHorizontalScroll = __webpack_require__(/*! elementor-pro/frontend/utils/flex-horizontal-scroll */ "../assets/dev/js/frontend/utils/flex-horizontal-scroll.js");
 class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   constructor() {
     super(...arguments);
@@ -94,6 +188,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       this.lifecycleChangeListener = null;
     }
     this.resizeListener = null;
+    this.prevMouseY = null;
   }
   getDefaultSettings() {
     const settings = super.getDefaultSettings();
@@ -301,7 +396,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       containerClass = settings.selectors.tabContent,
       $requestedTitle = this.elements.$tabDropdowns.filter(this.getTabTitleFilterSelector(tabIndex)),
       animationDuration = 'show' === settings.showTabFn ? 0 : 400,
-      $requestedContent = this.elements.$tabContents.filter(this.getTabContentFilterSelector(tabIndex));
+      $requestedContent = this.elements.$tabContents.filter(this.getTabContentFilterSelector(tabIndex)),
+      $menuContent = this.elements.$menuContent;
     this.addAnimationToContentIfNeeded(tabIndex);
     $requestedContent[settings.showTabFn](animationDuration, () => this.onShowTabContent($requestedContent));
     $requestedTitle.attr(this.getTitleActivationAttributes());
@@ -311,6 +407,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       display: 'var(--display)'
     });
     $requestedContent.removeAttr('display');
+    $menuContent.addClass(activeClass);
     if (elementorFrontend.isEditMode() && !!$requestedContent.length) {
       this.activeContainerWidthListener($requestedContent);
     }
@@ -321,11 +418,13 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       activeTitleFilter = settings.ariaAttributes.activeTitleSelector,
       activeContentFilter = '.' + activeClass,
       $activeTitle = this.elements.$tabDropdowns.filter(activeTitleFilter),
-      $activeContent = this.elements.$tabContents.filter(activeContentFilter);
+      $activeContent = this.elements.$tabContents.filter(activeContentFilter),
+      $menuContent = this.elements.$menuContent;
     this.setTabDeactivationAttributes($activeTitle, newTabIndex);
     $activeContent.removeClass(activeClass);
     $activeContent[settings.hideTabFn](0, () => this.onHideTabContent($activeContent));
     this.removeAnimationFromContentIfNeeded();
+    $menuContent.removeClass(activeClass);
     if (elementorFrontend.isEditMode() && !!$activeContent.length) {
       this.observedContainer?.unobserve($activeContent[0]);
     }
@@ -408,6 +507,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.elements.$dropdownMenuToggle.on('click', this.onClickToggleDropdownMenu.bind(this));
     this.elements.$tabContents.on(this.getContentEvents());
     this.elements.$menuContent.on(this.getContentEvents());
+    this.elements.$headingContainer.on(this.getHeadingEvents());
     elementorFrontend.addListenerOnce(this.getModelCID(), 'scroll', elementorFrontend.debounce(this.menuHeightController.reassignMobileMenuHeight.bind(this.menuHeightController), 250));
     elementorFrontend.elements.$window.on('elementor/nested-tabs/activate', this.reInitSwipers);
     elementorFrontend.elements.$window.on('elementor/nested-elements/activate-by-keyboard', this.changeActiveTabByKeyboard.bind(this));
@@ -421,6 +521,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.elements.$tabTitles.off();
     this.elements.$menuContent.off();
     this.elements.$tabContents.off();
+    this.elements.$headingContainer.off();
     elementorFrontend.elements.$window.off('resize');
     if (elementorFrontend.isEditMode()) {
       this.removeChildLifeCycleEventListeners();
@@ -434,6 +535,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.setLayoutType();
     this.setTouchMode();
     this.menuHeightController.reassignMobileMenuHeight();
+    this.setScrollPosition();
   }
 
   /**
@@ -473,7 +575,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   }
   getContentEvents() {
     return this.isNeedToOpenOnClick() ? {} : {
-      mouseleave: this.onMouseLeave.bind(this)
+      mouseleave: this.onMouseLeave.bind(this),
+      mousemove: this.trackMousePosition.bind(this)
     };
   }
   isNeedToOpenOnClick() {
@@ -539,20 +642,66 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     this.elements.$tabContents.removeClass(`animated ${openAnimation}`);
   }
-  isHoveredDropdownMenu(isMouseLeavingTabContent) {
-    const settings = this.getSettings(),
-      $widget = this.$element,
-      isMenuContentHover = 0 < $widget.find(`${settings.selectors.menuContent}:hover`).length,
-      isTabContentHover = 0 < $widget.find(`${settings.selectors.tabContent}:hover`).length;
-    return isTabContentHover || !isMouseLeavingTabContent && isMenuContentHover;
+
+  /**
+   * Store the current Y-coordinate of the mouse cursor.
+   *
+   * @param {Event} event - The mouse event object.
+   */
+  trackMousePosition(event) {
+    this.prevMouseY = event?.clientY;
   }
+
+  /**
+   * Check if the menu content is currently hovered.
+   *
+   * @return {boolean} - True if menu content is hovered, otherwise false.
+   */
+  isMenuContentHovered() {
+    const settings = this.getSettings(),
+      $widget = this.$element;
+    return $widget.find(`${settings.selectors.menuContent}:hover`).length > 0;
+  }
+
+  /**
+   * Determines whether the cursor moved sideways or downwards.
+   *
+   * @param {Event} event - The mouse event object.
+   * @return {boolean} - True if the cursor moved sideways or downwards, otherwise false.
+   */
+  didCursorMoveSidewaysOrDown(event) {
+    // Detects if the Y-coordinate of the mouse has not decreased (i.e., either remained the same or increased).
+    return this.prevMouseY !== null && event?.clientY >= this.prevMouseY;
+  }
+
+  /**
+   * Check whether the dropdown menu should remain open based on hover and cursor movement.
+   *
+   * @param {boolean} isMouseLeavingTabContent - True if the mouse is leaving the tab content.
+   * @param {Event}   event                    - The mouse event object.
+   * @return {boolean} - True if dropdown should be considered as hovered, otherwise false.
+   */
+  isHoveredDropdownMenu(isMouseLeavingTabContent, event) {
+    // If the mouse is leaving the tab content and it moved sideways or downwards, close the dropdown.
+    if (isMouseLeavingTabContent && this.didCursorMoveSidewaysOrDown(event)) {
+      return false;
+    }
+
+    // Otherwise, return true if the menu content is hovered.
+    return this.isMenuContentHovered();
+  }
+
+  /**
+   * Handle the event when the mouse leaves the dropdown.
+   *
+   * @param {Event} event - The mouse event object.
+   */
   onMouseLeave(event) {
     event.preventDefault();
     const isMouseLeavingTabContent = event?.currentTarget?.classList.contains('e-con');
-    if (this.isHoveredDropdownMenu(isMouseLeavingTabContent)) {
-      return;
+    if (!this.isHoveredDropdownMenu(isMouseLeavingTabContent, event)) {
+      this.deactivateActiveTab('', 'mouseLeave');
     }
-    this.deactivateActiveTab('', 'mouseLeave');
   }
   onInit() {
     this.menuHeightController = new elementorProFrontend.utils.DropdownMenuHeightController(this.dropdownMenuHeightControllerConfig());
@@ -563,6 +712,16 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       this.anchorLinks.followMenuAnchors(this.elements.$anchorLink, classes);
     }
     this.menuToggleVisibilityListener(this.elements.$dropdownMenuToggle);
+    this.setScrollPosition();
+  }
+  setScrollPosition() {
+    const settingsObject = {
+      element: this.elements.$headingContainer[0],
+      direction: this.getItemPosition(),
+      justifyCSSVariable: '--n-menu-heading-justify-content',
+      horizontalScrollStatus: this.getHorizontalScrollSetting()
+    };
+    (0, _flexHorizontalScroll.setHorizontalScrollAlignment)(settingsObject);
   }
   getPropsThatTriggerContentPositionCalculations() {
     return ['content_horizontal_position', 'content_position', 'item_position_horizontal', 'content_width', 'item_layout'];
@@ -618,6 +777,23 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     const layoutType = 'flex' === this.elements.$headingContainer.css('display') ? 'horizontal' : 'dropdown';
     this.elements.$widgetContainer.attr('data-layout', layoutType);
   }
+  getHeadingEvents() {
+    const navigationWrapper = this.elements.$headingContainer[0];
+    return {
+      mousedown: _flexHorizontalScroll.changeScrollStatus.bind(this, navigationWrapper),
+      mouseup: _flexHorizontalScroll.changeScrollStatus.bind(this, navigationWrapper),
+      mouseleave: _flexHorizontalScroll.changeScrollStatus.bind(this, navigationWrapper),
+      mousemove: _flexHorizontalScroll.setHorizontalTitleScrollValues.bind(this, navigationWrapper, this.getHorizontalScrollSetting())
+    };
+  }
+  getHorizontalScrollSetting() {
+    const currentDevice = elementorFrontend.getCurrentDeviceMode();
+    return elementorFrontend.utils.controls.getResponsiveControlValue(this.getElementSettings(), 'horizontal_scroll', '', currentDevice);
+  }
+  getItemPosition() {
+    const currentDevice = elementorFrontend.getCurrentDeviceMode();
+    return elementorFrontend.utils.controls.getResponsiveControlValue(this.getElementSettings(), 'item_position_horizontal', '', currentDevice);
+  }
 }
 exports["default"] = MegaMenu;
 
@@ -650,4 +826,4 @@ function isMenuInDropdownMode(elementSettings) {
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu.44b2f84edff9ca08fd3e.bundle.js.map
+//# sourceMappingURL=mega-menu.9fd7c3ad1b53deb3418d.bundle.js.map

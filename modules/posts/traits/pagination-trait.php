@@ -90,4 +90,39 @@ trait Pagination_Trait {
 
 		return (int) $current_page <= (int) $element['settings']['pagination_page_limit'];
 	}
+
+	public function get_base_url() {
+		if ( is_page() || is_single() ) {
+			// Check if it's a normal page.
+			return get_permalink();
+		} elseif ( is_year() ) {
+			return get_year_link( get_query_var( 'year' ) );
+		} elseif ( is_month() ) {
+			return get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) );
+		} elseif ( is_day() ) {
+			return get_day_link( get_query_var( 'year' ), get_query_var( 'monthnum' ), get_query_var( 'day' ) );
+		} elseif ( is_category() || is_tag() || is_tax() ) {
+			$queried_object = get_queried_object();
+			return get_term_link( $queried_object->term_id, $queried_object->taxonomy );
+		} elseif ( is_author() ) {
+			return get_author_posts_url( get_the_author_meta( 'ID' ) );
+		} elseif ( is_search() ) {
+			return get_search_link();
+		} elseif ( is_archive() ) {
+			// Check if it's an archive page.
+			return get_post_type_archive_link( get_post_type() );
+		} elseif ( is_singular() && 'post' !== get_post_type() && 'page' !== get_post_type() ) {
+			// Check if it's a single post/page of a custom post type.
+			$post_type = get_post_type_object( get_post_type() );
+
+			if ( $post_type->has_archive ) {
+				return get_post_type_archive_link( get_post_type() );
+			} else {
+				return get_permalink();
+			}
+		}
+
+		// Fallback to home URL.
+		return home_url( '/' );
+	}
 }

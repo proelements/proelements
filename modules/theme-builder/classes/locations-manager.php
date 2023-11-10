@@ -1,12 +1,12 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Classes;
 
-use ElementorPro\Modules\ThemeBuilder\Files\CSS\Template as Template_CSS;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Plugin;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
+use Elementor\Core\Files\CSS\Post as Post_CSS;
 use ElementorPro\Modules\Posts\Traits\Pagination_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -127,7 +127,7 @@ class Locations_Manager {
 
 				// Don't enqueue current post here (let the  preview/frontend components to handle it)
 				if ( $current_post_id !== $post_id ) {
-					$css_file = new Template_CSS( $post_id );
+					$css_file = new Post_CSS( $post_id );
 					$css_files[] = $css_file;
 				}
 			}

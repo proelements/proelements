@@ -7,6 +7,7 @@ use ElementorPro\Base\Base_Widget;
 use Elementor\Controls_Manager;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\Posts\Traits\Button_Widget_Trait;
+use ElementorPro\Modules\Posts\Traits\Pagination_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -17,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class Posts_Base extends Base_Widget {
 	use Button_Widget_Trait;
+	use Pagination_Trait;
 
 	const LOAD_MORE_ON_CLICK = 'load_more_on_click';
 	const LOAD_MORE_INFINITE_SCROLL = 'load_more_infinite_scroll';
@@ -260,6 +262,54 @@ abstract class Posts_Base extends Base_Widget {
 						'load_more_on_click',
 						'load_more_infinite_scroll',
 						'',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_individual_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'numbers_and_prev_next',
+						'prev_next',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_individual_handle',
+			[
+				'label' => esc_html__( 'Individual Pagination', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'default' => '',
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'numbers_and_prev_next',
+						'prev_next',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_individual_handle_message',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__( 'For multiple Posts Widgets on the same page, toggle this on to control the pagination for each individually. Note: It affects the page\'s URL structure.', 'elementor-pro' ),
+				'content_classes' => 'elementor-control-field-description',
+				'condition' => [
+					'pagination_type' => [
+						'numbers',
+						'numbers_and_prev_next',
+						'prev_next',
 					],
 				],
 			]
@@ -589,7 +639,12 @@ abstract class Posts_Base extends Base_Widget {
 			return 1;
 		}
 
-		return max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) );
+		return max(
+			1,
+			get_query_var( 'paged' ),
+			get_query_var( 'page' ),
+			Utils::_unstable_get_super_global_value( $_GET, 'e-page-' . $this->get_id() )
+		);
 	}
 
 	public function is_rest_request() {
@@ -601,7 +656,7 @@ abstract class Posts_Base extends Base_Widget {
 	}
 
 	public function get_wp_link_page( $i ) {
-		if ( ( ! is_singular() || is_front_page() ) && ! $this->is_rest_request() ) {
+		if ( ( ! is_singular() || is_front_page() ) && ! $this->is_rest_request() && ! $this->is_allow_to_use_custom_page_option() ) {
 			return get_pagenum_link( $i );
 		}
 
@@ -632,6 +687,15 @@ abstract class Posts_Base extends Base_Widget {
 			}
 		}
 
+		if ( $i > 1 && $this->is_allow_to_use_custom_page_option() ) {
+			$raw_url = $this->get_base_url() . '&e-page-' . $this->get_id() . '=' . $i;
+			$url = $this->format_query_string_concatenation( $raw_url );
+		}
+
+		if ( 1 === $i && $this->is_allow_to_use_custom_page_option() ) {
+			$url = $this->get_base_url();
+		}
+
 		if ( is_preview() ) {
 			$url = $this->get_wp_link_page_url_for_preview( $post, $query_args, $url );
 		}
@@ -645,6 +709,10 @@ abstract class Posts_Base extends Base_Widget {
 		}
 
 		return $url;
+	}
+
+	public function is_allow_to_use_custom_page_option() {
+		return 'ajax' === $this->get_settings_for_display( 'pagination_load_type' ) || 'yes' === $this->get_settings_for_display( 'pagination_individual_handle' );
 	}
 
 	protected function get_base_url_for_rest_request( $post_id, $url ) {

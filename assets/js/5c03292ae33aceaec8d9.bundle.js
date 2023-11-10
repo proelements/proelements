@@ -1,4 +1,4 @@
-/*! pro-elements - v3.16.0 - 20-09-2023 */
+/*! pro-elements - v3.17.0 - 01-11-2023 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["modules_query-control_assets_js_editor_template-query-control_js"],{
 
@@ -114,7 +114,8 @@ class TemplateQueryControl extends _queryControl.default {
     return templateID;
   }
   getTemplateSourceTypeValue() {
-    if ('repeater' === this.options?.container?.args?.type) {
+    var _this$options, _this$options$contain, _this$options$contain2;
+    if ('repeater' === ((_this$options = this.options) === null || _this$options === void 0 ? void 0 : (_this$options$contain = _this$options.container) === null || _this$options$contain === void 0 ? void 0 : (_this$options$contain2 = _this$options$contain.args) === null || _this$options$contain2 === void 0 ? void 0 : _this$options$contain2.type)) {
       return this.options.container.renderer.args.settings.attributes._skin || undefined;
     }
     return this.options.container.controls._skin ? this.options.container.panel.getControlView('_skin').getControlValue() : undefined;
@@ -166,4 +167,4 @@ exports["default"] = TemplateQueryControl;
 /***/ })
 
 }]);
-//# sourceMappingURL=e1314d8e113e32e00c20.bundle.js.map
+//# sourceMappingURL=5c03292ae33aceaec8d9.bundle.js.map
