@@ -4,12 +4,16 @@ namespace ElementorPro\Modules\CustomCode\AdminMenuItems;
 use Elementor\Core\Admin\Menu\Interfaces\Admin_Menu_Item;
 use Elementor\Settings;
 use ElementorPro\Modules\CustomCode\Module as CustomCodeModule;
+use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 class Custom_Code_Menu_Item implements Admin_Menu_Item {
+
+	const LICENSE_FEATURE_NAME = 'custom_code';
+
 	public function get_capability() {
 		return CustomCodeModule::CAPABILITY;
 	}
@@ -27,6 +31,6 @@ class Custom_Code_Menu_Item implements Admin_Menu_Item {
 	}
 
 	public function is_visible() {
-		return true;
+		return API::is_licence_has_feature( static::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK );
 	}
 }

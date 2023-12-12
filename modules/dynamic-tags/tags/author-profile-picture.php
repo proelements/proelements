@@ -24,7 +24,10 @@ class Author_Profile_Picture extends Data_Tag {
 	}
 
 	public function get_categories() {
-		return [ Module::IMAGE_CATEGORY ];
+		return [
+			Module::IMAGE_CATEGORY,
+			Module::MEDIA_CATEGORY,
+		];
 	}
 
 	public function get_value( array $options = [] ) {

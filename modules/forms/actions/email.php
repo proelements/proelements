@@ -3,9 +3,11 @@ namespace ElementorPro\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
 use ElementorPro\Core\Utils;
+use ElementorPro\Core\Utils\Collection;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Action_Base;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
+use ElementorPro\Modules\Forms\Fields\Upload;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -301,7 +303,7 @@ class Email extends Action_Base {
 		/**
 		 * Email headers.
 		 *
-		 * Filters the headers sent when an email is send from Elementor forms. This
+		 * Filters the headers sent when an email is sent from Elementor forms. This
 		 * hook allows developers to alter email headers triggered by Elementor forms.
 		 *
 		 * @since 1.0.0
@@ -322,13 +324,32 @@ class Email extends Action_Base {
 		 */
 		$fields['email_content'] = apply_filters( 'elementor_pro/forms/wp_mail_message', $fields['email_content'] );
 
-		$email_sent = wp_mail( $fields['email_to'], $fields['email_subject'], $fields['email_content'], $headers . $cc_header );
+		$attachments_mode_attach = $this->get_file_by_attachment_type( $settings['form_fields'], $record, Upload::MODE_ATTACH );
+		$attachments_mode_both = $this->get_file_by_attachment_type( $settings['form_fields'], $record, Upload::MODE_BOTH );
+
+		$email_sent = wp_mail(
+			$fields['email_to'],
+			$fields['email_subject'],
+			$fields['email_content'],
+			$headers . $cc_header,
+			array_merge( $attachments_mode_attach, $attachments_mode_both )
+		);
 
 		if ( ! empty( $fields['email_to_bcc'] ) ) {
 			$bcc_emails = explode( ',', $fields['email_to_bcc'] );
 			foreach ( $bcc_emails as $bcc_email ) {
-				wp_mail( trim( $bcc_email ), $fields['email_subject'], $fields['email_content'], $headers );
+				wp_mail(
+					trim( $bcc_email ),
+					$fields['email_subject'],
+					$fields['email_content'],
+					$headers,
+					array_merge( $attachments_mode_attach, $attachments_mode_both )
+				);
 			}
+		}
+
+		foreach ( $attachments_mode_attach as $file ) {
+			@unlink( $file );
 		}
 
 		/**
@@ -398,10 +419,16 @@ class Email extends Action_Base {
 		if ( false !== strpos( $email_content, $all_fields_shortcode ) ) {
 			$text = '';
 			foreach ( $record->get( 'fields' ) as $field ) {
+				// Skip upload fields that only attached to the email
+				if ( isset( $field['attachment_type'] ) && Upload::MODE_ATTACH === $field['attachment_type'] ) {
+					continue;
+				}
+
 				$formatted = $this->field_formatted( $field );
 				if ( ( 'textarea' === $field['type'] ) && ( '<br>' === $line_break ) ) {
 					$formatted = str_replace( [ "\r\n", "\n", "\r" ], '<br />', $formatted );
 				}
+
 				$text .= $formatted . $line_break;
 			}
 
@@ -410,5 +437,27 @@ class Email extends Action_Base {
 		}
 
 		return $email_content;
+	}
+
+	/**
+	 * @param array       $form_fields
+	 * @param Form_Record $record
+	 * @param string      $type
+	 *
+	 * @return array
+	 */
+	private function get_file_by_attachment_type( $form_fields, $record, $type ) {
+		return Collection::make( $form_fields )
+			->filter( function ( $field ) use ( $type ) {
+				return $type === $field['attachment_type'];
+			} )
+			->map( function ( $field ) use ( $record ) {
+				$id = $field['custom_id'];
+
+				return $record->get( 'files' )[ $id ]['path'] ?? null;
+			} )
+			->filter()
+			->flatten()
+			->values();
 	}
 }

@@ -49,10 +49,4 @@ trait Base_Widget_Trait {
 			'file_path' => ELEMENTOR_PRO_ASSETS_PATH . $responsive_widgets_data_manager::RESPONSIVE_WIDGETS_FILE_PATH,
 		];
 	}
-
-	// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
-	// Remove together with support for physical properties inside the container widget.
-	protected function get_core_version_css_class() {
-		return version_compare( ELEMENTOR_VERSION, '3.16.0', '<' ) ? 'e-core-315' : '';
-	}
 }

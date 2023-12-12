@@ -8,6 +8,9 @@ use ElementorPro\Modules\QueryControl\Controls\Template_Query;
 use ElementorPro\Modules\QueryControl\Module as QueryControlModule;
 use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
 use ElementorPro\Plugin;
+use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Text_Stroke;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -317,6 +320,100 @@ class Loop_Grid extends Base {
 		$this->end_injection();
 	}
 
+	protected function register_additional_options_section_controls() {
+		$this->start_controls_section(
+			'section_additional_options',
+			[
+				'label' => esc_html__( 'Additional Options', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'template_id!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'enable_nothing_found_message',
+			[
+				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
+				'description' => esc_html__( 'Note: This message will appear when no content is loaded in the grid.', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'nothing_found_message_text',
+			[
+				'type' => Controls_Manager::TEXTAREA,
+				'ai' => [
+					'type' => 'text',
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+				'condition' => [
+					'enable_nothing_found_message' => 'yes',
+				],
+				'default' => esc_html__( 'It seems we can’t find what you’re looking for.', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'nothing_found_message_align',
+			[
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-loop-nothing-found-message-align: {{VALUE}};',
+				],
+				'condition' => [
+					'enable_nothing_found_message' => 'yes',
+				],
+				'render_type' => 'ui',
+			]
+		);
+
+		$this->add_control(
+			'nothing_found_message_html_tag',
+			[
+				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+				],
+				'default' => 'div',
+				'condition' => [
+					'enable_nothing_found_message' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	protected function register_design_layout_controls() {
 		$this->start_controls_section(
 			'section_design_layout',
@@ -360,6 +457,100 @@ class Loop_Grid extends Base {
 				'selectors' => [
 					'{{WRAPPER}}' => '--grid-row-gap: {{SIZE}}{{UNIT}}',
 				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function register_design_nothing_found_message_controls() {
+		$this->start_controls_section(
+			'section_nothing_found_message_design',
+			[
+				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'template_id!' => '',
+					'enable_nothing_found_message' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'nothing_found_message_space_from_top',
+			[
+				'label' => esc_html__( 'Space from top', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-loop-nothing-found-message-space-from-top: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'nothing_found_message_space_from_bottom',
+			[
+				'label' => esc_html__( 'Space from bottom', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-loop-nothing-found-message-space-from-bottom: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'nothing_found_message_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'nothing_found_message_typography',
+				'selector' => '{{WRAPPER}} .e-loop-nothing-found-message__text',
+			]
+		);
+
+		$this->add_control(
+			'nothing_found_message_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-loop-nothing-found-message-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'nothing_found_message_text_shadow',
+				'selector' => '{{WRAPPER}} .e-loop-nothing-found-message__text',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'nothing_found_message_text_stroke',
+				'selector' => '{{WRAPPER}} .e-loop-nothing-found-message__text',
 			]
 		);
 

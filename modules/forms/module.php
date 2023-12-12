@@ -15,6 +15,8 @@ use ElementorPro\Modules\Forms\Registrars\Form_Fields_Registrar;
 use ElementorPro\Modules\Forms\Submissions\Component as Form_Submissions_Component;
 use ElementorPro\Modules\Forms\Controls\Fields_Repeater;
 use ElementorPro\Plugin;
+use ElementorPro\License\API;
+use ElementorPro\Modules\Forms\Submissions\AdminMenuItems\Submissions_Promotion_Menu_Item;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -31,15 +33,19 @@ class Module extends Module_Base {
 	 */
 	public $fields_registrar;
 
+	const ACTIVITY_LOG_LICENSE_FEATURE_NAME = 'activity-log';
+	const CF7DB_LICENSE_FEATURE_NAME = 'cf7db';
+	const WIDGET_NAME_CLASS_NAME_MAP = [
+		'form' => 'Form',
+		'login' => 'Login',
+	];
+
 	public function get_name() {
 		return 'forms';
 	}
 
 	public function get_widgets() {
-		return [
-			'Form',
-			'Login',
-		];
+		return API::filter_active_features( static::WIDGET_NAME_CLASS_NAME_MAP );
 	}
 
 	/**
@@ -175,7 +181,13 @@ class Module extends Module_Base {
 		$this->add_component( 'recaptcha_v3', new Classes\Recaptcha_V3_Handler() );
 		$this->add_component( 'honeypot', new Classes\Honeypot_Handler() );
 
-		$this->register_submissions_component();
+		if ( API::is_licence_has_feature( Form_Submissions_Component::NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			$this->register_submissions_component();
+		} else {
+			add_action( 'elementor/admin/menu/register', function( $admin_menu ) {
+				$admin_menu->register( Form_Submissions_Component::PAGE_ID, new Submissions_Promotion_Menu_Item() );
+			}, 9 /* After "Settings" */ );
+		}
 
 		// Initialize registrars.
 		$this->actions_registrar = new Form_Actions_Registrar();
@@ -184,12 +196,12 @@ class Module extends Module_Base {
 		// Add Actions as components, that runs manually in the Ajax_Handler
 
 		// Activity Log
-		if ( function_exists( 'aal_insert_log' ) ) {
+		if ( function_exists( 'aal_insert_log' ) && API::is_licence_has_feature( static::ACTIVITY_LOG_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'activity_log', new Actions\Activity_Log() );
 		}
 
 		// Contact Form to Database
-		if ( function_exists( 'CF7DBPlugin_init' ) ) {
+		if ( function_exists( 'CF7DBPlugin_init' ) && API::is_licence_has_feature( static::CF7DB_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'cf7db', new Actions\CF7DB() );
 		}
 

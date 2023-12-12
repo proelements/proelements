@@ -688,8 +688,7 @@ abstract class Posts_Base extends Base_Widget {
 		}
 
 		if ( $i > 1 && $this->is_allow_to_use_custom_page_option() ) {
-			$raw_url = $this->get_base_url() . '&e-page-' . $this->get_id() . '=' . $i;
-			$url = $this->format_query_string_concatenation( $raw_url );
+			$url = $this->get_wp_link_page_url_for_custom_page_option( $url, $i, $post_id ?? 0 );
 		}
 
 		if ( 1 === $i && $this->is_allow_to_use_custom_page_option() ) {
@@ -723,7 +722,7 @@ abstract class Posts_Base extends Base_Widget {
 		global $wp_rewrite;
 
 		if ( $wp_rewrite->using_permalinks() && ( $this->current_url_contains_taxonomy_filter() || $this->referer_contains_taxonomy_filter() ) ) {
-			$url = get_query_var( 'pagination_base_url' ) . user_trailingslashit( "$wp_rewrite->pagination_base/", 'single_paged' );
+			$url = $this->is_allow_to_use_custom_page_option() ? get_query_var( 'pagination_base_url' ) : get_query_var( 'pagination_base_url' ) . user_trailingslashit( "$wp_rewrite->pagination_base/", 'single_paged' );
 		} else {
 			$url = remove_query_arg( 'p', $url );
 		}
@@ -773,7 +772,7 @@ abstract class Posts_Base extends Base_Widget {
 		$e_filters = '';
 
 		foreach ( $query_params as $param_key => $param_value ) {
-			if ( strpos( $param_key, 'e-filter' ) ) {
+			if ( false !== strpos( $param_key, 'e-filter' ) ) {
 				$e_filters .= '&' . $param_key . '=' . $param_value;
 			}
 		}
@@ -782,11 +781,11 @@ abstract class Posts_Base extends Base_Widget {
 	}
 
 	public function current_url_contains_taxonomy_filter() {
-		return strpos( Utils::_unstable_get_super_global_value( $_SERVER, 'QUERY_STRING' ), 'e-filter-' );
+		return false !== strpos( Utils::_unstable_get_super_global_value( $_SERVER, 'QUERY_STRING' ), 'e-filter-' );
 	}
 
 	public function referer_contains_taxonomy_filter() {
-		return strpos( Utils::_unstable_get_super_global_value( $_SERVER, 'HTTP_REFERER' ), 'e-filter-' );
+		return false !== strpos( Utils::_unstable_get_super_global_value( $_SERVER, 'HTTP_REFERER' ), 'e-filter-' );
 	}
 
 	protected function format_query_string_concatenation( $input ) {
@@ -856,4 +855,16 @@ abstract class Posts_Base extends Base_Widget {
 	}
 
 	public function render_plain_content() {}
+
+	/**
+	 * @param string $url
+	 * @param int $i
+	 * @param int $post_id
+	 * @return string
+	 */
+	private function get_wp_link_page_url_for_custom_page_option( $url, $i, $post_id ) {
+		$base_raw_url = $this->is_rest_request() ? $this->get_base_url_for_rest_request( $post_id, $url ) : $this->get_base_url();
+
+		return $this->format_query_string_concatenation( $base_raw_url . '&e-page-' . $this->get_id() . '=' . $i );
+	}
 }

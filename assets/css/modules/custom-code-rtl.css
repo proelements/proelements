@@ -66,6 +66,21 @@
   color: inherit;
 }
 
+#adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link] {
+  font-weight: 600;
+  background-color: #93003c;
+  color: #ffffff;
+  margin: 3px 10px 0;
+  display: block;
+  text-align: center;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+#adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:hover, #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:focus {
+  background-color: #c60051;
+  box-shadow: none;
+}
+
 .fixed .column-elementor_library_type,
 .fixed .column-instances {
   width: 10%;
@@ -620,7 +635,7 @@ span.font-variations-count {
   flex-wrap: wrap-reverse;
 }
 .eps-grid-container--spacing {
-  --grid-row-gutter: calc(-1 * calc(var(--grid-spacing-gutter) * (0.625rem / 10)));
+  --grid-row-gutter: calc(-1 * calc(var(--grid-spacing-gutter) * 0.625rem / 10));
   width: var(--grid-spacing-width);
   margin: var(--grid-row-gutter);
 }
@@ -732,384 +747,384 @@ span.font-variations-count {
 }
 .eps-grid-item-xs-1 {
   flex-grow: 0;
-  max-width: calc( 1 / 12 * 100% );
-  flex-basis: calc( 1 / 12 * 100% );
+  max-width: calc(1 / 12 * 100%);
+  flex-basis: calc(1 / 12 * 100%);
 }
 
 .eps-grid-item-xs-2 {
   flex-grow: 0;
-  max-width: calc( 2 / 12 * 100% );
-  flex-basis: calc( 2 / 12 * 100% );
+  max-width: calc(2 / 12 * 100%);
+  flex-basis: calc(2 / 12 * 100%);
 }
 
 .eps-grid-item-xs-3 {
   flex-grow: 0;
-  max-width: calc( 3 / 12 * 100% );
-  flex-basis: calc( 3 / 12 * 100% );
+  max-width: calc(3 / 12 * 100%);
+  flex-basis: calc(3 / 12 * 100%);
 }
 
 .eps-grid-item-xs-4 {
   flex-grow: 0;
-  max-width: calc( 4 / 12 * 100% );
-  flex-basis: calc( 4 / 12 * 100% );
+  max-width: calc(4 / 12 * 100%);
+  flex-basis: calc(4 / 12 * 100%);
 }
 
 .eps-grid-item-xs-5 {
   flex-grow: 0;
-  max-width: calc( 5 / 12 * 100% );
-  flex-basis: calc( 5 / 12 * 100% );
+  max-width: calc(5 / 12 * 100%);
+  flex-basis: calc(5 / 12 * 100%);
 }
 
 .eps-grid-item-xs-6 {
   flex-grow: 0;
-  max-width: calc( 6 / 12 * 100% );
-  flex-basis: calc( 6 / 12 * 100% );
+  max-width: calc(6 / 12 * 100%);
+  flex-basis: calc(6 / 12 * 100%);
 }
 
 .eps-grid-item-xs-7 {
   flex-grow: 0;
-  max-width: calc( 7 / 12 * 100% );
-  flex-basis: calc( 7 / 12 * 100% );
+  max-width: calc(7 / 12 * 100%);
+  flex-basis: calc(7 / 12 * 100%);
 }
 
 .eps-grid-item-xs-8 {
   flex-grow: 0;
-  max-width: calc( 8 / 12 * 100% );
-  flex-basis: calc( 8 / 12 * 100% );
+  max-width: calc(8 / 12 * 100%);
+  flex-basis: calc(8 / 12 * 100%);
 }
 
 .eps-grid-item-xs-9 {
   flex-grow: 0;
-  max-width: calc( 9 / 12 * 100% );
-  flex-basis: calc( 9 / 12 * 100% );
+  max-width: calc(9 / 12 * 100%);
+  flex-basis: calc(9 / 12 * 100%);
 }
 
 .eps-grid-item-xs-10 {
   flex-grow: 0;
-  max-width: calc( 10 / 12 * 100% );
-  flex-basis: calc( 10 / 12 * 100% );
+  max-width: calc(10 / 12 * 100%);
+  flex-basis: calc(10 / 12 * 100%);
 }
 
 .eps-grid-item-xs-11 {
   flex-grow: 0;
-  max-width: calc( 11 / 12 * 100% );
-  flex-basis: calc( 11 / 12 * 100% );
+  max-width: calc(11 / 12 * 100%);
+  flex-basis: calc(11 / 12 * 100%);
 }
 
 .eps-grid-item-xs-12 {
   flex-grow: 0;
-  max-width: calc( 12 / 12 * 100% );
-  flex-basis: calc( 12 / 12 * 100% );
+  max-width: calc(12 / 12 * 100%);
+  flex-basis: calc(12 / 12 * 100%);
 }
 
 @media screen and (min-width: 480px) {
   .eps-grid-item-sm-1 {
     flex-grow: 0;
-    max-width: calc( 1 / 12 * 100% );
-    flex-basis: calc( 1 / 12 * 100% );
+    max-width: calc(1 / 12 * 100%);
+    flex-basis: calc(1 / 12 * 100%);
   }
   .eps-grid-item-sm-2 {
     flex-grow: 0;
-    max-width: calc( 2 / 12 * 100% );
-    flex-basis: calc( 2 / 12 * 100% );
+    max-width: calc(2 / 12 * 100%);
+    flex-basis: calc(2 / 12 * 100%);
   }
   .eps-grid-item-sm-3 {
     flex-grow: 0;
-    max-width: calc( 3 / 12 * 100% );
-    flex-basis: calc( 3 / 12 * 100% );
+    max-width: calc(3 / 12 * 100%);
+    flex-basis: calc(3 / 12 * 100%);
   }
   .eps-grid-item-sm-4 {
     flex-grow: 0;
-    max-width: calc( 4 / 12 * 100% );
-    flex-basis: calc( 4 / 12 * 100% );
+    max-width: calc(4 / 12 * 100%);
+    flex-basis: calc(4 / 12 * 100%);
   }
   .eps-grid-item-sm-5 {
     flex-grow: 0;
-    max-width: calc( 5 / 12 * 100% );
-    flex-basis: calc( 5 / 12 * 100% );
+    max-width: calc(5 / 12 * 100%);
+    flex-basis: calc(5 / 12 * 100%);
   }
   .eps-grid-item-sm-6 {
     flex-grow: 0;
-    max-width: calc( 6 / 12 * 100% );
-    flex-basis: calc( 6 / 12 * 100% );
+    max-width: calc(6 / 12 * 100%);
+    flex-basis: calc(6 / 12 * 100%);
   }
   .eps-grid-item-sm-7 {
     flex-grow: 0;
-    max-width: calc( 7 / 12 * 100% );
-    flex-basis: calc( 7 / 12 * 100% );
+    max-width: calc(7 / 12 * 100%);
+    flex-basis: calc(7 / 12 * 100%);
   }
   .eps-grid-item-sm-8 {
     flex-grow: 0;
-    max-width: calc( 8 / 12 * 100% );
-    flex-basis: calc( 8 / 12 * 100% );
+    max-width: calc(8 / 12 * 100%);
+    flex-basis: calc(8 / 12 * 100%);
   }
   .eps-grid-item-sm-9 {
     flex-grow: 0;
-    max-width: calc( 9 / 12 * 100% );
-    flex-basis: calc( 9 / 12 * 100% );
+    max-width: calc(9 / 12 * 100%);
+    flex-basis: calc(9 / 12 * 100%);
   }
   .eps-grid-item-sm-10 {
     flex-grow: 0;
-    max-width: calc( 10 / 12 * 100% );
-    flex-basis: calc( 10 / 12 * 100% );
+    max-width: calc(10 / 12 * 100%);
+    flex-basis: calc(10 / 12 * 100%);
   }
   .eps-grid-item-sm-11 {
     flex-grow: 0;
-    max-width: calc( 11 / 12 * 100% );
-    flex-basis: calc( 11 / 12 * 100% );
+    max-width: calc(11 / 12 * 100%);
+    flex-basis: calc(11 / 12 * 100%);
   }
   .eps-grid-item-sm-12 {
     flex-grow: 0;
-    max-width: calc( 12 / 12 * 100% );
-    flex-basis: calc( 12 / 12 * 100% );
+    max-width: calc(12 / 12 * 100%);
+    flex-basis: calc(12 / 12 * 100%);
   }
 }
 @media screen and (min-width: 768px) {
   .eps-grid-item-md-1 {
     flex-grow: 0;
-    max-width: calc( 1 / 12 * 100% );
-    flex-basis: calc( 1 / 12 * 100% );
+    max-width: calc(1 / 12 * 100%);
+    flex-basis: calc(1 / 12 * 100%);
   }
   .eps-grid-item-md-2 {
     flex-grow: 0;
-    max-width: calc( 2 / 12 * 100% );
-    flex-basis: calc( 2 / 12 * 100% );
+    max-width: calc(2 / 12 * 100%);
+    flex-basis: calc(2 / 12 * 100%);
   }
   .eps-grid-item-md-3 {
     flex-grow: 0;
-    max-width: calc( 3 / 12 * 100% );
-    flex-basis: calc( 3 / 12 * 100% );
+    max-width: calc(3 / 12 * 100%);
+    flex-basis: calc(3 / 12 * 100%);
   }
   .eps-grid-item-md-4 {
     flex-grow: 0;
-    max-width: calc( 4 / 12 * 100% );
-    flex-basis: calc( 4 / 12 * 100% );
+    max-width: calc(4 / 12 * 100%);
+    flex-basis: calc(4 / 12 * 100%);
   }
   .eps-grid-item-md-5 {
     flex-grow: 0;
-    max-width: calc( 5 / 12 * 100% );
-    flex-basis: calc( 5 / 12 * 100% );
+    max-width: calc(5 / 12 * 100%);
+    flex-basis: calc(5 / 12 * 100%);
   }
   .eps-grid-item-md-6 {
     flex-grow: 0;
-    max-width: calc( 6 / 12 * 100% );
-    flex-basis: calc( 6 / 12 * 100% );
+    max-width: calc(6 / 12 * 100%);
+    flex-basis: calc(6 / 12 * 100%);
   }
   .eps-grid-item-md-7 {
     flex-grow: 0;
-    max-width: calc( 7 / 12 * 100% );
-    flex-basis: calc( 7 / 12 * 100% );
+    max-width: calc(7 / 12 * 100%);
+    flex-basis: calc(7 / 12 * 100%);
   }
   .eps-grid-item-md-8 {
     flex-grow: 0;
-    max-width: calc( 8 / 12 * 100% );
-    flex-basis: calc( 8 / 12 * 100% );
+    max-width: calc(8 / 12 * 100%);
+    flex-basis: calc(8 / 12 * 100%);
   }
   .eps-grid-item-md-9 {
     flex-grow: 0;
-    max-width: calc( 9 / 12 * 100% );
-    flex-basis: calc( 9 / 12 * 100% );
+    max-width: calc(9 / 12 * 100%);
+    flex-basis: calc(9 / 12 * 100%);
   }
   .eps-grid-item-md-10 {
     flex-grow: 0;
-    max-width: calc( 10 / 12 * 100% );
-    flex-basis: calc( 10 / 12 * 100% );
+    max-width: calc(10 / 12 * 100%);
+    flex-basis: calc(10 / 12 * 100%);
   }
   .eps-grid-item-md-11 {
     flex-grow: 0;
-    max-width: calc( 11 / 12 * 100% );
-    flex-basis: calc( 11 / 12 * 100% );
+    max-width: calc(11 / 12 * 100%);
+    flex-basis: calc(11 / 12 * 100%);
   }
   .eps-grid-item-md-12 {
     flex-grow: 0;
-    max-width: calc( 12 / 12 * 100% );
-    flex-basis: calc( 12 / 12 * 100% );
+    max-width: calc(12 / 12 * 100%);
+    flex-basis: calc(12 / 12 * 100%);
   }
 }
 @media screen and (min-width: 1025px) {
   .eps-grid-item-lg-1 {
     flex-grow: 0;
-    max-width: calc( 1 / 12 * 100% );
-    flex-basis: calc( 1 / 12 * 100% );
+    max-width: calc(1 / 12 * 100%);
+    flex-basis: calc(1 / 12 * 100%);
   }
   .eps-grid-item-lg-2 {
     flex-grow: 0;
-    max-width: calc( 2 / 12 * 100% );
-    flex-basis: calc( 2 / 12 * 100% );
+    max-width: calc(2 / 12 * 100%);
+    flex-basis: calc(2 / 12 * 100%);
   }
   .eps-grid-item-lg-3 {
     flex-grow: 0;
-    max-width: calc( 3 / 12 * 100% );
-    flex-basis: calc( 3 / 12 * 100% );
+    max-width: calc(3 / 12 * 100%);
+    flex-basis: calc(3 / 12 * 100%);
   }
   .eps-grid-item-lg-4 {
     flex-grow: 0;
-    max-width: calc( 4 / 12 * 100% );
-    flex-basis: calc( 4 / 12 * 100% );
+    max-width: calc(4 / 12 * 100%);
+    flex-basis: calc(4 / 12 * 100%);
   }
   .eps-grid-item-lg-5 {
     flex-grow: 0;
-    max-width: calc( 5 / 12 * 100% );
-    flex-basis: calc( 5 / 12 * 100% );
+    max-width: calc(5 / 12 * 100%);
+    flex-basis: calc(5 / 12 * 100%);
   }
   .eps-grid-item-lg-6 {
     flex-grow: 0;
-    max-width: calc( 6 / 12 * 100% );
-    flex-basis: calc( 6 / 12 * 100% );
+    max-width: calc(6 / 12 * 100%);
+    flex-basis: calc(6 / 12 * 100%);
   }
   .eps-grid-item-lg-7 {
     flex-grow: 0;
-    max-width: calc( 7 / 12 * 100% );
-    flex-basis: calc( 7 / 12 * 100% );
+    max-width: calc(7 / 12 * 100%);
+    flex-basis: calc(7 / 12 * 100%);
   }
   .eps-grid-item-lg-8 {
     flex-grow: 0;
-    max-width: calc( 8 / 12 * 100% );
-    flex-basis: calc( 8 / 12 * 100% );
+    max-width: calc(8 / 12 * 100%);
+    flex-basis: calc(8 / 12 * 100%);
   }
   .eps-grid-item-lg-9 {
     flex-grow: 0;
-    max-width: calc( 9 / 12 * 100% );
-    flex-basis: calc( 9 / 12 * 100% );
+    max-width: calc(9 / 12 * 100%);
+    flex-basis: calc(9 / 12 * 100%);
   }
   .eps-grid-item-lg-10 {
     flex-grow: 0;
-    max-width: calc( 10 / 12 * 100% );
-    flex-basis: calc( 10 / 12 * 100% );
+    max-width: calc(10 / 12 * 100%);
+    flex-basis: calc(10 / 12 * 100%);
   }
   .eps-grid-item-lg-11 {
     flex-grow: 0;
-    max-width: calc( 11 / 12 * 100% );
-    flex-basis: calc( 11 / 12 * 100% );
+    max-width: calc(11 / 12 * 100%);
+    flex-basis: calc(11 / 12 * 100%);
   }
   .eps-grid-item-lg-12 {
     flex-grow: 0;
-    max-width: calc( 12 / 12 * 100% );
-    flex-basis: calc( 12 / 12 * 100% );
+    max-width: calc(12 / 12 * 100%);
+    flex-basis: calc(12 / 12 * 100%);
   }
 }
 @media screen and (min-width: 1440px) {
   .eps-grid-item-xl-1 {
     flex-grow: 0;
-    max-width: calc( 1 / 12 * 100% );
-    flex-basis: calc( 1 / 12 * 100% );
+    max-width: calc(1 / 12 * 100%);
+    flex-basis: calc(1 / 12 * 100%);
   }
   .eps-grid-item-xl-2 {
     flex-grow: 0;
-    max-width: calc( 2 / 12 * 100% );
-    flex-basis: calc( 2 / 12 * 100% );
+    max-width: calc(2 / 12 * 100%);
+    flex-basis: calc(2 / 12 * 100%);
   }
   .eps-grid-item-xl-3 {
     flex-grow: 0;
-    max-width: calc( 3 / 12 * 100% );
-    flex-basis: calc( 3 / 12 * 100% );
+    max-width: calc(3 / 12 * 100%);
+    flex-basis: calc(3 / 12 * 100%);
   }
   .eps-grid-item-xl-4 {
     flex-grow: 0;
-    max-width: calc( 4 / 12 * 100% );
-    flex-basis: calc( 4 / 12 * 100% );
+    max-width: calc(4 / 12 * 100%);
+    flex-basis: calc(4 / 12 * 100%);
   }
   .eps-grid-item-xl-5 {
     flex-grow: 0;
-    max-width: calc( 5 / 12 * 100% );
-    flex-basis: calc( 5 / 12 * 100% );
+    max-width: calc(5 / 12 * 100%);
+    flex-basis: calc(5 / 12 * 100%);
   }
   .eps-grid-item-xl-6 {
     flex-grow: 0;
-    max-width: calc( 6 / 12 * 100% );
-    flex-basis: calc( 6 / 12 * 100% );
+    max-width: calc(6 / 12 * 100%);
+    flex-basis: calc(6 / 12 * 100%);
   }
   .eps-grid-item-xl-7 {
     flex-grow: 0;
-    max-width: calc( 7 / 12 * 100% );
-    flex-basis: calc( 7 / 12 * 100% );
+    max-width: calc(7 / 12 * 100%);
+    flex-basis: calc(7 / 12 * 100%);
   }
   .eps-grid-item-xl-8 {
     flex-grow: 0;
-    max-width: calc( 8 / 12 * 100% );
-    flex-basis: calc( 8 / 12 * 100% );
+    max-width: calc(8 / 12 * 100%);
+    flex-basis: calc(8 / 12 * 100%);
   }
   .eps-grid-item-xl-9 {
     flex-grow: 0;
-    max-width: calc( 9 / 12 * 100% );
-    flex-basis: calc( 9 / 12 * 100% );
+    max-width: calc(9 / 12 * 100%);
+    flex-basis: calc(9 / 12 * 100%);
   }
   .eps-grid-item-xl-10 {
     flex-grow: 0;
-    max-width: calc( 10 / 12 * 100% );
-    flex-basis: calc( 10 / 12 * 100% );
+    max-width: calc(10 / 12 * 100%);
+    flex-basis: calc(10 / 12 * 100%);
   }
   .eps-grid-item-xl-11 {
     flex-grow: 0;
-    max-width: calc( 11 / 12 * 100% );
-    flex-basis: calc( 11 / 12 * 100% );
+    max-width: calc(11 / 12 * 100%);
+    flex-basis: calc(11 / 12 * 100%);
   }
   .eps-grid-item-xl-12 {
     flex-grow: 0;
-    max-width: calc( 12 / 12 * 100% );
-    flex-basis: calc( 12 / 12 * 100% );
+    max-width: calc(12 / 12 * 100%);
+    flex-basis: calc(12 / 12 * 100%);
   }
 }
 @media screen and (min-width: 1600px) {
   .eps-grid-item-xxl-1 {
     flex-grow: 0;
-    max-width: calc( 1 / 12 * 100% );
-    flex-basis: calc( 1 / 12 * 100% );
+    max-width: calc(1 / 12 * 100%);
+    flex-basis: calc(1 / 12 * 100%);
   }
   .eps-grid-item-xxl-2 {
     flex-grow: 0;
-    max-width: calc( 2 / 12 * 100% );
-    flex-basis: calc( 2 / 12 * 100% );
+    max-width: calc(2 / 12 * 100%);
+    flex-basis: calc(2 / 12 * 100%);
   }
   .eps-grid-item-xxl-3 {
     flex-grow: 0;
-    max-width: calc( 3 / 12 * 100% );
-    flex-basis: calc( 3 / 12 * 100% );
+    max-width: calc(3 / 12 * 100%);
+    flex-basis: calc(3 / 12 * 100%);
   }
   .eps-grid-item-xxl-4 {
     flex-grow: 0;
-    max-width: calc( 4 / 12 * 100% );
-    flex-basis: calc( 4 / 12 * 100% );
+    max-width: calc(4 / 12 * 100%);
+    flex-basis: calc(4 / 12 * 100%);
   }
   .eps-grid-item-xxl-5 {
     flex-grow: 0;
-    max-width: calc( 5 / 12 * 100% );
-    flex-basis: calc( 5 / 12 * 100% );
+    max-width: calc(5 / 12 * 100%);
+    flex-basis: calc(5 / 12 * 100%);
   }
   .eps-grid-item-xxl-6 {
     flex-grow: 0;
-    max-width: calc( 6 / 12 * 100% );
-    flex-basis: calc( 6 / 12 * 100% );
+    max-width: calc(6 / 12 * 100%);
+    flex-basis: calc(6 / 12 * 100%);
   }
   .eps-grid-item-xxl-7 {
     flex-grow: 0;
-    max-width: calc( 7 / 12 * 100% );
-    flex-basis: calc( 7 / 12 * 100% );
+    max-width: calc(7 / 12 * 100%);
+    flex-basis: calc(7 / 12 * 100%);
   }
   .eps-grid-item-xxl-8 {
     flex-grow: 0;
-    max-width: calc( 8 / 12 * 100% );
-    flex-basis: calc( 8 / 12 * 100% );
+    max-width: calc(8 / 12 * 100%);
+    flex-basis: calc(8 / 12 * 100%);
   }
   .eps-grid-item-xxl-9 {
     flex-grow: 0;
-    max-width: calc( 9 / 12 * 100% );
-    flex-basis: calc( 9 / 12 * 100% );
+    max-width: calc(9 / 12 * 100%);
+    flex-basis: calc(9 / 12 * 100%);
   }
   .eps-grid-item-xxl-10 {
     flex-grow: 0;
-    max-width: calc( 10 / 12 * 100% );
-    flex-basis: calc( 10 / 12 * 100% );
+    max-width: calc(10 / 12 * 100%);
+    flex-basis: calc(10 / 12 * 100%);
   }
   .eps-grid-item-xxl-11 {
     flex-grow: 0;
-    max-width: calc( 11 / 12 * 100% );
-    flex-basis: calc( 11 / 12 * 100% );
+    max-width: calc(11 / 12 * 100%);
+    flex-basis: calc(11 / 12 * 100%);
   }
   .eps-grid-item-xxl-12 {
     flex-grow: 0;
-    max-width: calc( 12 / 12 * 100% );
-    flex-basis: calc( 12 / 12 * 100% );
+    max-width: calc(12 / 12 * 100%);
+    flex-basis: calc(12 / 12 * 100%);
   }
 }
 :root {

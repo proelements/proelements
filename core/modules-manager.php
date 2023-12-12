@@ -68,6 +68,7 @@ final class Modules_Manager {
 			'mega-menu',
 			'nested-carousel',
 			'loop-filter',
+			'tiers',
 		];
 
 		foreach ( $modules as $module_name ) {

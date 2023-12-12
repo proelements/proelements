@@ -1,20 +1,32 @@
 export default class Module extends elementorModules.Module {
+	#actionLinks = [
+		{
+			href: 'elementor_pro_renew_license_menu_link',
+			external_url: 'https://go.elementor.com/wp-menu-renew/',
+		},
+		{
+			href: 'elementor_pro_upgrade_license_menu_link',
+			external_url: 'https://go.elementor.com/go-pro-advanced-elementor-menu/',
+		},
+	];
+
 	onInit() {
-		this.assignRenewMenuItemAction();
+		this.assignMenuItemActions();
 	}
 
-	assignRenewMenuItemAction() {
+	assignMenuItemActions() {
 		window.addEventListener( 'DOMContentLoaded', () => {
-			const link = document.querySelector( 'a[href="elementor_pro_renew_license_menu_link"]' );
+			this.#actionLinks.forEach( ( item ) => {
+				const link = document.querySelector( `a[href="${ item.href }"]` );
 
-			if ( ! link ) {
-				return;
-			}
+				if ( ! link ) {
+					return;
+				}
 
-			link.addEventListener( 'click', ( e ) => {
-				e.preventDefault();
-
-				window.open( 'https://go.elementor.com/wp-menu-renew/', '_blank' );
+				link.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					window.open( item.external_url, '_blank' );
+				} );
 			} );
 		} );
 	}

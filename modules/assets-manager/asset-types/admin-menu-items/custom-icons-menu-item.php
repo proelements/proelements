@@ -15,7 +15,7 @@ class Custom_Icons_Menu_Item implements Admin_Menu_Item {
 	}
 
 	public function get_label() {
-		return esc_html_x( 'Custom Icons', 'Elementor Font', 'elementor-pro' );
+		return esc_html__( 'Custom Icons', 'elementor-pro' );
 	}
 
 	public function get_parent_slug() {

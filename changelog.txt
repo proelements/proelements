@@ -1,5 +1,31 @@
 # PRO Elements - by PROElements.org
 
+#### 3.18.1 - 2023-12-06
+
+* Fix: No results appeared when reloading the page with deep link and de-selecting terms in Taxonomy Filter widget
+* Fix: No results appeared when filtering the Uncategorized category in Filter Taxonomy widget
+* Fix: Notes still available when the Notes feature is deactivated
+
+#### 3.18.0 - 2023-12-04
+
+* Tweak: Added the ability to upload files as attachments to emails in the File Upload field in Form widget ([#4868](https://github.com/elementor/elementor/issues/4868))
+* Tweak: Introduced the capability to design and edit the empty state in the Loop Grid widget ([#24261](https://github.com/elementor/elementor/issues/24261))
+* Tweak: Implemented the option to close the menu content area with a click anywhere on the screen in Menu widget ([#22686](https://github.com/elementor/elementor/issues/22686))
+* Tweak: Improve scrolling behavior inside the content area when there is not enough space in Menu widget ([#22712](https://github.com/elementor/elementor/issues/22712))
+* Tweak: Expanded breakpoint options in Menu widget ([#22488](https://github.com/elementor/elementor/issues/22488))
+* Tweak: Added Logical Combination control in Taxonomy Filter widget
+* Tweak: Added additional units to Horizontal and Vertical padding for Dropdown in WordPress Menu widget
+* Tweak: Hide navigation arrows when there is only one slide in Loop Carousel and Carousel widgets
+* Tweak: Added various HTML Tag controls in Video Playlist widget
+* Tweak: Added responsive control to navigation size in Slides, Reviews, Media Carousel and Testimonial Carousel widgets
+* Tweak: Added semantic `<search>` wrapper in Search Form widget
+* Tweak: Added semantic `<search>` wrapper in Taxonomy Filter widget
+* Tweak: Added Multiple Selection control in Taxonomy Filter widget
+* Fix: Deprecated notice when using ${var} in strings instead of {$var} with PHP 8.2 ([#23927](https://github.com/elementor/elementor/issues/23927))
+* Fix: Dropdown indicator position issue in Menu widget ([#23947](https://github.com/elementor/elementor/issues/23947))
+* Fix: Dynamic Tags are not available when choosing 'self-hosted' source in Video widget
+* Fix: Telephone field placeholder is aligned to the left in RTL websites in Form widget
+
 #### 3.17.1 - 2023-11-01
 
 * Modified controls sanitization to enforce better security policies in Code Highlight, Form, Lottie, Price List, and Video Playlist widgets

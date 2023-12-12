@@ -1,4 +1,4 @@
-/*! pro-elements - v3.17.0 - 01-11-2023 */
+/*! pro-elements - v3.18.0 - 06-12-2023 */
 .elementor-panel .elementor-control .e-control-error {
   color: #F59E0B;
 }
@@ -15,6 +15,10 @@
 .elementor-panel .elementor-control .elementor-button.elementor-button-default.elementor-button-center {
   display: block;
   margin: 0 auto;
+}
+
+#elementor-element--promotion__dialog .dialog-header .eicon-pro-icon {
+  visibility: hidden;
 }
 
 #elementor-widget-template-empty-templates {

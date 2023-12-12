@@ -72,7 +72,7 @@ class Component extends Module_Base {
 	}
 
 	private function can_use_submissions() : bool {
-		return API::is_license_active() && ! API::is_license_expired();
+		return API::is_license_active() && API::active_licence_has_feature( static::NAME );
 	}
 
 	private function render_admin_page() {

@@ -100,7 +100,7 @@ class Templates extends Import_Runner_Base {
 	}
 
 	private function set_templates_conditions( $template_data ) {
-		$conditions = $template_data['import_settings']['conditions'];
+		$conditions = $template_data['import_settings']['conditions'] ?? [];
 
 		if ( empty( $conditions ) ) {
 			return;

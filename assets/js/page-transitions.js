@@ -1,4 +1,4 @@
-/*! pro-elements - v3.17.0 - 01-11-2023 */
+/*! pro-elements - v3.18.0 - 06-12-2023 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -46,7 +46,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 // Ref: https://stackoverflow.com/questions/26088849/url-fragment-allowed-characters
 const urlFragmentPattern = /.*#[\w\-/$.+()*@?~!&',;=:%]*$/;
-var _default = {
+var _default = exports["default"] = {
   // Disable using data attribute.
   isDisabled: a => Object.prototype.hasOwnProperty.call(a.dataset, 'eDisablePageTransition'),
   // Allow only links from same origin and without a URL fragment (e.g. #some-string).
@@ -60,19 +60,17 @@ var _default = {
   isPopup: a => 'true' === a.getAttribute('aria-haspopup') && 'false' === a.getAttribute('aria-expanded'),
   // Disable in WooCommerce links.
   isWoocommerce: a => {
-    var _a$parentElement;
     const isAddToCart = a.href.match(/\?add-to-cart=/),
       isRemoveFromCart = a.href.match(/\?remove_item=/),
       isRestoreToCart = a.href.match(/\?undo_item=/),
       isWoocommercePagination = a.href.match(/\?product-page=/),
       isWoocommerceLogout = a.href.match(/\?elementor_wc_logout=/),
-      isWoocommerceTab = (_a$parentElement = a.parentElement) === null || _a$parentElement === void 0 ? void 0 : _a$parentElement.classList.contains('woocommerce-MyAccount-navigation-link');
+      isWoocommerceTab = a.parentElement?.classList.contains('woocommerce-MyAccount-navigation-link');
     return isAddToCart || isRemoveFromCart || isRestoreToCart || isWoocommercePagination || isWoocommerceLogout || isWoocommerceTab;
   },
   // Custom regex filter from attributes.
   isExcluded: (a, exclude) => a.href.match(new RegExp(exclude))
 };
-exports["default"] = _default;
 
 /***/ }),
 
@@ -339,8 +337,7 @@ class PageTransition extends HTMLElement {
    * @param {string} prefix   - Variable prefix, defaults to `e-page-transition`.
    * @return {string} - CSS variable value.
    */
-  getCssVar(variable) {
-    let prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'e-page-transition-';
+  getCssVar(variable, prefix = 'e-page-transition-') {
     return window.getComputedStyle(this).getPropertyValue(`--${prefix}${variable}`);
   }
 
@@ -405,10 +402,8 @@ class PageTransition extends HTMLElement {
    * @param {number}                 delay - Delay (in ms) before resolving the Promise.
    * @return {Promise} - Animation sequence Promise.
    */
-  animateState(state) {
-    var _this$classes;
-    let delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    const className = (_this$classes = this.classes) === null || _this$classes === void 0 ? void 0 : _this$classes[state];
+  animateState(state, delay = 0) {
+    const className = this.classes?.[state];
     if (!className) {
       return new Promise((resolve, reject) => {
         reject(state);
@@ -448,8 +443,7 @@ class PageTransition extends HTMLElement {
   }
 }
 exports.PageTransition = PageTransition;
-var _default = PageTransition;
-exports["default"] = _default;
+var _default = exports["default"] = PageTransition;
 
 /***/ }),
 
@@ -529,8 +523,7 @@ class Preloader extends HTMLElement {
   }
 }
 exports.Preloader = Preloader;
-var _default = Preloader;
-exports["default"] = _default;
+var _default = exports["default"] = Preloader;
 
 /***/ }),
 

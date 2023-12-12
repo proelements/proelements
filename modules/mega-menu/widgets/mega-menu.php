@@ -724,8 +724,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		];
 
 		$excluded_breakpoints = [
-			'laptop',
-			'tablet_extra',
 			'widescreen',
 		];
 
@@ -1708,10 +1706,6 @@ class Mega_Menu extends Widget_Nested_Base {
 			]
 		);
 
-		// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
-		// Remove together with support for physical properties inside the container widget.
-		$padding_physical_properties = '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};';
-
 		$this->add_responsive_control(
 			'content_padding',
 			[
@@ -1719,7 +1713,10 @@ class Mega_Menu extends Widget_Nested_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
-					$this->get_control_selector_class( 'active_content_container' ) => "$padding_physical_properties --padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
+					$this->get_control_selector_class( 'active_content_container' ) => '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};',
+					// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
+					// Remove together with support for physical properties inside the container widget.
+					':where( [data-core-v316-plus="true"] .elementor-element.elementor-widget-n-menu > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-content ) > .e-con' => "--padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
 				],
 				'separator' => 'before',
 			]
@@ -1949,11 +1946,6 @@ class Mega_Menu extends Widget_Nested_Base {
 
 	protected function render_menu_attributes( $element_uid = '' ) {
 		$menu_classes = [ 'e-n-menu' ];
-		$core_version_class = $this->get_core_version_css_class();
-
-		if ( ! empty( $core_version_class ) ) {
-			$menu_classes[] = $core_version_class;
-		}
 
 		$this->add_render_attribute( 'e-n-menu', [
 			'class' => $menu_classes,
@@ -2125,19 +2117,19 @@ class Mega_Menu extends Widget_Nested_Base {
 					<?php if ( $menu_item_icon ) { ?>
 						<span class="e-n-menu-icon">
 							<span class="icon-active"><?php echo $menu_item_active_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-							<span class="icon-inactive" ><?php echo $menu_item_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+							<span class="icon-inactive"><?php echo $menu_item_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						</span>
 					<?php } ?>
 					<?php echo $this->get_title_link_opening_tag( $item, $item['item_link']['url'], $display_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php echo $item['item_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php echo $this->get_title_link_closing_tag( $item['item_link']['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					<?php if ( $has_dropdown_content ) { ?>
-						<button <?php echo wp_kses_post( $this->get_render_attribute_string( $key . '_link' ) ); ?> >
-							<span class="e-n-menu-dropdown-icon-opened" ><?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-							<span class="e-n-menu-dropdown-icon-closed"><?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						</button>
-					<?php } ?>
 				</div>
+				<?php if ( $has_dropdown_content ) { ?>
+					<button <?php echo wp_kses_post( $this->get_render_attribute_string( $key . '_link' ) ); ?> >
+						<span class="e-n-menu-dropdown-icon-opened"><?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<span class="e-n-menu-dropdown-icon-closed"><?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+					</button>
+				<?php } ?>
 			</li>
 		<?php
 		return ob_get_clean();

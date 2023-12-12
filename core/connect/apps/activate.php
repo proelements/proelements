@@ -120,6 +120,7 @@ class Activate extends Common_App {
 		return [
 			'templates_access_level' => API::get_library_access_level( 'template' ),
 			'kits_access_level' => API::get_library_access_level( 'kit' ),
+			'access_tier' => API::get_access_tier(),
 		];
 	}
 

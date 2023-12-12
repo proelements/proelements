@@ -6,6 +6,7 @@ use Elementor\Modules\Promotions\AdminMenuItems\Base_Promotion_Item;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\License\API;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Popup\Module as Popup_Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -18,12 +19,22 @@ class Popups_Promotion_Menu_Item extends Base_Promotion_Item {
 	}
 
 	public function get_cta_text() {
+		if ( ! API::active_licence_has_feature( Popup_Module::DOCUMENT_TYPE ) ) {
+			return esc_html__( 'Upgrade Now', 'elementor-pro' );
+		}
+
 		return API::is_license_expired()
 			? esc_html__( 'Renew now', 'elementor-pro' )
 			: esc_html__( 'Connect & Activate', 'elementor-pro' );
 	}
 
 	public function get_cta_url() {
+		if ( ! API::active_licence_has_feature( Popup_Module::DOCUMENT_TYPE ) ) {
+			$upgrade_url = 'https://go.elementor.com/go-pro-advanced-popups/';
+
+			return $upgrade_url;
+		}
+
 		$connect_url = Plugin::instance()->license_admin->get_connect_url( [
 			'utm_source' => 'popup-templates',
 			'utm_medium' => 'wp-dash',
@@ -55,7 +66,7 @@ class Popups_Promotion_Menu_Item extends Base_Promotion_Item {
 
 	public function render_promotion_description() {
 		echo esc_html__(
-			'Popup Builder lets you take advantage of all the amazing features in Elementor, so you can build beautiful & highly converting popups. Go pro and start designing your popups today.',
+			"Create custom designed Popups using all of Elementor's widgets. Use advanced display conditions and triggers to display the right popup, to the right visitor, at the right time and maximize conversions.",
 			'elementor-pro'
 		);
 	}

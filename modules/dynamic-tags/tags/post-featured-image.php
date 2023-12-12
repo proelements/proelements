@@ -20,7 +20,10 @@ class Post_Featured_Image extends Data_Tag {
 	}
 
 	public function get_categories() {
-		return [ Module::IMAGE_CATEGORY ];
+		return [
+			Module::IMAGE_CATEGORY,
+			Module::MEDIA_CATEGORY,
+		];
 	}
 
 	public function get_title() {

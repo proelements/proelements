@@ -85,8 +85,10 @@ class Base extends Posts {
 		$this->register_navigation_section_controls();
 
 		$this->register_pagination_section_controls();
+		$this->register_additional_options_section_controls();
 
 		$this->register_design_layout_controls();
+		$this->register_design_nothing_found_message_controls();
 		$this->register_design_navigation_controls();
 		$this->register_design_pagination_controls();
 
@@ -340,7 +342,11 @@ class Base extends Posts {
 		);
 	}
 
+	protected function register_additional_options_section_controls() {}
+
 	protected function register_design_layout_controls() {}
+
+	protected function register_design_nothing_found_message_controls() {}
 
 	protected function register_design_navigation_controls() {}
 

@@ -6,6 +6,8 @@ use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Utils;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\License\API;
+use ElementorPro\Modules\Tiers\Module as Tiers;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,6 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Module extends Module_Base {
+
+	const LICENSE_FEATURE_NAME = 'custom-attributes';
 
 	public function __construct() {
 		parent::__construct();
@@ -77,6 +81,9 @@ class Module extends Module_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'placeholder' => esc_html__( 'key|value', 'elementor-pro' ),
 				'description' => sprintf(
 					/* translators: %s: The `|` separate char. */
@@ -100,9 +107,16 @@ class Module extends Module_Base {
 		}
 
 		// Remove Custom CSS Banner (From free version)
-		if ( 'section_custom_attributes_pro' === $section_id ) {
-			$this->replace_go_pro_custom_attributes_controls( $element );
+		if ( 'section_custom_attributes_pro' !== $section_id ) {
+			return;
 		}
+
+		if ( ! API::is_licence_has_feature( self::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			$this->replace_controls_with_upgrade_promotion( $element );
+			return;
+		}
+
+		$this->replace_go_pro_custom_attributes_controls( $element );
 	}
 
 	/**
@@ -126,6 +140,37 @@ class Module extends Module_Base {
 
 	protected function add_actions() {
 		add_action( 'elementor/element/after_section_end', [ $this, 'register_controls' ], 10, 2 );
-		add_action( 'elementor/element/after_add_attributes', [ $this, 'render_attributes' ] );
+
+		if ( API::is_licence_has_feature( static::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			add_action( 'elementor/element/after_add_attributes', [ $this, 'render_attributes' ] );
+		}
+	}
+
+	private function replace_controls_with_upgrade_promotion( Element_Base $element ) {
+		Plugin::elementor()->controls_manager->remove_control_from_stack( $element->get_unique_name(), [ 'section_custom_attributes_pro', 'section_custom_attributes_pro' ] );
+
+		$element->start_controls_section(
+			'section_custom_attributes_promotion',
+			[
+				'label' => esc_html__( 'Attributes', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_ADVANCED,
+			]
+		);
+
+		$element->add_control(
+			'custom_attributes_promotion',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => Tiers::get_promotion_template( [
+					'title' => esc_html__( 'Meet Our Attributes', 'elementor-pro' ),
+					'messages' => [
+						esc_html__( 'Add custom HTML attributes to any element.', 'elementor-pro' ),
+					],
+					'link' => 'https://go.elementor.com/go-pro-advanced-attributes/',
+				] ),
+			]
+		);
+
+		$element->end_controls_section();
 	}
 }

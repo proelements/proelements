@@ -14,7 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Upload extends Field_Base {
 
-	private $fixed_files_indices = false;
+	public $fixed_files_indices = false;
+
+	const MODE_LINK = 'link';
+	const MODE_ATTACH = 'attach';
+	const MODE_BOTH = 'both';
 
 	public function get_type() {
 		return 'upload';
@@ -37,6 +41,24 @@ class Upload extends Field_Base {
 		}
 
 		$field_controls = [
+			'attachment_type' => [
+				'name' => 'attachment_type',
+				'label' => esc_html__( 'Send files', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'condition' => [
+					'field_type' => $this->get_type(),
+				],
+				'options' => [
+					self::MODE_LINK => esc_html__( 'Email with link', 'elementor-pro' ),
+					self::MODE_ATTACH => esc_html__( 'Email with attachment', 'elementor-pro' ),
+					self::MODE_BOTH => esc_html__( 'Email with both', 'elementor-pro' ),
+				],
+				'default' => self::MODE_LINK,
+				'description' => esc_html__( "Uploads you receive via link are stored on your server. However, uploads via attachment won't be saved on your server, and under Submissions", 'elementor-pro' ),
+				'tab' => 'content',
+				'inner_tab' => 'form_fields_content_tab',
+				'tabs_wrapper' => 'form_fields_tabs',
+			],
 			'file_sizes' => [
 				'name' => 'file_sizes',
 				'label' => esc_html__( 'Max. File Size', 'elementor-pro' ),
@@ -149,9 +171,10 @@ class Upload extends Field_Base {
 						$files[ $position ][0][ $key ] = $value;
 					}
 				}
-				// remove old key reference
-				unset( $files[ $key ] );
 			}
+
+			// remove original key reference
+			unset( $files[ $key ] );
 		}
 		$_FILES['form_fields'] = $files;
 		$this->fixed_files_indices = true;
@@ -286,8 +309,9 @@ class Upload extends Field_Base {
 				/* translators: %s: phpinfo() */
 				UPLOAD_ERR_EXTENSION => sprintf( esc_html__( 'A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with %s may help.', 'elementor-pro' ), 'phpinfo()' ),
 			];
-			$this->fix_file_indices();
 		}
+
+		$this->fix_file_indices();
 
 		$id = $field['id'];
 		$files = Utils::_unstable_get_super_global_value( $_FILES, 'form_fields' );
@@ -463,21 +487,25 @@ class Upload extends Field_Base {
 	public function process_field( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {
 		$id = $field['id'];
 		$files = Utils::_unstable_get_super_global_value( $_FILES, 'form_fields' );
+
 		foreach ( $files[ $id ] as $index => $file ) {
 			if ( UPLOAD_ERR_NO_FILE === $file['error'] ) {
 				continue;
 			}
+
 			$uploads_dir = $this->get_ensure_upload_dir();
 			$file_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
 			$filename = uniqid() . '.' . $file_extension;
 			$filename = wp_unique_filename( $uploads_dir, $filename );
 			$new_file = trailingslashit( $uploads_dir ) . $filename;
+
 			if ( is_dir( $uploads_dir ) && is_writable( $uploads_dir ) ) {
-				$move_new_file = @ move_uploaded_file( $file['tmp_name'], $new_file );
+				$move_new_file = Plugin::instance()->php_api->move_uploaded_file( $file['tmp_name'], $new_file );
 				if ( false !== $move_new_file ) {
 					// Set correct file permissions.
 					$perms = 0644;
 					@ chmod( $new_file, $perms );
+
 					$record->add_file( $id, $index,
 						[
 							'path' => $new_file,

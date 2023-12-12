@@ -409,6 +409,9 @@ class Form extends Form_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'conditions' => [
 					'terms' => [
 						[
@@ -443,6 +446,9 @@ class Form extends Form_Base {
 				'required' => true,
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);

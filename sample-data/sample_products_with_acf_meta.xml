@@ -1067,6 +1067,7 @@
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="pa_color" nicename="yellow"><![CDATA[Yellow]]></category>
       <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
+      <category domain="product_cat" nicename="decor"><![CDATA[Decor]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-cap]]></wp:meta_value>
@@ -2059,6 +2060,8 @@
       <wp:is_sticky>0</wp:is_sticky>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="music"><![CDATA[Music]]></category>
+      <category domain="product_cat" nicename="decor"><![CDATA[Decor]]></category>
+      <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-album]]></wp:meta_value>

@@ -1096,7 +1096,13 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Horizontal Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'vw' => [
+						'min' => 0,
+						'max' => 10,
+					],
+				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-nav-menu--dropdown a' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}}',
 				],
@@ -1110,10 +1116,14 @@ class Nav_Menu extends Base_Widget {
 			[
 				'label' => esc_html__( 'Vertical Padding', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
 						'max' => 50,
+					],
+					'vh' => [
+						'min' => 0,
+						'max' => 10,
 					],
 				],
 				'selectors' => [

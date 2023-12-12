@@ -31,14 +31,18 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
-		// TODO: Maybe just ignore all of those when the user can't use popups?
-		add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
-		add_action( 'elementor/theme/register_locations', [ $this, 'register_location' ] );
-		add_action( 'elementor/dynamic_tags/register', [ $this, 'register_tag' ] );
-		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+		if ( $this->can_use_popups() ) {
+			add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
+			add_action( 'elementor/theme/register_locations', [ $this, 'register_location' ] );
+			add_action( 'elementor/dynamic_tags/register', [ $this, 'register_tag' ] );
+			add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 
-		add_action( 'wp_footer', [ $this, 'print_popups' ] );
-		add_action( 'elementor_pro/init', [ $this, 'add_form_action' ] );
+			add_action( 'wp_footer', [ $this, 'print_popups' ] );
+			add_action( 'elementor_pro/init', [ $this, 'add_form_action' ] );
+		} else {
+			add_action( 'load-post.php', [ $this, 'disable_editing' ] );
+			add_action( 'admin_init', [ $this, 'maybe_redirect_to_promotion_page' ] );
+		}
 
 		if ( Plugin::elementor()->experiments->is_feature_active( 'admin_menu_rearrangement' ) ) {
 			add_action( 'elementor/admin/menu_registered/elementor', function( MainMenu $menu ) {
@@ -60,6 +64,52 @@ class Module extends Module_Base {
 		}
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
+	}
+
+	public function disable_editing() {
+		$post_id = Utils::_unstable_get_super_global_value( $_GET, 'post' );
+
+		if ( ! $post_id ) {
+			return;
+		}
+
+		$document = Plugin::elementor()->documents->get( $post_id );
+
+		if ( ! $document ) {
+			return;
+		}
+
+		$template_type = $document->get_main_meta( DocumentBase::TYPE_META_KEY );
+
+		if ( static::DOCUMENT_TYPE === $template_type ) {
+			$error = new \WP_Error( 'e_popups_editing_disabled', esc_html__( 'Invalid post type.', 'elementor-pro' ) );
+			wp_die( $error ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+	}
+
+	public function maybe_redirect_to_promotion_page() {
+		if ( $this->is_on_popups_admin_page() ) {
+			wp_redirect( $this->get_promotion_url() );
+			exit();
+		}
+	}
+
+	private function is_on_popups_admin_page() {
+		global $pagenow;
+
+		return isset( $pagenow ) &&
+			'edit.php' === $pagenow &&
+			Source_Local::CPT === Utils::_unstable_get_super_global_value( $_GET, 'post_type' ) &&
+			static::DOCUMENT_TYPE === Utils::_unstable_get_super_global_value( $_GET, Source_Local::TAXONOMY_TYPE_SLUG );
+	}
+
+	private function get_promotion_url() {
+		return add_query_arg(
+			[
+				'page' => static::PROMOTION_MENU_SLUG,
+			],
+			Source_Local::ADMIN_MENU_SLUG
+		);
 	}
 
 	public function get_name() {
@@ -195,7 +245,7 @@ class Module extends Module_Base {
 	}
 
 	private function can_use_popups() {
-		return ( API::is_license_active() || $this->has_popups() );
+		return ( API::is_license_active() && API::is_licence_has_feature( static::DOCUMENT_TYPE, API::BC_VALIDATION_CALLBACK ) ) || $this->has_popups();
 	}
 
 	private function has_popups() {

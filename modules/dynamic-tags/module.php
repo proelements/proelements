@@ -6,6 +6,7 @@ use ElementorPro\Modules\DynamicTags\ACF;
 use ElementorPro\Modules\DynamicTags\Toolset;
 use ElementorPro\Modules\DynamicTags\Pods;
 use ElementorPro\Core\Utils;
+use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -32,19 +33,23 @@ class Module extends TagsModule {
 	// TODO: Remove when Core 3.10.0 is released.
 	const DATETIME_CATEGORY = 'datetime';
 
+	const LICENSE_FEATURE_ACF_NAME = 'dynamic-tags-acf';
+	const LICENSE_FEATURE_PODS_NAME = 'dynamic-tags-pods';
+	const LICENSE_FEATURE_TOOLSET_NAME = 'dynamic-tags-toolset';
+
 	public function __construct() {
 		parent::__construct();
 
 		// ACF 5 and up
-		if ( class_exists( '\acf' ) && function_exists( 'acf_get_field_groups' ) ) {
+		if ( class_exists( '\acf' ) && function_exists( 'acf_get_field_groups' ) && API::is_licence_has_feature( self::LICENSE_FEATURE_ACF_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'acf', new ACF\Module() );
 		}
 
-		if ( function_exists( 'wpcf_admin_fields_get_groups' ) ) {
+		if ( function_exists( 'wpcf_admin_fields_get_groups' ) && API::is_licence_has_feature( self::LICENSE_FEATURE_TOOLSET_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'toolset', new Toolset\Module() );
 		}
 
-		if ( function_exists( 'pods' ) ) {
+		if ( function_exists( 'pods' ) && API::is_licence_has_feature( self::LICENSE_FEATURE_PODS_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'pods', new Pods\Module() );
 		}
 

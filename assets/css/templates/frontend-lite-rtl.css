@@ -185,23 +185,6 @@
 .e-con.elementor-sticky--active {
   z-index: var(--z-index, 99);
 }
-.e-con .e-con.elementor-sticky {
-  /* Fix for sticky effect inside containers */
-}
-.e-con .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: var(--padding-left);
-  --bc-padding-inline-end: var(--padding-right);
-  padding-inline-start: var(--bc-padding-inline-start, var(--padding-inline-start));
-  padding-inline-end: var(--bc-padding-inline-end, var(--padding-inline-end));
-}
-[dir=rtl] .e-con .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: var(--padding-right);
-  --bc-padding-inline-end: var(--padding-left);
-}
-.e-con[data-core-v316-plus=true] .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: initial;
-  --bc-padding-inline-end: initial;
-}
 
 [data-elementor-type=popup]:not(.elementor-edit-area) {
   display: none;

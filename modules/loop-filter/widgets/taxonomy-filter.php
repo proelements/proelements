@@ -264,6 +264,44 @@ class Taxonomy_Filter extends Base_Widget {
 		);
 
 		$this->add_control(
+			'heading_filter_logic',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Filter Logic', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'multiple_selection',
+			[
+				'label' => esc_html__( 'Multiple Selection', 'elementor-pro' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'elementor-pro' ),
+				'label_off' => esc_html__( 'No', 'elementor-pro' ),
+				'default' => 'no',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'logical_combination',
+			[
+				'label' => __( 'Logical Combination', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'AND',
+				'options' => [
+					'AND' => esc_html__( 'AND', 'elementor-pro' ),
+					'OR' => esc_html__( 'OR', 'elementor-pro' ),
+				],
+				'condition' => [
+					'multiple_selection' => 'yes',
+				],
+				'separator' => 'after',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
 			'heading_displayed_elements',
 			[
 				'type' => Controls_Manager::HEADING,
@@ -693,12 +731,12 @@ class Taxonomy_Filter extends Base_Widget {
 			return;
 		}
 
-		$active_filter = [];
+		$active_filters = [];
 		$loop_filter_module = Plugin::instance()->modules_manager->get_modules( 'loop-filter' );
 		$query_string_filters = $loop_filter_module->get_query_string_filters();
 
 		if ( array_key_exists( $selected_element, $query_string_filters ) ) {
-			$active_filter = $query_string_filters[ $selected_element ]['taxonomy'];
+			$active_filters = $query_string_filters[ $selected_element ]['taxonomy'];
 		}
 
 		$active_terms = 0;
@@ -707,11 +745,12 @@ class Taxonomy_Filter extends Base_Widget {
 
 		$this->add_render_attribute( 'filter-bar', [
 			'class' => 'e-filter',
+			'role' => 'search', // BC for older browser versions that don't support `<search>` element.
 			'data-base-url' => $this->get_base_url(),
 			'data-page-num' => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
 		] );
 		?>
-		<div <?php $this->print_render_attribute_string( 'filter-bar' ); ?>>
+		<search <?php $this->print_render_attribute_string( 'filter-bar' ); ?>>
 			<?php foreach ( $terms as $term ) {
 				$total_taxonomies++;
 				$aria_pressed_value = 'false';
@@ -722,7 +761,7 @@ class Taxonomy_Filter extends Base_Widget {
 
 				$term_taxonomy = $term->taxonomy;
 
-				if ( array_key_exists( $term_taxonomy, $active_filter ) && $term->slug === $active_filter[ $term_taxonomy ][0] ) {
+				if ( array_key_exists( $term_taxonomy, $active_filters ) && in_array( urldecode( $term->slug ), $active_filters[ $term_taxonomy ]['terms'] ) ) {
 					$aria_pressed_value = 'true';
 					$active_terms++;
 				}
@@ -745,7 +784,7 @@ class Taxonomy_Filter extends Base_Widget {
 				<?php echo $settings['first_item_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</button>
 			<?php endif; ?>
-		</div>
+		</search>
 		<?php
 	}
 

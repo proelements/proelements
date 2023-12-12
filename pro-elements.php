@@ -4,8 +4,8 @@
  * Description: This plugin enables GPL features of Elementor Pro: widgets, theme builder, dynamic colors & content, forms & popup builder, and more. Note that PRO Elements is not a substitute for Elementor Pro. If you need all Elementor Pro features, including access to pro templates library and dedicated support, we encourage you to <a href="https://elementor.com/pro/" target="_blank">purchase Elementor Pro</a>.
  * Plugin URI: https://proelements.org/
  * Author: PROElements.org
- * Version: 3.17.1
- * Elementor tested up to: 3.17.0
+ * Version: 3.18.1
+ * Elementor tested up to: 3.18.0
  * Author URI: https://proelements.org/
  *
  * Text Domain: elementor-pro
@@ -26,7 +26,7 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-define( 'ELEMENTOR_PRO_VERSION', '3.17.1' );
+define( 'ELEMENTOR_PRO_VERSION', '3.18.1' );
 
 /**
  * All versions should be `major.minor`, without patch, in order to compare them properly.
@@ -34,8 +34,8 @@ define( 'ELEMENTOR_PRO_VERSION', '3.17.1' );
  * (e.g. Core 3.14.0-beta1 and Core 3.14.0-cloud2 should be fine when requiring 3.14, while
  * requiring 3.14.2 is not allowed)
  */
-define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '3.15' );
-define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '3.17' );
+define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '3.16' );
+define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '3.18' );
 
 define( 'ELEMENTOR_PRO__FILE__', __FILE__ );
 define( 'ELEMENTOR_PRO_PLUGIN_BASE', plugin_basename( ELEMENTOR_PRO__FILE__ ) );

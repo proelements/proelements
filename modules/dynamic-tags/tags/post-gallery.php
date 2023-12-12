@@ -27,7 +27,6 @@ class Post_Gallery extends Data_Tag {
 	}
 
 	public function get_value( array $options = [] ) {
-
 		$value = [];
 		$images = [];
 		$blocks = parse_blocks( get_the_content() );

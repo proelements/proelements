@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Forms\Classes;
 
 use ElementorPro\Core\Utils;
+use ElementorPro\Modules\Forms\Fields\Upload;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -234,9 +235,10 @@ class Form_Record {
 			];
 
 			if ( 'upload' === $field['type'] ) {
-				$field['file_sizes'] = isset( $form_field['file_sizes'] ) ? $form_field['file_sizes'] : '';
-				$field['file_types'] = isset( $form_field['file_types'] ) ? $form_field['file_types'] : '';
-				$field['max_files'] = isset( $form_field['max_files'] ) ? $form_field['max_files'] : '';
+				$field['file_sizes'] = $form_field['file_sizes'] ?? '';
+				$field['file_types'] = $form_field['file_types'] ?? '';
+				$field['max_files'] = $form_field['max_files'] ?? '';
+				$field['attachment_type'] = $form_field['attachment_type'] ?? '';
 			}
 
 			if ( isset( $this->sent_data[ $form_field['custom_id'] ] ) ) {
@@ -318,7 +320,9 @@ class Form_Record {
 				'path' => [],
 			];
 		}
-		$this->files[ $id ]['url'][ $index ] = $filename['url'];
+
+		$attachment_type = $this->fields[ $id ]['attachment_type'];
+		$this->files[ $id ]['url'][ $index ] = Upload::MODE_ATTACH === $attachment_type ? 'attached' : $filename['url'];
 		$this->files[ $id ]['path'][ $index ] = $filename['path'];
 	}
 

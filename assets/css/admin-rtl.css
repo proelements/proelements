@@ -1,4 +1,4 @@
-/*! pro-elements - v3.17.0 - 01-11-2023 */
+/*! pro-elements - v3.18.0 - 06-12-2023 */
 .wrap.elementor-admin-page-license form.elementor-license-box {
   max-width: 600px;
   background: white;
@@ -57,6 +57,21 @@
 }
 .wrap.elementor-admin-page-license .elementor-box-action .elementor-manually-link:hover {
   color: inherit;
+}
+
+#adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link] {
+  font-weight: 600;
+  background-color: #93003c;
+  color: #ffffff;
+  margin: 3px 10px 0;
+  display: block;
+  text-align: center;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+#adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:hover, #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:focus {
+  background-color: #c60051;
+  box-shadow: none;
 }
 
 .fixed .column-elementor_library_type,

@@ -186,23 +186,6 @@
 .e-con.elementor-sticky--active {
   z-index: var(--z-index, 99);
 }
-.e-con .e-con.elementor-sticky {
-  /* Fix for sticky effect inside containers */
-}
-.e-con .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: var(--padding-left);
-  --bc-padding-inline-end: var(--padding-right);
-  padding-inline-start: var(--bc-padding-inline-start, var(--padding-inline-start));
-  padding-inline-end: var(--bc-padding-inline-end, var(--padding-inline-end));
-}
-[dir=rtl] .e-con .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: var(--padding-right);
-  --bc-padding-inline-end: var(--padding-left);
-}
-.e-con[data-core-v316-plus=true] .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: initial;
-  --bc-padding-inline-end: initial;
-}
 
 [data-elementor-type=popup]:not(.elementor-edit-area) {
   display: none;
@@ -4002,7 +3985,7 @@ body.elementor-default .elementor-widget-woocommerce-menu-cart.elementor-menu-ca
   justify-content: space-between;
 }
 .elementor-post-navigation .elementor-post-navigation__link {
-  width: calc(50% - ( 1px / 2 ));
+  width: calc(50% - 1px / 2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -4931,6 +4914,10 @@ the source property is coming from element/dev/scss...
 
 .elementor-field-type-html {
   display: inline-block;
+}
+
+.elementor-field-type-tel input {
+  direction: inherit;
 }
 
 .elementor-login .elementor-remember-me,
@@ -6560,10 +6547,10 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
   transform: translateX(-50%) scaleX(0.75) rotate(45deg);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_above.elementor-testimonial--align-left .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_stacked.elementor-testimonial--align-left .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_inline.elementor-testimonial--align-left .elementor-testimonial__content:after {
-  left: calc( 20px + ( 50px / 2 ) );
+  left: calc(20px + 50px / 2);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_above.elementor-testimonial--align-right .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_stacked.elementor-testimonial--align-right .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_inline.elementor-testimonial--align-right .elementor-testimonial__content:after {
-  right: calc( 20px + ( 50px / 2 ) );
+  right: calc(20px + 50px / 2);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_left .elementor-testimonial__content:after {
   transform: scaleY(0.75) rotate(135deg);
@@ -6574,7 +6561,7 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
   right: -8px;
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_left .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_right .elementor-testimonial__content:after {
-  top: calc(20px + (50px / 2));
+  top: calc(20px + 50px / 2);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_left .elementor-testimonial__footer, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_right .elementor-testimonial__footer {
   padding-top: 20px;
@@ -7099,7 +7086,7 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-next, .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-prev,
 .elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-next,
 .elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-prev {
-  top: calc(50% - ( 40px / 2 ));
+  top: calc(50% - 40px / 2);
 }
 
 .elementor-widget-media-carousel .elementor-swiper-button-prev,
@@ -9920,6 +9907,12 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   cursor: pointer;
   position: relative;
 }
+.elementor-widget-loop-grid .e-loop-nothing-found-message {
+  text-align: var(--e-loop-nothing-found-message-align, center);
+  padding-block-start: var(--e-loop-nothing-found-message-space-from-top, 30px);
+  padding-block-end: var(--e-loop-nothing-found-message-space-from-bottom, 30px);
+  color: var(--e-loop-nothing-found-message-color, #1f2124);
+}
 
 .elementor-loop-container.elementor-posts-masonry {
   align-items: flex-start;
@@ -10163,6 +10156,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   --n-menu-icon-align-items: center;
   --n-menu-icon-order: initial;
   --n-menu-icon-gap: 5px;
+  --n-menu-dropdown-icon-gap: 5px;
   --n-menu-dropdown-content-max-width: initial;
   --n-menu-dropdown-content-box-border-color: #ffffff;
   --n-menu-dropdown-content-box-border-inline-start-width: medium;
@@ -10278,6 +10272,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   display: flex;
   flex-direction: var(--n-menu-title-direction);
   align-items: var(--n-menu-title-align-items);
+  align-self: var(--n-menu-icon-align-items);
   gap: var(--n-menu-icon-gap);
   justify-content: var(--n-menu-title-justify-content);
 }
@@ -10285,6 +10280,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   display: flex;
   align-items: center;
   font-size: var(--n-menu-title-font-size);
+  line-height: var(--n-menu-title-line-height);
   transition: all var(--n-menu-title-transition);
 }
 .elementor-widget-n-menu .e-n-menu-title-text.e-link {
@@ -10324,9 +10320,10 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   align-self: var(--n-menu-icon-align-items);
   justify-content: center;
   flex-direction: column;
-  overflow: hidden;
   position: relative;
   width: fit-content;
+  margin-inline-start: var(--n-menu-dropdown-icon-gap);
+  transition: all var(--n-menu-title-transition);
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon span i {
   font-size: var(--n-menu-title-font-size);
@@ -10337,6 +10334,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   width: var(--n-menu-title-font-size);
   height: var(--n-menu-title-font-size);
   transition: all var(--n-menu-title-transition);
+  fill: var(--n-menu-title-color-normal);
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon[aria-expanded=false] .e-n-menu-dropdown-icon-opened {
   display: none;
@@ -10640,7 +10638,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   --flex-grow: var(--container-widget-flex-grow);
 }
 
-.elementor-widget-n-menu .e-n-menu:not(.e-core-315) .e-n-menu-content > .e-con {
+[data-core-v316-plus=true] .elementor-widget-n-menu .e-n-menu .e-n-menu-content > .e-con {
   --padding-top: initial;
   --padding-right: initial;
   --padding-bottom: initial;
@@ -10817,7 +10815,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   max-width: calc((100% - var(--e-n-carousel-gaps-width-total)) / var(--e-n-carousel-swiper-slides-to-display, 1));
 }
 
-.elementor-widget-n-carousel .e-n-carousel:not(.e-core-315) .swiper-slide > .e-con {
+[data-core-v316-plus=true] .elementor-widget-n-carousel .e-n-carousel .swiper-slide > .e-con {
   --padding-top: initial;
   --padding-right: initial;
   --padding-bottom: initial;

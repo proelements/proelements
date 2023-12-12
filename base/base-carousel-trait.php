@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 trait Base_Carousel_Trait {
+	public $num_of_carousel_items;
+
 	public function add_carousel_layout_controls( $params ) {
 		$slides_on_display = range( 1, $params['slides_on_display'] );
 		$slides_on_display = array_combine( $slides_on_display, $slides_on_display );
@@ -1076,19 +1078,20 @@ trait Base_Carousel_Trait {
 		$this->end_controls_section();
 	}
 
-	public function render_carousel_footer( $settings ) { ?>
-		<?php if ( 'yes' === $settings['arrows'] ) { ?>
+	public function render_carousel_footer( $settings ) {
+		$should_render_pagination_and_arrows = $this->should_render_pagination_and_arrows( $settings );
+		if ( 'yes' === $settings['arrows'] && $should_render_pagination_and_arrows ) : ?>
 			<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
 				<?php $this->render_swiper_button( 'previous' ); ?>
 			</div>
 			<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0">
 				<?php $this->render_swiper_button( 'next' ); ?>
 			</div>
-		<?php }
+		<?php endif;
 
-		if ( $settings['pagination'] ) { ?>
+		if ( $settings['pagination'] && $should_render_pagination_and_arrows ) : ?>
 			<div class="swiper-pagination"></div>
-		<?php }
+		<?php endif;
 	}
 
 	private function render_swiper_button( $type ) {
@@ -1376,4 +1379,16 @@ trait Base_Carousel_Trait {
 
 		return is_rtl() ? array_reverse( $navigation_controls ) : $navigation_controls;
 	}
+
+	/**
+	 * @param array $settings
+	 * @return boolean
+	 */
+	private function should_render_pagination_and_arrows( array $settings ) {
+		// Check for override of control that specifies the number of items to show in the carousel. Nested Carousel overrides this.
+		$num_of_carousel_items = $this->num_of_carousel_items ?? $settings['posts_per_page'];
+
+		return ( isset( $num_of_carousel_items ) && 1 < $num_of_carousel_items || '' == $num_of_carousel_items );
+	}
+
 }

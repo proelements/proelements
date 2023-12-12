@@ -5,6 +5,7 @@ use Elementor\Modules\Promotions\AdminMenuItems\Base_Promotion_Item;
 use Elementor\Settings;
 use ElementorPro\License\API;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Forms\Submissions\Component as Form_Submissions_Component;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -20,6 +21,12 @@ class Submissions_Promotion_Menu_Item extends Base_Promotion_Item {
 	}
 
 	public function get_cta_url() {
+		if ( ! API::active_licence_has_feature( Form_Submissions_Component::NAME ) ) {
+			$upgrade_url = 'https://go.elementor.com/go-pro-advanced-form-submissions/';
+
+			return $upgrade_url;
+		}
+
 		$connect_url = Plugin::instance()->license_admin->get_connect_url( [
 			'utm_source' => 'wp-dash-submissions',
 			'utm_medium' => 'wp-dash',
@@ -34,6 +41,10 @@ class Submissions_Promotion_Menu_Item extends Base_Promotion_Item {
 	}
 
 	public function get_cta_text() {
+		if ( ! API::active_licence_has_feature( Form_Submissions_Component::NAME ) ) {
+			return esc_html__( 'Upgrade Now', 'elementor-pro' );
+		}
+
 		return API::is_license_expired()
 				? esc_html__( 'Renew now', 'elementor-pro' )
 				: esc_html__( 'Connect & Activate', 'elementor-pro' );
@@ -45,7 +56,7 @@ class Submissions_Promotion_Menu_Item extends Base_Promotion_Item {
 
 	public function render_promotion_description() {
 		echo esc_html__(
-			'Save and manage all of your form submissions in one single place. All within a simple, intuitive place.',
+			'Store all your form submissions within Elementor. Manage, analyze, or export leads easily.',
 			'elementor-pro'
 		);
 	}

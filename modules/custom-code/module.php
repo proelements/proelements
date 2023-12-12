@@ -41,8 +41,11 @@ class Module extends Module_Base {
 		$this->meta_box = new Custom_Code_Metabox();
 
 		$this->actions();
-		$this->register_custom_post_type();
-		$this->register_metabox();
+
+		if ( $this->can_use_custom_code() ) {
+			$this->register_custom_post_type();
+			$this->register_metabox();
+		}
 	}
 
 	public function get_name() {
@@ -50,14 +53,15 @@ class Module extends Module_Base {
 	}
 
 	private function actions() {
-		// TODO: Maybe just ignore all of those when the user can't use custom code?
-		add_action( 'elementor/documents/register', function ( $documents_manager ) {
-			return $this->register_documents( $documents_manager );
-		} );
+		if ( $this->can_use_custom_code() ) {
+			add_action( 'elementor/documents/register', function ( $documents_manager ) {
+				return $this->register_documents( $documents_manager );
+			} );
 
-		add_action( 'elementor/theme/register_locations', function ( $location_manager ) {
-			return $this->register_location( $location_manager );
-		} );
+			add_action( 'elementor/theme/register_locations', function ( $location_manager ) {
+				return $this->register_location( $location_manager );
+			} );
+		}
 
 		add_action( 'elementor/admin/menu/register', function ( Admin_Menu_Manager $admin_menu_manager ) {
 			$this->add_admin_menu( $admin_menu_manager );
@@ -323,7 +327,7 @@ class Module extends Module_Base {
 	}
 
 	private function can_use_custom_code() {
-		return API::is_license_active() || $this->has_custom_code_snippets();
+		return ( API::is_license_active() && API::is_licence_has_feature( static::MODULE_NAME, API::BC_VALIDATION_CALLBACK ) || $this->has_custom_code_snippets() );
 	}
 
 	private function has_custom_code_snippets() {
@@ -394,7 +398,7 @@ class Module extends Module_Base {
 			}
 
 			echo esc_html( $value );
-		} else if ( self::ADDITIONAL_COLUMN_INSTANCES === $column_name ) {
+		} elseif ( self::ADDITIONAL_COLUMN_INSTANCES === $column_name ) {
 			/** @var Conditions_Manager $conditions_manager */
 			$conditions_manager = Plugin::instance()->modules_manager->get_modules( 'theme-builder' )->get_conditions_manager();
 

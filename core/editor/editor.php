@@ -128,7 +128,7 @@ class Editor extends App {
 		foreach ( $assets_config->all() as $package => $config ) {
 			wp_enqueue_script(
 				$config['handle'],
-				$this->get_js_assets_url( "packages/${package}/${package}" ),
+				$this->get_js_assets_url( "packages/{$package}/{$package}" ),
 				$config['deps'],
 				ELEMENTOR_PRO_VERSION,
 				true
@@ -158,6 +158,10 @@ class Editor extends App {
 			'utm_campaign' => 'connect-and-activate-license',
 			'utm_content' => 'editor-dynamic-promotion',
 		] );
+
+		if ( ! isset( $settings['promotionWidgets'] ) ) {
+			$settings['promotionWidgets'] = License_API::get_promotion_widgets();
+		}
 
 		return $settings;
 	}

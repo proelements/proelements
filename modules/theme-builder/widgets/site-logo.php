@@ -99,7 +99,10 @@ class Site_Logo extends Widget_Image {
 		$this->update_control(
 			'caption_source',
 			[
-				'options' => $this->get_caption_source_options(),
+				'options' => [
+					'none' => esc_html__( 'None', 'elementor-pro' ),
+					'attachment' => esc_html__( 'Attachment Caption', 'elementor-pro' ),
+				],
 			]
 		);
 
@@ -188,14 +191,6 @@ class Site_Logo extends Widget_Image {
 		return parent::get_html_wrapper_class() . ' elementor-widget-' . parent::get_name();
 	}
 
-	private function get_caption_source_options() {
-		$caption_source_options = $this->get_controls( 'caption_source' )['options'];
-
-		unset( $caption_source_options['custom'] );
-
-		return $caption_source_options;
-	}
-
 	protected function get_link_url( $settings ) {
 		switch ( $settings['link_to'] ) {
 			case 'none':
@@ -220,15 +215,11 @@ class Site_Logo extends Widget_Image {
 	// TODO: Remove this method when removing the render() method.
 	private function get_caption( $settings ) {
 		$caption = '';
-		if ( ! empty( $settings['caption_source'] ) ) {
-			switch ( $settings['caption_source'] ) {
-				case 'attachment':
-					$caption = wp_get_attachment_caption( $settings['image']['id'] );
-					break;
-				case 'custom':
-					$caption = ! Utils::is_empty( $settings['caption'] ) ? $settings['caption'] : '';
-			}
+
+		if ( ! empty( $settings['caption_source'] ) && 'attachment' === $settings['caption_source'] ) {
+			$caption = wp_get_attachment_caption( $settings['image']['id'] );
 		}
+
 		return $caption;
 	}
 

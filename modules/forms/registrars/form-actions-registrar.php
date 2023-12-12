@@ -5,6 +5,7 @@ namespace ElementorPro\Modules\Forms\Registrars;
 use ElementorPro\Core\Utils\Registrar;
 use ElementorPro\Modules\Forms\Actions;
 use ElementorPro\Plugin;
+use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -14,6 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Basic form actions registration manager.
  */
 class Form_Actions_Registrar extends Registrar {
+
+	const FEATURE_NAME_CLASS_NAME_MAP = [
+		'email' => 'Email',
+		'email2' => 'Email2',
+		'redirect' => 'Redirect',
+		'webhook' => 'Webhook',
+		'mailchimp' => 'Mailchimp',
+		'drip' => 'Drip',
+		'activecampaign' => 'Activecampaign',
+		'getresponse' => 'Getresponse',
+		'convertkit' => 'Convertkit',
+		'mailerlite' => 'Mailerlite',
+		'slack' => 'Slack',
+		'discord' => 'Discord',
+	];
 
 	/**
 	 * Form_Actions_Registrar constructor.
@@ -34,18 +50,12 @@ class Form_Actions_Registrar extends Registrar {
 	public function init() {
 		// Register the actions handlers using a hook since some actions need to be registered before those actions (e.g: save-to-database).
 		add_action( 'elementor_pro/forms/actions/register', function ( Form_Actions_Registrar $actions_registrar ) {
-			$actions_registrar->register( new Actions\Email() );
-			$actions_registrar->register( new Actions\Email2() );
-			$actions_registrar->register( new Actions\Redirect() );
-			$actions_registrar->register( new Actions\Webhook() );
-			$actions_registrar->register( new Actions\Mailchimp() );
-			$actions_registrar->register( new Actions\Drip() );
-			$actions_registrar->register( new Actions\Activecampaign() );
-			$actions_registrar->register( new Actions\Getresponse() );
-			$actions_registrar->register( new Actions\Convertkit() );
-			$actions_registrar->register( new Actions\Mailerlite() );
-			$actions_registrar->register( new Actions\Slack() );
-			$actions_registrar->register( new Actions\Discord() );
+			$form_actions = API::filter_active_features( static::FEATURE_NAME_CLASS_NAME_MAP );
+
+			foreach ( $form_actions as $action ) {
+				$class_name = 'ElementorPro\Modules\Forms\Actions\\' . $action;
+				$actions_registrar->register( new $class_name() );
+			}
 		} );
 
 		/**

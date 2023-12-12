@@ -30,6 +30,7 @@ class Post_Custom_Field extends Tag {
 			Module::POST_META_CATEGORY,
 			Module::COLOR_CATEGORY,
 			Module::DATETIME_CATEGORY,
+			Module::MEDIA_CATEGORY,
 		];
 	}
 

@@ -3,6 +3,8 @@ namespace ElementorPro\License;
 
 use Elementor\Core\Common\Modules\Connect\Module as ConnectModule;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Tiers\Module as Tiers;
+use Elementor\Api as Core_API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -56,6 +58,21 @@ class API {
 	const REQUEST_LOCK_OPTION_NAME = '_elementor_pro_api_requests_lock';
 
 	const TRANSIENT_KEY_PREFIX = 'elementor_pro_remote_info_api_data_';
+
+	const LICENCE_TIER_KEY = 'tier';
+	const LICENCE_GENERATION_KEY = 'generation';
+
+	// Tiers.
+	const TIER_ESSENENTIAL = 'essential';
+	const TIER_ADVANCED = 'advanced';
+	const TIER_EXPERT = 'expert';
+	const TIER_AGENCY = 'agency';
+
+	// Generations.
+	const GENERATION_ESSENTIAL_OCT2023 = 'essential-oct2023';
+	const GENERATION_EMPTY = 'empty';
+
+	const BC_VALIDATION_CALLBACK = 'should_allow_all_features';
 
 	protected static $transient_data = [];
 
@@ -360,11 +377,118 @@ class API {
 		return self::is_licence_has_feature( self::FEATURE_PRO_TRIAL );
 	}
 
-	public static function is_licence_has_feature( $feature_name ) {
+	public static function is_licence_has_feature( $feature_name, $license_check_validator = null ) {
 		$license_data = self::get_license_data();
+
+		if ( self::custom_licence_validator_passed( $license_check_validator ) ) {
+			return true;
+		}
 
 		return ! empty( $license_data['features'] )
 			&& in_array( $feature_name, $license_data['features'], true );
+	}
+
+	private static function custom_licence_validator_passed( $license_check_validator ) {
+		return null !== $license_check_validator &&
+			is_callable( [ __CLASS__, $license_check_validator ] ) &&
+			self::$license_check_validator();
+	}
+
+	private static function should_allow_all_features() {
+		return ! self::licence_supports_tiers() || self::is_frontend();
+	}
+
+	private static function is_frontend() {
+		return ! is_admin() && ! Plugin::elementor()->preview->is_preview_mode();
+	}
+
+	/*
+	 * We can consider removing this function and it's usages at a future point if
+	 * we feel confident that all user's Licence Caches has been refreshed
+	 * and should definitely contain a tier and generation.
+	 */
+	private static function licence_supports_tiers() {
+		$license_data = self::get_license_data();
+
+		return ! empty( $license_data[ static::LICENCE_TIER_KEY ] ) && ! empty( $license_data[ static::LICENCE_GENERATION_KEY ] );
+	}
+
+	public static function is_need_to_show_upgrade_promotion() {
+		if ( ! self::licence_supports_tiers() ) {
+			return false;
+		}
+
+		return self::is_licence_tier( static::TIER_ESSENENTIAL ) && self::is_licence_generation( static::GENERATION_EMPTY );
+	}
+
+	private static function is_licence_tier( $tier ) {
+		if ( ! self::licence_supports_tiers() ) {
+			return false;
+		}
+
+		return self::get_license_data()[ static::LICENCE_TIER_KEY ] === $tier;
+	}
+
+	private static function is_licence_generation( $generation ) {
+		if ( ! self::licence_supports_tiers() ) {
+			return false;
+		}
+
+		return self::get_license_data()[ static::LICENCE_GENERATION_KEY ] === $generation;
+	}
+
+	public static function filter_active_features( $features ) {
+		if ( self::should_allow_all_features() ) {
+			return array_values( $features );
+		}
+
+		$license_data = self::get_license_data();
+		$filtered_values = [];
+
+		if ( ! is_array( $license_data['features'] ) ) {
+			$license_data['features'] = [];
+		}
+
+		foreach ( $license_data['features'] as $key ) {
+			if ( ! array_key_exists( $key, $features ) ) {
+				continue;
+			}
+
+			$filtered_values[] = $features[ $key ];
+		}
+
+		return $filtered_values;
+	}
+
+	public static function get_promotion_widgets() {
+		$promotions = Core_API::get_promotion_widgets();
+		$license_data = self::get_license_data();
+
+		if ( ! self::licence_supports_tiers() ) {
+			return [];
+		}
+
+		if ( ! is_array( $license_data['features'] ) ) {
+			$license_data['features'] = [];
+		}
+
+		foreach ( $promotions as $key => $promotion ) {
+			if ( ! in_array( $promotion['name'], $license_data['features'] ) ) {
+				continue;
+			}
+
+			unset( $promotions[ $key ] );
+		}
+
+		return array_values( $promotions );
+	}
+
+	/*
+	 * Check if the Licence is not Expired and also has a Feature.
+	 * Needed because even Expired Licences keep the features array for BC.
+	 */
+	public static function active_licence_has_feature( $feature_name ) {
+		return ! self::is_license_expired() && self::is_licence_has_feature( $feature_name, static::BC_VALIDATION_CALLBACK );
 	}
 
 	public static function is_license_about_to_expire() {
@@ -411,5 +535,44 @@ class API {
 		}
 
 		return $access_level;
+	}
+
+	/**
+	 * The license API uses "tiers" and "generations".
+	 * Because we don't use the same logic, and have a flat list of prioritized tiers & generations,
+	 * we take the generation if exists and fallback to the tier otherwise.
+	 *
+	 * For example:
+	 *   [ 'tier' => 'essential', 'generation' => 'essential-oct2023' ] => 'essential-oct2023'
+	 *   [ 'tier' => 'essential', 'generation' => 'empty' ] => 'essential'
+	 *   [ 'tier' => '', 'generation' => '' ] => 'essential-oct2023'
+	 *   [] => 'essential-oct2023'
+	 *
+	 * @return string
+	 */
+	public static function get_access_tier() {
+		if ( ! static::is_license_active() ) {
+			return 'free';
+		}
+
+		$license_data = static::get_license_data();
+		$tier = $license_data['tier'] ?? null;
+		$generation = $license_data['generation'] ?? null;
+
+		// Fallback to legacy license when the API returns empty values.
+		$is_legacy_api = empty( $tier ) || empty( $generation );
+
+		if ( $is_legacy_api ) {
+			return 'essential-oct2023';
+		}
+
+		// The license API returns "empty" instead of empty string.
+		$has_generation = 'empty' !== $generation;
+
+		if ( $has_generation ) {
+			return $generation;
+		}
+
+		return $tier;
 	}
 }

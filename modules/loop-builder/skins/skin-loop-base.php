@@ -10,6 +10,7 @@ use ElementorPro\Modules\QueryControl\Controls\Group_Control_Related;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Dynamic_CSS;
 use ElementorPro\Modules\LoopBuilder\Traits\Alternate_Templates_Trait;
+use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -98,6 +99,23 @@ class Skin_Loop_Base extends Skin_Base {
 		if ( $current_document ) {
 			Plugin::elementor()->documents->switch_to_document( $current_document );
 		}
+	}
+
+	protected function handle_no_posts_found() {
+		$settings = $this->parent->get_settings_for_display();
+
+		?>
+		<div class="e-loop-nothing-found-message">
+		<?php
+		if ( isset( $settings['enable_nothing_found_message'] ) && 'yes' === $settings['enable_nothing_found_message'] ) {
+			$nothing_found_message_html_tag = Utils::validate_html_tag( $settings['nothing_found_message_html_tag'] ); ?>
+			<<?php Utils::print_validated_html_tag( $nothing_found_message_html_tag ); ?> class="e-loop-nothing-found-message__text">
+				<?php Utils::print_unescaped_internal_string( $settings['nothing_found_message_text'] ); ?>
+			</<?php Utils::print_validated_html_tag( $nothing_found_message_html_tag ); ?>>
+			<?php
+		}
+		?></div>
+		<?php
 	}
 
 	protected function get_loop_header_widget_classes() {

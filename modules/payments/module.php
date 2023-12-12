@@ -6,6 +6,7 @@ use ElementorPro\Base\Module_Base;
 use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Payments\Classes\Stripe_Handler;
+use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -19,15 +20,18 @@ class Module extends Module_Base {
 	const STRIPE_TAX_ENDPOINT_URL = 'tax_rates';
 	const WP_DASH_STRIPE_API_KEYS_LINK = 'https://go.elementor.com/wp-dash-stripe-api-keys/';
 	const STRIPE_TRANSACTIONS_LINK = 'https://go.elementor.com/stripe-transaction/';
+	const STRIPE_LICENCE_FEATURE_NAME = 'stripe-button';
+
+	const WIDGET_NAME_CLASS_NAME_MAP = [
+		'paypal-button' => 'Paypal_Button',
+		self::STRIPE_LICENCE_FEATURE_NAME => 'Stripe_Button',
+	];
 
 	public $secret_key = '';
 	private $stripe_handler;
 
 	public function get_widgets() {
-		return [
-			'Paypal_Button',
-			'Stripe_Button',
-		];
+		return API::filter_active_features( static::WIDGET_NAME_CLASS_NAME_MAP );
 	}
 
 	/**
@@ -457,7 +461,7 @@ class Module extends Module_Base {
 		add_action( 'wp_ajax_nopriv_submit_stripe_form', [ $this, 'submit_stripe_form' ] );
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 
-		if ( current_user_can( 'administrator' ) ) {
+		if ( current_user_can( 'administrator' ) && API::is_licence_has_feature( static::STRIPE_LICENCE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_admin_fields' ], 999 );
 		}
 		add_action( 'wp_ajax_' . self::STRIPE_TEST_SECRET_KEY . '_validate', [ $this, 'ajax_validate_secret_key' ] );
