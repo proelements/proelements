@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 06-12-2023 */
+/*! pro-elements - v3.18.0 - 17-01-2024 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["preloaded-elements-handlers"],{
 
 /***/ "../assets/dev/js/frontend/preloaded-elements-handlers.js":
@@ -8681,6 +8681,7 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
         if ('bullets' === elementSettings.marker_view && icon) {
           liContent = `${renderedIcon}${liContent}`;
         }
+        liContent = _dompurify.default.sanitize(liContent);
         html += liContent;
         html += '</div>';
         this.listItemPointer++;

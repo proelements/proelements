@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 06-12-2023 */
+/*! pro-elements - v3.18.0 - 17-01-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["table-of-contents"],{
 
@@ -259,6 +259,7 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
         if ('bullets' === elementSettings.marker_view && icon) {
           liContent = `${renderedIcon}${liContent}`;
         }
+        liContent = _dompurify.default.sanitize(liContent);
         html += liContent;
         html += '</div>';
         this.listItemPointer++;
@@ -410,4 +411,4 @@ exports["default"] = TOCHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=table-of-contents.406ba62e8fc6e765b15b.bundle.js.map
+//# sourceMappingURL=table-of-contents.e67f9eaf44032e14dc57.bundle.js.map

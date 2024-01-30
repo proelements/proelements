@@ -17,5 +17,5 @@ class Posts_Archive_Skin_Full_Content extends Skin_Full_Content {
 	}
 
 	/* Remove `posts_per_page` control */
-	protected function register_post_count_control(){}
+	protected function register_post_count_control() {}
 }

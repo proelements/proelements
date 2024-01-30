@@ -515,7 +515,11 @@ class Price_List extends Base_Widget {
 			$image_src = $image_src[0];
 		}
 
-		return sprintf( '<img src="%s" alt="%s" loading="lazy" />', $image_src, $item['title'] );
+		return sprintf(
+			'<img src="%s" alt="%s" loading="lazy" />',
+			esc_url( $image_src ),
+			esc_attr( wp_kses_post( $item['title'] ) )
+		);
 	}
 
 	private function render_item_header( $item ) {

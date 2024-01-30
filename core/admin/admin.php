@@ -294,9 +294,10 @@ class Admin extends App {
 		else add_action( 'admin_menu', [ $this, 'remove_go_pro_menu' ], 999 );
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
-		add_filter( 'elementor/tracker/send_tracking_data_params', [ $this, 'change_tracker_params' ], 200 );
 
 		if (defined('IS_PRO_ELEMENTS')) return;
+		add_filter( 'elementor/tracker/send_tracking_data_params', [ $this, 'change_tracker_params' ], 200 );
+
 		add_action( 'elementor/admin/after_create_settings/' . Tools::PAGE_ID, [ $this, 'register_admin_tools_fields' ], 50 );
 
 		add_filter( 'plugin_action_links_' . ELEMENTOR_PLUGIN_BASE, [ $this, 'plugin_action_links' ], 50 );

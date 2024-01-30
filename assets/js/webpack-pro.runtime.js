@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 06-12-2023 */
+/*! pro-elements - v3.18.0 - 17-01-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -103,7 +103,7 @@
 /******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".58e0fcb000aa02df3f24.bundle.js";
 /******/ 			if (chunkId === "slides") return "" + chunkId + ".3b185c687f9167dfae0c.bundle.js";
 /******/ 			if (chunkId === "social") return "" + chunkId + ".deeefd0e3641200f8239.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".406ba62e8fc6e765b15b.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".e67f9eaf44032e14dc57.bundle.js";
 /******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".2a0ae25f7c61f4ef3f38.bundle.js";
 /******/ 			if (chunkId === "search-form") return "" + chunkId + ".4beabae7f0e0a3129ef7.bundle.js";
 /******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".010ec7298aee1fcdc2ea.bundle.js";

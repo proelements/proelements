@@ -305,9 +305,12 @@ class Conditions_Manager {
 
 		$document = $theme_builder_module->get_document( $post_id );
 
+		if ( ! $document ) {
+			return false;
+		}
+
 		if ( empty( $conditions_to_save ) ) {
-			// TODO: $document->delete_meta.
-			$is_saved = delete_post_meta( $post_id, '_elementor_conditions' );
+			$is_saved = $document->delete_meta( '_elementor_conditions' );
 		} else {
 			$is_saved = $document->update_meta( '_elementor_conditions', $conditions_to_save );
 		}

@@ -1241,7 +1241,7 @@ class Module extends Module_Base {
 
 		$products_html = ob_get_clean();
 
-		remove_filter( $title_hook, function(){}, 10 );
+		remove_filter( $title_hook, function() {}, 10 );
 
 		if ( $products_html ) {
 			$products_html = str_replace( '<ul class="products', '<ul class="products elementor-grid', $products_html );

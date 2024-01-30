@@ -29,5 +29,5 @@ class Posts_Archive_Skin_Classic extends Skin_Classic {
 	}
 
 	/* Remove `posts_per_page` control */
-	protected function register_post_count_control(){}
+	protected function register_post_count_control() {}
 }

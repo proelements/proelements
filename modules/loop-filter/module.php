@@ -20,6 +20,7 @@ class Module extends Module_Base {
 	const EXPERIMENT_NAME = 'taxonomy-filter';
 	private $operator;
 	private $taxonomy;
+	private $query;
 
 	/**
 	 * @var array Array of widgets containing each widget's filters which are tied to the current session.

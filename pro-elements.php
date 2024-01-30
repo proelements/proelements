@@ -26,7 +26,7 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-define( 'ELEMENTOR_PRO_VERSION', '3.18.1' );
+define( 'ELEMENTOR_PRO_VERSION', '3.18.3' );
 
 /**
  * All versions should be `major.minor`, without patch, in order to compare them properly.

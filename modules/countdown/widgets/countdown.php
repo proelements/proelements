@@ -657,6 +657,35 @@ class Countdown extends Base_Widget {
 		return $actions;
 	}
 
+	private function is_valid_url( $url ) {
+		return ! preg_match( '/\bjavascript\b/i', $url ) && filter_var( $url, FILTER_VALIDATE_URL );
+	}
+
+	private function sanitize_action( $key, $value ) {
+		if ( 'redirect_url' === $key && is_string( $value ) ) {
+			return $this->is_valid_url( $value ) ? esc_url( $value ) : null;
+		}
+
+		return esc_html( $value );
+	}
+
+	private function map_sanitized_action( $action ) {
+		$sanitized_action = [];
+
+		foreach ( $action as $key => $value ) {
+			$sanitized_action[ $key ] = $this->sanitize_action( $key, $value );
+		}
+
+		return $sanitized_action;
+	}
+
+	private function sanitize_redirect_url( $actions ) {
+		return array_map( function ( $action ) {
+			return $this->map_sanitized_action( $action );
+		}, $actions );
+	}
+
+
 	protected function render() {
 		$instance = $this->get_settings_for_display();
 		$due_date = $instance['due_date'];
@@ -677,7 +706,9 @@ class Countdown extends Base_Widget {
 		}
 
 		if ( $actions ) {
-			$this->add_render_attribute( 'div', 'data-expire-actions', wp_json_encode( $actions ) );
+			$sanitized_actions = $this->sanitize_redirect_url( $actions );
+
+			$this->add_render_attribute( 'div', 'data-expire-actions', wp_json_encode( $sanitized_actions ) );
 		}
 
 		$this->add_render_attribute( 'div', [
@@ -696,8 +727,7 @@ class Countdown extends Base_Widget {
 					continue;
 				} ?>
 				<div class="elementor-countdown-expire--message">
-					<?php // PHPCS - the main text of a widget should not be escaped.
-					echo $instance['message_after_expire']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo esc_html( $instance['message_after_expire'] ); ?>
 				</div>
 				<?php
 			}
