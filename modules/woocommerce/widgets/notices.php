@@ -99,11 +99,7 @@ class Notices extends Base_Widget {
 
 	protected function render() {
 		if ( Plugin::elementor()->editor->is_edit_mode() || Plugin::elementor()->preview->is_preview_mode() ) {
-			?>
-			<div class="woocommerce-info e-notices-demo-notice">
-				<?php echo esc_html__( 'This is an example of a WooCommerce notice. (You won\'t see this while previewing your site.)', 'elementor-pro' ); ?>
-			</div>
-			<?php
+			$this->render_demo_notice();
 		} else {
 			$this->hide_woocommerce_notices();
 			?>
@@ -112,6 +108,23 @@ class Notices extends Base_Widget {
 			</div>
 			<?php
 		}
+	}
+
+	protected function render_demo_notice() {
+		?>
+		<div class="e-notices-demo-notice">
+		<?php
+		wc_get_template( 'notices/notice.php', [
+			'notices' => [
+				'0' => [
+					'notice' => esc_html__( 'This is an example of a WooCommerce notice. (You won\'t see this while previewing your site.)', 'elementor-pro' ),
+					'data' => [],
+				],
+			],
+		] );
+		?>
+		</div>
+		<?php
 	}
 
 	public function get_group_name() {

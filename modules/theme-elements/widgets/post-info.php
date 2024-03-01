@@ -137,6 +137,9 @@ class Post_Info extends Base {
 					__( 'Use the letters: %s', 'elementor-pro' ),
 					'l D d j S F m M n Y y'
 				),
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -174,6 +177,9 @@ class Post_Info extends Base {
 					__( 'Use the letters: %s', 'elementor-pro' ),
 					'g G H i a A'
 				),
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -201,6 +207,9 @@ class Post_Info extends Base {
 				],
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -411,7 +420,13 @@ class Post_Info extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 50,
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -497,6 +512,12 @@ class Post_Info extends Base {
 						'min' => 1,
 						'max' => 20,
 					],
+					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'condition' => [
 					'divider' => 'yes',
@@ -521,6 +542,12 @@ class Post_Info extends Base {
 					'px' => [
 						'min' => 1,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 					'%' => [
 						'min' => 1,
@@ -550,6 +577,12 @@ class Post_Info extends Base {
 					'px' => [
 						'min' => 1,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 					'%' => [
 						'min' => 1,
@@ -623,6 +656,12 @@ class Post_Info extends Base {
 					'px' => [
 						'min' => 6,
 					],
+					'em' => [
+						'max' => 0.6,
+					],
+					'rem' => [
+						'max' => 0.6,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-icon-list-icon' => 'width: {{SIZE}}{{UNIT}};',
@@ -651,6 +690,12 @@ class Post_Info extends Base {
 				'range' => [
 					'px' => [
 						'max' => 50,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'selectors' => [

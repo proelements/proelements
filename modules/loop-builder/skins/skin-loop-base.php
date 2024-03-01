@@ -3,6 +3,8 @@ namespace ElementorPro\Modules\LoopBuilder\Skins;
 
 use ElementorPro\Modules\LoopBuilder\Documents\Loop;
 use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
+use ElementorPro\Modules\LoopBuilder\Files\Css\Loop as Loop_CSS;
+use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Preview;
 use ElementorPro\Modules\LoopBuilder\Module;
 use ElementorPro\Modules\LoopBuilder\Widgets\Base as Loop_Widget_Base;
 use ElementorPro\Modules\Posts\Skins\Skin_Base;
@@ -11,6 +13,7 @@ use ElementorPro\Plugin;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Dynamic_CSS;
 use ElementorPro\Modules\LoopBuilder\Traits\Alternate_Templates_Trait;
 use Elementor\Utils;
+use Elementor\Core\Files\CSS\Post as Post_CSS;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -73,6 +76,35 @@ class Skin_Loop_Base extends Skin_Base {
 		return $this->query_posts_for_alternate_templates();
 	}
 
+	/**
+	 * Enqueue Loop Document CSS Meta
+	 *
+	 * Process the template before beginning to loop through the items. This ensures that
+	 * elements with dynamic CSS are identified before each individual item is rendered.
+	 *
+	 * @param int $post_id
+	 *
+	 * @return void
+	 */
+	protected function enqueue_loop_document_css_meta( $post_id ) {
+		if ( $this->post_meta_css_exists( $post_id ) ) {
+			return;
+		}
+
+		if ( wp_is_post_autosave( $post_id ) ) {
+			$css_file = Loop_Preview::create( $post_id );
+		} else {
+			$css_file = Loop_CSS::create( $post_id );
+		}
+
+		/** @var Loop|Loop_Preview $css_file */
+		$css_file->update();
+	}
+
+	private function post_meta_css_exists( $post_id ) {
+		return ! empty( get_post_meta( $post_id, Post_CSS::META_KEY ) );
+	}
+
 	public function render() {
 		$template_id = $this->parent->get_settings_for_display( 'template_id' );
 		$is_edit_mode = Plugin::elementor()->editor->is_edit_mode();
@@ -81,6 +113,7 @@ class Skin_Loop_Base extends Skin_Base {
 		$current_document = Plugin::elementor()->documents->get_current();
 
 		if ( $template_id ) {
+			$this->enqueue_loop_document_css_meta( $template_id );
 			$this->alternate_template_before_skin_render();
 
 			$this->maybe_add_load_more_wrapper_class();

@@ -96,10 +96,14 @@ class Product_Rating extends Base_Widget {
 					'unit' => 'em',
 				],
 				'range' => [
+					'px' => [
+						'max' => 50,
+					],
 					'em' => [
-						'min' => 0,
-						'max' => 4,
-						'step' => 0.1,
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'selectors' => [
@@ -118,15 +122,14 @@ class Product_Rating extends Base_Widget {
 					'unit' => 'em',
 				],
 				'range' => [
-					'em' => [
-						'min' => 0,
-						'max' => 4,
-						'step' => 0.1,
-					],
 					'px' => [
-						'min' => 0,
 						'max' => 50,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'selectors' => [

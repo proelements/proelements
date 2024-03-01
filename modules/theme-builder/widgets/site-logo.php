@@ -141,10 +141,6 @@ class Site_Logo extends Widget_Image {
 			return;
 		}
 
-		if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' ) ) {
-			$this->add_render_attribute( 'wrapper', 'class', 'elementor-image' );
-		}
-
 		$has_caption = $this->has_caption( $settings );
 
 		$link = $this->get_link_url( $settings );
@@ -160,9 +156,6 @@ class Site_Logo extends Widget_Image {
 				$this->add_lightbox_data_attributes( 'link', $settings['image']['id'], $settings['open_lightbox'] );
 			}
 		} ?>
-		<?php if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' ) ) { ?>
-			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-		<?php } ?>
 		<?php if ( $has_caption ) : ?>
 		<figure class="wp-caption">
 	<?php endif; ?>
@@ -181,9 +174,6 @@ class Site_Logo extends Widget_Image {
 		<?php if ( $has_caption ) : ?>
 		</figure>
 	<?php endif; ?>
-		<?php if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' ) ) { ?>
-			</div>
-		<?php } ?>
 		<?php
 	}
 

@@ -155,6 +155,9 @@ class Table_Of_Contents extends Base_Widget {
 				'default' => [],
 				'label_block' => true,
 				'frontend_available' => true,
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -413,6 +416,9 @@ class Table_Of_Contents extends Base_Widget {
 					'em' => [
 						'max' => 2,
 					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--box-border-width: {{SIZE}}{{UNIT}}',
@@ -452,8 +458,13 @@ class Table_Of_Contents extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 1000,
+					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
 					],
 				],
 				'selectors' => [
@@ -561,8 +572,13 @@ class Table_Of_Contents extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 1000,
+					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
 					],
 				],
 				'selectors' => [

@@ -52,6 +52,9 @@ class Price_List extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -333,6 +336,12 @@ class Price_List extends Base_Widget {
 					'px' => [
 						'max' => 10,
 					],
+					'em' => [
+						'max' => 1,
+					],
+					'rem' => [
+						'max' => 1,
+					],
 				],
 				'condition' => [
 					'separator_style!' => 'none',
@@ -372,6 +381,12 @@ class Price_List extends Base_Widget {
 				'range' => [
 					'px' => [
 						'max' => 40,
+					],
+					'em' => [
+						'max' => 4,
+					],
+					'rem' => [
+						'max' => 4,
 					],
 				],
 				'condition' => [
@@ -424,6 +439,12 @@ class Price_List extends Base_Widget {
 					'px' => [
 						'max' => 50,
 					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
 				],
 				'selectors' => [
 					'body.rtl {{WRAPPER}} .elementor-price-list-image' => 'padding-left: calc({{SIZE}}{{UNIT}}/2);',
@@ -460,7 +481,9 @@ class Price_List extends Base_Widget {
 					],
 					'em' => [
 						'max' => 5,
-						'step' => 0.1,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'selectors' => [

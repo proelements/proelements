@@ -114,6 +114,9 @@ class Blockquote extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'default' => esc_html__( 'John Doe', 'elementor-pro' ),
 				'separator' => 'after',
 			]
@@ -180,6 +183,9 @@ class Blockquote extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -194,6 +200,9 @@ class Blockquote extends Base_Widget {
 				],
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -227,6 +236,9 @@ class Blockquote extends Base_Widget {
 						TagsModule::POST_META_CATEGORY,
 						TagsModule::URL_CATEGORY,
 					],
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'label_block' => true,
@@ -368,25 +380,16 @@ class Blockquote extends Base_Widget {
 					'{{WRAPPER}} .elementor-blockquote__tweet-button' => 'border-radius: {{SIZE}}{{UNIT}}',
 				],
 				'range' => [
+					'px' => [
+						'max' => 50,
+					],
 					'em' => [
 						'min' => 0,
 						'max' => 5,
-						'step' => 0.1,
 					],
 					'rem' => [
 						'min' => 0,
 						'max' => 5,
-						'step' => 0.1,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
 					],
 				],
 			]

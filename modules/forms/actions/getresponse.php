@@ -72,6 +72,9 @@ class Getresponse extends Integration_Base {
 				'condition' => [
 					'getresponse_api_key_source' => 'custom',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

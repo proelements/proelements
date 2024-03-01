@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 17-01-2024 */
+/*! pro-elements - v3.19.0 - 26-02-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2527,7 +2527,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = exports.Link = void 0;
-class Link extends $e.modules.document.CommandHistory {
+class Link extends $e.modules.editor.document.CommandHistoryBase {
   validateArgs(args) {
     this.requireContainer(args);
     this.requireArgumentConstructor('data', Object, args);
@@ -2567,7 +2567,7 @@ class Link extends $e.modules.document.CommandHistory {
       $e.run('document/elements/create', {
         container: container.parent,
         model: {
-          id: elementor.helpers.getUniqueID(),
+          id: elementorCommon.helpers.getUniqueId(),
           elType: elementModelAttributes.elType,
           widgetType: elementModelAttributes.widgetType,
           templateID: data.template_id
@@ -2602,7 +2602,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = exports.Unlink = void 0;
-class Unlink extends $e.modules.document.CommandHistory {
+class Unlink extends $e.modules.editor.document.CommandHistoryBase {
   validateArgs(args) {
     this.requireContainer(args);
   }
@@ -2632,7 +2632,7 @@ class Unlink extends $e.modules.document.CommandHistory {
       $e.run('document/elements/create', {
         container: container.parent,
         model: {
-          id: elementor.helpers.getUniqueID(),
+          id: elementorCommon.helpers.getUniqueId(),
           elType: 'widget',
           widgetType: elementModel.get('widgetType'),
           settings: elementorCommon.helpers.cloneObject(elementModel.get('settings').attributes),
@@ -3336,10 +3336,10 @@ class Module extends elementorModules.editor.utils.Module {
         name: 'save'
       });
       if (elementorPro.config.should_show_promotion) {
-        saveAction.shortcut = jQuery('<i>', {
-          class: 'eicon-upgrade'
-        });
-        saveAction.isEnabled = false;
+        const iconLink = '<i class="eicon-advanced"></i>' + '<a class="elementor-context-menu-list__item__shortcut--link-fullwidth" href="https://go.elementor.com/go-pro-advanced-global-widget-context-menu/" target="_blank" rel="noopener noreferrer"></a>';
+        saveAction.shortcut = jQuery(iconLink);
+        saveAction.isEnabled = () => false;
+        delete saveAction.callback;
         return groups;
       }
       saveAction.callback = widget.save.bind(widget);
@@ -3974,6 +3974,81 @@ class _default extends elementorModules.editor.utils.Module {
   }
 }
 exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/notes/assets/js/notes-context-menu.js":
+/*!********************************************************!*\
+  !*** ../modules/notes/assets/js/notes-context-menu.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.notesContextMenu = exports["default"] = void 0;
+class notesContextMenu {
+  constructor() {
+    const elTypes = ['widget', 'section', 'column', 'container'];
+    elTypes.forEach(type => {
+      elementor.hooks.addFilter(`elements/${type}/contextMenuGroups`, this.notesContextMenuAddGroup);
+    });
+  }
+
+  /**
+   * Enable the 'Notes' context menu item
+   *
+   * @since 3.8.0
+   *
+   * @param {Array} groups
+   * @return {Array} The updated groups.
+   */
+  notesContextMenuAddGroup(groups) {
+    const notesGroup = _.findWhere(groups, {
+        name: 'notes'
+      }),
+      notesGroupIndex = groups.indexOf(notesGroup),
+      notesActionItem = {
+        name: 'open_notes',
+        title: __('Notes', 'elementor-pro'),
+        shortcut: '⇧+C',
+        isEnabled: () => true,
+        callback: () => $e.route('notes')
+      };
+    if (elementorPro.config.should_show_promotion) {
+      const iconLink = '<i class="eicon-advanced"></i>' + '<a class="elementor-context-menu-list__item__shortcut--link-fullwidth" href="https://go.elementor.com/go-pro-advanced-notes-context-menu/" target="_blank" rel="noopener noreferrer"></a>';
+      notesActionItem.shortcut = jQuery(iconLink);
+      notesActionItem.isEnabled = () => false;
+      delete notesActionItem.callback;
+    }
+
+    // Create the Notes group if it doesn't exist
+    if (-1 === notesGroupIndex) {
+      const deleteGroup = _.findWhere(groups, {
+          name: 'delete'
+        }),
+        deleteGroupIndex = groups.indexOf(deleteGroup),
+        newGroupPosition = -1 !== deleteGroupIndex ? deleteGroupIndex : groups.length;
+      groups.splice(newGroupPosition, 0, {
+        name: 'notes',
+        actions: [notesActionItem]
+      });
+      return groups;
+    }
+    const openNotesAction = _.findWhere(notesGroup.actions, {
+        name: 'open_notes'
+      }),
+      openNotesActionIndex = notesGroup.actions.indexOf(openNotesAction);
+    groups[notesGroupIndex].actions[openNotesActionIndex] = notesActionItem;
+    return groups;
+  }
+}
+exports.notesContextMenu = notesContextMenu;
+var _default = exports["default"] = notesContextMenu;
 
 /***/ }),
 
@@ -8704,7 +8779,7 @@ $({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".e3439a669e359e50462f.bundle.js";
-/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".9282dc5183d75bb03175.bundle.js";
+/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".bbef3f7412481cbce555.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".2fdc278ce6bc9f6ec2e0.bundle.js";
 /******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".2dedca4ebc18b2de2c3d.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "4abfbfd970d6f7680bc7.bundle.js";
@@ -8915,6 +8990,7 @@ var _module8 = _interopRequireDefault(__webpack_require__(/*! modules/scroll-sna
 var _module9 = _interopRequireDefault(__webpack_require__(/*! modules/payments/assets/js/editor/module */ "../modules/payments/assets/js/editor/module.js"));
 var _module10 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/editor/module */ "../modules/loop-builder/assets/js/editor/module.js"));
 var _tiers = __webpack_require__(/*! ./tiers */ "../assets/dev/js/editor/tiers.js");
+var _notesContextMenu = _interopRequireDefault(__webpack_require__(/*! modules/notes/assets/js/notes-context-menu */ "../modules/notes/assets/js/notes-context-menu.js"));
 var ElementorPro = Marionette.Application.extend({
   config: {},
   modules: {},
@@ -9000,6 +9076,9 @@ var ElementorPro = Marionette.Application.extend({
     elementor.on('preview:loaded', () => this.onElementorPreviewLoaded());
     elementorPro.libraryRemoveGetProButtons();
     elementorCommon.debug.addURLToWatch('elementor-pro/assets');
+    if (elementorPro.config.should_show_promotion) {
+      new _notesContextMenu.default();
+    }
   },
   onElementorPreviewLoaded() {
     elementor.$preview[0].contentWindow.elementorPro = this;

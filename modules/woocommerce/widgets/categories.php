@@ -196,7 +196,6 @@ class Categories extends Base_Widget {
 				],
 				'range'     => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],
@@ -217,7 +216,6 @@ class Categories extends Base_Widget {
 				],
 				'range'     => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],

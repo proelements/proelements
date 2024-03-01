@@ -258,18 +258,19 @@ class Module extends Module_Base {
 		$controls_stack->add_control(
 			$this->get_control_id( 'animation_duration' ),
 			[
-				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'ms' ],
+				'size_units' => [ 's', 'ms', 'custom' ],
 				'default' => [
 					'unit' => 'ms',
 					'size' => 1500,
 				],
 				'range' => [
+					's' => [
+						'max' => 5,
+					],
 					'ms' => [
-						'min' => 0,
 						'max' => 5000,
-						'step' => 50,
 					],
 				],
 				'condition' => [
@@ -414,18 +415,19 @@ class Module extends Module_Base {
 		$controls_stack->add_control(
 			$this->get_control_id( 'preloader_animation_duration' ),
 			[
-				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Animation Duration', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'ms' ],
+				'size_units' => [ 's', 'ms', 'custom' ],
 				'default' => [
 					'unit' => 'ms',
 					'size' => 1500,
 				],
 				'range' => [
+					's' => [
+						'max' => 5,
+					],
 					'ms' => [
-						'min' => 0,
 						'max' => 5000,
-						'step' => 50,
 					],
 				],
 				// Show the control only for images, icons & specific custom pre-loaders.
@@ -466,18 +468,19 @@ class Module extends Module_Base {
 		$controls_stack->add_control(
 			$this->get_control_id( 'preloader_delay' ),
 			[
-				'label' => esc_html__( 'Preloader Delay', 'elementor-pro' ) . ' (ms)',
+				'label' => esc_html__( 'Preloader Delay', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'ms' ],
+				'size_units' => [ 's', 'ms', 'custom' ],
 				'default' => [
 					'unit' => 'ms',
 					'size' => 0,
 				],
 				'range' => [
+					's' => [
+						'max' => 5,
+					],
 					'ms' => [
-						'min' => 0,
 						'max' => 5000,
-						'step' => 50,
 					],
 				],
 				'condition' => [
@@ -520,15 +523,19 @@ class Module extends Module_Base {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'size' => 20,
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 300,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 30,
+					],
+					'rem' => [
+						'max' => 30,
 					],
 				],
 				'condition' => [
@@ -598,6 +605,12 @@ class Module extends Module_Base {
 						'min' => 1,
 						'max' => 1000,
 					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
+					],
 					'vw' => [
 						'min' => 1,
 						'max' => 100,
@@ -636,6 +649,12 @@ class Module extends Module_Base {
 						'min' => 1,
 						'max' => 1000,
 					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
+					],
 					'vw' => [
 						'min' => 1,
 						'max' => 100,
@@ -659,7 +678,7 @@ class Module extends Module_Base {
 					'px' => [
 						'min' => 0,
 						'max' => 1,
-						'step' => .1,
+						'step' => 0.1,
 					],
 				],
 				'condition' => [

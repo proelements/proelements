@@ -69,7 +69,13 @@ class Product_Meta extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 50,
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -134,6 +140,12 @@ class Product_Meta extends Base_Widget {
 						'min' => 1,
 						'max' => 20,
 					],
+					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'condition' => [
 					'divider' => 'yes',
@@ -175,12 +187,13 @@ class Product_Meta extends Base_Widget {
 				],
 				'range' => [
 					'px' => [
-						'min' => 1,
 						'max' => 100,
 					],
-					'%' => [
-						'min' => 1,
-						'max' => 100,
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'condition' => [
@@ -360,6 +373,9 @@ class Product_Meta extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -371,6 +387,9 @@ class Product_Meta extends Base_Widget {
 				'placeholder' => esc_html__( 'N/A', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);

@@ -180,11 +180,16 @@ class Nested_Carousel extends Widget_Nested_Base {
 			[
 				'label' => esc_html__( 'Gap between slides', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 400,
+					],
+					'em' => [
+						'max' => 40,
+					],
+					'rem' => [
+						'max' => 40,
 					],
 				],
 				'default' => [

@@ -199,6 +199,9 @@ class Countdown extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -216,6 +219,9 @@ class Countdown extends Base_Widget {
 				],
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -235,6 +241,9 @@ class Countdown extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -252,6 +261,9 @@ class Countdown extends Base_Widget {
 				],
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -332,12 +344,13 @@ class Countdown extends Base_Widget {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 2000,
 					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
+					'em' => [
+						'max' => 200,
+					],
+					'rem' => [
+						'max' => 200,
 					],
 				],
 				'selectors' => [
@@ -392,8 +405,13 @@ class Countdown extends Base_Widget {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -463,6 +481,9 @@ class Countdown extends Base_Widget {
 				'label' => esc_html__( 'Label', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'show_labels!' => '',
+				],
 			]
 		);
 
@@ -473,6 +494,9 @@ class Countdown extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-label' => 'color: {{VALUE}};',
+				],
+				'condition' => [
+					'show_labels!' => '',
 				],
 			]
 		);
@@ -485,6 +509,9 @@ class Countdown extends Base_Widget {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
+				'condition' => [
+					'show_labels!' => '',
+				],
 			]
 		);
 
@@ -493,6 +520,9 @@ class Countdown extends Base_Widget {
 			[
 				'name' => 'text_stroke',
 				'selector' => '{{WRAPPER}} .elementor-countdown-label',
+				'condition' => [
+					'show_labels!' => '',
+				],
 			]
 		);
 

@@ -150,6 +150,9 @@ abstract class Payment_Button extends Widget_Button {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 17-01-2024 */
+/*! pro-elements - v3.19.0 - 26-02-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -678,6 +678,9 @@ class BaseFilterFrontendModule extends elementorModules.Module {
         newWidgetContainer = this.createElementFromHTMLString(response.data);
       widget.replaceChild(newWidgetContainer, existingWidgetContainer);
       this.handleElementHandlers(newWidgetContainer);
+      if (elementorFrontend.config.experimentalFeatures.e_lazyload) {
+        document.dispatchEvent(new Event('elementor/lazyload/observe'));
+      }
       elementorFrontend.elementsHandler.runReadyTrigger(document.querySelector(`.elementor-element-${widgetId}`));
       widget.classList.remove('e-loading');
     }).finally(() => {

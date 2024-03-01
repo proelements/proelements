@@ -64,6 +64,9 @@ class Post_Navigation extends Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'default' => esc_html__( 'Previous', 'elementor-pro' ),
 				'condition' => [
 					'show_label' => 'yes',
@@ -79,6 +82,9 @@ class Post_Navigation extends Base {
 				'default' => esc_html__( 'Next', 'elementor-pro' ),
 				'condition' => [
 					'show_label' => 'yes',
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'dynamic' => [
 					'active' => true,
@@ -398,8 +404,14 @@ class Post_Navigation extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 6,
+						'min' => 1,
 						'max' => 300,
+					],
+					'em' => [
+						'max' => 30,
+					],
+					'rem' => [
+						'max' => 30,
 					],
 				],
 				'selectors' => [
@@ -414,17 +426,22 @@ class Post_Navigation extends Base {
 				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 50,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
+				],
 				'selectors' => [
 					'body:not(.rtl) {{WRAPPER}} .post-navigation__arrow-prev' => 'padding-right: {{SIZE}}{{UNIT}};',
 					'body:not(.rtl) {{WRAPPER}} .post-navigation__arrow-next' => 'padding-left: {{SIZE}}{{UNIT}};',
 					'body.rtl {{WRAPPER}} .post-navigation__arrow-prev' => 'padding-left: {{SIZE}}{{UNIT}};',
 					'body.rtl {{WRAPPER}} .post-navigation__arrow-next' => 'padding-right: {{SIZE}}{{UNIT}};',
-				],
-				'range' => [
-					'em' => [
-						'min' => 0,
-						'max' => 5,
-					],
 				],
 			]
 		);
@@ -466,6 +483,12 @@ class Post_Navigation extends Base {
 						'min' => 1,
 						'max' => 100,
 					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post-navigation__separator' => 'width: {{SIZE}}{{UNIT}}',
@@ -482,14 +505,19 @@ class Post_Navigation extends Base {
 				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
+				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post-navigation' => 'padding: {{SIZE}}{{UNIT}} 0;',
-				],
-				'range' => [
-					'em' => [
-						'min' => 0,
-						'max' => 5,
-					],
 				],
 			]
 		);

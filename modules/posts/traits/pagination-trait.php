@@ -120,9 +120,34 @@ trait Pagination_Trait {
 			} else {
 				return get_permalink();
 			}
+		} elseif ( $this->is_posts_page() ) {
+			return get_permalink( get_option( 'page_for_posts' ) );
 		}
 
 		// Fallback to home URL.
 		return home_url( '/' );
+	}
+
+	/**
+	 * Determines whether the query is for an existing blog posts index page
+	 *
+	 * @param bool $custom_page_option
+	 * @return bool
+	 */
+	private function is_posts_page( $custom_page_option = true ) {
+		if ( $custom_page_option ) {
+			return ! is_front_page() && is_home();
+		}
+
+		$posts_page_id = (int) get_option( 'page_for_posts' );
+		$base_url = get_query_var( 'pagination_base_url' );
+
+		if ( ! empty( $base_url ) ) {
+			$post_id = url_to_postid( $base_url );
+
+			return $posts_page_id === $post_id;
+		}
+
+		return false;
 	}
 }

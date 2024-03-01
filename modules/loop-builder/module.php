@@ -63,12 +63,25 @@ class Module extends Module_Base {
 		// Prevent enqueue default dynamic CSS for loop item templates
 		add_filter( 'elementor/css-file/dynamic/should_enqueue',
 			function ( $should_enqueue, $post_id ) {
-				if ( static::TEMPLATE_LIBRARY_TYPE_SLUG === get_post_meta( $post_id, Document::TYPE_META_KEY, true ) ) {
+				if ( $this->is_loop_item_document_type_meta_key( $post_id ) ) {
 					$should_enqueue = false;
 				}
 				return $should_enqueue;
 			},
 		10, 2 );
+
+		// Prevent enqueue default Post CSS for loop item templates
+		add_action(
+			'elementor/css-file/post/enqueue',
+			function( $css_file ) {
+				$post_id = $css_file->get_post_id();
+				$file_handle = 'elementor-post-' . $post_id;
+
+				if ( $this->is_loop_item_document_type_meta_key( $post_id ) && wp_style_is( $file_handle, 'enqueued' ) ) {
+					wp_dequeue_style( $file_handle );
+				}
+			}
+		);
 
 		add_filter( 'elementor/editor/localize_settings', function ( $config ) {
 			$config['admin_url'] = admin_url();

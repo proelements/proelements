@@ -35,6 +35,8 @@ class Module extends Module_Base {
 
 	const ACTIVITY_LOG_LICENSE_FEATURE_NAME = 'activity-log';
 	const CF7DB_LICENSE_FEATURE_NAME = 'cf7db';
+	const AKISMET_LICENSE_FEATURE_NAME = 'akismet';
+
 	const WIDGET_NAME_CLASS_NAME_MAP = [
 		'form' => 'Form',
 		'login' => 'Login',
@@ -180,6 +182,11 @@ class Module extends Module_Base {
 		$this->add_component( 'recaptcha', new Classes\Recaptcha_Handler() );
 		$this->add_component( 'recaptcha_v3', new Classes\Recaptcha_V3_Handler() );
 		$this->add_component( 'honeypot', new Classes\Honeypot_Handler() );
+
+		// Akismet
+		if ( class_exists( '\Akismet' ) && API::is_licence_has_feature( static::AKISMET_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			$this->add_component( 'akismet', new Classes\Akismet() );
+		}
 
 		if ( API::is_licence_has_feature( Form_Submissions_Component::NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->register_submissions_component();

@@ -81,7 +81,10 @@ class Triggers extends Base {
 				'type' => Controls_Manager::TEXT,
 				'label' => esc_html__( 'Selector', 'elementor-pro' ),
 				'placeholder' => '.my-class',
-			]
+				'ai' => [
+					'active' => false,
+				],
+			],
 		);
 
 		$this->end_settings_group();

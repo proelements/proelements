@@ -164,6 +164,8 @@ class Slack extends Action_Base {
 			$element['slack_webhook'],
 			$element['slack_channel']
 		);
+
+		return $element;
 	}
 
 	public function run( $record, $ajax_handler ) {

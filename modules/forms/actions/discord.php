@@ -147,6 +147,8 @@ class Discord extends Action_Base {
 			$element['discord_title'],
 			$element['discord_webhook']
 		);
+
+		return $element;
 	}
 
 	public function run( $record, $ajax_handler ) {

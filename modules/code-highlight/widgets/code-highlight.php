@@ -238,6 +238,10 @@ class Code_Highlight extends Base_Widget {
 						'min' => 6,
 						'max' => 50,
 					],
+					'rem' => [
+						'min' => 6,
+						'max' => 50,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .highlight-height' => 'height: {{SIZE}}{{UNIT}};',
@@ -255,6 +259,12 @@ class Code_Highlight extends Base_Widget {
 					'px' => [
 						'min' => 1,
 						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
 					],
 					'vw' => [
 						'min' => 0.1,

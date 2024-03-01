@@ -36,6 +36,9 @@ class Email2 extends Email {
 				'type' => Controls_Manager::TEXT,
 				'default' => $admin_email,
 				'placeholder' => $admin_email,
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

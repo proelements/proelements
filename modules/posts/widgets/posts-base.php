@@ -142,6 +142,12 @@ abstract class Posts_Base extends Base_Widget {
 					'px' => [
 						'max' => 50,
 					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--load-more—spacing: {{SIZE}}{{UNIT}};',
@@ -577,8 +583,13 @@ abstract class Posts_Base extends Base_Widget {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -598,8 +609,13 @@ abstract class Posts_Base extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -679,7 +695,7 @@ abstract class Posts_Base extends Base_Widget {
 
 		if ( $i > 1 ) {
 			if ( '' === get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ] ) ) {
-				$url = add_query_arg( 'page', $i, $url );
+				$url = add_query_arg( $this->get_wp_pagination_query_var(), $i, $url );
 			} elseif ( get_option( 'show_on_front' ) === 'page' && (int) get_option( 'page_on_front' ) === $post->ID ) {
 				$url = trailingslashit( $url ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 			} else {
@@ -866,5 +882,16 @@ abstract class Posts_Base extends Base_Widget {
 		$base_raw_url = $this->is_rest_request() ? $this->get_base_url_for_rest_request( $post_id, $url ) : $this->get_base_url();
 
 		return $this->format_query_string_concatenation( $base_raw_url . '&e-page-' . $this->get_id() . '=' . $i );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_wp_pagination_query_var() {
+		if ( '' === get_option( 'permalink_structure' ) && $this->is_posts_page( $this->is_allow_to_use_custom_page_option() ) ) {
+			return 'paged';
+		}
+
+		return 'page';
 	}
 }

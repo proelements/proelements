@@ -709,7 +709,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _commands___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./commands/ */ "../assets/js/commands/index.js");
 /* harmony import */ var _data_commands___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data-commands/ */ "../assets/js/data-commands/index.js");
 /* harmony import */ var _hooks___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hooks/ */ "../assets/js/hooks/index.js");
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
+/* harmony import */ var _notes_context_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./notes-context-menu */ "../assets/js/notes-context-menu.js");
+
 
 
 
@@ -991,52 +992,7 @@ class EComponent extends $e.modules.ComponentBase {
     if (!this.isInEditor()) {
       return;
     }
-    const elTypes = ['widget', 'section', 'column', 'container'];
-    elTypes.forEach(type => {
-      elementor.hooks.addFilter(`elements/${type}/contextMenuGroups`, this.contextMenuAddGroup);
-    });
-  }
-
-  /**
-   * Enable the 'Notes' context menu item
-   *
-   * @since 3.8.0
-   *
-   * @param {Array} groups
-   * @return {Array} The updated groups.
-   */
-  contextMenuAddGroup(groups) {
-    const notesGroup = _.findWhere(groups, {
-        name: 'notes'
-      }),
-      notesGroupIndex = groups.indexOf(notesGroup),
-      notesActionItem = {
-        name: 'open_notes',
-        title: __('Notes', 'elementor-pro'),
-        shortcut: '⇧+C',
-        isEnabled: () => true,
-        callback: () => $e.route('notes')
-      };
-
-    // Create the Notes group if it doesn't exist
-    if (-1 === notesGroupIndex) {
-      const deleteGroup = _.findWhere(groups, {
-          name: 'delete'
-        }),
-        deleteGroupIndex = groups.indexOf(deleteGroup),
-        newGroupPosition = -1 !== deleteGroupIndex ? deleteGroupIndex : groups.length;
-      groups.splice(newGroupPosition, 0, {
-        name: 'notes',
-        actions: [notesActionItem]
-      });
-      return groups;
-    }
-    const openNotesAction = _.findWhere(notesGroup.actions, {
-        name: 'open_notes'
-      }),
-      openNotesActionIndex = notesGroup.actions.indexOf(openNotesAction);
-    groups[notesGroupIndex].actions[openNotesActionIndex] = notesActionItem;
-    return groups;
+    new _notes_context_menu__WEBPACK_IMPORTED_MODULE_3__["default"]();
   }
 }
 
@@ -1088,6 +1044,79 @@ class NotesAddPanelMenuItem extends $e.modules.hookUI.After {
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotesAddPanelMenuItem);
+
+/***/ }),
+
+/***/ "../assets/js/notes-context-menu.js":
+/*!******************************************!*\
+  !*** ../assets/js/notes-context-menu.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   notesContextMenu: () => (/* binding */ notesContextMenu)
+/* harmony export */ });
+/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
+class notesContextMenu {
+  constructor() {
+    const elTypes = ['widget', 'section', 'column', 'container'];
+    elTypes.forEach(type => {
+      elementor.hooks.addFilter(`elements/${type}/contextMenuGroups`, this.notesContextMenuAddGroup);
+    });
+  }
+
+  /**
+   * Enable the 'Notes' context menu item
+   *
+   * @since 3.8.0
+   *
+   * @param {Array} groups
+   * @return {Array} The updated groups.
+   */
+  notesContextMenuAddGroup(groups) {
+    const notesGroup = _.findWhere(groups, {
+        name: 'notes'
+      }),
+      notesGroupIndex = groups.indexOf(notesGroup),
+      notesActionItem = {
+        name: 'open_notes',
+        title: __('Notes', 'elementor-pro'),
+        shortcut: '⇧+C',
+        isEnabled: () => true,
+        callback: () => $e.route('notes')
+      };
+    if (elementorPro.config.should_show_promotion) {
+      const iconLink = '<i class="eicon-advanced"></i>' + '<a class="elementor-context-menu-list__item__shortcut--link-fullwidth" href="https://go.elementor.com/go-pro-advanced-notes-context-menu/" target="_blank" rel="noopener noreferrer"></a>';
+      notesActionItem.shortcut = jQuery(iconLink);
+      notesActionItem.isEnabled = () => false;
+      delete notesActionItem.callback;
+    }
+
+    // Create the Notes group if it doesn't exist
+    if (-1 === notesGroupIndex) {
+      const deleteGroup = _.findWhere(groups, {
+          name: 'delete'
+        }),
+        deleteGroupIndex = groups.indexOf(deleteGroup),
+        newGroupPosition = -1 !== deleteGroupIndex ? deleteGroupIndex : groups.length;
+      groups.splice(newGroupPosition, 0, {
+        name: 'notes',
+        actions: [notesActionItem]
+      });
+      return groups;
+    }
+    const openNotesAction = _.findWhere(notesGroup.actions, {
+        name: 'open_notes'
+      }),
+      openNotesActionIndex = notesGroup.actions.indexOf(openNotesAction);
+    groups[notesGroupIndex].actions[openNotesActionIndex] = notesActionItem;
+    return groups;
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (notesContextMenu);
 
 /***/ }),
 

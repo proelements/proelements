@@ -142,10 +142,14 @@ class Product_Price extends Base_Widget {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
+					'px' => [
+						'max' => 100,
+					],
 					'em' => [
-						'min' => 0,
-						'max' => 5,
-						'step' => 0.1,
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [

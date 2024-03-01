@@ -72,6 +72,9 @@ class Lightbox extends Tag {
 				'condition' => [
 					'type' => 'video',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 	}

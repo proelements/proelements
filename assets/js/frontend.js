@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 17-01-2024 */
+/*! pro-elements - v3.19.0 - 26-02-2024 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/frontend.js":
@@ -427,7 +427,7 @@ class _default extends elementorModules.frontend.handlers.Base {
       $dimensionsElement = $element;
       let childElementSelector;
       if ('column' === elementType) {
-        childElementSelector = elementorFrontend.config.legacyMode.elementWrappers ? '.elementor-column-wrap' : '.elementor-widget-wrap';
+        childElementSelector = '.elementor-widget-wrap';
       } else {
         childElementSelector = '.elementor-widget-container';
       }

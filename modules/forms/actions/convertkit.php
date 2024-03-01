@@ -72,6 +72,9 @@ class Convertkit extends Integration_Base {
 				'condition' => [
 					'convertkit_api_key_source' => 'custom',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

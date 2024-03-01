@@ -42,7 +42,7 @@ class Module extends Module_Base {
 				'</a>'
 			),
 			'hidden' => false,
-			'release_status' => Manager::RELEASE_STATUS_ALPHA,
+			'release_status' => Manager::RELEASE_STATUS_BETA,
 			'default' => Manager::STATE_INACTIVE,
 			'dependencies' => [
 				'container',

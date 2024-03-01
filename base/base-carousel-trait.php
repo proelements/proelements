@@ -618,10 +618,6 @@ trait Base_Carousel_Trait {
 						'min' => 0.1,
 						'max' => 10,
 					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
 					'rem' => [
 						'min' => 0.1,
 						'max' => 10,
@@ -656,22 +652,13 @@ trait Base_Carousel_Trait {
 					'em' => [
 						'min' => 0,
 						'max' => 5,
-						'step' => 0.1,
 					],
 					'rem' => [
 						'min' => 0,
 						'max' => 5,
-						'step' => 0.1,
 					],
 					'px' => [
-						'min' => 0,
 						'max' => 50,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
 					],
 				],
 				'separator' => 'before',
@@ -778,6 +765,14 @@ trait Base_Carousel_Trait {
 						'min' => 5,
 						'max' => 200,
 					],
+					'em' => [
+						'min' => 0.5,
+						'max' => 20,
+					],
+					'rem' => [
+						'min' => 0.5,
+						'max' => 20,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--' . $params['css_prefix'] . 'swiper-pagination-size: {{SIZE}}{{UNIT}}',
@@ -867,6 +862,12 @@ trait Base_Carousel_Trait {
 				'range' => [
 					'px' => [
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'conditions' => [
@@ -971,6 +972,12 @@ trait Base_Carousel_Trait {
 					'px' => [
 						'max' => 100,
 					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
 				],
 				'conditions' => [
 					'relation' => 'and',
@@ -1012,8 +1019,13 @@ trait Base_Carousel_Trait {
 				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
 					],
 				],
 				'selectors' => [

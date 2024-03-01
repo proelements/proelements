@@ -4,8 +4,8 @@
  * Description: This plugin enables GPL features of Elementor Pro: widgets, theme builder, dynamic colors & content, forms & popup builder, and more. Note that PRO Elements is not a substitute for Elementor Pro. If you need all Elementor Pro features, including access to pro templates library and dedicated support, we encourage you to <a href="https://elementor.com/pro/" target="_blank">purchase Elementor Pro</a>.
  * Plugin URI: https://proelements.org/
  * Author: PROElements.org
- * Version: 3.18.3
- * Elementor tested up to: 3.18.0
+ * Version: 3.19.3
+ * Elementor tested up to: 3.19.0
  * Author URI: https://proelements.org/
  *
  * Text Domain: elementor-pro
@@ -26,7 +26,7 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-define( 'ELEMENTOR_PRO_VERSION', '3.18.3' );
+define( 'ELEMENTOR_PRO_VERSION', '3.19.3' );
 
 /**
  * All versions should be `major.minor`, without patch, in order to compare them properly.
@@ -34,8 +34,8 @@ define( 'ELEMENTOR_PRO_VERSION', '3.18.3' );
  * (e.g. Core 3.14.0-beta1 and Core 3.14.0-cloud2 should be fine when requiring 3.14, while
  * requiring 3.14.2 is not allowed)
  */
-define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '3.16' );
-define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '3.18' );
+define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '3.17' );
+define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '3.19' );
 
 define( 'ELEMENTOR_PRO__FILE__', __FILE__ );
 define( 'ELEMENTOR_PRO_PLUGIN_BASE', plugin_basename( ELEMENTOR_PRO__FILE__ ) );
@@ -117,8 +117,8 @@ function pro_elements_plugin_fail_load() {
 
 		$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
 
-		$message = '<h3>' . esc_html__( 'You\'re not using Pro Elements yet!', 'elementor-pro' ) . '</h3>';
-		$message .= '<p>' . esc_html__( 'Activate the Elementor plugin to start using all of Pro Elements plugin’s features.', 'elementor-pro' ) . '</p>';
+		$message = '<h3>' . esc_html__( 'You\'re not using Elementor Pro yet!', 'elementor-pro' ) . '</h3>';
+		$message .= '<p>' . esc_html__( 'Activate the Elementor plugin to start using all of Elementor Pro plugin’s features.', 'elementor-pro' ) . '</p>';
 		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, esc_html__( 'Activate Now', 'elementor-pro' ) ) . '</p>';
 	} else {
 		if ( ! current_user_can( 'install_plugins' ) ) {

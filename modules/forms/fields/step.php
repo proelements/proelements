@@ -67,6 +67,9 @@ class Step extends Field_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],
@@ -80,6 +83,9 @@ class Step extends Field_Base {
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'condition' => [
 					'field_type' => $this->get_type(),

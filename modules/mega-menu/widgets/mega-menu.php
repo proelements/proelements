@@ -233,6 +233,9 @@ class Mega_Menu extends Widget_Nested_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-pro' ),
 				'style_transfer' => false,
 			]
@@ -517,12 +520,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'unit' => 'ms',
 					'size' => 500,
 				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
-				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-open-animation-duration: {{SIZE}}{{UNIT}}',
 				],
@@ -628,12 +625,6 @@ class Mega_Menu extends Widget_Nested_Base {
 				'default' => [
 					'unit' => 'ms',
 					'size' => 500,
-				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-toggle-icon-wrapper-animation-duration: {{SIZE}}{{UNIT}}',
@@ -765,11 +756,16 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_responsive_control( 'menu_item_title_space_between', [
 			'label' => esc_html__( 'Space between Items', 'elementor-pro' ),
 			'type' => Controls_Manager::SLIDER,
-			'size_units' => [ 'px' ],
+			'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 200,
+				],
+				'em' => [
+					'max' => 20,
+				],
+				'rem' => [
+					'max' => 20,
 				],
 			],
 			'default' => [
@@ -786,12 +782,13 @@ class Mega_Menu extends Widget_Nested_Base {
 			'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 200,
 				],
-				'%' => [
-					'min' => 0,
-					'max' => 100,
+				'em' => [
+					'max' => 20,
+				],
+				'rem' => [
+					'max' => 20,
 				],
 			],
 			'default' => [
@@ -948,6 +945,12 @@ class Mega_Menu extends Widget_Nested_Base {
 						'min' => 1,
 						'max' => 20,
 					],
+					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'condition' => $divider_condition,
 				'selectors' => [
@@ -966,6 +969,12 @@ class Mega_Menu extends Widget_Nested_Base {
 					'px' => [
 						'min' => 1,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 					'%' => [
 						'min' => 1,
@@ -1082,12 +1091,6 @@ class Mega_Menu extends Widget_Nested_Base {
 				'size_units' => [ 's', 'ms', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-title-transition: {{SIZE}}{{UNIT}}',
-				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
 				],
 				'default' => [
 					'unit' => 'ms',
@@ -1251,18 +1254,15 @@ class Mega_Menu extends Widget_Nested_Base {
 			'type' => Controls_Manager::SLIDER,
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 100,
 				],
 				'em' => [
 					'min' => 0,
 					'max' => 10,
-					'step' => 0.1,
 				],
 				'rem' => [
 					'min' => 0,
 					'max' => 10,
-					'step' => 0.1,
 				],
 			],
 			'default' => [
@@ -1278,10 +1278,16 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_responsive_control( 'icon_spacing', [
 			'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 			'type' => Controls_Manager::SLIDER,
+			'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 400,
+				],
+				'em' => [
+					'max' => 40,
+				],
+				'rem' => [
+					'max' => 40,
 				],
 				'vw' => [
 					'min' => 0,
@@ -1289,10 +1295,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'step' => 0.1,
 				],
 			],
-			'default' => [
-				'unit' => 'px',
-			],
-			'size_units' => [ 'px', 'vw' ],
 			'selectors' => [
 				'{{WRAPPER}}' => '--n-menu-icon-gap: {{SIZE}}{{UNIT}}',
 			],
@@ -1355,6 +1357,81 @@ class Mega_Menu extends Widget_Nested_Base {
 
 		$this->end_controls_section();
 
+		$this->start_controls_section( 'section_dropdown_indicator_style', [
+			'label' => esc_html__( 'Dropdown Indicator', 'elementor-pro' ),
+			'tab' => Controls_Manager::TAB_STYLE,
+			'conditions' => [
+				'relation' => 'or',
+				'terms' => [
+					[
+						'name' => 'menu_item_icon[value]',
+						'operator' => '!==',
+						'value' => '',
+					],
+					[
+						'name' => 'menu_item_icon_active[value]',
+						'operator' => '!==',
+						'value' => '',
+					],
+				],
+			],
+		] );
+
+		$this->add_responsive_control(
+			'style_dropdown_indicator_size',
+			[
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-size: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_dropdown_indicator_rotate',
+			[
+				'label' => esc_html__( 'Rotate', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'deg', 'grad', 'rad', 'turn', 'custom' ],
+				'default' => [
+					'unit' => 'deg',
+				],
+				'tablet_default' => [
+					'unit' => 'deg',
+				],
+				'mobile_default' => [
+					'unit' => 'deg',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-rotate: rotate({{SIZE}}{{UNIT}})',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_dropdown_indicator_space',
+			[
+				'label' => esc_html__( 'Space', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-space: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'style_menu_dropdown_indicator' );
+
+		foreach ( array( 'normal', 'hover', 'active' ) as $state ) {
+			$this->add_dropdown_indicator_state_based_style_controls( $state );
+		}
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
 		$this->start_controls_section( 'section_menu_toggle_style', [
 			'label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
 			'tab' => Controls_Manager::TAB_STYLE,
@@ -1379,24 +1456,13 @@ class Mega_Menu extends Widget_Nested_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 200,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
 					],
 					'em' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 0.1,
+						'max' => 20,
 					],
 					'rem' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 0.1,
+						'max' => 20,
 					],
 				],
 				'selectors' => [
@@ -1529,12 +1595,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'unit' => 'ms',
 					'size' => 500,
 				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
-				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-toggle-icon-hover-duration: {{SIZE}}{{UNIT}}',
 				],
@@ -1630,10 +1690,16 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_responsive_control( 'menu_toggle_icon_distance_from_dropdown', [
 			'label' => esc_html__( 'Distance from dropdown', 'elementor-pro' ),
 			'type' => Controls_Manager::SLIDER,
+			'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 100,
+				],
+				'em' => [
+					'max' => 10,
+				],
+				'rem' => [
+					'max' => 10,
 				],
 			],
 			'default' => [
@@ -1642,7 +1708,6 @@ class Mega_Menu extends Widget_Nested_Base {
 			'placeholder' => [
 				'size' => 0,
 			],
-			'size_units' => [ 'px' ],
 			'selectors' => [
 				'{{WRAPPER}}' => '--n-menu-toggle-icon-distance-from-dropdown: {{SIZE}}{{UNIT}}',
 			],
@@ -2288,6 +2353,40 @@ class Mega_Menu extends Widget_Nested_Base {
 	 */
 	private function is_active_icon_exist( $item ) {
 		return array_key_exists( 'item_icon_active', $item ) && ! empty( $item['item_icon_active'] ) && ! empty( $item['item_icon_active']['value'] );
+	}
+
+	/**
+	 * @param string $state
+	 * @param $css_prefix
+	 * @return void
+	 */
+	private function add_dropdown_indicator_state_based_style_controls( string $state ) {
+		$label = esc_html__( 'Normal', 'elementor-pro' );
+		$selector = '--n-menu-dropdown-indicator-color-normal: {{VALUE}};';
+		if ( 'hover' === $state ) {
+			$label = esc_html__( 'Hover', 'elementor-pro' );
+			$selector = '--n-menu-dropdown-indicator-color-hover: {{VALUE}};';
+		}
+		if ( 'active' === $state ) {
+			$label = esc_html__( 'Active', 'elementor-pro' );
+			$selector = '--n-menu-dropdown-indicator-color-active: {{VALUE}};';
+		}
+		$this->start_controls_tab('style_menu_dropdown_indicator_' . $state, [
+			'label' => $label,
+		]);
+
+		$this->add_control(
+			'menu_dropdown_indicator_color_' . $state,
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => $selector,
+				],
+			]
+		);
+
+		$this->end_controls_tab();
 	}
 
 	protected function content_template() {

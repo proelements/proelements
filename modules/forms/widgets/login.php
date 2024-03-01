@@ -84,6 +84,9 @@ class Login extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'default' => esc_html__( 'Log In', 'elementor-pro' ),
 			]
 		);
@@ -261,6 +264,9 @@ class Login extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'default' => esc_html__( 'Username or Email Address', 'elementor-pro' ),
 				'conditions' => [
 					'relation' => 'or',
@@ -292,6 +298,9 @@ class Login extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -302,6 +311,9 @@ class Login extends Base_Widget {
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'default' => esc_html__( 'Password', 'elementor-pro' ),
 				'conditions' => [
@@ -334,6 +346,9 @@ class Login extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -354,12 +369,17 @@ class Login extends Base_Widget {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
-					'size' => '10',
+					'size' => 10,
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 60,
+					],
+					'em' => [
+						'max' => 6,
+					],
+					'rem' => [
+						'max' => 6,
 					],
 				],
 				'selectors' => [
@@ -417,12 +437,17 @@ class Login extends Base_Widget {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
-					'size' => '0',
+					'size' => 0,
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 60,
+					],
+					'em' => [
+						'max' => 6,
+					],
+					'rem' => [
+						'max' => 6,
 					],
 				],
 				'selectors' => [
@@ -709,6 +734,9 @@ class Login extends Base_Widget {
 			[
 				'label' => esc_html__( 'Logged in Message', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_logged_in_message' => 'yes',
+				],
 			]
 		);
 
@@ -723,6 +751,9 @@ class Login extends Base_Widget {
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
+				'condition' => [
+					'show_logged_in_message' => 'yes',
+				],
 			]
 		);
 
@@ -733,6 +764,9 @@ class Login extends Base_Widget {
 				'selector' => '{{WRAPPER}} .elementor-widget-container .elementor-login__logged-in-message',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+				'condition' => [
+					'show_logged_in_message' => 'yes',
 				],
 			]
 		);

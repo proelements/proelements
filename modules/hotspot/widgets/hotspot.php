@@ -144,12 +144,17 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'default' => [
-					'size' => '5',
+					'size' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .e-hotspot__button' =>
@@ -181,9 +186,13 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 1000,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
 					],
 				],
 				'selectors' => [
@@ -203,9 +212,13 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 1000,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
 					],
 				],
 				'selectors' => [
@@ -264,7 +277,7 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ '%' ],
 				'default' => [
 					'unit' => '%',
-					'size' => '50',
+					'size' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' =>
@@ -301,7 +314,7 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ '%' ],
 				'default' => [
 					'unit' => '%',
-					'size' => '50',
+					'size' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' =>
@@ -374,9 +387,13 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 2000,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 200,
+					],
+					'rem' => [
+						'max' => 200,
 					],
 				],
 				'selectors' => [
@@ -460,8 +477,9 @@ class Hotspot extends Widget_Image {
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
-						'min' => 100,
+						'min' => 0,
 						'max' => 20000,
+						'step' => 100,
 					],
 				],
 				'condition' => [
@@ -560,6 +578,7 @@ class Hotspot extends Widget_Image {
 					'px' => [
 						'min' => 0,
 						'max' => 10000,
+						'step' => 100,
 					],
 				],
 				'selectors' => [
@@ -693,14 +712,14 @@ class Hotspot extends Widget_Image {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
 					'px' => [
-						'min' => 0,
 						'max' => 300,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 30,
+					],
+					'rem' => [
+						'max' => 30,
 					],
 				],
 				'selectors' => [
@@ -728,9 +747,13 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 1000,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
 					],
 				],
 				'selectors' => [
@@ -747,9 +770,13 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 1000,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
 					],
 				],
 				'selectors' => [
@@ -779,14 +806,14 @@ class Hotspot extends Widget_Image {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
-					'em' => [
-						'min' => 0,
+					'px' => [
 						'max' => 100,
 					],
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -899,9 +926,13 @@ class Hotspot extends Widget_Image {
 				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 2000,
-						'step' => 1,
+					],
+					'em' => [
+						'max' => 200,
+					],
+					'rem' => [
+						'max' => 200,
 					],
 				],
 				'selectors' => [

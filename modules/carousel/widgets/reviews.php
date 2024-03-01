@@ -92,13 +92,18 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-testimonial__header' => 'padding-bottom: calc({{SIZE}}{{UNIT}} / 2)',
-					'{{WRAPPER}} .elementor-testimonial__content' => 'padding-top: calc({{SIZE}}{{UNIT}} / 2)',
+					'{{WRAPPER}} .elementor-testimonial__header' => 'padding-block-end: calc( {{SIZE}}{{UNIT}} / 2 )',
+					'{{WRAPPER}} .elementor-testimonial__content' => 'padding-block-start: calc( {{SIZE}}{{UNIT}} / 2 )',
 				],
 			]
 		);
@@ -123,7 +128,7 @@ class Reviews extends Base {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-testimonial__header' => 'border-bottom-color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-testimonial__header' => 'border-block-end-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_separator!' => '',
@@ -139,15 +144,20 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
+						'max' => 2,
 					],
 				],
 				'condition' => [
 					'show_separator!' => '',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-testimonial__header' => 'border-bottom-width: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .elementor-testimonial__header' => 'border-block-end-width: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -274,8 +284,13 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
-						'max' => 70,
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -292,13 +307,17 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
-					'body:not(.rtl) {{WRAPPER}} .elementor-testimonial__image + cite' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
-					'body.rtl {{WRAPPER}} .elementor-testimonial__image + cite' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left:0;',
+					'{{WRAPPER}} .elementor-testimonial__image + cite' => 'margin-inline-start: {{SIZE}}{{UNIT}}; margin-inline-end: 0;',
 				],
 			]
 		);
@@ -361,8 +380,13 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -425,8 +449,13 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -444,13 +473,17 @@ class Reviews extends Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 50,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'selectors' => [
-					'body:not(.rtl) {{WRAPPER}} .elementor-star-rating i:not(:last-of-type)' => 'margin-right: {{SIZE}}{{UNIT}}',
-					'body.rtl {{WRAPPER}} .elementor-star-rating i:not(:last-of-type)' => 'margin-left: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .elementor-star-rating i:not(:last-of-type)' => 'margin-inline-end: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -534,6 +567,9 @@ class Reviews extends Base {
 				'default' => esc_html__( 'John Doe', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);

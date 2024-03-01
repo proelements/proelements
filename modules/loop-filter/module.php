@@ -109,9 +109,11 @@ class Module extends Module_Base {
 			// The $filters array contains all filters of a specific type. For example, for the taxonomy filter type,
 			// it would contain all taxonomies to be filtered - e.g. 'category', 'tag', 'product-cat', etc.
 			$tax_query = [];
-			$operator = $this->operator ?? $this->query[ $filters['logicalJoin'] ?? 'DISABLED' ]['operator'];
 
 			foreach ( $filters as $filter_taxonomy => $filter ) {
+				if ( 'logicalJoin' === $filter_taxonomy ) {
+					continue;
+				}
 
 				if ( $this->is_filter_empty( $filter ) ) {
 					continue;

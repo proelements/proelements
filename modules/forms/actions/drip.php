@@ -72,6 +72,9 @@ class Drip extends Integration_Base {
 					'drip_api_token_source' => 'custom',
 				],
 				'description' => esc_html__( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -134,6 +137,9 @@ class Drip extends Integration_Base {
 				'description' => esc_html__( 'Add as many tags as you want, comma separated.', 'elementor-pro' ),
 				'condition' => [
 					'drip_account!' => '',
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);

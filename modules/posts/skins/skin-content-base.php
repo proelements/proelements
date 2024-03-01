@@ -101,13 +101,14 @@ trait Skin_Content_Base {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
-					'%' => [
-						'min' => 10,
-						'max' => 100,
-					],
 					'px' => [
-						'min' => 10,
 						'max' => 600,
+					],
+					'em' => [
+						'max' => 6,
+					],
+					'rem' => [
+						'max' => 6,
 					],
 				],
 				'default' => [
@@ -151,8 +152,13 @@ trait Skin_Content_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'frontend_available' => true,

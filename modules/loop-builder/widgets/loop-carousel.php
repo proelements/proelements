@@ -83,7 +83,6 @@ class Loop_Carousel extends Base {
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 400,
 					],
 				],

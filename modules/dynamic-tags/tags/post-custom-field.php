@@ -61,6 +61,9 @@ class Post_Custom_Field extends Tag {
 				'condition' => [
 					'key' => '',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

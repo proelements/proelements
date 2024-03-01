@@ -256,6 +256,9 @@ class Paypal_Button extends Payment_Button {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'description' => esc_html__( 'Transactions made through your PayPal button will be registered under this account.', 'elementor-pro' ),
 				'label_block' => true,
 				'condition' => [
@@ -272,6 +275,9 @@ class Paypal_Button extends Payment_Button {
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'label_block' => true,
 				'condition' => [
@@ -324,6 +330,9 @@ class Paypal_Button extends Payment_Button {
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'description' => esc_html__( 'This is the address given to you by PayPal when you set up a sandbox with your developer account. You can use the sandbox to test your purchase flow.', 'elementor-pro' ),
 				'label_block' => true,

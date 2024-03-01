@@ -12,6 +12,11 @@ class Loop extends Post_CSS {
 	use Loop_Css_Trait;
 
 	/**
+	 * @var int
+	 */
+	private $post_id;
+
+	/**
 	 * Elementor Loop CSS file prefix.
 	 */
 	const FILE_PREFIX = 'loop-';

@@ -114,6 +114,9 @@ class Video_Playlist extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'placeholder' => esc_html__( 'Paste URL', 'elementor-pro' ) . ' (YouTube)',
 				'label_block' => true,
 				'condition' => [
@@ -133,6 +136,9 @@ class Video_Playlist extends Base_Widget {
 						TagsModule::POST_META_CATEGORY,
 						TagsModule::URL_CATEGORY,
 					],
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'placeholder' => esc_html__( 'Enter your URL', 'elementor-pro' ) . ' (Vimeo)',
 				'default' => 'https://vimeo.com/235215203',
@@ -277,6 +283,9 @@ class Video_Playlist extends Base_Widget {
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => '1:05',
 				'default' => '',
+				'ai' => [
+					'active' => false,
+				],
 				'condition' => [
 					'type!' => 'section',
 				],
@@ -420,6 +429,9 @@ class Video_Playlist extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'placeholder' => esc_html__( 'Name', 'elementor-pro' ),
 				'frontend_available' => true,
 			]
@@ -433,6 +445,9 @@ class Video_Playlist extends Base_Widget {
 				'default' => esc_html__( 'Tab #2', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'placeholder' => esc_html__( 'Name', 'elementor-pro' ),
 				'frontend_available' => true,
@@ -461,6 +476,9 @@ class Video_Playlist extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'placeholder' => esc_html__( 'Show More', 'elementor-pro' ),
 				'default' => esc_html__( 'Show More', 'elementor-pro' ),
 				'condition' => [
@@ -477,6 +495,9 @@ class Video_Playlist extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'placeholder' => esc_html__( 'Show Less', 'elementor-pro' ),
 				'default' => esc_html__( 'Show Less', 'elementor-pro' ),
 				'condition' => [
@@ -490,14 +511,22 @@ class Video_Playlist extends Base_Widget {
 			[
 				'label' => esc_html__( 'Height', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => '54',
-				],
 				'size_units' => [ 'px', 'em', 'rem', 'vh', 'custom' ],
+				'default' => [
+					'size' => 54,
+				],
 				'range' => [
 					'px' => [
-						'min' => 54,
+						'min' => 50,
 						'max' => 500,
+					],
+					'em' => [
+						'min' => 5,
+						'max' => 50,
+					],
+					'rem' => [
+						'min' => 5,
+						'max' => 50,
 					],
 				],
 				'render_type' => 'template',
@@ -738,13 +767,13 @@ class Video_Playlist extends Base_Widget {
 						'min' => 200,
 						'max' => 1200,
 					],
-					'vh' => [
-						'min' => 10,
-						'max' => 100,
+					'em' => [
+						'min' => 20,
+						'max' => 120,
 					],
-					'vw' => [
-						'min' => 10,
-						'max' => 100,
+					'rem' => [
+						'min' => 20,
+						'max' => 120,
 					],
 				],
 				'selectors' => [
@@ -986,6 +1015,14 @@ class Video_Playlist extends Base_Widget {
 						'min' => 10,
 						'max' => 30,
 					],
+					'em' => [
+						'min' => 1,
+						'max' => 3,
+					],
+					'rem' => [
+						'min' => 1,
+						'max' => 3,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--playlist-item-icon-size: {{SIZE}}{{UNIT}}',
@@ -1030,8 +1067,13 @@ class Video_Playlist extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 10,
+					],
+					'em' => [
+						'max' => 1,
+					],
+					'rem' => [
+						'max' => 1,
 					],
 				],
 				'selectors' => [
@@ -1188,6 +1230,14 @@ class Video_Playlist extends Base_Widget {
 						'min' => 10,
 						'max' => 30,
 					],
+					'em' => [
+						'min' => 1,
+						'max' => 3,
+					],
+					'rem' => [
+						'min' => 1,
+						'max' => 3,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span i' => 'font-size: {{SIZE}}{{UNIT}}',
@@ -1233,8 +1283,13 @@ class Video_Playlist extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 10,
+					],
+					'em' => [
+						'max' => 1,
+					],
+					'rem' => [
+						'max' => 1,
 					],
 				],
 				'selectors' => [
@@ -1379,6 +1434,9 @@ class Video_Playlist extends Base_Widget {
 						'max' => 20,
 					],
 					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
 						'max' => 2,
 					],
 				],

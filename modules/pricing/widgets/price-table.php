@@ -127,6 +127,9 @@ class Price_Table extends Base_Widget {
 			[
 				'label' => esc_html__( 'Custom Symbol', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'condition' => [
 					'currency_symbol' => 'custom',
 				],
@@ -141,6 +144,9 @@ class Price_Table extends Base_Widget {
 				'default' => '39.99',
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -190,6 +196,9 @@ class Price_Table extends Base_Widget {
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'default' => esc_html__( 'Monthly', 'elementor-pro' ),
 			]
@@ -548,7 +557,6 @@ class Price_Table extends Base_Widget {
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],
@@ -630,7 +638,6 @@ class Price_Table extends Base_Widget {
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],
@@ -978,6 +985,12 @@ class Price_Table extends Base_Widget {
 						'min' => 1,
 						'max' => 10,
 					],
+					'em' => [
+						'max' => 1,
+					],
+					'rem' => [
+						'max' => 1,
+					],
 				],
 				'condition' => [
 					'list_divider' => 'yes',
@@ -1015,6 +1028,12 @@ class Price_Table extends Base_Widget {
 					'px' => [
 						'min' => 1,
 						'max' => 50,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'condition' => [
@@ -1342,8 +1361,13 @@ class Price_Table extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 50,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 				],
 				'selectors' => [

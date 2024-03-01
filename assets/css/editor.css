@@ -1,4 +1,4 @@
-/*! pro-elements - v3.18.0 - 17-01-2024 */
+/*! pro-elements - v3.19.0 - 26-02-2024 */
 .elementor-panel .elementor-control .e-control-error {
   color: #F59E0B;
 }
@@ -19,6 +19,26 @@
 
 #elementor-element--promotion__dialog .dialog-header .eicon-pro-icon {
   visibility: hidden;
+}
+
+.elementor-context-menu-list__item {
+  position: relative;
+}
+.elementor-context-menu-list__item--disabled .elementor-context-menu-list__item__title {
+  opacity: 0.5;
+}
+.elementor-context-menu-list__item__shortcut .eicon-advanced {
+  font-size: 16px;
+  color: var(--e-a-color-txt-muted);
+}
+.elementor-context-menu-list__item__shortcut--link-fullwidth {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  cursor: pointer;
 }
 
 #elementor-widget-template-empty-templates {
@@ -535,5 +555,36 @@
   justify-content: center;
   margin-block-start: 15px;
   gap: 15px;
+}
+
+.e-control-display-conditions__wrapper,
+.e-control-display-conditions-promo__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.e-control-display-conditions__desc,
+.e-control-display-conditions-promo__desc {
+  align-self: center;
+}
+.e-control-display-conditions__desc .eicon-lock,
+.e-control-display-conditions-promo__desc .eicon-lock {
+  margin-inline-start: 15px;
+}
+.e-control-display-conditions__desc .eicon-lock:hover,
+.e-control-display-conditions-promo__desc .eicon-lock:hover {
+  color: var(--e-a-color-accent);
+}
+.e-control-display-conditions.eicon-flow,
+.e-control-display-conditions-promo.eicon-flow {
+  align-self: flex-end;
+  cursor: pointer;
+  border: var(--e-a-border-bold);
+  border-radius: var(--e-a-border-radius);
+  padding: 5px;
+}
+.e-control-display-conditions.eicon-flow.filled,
+.e-control-display-conditions-promo.eicon-flow.filled {
+  background-color: var(--e-a-bg-active);
+  color: #E73CF6;
 }
 /*# sourceMappingURL=editor.css.map */

@@ -76,6 +76,9 @@ class Upload extends Field_Base {
 				'name' => 'file_types',
 				'label' => esc_html__( 'Allowed File Types', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
+				'ai' => [
+					'active' => false,
+				],
 				'condition' => [
 					'field_type' => $this->get_type(),
 				],

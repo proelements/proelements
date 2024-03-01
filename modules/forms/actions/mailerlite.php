@@ -72,6 +72,9 @@ class Mailerlite extends Integration_Base {
 					'mailerlite_api_key_source' => 'custom',
 				],
 				'description' => esc_html__( 'Use this field to set a custom API Key for the current form', 'elementor-pro' ),
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

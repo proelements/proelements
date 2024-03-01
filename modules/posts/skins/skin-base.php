@@ -152,6 +152,14 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 						'min' => 10,
 						'max' => 600,
 					],
+					'em' => [
+						'min' => 1,
+						'max' => 60,
+					],
+					'rem' => [
+						'min' => 1,
+						'max' => 60,
+					],
 				],
 				'default' => [
 					'size' => 100,
@@ -308,6 +316,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'default' => esc_html__( 'Read More »', 'elementor-pro' ),
 				'condition' => [
 					$this->get_control_id( 'show_read_more' ) => 'yes',
@@ -423,8 +434,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -444,8 +460,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'frontend_available' => true,
@@ -517,6 +538,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'range' => [
 					'px' => [
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -641,6 +668,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 					'px' => [
 						'max' => 100,
 					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post__title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -715,6 +748,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 					'px' => [
 						'max' => 100,
 					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post__meta-data' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -774,6 +813,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'range' => [
 					'px' => [
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -838,6 +883,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'range' => [
 					'px' => [
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [

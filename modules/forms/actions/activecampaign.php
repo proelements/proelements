@@ -77,6 +77,9 @@ class Activecampaign extends Integration_Base {
 				'condition' => [
 					'activecampaign_api_credentials_source' => 'custom',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -88,6 +91,9 @@ class Activecampaign extends Integration_Base {
 				'description' => esc_html__( 'Use this field to set a custom API URL for the current form', 'elementor-pro' ),
 				'condition' => [
 					'activecampaign_api_credentials_source' => 'custom',
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -137,6 +143,9 @@ class Activecampaign extends Integration_Base {
 				'description' => esc_html__( 'Add as many tags as you want, comma separated.', 'elementor-pro' ),
 				'condition' => [
 					'activecampaign_list!' => '',
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);

@@ -32,6 +32,8 @@ final class Modules_Manager {
 			'admin-top-bar',
 			'notes',
 			'announcements',
+			'display-conditions',
+			'element-manager',
 
 			// Modules with Widgets.
 			'theme-builder',

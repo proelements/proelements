@@ -390,6 +390,14 @@ class Loop extends Theme_Document {
 						'min' => 200,
 						'max' => 1140,
 					],
+					'em' => [
+						'min' => 20,
+						'max' => 100,
+					],
+					'rem' => [
+						'min' => 20,
+						'max' => 100,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--preview-width: {{SIZE}}{{UNIT}};',
