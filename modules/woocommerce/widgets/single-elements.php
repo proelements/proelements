@@ -10,6 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Single_Elements extends Base_Widget {
 
+	private array $allowed_functions;
+
+	public function __construct( $data = [], $args = null ) {
+		parent::__construct( $data, $args );
+		$this->init_allowed_functions();
+	}
+
 	public function get_name() {
 		return 'wc-single-elements';
 	}
@@ -27,6 +34,26 @@ class Single_Elements extends Base_Widget {
 		return false;
 	}
 
+	/**
+	 * @return void
+	 */
+	private function init_allowed_functions(): void {
+		$this->allowed_functions = [
+			'' => '— ' . esc_html__( 'Select', 'elementor-pro' ) . ' —',
+			'woocommerce_output_product_data_tabs' => esc_html__( 'Data Tabs', 'elementor-pro' ),
+			'woocommerce_template_single_title' => esc_html__( 'Title', 'elementor-pro' ),
+			'woocommerce_template_single_rating' => esc_html__( 'Rating', 'elementor-pro' ),
+			'woocommerce_template_single_price' => esc_html__( 'Price', 'elementor-pro' ),
+			'woocommerce_template_single_excerpt' => esc_html__( 'Excerpt', 'elementor-pro' ),
+			'woocommerce_template_single_meta' => esc_html__( 'Meta', 'elementor-pro' ),
+			'woocommerce_template_single_sharing' => esc_html__( 'Sharing', 'elementor-pro' ),
+			'woocommerce_show_product_sale_flash' => esc_html__( 'Sale Flash', 'elementor-pro' ),
+			'woocommerce_product_additional_information_tab' => esc_html__( 'Additional Information Tab', 'elementor-pro' ),
+			'woocommerce_upsell_display' => esc_html__( 'Upsell', 'elementor-pro' ),
+			'wc_get_stock_html' => esc_html__( 'Stock Status', 'elementor-pro' ),
+		];
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_product',
@@ -40,20 +67,7 @@ class Single_Elements extends Base_Widget {
 			[
 				'label' => esc_html__( 'Element', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'' => '— ' . esc_html__( 'Select', 'elementor-pro' ) . ' —',
-					'woocommerce_output_product_data_tabs' => esc_html__( 'Data Tabs', 'elementor-pro' ),
-					'woocommerce_template_single_title' => esc_html__( 'Title', 'elementor-pro' ),
-					'woocommerce_template_single_rating' => esc_html__( 'Rating', 'elementor-pro' ),
-					'woocommerce_template_single_price' => esc_html__( 'Price', 'elementor-pro' ),
-					'woocommerce_template_single_excerpt' => esc_html__( 'Excerpt', 'elementor-pro' ),
-					'woocommerce_template_single_meta' => esc_html__( 'Meta', 'elementor-pro' ),
-					'woocommerce_template_single_sharing' => esc_html__( 'Sharing', 'elementor-pro' ),
-					'woocommerce_show_product_sale_flash' => esc_html__( 'Sale Flash', 'elementor-pro' ),
-					'woocommerce_product_additional_information_tab' => esc_html__( 'Additional Information Tab', 'elementor-pro' ),
-					'woocommerce_upsell_display' => esc_html__( 'Upsell', 'elementor-pro' ),
-					'wc_get_stock_html' => esc_html__( 'Stock Status', 'elementor-pro' ),
-				],
+				'options' => $this->allowed_functions,
 			]
 		);
 
@@ -109,7 +123,7 @@ class Single_Elements extends Base_Widget {
 				break;
 
 			default:
-				if ( is_callable( $settings['element'] ) ) {
+				if ( is_callable( $settings['element'] ) && array_key_exists( $settings['element'], $this->allowed_functions ) ) {
 					$html = call_user_func( $settings['element'] );
 				}
 		}

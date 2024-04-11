@@ -39,14 +39,13 @@ class Editor extends App {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 
-		if (!defined('IS_PRO_ELEMENTS'))
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 
 		add_filter( 'elementor/editor/panel/get_pro_details', function( $get_pro_details ) {
 			if ( defined( '\Elementor\Modules\Apps\Module::PAGE_ID' ) ) {
 				$get_pro_details['link'] = admin_url( 'admin.php?page=' . \Elementor\Modules\Apps\Module::PAGE_ID );
-				$get_pro_details['message'] = __( 'Extend Elementor With Apps', 'elementor-pro' );
-				$get_pro_details['button_text'] = __( 'Explore Apps', 'elementor-pro' );
+				$get_pro_details['message'] = __( 'Extend Elementor With Add-ons', 'elementor-pro' );
+				$get_pro_details['button_text'] = __( 'Explore Add-ons', 'elementor-pro' );
 			}
 
 			return $get_pro_details;
@@ -146,22 +145,25 @@ class Editor extends App {
 	}
 
 	public function localize_settings( array $settings ) {
-		$settings['elementPromotionURL'] = Plugin::instance()->license_admin->get_connect_url([
-			'utm_source' => '%s', // Will be replaced in the frontend to the widget name
-			'utm_medium' => 'wp-dash',
-			'utm_campaign' => 'connect-and-activate-license',
-			'utm_content' => 'editor-widget-promotion',
-		]);
 
-		$settings['dynamicPromotionURL'] = Plugin::instance()->license_admin->get_connect_url( [
-			'utm_source' => '%s', // Will be replaced in the frontend to the control name
-			'utm_medium' => 'wp-dash',
-			'utm_campaign' => 'connect-and-activate-license',
-			'utm_content' => 'editor-dynamic-promotion',
-		] );
+		if (!defined('IS_PRO_ELEMENTS')) {
+			$settings['elementPromotionURL'] = Plugin::instance()->license_admin->get_connect_url( [
+				'utm_source'   => '%s', // Will be replaced in the frontend to the widget name
+				'utm_medium'   => 'wp-dash',
+				'utm_campaign' => 'connect-and-activate-license',
+				'utm_content'  => 'editor-widget-promotion',
+			] );
 
-		if ( ! isset( $settings['promotionWidgets'] ) ) {
-			$settings['promotionWidgets'] = License_API::get_promotion_widgets();
+			$settings['dynamicPromotionURL'] = Plugin::instance()->license_admin->get_connect_url( [
+				'utm_source'   => '%s', // Will be replaced in the frontend to the control name
+				'utm_medium'   => 'wp-dash',
+				'utm_campaign' => 'connect-and-activate-license',
+				'utm_content'  => 'editor-dynamic-promotion',
+			] );
+
+			if ( ! isset( $settings['promotionWidgets'] ) ) {
+				$settings['promotionWidgets'] = License_API::get_promotion_widgets();
+			}
 		}
 
 		if ( Display_Conditions_Module::can_use_display_conditions() && Display_Conditions_Module::is_experiment_active() ) {

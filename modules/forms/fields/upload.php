@@ -267,6 +267,12 @@ class Upload extends Field_Base {
 				'tmp',
 				'cgi',
 				'svg',
+				'php2',
+				'phtm',
+				'phar',
+				'hphp',
+				'phpt',
+				'svgz',
 			];
 
 			/**

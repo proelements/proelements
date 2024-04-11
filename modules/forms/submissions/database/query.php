@@ -810,7 +810,7 @@ class Query extends Base_Object {
 		$edit_post_id = $submission->post_id;
 
 		// TODO: Should be removed if there is an ability to edit "global widgets"
-		$meta = json_decode( $submission->meta, true );
+		$meta = json_decode( $submission->meta ?? '', true );
 
 		if ( isset( $meta['edit_post_id'] ) ) {
 			$edit_post_id = $meta['edit_post_id'];

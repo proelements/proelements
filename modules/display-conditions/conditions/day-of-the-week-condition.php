@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Day_Of_The_Week_Condition extends Condition_Base {
+	const CONDITION_KEY = 'days';
 
 	public function get_name() {
 		return 'day_of_the_week';
@@ -47,7 +48,7 @@ class Day_Of_The_Week_Condition extends Condition_Base {
 		);
 
 		$this->add_control(
-			'days',
+			self::CONDITION_KEY,
 			[
 				'type' => Controls_Manager::SELECT2,
 				'options' => [

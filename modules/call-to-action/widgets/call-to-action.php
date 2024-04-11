@@ -111,7 +111,6 @@ class Call_To_Action extends Base_Widget {
 				'condition' => [
 					'bg_image[id]!' => '',
 				],
-				'separator' => 'none',
 			]
 		);
 
@@ -337,7 +336,6 @@ class Call_To_Action extends Base_Widget {
 					'button' => esc_html__( 'Button Only', 'elementor-pro' ),
 				],
 				'default' => 'button',
-				'separator' => 'none',
 				'condition' => [
 					'link[url]!' => '',
 				],
@@ -471,7 +469,6 @@ class Call_To_Action extends Base_Widget {
 					],
 				],
 				'prefix_class' => 'elementor-cta--valign-',
-				'separator' => 'none',
 			]
 		);
 
@@ -1094,13 +1091,16 @@ class Call_To_Action extends Base_Widget {
 			[
 				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'sm',
 				'options' => [
 					'xs' => esc_html__( 'Extra Small', 'elementor-pro' ),
 					'sm' => esc_html__( 'Small', 'elementor-pro' ),
 					'md' => esc_html__( 'Medium', 'elementor-pro' ),
 					'lg' => esc_html__( 'Large', 'elementor-pro' ),
 					'xl' => esc_html__( 'Extra Large', 'elementor-pro' ),
+				],
+				'default' => 'sm',
+				'condition' => [
+					'button_size!' => 'sm', // a workaround to hide the control, unless it's in use (not default).
 				],
 			]
 		);
@@ -1582,7 +1582,6 @@ class Call_To_Action extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-cta__bg-overlay' => 'mix-blend-mode: {{VALUE}}',
 				],
-				'separator' => 'none',
 			]
 		);
 

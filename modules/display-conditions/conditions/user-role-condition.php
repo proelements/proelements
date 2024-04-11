@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class User_Role_Condition extends Condition_Base {
+	const CONDITION_KEY = 'roles';
 
 	public function get_name() {
 		return 'user_role';
@@ -47,11 +48,12 @@ class User_Role_Condition extends Condition_Base {
 			'default' => Comparator_Provider::COMPARATOR_IS_ONE_OF,
 		] );
 
-		$this->add_control( 'roles', [
+		$this->add_control( self::CONDITION_KEY, [
 			'type' => Controls_Manager::SELECT2,
 			'options' => $user_roles,
 			'multiple' => true,
 			'required' => true,
+			'default' => [],
 		] );
 	}
 

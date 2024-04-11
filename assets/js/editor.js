@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-02-2024 */
+/*! pro-elements - v3.19.0 - 26-03-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -4049,6 +4049,488 @@ class notesContextMenu {
 }
 exports.notesContextMenu = notesContextMenu;
 var _default = exports["default"] = notesContextMenu;
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/commands/animate.js":
+/*!************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/commands/animate.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = exports.Animate = void 0;
+class Animate extends $e.modules.CommandBase {
+  /**
+   * Animate the Page Transition element.
+   *
+   * @return {void}
+   */
+  apply() {
+    const pageTransition = elementor.$previewContents[0].querySelector('e-page-transition');
+    if (!pageTransition) {
+      return;
+    }
+    pageTransition.animate();
+  }
+}
+exports.Animate = Animate;
+var _default = exports["default"] = Animate;
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/commands/index.js":
+/*!**********************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/commands/index.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+Object.defineProperty(exports, "Animate", ({
+  enumerable: true,
+  get: function () {
+    return _animate.Animate;
+  }
+}));
+var _animate = __webpack_require__(/*! ./animate */ "../modules/page-transitions/assets/js/editor/commands/animate.js");
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/component.js":
+/*!*****************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/component.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var commands = _interopRequireWildcard(__webpack_require__(/*! ./commands/ */ "../modules/page-transitions/assets/js/editor/commands/index.js"));
+var hooks = _interopRequireWildcard(__webpack_require__(/*! ./hooks/ */ "../modules/page-transitions/assets/js/editor/hooks/index.js"));
+var _pageTransitionPreview = _interopRequireDefault(__webpack_require__(/*! ./hooks/routes/page-transition-preview */ "../modules/page-transitions/assets/js/editor/hooks/routes/page-transition-preview.js"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+class Component extends $e.modules.ComponentBase {
+  /**
+   * Initialize the component.
+   *
+   * @return {void}
+   */
+  constructor() {
+    super();
+    this.routesHooks = {};
+    this.initRouteHooks();
+  }
+
+  /**
+   * Add route hooks & listen to route changes.
+   *
+   * @return {void}
+   */
+  initRouteHooks() {
+    // TODO: Remove when route hooks are available.
+    this.routesHooks.pageTransitionPreview = new _pageTransitionPreview.default();
+    $e.routes.on('run:after', (component, route) => {
+      this.routesHooks.pageTransitionPreview.run(component, route);
+    });
+  }
+
+  /**
+   * Get the component namespace.
+   *
+   * @return {string} - Component namespace.
+   */
+  getNamespace() {
+    return 'page-transitions';
+  }
+
+  /**
+   * Get the component hooks.
+   *
+   * @return {Object} - Component hooks.
+   */
+  defaultHooks() {
+    return this.importHooks(hooks);
+  }
+
+  /**
+   * Get the component commands.
+   *
+   * @return {Object} - Component commands.
+   */
+  defaultCommands() {
+    return this.importCommands(commands);
+  }
+}
+exports["default"] = Component;
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/hooks/data/animate-page-transition.js":
+/*!******************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/hooks/data/animate-page-transition.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = exports.AnimatePageTransition = void 0;
+/**
+ * Data hook that animates the Page Transition component when entrance / exit animations are changed.
+ */
+class AnimatePageTransition extends $e.modules.hookData.After {
+  // Page Transitions settings prefix.
+  prefix = 'settings_page_transitions_';
+
+  // Controls that the hook should listen to.
+  settings = ['entrance_animation', 'exit_animation'];
+  getCommand() {
+    return 'document/elements/settings';
+  }
+  getId() {
+    return 'animate-page-transitions--document/elements/settings';
+  }
+  getContainerType() {
+    return 'document';
+  }
+  getConditions(args) {
+    // Execute only for specific settings.
+    return Object.keys(args.settings).some(key => {
+      key = key.replace(this.prefix, '');
+      return this.settings.includes(key);
+    });
+  }
+  apply() {
+    $e.run('page-transitions/animate');
+  }
+}
+exports.AnimatePageTransition = AnimatePageTransition;
+var _default = exports["default"] = AnimatePageTransition;
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/hooks/data/index.js":
+/*!************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/hooks/data/index.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+Object.defineProperty(exports, "AnimatePageTransition", ({
+  enumerable: true,
+  get: function () {
+    return _animatePageTransition.AnimatePageTransition;
+  }
+}));
+Object.defineProperty(exports, "ReRenderPageTransition", ({
+  enumerable: true,
+  get: function () {
+    return _reRenderPageTransition.ReRenderPageTransition;
+  }
+}));
+var _animatePageTransition = __webpack_require__(/*! ./animate-page-transition */ "../modules/page-transitions/assets/js/editor/hooks/data/animate-page-transition.js");
+var _reRenderPageTransition = __webpack_require__(/*! ./re-render-page-transition */ "../modules/page-transitions/assets/js/editor/hooks/data/re-render-page-transition.js");
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/hooks/data/re-render-page-transition.js":
+/*!********************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/hooks/data/re-render-page-transition.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = exports.ReRenderPageTransition = void 0;
+var _utils = __webpack_require__(/*! ../utils */ "../modules/page-transitions/assets/js/editor/hooks/utils.js");
+/**
+ * Data hook that passes the new settings from the panel as attributes to the Page Transition component, in order to re-render it.
+ */
+class ReRenderPageTransition extends $e.modules.hookData.After {
+  // Page Transitions settings prefix.
+  prefix = 'settings_page_transitions_';
+
+  // Controls that the hook should listen to.
+  settings = ['entrance_animation', 'preloader_type', 'preloader_icon', 'preloader_image', 'preloader_animation_type'];
+  getCommand() {
+    return 'document/elements/settings';
+  }
+  getId() {
+    return 're-render-page-transitions--document/elements/settings';
+  }
+  getContainerType() {
+    return 'document';
+  }
+  getConditions(args) {
+    // Execute only for specific settings.
+    return Object.keys(args.settings).some(key => {
+      key = key.replace(this.prefix, '');
+      return this.settings.includes(key);
+    });
+  }
+  apply(args) {
+    (0, _utils.renderPageTransition)(args.container);
+  }
+}
+exports.ReRenderPageTransition = ReRenderPageTransition;
+var _default = exports["default"] = ReRenderPageTransition;
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/hooks/index.js":
+/*!*******************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/hooks/index.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+var _data = __webpack_require__(/*! ./data */ "../modules/page-transitions/assets/js/editor/hooks/data/index.js");
+Object.keys(_data).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _data[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _data[key];
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/hooks/routes/page-transition-preview.js":
+/*!********************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/hooks/routes/page-transition-preview.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _utils = __webpack_require__(/*! ../utils */ "../modules/page-transitions/assets/js/editor/hooks/utils.js");
+/**
+ * A route hook that listens to route changes in the panel and change the preview mode for
+ * the Page Transitions feature when navigating to the `Site Settings -> Page Transitions` tab.
+ *
+ * TODO: Convert to `$e.modules.hookRoute.After` when available.
+ */
+class PageTransitionPreview {
+  /**
+   * Run the hook.
+   *
+   * @param {Object} component
+   * @param {string} route
+   *
+   * @return {void}
+   */
+  run(component, route) {
+    if ('panel/global/settings-page-transitions' === route) {
+      (0, _utils.renderPageTransition)(elementor.documents.getCurrent().container);
+      this.togglePageTransitionPreview(true);
+    } else {
+      this.togglePageTransitionPreview(false);
+    }
+  }
+
+  /**
+   * Toggle the Page Transition state to show or hide preview.
+   *
+   * @param {boolean} on
+   *
+   * @return {void}
+   */
+  togglePageTransitionPreview(on = true) {
+    const className = 'e-page-transition--preview',
+      pageTransition = elementor.$previewContents[0].body.querySelector('e-page-transition');
+    if (!pageTransition) {
+      return;
+    }
+    pageTransition.classList.toggle(className, on);
+  }
+}
+exports["default"] = PageTransitionPreview;
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/hooks/utils.js":
+/*!*******************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/hooks/utils.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.getPageTransitionSettings = getPageTransitionSettings;
+exports.renderPageTransition = renderPageTransition;
+const prefix = 'settings_page_transitions_';
+
+/**
+ * Get only the Page Transitions controls' values from a Container.
+ *
+ * @param {Object} container
+ *
+ * @return {Object} - Controls' values.
+ */
+function getPageTransitionSettings(container) {
+  // Filter only the Page Transitions controls which doesn't change CSS values.
+  // (since they shouldn't affect the render)
+  const controls = Object.entries(container.settings.getActiveControls()).filter(([key, control]) => {
+    return key.startsWith(prefix) && !control.selectors;
+  });
+  const settings = {};
+  controls.forEach(([control]) => {
+    settings[control] = container.settings.get(control);
+  });
+  return settings;
+}
+
+/**
+ * Live render the Page Transition element, based on settings from the user.
+ *
+ * @param {Object} container - The container to get the settings from.
+ *
+ * @return {void}
+ */
+function renderPageTransition(container) {
+  let pageTransition = elementor.$previewContents[0].querySelector('e-page-transition');
+  const hasEntranceAnimation = !!container.settings.get(`${prefix}entrance_animation`),
+    hasPreloader = !!container.settings.get(`${prefix}preloader_type`),
+    shouldRender = hasEntranceAnimation || hasPreloader;
+
+  // Create the Page Transition element if it doesn't exist.
+  if (!pageTransition) {
+    pageTransition = document.createElement('e-page-transition');
+    pageTransition.classList.add('e-page-transition--preview');
+    elementor.$previewContents[0].body.append(pageTransition);
+  }
+
+  // Disable the Page Transition if needed.
+  pageTransition.toggleAttribute('disabled', !shouldRender);
+  const settings = getPageTransitionSettings(container);
+
+  // Iterate over the settings and set them as attributes.
+  Object.entries(settings).forEach(([key, value]) => {
+    key = key.replace(prefix, '');
+    key = key.replaceAll('_', '-');
+    if (!value) {
+      pageTransition.removeAttribute(key);
+      return;
+    }
+    if ('string' === typeof value) {
+      pageTransition.setAttribute(key, value);
+      return;
+    }
+
+    // For object values (e.g. image control).
+    Object.entries(value).forEach(([subKey, subValue]) => {
+      let newKey = key;
+
+      // Append the sub key only if it's not `value` (e.g. `url`), in order to avoid weird
+      // attributes like `preloader-icon-value`.
+      if (subKey !== 'value') {
+        newKey = `${key}-${subKey}`;
+      }
+      pageTransition.setAttribute(newKey, subValue);
+    });
+  });
+}
+
+/***/ }),
+
+/***/ "../modules/page-transitions/assets/js/editor/module.js":
+/*!**************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/editor/module.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _component = _interopRequireDefault(__webpack_require__(/*! ./component */ "../modules/page-transitions/assets/js/editor/component.js"));
+class _default extends elementorModules.editor.utils.Module {
+  /**
+   * Register the component & bind events on init.
+   *
+   * @return {void}
+   */
+  onInit() {
+    $e.components.register(new _component.default());
+    this.bindEvents();
+  }
+
+  /**
+   * Listen to Page Transition event.
+   *
+   * @return {void}
+   */
+  bindEvents() {
+    // Make sure that `window.elementor` is initialized.
+    // TODO: Find a better solution. It's caused because of the dynamic import.
+    if (window.elementor) {
+      this.onAnimateButtonClick();
+      return;
+    }
+    jQuery(window).on('elementor:init', () => this.onAnimateButtonClick());
+  }
+
+  /**
+   * Listen to `animate` button click event and animate the Page Transition.
+   *
+   * @return {void}
+   */
+  onAnimateButtonClick() {
+    elementor.channels.editor.on('elementorPageTransitions:animate', () => {
+      $e.run('page-transitions/animate');
+    });
+  }
+}
+exports["default"] = _default;
 
 /***/ }),
 
@@ -8778,10 +9260,9 @@ $({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "page-transitions-editor") return "" + chunkId + ".e3439a669e359e50462f.bundle.js";
 /******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".bbef3f7412481cbce555.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".2fdc278ce6bc9f6ec2e0.bundle.js";
-/******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".2dedca4ebc18b2de2c3d.bundle.js";
+/******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".d1bae86a5ed21c0e9981.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "4abfbfd970d6f7680bc7.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
@@ -8991,6 +9472,7 @@ var _module9 = _interopRequireDefault(__webpack_require__(/*! modules/payments/a
 var _module10 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/editor/module */ "../modules/loop-builder/assets/js/editor/module.js"));
 var _tiers = __webpack_require__(/*! ./tiers */ "../assets/dev/js/editor/tiers.js");
 var _notesContextMenu = _interopRequireDefault(__webpack_require__(/*! modules/notes/assets/js/notes-context-menu */ "../modules/notes/assets/js/notes-context-menu.js"));
+var _module11 = _interopRequireDefault(__webpack_require__(/*! modules/page-transitions/assets/js/editor/module */ "../modules/page-transitions/assets/js/editor/module.js"));
 var ElementorPro = Marionette.Application.extend({
   config: {},
   modules: {},
@@ -9018,20 +9500,12 @@ var ElementorPro = Marionette.Application.extend({
       woocommerce: new _module7.default(),
       stripe: new _module9.default(),
       loopBuilder: new _module10.default(),
+      pageTransitions: new _module11.default(),
       // Popup is depended on Theme Builder.
       popup: new _module.default(),
       videoPlaylistModule: new _module6.default(),
       ScrollSnapModule: new _module8.default()
     };
-
-    // Import the Page Transitions editor module dynamically.
-    if (elementorCommon.config.experimentalFeatures['page-transitions']) {
-      __webpack_require__.e(/*! import() | page-transitions-editor */ "page-transitions-editor").then(__webpack_require__.bind(__webpack_require__, /*! modules/page-transitions/assets/js/editor/module */ "../modules/page-transitions/assets/js/editor/module.js")).then(({
-        default: PageTransitions
-      }) => {
-        this.modules.pageTransitions = new PageTransitions();
-      });
-    }
     if (elementorCommon.config.experimentalFeatures['mega-menu']) {
       elementorCommon.elements.$window.on('elementor/nested-element-type-loaded', async () => {
         // The module should be loaded only when `nestedElements` is available.

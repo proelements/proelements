@@ -624,14 +624,16 @@ class Module extends Module_Base {
 				$wp_http_referer = wp_unslash( $post_data['_wp_http_referer'] );
 
 				$wp_http_referer_query_string = wp_parse_url( $wp_http_referer, PHP_URL_QUERY );
-				parse_str( $wp_http_referer_query_string, $wp_http_referer_query_string );
+				if ( ! empty( $wp_http_referer_query_string ) ) {
+					parse_str( $wp_http_referer_query_string, $wp_http_referer_query_string );
 
-				if ( isset( $wp_http_referer_query_string['elementorPageId'] ) ) {
-					$page_id = $wp_http_referer_query_string['elementorPageId'];
-				}
+					if ( isset( $wp_http_referer_query_string['elementorPageId'] ) ) {
+						$page_id = $wp_http_referer_query_string['elementorPageId'];
+					}
 
-				if ( isset( $wp_http_referer_query_string['elementorWidgetId'] ) ) {
-					$widget_id = $wp_http_referer_query_string['elementorWidgetId'];
+					if ( isset( $wp_http_referer_query_string['elementorWidgetId'] ) ) {
+						$widget_id = $wp_http_referer_query_string['elementorWidgetId'];
+					}
 				}
 			}
 		}

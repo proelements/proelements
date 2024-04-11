@@ -82,7 +82,6 @@ class Section extends Theme_Section_Document {
 				'type' => Controls_Manager::BUTTON,
 				'label' => '',
 				'text' => esc_html__( 'Apply', 'elementor-pro' ),
-				'separator' => 'none',
 				'event' => 'elementorThemeBuilder:ApplyPreview',
 			]
 		);

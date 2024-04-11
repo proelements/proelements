@@ -2,12 +2,23 @@
 namespace ElementorPro\Modules\DisplayConditions\Conditions\Base;
 
 use Elementor\Controls_Stack;
+use ElementorPro\Core\Isolation\Wordpress_Adapter_Interface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 abstract class Condition_Base extends Controls_Stack {
+
+	/**
+	 * @var Wordpress_Adapter_Interface
+	 */
+	protected $wordpress_adapter;
+
+	public function __construct( array $data = [] ) {
+		$this->wordpress_adapter = array_pop( $data );
+		parent::__construct( $data );
+	}
 
 	abstract public function get_label();
 

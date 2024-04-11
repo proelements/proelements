@@ -308,7 +308,6 @@ abstract class Theme_Document extends Library_Document {
 				'autocomplete' => [
 					'object' => QueryModule::QUERY_OBJECT_JS,
 				],
-				'separator' => 'none',
 				'export' => false,
 				'condition' => [
 					'preview_type!' => [
@@ -338,7 +337,6 @@ abstract class Theme_Document extends Library_Document {
 				'label_block' => true,
 				'show_label' => false,
 				'text' => esc_html__( 'Apply & Preview', 'elementor-pro' ),
-				'separator' => 'none',
 				'event' => 'elementorThemeBuilder:ApplyPreview',
 			]
 		);

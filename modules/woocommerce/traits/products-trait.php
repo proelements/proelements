@@ -166,9 +166,10 @@ trait Products_Trait {
 		$this->add_control(
 			'related_products_note',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'Note: The Related Products Query is available when creating a Single Product template', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Note: The Related Products Query is available when creating a Single Product template', 'elementor-pro' ),
 				'condition' => [
 					$this->product_query_post_type_control_id => 'related_products',
 				],
@@ -178,9 +179,10 @@ trait Products_Trait {
 		$this->add_control(
 			'upsells_products_note',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'Note: The Upsells Query is available when creating a Single Product template', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Note: The Upsells Query is available when creating a Single Product template', 'elementor-pro' ),
 				'condition' => [
 					$this->product_query_post_type_control_id => 'upsells',
 				],
@@ -190,9 +192,10 @@ trait Products_Trait {
 		$this->add_control(
 			'cross_sells_products_note',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'Note: The Cross-Sells Query is available when creating a Cart page', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Note: The Cross-Sells Query is available when creating a Cart page', 'elementor-pro' ),
 				'condition' => [
 					$this->product_query_post_type_control_id => 'cross_sells',
 				],

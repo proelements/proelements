@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-02-2024 */
+/*! pro-elements - v3.19.0 - 26-03-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu"],{
 
@@ -189,6 +189,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     this.resizeListener = null;
     this.prevMouseY = null;
+    this.isKeyboardNavigation = false;
   }
   getDefaultSettings() {
     const settings = super.getDefaultSettings();
@@ -222,6 +223,11 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     elements.$anchorLink = this.$element.find(selectors.anchorLink);
     return elements;
   }
+  setKeyboardNavigation(event) {
+    if ('Tab' === event.key) {
+      this.isKeyboardNavigation = true;
+    }
+  }
   dropdownMenuHeightControllerConfig() {
     const selectors = this.getSettings('selectors');
     return {
@@ -245,7 +251,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
 
     // If no container is passed as an argument, check if there is an active container.
     const activeTitleSelector = this.getSettings('ariaAttributes').activeTitleSelector,
-      tabIndex = this.elements.$tabDropdowns.filter(activeTitleSelector)?.attr('data-tab-index');
+      tabIndex = this.elements.$tabDropdowns.filter(activeTitleSelector).attr('data-tab-index');
     $contentContainer = $contentContainer || this.elements.$tabContents.filter(this.getTabContentFilterSelector(tabIndex));
     if (!$contentContainer.length) {
       return;
@@ -414,7 +420,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     }
     this.menuHeightController.reassignMenuHeight($requestedContent);
   }
-  deactivateActiveTab(newTabIndex) {
+  deactivateActiveTab() {
     const settings = this.getSettings(),
       activeClass = settings.classes.active,
       activeTitleFilter = settings.ariaAttributes.activeTitleSelector,
@@ -422,7 +428,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       $activeTitle = this.elements.$tabDropdowns.filter(activeTitleFilter),
       $activeContent = this.elements.$tabContents.filter(activeContentFilter),
       $menuContent = this.elements.$menuContent;
-    this.setTabDeactivationAttributes($activeTitle, newTabIndex);
+    this.setTabDeactivationAttributes($activeTitle);
     $activeContent.removeClass(activeClass);
     $activeContent[settings.hideTabFn](0, () => this.onHideTabContent($activeContent));
     this.removeAnimationFromContentIfNeeded();
@@ -434,22 +440,15 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   }
   getTitleActivationAttributes() {
     let elementType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'tab';
-    const titleAttributes = {
-      tabindex: '0'
-    };
+    const titleAttributes = {};
     if ('tab' === elementType) {
       titleAttributes['aria-expanded'] = 'true';
     }
     return titleAttributes;
   }
-  setTabDeactivationAttributes($activeTitle, newTabIndex) {
-    const isActiveTab = this.isActiveTab(newTabIndex),
-      titleStateAttribute = this.getSettings('ariaAttributes').titleStateAttribute;
+  setTabDeactivationAttributes($activeTitle) {
+    const titleStateAttribute = this.getSettings('ariaAttributes').titleStateAttribute;
     $activeTitle.attr(`${titleStateAttribute}`, 'false');
-    if (!!newTabIndex && !isActiveTab) {
-      this.elements.$tabDropdowns.attr('tabindex', '-1');
-      this.elements.$tabDropdowns.prev('.e-n-menu-title-container').find('a').attr('tabindex', '-1');
-    }
   }
   shouldPositionContentAbove($contentContainer) {
     let offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -474,7 +473,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   changeActiveTab(tabIndex) {
     let fromUser = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     const isActiveTab = this.isActiveTab(tabIndex);
-    this.deactivateActiveTab(tabIndex);
+    this.deactivateActiveTab();
     if (!isActiveTab || isActiveTab && !fromUser) {
       this.activateTab(tabIndex);
     }
@@ -496,7 +495,16 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     event.stopPropagation();
   }
   onTabClick(event) {
-    if (event?.currentTarget?.classList?.contains('link-only')) {
+    if (elementorFrontend.isEditMode()) {
+      event.preventDefault();
+    }
+    const hasNoDropdown = event?.currentTarget?.classList?.contains('link-only');
+
+    // Tweak for NVDA screen reader with Windows Edge.
+    // Ref: https://github.com/nvaccess/nvda/issues/7898
+    const dropdownOpensWithHover = !this.isNeedToOpenOnClick(),
+      blockMouseClickEvents = dropdownOpensWithHover && !this.isKeyboardNavigation;
+    if (hasNoDropdown || blockMouseClickEvents) {
       return;
     }
     const getClickedMenuId = event?.target?.closest('.elementor-widget-n-menu')?.getAttribute('data-id'),
@@ -545,7 +553,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.menuHeightController.reassignMobileMenuHeight();
     this.setScrollPosition();
     const activeTitleSelector = this.getSettings('ariaAttributes').activeTitleSelector,
-      tabIndex = this.elements.$tabDropdowns.filter(activeTitleSelector)?.attr('data-tab-index'),
+      tabIndex = this.elements.$tabDropdowns.filter(activeTitleSelector).attr('data-tab-index'),
       childMenuContentSelector = `.elementor-element-${this.getID()} .e-n-menu .e-n-menu .e-n-menu-content > .e-con`,
       $requestedContent = this.elements.$tabContents.filter(this.getTabContentFilterSelector(tabIndex)).not(childMenuContentSelector);
     this.menuHeightController.resetMenuHeight($requestedContent);
@@ -602,9 +610,9 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     return mobileDevices.includes(elementorFrontend.getCurrentDeviceMode());
   }
   replaceClickWithHover(tabEvents) {
-    delete tabEvents.click;
     tabEvents.mouseenter = this.onMouseTitleEnter.bind(this);
     tabEvents.mouseleave = this.onMouseLeave.bind(this);
+    tabEvents.keyup = this.setKeyboardNavigation.bind(this);
     return tabEvents;
   }
   onMouseTitleEnter(event) {
@@ -618,7 +626,6 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       return;
     }
     const tabIndex = activeDropdownElement?.getAttribute('data-tab-index');
-    this.resetTabindexAttributes();
     this.changeActiveTab(tabIndex, true);
   }
   onClickToggleDropdownMenu(show) {
@@ -738,7 +745,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     event.preventDefault();
     const isMouseLeavingTabContent = event?.currentTarget?.classList?.contains('e-con');
     if (!this.isHoveredDropdownMenu(isMouseLeavingTabContent, event)) {
-      this.deactivateActiveTab('', 'mouseLeave');
+      this.deactivateActiveTab();
     }
   }
   onInit() {
@@ -805,9 +812,6 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       super.onEditSettingsChange(propertyName, value);
     }
     this.setLayoutType();
-  }
-  resetTabindexAttributes() {
-    this.elements.$tabDropdowns.attr('tabindex', '-1');
   }
 
   /**
@@ -877,4 +881,4 @@ function isMenuInDropdownMode(elementSettings) {
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu.0a323d44fdf01d97bc64.bundle.js.map
+//# sourceMappingURL=mega-menu.bc1b8483f0d497cb1b50.bundle.js.map

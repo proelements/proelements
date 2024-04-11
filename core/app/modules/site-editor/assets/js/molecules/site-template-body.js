@@ -8,13 +8,15 @@ export const SiteTemplateBody = ( props ) => {
 			{
 				props.extended
 					? <PreviewIFrame src={ props.previewUrl } templateType={ props.type } />
-					: <SiteTemplateThumbnail
+					: (
+						<SiteTemplateThumbnail
 							id={ props.id }
 							title={ props.title }
 							type={ props.type }
 							thumbnail={ props.thumbnail }
 							placeholder={ props.placeholderUrl }
-					/>
+						/>
+					)
 			}
 		</CardBody>
 	);

@@ -5999,6 +5999,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_telegram, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_telegram {
   background-color: #2CA5E0;
 }
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_threads, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_threads {
+  background-color: #000000;
+}
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_twitter {
   background-color: #1DA1F2;
 }
@@ -6013,6 +6016,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_wordpress, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_wordpress {
   background-color: #21759b;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_x-twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_x-twitter {
+  background-color: #000000;
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_xing, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_xing {
   background-color: #026466;
@@ -6125,6 +6131,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_telegram svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_telegram svg {
   fill: #2CA5E0;
 }
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_threads, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_threads {
+  color: #000000;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_threads svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_threads svg {
+  fill: #000000;
+}
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_twitter {
   color: #1DA1F2;
 }
@@ -6154,6 +6166,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_wordpress svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_wordpress svg {
   fill: #21759b;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_x-twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_x-twitter {
+  color: #000000;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_x-twitter svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_x-twitter svg {
+  fill: #000000;
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_xing, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_xing {
   color: #026466;
@@ -6215,6 +6233,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_telegram .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_telegram .elementor-share-btn__icon {
   background-color: #2CA5E0;
 }
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_threads .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_threads .elementor-share-btn__icon {
+  background-color: #000000;
+}
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_twitter .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_twitter .elementor-share-btn__icon {
   background-color: #1DA1F2;
 }
@@ -6229,6 +6250,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_wordpress .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_wordpress .elementor-share-btn__icon {
   background-color: #21759b;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_x-twitter .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_x-twitter .elementor-share-btn__icon {
+  background-color: #000000;
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_xing .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_xing .elementor-share-btn__icon {
   background-color: #026466;
@@ -6928,6 +6952,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-thumb-tack, .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-thumbtack {
   --e-testimonial-icon-color: #1aa1d8;
 }
+.elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-threads {
+  --e-testimonial-icon-color: #000000;
+}
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-tripadvisor {
   --e-testimonial-icon-color: #589442;
 }
@@ -6957,6 +6984,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-wordpress {
   --e-testimonial-icon-color: #21759b;
+}
+.elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-x {
+  --e-testimonial-icon-color: #000000;
 }
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-xing {
   --e-testimonial-icon-color: #026466;
@@ -8925,6 +8955,7 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
   font-size: 18px;
   margin: 0;
   color: var(--header-color);
+  flex-grow: 1;
 }
 .elementor-toc__toggle-button {
   cursor: pointer;
@@ -8975,6 +9006,9 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
   margin-top: 0.5em;
   margin-left: var(--nested-list-indent, 1em);
 }
+.elementor-toc__list-item-text {
+  transition-duration: var(--item-text-transition-duration);
+}
 .elementor-toc__list-item-text:hover {
   color: var(--item-text-hover-color);
   text-decoration: var(--item-text-hover-decoration);
@@ -9018,6 +9052,7 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
 .elementor-toc__body .elementor-toc__list-item-text {
   color: var(--item-text-color);
   text-decoration: var(--item-text-decoration);
+  transition-duration: var(--item-text-transition-duration);
 }
 .elementor-toc__body .elementor-toc__list-item-text:hover {
   color: var(--item-text-hover-color);

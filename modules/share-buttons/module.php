@@ -76,8 +76,26 @@ class Module extends Module_Base {
 	];
 
 	public static function get_networks( $network_name = null ) {
+		// TODO: Remove the class_exists check and move X-twitter and Threads to self::$networks permanently when Elementor 3.22 is released.
+		if ( class_exists( 'Elementor\Widget_Share_Buttons' ) ) {
+			self::$networks = array_merge( self::$networks, [
+				'x-twitter' => [
+					'title' => 'X',
+				],
+				'threads' => [
+					'title' => 'Threads',
+				],
+			] );
+
+			$supported_networks = \Elementor\Widget_Share_Buttons::get_supported_networks();
+
+			self::$networks = array_filter( self::$networks, function( $network_name ) use ( $supported_networks ) {
+				return in_array( $network_name, $supported_networks, true );
+			}, ARRAY_FILTER_USE_KEY );
+		}
+
 		if ( $network_name ) {
-			return isset( self::$networks[ $network_name ] ) ? self::$networks[ $network_name ] : null;
+			return self::$networks[ $network_name ] ?? null;
 		}
 
 		return self::$networks;
@@ -94,7 +112,7 @@ class Module extends Module_Base {
 	}
 
 	public function add_localize_data( $settings ) {
-		$settings['shareButtonsNetworks'] = self::$networks;
+		$settings['shareButtonsNetworks'] = self::get_networks();
 
 		return $settings;
 	}
@@ -105,6 +123,5 @@ class Module extends Module_Base {
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'add_localize_data' ] );
 
 		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'add_localize_data' ] );
-
 	}
 }

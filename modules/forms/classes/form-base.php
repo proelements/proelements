@@ -119,7 +119,7 @@ abstract class Form_Base extends Base_Widget {
 			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
 				<?php
 				foreach ( $options as $key => $option ) {
-					$option_id = $item['custom_id'] . $key;
+					$option_id = esc_attr( $item['custom_id'] . $key );
 					$option_value = esc_attr( $option );
 					$option_label = esc_html( $option );
 
@@ -151,9 +151,9 @@ abstract class Form_Base extends Base_Widget {
 		$options = preg_split( "/\\r\\n|\\r|\\n/", $item['field_options'] );
 		$html = '';
 		if ( $options ) {
-			$html .= '<div class="elementor-field-subgroup ' . esc_attr( $item['css_classes'] ) . ' ' . $item['inline_list'] . '">';
+			$html .= '<div class="elementor-field-subgroup ' . esc_attr( $item['css_classes'] ) . ' ' . esc_attr( $item['inline_list'] ) . '">';
 			foreach ( $options as $key => $option ) {
-				$element_id = $item['custom_id'] . $key;
+				$element_id = esc_attr( $item['custom_id'] ) . $key;
 				$html_id = $this->get_attribute_id( $item ) . '-' . $key;
 				$option_label = $option;
 				$option_value = $option;
@@ -263,7 +263,7 @@ abstract class Form_Base extends Base_Widget {
 	}
 
 	public function get_attribute_id( $item ) {
-		return 'form-field-' . $item['custom_id'];
+		return 'form-field-' . esc_attr( $item['custom_id'] );
 	}
 
 	private function add_required_attribute( $element ) {

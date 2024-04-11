@@ -53,7 +53,6 @@ class Module extends Module_Base {
 
 		parent::__construct();
 
-		$this->initialize_experiment();
 		$this->add_actions();
 	}
 
@@ -89,36 +88,8 @@ class Module extends Module_Base {
 			]
 		);
 
-		// Add an experiment message with a link to turn it on.
-		if ( ! $this->is_experiment_active() ) {
-			$this->add_experiment_message( $element );
-			return;
-		}
-
 		// Replace the teaser message with actual controls.
 		$this->register_page_transitions_controls( $element );
-	}
-
-	/**
-	 * Add a Page Transition experiment message when the experiment is off, with a link to turn it on.
-	 *
-	 * @param Controls_Stack $controls_stack
-	 *
-	 * @return void
-	 */
-	private function add_experiment_message( $controls_stack ) {
-		// Remove the hook to prevent infinite hook calls
-		// (since the `add_page_transitions_controls` registers the same section ID).
-		remove_action( 'elementor/element/after_section_end', [ $this, 'register_controls' ] );
-
-		$message = sprintf(
-			/* translators: 1: Link opening tag, 2: Link closing tag. */
-			esc_html__( 'This feature is currently an experiment, you can turn it on in Elementor > Settings > %1$sExperiments%2$s.', 'elementor-pro' ),
-			sprintf( '<a href="%s" target="_blank">', admin_url( 'admin.php?page=elementor#tab-experiments' ) ),
-			'</a>'
-		);
-
-		Plugin::elementor()->controls_manager->add_page_transitions_controls( $controls_stack, Settings_Page_Transitions::TAB_ID, [ $message ] );
 	}
 
 	/**
@@ -890,11 +861,6 @@ class Module extends Module_Base {
 	private function add_actions() {
 		add_action( 'elementor/element/after_section_end', [ $this, 'register_controls' ], 10, 2 );
 
-		// Don't execute unnecessary code if the experiment is off.
-		if ( ! $this->is_experiment_active() ) {
-			return;
-		}
-
 		add_action( 'wp_enqueue_scripts', function () {
 			if ( $this->should_enqueue_scripts() ) {
 				$this->enqueue_scripts();
@@ -907,46 +873,5 @@ class Module extends Module_Base {
 				$this->render();
 			}
 		}, 10, 2 );
-	}
-
-	/**
-	 * Register the module as an experimental feature data.
-	 *
-	 * @return bool - Whether the experiment is on or off.
-	 */
-	private function initialize_experiment() {
-		$description = esc_html__(
-			'Customize entrance and exit animations for every page on your site, add a preloader with predefined animations and icons or upload your own images.',
-			'elementor-pro'
-		);
-
-		$learn_more = sprintf(
-			'<a href="%s" target="_blank">%s</a>',
-			esc_attr( 'https://go.elementor.com/page-transition' ),
-			esc_html__( 'Learn More', 'elementor-pro' )
-		);
-
-		$experiments_manager = Plugin::elementor()->experiments;
-
-		$experiments_manager->add_feature( [
-			'name' => self::NAME,
-			'title' => esc_html__( 'Page Transitions', 'elementor-pro' ),
-			'default' => Experiments_Manager::STATE_ACTIVE,
-			'release_status' => Experiments_Manager::RELEASE_STATUS_STABLE,
-			'description' => $description . ' ' . $learn_more,
-		] );
-
-		return $experiments_manager->is_feature_active( self::NAME );
-	}
-
-	/**
-	 * Determine if the experiment is active.
-	 *
-	 * @return bool
-	 */
-	private function is_experiment_active() {
-		$experiments_manager = Plugin::elementor()->experiments;
-
-		return $experiments_manager->is_feature_active( self::NAME );
 	}
 }

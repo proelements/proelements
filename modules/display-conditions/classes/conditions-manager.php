@@ -1,8 +1,10 @@
 <?php
 namespace ElementorPro\Modules\DisplayConditions\Classes;
 
+use ElementorPro\Core\Isolation\Wordpress_Adapter;
 use ElementorPro\Modules\DisplayConditions\Conditions\Base\Condition_Base;
 use ElementorPro\Modules\DisplayConditions\Module;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -15,6 +17,42 @@ class Conditions_Manager {
 	private $conditions = [];
 
 	private $groups;
+
+	private const CONDITIONS = [
+		// Page
+		'Page_Title_Condition',
+		'Page_Parent_Condition',
+		'Page_Author_Condition',
+
+		// Post
+		'Post_Title_Condition',
+		'In_Categories_Condition',
+		'In_Tags_Condition',
+		'Date_Of_Modification_Condition',
+		'Date_Of_Publish_Condition',
+		'Post_Author_Condition',
+		'Post_Number_Of_Comments_Condition',
+		'Featured_Image_Condition',
+
+		// User
+		'Login_Status_Condition',
+		'User_Role_Condition',
+		'User_Registration_Date_Condition',
+
+		// Date and time
+		'Day_Of_The_Week_Condition',
+		'Time_Of_The_Day_Condition',
+		'Current_Date_Condition',
+
+		// Archive
+		'Archive_Of_Category_Condition',
+		'Archive_Of_Tag_Condition',
+		'Archive_Of_Author_Condition',
+
+		// Other
+		'From_URL_Condition',
+		'Dynamic_Tags_Condition',
+	];
 
 	private Module $display_conditions_module;
 
@@ -60,6 +98,7 @@ class Conditions_Manager {
 			return;
 		}
 
+		$args[] = new Wordpress_Adapter();
 		$class_name = '\\ElementorPro\\Modules\\DisplayConditions\\Conditions\\' . $id;
 
 		/** @var Condition_Base $condition */
@@ -145,24 +184,7 @@ class Conditions_Manager {
 	}
 
 	public function register_conditions() {
-		$conditions = [
-			'Login_Status_Condition',
-			'Day_Of_The_Week_Condition',
-			'Time_Of_The_Day_Condition',
-			'User_Role_Condition',
-			'User_Registration_Date_Condition',
-			'Page_Parent_Condition',
-			'Current_Date_Condition',
-			'Page_Author_Condition',
-			'In_Categories_Condition',
-			'From_URL_Condition',
-			'In_Tags_Condition',
-			'Date_Of_Modification_Condition',
-			'Date_Of_Publish_Condition',
-			'Archive_Of_Category_Condition',
-			'Archive_Of_Tag_Condition',
-			'Post_Author_Condition',
-		];
+		$conditions = self::CONDITIONS;
 
 		foreach ( $conditions as $condition ) {
 			$this->register_condition( $condition );

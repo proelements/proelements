@@ -71,9 +71,10 @@ class Archive_Products extends Products {
 			$this->add_control(
 				'wc_notice_wc_not_supported',
 				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => esc_html__( 'Looks like you are using WooCommerce, while your theme does not support it. Please consider switching themes.', 'elementor-pro' ),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+					// TODO: Remove define() with the release of Elementor 3.22
+					'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+					'alert_type' => 'warning',
+					'content' => esc_html__( 'Looks like you are using WooCommerce, while your theme does not support it. Please consider switching themes.', 'elementor-pro' ),
 				]
 			);
 		}
@@ -81,18 +82,20 @@ class Archive_Products extends Products {
 		$this->add_control(
 			'wc_notice_use_customizer',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'To change the Products Archive’s layout, go to Appearance > Customize.', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => esc_html__( 'To change the Products Archive’s layout, go to Appearance > Customize.', 'elementor-pro' ),
 			]
 		);
 
 		$this->add_control(
 			'wc_notice_wrong_data',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'The editor preview might look different from the live site. Please make sure to check the frontend.', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => esc_html__( 'The editor preview might look different from the live site. Please make sure to check the frontend.', 'elementor-pro' ),
 			]
 		);
 

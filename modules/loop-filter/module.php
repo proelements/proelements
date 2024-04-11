@@ -53,8 +53,12 @@ class Module extends Module_Base {
 				'<a href="https://go.elementor.com/wp-dash-taxonomy-filter/" target="_blank">',
 				'</a>'
 			),
-			'release_status' => Manager::RELEASE_STATUS_ALPHA,
+			'release_status' => Manager::RELEASE_STATUS_BETA,
 			'default' => Manager::STATE_INACTIVE,
+			'new_site' => [
+				'default_active' => true,
+				'minimum_installation_version' => '3.20',
+			],
 		];
 
 		return $experiment_data;

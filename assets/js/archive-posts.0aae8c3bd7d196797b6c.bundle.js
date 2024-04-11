@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-02-2024 */
+/*! pro-elements - v3.19.0 - 26-03-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["archive-posts"],{
 
@@ -160,9 +160,7 @@ class LoadMore extends elementorModules.frontend.handlers.Base {
   handleUiWhenNoPosts() {
     this.elements.postsWidgetWrapper.classList.add(this.classes.loadMorePaginationEnd);
   }
-
-  // eslint-disable-next-line no-unused-vars
-  afterInsertPosts(postsElements) {}
+  afterInsertPosts() {}
   handleSuccessFetch(result) {
     this.handleUiAfterLoading();
     const selectors = this.getSettings('selectors');
@@ -400,4 +398,4 @@ var _default = exports["default"] = _posts.default.extend({
 /***/ })
 
 }]);
-//# sourceMappingURL=archive-posts.2a0ae25f7c61f4ef3f38.bundle.js.map
+//# sourceMappingURL=archive-posts.0aae8c3bd7d196797b6c.bundle.js.map

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-02-2024 */
+/*! pro-elements - v3.19.0 - 26-03-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["loop-filter-editor"],{
 
@@ -123,9 +123,7 @@ module.exports = ElementEditorModule.extend({
         return {};
       }
       return response.json();
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .catch(error => {
+    }).catch(() => {
       this.displayErrorDialog();
       return {};
     }).then(response => {
@@ -190,4 +188,4 @@ module.exports = ElementEditorModule.extend({
 /***/ })
 
 }]);
-//# sourceMappingURL=loop-filter-editor.2dedca4ebc18b2de2c3d.bundle.js.map
+//# sourceMappingURL=loop-filter-editor.d1bae86a5ed21c0e9981.bundle.js.map

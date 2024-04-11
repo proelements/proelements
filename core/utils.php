@@ -61,7 +61,7 @@ class Utils {
 		];
 
 		foreach ( $server_ip_keys as $key ) {
-			$value = self::_unstable_get_super_global_value( $_SERVER, $key );
+			$value = static::_unstable_get_super_global_value( $_SERVER, $key );
 			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
 				return $value;
 			}
@@ -371,8 +371,8 @@ class Utils {
 
 		if ( $_FILES === $super_global ) {
 			return isset( $super_global[ $key ]['name'] ) ?
-				self::sanitize_file_name( $super_global[ $key ] ) :
-				self::sanitize_multi_upload( $super_global[ $key ] );
+				static::sanitize_file_name( $super_global[ $key ] ) :
+				static::sanitize_multi_upload( $super_global[ $key ] );
 		}
 
 		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
@@ -380,7 +380,7 @@ class Utils {
 
 	private static function sanitize_multi_upload( $fields ) {
 		return array_map( function( $field ) {
-			return array_map( 'self::sanitize_file_name', $field );
+			return array_map( [ __CLASS__, 'sanitize_file_name' ], $field );
 		}, $fields );
 	}
 

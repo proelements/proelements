@@ -352,7 +352,6 @@ class Loop extends Theme_Document {
 				'label_block' => true,
 				'show_label' => false,
 				'text' => esc_html__( 'Apply', 'elementor-pro' ),
-				'separator' => 'none',
 				'event' => 'elementorLoopBuilder:ApplySourceChange',
 			]
 		);

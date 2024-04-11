@@ -29,4 +29,8 @@ class Archive_Of_Category_Condition extends Archive_Condition_Base {
 	protected function is_of_taxonomy( $args ): bool {
 		return is_category( array_column( $args['categories'], 'id' ) );
 	}
+
+	protected function get_taxonomy() {
+		return 'category';
+	}
 }

@@ -196,6 +196,31 @@ class API {
 
 	public static function get_license_data( $force_request = false ) {
 		$license_data['success'] = true;
+		$license_data['features'] = [  
+		                             'custom-attributes',
+		                             'custom_code',
+		                             'custom-css',
+		                             'global-css',
+		                             'display-conditions',
+		                             'dynamic-tags-acf',
+		                             'dynamic-tags-pods',
+		                             'dynamic-tags-toolset',
+		                             'element-manager-permissions',
+		                             'global-widget',
+		                             'editor_comments',
+		                             'stripe-button',
+		                             'popup',
+		                             'role-manager',
+		                             'woocommerce-menu-cart',
+		                             'product-single',
+		                             'product-archive',
+		                             'settings-woocommerce-pages',
+		                             'settings-woocommerce-notices',
+		                             'dynamic-tags-wc',
+		                             'settings-woocommerce-pages',
+		                             'settings-woocommerce-notices'];
+
+
 		return $license_data;
 	}
 

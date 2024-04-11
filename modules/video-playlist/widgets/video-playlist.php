@@ -155,7 +155,6 @@ class Video_Playlist extends Base_Widget {
 				'type' => Controls_Manager::BUTTON,
 				'label_block' => true,
 				'text' => esc_html__( 'Get Video Data', 'elementor-pro' ),
-				'separator' => 'none',
 				'event' => 'elementorPlaylistWidget:fetchVideoData',
 				'condition' => [
 					'type' => [ 'youtube', 'vimeo' ],
@@ -581,7 +580,6 @@ class Video_Playlist extends Base_Widget {
 			[
 				'name' => 'image_overlay',
 				'default' => 'full',
-				'separator' => 'none',
 				'condition' => [
 					'show_image_overlay' => 'yes',
 				],
@@ -1612,6 +1610,21 @@ class Video_Playlist extends Base_Widget {
 			]
 		);
 
+		$this->add_control(
+			'inner_tab_hover_show_more_color_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 's', 'ms', 'custom' ],
+				'default' => [
+					'unit' => 'ms',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-content-wrapper .e-inner-tab-content button' => 'transition-duration: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
@@ -2062,7 +2075,7 @@ class Video_Playlist extends Base_Widget {
 					case 'hosted':
 						playlistItemObject.type = playlistItem.type;
 						playlistItemObject.videoTitle = playlistItem.title;
-						playlistItemObject.videoHtmlTag = playlistItem.video_html_tag;
+						playlistItemObject.videoHtmlTag = elementor.helpers.validateHTMLTag( playlistItem.video_html_tag );
 
 						if ( playlistItem.youtube_url && 'youtube' === playlistItem.type ) {
 							playlistItemObject.videoUrl = playlistItem.youtube_url;
@@ -2107,7 +2120,7 @@ class Video_Playlist extends Base_Widget {
 					case 'section':
 						playlistItemObject.type = playlistItem.type;
 						playlistItemObject.sectionTitle = playlistItem.title;
-						playlistItemObject.sectionHtmlTag = playlistItem.section_html_tag;
+						playlistItemObject.sectionHtmlTag = elementor.helpers.validateHTMLTag( playlistItem.section_html_tag );
 						playlistItemObject.isInnerTabsVisible = false;
 					break;
 				}

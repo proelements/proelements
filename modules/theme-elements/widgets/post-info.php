@@ -1043,12 +1043,17 @@ class Post_Info extends Base {
 				</span>
 			<?php else : ?>
 				<?php
-				echo wp_kses( $item_data['text'], [
+				$content = ( 'date' === $item_data['type'] || 'time' === $item_data['type'] )
+					? sprintf( '<time>%s</time>', $item_data['text'] )
+					: $item_data['text'];
+
+				echo wp_kses( $content, [
 					'a' => [
 						'href' => [],
 						'title' => [],
 						'rel' => [],
 					],
+					'time' => [],
 				] );
 				?>
 			<?php endif; ?>

@@ -1550,7 +1550,7 @@ class Gallery extends Base_Widget {
 						$href = $image_data['media'];
 
 						$this->add_render_attribute( 'gallery_item_' . $unique_index, [
-							'href' => $href,
+							'href' => esc_url( $href ),
 						] );
 
 						if ( Plugin::elementor()->editor->is_edit_mode() ) {

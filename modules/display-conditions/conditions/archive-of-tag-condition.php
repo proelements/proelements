@@ -2,7 +2,6 @@
 
 namespace ElementorPro\Modules\DisplayConditions\Conditions;
 
-use ElementorPro\Modules\DisplayConditions\Classes\Comparator_Provider;
 use ElementorPro\Modules\DisplayConditions\Conditions\Base\Archive_Condition_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,5 +27,9 @@ class Archive_Of_Tag_Condition extends Archive_Condition_Base {
 
 	protected function is_of_taxonomy( $args ): bool {
 		return is_tag( array_column( $args['tags'], 'id' ) );
+	}
+
+	protected function get_taxonomy() {
+		return 'post_tag';
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 namespace ElementorPro\Modules\AssetsManager\AssetTypes\AdminMenuItems;
 
-use Elementor\Modules\Promotions\AdminMenuItems\Base_Promotion_Item;
+use ElementorPro\Modules\Tiers\AdminMenuItems\Base_Promotion_Item;
 use ElementorPro\License\API;
 use ElementorPro\Plugin;
 
@@ -10,6 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Custom_Fonts_Promotion_Menu_Item extends Base_Promotion_Item {
+	public function get_name() {
+		return 'custom-fonts-promotion';
+	}
+
 	public function get_position() {
 		return null;
 	}
@@ -46,10 +50,18 @@ class Custom_Fonts_Promotion_Menu_Item extends Base_Promotion_Item {
 		return esc_html__( 'Add Your Custom Fonts', 'elementor-pro' );
 	}
 
-	public function render_promotion_description() {
-		echo esc_html__(
+	public function get_promotion_description() {
+		return esc_html__(
 			'Custom Fonts allows you to add your self-hosted fonts and use them on your Elementor projects to create a unique brand language.',
 			'elementor-pro'
 		);
+	}
+
+	/**
+	 * @deprecated use get_promotion_description instead
+	 * @return void
+	 */
+	public function render_promotion_description() {
+		echo $this->get_promotion_description(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

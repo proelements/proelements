@@ -594,14 +594,7 @@ class Lottie extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}}' => '--lottie-container-max-width: {{SIZE}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'separator_panel_style',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
+				'separator' => 'after',
 			]
 		);
 

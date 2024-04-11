@@ -1415,7 +1415,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			[
 				'label' => esc_html__( 'Space', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-space: {{SIZE}}{{UNIT}}',
 				],
@@ -1973,13 +1973,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->end_controls_section();
 	}
 
-	// TODO: Remove this function in version 3.19.
-	protected function widget_number(): string {
-		return method_exists( $this, 'get_widget_number' )
-			? $this->get_widget_number()
-			: substr( $this->get_id_int(), 0, 3 );
-	}
-
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$menu_titles = '';
@@ -1989,7 +1982,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			$menu_titles .= $this->render_menu_titles_html( $index, $item );
 
 			ob_start();
-			$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->widget_number() . ( $index + 1 );
+			$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->get_widget_number() . ( $index + 1 );
 			$this->print_child( $index, 'yes' === $item['item_dropdown_content'], $item_dropdown_id );
 			$menu_containers .= ob_get_clean();
 		}
@@ -1998,7 +1991,7 @@ class Mega_Menu extends Widget_Nested_Base {
 		<nav <?php $this->render_menu_attributes(); ?>>
 			<?php $this->render_menu_toggle( $settings ); ?>
 			<div <?php $this->render_menu_wrapper_attributes(); ?>>
-				<ul class="e-n-menu-heading" role="menubar">
+				<ul class="e-n-menu-heading">
 					<?php echo $menu_titles; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</ul>
 				<div class="e-n-menu-content">
@@ -2010,12 +2003,10 @@ class Mega_Menu extends Widget_Nested_Base {
 	}
 
 	protected function render_menu_attributes( $element_uid = '' ) {
-		$menu_classes = [ 'e-n-menu' ];
-
 		$this->add_render_attribute( 'e-n-menu', [
-			'class' => $menu_classes,
-			'data-widget-number' => ! empty( $element_uid ) ? $element_uid : $this->widget_number(),
-			'aria-label' => esc_html__( 'Menu | Open (Enter or Space) | Return (Escape) | Other Menu Items (Arrow, Home & End Keys)', 'elementor-pro' ),
+			'class' => [ 'e-n-menu' ],
+			'data-widget-number' => ! empty( $element_uid ) ? $element_uid : $this->get_widget_number(),
+			'aria-label' => esc_html__( 'Menu', 'elementor-pro' ),
 		] );
 
 		$this->print_render_attribute_string( 'e-n-menu' );
@@ -2024,8 +2015,8 @@ class Mega_Menu extends Widget_Nested_Base {
 	protected function render_menu_wrapper_attributes() {
 		$this->add_render_attribute( 'e-n-menu-wrapper', [
 			'class' => 'e-n-menu-wrapper',
-			'id' => 'menubar-' . $this->widget_number(),
-			'aria-labelledby' => 'menu-toggle-' . $this->widget_number(),
+			'id' => 'menubar-' . $this->get_widget_number(),
+			'aria-labelledby' => 'menu-toggle-' . $this->get_widget_number(),
 		] );
 
 		$this->print_render_attribute_string( 'e-n-menu-wrapper' );
@@ -2036,43 +2027,36 @@ class Mega_Menu extends Widget_Nested_Base {
 			? ' elementor-animation-' . $settings['menu_toggle_icon_hover_animation']
 			: '';
 
-		$menu_toggle_class = 'e-n-menu-toggle' . $menu_toggle_hover_animation;
-
 		$this->add_render_attribute( 'menu-toggle', [
-			'class' => $menu_toggle_class,
-			'id' => 'menu-toggle-' . $this->widget_number(),
+			'class' => 'e-n-menu-toggle' . $menu_toggle_hover_animation,
+			'id' => 'menu-toggle-' . $this->get_widget_number(),
 			'aria-haspopup' => 'true',
 			'aria-expanded' => 'false',
-			'aria-controls' => 'menubar-' . $this->widget_number(),
-			'aria-label' => esc_html__( 'Menu Toggle | Open (Enter or Space) | Return (Escape)', 'elementor-pro' ),
+			'aria-controls' => 'menubar-' . $this->get_widget_number(),
+			'aria-label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
 		] );
+
+		$open_class = 'e-n-menu-toggle-icon e-open';
+		$close_class = 'e-n-menu-toggle-icon e-close';
+
+		$normal_icon = ! empty( $settings['menu_toggle_icon_normal']['value'] )
+			? $settings['menu_toggle_icon_normal']
+			: [
+				'library' => 'eicons',
+				'value' => 'eicon-menu-bar',
+			];
+
+		$active_icon = ! empty( $settings['menu_toggle_icon_active']['value'] )
+			? $settings['menu_toggle_icon_active']
+			: [
+				'library' => 'eicons',
+				'value' => 'eicon-close',
+			];
 		?>
 		<button <?php $this->print_render_attribute_string( 'menu-toggle' ); ?>>
-			<?php
-			$open_class = 'e-n-menu-toggle-icon e-open';
-			$close_class = 'e-n-menu-toggle-icon e-close';
-
-			$normal_icon = ! empty( $settings['menu_toggle_icon_normal']['value'] )
-				? $settings['menu_toggle_icon_normal']
-				: [
-					'library' => 'eicons',
-					'value' => 'eicon-menu-bar',
-				];
-
-			?>
 			<span class="<?php echo esc_attr( $open_class ); ?>">
 				<?php Icons_Manager::render_icon( $normal_icon ); ?>
 			</span>
-			<?php
-
-			$active_icon = ! empty( $settings['menu_toggle_icon_active']['value'] )
-				? $settings['menu_toggle_icon_active']
-				: [
-					'library' => 'eicons',
-					'value' => 'eicon-close',
-				];
-
-			?>
 			<span class="<?php echo esc_attr( $close_class ); ?>">
 				<?php Icons_Manager::render_icon( $active_icon ); ?>
 			</span>
@@ -2098,7 +2082,7 @@ class Mega_Menu extends Widget_Nested_Base {
 					'aria-haspopup': 'true',
 					'aria-expanded': 'false',
 					'aria-controls': 'menubar-' + elementUid,
-					'aria-label': '<?php echo esc_html__( 'Menu Toggle | Open (Enter or Space) | Return (Escape)', 'elementor-pro' ); ?>',
+					'aria-label': '<?php echo esc_html__( 'Menu Toggle', 'elementor-pro' ); ?>',
 				} );
 			#>
 			<button {{{ view.getRenderAttributeString( menuToggleKey ) }}}>
@@ -2159,8 +2143,8 @@ class Mega_Menu extends Widget_Nested_Base {
 		$icon_active_html = Icons_Manager::try_get_icon_html( $settings['menu_item_icon_active'], [ 'aria-hidden' => 'true' ] );
 		$display_index = $index + 1;
 		$has_dropdown_content = 'yes' === $settings['menu_items'][ $index ]['item_dropdown_content'];
-		$menu_item_id = empty( $item['element_id'] ) ? 'e-n-menu-title-' . $this->widget_number() . $display_index : $item['element_id'];
-		$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->widget_number() . $display_index;
+		$menu_item_id = empty( $item['element_id'] ) ? 'e-n-menu-title-' . $this->get_widget_number() . $display_index : $item['element_id'];
+		$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->get_widget_number() . $display_index;
 		$key = $this->get_repeater_setting_key( 'item_title', 'menu_items', $display_index );
 		$menu_item = $settings['menu_items'][ $index ];
 		$menu_item_icon = Icons_Manager::try_get_icon_html( $menu_item['item_icon'], [ 'aria-hidden' => 'true' ] );
@@ -2191,8 +2175,14 @@ class Mega_Menu extends Widget_Nested_Base {
 				</div>
 				<?php if ( $has_dropdown_content ) { ?>
 					<button <?php echo wp_kses_post( $this->get_render_attribute_string( $key . '_link' ) ); ?> >
-						<span class="e-n-menu-dropdown-icon-opened"><?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						<span class="e-n-menu-dropdown-icon-closed"><?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<span class="e-n-menu-dropdown-icon-opened">
+							<?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span class="elementor-screen-only"><?php printf( esc_html__( 'Close %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						</span>
+						<span class="e-n-menu-dropdown-icon-closed">
+							<?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span class="elementor-screen-only"><?php printf( esc_html__( 'Open %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						</span>
 					</button>
 				<?php } ?>
 			</li>
@@ -2204,7 +2194,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_render_attribute( $key, [
 			'id' => $menu_item_id,
 			'class' => $classes,
-			'role' => 'presentation',
 			'style' => '--n-menu-title-order: ' . $display_index . ';',
 		] );
 	}
@@ -2213,13 +2202,10 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_render_attribute( $key, [
 			'id' => $item_dropdown_id,
 			'class' => $classes,
-			'role' => 'button',
 			'data-tab-index' => $display_index,
-			'tabindex' => 1 === $display_index ? '0' : '-1',
 			'aria-haspopup' => $has_dropdown_content ? 'true' : 'false',
 			'aria-expanded' => 'false',
-			'aria-controls' => 'e-n-menu-content-' . $this->widget_number() . $display_index,
-			'aria-label' => esc_html__( 'Expand: ', 'elementor-pro' ) . $title,
+			'aria-controls' => 'e-n-menu-content-' . $this->get_widget_number() . $display_index,
 		] );
 	}
 
@@ -2278,8 +2264,7 @@ class Mega_Menu extends Widget_Nested_Base {
 
 	protected function set_container_attributes( $container, $menu_index, $menu_item_id ) {
 		$container->add_render_attribute( '_wrapper', [
-			'id' => 'e-n-menu-content-' . $this->widget_number() . $menu_index,
-			'role' => 'menu',
+			'id' => 'e-n-menu-content-' . $this->get_widget_number() . $menu_index,
 			'data-tab-index' => $menu_index,
 			'aria-labelledby' => $menu_item_id,
 			'style' => '--n-menu-title-order: ' . $menu_index . ';',
@@ -2321,8 +2306,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->remove_render_attribute( $link_id );
 		$this->add_render_attribute( $link_id, [
 			'class' => $link_classes,
-			'tabindex' => 1 === $display_index ? '0' : '-1',
-			'role' => 'menuitem',
 		] );
 		$this->add_link_attributes( $link_id, $item['item_link'] );
 
@@ -2400,7 +2383,7 @@ class Mega_Menu extends Widget_Nested_Base {
 		<nav <?php $this->render_menu_attributes( '{{ elementUid }}' ); ?>>
 			<?php $this->render_menu_toggle_template(); ?>
 			<div <?php $this->render_menu_wrapper_attributes(); ?>>
-				<ul class="e-n-menu-heading" role="menubar">
+				<ul class="e-n-menu-heading">
 					<# _.each( settings['menu_items'], function( item, index ) {
 						const menuItemCount = index + 1,
 							menuItemUid = elementUid + menuItemCount,
@@ -2439,7 +2422,6 @@ class Mega_Menu extends Widget_Nested_Base {
 						view.addRenderAttribute( menuItemWrapperKey, {
 							'id': menuItemId,
 							'class': menuItemClassList,
-							'role': 'presentation',
 							'style': '--n-menu-title-order: ' + menuItemCount + ';',
 						} );
 
@@ -2452,8 +2434,7 @@ class Mega_Menu extends Widget_Nested_Base {
 
 						view.addRenderAttribute( menuItemTitleKey, {
 							'class': menuItemLinkClasses,
-							'role': !! item.item_link.url ? 'menuitem' : 'none',
-							'tabindex': 1 === menuItemCount ? '0' : '-1',
+							'href': item.item_link.url,
 							'data-binding-type': 'repeater-item',
 							'data-binding-repeater-name': 'menu_items',
 							'data-binding-setting': ['item_title'],
@@ -2468,13 +2449,10 @@ class Mega_Menu extends Widget_Nested_Base {
 						view.addRenderAttribute( menuItemDropdownIconKey, {
 							'id': 'e-n-menu-dropdown-icon-' + menuItemUid,
 							'class': [ 'e-n-menu-dropdown-icon', 'e-focus' ],
-							'role': 'button',
 							'data-tab-index': menuItemCount,
-							'tabindex': 1 === menuItemCount ? '0' : '-1',
 							'aria-haspopup': hasDropdownContent ? 'true' : 'false',
 							'aria-expanded': 'false',
 							'aria-controls': 'e-n-menu-content-' + menuItemUid,
-							'aria-label': '<?php echo esc_html__( 'Expand: ', 'elementor-pro' ); ?>' + item.item_title,
 						} );
 					#>
 
@@ -2503,8 +2481,14 @@ class Mega_Menu extends Widget_Nested_Base {
 
 						<# if ( hasDropdownContent ) { #>
 							<button {{{ view.getRenderAttributeString( menuItemDropdownIconKey ) }}}>
-								<span class="e-n-menu-dropdown-icon-closed">{{{ menuItemIcon.value }}}</span>
-								<span class="e-n-menu-dropdown-icon-opened">{{{  menuItemIconActive.value }}}</span>
+								<span class="e-n-menu-dropdown-icon-opened">
+									{{{ menuItemIconActive.value }}}
+									<span class="elementor-screen-only"><?php echo esc_html__( 'Close ', 'elementor-pro' ); ?>{{{ item.item_title }}}</span>
+								</span>
+								<span class="e-n-menu-dropdown-icon-closed">
+									{{{ menuItemIcon.value }}}
+									<span class="elementor-screen-only"><?php echo esc_html__( 'Open ', 'elementor-pro' ); ?>{{{ item.item_title }}}</span>
+								</span>
 							</button>
 						<# } #>
 					</li>

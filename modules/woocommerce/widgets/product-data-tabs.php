@@ -40,9 +40,10 @@ class Product_Data_Tabs extends Base_Widget {
 		$this->add_control(
 			'wc_style_warning',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => esc_html__( 'The style of this widget is often affected by your theme and plugins. If you experience any such issue, try to switch to a basic theme and deactivate related plugins.', 'elementor-pro' ),
 			]
 		);
 
@@ -138,18 +139,12 @@ class Product_Data_Tabs extends Base_Widget {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
-			'separator_tabs_style',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
-		);
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tab_typography',
 				'selector' => '.woocommerce {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a',
+				'separator' => 'before',
 			]
 		);
 
@@ -223,13 +218,6 @@ class Product_Data_Tabs extends Base_Widget {
 		);
 
 		$this->add_control(
-			'separator_panel_style',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
-		);
-
-		$this->add_control(
 			'panel_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'elementor-pro' ),
@@ -238,6 +226,7 @@ class Product_Data_Tabs extends Base_Widget {
 				'selectors' => [
 					'.woocommerce {{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; margin-top: -{{TOP}}{{UNIT}}',
 				],
+				'separator' => 'before',
 			]
 		);
 

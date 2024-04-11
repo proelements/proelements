@@ -57,7 +57,6 @@ abstract class Theme_Page_Document extends Theme_Document {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => esc_html__( 'Default Page Template from your theme', 'elementor-pro' ),
-				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
 					'page_template' => 'default',
@@ -70,7 +69,6 @@ abstract class Theme_Page_Document extends Theme_Document {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => esc_html__( 'No header, no footer, just Elementor', 'elementor-pro' ),
-				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
 					'page_template' => PageTemplatesModule::TEMPLATE_CANVAS,
@@ -83,7 +81,6 @@ abstract class Theme_Page_Document extends Theme_Document {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => esc_html__( 'This template includes the header, full-width content and footer', 'elementor-pro' ),
-				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
 					'page_template' => PageTemplatesModule::TEMPLATE_HEADER_FOOTER,

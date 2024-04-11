@@ -91,7 +91,7 @@ class Module extends Module_Base {
 	 */
 	public function add_page_settings_css( $post_css ) {
 		$document = Plugin::elementor()->documents->get( $post_css->get_post_id() );
-		$custom_css = $document->get_settings( 'custom_css' );
+		$custom_css = $document->get_settings( 'custom_css' ) ?? '';
 
 		$custom_css = trim( $custom_css );
 

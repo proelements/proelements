@@ -409,7 +409,6 @@ abstract class Base extends Base_Widget {
 			[
 				'label' => esc_html__( 'Arrows', 'elementor-pro' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'none',
 			]
 		);
 

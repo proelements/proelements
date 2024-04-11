@@ -97,7 +97,6 @@ class ProgressTracker extends Base_Widget {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => esc_html__( 'Note: You can only track progress relative to Post Content on a single post template.', 'elementor-pro' ),
-				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
 					'relative_to' => 'post_content',

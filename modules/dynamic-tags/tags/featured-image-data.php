@@ -31,6 +31,30 @@ class Featured_Image_Data extends Tag {
 		return esc_html__( 'Featured Image Data', 'elementor-pro' );
 	}
 
+	public function get_editor_config() {
+		$config = parent::get_editor_config();
+
+		$config['display_conditions'] = [
+			'featured_image_data_title' => [
+				'label' => esc_html__( 'Image Title', 'elementor-pro' ),
+				'settings' => [ 'attachment_data' => 'title' ],
+				'group' => 'featured_image',
+			],
+			'featured_image_data_alt' => [
+				'label' => esc_html__( 'Image Alt', 'elementor-pro' ),
+				'settings' => [ 'attachment_data' => 'alt' ],
+				'group' => 'featured_image',
+			],
+			'featured_image_data_caption' => [
+				'label' => esc_html__( 'Image Caption', 'elementor-pro' ),
+				'settings' => [ 'attachment_data' => 'caption' ],
+				'group' => 'featured_image',
+			],
+		];
+
+		return $config;
+	}
+
 	private function get_attacment() {
 		$id = get_post_thumbnail_id();
 

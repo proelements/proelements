@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-02-2024 */
+/*! pro-elements - v3.19.0 - 26-03-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -666,9 +666,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
         return {};
       }
       return response.json();
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .catch(error => {
+    }).catch(() => {
       return {};
     }).then(response => {
       if (!response?.data && '' !== response?.data) {
@@ -1093,12 +1091,12 @@ class _default extends elementorModules.frontend.Document {
     if (!$focusableElements.length) {
       return;
     }
-    let $lastButtonClicked = null;
+    let lastButtonClicked = null;
     if (event?.currentTarget) {
-      $lastButtonClicked = jQuery(event.currentTarget);
+      lastButtonClicked = event.currentTarget;
     }
-    const $lastFocusableElement = $focusableElements[$focusableElements.length - 1];
-    const $firstFocusableElement = $focusableElements[0];
+    const lastFocusableElement = $focusableElements[$focusableElements.length - 1];
+    const firstFocusableElement = $focusableElements[0];
     const onKeyDownPressed = keyDownEvent => {
       const TAB_KEY = 9;
       const isShiftPressed = keyDownEvent.shiftKey;
@@ -1108,25 +1106,25 @@ class _default extends elementorModules.frontend.Document {
       }
       const activeElement = elementorFrontend.elements.window.document.activeElement;
       if (isShiftPressed) {
-        const isFocusOnFirstElement = activeElement === $firstFocusableElement;
+        const isFocusOnFirstElement = activeElement === firstFocusableElement;
         if (isFocusOnFirstElement) {
-          $lastFocusableElement.focus();
+          lastFocusableElement.focus();
           keyDownEvent.preventDefault();
         }
       } else {
-        const isFocusOnLastElement = activeElement === $lastFocusableElement;
+        const isFocusOnLastElement = activeElement === lastFocusableElement;
         if (isFocusOnLastElement) {
-          $firstFocusableElement.focus();
+          firstFocusableElement.focus();
           keyDownEvent.preventDefault();
         }
       }
     };
-    $firstFocusableElement.focus();
+    firstFocusableElement.focus();
     const $window = elementorFrontend.elements.$window;
     $window.on('keydown', onKeyDownPressed).on('elementor/popup/hide', () => {
       $window.off('keydown', onKeyDownPressed);
-      if ($lastButtonClicked) {
-        $lastButtonClicked.focus();
+      if (lastButtonClicked) {
+        lastButtonClicked.focus();
       }
     });
   }

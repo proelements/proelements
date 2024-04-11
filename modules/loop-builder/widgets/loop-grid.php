@@ -249,9 +249,10 @@ class Loop_Grid extends Base {
 		$repeater->add_control(
 			'column_span_masonry_note',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__( 'Note: The Masonry option combined with Column Span might cause unexpected results and break the layout.', 'elementor-pro' ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'warning',
+				'content' => esc_html__( 'Note: The Masonry option combined with Column Span might cause unexpected results and break the layout.', 'elementor-pro' ),
 				'condition' => [
 					'column_span!' => '1',
 				],
@@ -532,18 +533,12 @@ class Loop_Grid extends Base {
 			]
 		);
 
-		$this->add_control(
-			'nothing_found_message_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
-		);
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'nothing_found_message_typography',
 				'selector' => '{{WRAPPER}} .e-loop-nothing-found-message__text',
+				'separator' => 'before',
 			]
 		);
 

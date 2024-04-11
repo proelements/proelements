@@ -27,6 +27,20 @@ class Archive_Title extends Tag {
 		return [ Module::TEXT_CATEGORY ];
 	}
 
+	public function get_editor_config() {
+		$config = parent::get_editor_config();
+
+		$config['display_conditions'] = [
+			'archive_title' => [
+				'label' => esc_html__( 'Title', 'elementor-pro' ),
+				'settings' => [ 'include_context' => 'no' ],
+				'group' => 'archive',
+			],
+		];
+
+		return $config;
+	}
+
 	public function render() {
 		$include_context = 'yes' === $this->get_settings( 'include_context' );
 

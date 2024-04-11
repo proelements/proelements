@@ -194,7 +194,6 @@ class Media_Carousel extends Base {
 					'type' => 'image',
 					'image_link_to_type' => 'custom',
 				],
-				'separator' => 'none',
 				'show_label' => false,
 			]
 		);
@@ -301,7 +300,7 @@ class Media_Carousel extends Base {
 			if ( 'custom' === $slide['image_link_to_type'] ) {
 				$this->add_link_attributes( $element_key . '_link', $slide['image_link_to'] );
 			} else {
-				$this->add_render_attribute( $element_key . '_link', 'href', $image_link_to );
+				$this->add_render_attribute( $element_key . '_link', 'href', esc_url( $image_link_to ) );
 
 				$this->add_lightbox_data_attributes( $element_key . '_link', $slide['image']['id'], 'yes', $this->get_id() );
 

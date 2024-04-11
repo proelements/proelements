@@ -17,34 +17,35 @@ abstract class Integration_Base extends Action_Base {
 
 	public static function global_api_control( $widget, $api_key = '', $label = '', $condition = [], $id = '' ) {
 		if ( empty( $api_key ) ) {
-			$html = sprintf(
+			$content = sprintf(
 				/* translators: 1: Integration label, 2: Link opening tag, 3: Link closing tag. */
 				esc_html__( 'Set your %1$s in the %2$sIntegrations Settings%3$s.', 'elementor-pro' ),
 				$label,
 				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
 				'</a>'
 			);
-			$content_classes = 'elementor-panel-alert elementor-panel-alert-warning';
+			$alert_type = 'warning';
 		} else {
-			$html = sprintf(
+			$content = sprintf(
 				/* translators: 1: Integration label, 2: Link opening tag, 3: Link closing tag. */
 				esc_html__( 'You are using %1$s set in the %2$sIntegrations Settings%3$s.', 'elementor-pro' ),
 				$label,
 				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
 				'</a>'
 			);
-			$content_classes = 'elementor-panel-alert elementor-panel-alert-info';
+			$alert_type = 'info';
 		}
 
 		/* translators: %s: Integration label. */
-		$html .= ' ' . sprintf( esc_html__( 'You can also set a different %s by choosing "Custom".', 'elementor-pro' ), $label );
+		$content .= ' ' . sprintf( esc_html__( 'You can also set a different %s by choosing "Custom".', 'elementor-pro' ), $label );
 
 		$widget->add_control(
 			$id . '_api_key_msg',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => $html,
-				'content_classes' => $content_classes,
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => $alert_type,
+				'content' => $content,
 				'condition' => $condition,
 			]
 		);

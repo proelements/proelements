@@ -14,9 +14,9 @@ const useConfirmAction = useConfirmActionBase ?? useConfirmActionFallback;
 export default function Import() {
 	const { importTemplates, action, resetActionState } = React.useContext( TemplatesContext ),
 		[ importedTemplate, setImportedTemplate ] = React.useState( null ),
-		isImport = React.useMemo( () => action.current === TemplatesProvider.actions.IMPORT, [ action ] ),
-		isUploading = React.useMemo( () => isImport && action.loading, [ action ] ),
-		hasError = React.useMemo( () => isImport && action.error, [ action ] );
+		isImport = action.current === TemplatesProvider.actions.IMPORT,
+		isUploading = isImport && action.loading,
+		hasError = isImport && action.error;
 
 	const upload = React.useCallback( ( file ) => {
 		if ( isUploading ) {

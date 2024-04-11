@@ -288,14 +288,15 @@ class Stripe_Button extends Payment_Button {
 		$this->add_control(
 			'test_environment_msg',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf(
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => sprintf(
 					/* translators: 1: Elementor's integrations settings link opening tab, 2: Link closing tag. */
 					esc_html__( 'For this widget to work, you need to set your Stripe API keys in the %1$sIntegrations Settings%2$s.', 'elementor-pro' ),
 					sprintf( '<a href="%s" target="_blank">', admin_url( 'admin.php?page=elementor#tab-integrations' ) ),
 					'</a>'
 				),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				'separator' => 'after',
 			]
 		);

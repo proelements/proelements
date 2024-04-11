@@ -36,14 +36,15 @@ class Akismet {
 		$form->add_control(
 			'akismet_info',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf(
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => sprintf(
 					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'Assign shortcodes to the fields below to enable spam protection on your form. %1$sShow me how%2$s', 'elementor-pro' ),
 					'<a href="http://go.elementor.com/widget-form-akismet/" target="_blank">',
 					'</a>'
 				),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 

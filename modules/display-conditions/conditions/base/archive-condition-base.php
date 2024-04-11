@@ -11,16 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 abstract class Archive_Condition_Base extends Condition_Base {
-	const TAXONOMY_MAP = [
-		'categories' => 'category',
-		'tags' => 'post_tag',
-	];
 
 	private string $condition_key;
 
-	/**
-	 * @param $condition_key : 'categories' | 'tags'
-	 */
 	public function __construct( $condition_key ) {
 		$this->condition_key = $condition_key;
 
@@ -30,6 +23,8 @@ abstract class Archive_Condition_Base extends Condition_Base {
 	abstract public function get_name();
 
 	abstract public function get_label();
+
+	abstract protected function get_taxonomy();
 
 	public function get_group(): string {
 		return 'archive';
@@ -53,9 +48,7 @@ abstract class Archive_Condition_Base extends Condition_Base {
 			Comparator_Provider::COMPARATOR_IS,
 			Comparator_Provider::COMPARATOR_IS_NOT,
 		] );
-		$taxonomy = self::TAXONOMY_MAP[ $this->condition_key ]
-			? self::TAXONOMY_MAP[ $this->condition_key ]
-			: '';
+		$taxonomy = $this->get_taxonomy();
 
 		$this->add_control(
 			'comparator',

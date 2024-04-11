@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import * as React from 'react';
+import { useRef, useEffect } from 'react';
 import { Button } from '@elementor/app-ui';
 import { arrayToClassName } from '../utils.js';
 

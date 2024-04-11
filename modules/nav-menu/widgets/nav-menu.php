@@ -92,16 +92,17 @@ class Nav_Menu extends Base_Widget {
 			$this->add_control(
 				'menu',
 				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<strong>' . esc_html__( 'There are no menus in your site.', 'elementor-pro' ) . '</strong><br>' .
-							sprintf(
-								/* translators: 1: Link opening tag, 2: Link closing tag. */
-								esc_html__( 'Go to the %1$sMenus screen%2$s to create one.', 'elementor-pro' ),
-								sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
-								'</a>'
-							),
+					// TODO: Remove define() with the release of Elementor 3.22
+					'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+					'alert_type' => 'info',
+					'heading' => esc_html__( 'There are no menus in your site.', 'elementor-pro' ),
+					'content' => sprintf(
+						/* translators: 1: Link opening tag, 2: Link closing tag. */
+						esc_html__( 'Go to the %1$sMenus screen%2$s to create one.', 'elementor-pro' ),
+						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+						'</a>'
+					),
 					'separator' => 'after',
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
 		}
@@ -1007,7 +1008,6 @@ class Nav_Menu extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-nav-menu--dropdown' => 'background-color: {{VALUE}}',
 				],
-				'separator' => 'none',
 			]
 		);
 
@@ -1046,7 +1046,6 @@ class Nav_Menu extends Base_Widget {
 					{{WRAPPER}} .elementor-nav-menu--dropdown a.elementor-item-active,
 					{{WRAPPER}} .elementor-nav-menu--dropdown a.highlighted' => 'background-color: {{VALUE}}',
 				],
-				'separator' => 'none',
 			]
 		);
 
@@ -1080,7 +1079,6 @@ class Nav_Menu extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-nav-menu--dropdown a.elementor-item-active' => 'background-color: {{VALUE}}',
 				],
-				'separator' => 'none',
 			]
 		);
 

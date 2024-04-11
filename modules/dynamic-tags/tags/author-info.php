@@ -18,6 +18,30 @@ class Author_Info extends Author_Tag {
 		return esc_html__( 'Author Info', 'elementor-pro' );
 	}
 
+	public function get_editor_config() {
+		$config = parent::get_editor_config();
+
+		$config['display_conditions'] = [
+			'author_info_bio' => [
+				'label' => esc_html__( 'Author Bio', 'elementor-pro' ),
+				'settings' => [ 'key' => 'description' ],
+				'group' => 'author',
+			],
+			'author_info_email' => [
+				'label' => esc_html__( 'Author Email', 'elementor-pro' ),
+				'settings' => [ 'key' => 'email' ],
+				'group' => 'author',
+			],
+			'author_info_website' => [
+				'label' => esc_html__( 'Author Website', 'elementor-pro' ),
+				'settings' => [ 'key' => 'url' ],
+				'group' => 'author',
+			],
+		];
+
+		return $config;
+	}
+
 	protected function register_controls() {
 		$this->add_control(
 			'key',

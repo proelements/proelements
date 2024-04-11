@@ -1,5 +1,55 @@
 # PRO Elements - by PROElements.org
 
+#### 3.20.2 - 2024-03-26
+
+* Security Fix: Improved code security enforcement in Media Carousel widget
+* Security Fix: Improved code security enforcement in Form widget
+* Security Fix: Improved code security enforcement in Post Navigation widget
+* Security Fix: Improved code security enforcement in Gallery widget
+* Security Fix: Improved code security enforcement in Video Playlist widget
+
+#### 3.20.1 - 2024-03-20
+
+* Fix: Strengthened code integrity in deprecated Woo Single Element widget
+* Fix: PHP error notice appears when using Loop Grid with the Taxonomy Filter widgets
+
+#### 3.20.0 - 2024-03-11
+
+* Tweak: Implemented OR logic in the Display Conditions feature
+* Tweak: Added X and Threads social networks to Share Buttons widget ([#25299](https://github.com/elementor/elementor/issues/25299))
+* Tweak: Added Archive Title dynamic tag rule in Display Conditions feature
+* Tweak: Added Featured Image Title dynamic tag rule in Display Conditions feature
+* Tweak: Added Featured Image Alt dynamic tag rule in Display Conditions feature
+* Tweak: Added Featured Image Caption dynamic tag rule in Display Conditions feature
+* Tweak: Added Author Bio dynamic tag rule in Display Conditions feature
+* Tweak: Added Author Email dynamic tag rule in Display Conditions feature
+* Tweak: Added Author Website dynamic tag rule in Display Conditions feature
+* Tweak: Added Page Title rule in Display Conditions feature
+* Tweak: Added Post Title rule in Display Conditions feature
+* Tweak: Added Featured Image rule in Display Conditions feature
+* Tweak: Added Comments Number rule in Display Conditions feature
+* Tweak: Added Archive Author rule in Display Conditions feature
+* Tweak: Added support for WordPress Custom Fields in Display Conditions feature
+* Tweak: Implemented accessibility improvements in Menu widget ([#23875](https://github.com/elementor/elementor/issues/23875))
+* Tweak: Implemented accessibility improvements in Login widget
+* Tweak: Added additional style controls in the Table of Contents widget
+* Tweak: Added Transition Duration option in Blockquote widget ([#21295](https://github.com/elementor/elementor/issues/21295))
+* Tweak: Added Transition Duration to button in Flip Box widget
+* Tweak: Added Transition Duration to button in Author Box widget
+* Tweak: Added Transition Duration to List in Table of Contents widget
+* Tweak: Added Transition Duration to button in Login widget
+* Tweak: Added Transition Duration in Post Navigation widget
+* Tweak: Added Transition Duration Show More in Video Playlist widget
+* Tweak: Added Transition Duration to button in Form widget
+* Tweak: Removed separator-none argument from all Editor controls
+* Tweak: Add `<time>` wrapper for Date and Time items in Post Info widget
+* Tweak: Page Transitions feature merged to version
+* Tweak: Scroll Snap feature merged to version
+* Tweak: Promoted Display Conditions feature to Beta status and activated for new sites
+* Tweak: Promoted Taxonomy Filter feature to beta status and activated for new sites
+* Fix: Page Transitions feature and Load Font Awesome 4 Support cause a console error ([#18885](https://github.com/elementor/elementor/issues/18885), [#19334](https://github.com/elementor/elementor/issues/19334), [#21082](https://github.com/elementor/elementor/issues/21082))
+* Fix: Added better output escaping in Taxonomy Filter widget
+
 #### 3.19.3 - 2024-02-26
 
 * Tweak: Improved Loop CSS loading structure in Loop Grid item

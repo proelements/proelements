@@ -41,15 +41,15 @@ class Save_To_Database extends Action_Base {
 		$widget->add_control(
 			'submissions_action_message',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf(
-					__(
-						'Collected Submissions will be saved to Elementor > <a href="%s" target="_blank" rel="noreferrer">Submissions</a>',
-						'elementor-pro'
-					),
-					self_admin_url( 'admin.php?page=' . Component::PAGE_ID )
+				// TODO: Remove define() with the release of Elementor 3.22
+				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'alert_type' => 'info',
+				'content' => sprintf(
+					/* translators: 1: Link open tag, 2: Link open tag, 3: Link close tag. */
+					esc_html__( 'Collected Submissions will be saved to Elementor > %1$s Submissions %2$s', 'elementor-pro' ),
+					sprintf( '<a href="%s" target="_blank" rel="noreferrer">', self_admin_url( 'admin.php?page=' . Component::PAGE_ID ) ),
+					'</a>',
 				),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
