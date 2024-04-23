@@ -1671,20 +1671,14 @@ class Call_To_Action extends Base_Widget {
 
 		$this->add_render_attribute( 'wrapper', 'class', 'elementor-cta' );
 
-		$background_selector = "background-image: url($bg_image);";
-
-		$is_lazyload_active = Plugin::elementor()->experiments->is_feature_active( 'e_lazyload' );
-		$is_edit_mode = Plugin::elementor()->editor->is_edit_mode();
-
-		if ( $print_bg && ! $is_edit_mode && $is_lazyload_active ) {
-			$background_selector = "background-image: var(--e-bg-lazyload-loaded); --e-bg-lazyload: url($bg_image);";
-			$this->add_render_attribute( 'wrapper', 'data-e-bg-lazyload', '.elementor-bg' );
-		}
+		/*$this->add_render_attribute( 'background_image', 'style', [
+			'background-image: url(' . $bg_image . ');',
+		] );*/
 
 		$this->add_render_attribute(
 			'background_image',
 			[
-				'style' => $background_selector,
+				'style' => 'background-image: url(' . esc_url( $bg_image ) . ');',
 				'role' => 'img',
 				'aria-label' => Control_Media::get_image_alt( $settings['bg_image'] ),
 			]

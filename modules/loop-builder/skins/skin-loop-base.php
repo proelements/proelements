@@ -60,7 +60,7 @@ class Skin_Loop_Base extends Skin_Base {
 		);
 	}
 
-	private function maybe_add_load_more_wrapper_class() {
+	protected function maybe_add_load_more_wrapper_class() {
 		$settings = $this->parent->get_settings_for_display();
 		/** @var Loop_Widget_Base $widget */
 		$widget = $this->parent;

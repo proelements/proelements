@@ -86,6 +86,10 @@ class Template extends Base_Widget {
 	protected function render() {
 		$template_id = $this->get_settings( 'template_id' );
 
+		if ( empty( $template_id ) ) {
+			return;
+		}
+
 		if ( 'publish' !== get_post_status( $template_id ) ) {
 			return;
 		}

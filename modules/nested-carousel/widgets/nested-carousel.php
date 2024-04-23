@@ -333,6 +333,46 @@ class Nested_Carousel extends Widget_Nested_Base {
 		$this->render_carousel_footer( $settings );
 	}
 
+	protected function get_initial_config(): array {
+		if ( Plugin::elementor()->experiments->is_feature_active( 'e_nested_atomic_repeaters' ) ) {
+			return array_merge( parent::get_initial_config(), [
+				'support_improved_repeaters' => true,
+				'target_container' => [ '.e-n-carousel > .swiper-wrapper' ],
+				'node' => 'div',
+			] );
+		}
+
+		return parent::get_initial_config();
+	}
+
+	protected function get_default_children_container_placeholder_selector() {
+		return '.swiper-slide';
+	}
+
+	protected function content_template_single_repeater_item() {
+		?>
+		<#
+		const elementUid = view.getIDInt().toString().substr( 0, 3 ),
+			numOfSlides = view.collection.length + 1;
+
+		const slideCount = numOfSlides,
+			slideUid = elementUid + slideCount,
+			slideWrapperKey = slideUid;
+
+		const slideWrapperKeyItem = {
+			'class': 'swiper-slide',
+			'data-slide': slideCount,
+			'role': 'group',
+			'aria-roledescription': 'slide',
+			'aria-label': slideCount + ' <?php echo esc_html__( 'of', 'elementor-pro' ); ?> ' + numOfSlides,
+		};
+
+		view.addRenderAttribute( 'single-slide', slideWrapperKeyItem, null, true );
+		#>
+		<div {{{ view.getRenderAttributeString( 'single-slide' ) }}}></div>
+		<?php
+	}
+
 	protected function content_template() {
 		?>
 			<# if ( settings['carousel_items'] ) {

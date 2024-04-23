@@ -1539,7 +1539,13 @@ class Author_Box extends Base {
 				'avatar',
 				[
 					'src' => esc_url( $author['avatar'] ),
-					'alt' => ( ! empty( $author['display_name'] ) ) ? $author['display_name'] : esc_html__( 'Author picture', 'elementor-pro' ),
+					'alt' => ( ! empty( $author['display_name'] ) )
+						? sprintf(
+							/* translators: %s: Author display name. */
+							esc_attr__( 'Picture of %s', 'elementor-pro' ),
+							$author['display_name']
+						)
+						: esc_html__( 'Author picture', 'elementor-pro' ),
 					'loading' => 'lazy',
 				]
 			);

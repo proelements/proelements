@@ -58,6 +58,9 @@ class Contact_URL extends Tag {
 				'condition' => [
 					'link_type' => 'email',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -97,6 +100,9 @@ class Contact_URL extends Tag {
 						'viber',
 					],
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -107,6 +113,9 @@ class Contact_URL extends Tag {
 				'type' => Controls_Manager::TEXT,
 				'condition' => [
 					'link_type' => [ 'skype', 'messenger' ],
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -155,6 +164,9 @@ class Contact_URL extends Tag {
 				'condition' => [
 					'link_type' => 'waze',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -201,6 +213,9 @@ class Contact_URL extends Tag {
 						'outlook_calendar',
 						'yahoo_calendar',
 					],
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);

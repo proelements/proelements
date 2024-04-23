@@ -152,6 +152,10 @@ class Module extends BaseModule {
 	 * @return array
 	 */
 	public function add_tracking_data( $params ) {
+		unset( $params['is_first_time'] );
+
+		$params['install_time_pro'] = Plugin::instance()->license_admin->get_installed_time();
+
 		$params['usages']['integrations'] = $this->get_integrations_usage();
 		$params['usages']['icons'] = $this->get_icons_usage();
 		$params['usages']['fonts'] = $this->get_fonts_usage();

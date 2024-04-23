@@ -139,9 +139,9 @@ class Blockquote extends Base_Widget {
 				'label' => esc_html__( 'View', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'icon-text' => 'Icon & Text',
-					'icon' => 'Icon',
-					'text' => 'Text',
+					'icon-text' => esc_html__( 'Icon & Text', 'elementor-pro' ),
+					'icon' => esc_html__( 'Icon', 'elementor-pro' ),
+					'text' => esc_html__( 'Text', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-blockquote--button-view-',
 				'default' => 'icon-text',
@@ -158,9 +158,9 @@ class Blockquote extends Base_Widget {
 				'label' => esc_html__( 'Skin', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'classic' => 'Classic',
-					'bubble' => 'Bubble',
-					'link' => 'Link',
+					'classic' => esc_html__( 'Classic', 'elementor-pro' ),
+					'bubble' => esc_html__( 'Bubble', 'elementor-pro' ),
+					'link' => esc_html__( 'Link', 'elementor-pro' ),
 				],
 				'default' => 'classic',
 				'prefix_class' => 'elementor-blockquote--button-skin-',
@@ -883,6 +883,10 @@ class Blockquote extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		if ( empty( $settings['blockquote_content'] ) && empty( $settings['author_name'] ) && 'yes' !== $settings['tweet_button'] ) {
+			return;
+		}
+
 		$tweet_button_view = $settings['tweet_button_view'];
 		$share_link = 'https://twitter.com/intent/tweet';
 
@@ -968,8 +972,12 @@ class Blockquote extends Base_Widget {
 	protected function content_template() {
 		?>
 		<#
-			var tweetButtonView = settings.tweet_button_view;
-			#>
+		if ( '' === settings.blockquote_content && '' === settings.author_name && 'yes' !== settings.tweet_button) {
+			return;
+		}
+
+		var tweetButtonView = settings.tweet_button_view;
+		#>
 			<blockquote class="elementor-blockquote">
 				<p class="elementor-blockquote__content elementor-inline-editing" data-elementor-setting-key="blockquote_content">
 					{{{ settings.blockquote_content }}}

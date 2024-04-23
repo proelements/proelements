@@ -1810,6 +1810,7 @@ class My_Account extends Base_Widget {
 		add_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		add_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
 		add_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+		add_filter( 'woocommerce_is_account_page', '__return_true' );
 
 		if ( $this->has_custom_template() && 'dashboard' === $this->get_current_endpoint() ) {
 			remove_action( 'woocommerce_account_content', 'woocommerce_account_content', 10 );
@@ -1830,6 +1831,7 @@ class My_Account extends Base_Widget {
 		remove_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 99 );
 		remove_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
 		remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+		remove_filter( 'woocommerce_is_account_page', '__return_true' );
 
 		if ( $this->has_custom_template() && 'dashboard' === $this->get_current_endpoint() ) {
 			remove_action( 'woocommerce_account_content', [ $this, 'display_custom_template' ], 10 );
@@ -1932,7 +1934,6 @@ class My_Account extends Base_Widget {
 		}
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<div class="e-my-account-tab e-my-account-tab__' . sanitize_html_class( $current_endpoint ) . ' ' . $custom_dashboard_class . '">'; ?>
-			<span class="elementor-hidden">[[woocommerce_my_account]]</span>
 			<?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
 		</div>
 		<?php
@@ -1960,7 +1961,6 @@ class My_Account extends Base_Widget {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<div class="e-my-account-tab e-my-account-tab__dashboard ' . $custom_dashboard_class . '">';
 		?>
-			<span class="elementor-hidden">[[woocommerce_my_account]]</span>
 			<div class="woocommerce">
 			<?php
 			if ( 'horizontal' === $settings['tabs_layout'] ) {

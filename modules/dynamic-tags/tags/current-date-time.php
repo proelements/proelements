@@ -73,6 +73,9 @@ class Current_Date_Time extends Tag {
 				'condition' => [
 					'date_format' => 'custom',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 	}

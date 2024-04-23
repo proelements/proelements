@@ -95,6 +95,9 @@ class User_Info extends Tag {
 				'condition' => [
 					'type' => 'meta',
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 	}

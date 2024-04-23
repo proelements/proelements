@@ -5,10 +5,14 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop as Loop_CSS;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Preview;
+use ElementorPro\Modules\QueryControl\Module as QueryModule;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
+use ElementorPro\Modules\LoopBuilder\Providers\Taxonomy_Loop_Provider;
+use ElementorPro\Modules\LoopFilter\Traits\Taxonomy_Filter_Trait;
+use ElementorPro\Modules\DynamicTags\Tags\Base\Tag_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -16,7 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Loop extends Theme_Document {
 
+	use Taxonomy_Filter_Trait;
+	use Tag_Trait;
+
 	const DOCUMENT_TYPE = 'loop-item';
+	const SINGLE_PREFIX = 'single/';
 
 	const RECOMMENDED_POSTS_WIDGET_NAMES = [
 		'theme-post-title',
@@ -31,6 +39,9 @@ class Loop extends Theme_Document {
 		'woocommerce-product-data-tabs',
 		'loop-carousel',
 	];
+
+	const PREVIEW_TYPE = 'preview_type';
+	const PREVIEW_ID = 'preview_id';
 
 	public static function get_type() {
 		return static::DOCUMENT_TYPE;
@@ -78,9 +89,17 @@ class Loop extends Theme_Document {
 		parent::save( $data );
 	}
 
+	private function get_data_id() {
+		if ( Taxonomy_Loop_Provider::is_loop_taxonomy() ) {
+			return $this->get_data_id_from_taxonomy_loop_query();
+		}
+
+		return get_the_ID();
+	}
+
 	public function get_container_attributes() {
 		$attributes = Document::get_container_attributes();
-		$post_id = get_the_ID();
+		$post_id = $this->get_data_id();
 
 		$attributes['class'] .= ' e-loop-item';
 		$attributes['class'] .= ' e-loop-item-' . $post_id;
@@ -93,7 +112,6 @@ class Loop extends Theme_Document {
 
 	public function get_initial_config() {
 		$config = parent::get_initial_config();
-
 		$loop_builder_module = new LoopBuilderModule();
 
 		if ( 'post' === $loop_builder_module->get_source_type_from_post_meta( $this->get_main_id() ) ) {
@@ -142,7 +160,7 @@ class Loop extends Theme_Document {
 		$post_types_options = [];
 
 		foreach ( $post_types as $post_type => $label ) {
-			$post_types_options[ 'single/' . $post_type ] = get_post_type_object( $post_type )->labels->singular_name;
+			$post_types_options[ self::SINGLE_PREFIX . $post_type ] = get_post_type_object( $post_type )->labels->singular_name;
 		}
 
 		return [
@@ -414,26 +432,10 @@ class Loop extends Theme_Document {
 		$loop_builder_module = new LoopBuilderModule();
 		$source_type = $loop_builder_module->get_source_type_from_post_meta( $this->get_main_id() );
 
-		$this->update_control(
-			'preview_type',
-			[
-				'default' => 'single/' . $source_type,
-				'label' => esc_html__( 'Preview a specific post or item', 'elementor-pro' ),
-			]
-		);
-
-		$latest_posts = get_posts([
-			'posts_per_page' => 1,
-			'post_type' => $source_type,
-		]);
-
-		if ( ! empty( $latest_posts ) ) {
-			$this->update_control(
-				'preview_id',
-				[
-					'default' => $latest_posts[0]->ID,
-				]
-			);
+		if ( Taxonomy_Loop_Provider::is_source_type_taxonomy( $source_type ) ) {
+			$this->update_taxonomy_settings_controls( $source_type );
+		} else {
+			$this->update_post_settings_controls( $source_type );
 		}
 	}
 
@@ -446,5 +448,88 @@ class Loop extends Theme_Document {
 		$category_keys = array_keys( $existing_categories );
 		$index = array_search( 'favorites', $category_keys, true );
 		return array_splice( $existing_categories, 0, $index + 1 ) + $new_categories + array_splice( $existing_categories, $index + 1 );
+	}
+
+	private function update_post_settings_controls( $source_type ) {
+		$this->update_control(
+			self::PREVIEW_TYPE,
+			[
+				'default' => self::SINGLE_PREFIX . $source_type,
+				'label' => esc_html__( 'Preview a specific post or item', 'elementor-pro' ),
+			]
+		);
+
+		$latest_posts = get_posts( [
+			'posts_per_page' => 1,
+			'post_type' => $source_type,
+		] );
+
+		if ( ! empty( $latest_posts ) ) {
+			$this->update_control(
+				self::PREVIEW_ID,
+				[
+					'default' => $latest_posts[0]->ID,
+				]
+			);
+		}
+	}
+
+	private function update_taxonomy_settings_controls( $source_type ) {
+		$this->update_taxonomy_preview_type_control( $source_type );
+		$this->update_taxonomy_preview_id_control( $source_type );
+	}
+
+	private function update_taxonomy_preview_type_control( $source_type ) {
+		$post_type_slug = $this->extract_taxonomy_type( $source_type );
+		$allowed_post_types = Taxonomy_Loop_Provider::get_supported_cpts( $post_type_slug );
+		$options_prefix = $source_type . '/';
+		$taxonomy_options = $this->get_taxonomy_options( $allowed_post_types, $options_prefix );
+
+		$this->update_control(
+			self::PREVIEW_TYPE,
+			[
+				'default' => Taxonomy_Loop_Provider::get_default_source_type( $source_type, $options_prefix ),
+				'groups' => [
+					'archive' => [
+						'label' => esc_html__( 'Archive', 'elementor-pro' ),
+						'options' => $taxonomy_options,
+					],
+				],
+				'label' => esc_html__( 'Preview a specific post or item', 'elementor-pro' ),
+			]
+		);
+	}
+
+	private function update_taxonomy_preview_id_control( $source_type ) {
+		$term_id = $this->get_settings_for_display( self::PREVIEW_ID ) ?? null;
+
+		$filter_args = [
+			'taxonomy' => Taxonomy_Loop_Provider::get_default_source_type( $source_type ),
+			'show_empty_items' => 'yes',
+			'show_child_taxonomy' => 'yes',
+		];
+
+		if ( $term_id ) {
+			$filter_args['term_taxonomy_id'] = $term_id;
+		}
+
+		$latest_terms = $this->get_filtered_taxonomies( $filter_args, [] );
+
+		if ( ! empty( $latest_terms ) ) {
+			$term = array_values( $latest_terms )[0];
+			$this->update_control(
+				self::PREVIEW_ID,
+				[
+					'default' => $term->term_id,
+					'autocomplete' => [
+						'object' => QueryModule::QUERY_OBJECT_TAX,
+					],
+				],
+			);
+		}
+	}
+
+	private function extract_taxonomy_type( $source_type ) {
+		return str_replace( '_taxonomy', '', $source_type );
 	}
 }

@@ -1,13 +1,17 @@
 <?php
 namespace ElementorPro\Modules\Woocommerce\Tags;
 
+use ElementorPro\Modules\LoopBuilder\Providers\Taxonomy_Loop_Provider;
 use ElementorPro\Modules\Woocommerce\Module;
+use ElementorPro\Modules\DynamicTags\Tags\Base\Tag_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Category_Image extends Base_Data_Tag {
+	use Tag_Trait;
+
 	public function get_name() {
 		return 'woocommerce-category-image-tag';
 	}
@@ -37,6 +41,8 @@ class Category_Image extends Base_Data_Tag {
 					$category_id = $category_ids[0];
 				}
 			}
+		} elseif ( Taxonomy_Loop_Provider::is_loop_taxonomy() ) {
+			$category_id = $this->get_data_id_from_taxonomy_loop_query();
 		}
 
 		if ( $category_id ) {

@@ -2,6 +2,7 @@
 namespace ElementorPro\Core;
 
 use ElementorPro\Plugin;
+use ElementorPro\Modules\LoopBuilder\Providers\Taxonomy_Loop_Provider;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -85,7 +86,11 @@ class Utils {
 
 	public static function get_the_archive_url() {
 		$url = '';
-		if ( is_category() || is_tag() || is_tax() ) {
+
+		if ( Taxonomy_Loop_Provider::is_loop_taxonomy_strict() ) {
+			global $wp_query;
+			$url = get_term_link( $wp_query->loop_term );
+		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$url = get_term_link( get_queried_object() );
 		} elseif ( is_author() ) {
 			$url = get_author_posts_url( get_queried_object_id() );
@@ -406,5 +411,9 @@ class Utils {
 		}
 
 		return $document;
+	}
+
+	public static function format_control_condition( $name, $operator, $value ) {
+		return compact( 'name', 'operator', 'value' );
 	}
 }

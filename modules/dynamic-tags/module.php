@@ -40,6 +40,8 @@ class Module extends TagsModule {
 	public function __construct() {
 		parent::__construct();
 
+		$this->add_component( 'author-meta-filter', new Components\Author_Meta_Filter() );
+
 		// ACF 5 and up
 		if ( class_exists( '\acf' ) && function_exists( 'acf_get_field_groups' ) && API::is_licence_has_feature( self::LICENSE_FEATURE_ACF_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'acf', new ACF\Module() );
@@ -78,6 +80,8 @@ class Module extends TagsModule {
 		if ( $add_to_cart && $redirect ) {
 			add_filter( 'woocommerce_add_to_cart_redirect', [ $this, 'filter_woocommerce_add_to_cart_redirect' ], 10, 1 );
 		}
+
+		add_filter( 'elementor/document/save/data', [ $this->get_component( 'author-meta-filter' ), 'filter' ], 10, 2 );
 	}
 
 	public function filter_woocommerce_add_to_cart_redirect( $wc_get_cart_url ) {

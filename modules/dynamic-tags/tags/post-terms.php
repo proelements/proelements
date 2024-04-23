@@ -71,6 +71,9 @@ class Post_Terms extends Tag {
 				'label' => esc_html__( 'Separator', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => ', ',
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 

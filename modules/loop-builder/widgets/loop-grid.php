@@ -7,7 +7,8 @@ use Elementor\Core\Base\Document;
 use ElementorPro\Modules\QueryControl\Controls\Template_Query;
 use ElementorPro\Modules\QueryControl\Module as QueryControlModule;
 use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
-use ElementorPro\Plugin;
+use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
+use ElementorPro\Modules\Woocommerce\Module as WoocommerceModule;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Text_Stroke;
@@ -122,6 +123,10 @@ class Loop_Grid extends Base {
 				'condition' => [
 					'posts_per_page!' => 1,
 					'template_id!' => '',
+					'_skin!' => [
+						LoopBuilderModule::LOOP_POST_TAXONOMY_SKIN_ID,
+						WoocommerceModule::LOOP_PRODUCT_TAXONOMY_SKIN_ID,
+					],
 				],
 				'render_type' => 'template',
 				'frontend_available' => true,

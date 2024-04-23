@@ -12,6 +12,7 @@ use Elementor\Icons_Manager;
 use Elementor\Skin_Base as Elementor_Skin_Base;
 use Elementor\Utils;
 use Elementor\Widget_Base;
+use ElementorPro\Modules\LoopBuilder\Providers\Taxonomy_Loop_Provider;
 use ElementorPro\Modules\Posts\Traits\Button_Widget_Trait;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Posts\Widgets\Posts_Base;
@@ -1091,11 +1092,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	protected function render_loop_header() {
 		$classes = $this->get_loop_header_widget_classes();
 
-		/** @var \WP_Query $wp_query */
-		$wp_query = $this->parent->get_query();
+		/** @var \WP_Query $e_wp_query */
+		$e_wp_query = $this->parent->get_query();
 
 		// Use grid only if found posts.
-		if ( $wp_query->found_posts ) {
+		if ( isset( $e_wp_query->found_posts ) || Taxonomy_Loop_Provider::is_loop_taxonomy() ) {
 			$classes[] = 'elementor-grid';
 		}
 

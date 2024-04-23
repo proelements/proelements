@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-03-2024 */
+/*! pro-elements - v3.21.0 - 15-04-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu"],{
 
@@ -198,9 +198,12 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     settings.selectors.menuWrapper = '.e-n-menu-wrapper';
     settings.selectors.headingContainer = '.e-n-menu-heading';
     settings.selectors.tabTitle = '.e-n-menu-title';
+    settings.selectors.directTabTitle = ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-title';
+    settings.selectors.tabClickableTitle = '.e-n-menu-title.e-click';
     settings.selectors.tabDropdown = '.e-n-menu-dropdown-icon';
     settings.selectors.menuContent = '.e-n-menu-content';
     settings.selectors.tabContent = '.e-n-menu-content > .e-con';
+    settings.selectors.directTabContent = ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-content > .e-con';
     settings.selectors.anchorLink = '.e-anchor a';
     settings.classes.anchorItem = 'e-anchor';
     settings.classes.activeAnchorItem = 'e-current';
@@ -437,6 +440,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       this.observedContainer?.unobserve($activeContent[0]);
     }
     this.menuHeightController.resetMenuHeight($activeContent);
+    this.clickInProgress = true;
   }
   getTitleActivationAttributes() {
     let elementType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'tab';
@@ -472,11 +476,18 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   }
   changeActiveTab(tabIndex) {
     let fromUser = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    if (this.clickInProgress && elementorFrontend.isEditMode()) {
+      return;
+    }
     const isActiveTab = this.isActiveTab(tabIndex);
     this.deactivateActiveTab();
     if (!isActiveTab || isActiveTab && !fromUser) {
+      this.clickInProgress = true;
       this.activateTab(tabIndex);
     }
+    setTimeout(() => {
+      this.clickInProgress = false;
+    });
   }
   changeActiveTabByKeyboard(event, settings) {
     if (settings.widgetId.toString() !== this.getID().toString()) {
@@ -532,6 +543,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     if (elementorFrontend.isEditMode()) {
       this.addChildLifeCycleEventListeners();
     }
+    elementorFrontend.elements.$window.on('elementor/nested-container/atomic-repeater', this.linkContainer.bind(this));
   }
   unbindEvents() {
     this.elements.$tabTitles.off();
@@ -760,6 +772,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     this.setScrollPosition();
     this.onClickOutsideDropdownMenu = this.onClickOutsideDropdownMenu.bind(this);
     document.addEventListener('click', this.onClickOutsideDropdownMenu);
+    this.clickInProgress = false;
   }
   onDestroy() {
     document.removeEventListener('click', this.onClickOutsideDropdownMenu);
@@ -849,6 +862,66 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     (0, _flexHorizontalScroll.setHorizontalTitleScrollValues)(navigationWrapper, this.getHorizontalScrollSetting(), event);
     elementorFrontend.elements.$window.trigger('elementor-pro/mega-menu/heading-mouse-event');
   }
+  linkContainer(event) {
+    const {
+        container
+      } = event.detail,
+      id = container.model.get('id'),
+      currentId = String(this.$element.data('id')),
+      view = container.view.$el;
+    if (id === currentId) {
+      this.updateIndexValues(view);
+      this.updateListeners(view);
+    }
+  }
+  updateIndexValues(view) {
+    const {
+        selectors: {
+          directTabTitle,
+          directTabContent
+        }
+      } = this.getDefaultSettings(),
+      currentMenu = view[0],
+      tabsContents = currentMenu.querySelectorAll(directTabContent),
+      tabTitles = currentMenu.querySelectorAll(directTabTitle),
+      settings = this.getSettings(),
+      itemIdBase = tabTitles[0].getAttribute('id').slice(0, -1),
+      containerIdBase = tabsContents[0].getAttribute('id').slice(0, -1);
+    tabTitles.forEach((element, index) => {
+      const newIndex = index + 1,
+        updatedTabID = itemIdBase + newIndex,
+        updatedContainerID = containerIdBase + newIndex;
+      element.setAttribute('id', updatedTabID);
+      element.setAttribute('style', `--n-menu-title-order: ${newIndex};`);
+      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('data-tab-index', newIndex);
+      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('data-focus-index', newIndex);
+      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('id', 'e-n-menu-dropdown-icon-' + newIndex);
+      element.querySelector(settings.selectors.tabTitleText)?.setAttribute('data-binding-index', newIndex);
+      element.querySelector(settings.selectors.tabTitleText)?.setAttribute('aria-controls', updatedTabID);
+      tabsContents[index].setAttribute('aria-labelledby', updatedTabID);
+      tabsContents[index].setAttribute('data-tab-index', newIndex);
+      tabsContents[index].setAttribute('id', updatedContainerID);
+      tabsContents[index].setAttribute('style', `--n-menu-title-order: ${newIndex}; position: var(--position); width: var(--width);`);
+    });
+  }
+  updateListeners(view) {
+    const {
+        selectors: {
+          tabClickableTitle,
+          tabDropdown,
+          tabContent,
+          tabTitle
+        }
+      } = this.getSettings(),
+      $tabTitles = view.find(tabTitle),
+      $tabClickableTitle = view.find(tabClickableTitle);
+    this.elements.$tabTitles = view.find(tabClickableTitle);
+    this.elements.$tabDropdowns = view.find(tabDropdown);
+    this.elements.$tabContents = view.find(tabContent);
+    $tabTitles.off();
+    $tabClickableTitle.on(this.getTabEvents());
+    this.clickInProgress = false;
+  }
 }
 exports["default"] = MegaMenu;
 
@@ -881,4 +954,4 @@ function isMenuInDropdownMode(elementSettings) {
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu.bc1b8483f0d497cb1b50.bundle.js.map
+//# sourceMappingURL=mega-menu.5eea2dda8d43e4430297.bundle.js.map

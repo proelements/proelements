@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-03-2024 */
+/*! pro-elements - v3.21.0 - 15-04-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -113,13 +113,13 @@
 /******/ 			if (chunkId === "woocommerce-my-account") return "" + chunkId + ".6509f179e93231fa2b6a.bundle.js";
 /******/ 			if (chunkId === "woocommerce-notices") return "" + chunkId + ".d8c0850de1984ac89f33.bundle.js";
 /******/ 			if (chunkId === "product-add-to-cart") return "" + chunkId + ".e099bc90899376d00959.bundle.js";
-/******/ 			if (chunkId === "loop") return "loop.c4d9f09c7596d4e1df61.bundle.js";
+/******/ 			if (chunkId === "loop") return "loop.27d8ba43536f8b76ca41.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".827a11bd7f1b0343de42.bundle.js";
 /******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".bc400e6cb24a14a2ea97.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".bc1b8483f0d497cb1b50.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".5eea2dda8d43e4430297.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".4648b25d00c1f94cec4e.bundle.js";
 /******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".255f6b16a2f292e5c260.bundle.js";
-/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".da220b2d6ef36e95bbad.bundle.js";
+/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".a6b8a103e170cb2de9a4.bundle.js";
 /******/ 			if (chunkId === "taxonomy-filter") return "" + chunkId + ".9d41aac2f76c01cfdb42.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;

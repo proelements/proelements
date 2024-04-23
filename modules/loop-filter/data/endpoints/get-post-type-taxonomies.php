@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\LoopFilter\Data\Endpoints;
 
 use ElementorPro\Modules\LoopFilter\Data\Interfaces\Endpoint;
+use ElementorPro\Modules\LoopFilter\Traits\Taxonomy_Filter_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -12,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // The endpoint accepts a string argument of 'post_type' and returns an array of taxonomies for that post type.
 
 class Get_Post_Type_Taxonomies extends Base implements Endpoint {
+
+	use Taxonomy_Filter_Trait;
 
 	public function get_name() : string {
 		return 'get_post_type_taxonomies';
@@ -28,32 +31,7 @@ class Get_Post_Type_Taxonomies extends Base implements Endpoint {
 	public function get_items( \WP_REST_Request $request ): array {
 		$data = $request->get_params();
 
-		$post_type_taxonomies = get_object_taxonomies( sanitize_key( $data['post_type'] ), 'objects' );
-		$taxonomies_to_exclude = $this->get_taxonomies_to_exclude( $data['post_type'] );
-
-		$control_options = [];
-
-		foreach ( $post_type_taxonomies as $taxonomy ) {
-			if ( $this->should_exclude_taxonomy( $taxonomy->name, $taxonomies_to_exclude ) ) {
-				continue;
-			}
-
-			$control_options[ $taxonomy->name ] = $taxonomy->label;
-		}
-
-		return $control_options;
-	}
-
-	private function get_taxonomies_to_exclude( $post_type ) {
-		if ( 'post' === $post_type ) {
-			return [ 'post_format' ];
-		}
-
-		return [];
-	}
-
-	private function should_exclude_taxonomy( $taxonomy_name, $taxonomies_to_exclude ) {
-		return ! empty( $taxonomies_to_exclude ) && in_array( $taxonomy_name, $taxonomies_to_exclude );
+		return $this->get_taxonomy_options( [ $data['post_type'] ] );
 	}
 
 	protected function register() {

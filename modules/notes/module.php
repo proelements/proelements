@@ -3,7 +3,6 @@ namespace ElementorPro\Modules\Notes;
 
 use Elementor\Core\Base\App;
 use ElementorPro\License\API;
-use Elementor\Core\Experiments\Manager;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\Modules\Notes\Data\Controller;
 use ElementorPro\Modules\Notes\User\Delete_User;
@@ -26,24 +25,6 @@ class Module extends App {
 	// Module-related tables.
 	const TABLE_NOTES = 'e_notes';
 	const TABLE_NOTES_USERS_RELATIONS = 'e_notes_users_relations';
-
-	/**
-	 * Registers the experiment if license allows it
-	 */
-	private function register_notes_experiment() {
-		if ( ! API::is_licence_has_feature( static::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			return;
-		}
-
-		Plugin::elementor()->experiments->add_feature( [
-			'name' => static::NAME,
-			'title' => esc_html__( 'Notes', 'elementor-pro' ),
-			'description' => esc_html__( 'Creates a dedicated workspace for your team and other stakeholders to leave comments and replies on your website while it\'s in progress. Notifications for mentions, replies, etc. are sent by email, and all notes are stored in your site\'s database.', 'elementor-pro' ),
-			'default' => Manager::STATE_ACTIVE,
-			'release_status' => Manager::RELEASE_STATUS_STABLE,
-		] );
-	}
-
 
 	/**
 	 * @return string
@@ -182,11 +163,9 @@ class Module extends App {
 	}
 
 	private function on_elementor_pro_init() {
-		$is_active = Plugin::elementor()->experiments->is_feature_active( static::NAME ) &&
-			API::is_license_active() &&
-			API::is_licence_has_feature( static::LICENSE_FEATURE_NAME );
+		$has_license = API::is_license_active() && API::is_licence_has_feature( static::LICENSE_FEATURE_NAME );
 
-		if ( ! $is_active ) {
+		if ( ! $has_license ) {
 			return;
 		}
 
@@ -242,8 +221,6 @@ class Module extends App {
 
 	public function __construct() {
 		parent::__construct();
-
-		$this->register_notes_experiment();
 
 		add_action( 'elementor_pro/init', function() {
 			$this->on_elementor_pro_init();

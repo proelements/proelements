@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-03-2024 */
+/*! pro-elements - v3.21.0 - 15-04-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["loop"],{
 
@@ -291,6 +291,12 @@ class Loop extends _posts.default {
   doEditorInitAction() {
     elementor.hooks.doAction('editor/widgets/loop-grid/on-init', this);
   }
+  onElementChange(control) {
+    if ('_skin' === control) {
+      elementorPro.modules.loopBuilder.onApplySkinChange();
+    }
+    _posts.default.prototype.onElementChange.apply(this);
+  }
   onInit() {
     super.onInit(...arguments);
     if (elementorFrontend.isEditMode()) {
@@ -447,4 +453,4 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
 /***/ })
 
 }]);
-//# sourceMappingURL=loop.c4d9f09c7596d4e1df61.bundle.js.map
+//# sourceMappingURL=loop.27d8ba43536f8b76ca41.bundle.js.map

@@ -67,6 +67,7 @@
       <category domain="pa_size" nicename="small"><![CDATA[Small]]></category>
       <category domain="product_type" nicename="variable"><![CDATA[variable]]></category>
       <category domain="product_cat" nicename="tshirts"><![CDATA[Tshirts]]></category>
+      <category domain="product_tag" nicename="fashion"><![CDATA[Fashion]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-vneck-tee]]></wp:meta_value>
@@ -238,6 +239,7 @@
       <category domain="pa_color" nicename="red"><![CDATA[Red]]></category>
       <category domain="product_type" nicename="variable"><![CDATA[variable]]></category>
       <category domain="product_cat" nicename="hoodies-and-more-hoodies"><![CDATA[Hoodies and More Hoodies]]></category>
+      <category domain="product_tag" nicename="brands"><![CDATA[Brands]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-hoodie]]></wp:meta_value>
@@ -407,6 +409,8 @@
       <category domain="pa_color" nicename="blue"><![CDATA[Blue]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="hoodies-and-more-hoodies"><![CDATA[Hoodies and More Hoodies]]></category>
+      <category domain="product_tag" nicename="brands"><![CDATA[Brands]]></category>
+	  <category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-hoodie-with-logo]]></wp:meta_value>
@@ -572,6 +576,8 @@
       <category domain="pa_color" nicename="gray"><![CDATA[Gray]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="חולצות"><![CDATA[חולצות]]></category>
+      <category domain="product_tag" nicename="brands"><![CDATA[Brands]]></category>
+	  <category domain="product_tag" nicename="international-items"><![CDATA[International Items]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-tshirt]]></wp:meta_value>
@@ -901,6 +907,8 @@
       <wp:is_sticky>0</wp:is_sticky>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
+      <category domain="product_tag" nicename="banners"><![CDATA[Banners]]></category>
+		<category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-belt]]></wp:meta_value>
@@ -1068,6 +1076,7 @@
       <category domain="pa_color" nicename="yellow"><![CDATA[Yellow]]></category>
       <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
       <category domain="product_cat" nicename="decor"><![CDATA[Decor]]></category>
+      <category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-cap]]></wp:meta_value>
@@ -1233,6 +1242,7 @@
       <category domain="product_visibility" nicename="featured"><![CDATA[featured]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
+		<category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-sunglasses]]></wp:meta_value>
@@ -1401,6 +1411,7 @@
       <category domain="pa_color" nicename="gray"><![CDATA[Gray]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="hoodies-and-more-hoodies"><![CDATA[Hoodies and More Hoodies]]></category>
+      <category domain="product_tag" nicename="brands"><![CDATA[Brands]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-hoodie-with-pocket]]></wp:meta_value>
@@ -1566,6 +1577,8 @@
       <category domain="product_visibility" nicename="featured"><![CDATA[featured]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="hoodies-and-more-hoodies"><![CDATA[Hoodies and More Hoodies]]></category>
+      <category domain="product_tag" nicename="brands"><![CDATA[Brands]]></category>
+      <category domain="product_tag" nicename="banners"><![CDATA[Banners]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-hoodie-with-zipper]]></wp:meta_value>
@@ -1731,6 +1744,7 @@
       <category domain="pa_color" nicename="green"><![CDATA[Green]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="tshirts"><![CDATA[Tshirts]]></category>
+		<category domain="product_tag" nicename="fashion"><![CDATA[Fashion]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-long-sleeve-tee]]></wp:meta_value>
@@ -1896,6 +1910,7 @@
       <category domain="pa_color" nicename="blue"><![CDATA[Blue]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="tshirts"><![CDATA[Tshirts]]></category>
+      <category domain="product_tag" nicename="fashion"><![CDATA[Fashion]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-polo]]></wp:meta_value>
@@ -2062,6 +2077,8 @@
       <category domain="product_cat" nicename="music"><![CDATA[Music]]></category>
       <category domain="product_cat" nicename="decor"><![CDATA[Decor]]></category>
       <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
+      <category domain="product_tag" nicename="international-items"><![CDATA[International Items]]></category>
+		<category domain="product_tag" nicename="not-for-sale"><![CDATA[Not For Sale]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-album]]></wp:meta_value>
@@ -2226,6 +2243,8 @@
       <wp:is_sticky>0</wp:is_sticky>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="music"><![CDATA[Music]]></category>
+      <category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
+      <category domain="product_tag" nicename="not-for-sale"><![CDATA[Not For Sale]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[woo-single]]></wp:meta_value>
@@ -3443,6 +3462,7 @@
       <category domain="pa_color" nicename="gray"><![CDATA[Gray]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="tshirts"><![CDATA[Tshirts]]></category>
+		<category domain="product_tag" nicename="fashion"><![CDATA[Fashion]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[Woo-tshirt-logo]]></wp:meta_value>
@@ -3608,6 +3628,8 @@
       <category domain="pa_color" nicename="red"><![CDATA[Red]]></category>
       <category domain="product_type" nicename="simple"><![CDATA[simple]]></category>
       <category domain="product_cat" nicename="accessories"><![CDATA[Accessories]]></category>
+      <category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
+		  <category domain="product_tag" nicename="not-for-sale"><![CDATA[Not For Sale]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[Woo-beanie-logo]]></wp:meta_value>
@@ -3780,6 +3802,7 @@
       <wp:is_sticky>0</wp:is_sticky>
       <category domain="product_type" nicename="grouped"><![CDATA[grouped]]></category>
       <category domain="product_cat" nicename="clothing"><![CDATA[Clothing]]></category>
+      <category domain="product_tag" nicename="by-products"><![CDATA[By Products]]></category>
       <wp:postmeta>
         <wp:meta_key>_sku</wp:meta_key>
         <wp:meta_value><![CDATA[logo-collection]]></wp:meta_value>

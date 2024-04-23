@@ -9,6 +9,7 @@ use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Modules\LoopFilter\Traits\Hierarchical_Taxonomy_Trait;
+use ElementorPro\Modules\LoopFilter\Traits\Taxonomy_Filter_Trait;
 use ElementorPro\Plugin;
 use Elementor\Utils;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
@@ -20,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Taxonomy_Filter extends Base_Widget {
 	use Hierarchical_Taxonomy_Trait;
+	use Taxonomy_Filter_Trait;
 	use Pagination_Trait;
 
 	public function get_name() {
@@ -799,30 +801,9 @@ class Taxonomy_Filter extends Base_Widget {
 	 * @return void|\WP_Term[]
 	 */
 	private function get_filtered_taxonomy_terms( $user_selected_taxonomy, $settings ) {
-		$args = [
-			'taxonomy' => $user_selected_taxonomy,
-			'hide_empty' => 'yes' !== $settings['show_empty_items'],
-		];
+		$display_settings = $this->get_settings_for_display();
+		$settings['taxonomy'] = $user_selected_taxonomy;
 
-		$avoid_reset_parent = ! empty( $settings['avoid_reset_parent'] );
-
-		if ( 'yes' !== $settings['show_child_taxonomy'] && ! $avoid_reset_parent ) {
-			$args['parent'] = 0;
-		}
-
-		$terms = get_terms( $args );
-
-		if ( is_wp_error( $terms ) ) {
-			return;
-		}
-
-		if ( 'yes' === $settings['show_child_taxonomy'] ) {
-			$taxonomy_plain_view = [];
-			$hierarchy_terms = $this->filter_child_terms_by_depth( $terms, $this->get_settings_for_display( 'child_taxonomy_depth' ) );
-			$this->transform_taxonomy_hierarchy_to_plain( $taxonomy_plain_view, $hierarchy_terms );
-			$terms = ! empty( $taxonomy_plain_view ) ? $taxonomy_plain_view : $terms;
-		}
-
-		return $terms;
+		return $this->get_filtered_taxonomies( $settings, $display_settings );
 	}
 }

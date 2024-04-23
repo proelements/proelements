@@ -184,16 +184,6 @@ class Flip_Box extends Base_Widget {
 				'name' => 'background_a',
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .elementor-flip-box__front',
-				'fields_options' => [
-					'image' => [
-						'background_lazyload' => [
-							'active' => true,
-							'keys' => [ 'background_a_image', 'url' ],
-							// Using both selectors because the lazy load module supports only a single background control per element.
-							'selector' => '.elementor-flip-box__front, .elementor-flip-box__back',
-						],
-					],
-				],
 			]
 		);
 

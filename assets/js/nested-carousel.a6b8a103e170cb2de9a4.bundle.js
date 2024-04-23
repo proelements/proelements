@@ -1,4 +1,4 @@
-/*! pro-elements - v3.19.0 - 26-03-2024 */
+/*! pro-elements - v3.21.0 - 15-04-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["nested-carousel"],{
 
@@ -111,10 +111,64 @@ class NestedCarousel extends elementorModules.frontend.handlers.CarouselBase {
       element.swiper.init();
     }
   }
+  linkContainer(event) {
+    const {
+        container,
+        index,
+        targetContainer,
+        action: {
+          type
+        }
+      } = event.detail,
+      view = container.view.$el,
+      id = container.model.get('id'),
+      currentId = this.$element.data('id');
+    if (id === currentId) {
+      const {
+        $slides
+      } = this.getDefaultElements();
+      let carouselItemWrapper, contentContainer;
+      switch (type) {
+        case 'move':
+          [carouselItemWrapper, contentContainer] = this.move(view, index, targetContainer, $slides);
+          break;
+        case 'duplicate':
+          [carouselItemWrapper, contentContainer] = this.duplicate(view, index, targetContainer, $slides);
+          break;
+        default:
+          break;
+      }
+      if (undefined !== carouselItemWrapper) {
+        carouselItemWrapper.appendChild(contentContainer);
+      }
+      this.updateIndexValues($slides);
+      this.updateListeners();
+    }
+  }
+  move(view, index, targetContainer, slides) {
+    return [slides[index], targetContainer.view.$el[0]];
+  }
+  duplicate(view, index, targetContainer, slides) {
+    return [slides[index + 1], targetContainer.view.$el[0]];
+  }
+  updateIndexValues($slides) {
+    $slides.each((index, element) => {
+      const newIndex = index + 1;
+      element.setAttribute('data-slide', newIndex);
+    });
+  }
+  updateListeners() {
+    this.swiper.initialized = false;
+    this.swiper.init();
+  }
+  bindEvents() {
+    super.bindEvents();
+    elementorFrontend.elements.$window.on('elementor/nested-container/atomic-repeater', this.linkContainer.bind(this));
+  }
 }
 exports["default"] = NestedCarousel;
 
 /***/ })
 
 }]);
-//# sourceMappingURL=nested-carousel.da220b2d6ef36e95bbad.bundle.js.map
+//# sourceMappingURL=nested-carousel.a6b8a103e170cb2de9a4.bundle.js.map

@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\DynamicTags\ACF;
 
+use ElementorPro\Modules\LoopBuilder\Providers\Taxonomy_Loop_Provider;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
 
@@ -15,7 +16,11 @@ class Dynamic_Value_Provider {
 			return [];
 		}
 
-		list( $field_key, $meta_key ) = explode( ':', $key );
+		[ $field_key, $meta_key ] = explode( ':', $key );
+
+		if ( Taxonomy_Loop_Provider::is_loop_taxonomy() ) {
+			return $this->get_taxonomy_field_data( $field_key, $meta_key );
+		}
 
 		$document = Plugin::elementor()->documents->get_current();
 
@@ -41,5 +46,18 @@ class Dynamic_Value_Provider {
 	 */
 	protected function get_field_object( $selector, $post_id ) {
 		return get_field_object( $selector, $post_id );
+	}
+
+	/**
+	 * Get the field data needed when rendering a dynamic tag for a taxonomy object.
+	 * @param $field_key
+	 * @param $meta_key
+	 *
+	 * @return array
+	 */
+	private function get_taxonomy_field_data( $field_key, $meta_key ) {
+		global $wp_query;
+		$field = $this->get_field_object( $field_key, $wp_query->loop_term );
+		return [ $field, $meta_key ];
 	}
 }

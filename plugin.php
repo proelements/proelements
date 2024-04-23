@@ -230,11 +230,7 @@ class Plugin {
 
 		wp_set_script_translations( 'elementor-pro-frontend', 'elementor-pro', ELEMENTOR_PRO_PATH . 'languages' );
 
-		if ( self::elementor()->experiments->is_feature_active( 'e_optimized_assets_loading' ) ) {
-			wp_enqueue_script( 'pro-elements-handlers' );
-		} else {
-			wp_enqueue_script( 'pro-preloaded-elements-handlers' );
-		}
+		wp_enqueue_script( 'pro-elements-handlers' );
 
 		$assets_url = ELEMENTOR_PRO_ASSETS_URL;
 
@@ -299,16 +295,6 @@ class Plugin {
 		wp_register_script(
 			'pro-elements-handlers',
 			ELEMENTOR_PRO_URL . 'assets/js/elements-handlers' . $suffix . '.js',
-			[
-				'elementor-frontend',
-			],
-			ELEMENTOR_PRO_VERSION,
-			true
-		);
-
-		wp_register_script(
-			'pro-preloaded-elements-handlers',
-			ELEMENTOR_PRO_URL . 'assets/js/preloaded-elements-handlers' . $suffix . '.js',
 			[
 				'elementor-frontend',
 			],

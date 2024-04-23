@@ -579,14 +579,16 @@ abstract class Theme_Document extends Library_Document {
 				];
 				break;
 			case 'taxonomy':
-				$term = get_term( $preview_id );
+			case 'post_taxonomy':
+			case 'product_taxonomy':
+				$term = $this->get_taxonomy_term( $preview_id, $preview_object_type );
 
 				if ( $term && ! is_wp_error( $term ) ) {
 					$query_args = [
 						'tax_query' => [
 							[
 								'taxonomy' => $term->taxonomy,
-								'terms' => [ $preview_id ],
+								'terms' => [ $term->term_id ],
 								'field' => 'id',
 							],
 						],
@@ -659,5 +661,22 @@ abstract class Theme_Document extends Library_Document {
 		$config['support_site_editor'] = static::get_property( 'support_site_editor' );
 
 		return $config;
+	}
+
+	/**
+	 * @param $preview_id
+	 * @param $preview_object_type
+	 * @return \WP_Error|\WP_Term|null
+	 */
+	private function get_taxonomy_term( $preview_id, $preview_object_type ) {
+		if ( ! empty( $preview_id ) ) {
+			return get_term( $preview_id );
+		}
+
+		$terms = get_terms( [
+			'taxonomy' => $preview_object_type,
+		] );
+
+		return reset( $terms );
 	}
 }

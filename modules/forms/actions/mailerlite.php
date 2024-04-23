@@ -56,8 +56,8 @@ class Mailerlite extends Integration_Base {
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'options' => [
-					'default' => 'Default',
-					'custom' => 'Custom',
+					'default' => esc_html__( 'Default', 'elementor-pro' ),
+					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 				'default' => 'default',
 			]

@@ -1,5 +1,23 @@
 # PRO Elements - by PROElements.org
 
+#### 3.21.0 - 2024-04-15
+
+* New: Introducing Loop Taxonomy Query - Enabling the display of post and product categories and tags within Loop Grid and Loop Carousel widgets ([#21372](https://github.com/elementor/elementor/issues/21372))
+* Tweak: Optimized Hotspot widget to prevent rendering when no image is provided
+* Tweak: Optimized Blockquote widget to eliminate unnecessary markup when devoid of content
+* Tweak: Optimized Template widget to eliminate unnecessary markup when no template is selected
+* Tweak: Optimized Code Highlight widget to eliminate unnecessary markup when there is no content
+* Tweak: Implemented CSS logical properties in Elementor
+* Tweak: Implemented accessibility improvements in Portfolio widget
+* Tweak: Implemented accessibility improvements of Author Avatar image alt text in Post Info widget ([#25440](https://github.com/elementor/elementor/issues/25440))
+* Tweak: Notes feature merged to version
+* Tweak: Implemented accessibility improvements of Profile Picture alt text in Author widget
+* Fix: Display issue on hover state in WooCommerce Menu Cart widget
+
+#### 3.20.3 - 2024-04-10
+
+* Fix: Compatibility issue between the My Account widget and other third-party plugins ([#20986](https://github.com/elementor/elementor/issues/20986))
+
 #### 3.20.2 - 2024-03-26
 
 * Security Fix: Improved code security enforcement in Media Carousel widget

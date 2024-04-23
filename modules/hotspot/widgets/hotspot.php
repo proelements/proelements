@@ -994,6 +994,10 @@ class Hotspot extends Widget_Image {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		if ( empty( $settings['image']['url'] ) ) {
+			return;
+		}
+
 		$is_tooltip_direction_animation = 'e-hotspot--slide-direction' === $settings['tooltip_animation'] || 'e-hotspot--fade-direction' === $settings['tooltip_animation'];
 		$show_tooltip = 'none' === $settings['tooltip_trigger'];
 		$sequenced_animation_class = 'yes' === $settings['hotspot_sequenced_animation'] ? 'e-hotspot--sequenced' : '';
@@ -1137,6 +1141,9 @@ class Hotspot extends Widget_Image {
 
 		const imageUrl = elementor.imagesManager.getImageUrl( image );
 
+		if ( ! imageUrl ) {
+			return;
+		}
 		#>
 		<img src="{{ imageUrl }}" title="" alt="">
 		<#
