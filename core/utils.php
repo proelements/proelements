@@ -323,13 +323,18 @@ class Utils {
 	 * @return string
 	 */
 	public static function trim_words( $text, $length ) {
-		if ( $length && str_word_count( $text ) > $length ) {
-			$text = explode( ' ', $text, $length + 1 );
-			unset( $text[ $length ] );
-			$text = implode( ' ', $text );
+		if ( ! $length ) {
+			return $text;
 		}
 
-		return $text;
+		$whitespace_pattern = '/\s+/u';
+		$words = preg_split( $whitespace_pattern, $text, -1, PREG_SPLIT_NO_EMPTY );
+
+		if ( count( $words ) > $length ) {
+			$words = array_slice( $words, 0, $length );
+		}
+
+		return implode( ' ', $words );
 	}
 
 	/**
