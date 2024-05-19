@@ -10,8 +10,5 @@
       "name": "ProElements",
       "homepage": "https://github.com/proelements"
     }
-  ],
-  "require": {
-    "composer/installers": "^1.0"
-  }
+  ]
 }
