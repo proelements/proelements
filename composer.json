@@ -1,0 +1,17 @@
+{
+  "name": "proelements/proelements",
+  "type": "wordpress-plugin",
+  "description": "ProElements plugin for WordPress",
+  "keywords": ["wordpress", "plugin"],
+  "homepage": "https://github.com/proelements/proelements",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "ProElements",
+      "homepage": "https://github.com/proelements"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.0"
+  }
+}
