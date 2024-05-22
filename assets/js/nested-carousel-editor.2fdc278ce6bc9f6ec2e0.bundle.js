@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 30-04-2024 */
+/*! pro-elements - v3.21.0 - 20-05-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["nested-carousel-editor"],{
 

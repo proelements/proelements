@@ -237,7 +237,11 @@ class Module extends Module_Base {
 	 * @return bool
 	 */
 	public static function can_use_display_conditions(): bool {
-		return API::is_license_active() && API::is_licence_has_feature( self::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK );
+		if ( is_admin() ) {
+			return API::is_license_active() && API::is_licence_has_feature( self::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK );
+		}
+
+		return API::is_licence_has_feature( self::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK );
 	}
 
 	/**

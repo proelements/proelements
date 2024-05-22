@@ -731,7 +731,7 @@ abstract class Posts_Base extends Base_Widget {
 			$url = $this->get_wp_link_page_url_for_normal_page_load( $url );
 		}
 
-		return $url;
+		return esc_url( $url );
 	}
 
 	public function is_allow_to_use_custom_page_option() {
