@@ -20,6 +20,10 @@ abstract class Base extends Base_Widget {
 		return [ 'imagesloaded' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	abstract protected function add_repeater_controls( Repeater $repeater );
 
 	abstract protected function get_repeater_defaults();

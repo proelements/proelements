@@ -43,6 +43,7 @@ class Module extends Module_Base {
 		$this->add_render_actions();
 
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+		add_filter( 'elementor/element/is_dynamic_content', [ $this, 'filter_element_caching_is_dynamic_content' ], 10, 3 );
 	}
 
 	private function add_components() {
@@ -231,6 +232,14 @@ class Module extends Module_Base {
 	 */
 	public function register_ajax_actions( $ajax_manager ) {
 		$ajax_manager->register_ajax_action( 'display_conditions_set_cache_notice_status', [ $this->get_component( 'cache_notice' ), 'set_notice_status' ] );
+	}
+
+	public function filter_element_caching_is_dynamic_content( $is_dynamic_content, $element_rqw_data, $element_instance ) {
+		if ( ! empty( $element_rqw_data['settings']['e_display_conditions'] ) ) {
+			$is_dynamic_content = true;
+		}
+
+		return $is_dynamic_content;
 	}
 
 	/**

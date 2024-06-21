@@ -101,6 +101,7 @@ class Taxonomy_Filter extends Base_Widget {
 				'condition' => [
 					'selected_element!' => '',
 				],
+				'control_type' => 'content',
 			]
 		);
 

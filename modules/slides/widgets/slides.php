@@ -38,6 +38,10 @@ class Slides extends Base_Widget {
 		return [ 'imagesloaded' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	public static function get_button_sizes() {
 		return [
 			'xs' => esc_html__( 'Extra Small', 'elementor-pro' ),
@@ -279,7 +283,6 @@ class Slides extends Base_Widget {
 			[
 				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],

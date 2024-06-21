@@ -35,6 +35,10 @@ class Price_Table extends Base_Widget {
 		return [ 'pricing', 'table', 'product', 'image', 'plan', 'button' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_header',
@@ -303,7 +307,6 @@ class Price_Table extends Base_Widget {
 			[
 				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'default' => [
 					'url' => '#',
 				],

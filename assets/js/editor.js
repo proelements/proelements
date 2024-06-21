@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -7471,6 +7471,17 @@ module.exports = WoocommerceModule;
 
 /***/ }),
 
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = React;
+
+/***/ }),
+
 /***/ "@wordpress/i18n":
 /*!**************************!*\
   !*** external "wp.i18n" ***!
@@ -9398,6 +9409,7 @@ $({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
 /******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".bbef3f7412481cbce555.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".2fdc278ce6bc9f6ec2e0.bundle.js";
 /******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".d1bae86a5ed21c0e9981.bundle.js";
+/******/ 			if (chunkId === "off-canvas-editor") return "" + chunkId + ".537e5e064206eea190cc.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "4abfbfd970d6f7680bc7.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
@@ -9658,6 +9670,12 @@ var ElementorPro = Marionette.Application.extend({
         default: LoopFilter
       }) => {
         this.modules.loopFilter = new LoopFilter();
+      });
+    }
+    if (elementorCommon.config.experimentalFeatures['nested-elements']) {
+      elementorCommon.elements.$window.on('elementor/nested-element-type-loaded', async () => {
+        // The module should be loaded only when `nestedElements` is available.
+        this.modules.offCanvas = new (await __webpack_require__.e(/*! import() | off-canvas-editor */ "off-canvas-editor").then(__webpack_require__.bind(__webpack_require__, /*! modules/off-canvas/assets/js/editor/module */ "../modules/off-canvas/assets/js/editor/module.js"))).default();
       });
     }
   },

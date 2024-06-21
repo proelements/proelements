@@ -32,6 +32,10 @@ class Animated_Headline extends Base_Widget {
 		return [ 'headline', 'heading', 'animation', 'title', 'text' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'text_elements',

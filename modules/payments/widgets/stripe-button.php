@@ -288,8 +288,7 @@ class Stripe_Button extends Payment_Button {
 		$this->add_control(
 			'test_environment_msg',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => sprintf(
 					/* translators: 1: Elementor's integrations settings link opening tab, 2: Link closing tag. */

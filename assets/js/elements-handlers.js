@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -32,6 +32,7 @@ var _frontend18 = _interopRequireDefault(__webpack_require__(/*! modules/loop-bu
 var _frontend19 = _interopRequireDefault(__webpack_require__(/*! modules/mega-menu/assets/js/frontend/frontend */ "../modules/mega-menu/assets/js/frontend/frontend.js"));
 var _frontend20 = _interopRequireDefault(__webpack_require__(/*! modules/nested-carousel/assets/js/frontend/frontend */ "../modules/nested-carousel/assets/js/frontend/frontend.js"));
 var _frontend21 = _interopRequireDefault(__webpack_require__(/*! modules/loop-filter/assets/js/frontend/frontend */ "../modules/loop-filter/assets/js/frontend/frontend.js"));
+var _frontend22 = _interopRequireDefault(__webpack_require__(/*! modules/off-canvas/assets/js/frontend/frontend */ "../modules/off-canvas/assets/js/frontend/frontend.js"));
 const extendDefaultHandlers = defaultHandlers => {
   const handlers = {
     animatedText: _frontend.default,
@@ -54,7 +55,8 @@ const extendDefaultHandlers = defaultHandlers => {
     loopBuilder: _frontend18.default,
     megaMenu: _frontend19.default,
     nestedCarousel: _frontend20.default,
-    taxonomyFilter: _frontend21.default
+    taxonomyFilter: _frontend21.default,
+    offCanvas: _frontend22.default
   };
   return {
     ...defaultHandlers,
@@ -96,6 +98,24 @@ class AjaxHelper {
   }
 }
 exports["default"] = AjaxHelper;
+
+/***/ }),
+
+/***/ "../assets/dev/js/frontend/utils/focusable-element-selectors.js":
+/*!**********************************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/focusable-element-selectors.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.focusableElementSelectors = focusableElementSelectors;
+function focusableElementSelectors() {
+  return 'audio, button, canvas, details, iframe, input, select, summary, textarea, video, [accesskey], a[href], area[href], [tabindex]';
+}
 
 /***/ }),
 
@@ -186,6 +206,118 @@ class IconsManager {
 exports["default"] = IconsManager;
 (0, _defineProperty2.default)(IconsManager, "symbolsContainer", void 0);
 (0, _defineProperty2.default)(IconsManager, "iconsUsageList", []);
+
+/***/ }),
+
+/***/ "../assets/dev/js/frontend/utils/modal-keyboard-handler.js":
+/*!*****************************************************************!*\
+  !*** ../assets/dev/js/frontend/utils/modal-keyboard-handler.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
+var _focusableElementSelectors = __webpack_require__(/*! ./focusable-element-selectors */ "../assets/dev/js/frontend/utils/focusable-element-selectors.js");
+class ModalKeyboardHandler {
+  constructor(elementConfig) {
+    (0, _defineProperty2.default)(this, "lastFocusableElement", null);
+    (0, _defineProperty2.default)(this, "firstFocusableElement", null);
+    (0, _defineProperty2.default)(this, "modalTriggerElement", null);
+    this.config = elementConfig;
+  }
+  onOpenModal() {
+    this.initializeElements();
+    this.setTriggerElement();
+    this.changeFocus();
+    this.bindEvents();
+  }
+  onCloseModal() {
+    elementorFrontend.elements.$window.off('keydown', this.onKeyDownPressed.bind(this));
+    if (this.modalTriggerElement) {
+      this.setFocusToElement(this.modalTriggerElement);
+    }
+  }
+  bindEvents() {
+    elementorFrontend.elements.$window.on('keydown', this.onKeyDownPressed.bind(this));
+    if ('popup' === this.config.modalType) {
+      this.onPopupCloseEvent();
+    }
+  }
+  onPopupCloseEvent() {
+    elementorFrontend.elements.$window.on('elementor/popup/hide', this.onCloseModal.bind(this));
+  }
+  getFocusableElements() {
+    const selectorFocusedElements = 'popup' === this.config.modalType ? ':focusable' : (0, _focusableElementSelectors.focusableElementSelectors)();
+    return this.config.$modalElements.find(selectorFocusedElements);
+  }
+  initializeElements() {
+    const $focusableElements = this.getFocusableElements();
+    if (!$focusableElements.length) {
+      return;
+    }
+    this.lastFocusableElement = $focusableElements[$focusableElements.length - 1];
+    this.firstFocusableElement = $focusableElements[0];
+  }
+  setTriggerElement() {
+    const activeElement = elementorFrontend.elements.window.document.activeElement;
+    if (!!activeElement) {
+      this.modalTriggerElement = elementorFrontend.elements.window.document.activeElement;
+    } else {
+      this.modalTriggerElement = null;
+    }
+  }
+  changeFocus() {
+    if (!!this.firstFocusableElement) {
+      this.setFocusToElement(this.firstFocusableElement);
+    } else {
+      this.config.$elementWrapper.attr('tabindex', '0');
+      this.setFocusToElement(this.config.$elementWrapper[0]);
+    }
+  }
+  onKeyDownPressed(keyDownEvent) {
+    const TAB_KEY = 9;
+    const isShiftPressed = keyDownEvent.shiftKey;
+    const isTabPressed = 'Tab' === keyDownEvent.key || TAB_KEY === keyDownEvent.keyCode;
+    const isContentWrapperFocused = '0' === this.config.$elementWrapper.attr('tabindex');
+    if (isTabPressed && isContentWrapperFocused) {
+      keyDownEvent.preventDefault();
+    } else if (isTabPressed) {
+      this.onTabKeyPressed(isTabPressed, isShiftPressed, keyDownEvent);
+    }
+  }
+  onTabKeyPressed(isTabPressed, isShiftPressed, keyDownEvent) {
+    if (elementorFrontend.isEditMode()) {
+      this.initializeElements();
+    }
+    const activeElement = elementorFrontend.elements.window.document.activeElement;
+    if (isShiftPressed) {
+      const isFocusOnFirstElement = activeElement === this.firstFocusableElement;
+      if (isFocusOnFirstElement) {
+        this.setFocusToElement(this.lastFocusableElement);
+        keyDownEvent.preventDefault();
+      }
+    } else {
+      const isFocusOnLastElement = activeElement === this.lastFocusableElement;
+      if (isFocusOnLastElement) {
+        this.setFocusToElement(this.firstFocusableElement);
+        keyDownEvent.preventDefault();
+      }
+    }
+  }
+  setFocusToElement(element) {
+    const focusDelayToEnsureThatAllAnimationsHaveFinished = 100;
+    setTimeout(() => {
+      element?.focus();
+    }, focusDelayToEnsureThatAllAnimationsHaveFinished);
+  }
+}
+exports["default"] = ModalKeyboardHandler;
 
 /***/ }),
 
@@ -999,6 +1131,48 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ "../modules/off-canvas/assets/js/frontend/frontend.js":
+/*!************************************************************!*\
+  !*** ../modules/off-canvas/assets/js/frontend/frontend.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    elementorFrontend.elementsHandler.attachHandler('off-canvas', () => __webpack_require__.e(/*! import() | off-canvas */ "off-canvas").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/off-canvas */ "../modules/off-canvas/assets/js/frontend/handlers/off-canvas.js")));
+    elementorFrontend.on('components:init', () => this.onFrontendComponentsInit());
+  }
+  onFrontendComponentsInit() {
+    this.addUrlActions();
+  }
+  addUrlActions() {
+    elementorFrontend.utils.urlActions.addAction('off_canvas:open', settings => {
+      this.toggleOffCanvasDisplay(settings);
+    });
+    elementorFrontend.utils.urlActions.addAction('off_canvas:close', settings => {
+      this.toggleOffCanvasDisplay(settings);
+    });
+    elementorFrontend.utils.urlActions.addAction('off_canvas:toggle', settings => {
+      this.toggleOffCanvasDisplay(settings);
+    });
+  }
+  toggleOffCanvasDisplay(settings) {
+    window.dispatchEvent(new CustomEvent('elementor-pro/off-canvas/toggle-display-mode', {
+      detail: settings
+    }));
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
 /***/ "../modules/popup/assets/js/frontend/document.js":
 /*!*******************************************************!*\
   !*** ../modules/popup/assets/js/frontend/document.js ***!
@@ -1012,12 +1186,18 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _triggers = _interopRequireDefault(__webpack_require__(/*! ./triggers */ "../modules/popup/assets/js/frontend/triggers.js"));
 var _timing = _interopRequireDefault(__webpack_require__(/*! ./timing */ "../modules/popup/assets/js/frontend/timing.js"));
 var _eIcons = __webpack_require__(/*! @elementor-pro/e-icons */ "../assets/dev/js/frontend/utils/icons/e-icons.js");
+var _modalKeyboardHandler = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/modal-keyboard-handler */ "../assets/dev/js/frontend/utils/modal-keyboard-handler.js"));
 // Temporary solution, when core 3.5.0 will be the minimum version, is should be replaced with @elementor/e-icons.
 
 class _default extends elementorModules.frontend.Document {
+  constructor() {
+    super(...arguments);
+    (0, _defineProperty2.default)(this, "keyboardHandler", null);
+  }
   bindEvents() {
     const openSelector = this.getDocumentSettings('open_selector');
     if (openSelector) {
@@ -1033,7 +1213,8 @@ class _default extends elementorModules.frontend.Document {
   initTriggers() {
     this.triggers = new _triggers.default(this.getDocumentSettings('triggers'), this);
   }
-  showModal(avoidMultiple, event) {
+  showModal(event) {
+    let avoidMultiple = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     // eslint-disable-next-line @wordpress/no-unused-vars-before-return
     const settings = this.getDocumentSettings();
     if (!this.isEdit) {
@@ -1067,7 +1248,7 @@ class _default extends elementorModules.frontend.Document {
     }
     elementorProFrontend.modules.popup.popupPopped = true;
     if (!this.isEdit && settings.a11y_navigation) {
-      this.handleKeyboardA11y(event);
+      this.handleKeyboardA11y();
     }
   }
   setEntranceAnimation() {
@@ -1085,48 +1266,11 @@ class _default extends elementorModules.frontend.Document {
     $widgetContent.addClass(newAnimation);
     setTimeout(() => $widgetContent.removeClass(newAnimation), animationDuration * 1000);
   }
-  handleKeyboardA11y(event) {
-    const selectorFocusedElements = ':focusable';
-    const $focusableElements = this.getModal().getElements('widgetContent').find(selectorFocusedElements);
-    if (!$focusableElements.length) {
-      return;
+  handleKeyboardA11y() {
+    if (!this.keyboardHandler) {
+      this.keyboardHandler = new _modalKeyboardHandler.default(this.getKeyboardHandlingConfig());
     }
-    let lastButtonClicked = null;
-    if (event?.currentTarget) {
-      lastButtonClicked = event.currentTarget;
-    }
-    const lastFocusableElement = $focusableElements[$focusableElements.length - 1];
-    const firstFocusableElement = $focusableElements[0];
-    const onKeyDownPressed = keyDownEvent => {
-      const TAB_KEY = 9;
-      const isShiftPressed = keyDownEvent.shiftKey;
-      const isTabPressed = 'Tab' === keyDownEvent.key || TAB_KEY === keyDownEvent.keyCode;
-      if (!isTabPressed) {
-        return;
-      }
-      const activeElement = elementorFrontend.elements.window.document.activeElement;
-      if (isShiftPressed) {
-        const isFocusOnFirstElement = activeElement === firstFocusableElement;
-        if (isFocusOnFirstElement) {
-          lastFocusableElement.focus();
-          keyDownEvent.preventDefault();
-        }
-      } else {
-        const isFocusOnLastElement = activeElement === lastFocusableElement;
-        if (isFocusOnLastElement) {
-          firstFocusableElement.focus();
-          keyDownEvent.preventDefault();
-        }
-      }
-    };
-    firstFocusableElement.focus();
-    const $window = elementorFrontend.elements.$window;
-    $window.on('keydown', onKeyDownPressed).on('elementor/popup/hide', () => {
-      $window.off('keydown', onKeyDownPressed);
-      if (lastButtonClicked) {
-        lastButtonClicked.focus();
-      }
-    });
+    this.keyboardHandler.onOpenModal();
   }
   setExitAnimation() {
     const modal = this.getModal(),
@@ -1272,6 +1416,14 @@ class _default extends elementorModules.frontend.Document {
       this.setCloseButtonPosition();
     }
   }
+  getKeyboardHandlingConfig() {
+    return {
+      $modalElements: this.getModal().getElements('widgetContent'),
+      $elementWrapper: this.$element,
+      modalType: 'popup',
+      modalId: this.$element.data('elementor-id')
+    };
+  }
 }
 exports["default"] = _default;
 
@@ -1327,7 +1479,7 @@ class _default extends elementorModules.Module {
     if (settings.toggle && modal.isVisible()) {
       modal.hide();
     } else {
-      popup.showModal(null, event);
+      popup.showModal(event);
     }
   }
   closePopup(settings, event) {
@@ -2172,11 +2324,23 @@ class _default extends _base.default {
     } catch (e) {
       return;
     }
-    this.waypointInstance = elementorFrontend.waypoint($targetElement, this.callback)[0];
+    if ($targetElement.length) {
+      this.setUpIntersectionObserver();
+      this.observer.observe($targetElement[0]);
+    }
+  }
+  setUpIntersectionObserver() {
+    this.observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.callback();
+        }
+      });
+    });
   }
   destroy() {
-    if (this.waypointInstance) {
-      this.waypointInstance.destroy();
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 }

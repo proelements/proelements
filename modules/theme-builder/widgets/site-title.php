@@ -73,8 +73,7 @@ class Site_Title extends Widget_Heading {
 		$this->add_control(
 			'site_identity_notice',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => sprintf(
 					/* translators: 1: Link opening tag, 2: Link closing tag. */

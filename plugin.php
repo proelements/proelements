@@ -275,10 +275,6 @@ class Plugin {
 			'ElementorProFrontendConfig',
 			$locale_settings
 		);
-
-		if ( $this->is_assets_loader_exist() ) {
-			$this->register_assets();
-		}
 	}
 
 	public function register_frontend_scripts() {
@@ -312,16 +308,20 @@ class Plugin {
 			true
 		);
 
-		if ( ! $this->is_assets_loader_exist() ) {
-			wp_register_script(
-				'elementor-sticky',
-				ELEMENTOR_PRO_URL . 'assets/lib/sticky/jquery.sticky' . $suffix . '.js',
-				[
-					'jquery',
-				],
-				ELEMENTOR_PRO_VERSION,
-				true
-			);
+		$sticky_handle = $this->is_assets_loader_exist() ? 'e-sticky' : 'elementor-sticky';
+
+		wp_register_script(
+			$sticky_handle,
+			ELEMENTOR_PRO_URL . 'assets/lib/sticky/jquery.sticky' . $suffix . '.js',
+			[
+				'jquery',
+			],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
+
+		if ( $this->is_assets_loader_exist() ) {
+			$this->register_assets();
 		}
 	}
 

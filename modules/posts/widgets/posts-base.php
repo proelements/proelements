@@ -62,6 +62,8 @@ abstract class Posts_Base extends Base_Widget {
 			'section_condition' => [
 				'pagination_type' => 'load_more_on_click',
 			],
+			'prefix_class' => 'load-more-align-',
+			'alignment_default' => 'center',
 		] );
 	}
 
@@ -377,8 +379,6 @@ abstract class Posts_Base extends Base_Widget {
 		$this->register_button_content_controls( [
 			'button_text' => esc_html__( 'Load More', 'elementor-pro' ),
 			'control_label_name' => esc_html__( 'Button Text', 'elementor-pro' ),
-			'prefix_class' => 'load-more-align-',
-			'alignment_default' => 'center',
 			'section_condition' => [
 				'pagination_type' => 'load_more_on_click',
 			],

@@ -42,8 +42,7 @@ abstract class Integration_Base extends Action_Base {
 		$widget->add_control(
 			$id . '_api_key_msg',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => $alert_type,
 				'content' => $content,
 				'condition' => $condition,

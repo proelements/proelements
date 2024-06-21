@@ -37,6 +37,10 @@ class Hotspot extends Widget_Image {
 		return [ 'image', 'tooltip', 'CTA', 'dot' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	protected function register_controls() {
 		parent::register_controls();
 
@@ -92,7 +96,6 @@ class Hotspot extends Widget_Image {
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 			]
 		);
 
@@ -106,6 +109,9 @@ class Hotspot extends Widget_Image {
 			]
 		);
 
+		$start = is_rtl() ? 'right' : 'left';
+		$end = is_rtl() ? 'left' : 'right';
+
 		$repeater->add_control(
 			'hotspot_icon_position',
 			[
@@ -113,12 +119,12 @@ class Hotspot extends Widget_Image {
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
-						'title' => esc_html__( 'Icon Start', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-left',
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => "eicon-h-align-{$start}",
 					],
 					'end' => [
-						'title' => esc_html__( 'Icon End', 'elementor-pro' ),
-						'icon' => 'eicon-h-align-right',
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => "eicon-h-align-{$end}",
 					],
 				],
 				'selectors_dictionary' => [

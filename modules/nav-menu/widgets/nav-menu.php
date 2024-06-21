@@ -92,8 +92,7 @@ class Nav_Menu extends Base_Widget {
 			$this->add_control(
 				'menu',
 				[
-					// TODO: Remove define() with the release of Elementor 3.22
-					'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+					'type' => Controls_Manager::ALERT,
 					'alert_type' => 'info',
 					'heading' => esc_html__( 'There are no menus in your site.', 'elementor-pro' ),
 					'content' => sprintf(

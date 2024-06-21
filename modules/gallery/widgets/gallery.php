@@ -51,6 +51,10 @@ class Gallery extends Base_Widget {
 		return 'eicon-gallery-justified';
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	public function get_inline_css_depends() {
 		if ( 'multiple' === $this->get_settings_for_display( 'gallery_type' ) ) {
 			return [ 'nav-menu' ];

@@ -59,8 +59,7 @@ class Facebook_SDK_Manager {
 		$widget->add_control(
 			'app_id',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => $alert_type,
 				'content' => $content,
 			]
@@ -69,8 +68,7 @@ class Facebook_SDK_Manager {
 		$widget->add_control(
 			'app_eu_message',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => sprintf(
 					/* translators: 1: Link opening tag, 2: Link closing tag. */

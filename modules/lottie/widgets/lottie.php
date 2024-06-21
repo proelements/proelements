@@ -45,6 +45,10 @@ class Lottie extends Base_Widget {
 		return 'eicon-lottie';
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section( 'lottie', [
 			'label' => esc_html__( 'Lottie', 'elementor-pro' ),

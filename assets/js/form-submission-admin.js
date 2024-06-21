@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -5134,9 +5134,9 @@ function Item(props) {
     className: "misc-pub-section"
   }, __('Update Date:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, (0, _date.formatToLocalDateTime)(data.updated_at))), data.user_name && /*#__PURE__*/_react.default.createElement("div", {
     className: "misc-pub-section"
-  }, __('User Name:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, data.user_name)), /*#__PURE__*/_react.default.createElement("div", {
+  }, __('User Name:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, data.user_name)), data.user_ip && /*#__PURE__*/_react.default.createElement("div", {
     className: "misc-pub-section"
-  }, __('User IP:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, data.user_ip)), /*#__PURE__*/_react.default.createElement("div", {
+  }, __('User IP:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, data.user_ip)), data.user_agent && /*#__PURE__*/_react.default.createElement("div", {
     className: "misc-pub-section"
   }, __('User Agent:', 'elementor-pro'), " ", /*#__PURE__*/_react.default.createElement("strong", null, data.user_agent))), /*#__PURE__*/_react.default.createElement("div", {
     id: "major-publishing-actions"

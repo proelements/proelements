@@ -218,7 +218,6 @@ class Author_Box extends Base {
 			[
 				'label' => esc_html__( 'Link', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'condition' => [
 					'source' => 'custom',
 				],
@@ -248,7 +247,6 @@ class Author_Box extends Base {
 			[
 				'label' => esc_html__( 'Archive Button', 'elementor-pro' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
 				],

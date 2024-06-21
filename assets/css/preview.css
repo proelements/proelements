@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 *[data-editable-elementor-document] {
   position: relative;
 }
@@ -8,7 +8,7 @@
 }
 *[data-editable-elementor-document] .elementor-document-handle {
   position: absolute;
-  z-index: 2147483639;
+  z-index: 2147483620;
   cursor: pointer;
   inset: 0;
   display: none;

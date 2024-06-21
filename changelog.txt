@@ -1,4 +1,28 @@
 # PRO Elements - by PROElements.org
+#### 3.22.0 - 2024-06-16
+
+* New: Introducing Off-Canvas widget - create engaging and creative layers triggered by a link ([#6225](https://github.com/elementor/elementor/issues/6225), [#21769](https://github.com/elementor/elementor/issues/21769), [#25770](https://github.com/elementor/elementor/issues/25770))
+* Tweak: Added option to remove 'User IP' and 'User Agent' from the form submissions metadata ([#14285](https://github.com/elementor/elementor/issues/14285))
+* Tweak: Replaced `waypoints.js` library with the native Intersection Observer API
+* Tweak: Extended Alignment and Position capabilities in Form widget
+* Tweak: Moved icon View control to style tab in Flip Box widget
+* Tweak: Moved icon View control to style tab in Call to Action widget
+* Tweak: Optimized Form widget to eliminate unnecessary markup when the button icon is empty
+* Tweak: Optimized Posts widget to eliminate unnecessary markup when Load More button text is empty
+* Tweak: Remove `placeholder` arguments from URL controls
+* Tweak: Implemented CSS logical properties to Icon Position in Form, Posts and Menu Cart widgets
+* Tweak: Activated Display Conditions feature for existing sites
+* Tweak: Activated Taxonomy Filter feature for existing sites
+* Tweak: Added functionality to delay the running of the ready triggers on inner elements
+* Fix: Icons are now part of the link in the Menu Widget ([#24298](https://github.com/elementor/elementor/issues/24298), [#25112](https://github.com/elementor/elementor/issues/25112))
+* Fix: `all: unset` assigned to buttons cause focus issues ([#24322](https://github.com/elementor/elementor/issues/24322), [#25448](https://github.com/elementor/elementor/issues/25448))
+* Fix: Menu cart SVG icon disappears on front when Optimized Control Loading experiment is activated ([#27342](https://github.com/elementor/elementor/issues/27342))
+* Fix: Elementor Pro auto-updates are not working on multisite networks ([#12615](https://github.com/elementor/elementor/issues/12615))
+* Fix: PHP error appears in the editor when using Loop Grid in an archive template
+* Fix: UI glitch on Icon Position control in Paypal and Stripe Buttons widgets
+* Fix: Icon Position control RTL issue in Hotspot widget
+* Fix: Manual Selection "Include By" Query doesn't work with product categories
+
 #### 3.21.3 - 2024-05-20
 
 * Security Fix: Improved code security enforcement in Loop Grid widget

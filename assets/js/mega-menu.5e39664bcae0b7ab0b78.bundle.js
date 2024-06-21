@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu"],{
 
@@ -27,7 +27,7 @@ class AnchorLinks {
       activeAnchorClass = classes.activeAnchorItem,
       anchorClass = classes.anchorItem,
       $targetElement = $element.hasClass(anchorClass) ? $element : $element.closest(`.${anchorClass}`);
-    let offset = -300,
+    let rootMargin = '300px 0px -50% 0px',
       $anchor;
     try {
       // `decodeURIComponent` for UTF8 characters in the hash.
@@ -39,33 +39,51 @@ class AnchorLinks {
       return;
     }
     if (!$anchor.hasClass('elementor-menu-anchor')) {
-      const halfViewport = jQuery(window).height() / 2;
-      offset = -$anchor.outerHeight() + halfViewport;
+      rootMargin = this.calculateRootMargin($anchor);
     }
-    elementorFrontend.waypoint($anchor, direction => {
-      if ('down' === direction) {
-        $targetElement.addClass(activeAnchorClass);
-        $element.attr('aria-current', 'location');
-      } else {
-        $targetElement.removeClass(activeAnchorClass);
-        $element.attr('aria-current', '');
-      }
-    }, {
-      offset: '50%',
-      triggerOnce: false
-    });
-    elementorFrontend.waypoint($anchor, direction => {
-      if ('down' === direction) {
-        $targetElement.removeClass(activeAnchorClass);
-        $element.attr('aria-current', '');
-      } else {
-        $targetElement.addClass(activeAnchorClass);
-        $element.attr('aria-current', 'location');
-      }
-    }, {
-      offset,
-      triggerOnce: false
-    });
+    const threshold = this.buildThreshold($anchor);
+    const options = {
+      root: null,
+      rootMargin,
+      threshold
+    };
+    const observer = this.createObserver($targetElement, activeAnchorClass, $element, options);
+    observer.observe($anchor[0]);
+  }
+  calculateRootMargin($anchor) {
+    const viewportHeight = jQuery(window).height();
+    const anchorHeight = $anchor.outerHeight();
+    let rootMargin;
+    if (anchorHeight > viewportHeight) {
+      rootMargin = 0;
+    } else {
+      const boxViewport = viewportHeight - anchorHeight;
+      rootMargin = boxViewport / 2;
+    }
+    return `${rootMargin}px`;
+  }
+  buildThreshold($anchor) {
+    const viewportHeight = jQuery(window).height();
+    const anchorHeight = $anchor.outerHeight();
+    let threshold = 0.5;
+    if (anchorHeight > viewportHeight) {
+      const halfViewport = viewportHeight / 2;
+      threshold = halfViewport / anchorHeight;
+    }
+    return threshold;
+  }
+  createObserver($targetElement, activeAnchorClass, $element, options) {
+    return new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          $targetElement.addClass(activeAnchorClass);
+          $element.attr('aria-current', 'location');
+        } else {
+          $targetElement.removeClass(activeAnchorClass);
+          $element.attr('aria-current', '');
+        }
+      });
+    }, options);
   }
 }
 exports["default"] = AnchorLinks;
@@ -476,7 +494,8 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
   }
   changeActiveTab(tabIndex) {
     let fromUser = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    if (this.clickInProgress && elementorFrontend.isEditMode()) {
+    let byKeyboard = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    if (this.clickInProgress && elementorFrontend.isEditMode() && !byKeyboard) {
       return;
     }
     const isActiveTab = this.isActiveTab(tabIndex);
@@ -494,7 +513,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       return;
     }
     if (!settings.titleIndex) {
-      this.changeActiveTab('', true);
+      this.changeActiveTab('', true, true);
       return;
     }
     const $focusableElement = this.$element.find(`[data-focus-index="${settings.titleIndex}"]`),
@@ -502,7 +521,7 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       dropdownSelector = this.getSettings('selectors.tabDropdown'),
       $tabDropdown = isLinkElement ? $focusableElement.next(dropdownSelector) : $focusableElement,
       tabIndex = this.getTabIndex($tabDropdown[0]);
-    this.changeActiveTab(tabIndex, true);
+    this.changeActiveTab(tabIndex, true, true);
     event.stopPropagation();
   }
   onTabClick(event) {
@@ -554,9 +573,11 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
     if (elementorFrontend.isEditMode()) {
       this.removeChildLifeCycleEventListeners();
     }
-    elementorFrontend.elements.$window.off('elementor/nested-tabs/activate');
-    elementorFrontend.elements.$window.off('elementor/nested-elements/activate-by-keyboard');
-    elementorFrontend.elements.$window.off('elementor/mega-menu/dropdown-toggle-by-keyboard');
+    elementorFrontend.elements.$window.off('elementor/nested-tabs/activate', this.reInitSwipers);
+    elementorFrontend.elements.$window.off('elementor/nested-elements/activate-by-keyboard', this.changeActiveTabByKeyboard.bind(this));
+    elementorFrontend.elements.$window.off('elementor/mega-menu/dropdown-toggle-by-keyboard', this.onClickToggleDropdownMenuByKeyboard.bind(this));
+    elementorFrontend.elements.$window.off('resize', this.resizeEventHandler.bind(this));
+    elementorFrontend.elements.$window.off('elementor/nested-container/atomic-repeater', this.linkContainer.bind(this));
   }
   resizeEventHandler() {
     this.resizeListener = this.handleContentContainerPosition();
@@ -885,20 +906,19 @@ class MegaMenu extends elementorModules.frontend.handlers.NestedTabs {
       tabsContents = currentMenu.querySelectorAll(directTabContent),
       tabTitles = currentMenu.querySelectorAll(directTabTitle),
       settings = this.getSettings(),
-      itemIdBase = tabTitles[0].getAttribute('id').slice(0, -1),
-      containerIdBase = tabsContents[0].getAttribute('id').slice(0, -1);
+      itemIdBase = tabTitles[0].getAttribute('id').slice(0, -1);
     tabTitles.forEach((element, index) => {
       const newIndex = index + 1,
         updatedTabID = itemIdBase + newIndex,
-        updatedContainerID = containerIdBase + newIndex;
+        updatedContainerID = updatedTabID.replace('e-n-menu-title-', 'e-n-menu-content-'),
+        updatedTabDropdownID = updatedTabID.replace('e-n-menu-title-', 'e-n-menu-dropdown-icon-');
       element.setAttribute('id', updatedTabID);
       element.setAttribute('style', `--n-menu-title-order: ${newIndex};`);
       element.querySelector(settings.selectors.tabDropdown)?.setAttribute('data-tab-index', newIndex);
-      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('data-focus-index', newIndex);
-      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('id', 'e-n-menu-dropdown-icon-' + newIndex);
+      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('id', updatedTabDropdownID);
+      element.querySelector(settings.selectors.tabDropdown)?.setAttribute('aria-controls', updatedContainerID);
       element.querySelector(settings.selectors.tabTitleText)?.setAttribute('data-binding-index', newIndex);
-      element.querySelector(settings.selectors.tabTitleText)?.setAttribute('aria-controls', updatedTabID);
-      tabsContents[index].setAttribute('aria-labelledby', updatedTabID);
+      tabsContents[index].setAttribute('aria-labelledby', updatedTabDropdownID);
       tabsContents[index].setAttribute('data-tab-index', newIndex);
       tabsContents[index].setAttribute('id', updatedContainerID);
       tabsContents[index].setAttribute('style', `--n-menu-title-order: ${newIndex}; position: var(--position); width: var(--width);`);
@@ -954,4 +974,4 @@ function isMenuInDropdownMode(elementSettings) {
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu.5eea2dda8d43e4430297.bundle.js.map
+//# sourceMappingURL=mega-menu.5e39664bcae0b7ab0b78.bundle.js.map

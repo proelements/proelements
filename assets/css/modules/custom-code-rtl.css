@@ -68,7 +68,7 @@
 
 #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link] {
   font-weight: 600;
-  background-color: #93003c;
+  background-color: #93003f;
   color: #ffffff;
   margin: 3px 10px 0;
   display: block;
@@ -77,7 +77,7 @@
   transition: all 0.3s;
 }
 #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:hover, #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:focus {
-  background-color: #c60051;
+  background-color: #c60055;
   box-shadow: none;
 }
 
@@ -1153,7 +1153,7 @@ span.font-variations-count {
   position: fixed;
   display: flex;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   align-items: center;
@@ -1183,13 +1183,13 @@ span.font-variations-count {
   background-color: var(--eps-tip-background-color);
 }
 .eps-modal__tip:not(:last-child), .eps-modal .eps-tip:not(:last-child) {
-  margin-bottom: 1.875rem;
+  margin-block-end: 1.875rem;
 }
 .eps-modal__tip:not(:first-child), .eps-modal .eps-tip:not(:first-child) {
-  margin-top: 1.875rem;
+  margin-block-start: 1.875rem;
 }
 .eps-modal__section:not(:first-child) {
-  margin-top: 1.875rem;
+  margin-block-start: 1.875rem;
 }
 .eps-modal__close-wrapper {
   padding-inline-start: 1rem;
@@ -1213,13 +1213,13 @@ span.font-variations-count {
   --button-danger-hover-background-color: #b21d1d;
   --button-danger-active-background-color: #861616;
   --button-danger-color: #ffffff;
-  --button-cta-background-color: #524CFF;
-  --button-cta-hover-background-color: #2119ff;
-  --button-cta-active-background-color: #0800e5;
+  --button-cta-background-color: #93003f;
+  --button-cta-hover-background-color: #600029;
+  --button-cta-active-background-color: #2d0013;
   --button-cta-color: #ffffff;
-  --button-brand-background-color: #524CFF;
-  --button-brand-hover-background-color: #2119ff;
-  --button-brand-active-background-color: #0800e5;
+  --button-brand-background-color: #93003f;
+  --button-brand-hover-background-color: #600029;
+  --button-brand-active-background-color: #2d0013;
   --button-brand-color: #ffffff;
   --button-link-background-color: #515962;
   --button-link-hover-background-color: #3a4046;
@@ -1251,14 +1251,14 @@ span.font-variations-count {
   --button-secondary-color: #fff;
   --button-secondary-hover-background-color: #9ea5ae;
   --button-secondary-active-background-color: #838c96;
-  --button-cta-background-color: #524CFF;
-  --button-cta-hover-background-color: #2119ff;
-  --button-cta-active-background-color: #0800e5;
+  --button-cta-background-color: #93003f;
+  --button-cta-hover-background-color: #600029;
+  --button-cta-active-background-color: #2d0013;
   --button-cta-color: #fff;
-  --button-brand-hover-background-color: #2119ff;
-  --button-brand-active-background-color: #0800e5;
+  --button-brand-hover-background-color: #600029;
+  --button-brand-active-background-color: #2d0013;
   --button-brand-color: #fff;
-  --button-brand-background-color: #524CFF;
+  --button-brand-background-color: #93003f;
   --button-link-background-color: #515962;
   --button-link-hover-background-color: #3a4046;
   --button-link-active-background-color: #23262a;

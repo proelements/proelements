@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2610,7 +2610,7 @@ class CustomCode extends elementorModules.Module {
     });
   }
   addOpenAIButton() {
-    const $buttonOpenAI = jQuery(`<button class="e-ai-button"><i class="eicon-ai"></i> ${__('Write me code', 'elementor-pro')}</button>`);
+    const $buttonOpenAI = jQuery(`<button class="e-ai-button"><i class="eicon-ai"></i> ${__('Code with AI', 'elementor-pro')}</button>`);
     $buttonOpenAI.on('click', event => {
       event.preventDefault();
       const isRTL = elementorCommon.config.isRTL;

@@ -87,6 +87,10 @@ class Share_Buttons extends Base_Widget {
 		return [ 'sharing', 'social', 'icon', 'button', 'like' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_buttons_content',
@@ -290,7 +294,6 @@ class Share_Buttons extends Base_Widget {
 					'active' => true,
 				],
 				'options' => false,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'condition' => [
 					'share_url_type' => 'custom',
 				],

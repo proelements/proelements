@@ -161,7 +161,6 @@ class Login extends Base_Widget {
 				'type' => Controls_Manager::URL,
 				'show_label' => false,
 				'options' => false,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'description' => esc_html__( 'Note: Because of security reasons, you can ONLY use your current domain here.', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,
@@ -189,7 +188,6 @@ class Login extends Base_Widget {
 				'type' => Controls_Manager::URL,
 				'show_label' => false,
 				'options' => false,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'description' => esc_html__( 'Note: Because of security reasons, you can ONLY use your current domain here.', 'elementor-pro' ),
 				'dynamic' => [
 					'active' => true,

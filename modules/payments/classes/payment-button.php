@@ -430,16 +430,6 @@ abstract class Payment_Button extends Widget_Button {
 		$this->update_control( 'button_text_color', [
 			'default' => '#FFF',
 		] );
-
-		$this->update_control(
-			'icon_align',
-			[
-				'options' => [
-					'left' => esc_html__( 'Before Text', 'elementor-pro' ),
-					'right' => esc_html__( 'After Text', 'elementor-pro' ),
-				],
-			]
-		);
 	}
 
 	// Add typography settings for custom messages.
@@ -525,6 +515,8 @@ abstract class Payment_Button extends Widget_Button {
 
 		if ( ! empty( $settings['size'] ) ) {
 			$this->add_render_attribute( 'button', 'class', 'elementor-size-' . $settings['size'] );
+		} else {
+			$this->add_render_attribute( 'button', 'class', 'elementor-size-sm' ); // BC, to make sure the class is always present
 		}
 
 		if ( $settings['hover_animation'] ) {
@@ -542,16 +534,41 @@ abstract class Payment_Button extends Widget_Button {
 		return;
 		?>
 		<#
+		view.addRenderAttribute( 'wrapper', 'class', 'elementor-button-wrapper' );
+		view.addRenderAttribute( 'button', 'class', 'elementor-button' );
+		view.addRenderAttribute( 'content-wrapper', 'class', 'elementor-button-content-wrapper' );
+		view.addRenderAttribute( 'icon', 'class', 'elementor-button-icon' );
 		view.addRenderAttribute( 'text', 'class', 'elementor-button-text' );
+
+		if ( '' !== settings.link.url ) {
+			view.addRenderAttribute( 'button', 'class', 'elementor-button-link' );
+			view.addRenderAttribute( 'button', 'href', settings.link.url );
+		} else {
+			view.addRenderAttribute( 'button', 'role', 'button' );
+		}
+
+		if ( '' !== settings.button_css_id ) {
+			view.addRenderAttribute( 'button', 'id', settings.button_css_id );
+		}
+
+		if ( '' !== settings.size ) {
+			view.addRenderAttribute( 'button', 'class', 'elementor-size-' + settings.size );
+		}
+
+		if ( '' !== settings.hover_animation ) {
+			view.addRenderAttribute( 'button', 'class', 'elementor-animation-' + settings.hover_animation );
+		}
+
 		view.addInlineEditingAttributes( 'text', 'none' );
-		var iconHTML = elementor.helpers.renderIcon( view, settings.selected_icon, { 'aria-hidden': true }, 'i' , 'object' ),
-		migrated = elementor.helpers.isIconMigrated( settings, 'selected_icon' );
+
+		const iconHTML = elementor.helpers.renderIcon( view, settings.selected_icon, { 'aria-hidden': true }, 'i' , 'object' );
+		const migrated = elementor.helpers.isIconMigrated( settings, 'selected_icon' );
 		#>
-		<div class="elementor-button-wrapper">
-			<a id="{{ settings.button_css_id }}" class="elementor-button elementor-size-{{ settings.size }} elementor-animation-{{ settings.hover_animation }}" href="#" role="button">
-				<span class="elementor-button-content-wrapper">
+		<div {{{ view.getRenderAttributeString( 'wrapper' ) }}}>
+			<a {{{ view.getRenderAttributeString( 'button' ) }}}>
+				<span {{{ view.getRenderAttributeString( 'content-wrapper' ) }}}>
 					<# if ( settings.icon || settings.selected_icon ) { #>
-					<span class="elementor-button-icon elementor-align-icon-{{ settings.icon_align }}">
+					<span {{{ view.getRenderAttributeString( 'icon' ) }}}>
 						<# if ( ( migrated || ! settings.icon ) && iconHTML.rendered ) { #>
 							{{{ iconHTML.value }}}
 						<# } else { #>

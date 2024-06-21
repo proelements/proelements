@@ -38,6 +38,7 @@ final class Modules_Manager {
 			// Modules with Widgets.
 			'theme-builder',
 			'loop-builder',
+			'off-canvas',
 			'posts',
 			'gallery',
 			'forms',
@@ -71,6 +72,7 @@ final class Modules_Manager {
 			'nested-carousel',
 			'loop-filter',
 			'tiers',
+			'conversion-center',
 		];
 
 		foreach ( $modules as $module_name ) {

@@ -680,8 +680,6 @@ class Reviews extends Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
-
 			]
 		);
 

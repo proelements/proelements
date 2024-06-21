@@ -37,6 +37,10 @@ class ProgressTracker extends Base_Widget {
 		return [ 'progress', 'tracker', 'read', 'scroll' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	private function register_content_controls() {
 		$this->start_controls_section(
 			'section_content_scrolling_tracker',

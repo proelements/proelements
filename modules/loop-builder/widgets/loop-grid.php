@@ -254,8 +254,7 @@ class Loop_Grid extends Base {
 		$repeater->add_control(
 			'column_span_masonry_note',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'warning',
 				'content' => esc_html__( 'Note: The Masonry option combined with Column Span might cause unexpected results and break the layout.', 'elementor-pro' ),
 				'condition' => [

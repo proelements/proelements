@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["nav-menu"],{
 
@@ -27,7 +27,7 @@ class AnchorLinks {
       activeAnchorClass = classes.activeAnchorItem,
       anchorClass = classes.anchorItem,
       $targetElement = $element.hasClass(anchorClass) ? $element : $element.closest(`.${anchorClass}`);
-    let offset = -300,
+    let rootMargin = '300px 0px -50% 0px',
       $anchor;
     try {
       // `decodeURIComponent` for UTF8 characters in the hash.
@@ -39,33 +39,51 @@ class AnchorLinks {
       return;
     }
     if (!$anchor.hasClass('elementor-menu-anchor')) {
-      const halfViewport = jQuery(window).height() / 2;
-      offset = -$anchor.outerHeight() + halfViewport;
+      rootMargin = this.calculateRootMargin($anchor);
     }
-    elementorFrontend.waypoint($anchor, direction => {
-      if ('down' === direction) {
-        $targetElement.addClass(activeAnchorClass);
-        $element.attr('aria-current', 'location');
-      } else {
-        $targetElement.removeClass(activeAnchorClass);
-        $element.attr('aria-current', '');
-      }
-    }, {
-      offset: '50%',
-      triggerOnce: false
-    });
-    elementorFrontend.waypoint($anchor, direction => {
-      if ('down' === direction) {
-        $targetElement.removeClass(activeAnchorClass);
-        $element.attr('aria-current', '');
-      } else {
-        $targetElement.addClass(activeAnchorClass);
-        $element.attr('aria-current', 'location');
-      }
-    }, {
-      offset,
-      triggerOnce: false
-    });
+    const threshold = this.buildThreshold($anchor);
+    const options = {
+      root: null,
+      rootMargin,
+      threshold
+    };
+    const observer = this.createObserver($targetElement, activeAnchorClass, $element, options);
+    observer.observe($anchor[0]);
+  }
+  calculateRootMargin($anchor) {
+    const viewportHeight = jQuery(window).height();
+    const anchorHeight = $anchor.outerHeight();
+    let rootMargin;
+    if (anchorHeight > viewportHeight) {
+      rootMargin = 0;
+    } else {
+      const boxViewport = viewportHeight - anchorHeight;
+      rootMargin = boxViewport / 2;
+    }
+    return `${rootMargin}px`;
+  }
+  buildThreshold($anchor) {
+    const viewportHeight = jQuery(window).height();
+    const anchorHeight = $anchor.outerHeight();
+    let threshold = 0.5;
+    if (anchorHeight > viewportHeight) {
+      const halfViewport = viewportHeight / 2;
+      threshold = halfViewport / anchorHeight;
+    }
+    return threshold;
+  }
+  createObserver($targetElement, activeAnchorClass, $element, options) {
+    return new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          $targetElement.addClass(activeAnchorClass);
+          $element.attr('aria-current', 'location');
+        } else {
+          $targetElement.removeClass(activeAnchorClass);
+          $element.attr('aria-current', '');
+        }
+      });
+    }, options);
   }
 }
 exports["default"] = AnchorLinks;
@@ -221,4 +239,4 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
 /***/ })
 
 }]);
-//# sourceMappingURL=nav-menu.ad2c1632628f619ad9e9.bundle.js.map
+//# sourceMappingURL=nav-menu.3302c748e084579995fb.bundle.js.map

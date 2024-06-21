@@ -325,6 +325,7 @@ class Menu_Cart extends Base_Widget {
 				'selectors_dictionary' => [
 					'' => 'display: none;',
 				],
+				'control_type' => 'content',
 			]
 		);
 
@@ -970,8 +971,34 @@ class Menu_Cart extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'body:not(.rtl) {{WRAPPER}} .elementor-menu-cart__toggle .elementor-button-text' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'body.rtl {{WRAPPER}} .elementor-menu-cart__toggle .elementor-button-text' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-menu-cart__toggle .elementor-button' => 'gap: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_subtotal!' => '',
+				],
+			]
+		);
+
+		$start = is_rtl() ? 'right' : 'left';
+		$end = is_rtl() ? 'left' : 'right';
+
+		$this->add_control(
+			'toggle_icon_position',
+			[
+				'label' => esc_html__( 'Position', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'row-reverse' => [
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => "eicon-h-align-{$start}",
+					],
+					'row' => [
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => "eicon-h-align-{$end}",
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-menu-cart__toggle .elementor-button' => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => [
 					'show_subtotal!' => '',

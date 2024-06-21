@@ -1,4 +1,4 @@
-/*! pro-elements - v3.21.0 - 20-05-2024 */
+/*! pro-elements - - v3.22.0 - 16-06-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["table-of-contents"],{
 
@@ -150,40 +150,35 @@ class TOCHandler extends elementorModules.frontend.handlers.Base {
     } catch (e) {
       return;
     }
-    elementorFrontend.waypoint($anchor, direction => {
-      if (this.itemClicked) {
-        return;
-      }
-      const id = $anchor.attr('id');
-      if ('down' === direction) {
-        this.viewportItems[id] = true;
-        this.activateItem($element);
-      } else {
-        delete this.viewportItems[id];
-        this.activateItem(this.$listItemTexts.eq(index - 1));
-      }
-    }, {
-      offset: 'bottom-in-view',
-      triggerOnce: false
-    });
-    elementorFrontend.waypoint($anchor, direction => {
-      if (this.itemClicked) {
-        return;
-      }
-      const id = $anchor.attr('id');
-      if ('down' === direction) {
-        delete this.viewportItems[id];
-        if (Object.keys(this.viewportItems).length) {
-          this.activateItem(this.$listItemTexts.eq(index + 1));
+    const observerOptions = {
+      rootMargin: '0px',
+      threshold: 0
+    };
+    const observer = this.createObserver(anchorSelector, $anchor, observerOptions, $element, index);
+    observer.observe($anchor[0]);
+  }
+  createObserver(anchorSelector, $anchor, options, $element, index) {
+    let lastScrollTop = 0;
+    return new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const scrollTop = document.documentElement.scrollTop,
+          isScrollingDown = scrollTop > lastScrollTop,
+          id = $anchor.attr('id');
+        if (entry.isIntersecting && !this.itemClicked) {
+          this.viewportItems[id] = true;
+          this.activateItem($element);
+        } else if (entry.isIntersecting && isScrollingDown) {
+          delete this.viewportItems[id];
+          if (Object.keys(this.viewportItems).length) {
+            this.activateItem(this.$listItemTexts.eq(index + 1));
+          }
+        } else if (!isScrollingDown) {
+          delete this.viewportItems[id];
+          this.activateItem(this.$listItemTexts.eq(index - 1));
         }
-      } else {
-        this.viewportItems[id] = true;
-        this.activateItem($element);
-      }
-    }, {
-      offset: 0,
-      triggerOnce: false
-    });
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
+    }, options);
   }
   followAnchors() {
     this.$listItemTexts.each((index, element) => this.followAnchor(jQuery(element), index));
@@ -411,4 +406,4 @@ exports["default"] = TOCHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=table-of-contents.e67f9eaf44032e14dc57.bundle.js.map
+//# sourceMappingURL=table-of-contents.d228157a74585ba6b08c.bundle.js.map

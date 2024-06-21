@@ -37,6 +37,10 @@ class Blockquote extends Base_Widget {
 		return 'eicon-blockquote';
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	public function get_keywords() {
 		return [ 'blockquote', 'quote', 'paragraph', 'testimonial', 'text', 'twitter', 'tweet' ];
 	}

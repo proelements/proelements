@@ -33,6 +33,10 @@ class Price_List extends Base_Widget {
 		return [ 'pricing', 'list', 'product', 'image', 'menu' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_list',

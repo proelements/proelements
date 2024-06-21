@@ -36,8 +36,7 @@ class Akismet {
 		$form->add_control(
 			'akismet_info',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => sprintf(
 					/* translators: 1: Link opening tag, 2: Link closing tag. */

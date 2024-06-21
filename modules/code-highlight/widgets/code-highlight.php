@@ -32,6 +32,10 @@ class Code_Highlight extends Base_Widget {
 		return [ 'prismjs_style' ];
 	}
 
+	protected function is_dynamic_content(): bool {
+		return false;
+	}
+
 	public function get_script_depends() {
 		$depends = [
 			'prismjs_core' => true,

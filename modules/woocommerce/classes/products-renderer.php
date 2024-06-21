@@ -343,8 +343,7 @@ class Products_Renderer extends Base_Products_Renderer {
 
 	private function is_include_query_type( $type ) {
 		return (
-			! in_array( $this->settings[ $this->settings_key_prefix . 'post_type' ], [ 'by_id', 'current_query' ] )
-			&& ! empty( $this->settings[ $this->settings_key_prefix . 'include' ] )
+			! empty( $this->settings[ $this->settings_key_prefix . 'include' ] )
 			&& in_array( $type, $this->settings[ $this->settings_key_prefix . 'include' ], true )
 		);
 	}

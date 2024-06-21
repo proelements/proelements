@@ -1421,6 +1421,8 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
 }
 .elementor-menu-cart__toggle {
   display: inline-block;
+  /* TODO: BC that should be removed in v3.23 */
+  /* END TODO */
 }
 .elementor-menu-cart__toggle .elementor-button {
   background-color: var(--toggle-button-background-color, transparent);
@@ -1430,8 +1432,9 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
   border-color: var(--toggle-button-border-color, #69727D);
   border-radius: var(--toggle-button-border-radius, 0px);
   display: inline-flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
+  gap: 0.3em;
   padding: var(--toggle-icon-padding, 12px 24px);
 }
 .elementor-menu-cart__toggle .elementor-button:hover {
@@ -1448,9 +1451,6 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
 .elementor-menu-cart__toggle .elementor-button svg {
   fill: var(--toggle-button-icon-color, #69727D);
 }
-.elementor-menu-cart__toggle .elementor-button-text {
-  margin-inline-end: 0.3em;
-}
 .elementor-menu-cart__toggle .elementor-button-icon {
   position: relative;
   transition: color 0.1s;
@@ -1463,6 +1463,11 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
 }
 .elementor-menu-cart__toggle .e-toggle-cart-custom-icon:hover {
   color: var(--toggle-button-icon-hover-color, #69727D);
+}
+.elementor-menu-cart__toggle .elementor-button-text,
+.elementor-menu-cart__toggle .elementor-button-icon {
+  flex-grow: unset;
+  order: unset;
 }
 .elementor-menu-cart--items-indicator-bubble .elementor-menu-cart__toggle .elementor-button-icon .elementor-button-icon-qty[data-counter] {
   display: block;
@@ -4943,20 +4948,29 @@ the source property is coming from element/dev/scss...
   order: 3;
 }
 
-.elementor-form .elementor-button > span {
-  display: flex;
-  justify-content: center;
+.elementor-form .elementor-button {
+  /* TODO: BC that should be removed in v3.23 */
+  /* END TODO */
+}
+.elementor-form .elementor-button .elementor-button-content-wrapper {
   align-items: center;
 }
 .elementor-form .elementor-button .elementor-button-text {
   white-space: normal;
-  flex-grow: 0;
 }
 .elementor-form .elementor-button svg {
   height: auto;
 }
 .elementor-form .elementor-button .e-font-icon-svg {
   height: 1em;
+}
+.elementor-form .elementor-button .elementor-button-content-wrapper {
+  gap: 5px;
+}
+.elementor-form .elementor-button .elementor-button-text,
+.elementor-form .elementor-button .elementor-button-icon {
+  flex-grow: unset;
+  order: unset;
 }
 
 .elementor-select-wrapper .select-caret-down-wrapper {
@@ -10290,9 +10304,6 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   position: absolute;
   left: calc(var(--n-menu-title-space-between) / 2 * -1 - var(--n-menu-divider-border-width) / 2);
 }
-.elementor-widget-n-menu .e-n-menu-heading .e-n-menu-title button:focus-visible, .elementor-widget-n-menu .e-n-menu-heading .e-n-menu-title a:focus-visible {
-  outline: 5px auto -webkit-focus-ring-color;
-}
 .elementor-widget-n-menu .e-n-menu-content {
   display: var(--n-menu-content-display);
   flex-direction: column;
@@ -10340,18 +10351,18 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   gap: var(--n-menu-icon-gap);
   justify-content: var(--n-menu-title-justify-content);
 }
+.elementor-widget-n-menu .e-n-menu-title-container.e-link {
+  cursor: pointer;
+}
+.elementor-widget-n-menu .e-n-menu-title-container:not(.e-link), .elementor-widget-n-menu .e-n-menu-title-container:not(.e-link) * {
+  cursor: default;
+}
 .elementor-widget-n-menu .e-n-menu-title-text {
   display: flex;
   align-items: center;
   font-size: var(--n-menu-title-font-size);
   line-height: var(--n-menu-title-line-height);
   transition: all var(--n-menu-title-transition);
-}
-.elementor-widget-n-menu .e-n-menu-title-text.e-link {
-  cursor: pointer;
-}
-.elementor-widget-n-menu .e-n-menu-title-text:not(.e-link), .elementor-widget-n-menu .e-n-menu-title-text:not(.e-link) > span {
-  cursor: default;
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-icon {
   display: flex;
@@ -10376,7 +10387,10 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   transition: all var(--n-menu-title-transition);
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon {
-  all: unset;
+  background-color: initial;
+  border: initial;
+  color: inherit;
+  padding: initial;
   user-select: none;
   display: flex;
   text-align: center;
@@ -10411,6 +10425,9 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon[aria-expanded=true] .e-n-menu-dropdown-icon-opened {
   display: flex;
+}
+.elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon:focus:not(:focus-visible) {
+  outline: none;
 }
 .elementor-widget-n-menu .e-n-menu-title:not(.e-current):not(:hover) .e-n-menu-title-container .e-n-menu-title-text {
   color: var(--n-menu-title-color-normal);
@@ -10456,7 +10473,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 .elementor-widget-n-menu .e-n-menu-title.e-current .e-n-menu-dropdown-icon svg {
   fill: var(--n-menu-dropdown-indicator-color-active, var(--n-menu-title-color-active));
 }
-.elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) .e-n-menu-title-text:not(.e-link) {
+.elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) .e-n-menu-title-container:not(.e-link) {
   cursor: default;
 }
 .elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) svg {
@@ -10481,15 +10498,18 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   fill: var(--n-menu-dropdown-indicator-color-hover, var(--n-menu-title-color-hover));
 }
 .elementor-widget-n-menu .e-n-menu-toggle {
-  all: unset;
+  background-color: initial;
+  border: initial;
+  color: inherit;
+  padding: initial;
   user-select: none;
   display: none;
   align-self: var(--n-menu-toggle-align);
   position: relative;
   z-index: 1000;
 }
-.elementor-widget-n-menu .e-n-menu-toggle:focus-visible {
-  outline: 5px auto -webkit-focus-ring-color;
+.elementor-widget-n-menu .e-n-menu-toggle:focus:not(:focus-visible) {
+  outline: none;
 }
 .elementor-widget-n-menu .e-n-menu-toggle i {
   font-size: var(--n-menu-toggle-icon-size);
@@ -10960,7 +10980,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   z-index: 2;
 }
 .elementor-widget-taxonomy-filter .e-filter-item {
-  all: unset;
+  background-color: initial;
   border-width: 1px;
   border-style: none;
   border-color: #69727D;
@@ -10996,12 +11016,8 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 .elementor-widget-taxonomy-filter .e-filter-item[data-filter=__all] {
   order: -1;
 }
-.elementor-widget-taxonomy-filter .e-filter-item:focus {
-  background-color: initial;
+.elementor-widget-taxonomy-filter .e-filter-item:focus:not(:focus-visible) {
   outline: none;
-}
-.elementor-widget-taxonomy-filter .e-filter-item:focus-visible {
-  outline: 5px auto -webkit-focus-ring-color;
 }
 .elementor-widget-taxonomy-filter .e-filter-empty {
   background-color: rgba(213, 216, 220, 0.8);
@@ -11013,6 +11029,115 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 
 .elementor-widget-loop-grid .e-loop-item.e-inactive {
   display: none;
+}
+
+body.e-off-canvas__no-scroll {
+  overflow: hidden;
+}
+
+.elementor-widget-off-canvas {
+  height: fit-content;
+  --e-off-canvas-width: 400px;
+  --e-off-canvas-height: 100vh;
+  --e-off-canvas-justify-content: flex-start;
+  --e-off-canvas-align-items: flex-start;
+  --e-off-canvas-animation-duration: 1.5s;
+  --e-off-canvas-content-overflow: auto;
+  --e-off-canvas-overlay-opacity: 1;
+  --e-off-canvas-animation-duration-minimum: Max(0.001s, var(--e-off-canvas-animation-duration));
+}
+.elementor-widget-off-canvas .e-off-canvas {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2147483630;
+  position: fixed;
+  pointer-events: none;
+}
+.elementor-widget-off-canvas .e-off-canvas[aria-hidden=true] {
+  visibility: hidden;
+  opacity: 0;
+}
+.elementor-widget-off-canvas .e-off-canvas[aria-hidden=true] .elementor-add-section {
+  display: none;
+}
+.elementor-widget-off-canvas .e-off-canvas__overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  pointer-events: all;
+  opacity: var(--e-off-canvas-overlay-opacity);
+  transition: 0s;
+}
+.elementor-widget-off-canvas .e-off-canvas__overlay.no-pointer-events {
+  pointer-events: none;
+}
+.elementor-widget-off-canvas .e-off-canvas__main {
+  display: flex;
+  justify-content: var(--e-off-canvas-justify-content);
+  align-items: var(--e-off-canvas-align-items);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+.elementor-widget-off-canvas .e-off-canvas__main.animated {
+  animation-duration: var(--e-off-canvas-animation-duration-minimum);
+}
+.elementor-widget-off-canvas .e-off-canvas__main.animated.none {
+  opacity: 1;
+  visibility: visible;
+  animation: e-off-canvas-without-animation 0.001s;
+}
+.elementor-widget-off-canvas .e-off-canvas__main.animated.none.reversed {
+  opacity: 0;
+  visibility: hidden;
+}
+.elementor-widget-off-canvas .e-off-canvas__content {
+  background-color: #FFFFFF;
+  box-shadow: 2px 8px 23px 3px rgba(0, 0, 0, 0.2);
+  width: var(--e-off-canvas-width);
+  height: var(--e-off-canvas-height);
+  pointer-events: all;
+  overflow: var(--e-off-canvas-content-overflow);
+}
+.elementor-widget-off-canvas .animated-reverse-wrapper {
+  visibility: hidden;
+  opacity: 0;
+  transform: initial;
+}
+.elementor-widget-off-canvas .animated-reverse-wrapper:not(.no-animation) {
+  animation: e-off-canvas-close var(--e-off-canvas-animation-duration-minimum);
+}
+.elementor-widget-off-canvas .animated-reverse-wrapper .no-animation {
+  animation: e-off-canvas-close 0.001s;
+}
+
+@keyframes e-off-canvas-close {
+  0%, 99.99% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+    transform: initial;
+  }
+}
+@keyframes e-off-canvas-without-animation {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 /*# sourceMappingURL=frontend-rtl.css.map */
