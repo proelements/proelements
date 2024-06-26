@@ -87,8 +87,8 @@ class Off_Canvas extends Widget_Nested_Base {
 				'alert_type' => 'info',
 				'content' => sprintf(
 					'%1$s <a target="_blank" href="https://go.elementor.com/off-canvas-help/">%2$s</a>',
-					esc_html__( 'To open the Off-Canvas widget, add a link or a button to that page and direct it to the widget.', 'elementor-pro' ),
-					esc_html__( 'Learn more', 'elementor-pro' ),
+					esc_html__( 'To open your Off-Canvas, add a link or button to your page, and set its dynamic tag to \'Off-Canvas\'.', 'elementor-pro' ),
+					esc_html__( 'Show me how', 'elementor-pro' ),
 				),
 			]
 		);

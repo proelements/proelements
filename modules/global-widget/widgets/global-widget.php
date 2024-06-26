@@ -104,6 +104,12 @@ class Global_Widget extends Base_Widget {
 			return $raw_data;
 		}
 
+		if ( apply_filters( 'elementor/element/should_render_shortcode', false ) ) {
+			$raw_data['widgetType'] = $this->get_name();
+
+			return $raw_data;
+		}
+
 		return $raw_data;
 	}
 
