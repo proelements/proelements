@@ -78,12 +78,9 @@
 	&__footer {
 		display: flex;
 		justify-content: flex-end;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		left: 0;
 		padding: $e-site-editor-save-button-container-spacing;
 		border-block-start: 1px solid var(--hr-color);
+		margin-top: $e-site-editor-save-button-container-margin-top;
 	}
 
 	&__input-wrapper {

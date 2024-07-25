@@ -1,4 +1,4 @@
-/*! pro-elements - v3.22.0 - 24-06-2024 */
+/*! pro-elements - v3.23.0 - 23-07-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -92,7 +92,7 @@
 /******/ 			if (chunkId === "carousel") return "" + chunkId + ".998a291abf70435fd698.bundle.js";
 /******/ 			if (chunkId === "countdown") return "" + chunkId + ".60cf02eaf22d71d83f3d.bundle.js";
 /******/ 			if (chunkId === "hotspot") return "" + chunkId + ".70886883c622dd8d5eb2.bundle.js";
-/******/ 			if (chunkId === "form") return "form.efd3434e4ecbe4dd5fc6.bundle.js";
+/******/ 			if (chunkId === "form") return "form.97ef0fd396471477cc8e.bundle.js";
 /******/ 			if (chunkId === "gallery") return "" + chunkId + ".805130d33e18cb04635f.bundle.js";
 /******/ 			if (chunkId === "lottie") return "" + chunkId + ".a00fda0bbf10f9b99eae.bundle.js";
 /******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".3302c748e084579995fb.bundle.js";
@@ -116,12 +116,15 @@
 /******/ 			if (chunkId === "loop") return "loop.27d8ba43536f8b76ca41.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".827a11bd7f1b0343de42.bundle.js";
 /******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".bc400e6cb24a14a2ea97.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".5e39664bcae0b7ab0b78.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".2e0078a6bbdc8abdf4af.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".4648b25d00c1f94cec4e.bundle.js";
-/******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".c652b7c2092bb13e8824.bundle.js";
-/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".a6b8a103e170cb2de9a4.bundle.js";
+/******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".b34510de747c3b311e45.bundle.js";
+/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".c8ad1035e988a2ae42b1.bundle.js";
 /******/ 			if (chunkId === "taxonomy-filter") return "" + chunkId + ".9d41aac2f76c01cfdb42.bundle.js";
-/******/ 			if (chunkId === "off-canvas") return "" + chunkId + ".e9d1f251ce164594d7e4.bundle.js";
+/******/ 			if (chunkId === "off-canvas") return "" + chunkId + ".26fe37796a9397d32c9f.bundle.js";
+/******/ 			if (chunkId === "contact-buttons") return "" + chunkId + ".5f4d4ece4d991cd56a20.bundle.js";
+/******/ 			if (chunkId === "contact-buttons-var-10") return "" + chunkId + ".5ceb4ecd2152a5f8b96e.bundle.js";
+/******/ 			if (chunkId === "search") return "" + chunkId + ".5154a7b515b28ee3dfe6.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

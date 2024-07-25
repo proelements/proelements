@@ -542,7 +542,7 @@ abstract class Payment_Button extends Widget_Button {
 
 		if ( '' !== settings.link.url ) {
 			view.addRenderAttribute( 'button', 'class', 'elementor-button-link' );
-			view.addRenderAttribute( 'button', 'href', settings.link.url );
+			view.addRenderAttribute( 'button', 'href', elementor.helpers.sanitizeUrl( settings.link.url ) );
 		} else {
 			view.addRenderAttribute( 'button', 'role', 'button' );
 		}

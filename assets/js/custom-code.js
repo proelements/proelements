@@ -1,4 +1,4 @@
-/*! pro-elements - v3.22.0 - 24-06-2024 */
+/*! pro-elements - v3.23.0 - 23-07-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -126,6 +126,7 @@ class ConditionsProvider extends _baseContext.default {
     super(props);
     this.state = {
       ...this.state,
+      conditionsFetched: false,
       conditions: {},
       updateConditionItemState: this.updateConditionItemState.bind(this),
       removeConditionItemInState: this.removeConditionItemInState.bind(this),
@@ -140,7 +141,17 @@ class ConditionsProvider extends _baseContext.default {
    * the subIds.
    */
   componentDidMount() {
-    this.executeAction(ConditionsProvider.actions.FETCH_CONFIG, () => _conditionsConfig.default.create()).then(conditionsConfig => this.conditionsConfig = conditionsConfig).then(this.normalizeConditionsState.bind(this)).then(this.setSubIdTitles.bind(this));
+    this.executeAction(ConditionsProvider.actions.FETCH_CONFIG, () => _conditionsConfig.default.create()).then(conditionsConfig => this.conditionsConfig = conditionsConfig).then(this.normalizeConditionsState.bind(this)).then(() => {
+      this.setSubIdTitles.bind(this);
+      this.setState({
+        conditionsFetched: true
+      });
+    });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.conditionsFetched && this.state.conditionsFetched) {
+      this.setSubIdTitles();
+    }
   }
 
   /**
@@ -216,7 +227,7 @@ class ConditionsProvider extends _baseContext.default {
           subIdAutocomplete: this.conditionsConfig.getSubIdAutocomplete(condition.sub),
           supIdOptions: condition.subId ? [{
             value: condition.subId,
-            label: condition.subId
+            label: ''
           }] : []
         });
         return {

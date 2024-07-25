@@ -10,10 +10,10 @@ use ElementorPro\Modules\LoopBuilder\Widgets\Base as Loop_Widget_Base;
 use ElementorPro\Modules\Posts\Skins\Skin_Base;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Related;
 use ElementorPro\Plugin;
-use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Dynamic_CSS;
 use ElementorPro\Modules\LoopBuilder\Traits\Alternate_Templates_Trait;
 use Elementor\Utils;
 use Elementor\Core\Files\CSS\Post as Post_CSS;
+use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Css_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -29,6 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Skin_Loop_Base extends Skin_Base {
 
 	use Alternate_Templates_Trait;
+	use Loop_Css_Trait;
 
 	public function get_id() {
 		return MODULE::LOOP_BASE_SKIN_ID;
@@ -193,31 +194,6 @@ class Skin_Loop_Base extends Skin_Base {
 
 		$this->print_dynamic_css( $post_id, $template_id );
 		$document->print_content();
-	}
-
-	protected function print_dynamic_css( $post_id, $post_id_for_data ) {
-		$document = Plugin::elementor()->documents->get_doc_for_frontend( $post_id_for_data );
-
-		if ( ! $document ) {
-			return;
-		}
-
-		Plugin::elementor()->documents->switch_to_document( $document );
-
-		$css_file = Loop_Dynamic_CSS::create( $post_id, $post_id_for_data );
-		$post_css = $css_file->get_content();
-
-		if ( empty( $post_css ) ) {
-			return;
-		}
-
-		$css = '';
-		$css = str_replace( '.elementor-' . $post_id, '.e-loop-item-' . $post_id, $post_css );
-		$css = sprintf( '<style id="%s">%s</style>', 'loop-dynamic-' . $post_id_for_data, $css );
-
-		echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-		Plugin::elementor()->documents->restore_document();
 	}
 
 	protected function render_loop_header() {

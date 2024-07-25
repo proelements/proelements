@@ -57,19 +57,24 @@ class Module extends Module_Base {
 	 * @param Element_Base $element
 	 */
 	public function replace_go_pro_custom_attributes_controls( Element_Base $element ) {
+		$old_section = Plugin::elementor()->controls_manager->get_control_from_stack(
+			$element->get_unique_name(),
+			'section_custom_attributes_pro'
+		);
+
 		Plugin::elementor()->controls_manager->remove_control_from_stack( $element->get_unique_name(), [ 'section_custom_attributes_pro', 'custom_attributes_pro' ] );
 
-		$this->register_custom_attributes_controls( $element );
+		$this->register_custom_attributes_controls( $element, $old_section['tab'] );
 	}
 
-	public function register_custom_attributes_controls( Element_Base $element ) {
+	public function register_custom_attributes_controls( Element_Base $element, $tab ) {
 		$element_name = $element->get_name();
 
 		$element->start_controls_section(
 			'_section_attributes',
 			[
 				'label' => esc_html__( 'Attributes', 'elementor-pro' ),
-				'tab' => Controls_Manager::TAB_ADVANCED,
+				'tab' => $tab,
 			]
 		);
 
@@ -147,13 +152,17 @@ class Module extends Module_Base {
 	}
 
 	private function replace_controls_with_upgrade_promotion( Element_Base $element ) {
+		$old_section = Plugin::elementor()->controls_manager->get_control_from_stack(
+			$element->get_unique_name(),
+			'section_custom_attributes_pro'
+		);
 		Plugin::elementor()->controls_manager->remove_control_from_stack( $element->get_unique_name(), [ 'section_custom_attributes_pro', 'section_custom_attributes_pro' ] );
 
 		$element->start_controls_section(
 			'section_custom_attributes_promotion',
 			[
 				'label' => esc_html__( 'Attributes', 'elementor-pro' ),
-				'tab' => Controls_Manager::TAB_ADVANCED,
+				'tab' => $old_section['tab'],
 			]
 		);
 

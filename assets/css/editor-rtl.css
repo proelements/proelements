@@ -1,4 +1,4 @@
-/*! pro-elements - v3.22.0 - 24-06-2024 */
+/*! pro-elements - v3.23.0 - 23-07-2024 */
 .elementor-panel .elementor-control .e-control-error {
   color: #F59E0B;
 }
@@ -23,9 +23,6 @@
 
 .elementor-context-menu-list__item {
   position: relative;
-}
-.elementor-context-menu-list__item--disabled .elementor-context-menu-list__item__title {
-  opacity: 0.5;
 }
 .elementor-context-menu-list__item__shortcut .eicon-advanced {
   font-size: 16px;

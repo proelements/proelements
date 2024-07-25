@@ -927,7 +927,7 @@ class Hotspot extends Widget_Image {
 		$this->add_responsive_control(
 			'style_tooltip_width',
 			[
-				'label' => esc_html__( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
@@ -943,6 +943,29 @@ class Hotspot extends Widget_Image {
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--tooltip-min-width: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_tooltip_max_width',
+			[
+				'label' => esc_html__( 'Max Width', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 2000,
+					],
+					'em' => [
+						'max' => 200,
+					],
+					'rem' => [
+						'max' => 200,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--tooltip-max-width: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);

@@ -41,7 +41,7 @@ class Facebook_SDK_Manager {
 			$content = sprintf(
 				/* translators: 1: Setting Page Link opening tag, 2: Link closing tag. */
 				esc_html__( 'Set your Facebook App ID in the %1$sIntegrations Settings%2$s', 'elementor-pro' ),
-				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
+				sprintf( '<a href="%s" target="_blank">', Settings::get_settings_tab_url( 'integrations' ) ),
 				'</a>'
 			);
 			$alert_type = 'warning';
@@ -50,7 +50,7 @@ class Facebook_SDK_Manager {
 				/* translators: 1: App ID, 2: Setting Page Link opening tag, 3: Link closing tag. */
 				esc_html__( 'You are connected to Facebook App %1$s, %2$sChange App%3$s', 'elementor-pro' ),
 				self::get_app_id(),
-				sprintf( '<a href="%s" target="_blank">', Settings::get_url() . '#tab-integrations' ),
+				sprintf( '<a href="%s" target="_blank">', Settings::get_settings_tab_url( 'integrations' ) ),
 				'</a>'
 			);
 			$alert_type = 'info';

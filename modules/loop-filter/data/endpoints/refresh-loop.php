@@ -1,86 +1,23 @@
 <?php
 namespace ElementorPro\Modules\LoopFilter\Data\Endpoints;
 
-use Elementor\Utils;
 use Elementor\Widget_Base;
-use ElementorPro\Modules\LoopFilter\Data\Interfaces\Endpoint;
+use Elementor\Utils;
 use ElementorPro\Modules\LoopFilter\Module;
 use ElementorPro\Plugin;
+use ElementorPro\Core\Data\Endpoints\Refresh_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class Refresh_Loop extends Base implements Endpoint {
-
-	private $is_edit_mode;
-
+class Refresh_Loop extends Refresh_Base {
 	public function get_name() : string {
 		return 'refresh-loop';
 	}
 
 	public function get_route() : string {
 		return 'refresh-loop';
-	}
-
-	private function is_widget_model_valid( $widget_model ) {
-		return is_array( $widget_model )
-			&& isset( $widget_model['id'] )
-			&& is_string( $widget_model['id'] )
-			&& isset( $widget_model['settings'] )
-			&& is_array( $widget_model['settings'] );
-	}
-
-	/**
-	 * The widget ID can only be 7 characters long, and contain only letters and numbers.
-	 *
-	 * @param $data
-	 * @return bool
-	 */
-	private function is_widget_id_valid( $widget_id ) {
-		return preg_match( '/^[a-zA-Z0-9]+$/', $widget_id )
-			&& strlen( $widget_id ) === 7;
-	}
-
-	private function permission_callback( $request ): bool {
-		$data = $request->get_params();
-
-		if ( $this->is_edit_mode( $data['post_id'] ) ) {
-			return true;
-		}
-
-		$post = get_post( $data['post_id'] );
-
-		if ( ! $post || 'publish' !== $post->post_status ) {
-			return false;
-		}
-
-		$document = Plugin::elementor()->documents->get( $data['post_id'] );
-
-		if ( ! $document ) {
-			return false;
-		}
-
-		$element_data = $document->get_elements_data();
-		$loop_widget = Utils::find_element_recursive( $element_data, $data['widget_id'] );
-
-		if ( empty( $loop_widget ) ) {
-			return false;
-		}
-
-		if ( 'widget' !== $loop_widget['elType'] || 'loop-grid' !== $loop_widget['widgetType'] ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private function create_widget_instance_from_db( $post_id, $widget_id ) {
-		$document = Plugin::elementor()->documents->get( $post_id );
-
-		$widget_data = Utils::find_element_recursive( $document->get_elements_data(), $widget_id );
-
-		return Plugin::elementor()->elements_manager->create_element_instance( $widget_data );
 	}
 
 	public function get_updated_loop_widget_markup( \WP_REST_Request $request ): array {
@@ -118,18 +55,6 @@ class Refresh_Loop extends Base implements Endpoint {
 		return [
 			'data' => $markup,
 		];
-	}
-
-	private function is_edit_mode( $post_id ) {
-		if ( isset( $this->is_edit_mode ) ) {
-			return $this->is_edit_mode;
-		}
-
-		$document = Plugin::elementor()->documents->get( $post_id );
-
-		$this->is_edit_mode = ! empty( $document ) && $document->is_editable_by_current_user();
-
-		return $this->is_edit_mode;
 	}
 
 	protected function register() {
@@ -186,7 +111,7 @@ class Refresh_Loop extends Base implements Endpoint {
 				'methods' => \WP_REST_Server::CREATABLE,
 				'callback' => [ $this, 'get_updated_loop_widget_markup' ],
 				'permission_callback' => function ( $request ) {
-					return $this->permission_callback( $request );
+					return $this->permission_callback( $request, 'loop-grid' );
 				},
 			],
 		] );

@@ -2129,7 +2129,7 @@ class Video_Playlist extends Base_Widget {
 					break;
 				}
 
-				playlistItemObject.htmlAttributesVideo = createPlaylistItemVideoAttributes( index, id, playlistItem, playlistItemObject.videoUrl );
+				playlistItemObject.htmlAttributesVideo = createPlaylistItemVideoAttributes( index, id, playlistItem, elementor.helpers.sanitizeUrl( playlistItemObject.videoUrl ) );
 
 				playlistItemsArray.push(playlistItemObject);
 			} );

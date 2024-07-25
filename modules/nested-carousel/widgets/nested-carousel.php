@@ -339,6 +339,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 				'support_improved_repeaters' => true,
 				'target_container' => [ '.e-n-carousel > .swiper-wrapper' ],
 				'node' => 'div',
+				'is_interlaced' => true,
 			] );
 		}
 

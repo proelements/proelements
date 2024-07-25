@@ -38,6 +38,9 @@ class Conditions_Manager {
 
 		add_action( 'manage_' . Source_Local::CPT . '_posts_columns', [ $this, 'admin_columns_headers' ] );
 		add_action( 'manage_' . Source_Local::CPT . '_posts_custom_column', [ $this, 'admin_columns_content' ], 10, 2 );
+
+		add_action( 'manage_e-floating-buttons_posts_columns', [ $this, 'admin_columns_headers' ] );
+		add_action( 'manage_e-floating-buttons_posts_custom_column', [ $this, 'admin_columns_content' ], 10, 2 );
 	}
 
 	public function on_untrash_post( $post_id ) {

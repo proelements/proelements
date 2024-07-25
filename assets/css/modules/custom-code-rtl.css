@@ -1433,12 +1433,9 @@ span.font-variations-count {
 .e-site-editor-conditions__footer {
   display: flex;
   justify-content: flex-end;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
   padding: 0.5rem;
   border-block-start: 1px solid var(--hr-color);
+  margin-top: 1rem;
 }
 .e-site-editor-conditions__input-wrapper {
   position: relative;

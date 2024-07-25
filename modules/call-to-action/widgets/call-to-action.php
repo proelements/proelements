@@ -84,6 +84,10 @@ class Call_To_Action extends Base_Widget {
 						'title' => esc_html__( 'Right', 'elementor-pro' ),
 						'icon' => 'eicon-h-align-right',
 					],
+					'below' => [
+						'title' => esc_html__( 'Below', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-bottom',
+					],
 				],
 				'prefix_class' => 'elementor-cta-%s-layout-image-',
 				'condition' => [

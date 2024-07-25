@@ -1,4 +1,4 @@
-/*! pro-elements - v3.22.0 - 24-06-2024 */
+/*! pro-elements - v3.23.0 - 23-07-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -33,6 +33,8 @@ var _frontend19 = _interopRequireDefault(__webpack_require__(/*! modules/mega-me
 var _frontend20 = _interopRequireDefault(__webpack_require__(/*! modules/nested-carousel/assets/js/frontend/frontend */ "../modules/nested-carousel/assets/js/frontend/frontend.js"));
 var _frontend21 = _interopRequireDefault(__webpack_require__(/*! modules/loop-filter/assets/js/frontend/frontend */ "../modules/loop-filter/assets/js/frontend/frontend.js"));
 var _frontend22 = _interopRequireDefault(__webpack_require__(/*! modules/off-canvas/assets/js/frontend/frontend */ "../modules/off-canvas/assets/js/frontend/frontend.js"));
+var _frontend23 = _interopRequireDefault(__webpack_require__(/*! modules/floating-buttons/assets/js/frontend/frontend */ "../modules/floating-buttons/assets/js/frontend/frontend.js"));
+var _frontend24 = _interopRequireDefault(__webpack_require__(/*! modules/search/assets/js/frontend/frontend */ "../modules/search/assets/js/frontend/frontend.js"));
 const extendDefaultHandlers = defaultHandlers => {
   const handlers = {
     animatedText: _frontend.default,
@@ -56,7 +58,9 @@ const extendDefaultHandlers = defaultHandlers => {
     megaMenu: _frontend19.default,
     nestedCarousel: _frontend20.default,
     taxonomyFilter: _frontend21.default,
-    offCanvas: _frontend22.default
+    offCanvas: _frontend22.default,
+    contactButtons: _frontend23.default,
+    search: _frontend24.default
   };
   return {
     ...defaultHandlers,
@@ -401,6 +405,33 @@ class _default extends elementorModules.Module {
   constructor() {
     super();
     elementorFrontend.elementsHandler.attachHandler('countdown', () => __webpack_require__.e(/*! import() | countdown */ "countdown").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/countdown */ "../modules/countdown/assets/js/frontend/handlers/countdown.js")));
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/floating-buttons/assets/js/frontend/frontend.js":
+/*!******************************************************************!*\
+  !*** ../modules/floating-buttons/assets/js/frontend/frontend.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    if (elementorFrontend.config.experimentalFeatures['floating-buttons']) {
+      ['contact-buttons-var-1', 'contact-buttons-var-3', 'contact-buttons-var-4', 'contact-buttons-var-5', 'contact-buttons-var-6', 'contact-buttons-var-7', 'contact-buttons-var-8', 'contact-buttons-var-9'].forEach(handler => {
+        elementorFrontend.elementsHandler.attachHandler(handler, () => __webpack_require__.e(/*! import() | contact-buttons */ "contact-buttons").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/contact-buttons */ "../modules/floating-buttons/assets/js/frontend/handlers/contact-buttons.js")));
+      });
+      elementorFrontend.elementsHandler.attachHandler('contact-buttons-var-10', () => __webpack_require__.e(/*! import() | contact-buttons-var-10 */ "contact-buttons-var-10").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/contact-buttons-v10 */ "../modules/floating-buttons/assets/js/frontend/handlers/contact-buttons-v10.js")));
+    }
   }
 }
 exports["default"] = _default;
@@ -2421,6 +2452,28 @@ class _default extends elementorModules.Module {
     elementorFrontend.elementsHandler.attachHandler('posts', () => __webpack_require__.e(/*! import() | posts */ "posts").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/posts */ "../modules/posts/assets/js/frontend/handlers/posts.js")), 'full_content');
     elementorFrontend.elementsHandler.attachHandler('posts', () => __webpack_require__.e(/*! import() | posts */ "posts").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/cards */ "../modules/posts/assets/js/frontend/handlers/cards.js")), 'cards');
     elementorFrontend.elementsHandler.attachHandler('portfolio', () => __webpack_require__.e(/*! import() | portfolio */ "portfolio").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/portfolio */ "../modules/posts/assets/js/frontend/handlers/portfolio.js")));
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/search/assets/js/frontend/frontend.js":
+/*!********************************************************!*\
+  !*** ../modules/search/assets/js/frontend/frontend.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    elementorFrontend.elementsHandler.attachHandler('search', [() => __webpack_require__.e(/*! import() | search */ "search").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/search */ "../modules/search/assets/js/frontend/handlers/search.js")), () => __webpack_require__.e(/*! import() | search */ "search").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/search-keyboard-handler */ "../modules/search/assets/js/frontend/handlers/search-keyboard-handler.js"))]);
   }
 }
 exports["default"] = _default;

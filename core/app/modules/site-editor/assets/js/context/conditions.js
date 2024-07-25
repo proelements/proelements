@@ -41,6 +41,8 @@ export class ConditionsProvider extends BaseContext {
 		this.state = {
 			...this.state,
 
+			conditionsFetched: false,
+
 			conditions: {},
 
 			updateConditionItemState: this.updateConditionItemState.bind( this ),
@@ -60,7 +62,16 @@ export class ConditionsProvider extends BaseContext {
 		this.executeAction( ConditionsProvider.actions.FETCH_CONFIG, () => ConditionsConfig.create() )
 			.then( ( conditionsConfig ) => this.conditionsConfig = conditionsConfig )
 			.then( this.normalizeConditionsState.bind( this ) )
-			.then( this.setSubIdTitles.bind( this ) );
+			.then( () => {
+				this.setSubIdTitles.bind( this );
+				this.setState( { conditionsFetched: true } );
+			} );
+	}
+
+	componentDidUpdate( prevProps, prevState ) {
+		if ( ! prevState.conditionsFetched && this.state.conditionsFetched ) {
+			this.setSubIdTitles();
+		}
 	}
 
 	/**
@@ -140,7 +151,7 @@ export class ConditionsProvider extends BaseContext {
 					options: this.conditionsConfig.getOptions(),
 					subOptions: this.conditionsConfig.getSubOptions( condition.name ),
 					subIdAutocomplete: this.conditionsConfig.getSubIdAutocomplete( condition.sub ),
-					supIdOptions: condition.subId ? [ { value: condition.subId, label: condition.subId } ] : [],
+					supIdOptions: condition.subId ? [ { value: condition.subId, label: '' } ] : [],
 				} );
 
 				return {

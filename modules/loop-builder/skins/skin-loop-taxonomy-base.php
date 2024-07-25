@@ -9,6 +9,7 @@ use ElementorPro\Modules\LoopBuilder\Widgets\Base as Loop_Widget_Base;
 use ElementorPro\Modules\LoopFilter\Traits\Taxonomy_Filter_Trait;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Taxonomy;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Css_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -18,6 +19,7 @@ abstract class Skin_Loop_Taxonomy_Base extends Skin_Loop_Base {
 
 	use Taxonomy_Filter_Trait;
 	use Tag_Trait;
+	use Loop_Css_Trait;
 
 	protected $provider;
 

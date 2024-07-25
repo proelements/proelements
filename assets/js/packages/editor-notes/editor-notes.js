@@ -106,7 +106,22 @@ function useNotesActionProps() {
   return {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Notes", "elementor-pro"),
     icon: _elementor_icons__WEBPACK_IMPORTED_MODULE_3__.MessageIcon,
-    onClick: () => (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.__privateRunCommand)("notes/toggle"),
+    onClick: () => {
+      const extendedWindow = window;
+      const config = extendedWindow?.elementor?.editorEvents?.config;
+      if (config) {
+        extendedWindow.elementor.editorEvents.dispatchEvent(
+          config.names.topBar.notes,
+          {
+            location: config.locations.topBar,
+            secondaryLocation: config.secondaryLocations.notes,
+            trigger: config.triggers.toggleClick,
+            element: config.elements.buttonIcon
+          }
+        );
+      }
+      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.__privateRunCommand)("notes/toggle");
+    },
     selected: isActive,
     disabled: isBlocked
   };

@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\LoopBuilder\Files\Css;
 use Elementor\Core\Files\CSS\Base;
 use Elementor\Icons_Manager;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Dynamic_CSS;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -145,5 +146,30 @@ trait Loop_Css_Trait {
 
 	public function print_css() {
 		$this->print_all_css( 0 );
+	}
+
+	public function print_dynamic_css( $post_id, $post_id_for_data ) {
+		$document = Plugin::elementor()->documents->get_doc_for_frontend( $post_id_for_data );
+
+		if ( ! $document ) {
+			return;
+		}
+
+		Plugin::elementor()->documents->switch_to_document( $document );
+
+		$css_file = Loop_Dynamic_CSS::create( $post_id, $post_id_for_data );
+		$post_css = $css_file->get_content();
+
+		if ( empty( $post_css ) ) {
+			return;
+		}
+
+		$css = '';
+		$css = str_replace( '.elementor-' . $post_id, '.e-loop-item-' . $post_id, $post_css );
+		$css = sprintf( '<style id="%s">%s</style>', 'loop-dynamic-' . $post_id_for_data, $css );
+
+		echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		Plugin::elementor()->documents->restore_document();
 	}
 }

@@ -72,7 +72,9 @@ final class Modules_Manager {
 			'nested-carousel',
 			'loop-filter',
 			'tiers',
-			'conversion-center',
+			'link-in-bio',
+			'floating-buttons',
+			'search',
 		];
 
 		foreach ( $modules as $module_name ) {

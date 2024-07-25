@@ -656,7 +656,7 @@ class Price_List extends Base_Widget {
 						item_open_wrap = '<li class="elementor-price-list-item">',
 						item_close_wrap = '</li>';
 					if ( item.link.url ) {
-						item_open_wrap = '<li><a href="' + _.escape( item.link.url ) + '" class="elementor-price-list-item">';
+						item_open_wrap = '<li><a href="' + elementor.helpers.sanitizeUrl( item.link.url ) + '" class="elementor-price-list-item">';
 						item_close_wrap = '</a></li>';
 					}
 

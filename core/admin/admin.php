@@ -253,12 +253,10 @@ class Admin extends App {
 	}
 
 	public function add_finder_items( array $categories ) {
-		$settings_url = Settings::get_url();
-
 		$categories['settings']['items']['integrations'] = [
 			'title' => esc_html__( 'Integrations', 'elementor-pro' ),
 			'icon' => 'integration',
-			'url' => $settings_url . '#tab-integrations',
+			'url' => Settings::get_settings_tab_url( 'integrations' ),
 			'keywords' => [ 'integrations', 'settings', 'typekit', 'facebook', 'recaptcha', 'mailchimp', 'drip', 'activecampaign', 'getresponse', 'convertkit', 'elementor' ],
 		];
 

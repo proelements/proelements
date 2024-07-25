@@ -42,6 +42,8 @@ class Module extends Module_Base {
 			return;
 		}
 
+		$old_section = Plugin::elementor()->controls_manager->get_control_from_stack( $element->get_unique_name(), 'section_custom_css_pro' );
+
 		if ( ! API::is_licence_has_feature( static::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$template = Tiers::get_promotion_template( [
 				'title' => esc_html__( 'Meet Our Custom CSS', 'elementor-pro' ),
@@ -51,7 +53,7 @@ class Module extends Module_Base {
 				'link' => 'https://go.elementor.com/go-pro-advanced-custom-css/',
 			] );
 
-			$this->replace_controls_with_upgrade_promotion( $element, Controls_Manager::TAB_ADVANCED, $template );
+			$this->replace_controls_with_upgrade_promotion( $element, $old_section['tab'], $template );
 			return;
 		}
 

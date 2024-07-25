@@ -8,8 +8,6 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Controls_Manager;
 use Elementor\Modules\NestedElements\Base\Widget_Nested_Base;
 use Elementor\Utils;
-use ElementorPro\Plugin;
-use ElementorPro\Core\Utils as ProUtils;
 use ElementorPro\Base\Base_Widget_Trait;
 
 class Off_Canvas extends Widget_Nested_Base {

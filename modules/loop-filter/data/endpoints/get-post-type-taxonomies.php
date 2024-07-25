@@ -1,8 +1,8 @@
 <?php
 namespace ElementorPro\Modules\LoopFilter\Data\Endpoints;
 
-use ElementorPro\Modules\LoopFilter\Data\Interfaces\Endpoint;
 use ElementorPro\Modules\LoopFilter\Traits\Taxonomy_Filter_Trait;
+use ElementorPro\Core\Data\Endpoints\Refresh_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // This class should handle fetching taxonomies from the database, it registers an endpoint that can be accessed via the REST API.
 // The endpoint accepts a string argument of 'post_type' and returns an array of taxonomies for that post type.
 
-class Get_Post_Type_Taxonomies extends Base implements Endpoint {
+class Get_Post_Type_Taxonomies extends Refresh_Base {
 
 	use Taxonomy_Filter_Trait;
 
@@ -24,7 +24,7 @@ class Get_Post_Type_Taxonomies extends Base implements Endpoint {
 		return 'get-post-type-taxonomies';
 	}
 
-	private function permission_callback() {
+	protected function permission_callback( $request, $widget_name = '' ) : bool {
 		return current_user_can( 'edit_posts' );
 	}
 
