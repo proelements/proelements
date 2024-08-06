@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 23-07-2024 */
+/*! pro-elements - v3.23.0 - 05-08-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["hotspot"],{
 

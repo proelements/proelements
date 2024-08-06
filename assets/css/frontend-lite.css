@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 23-07-2024 */
+/*! pro-elements - v3.23.0 - 05-08-2024 */
 .elementor-bg-transform .elementor-bg {
   will-change: transform;
 }
@@ -181,6 +181,9 @@
 
 .elementor-sticky--active {
   z-index: 99;
+}
+.elementor-sticky__spacer .e-n-menu .e-n-menu-content {
+  display: none;
 }
 
 .e-con.elementor-sticky--active {
