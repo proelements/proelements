@@ -77,6 +77,7 @@ class Loop extends Theme_Document {
 		$properties = parent::get_properties();
 
 		$properties['support_conditions'] = false;
+		$properties['condition_type'] = 'general';
 
 		return $properties;
 	}
