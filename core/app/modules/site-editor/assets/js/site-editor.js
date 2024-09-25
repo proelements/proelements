@@ -64,11 +64,12 @@ function SiteEditor() {
 							</LocationProvider>
 						</TemplatesProvider>
 					</Grid>
-					<Grid item className="e-site-editor__content_container_secondary">
+					<Grid container justify="space-between" className="e-site-editor__content_container_secondary">
 						<Button
 							text={ __( 'Switch to table view', 'elementor-pro' ) }
 							url={ elementorAppProConfig[ 'site-editor' ]?.urls?.legacy_view }
 						/>
+						{ window.location.href.indexOf( 'conditions' ) !== -1 && <div id="portal-root"></div> }
 					</Grid>
 				</Grid>
 			</Layout>

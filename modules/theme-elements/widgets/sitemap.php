@@ -38,6 +38,20 @@ class Sitemap extends Base {
 		return [ 'taxonomy', 'custom post type', 'cpt', 'sitemap', 'site map', 'link', 'menu', 'tree' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-theme-elements' ];
+	}
+
 	private function register_sitemap_tab() {
 		$this->start_controls_section(
 			'sitemap_section',

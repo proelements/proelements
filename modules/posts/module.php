@@ -27,6 +27,32 @@ class Module extends Module_Base {
 	}
 
 	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/posts/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-posts.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'widget-posts',
+			$this->get_css_assets_url( 'widget-posts', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	/**
 	 * Fix WP 5.5 pagination issue.
 	 *
 	 * Return true to mark that it's handled and avoid WP to set it as 404.
@@ -58,6 +84,8 @@ class Module extends Module_Base {
 		Plugin::elementor()->data_manager->register_controller( Controller::class );
 
 		add_filter( 'pre_handle_404', [ $this, 'allow_posts_widget_pagination' ], 10, 2 );
+
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 
 }

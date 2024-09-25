@@ -87,19 +87,33 @@ class Contact_Buttons_Var_7_Render extends Contact_Buttons_Core_Render {
 		return $button_text;
 	}
 
+	protected function get_aria_label(): string {
+		$platform = $this->settings['chat_button_platform'] ?? '';
+		$icon_text_mapping = Social_Network_Provider::get_text_mapping( $platform );
+		$accessible_name = $this->settings['chat_aria_label'];
+
+		if ( 'cta' == $this->settings['chat_button_display_text_select'] ) {
+			return $this->settings['chat_button_display_text'];
+		} else {
+			return sprintf(
+				/* translators: 1: Accessible name, 2: Platform name */
+				esc_html__( 'Open %1$s %2$s', 'elementor-pro' ),
+				$accessible_name,
+				$icon_text_mapping
+			);
+		}
+	}
+
 	protected function render_chat_button(): void {
 		$platform = $this->settings['chat_button_platform'] ?? '';
 		$hover_animation = $this->settings['style_button_color_hover_animation'];
-		$icon_position = $this->settings['style_chat_button_horizontal_position'];
+		$chat_button_text = $this->get_chat_button_text();
+		$aria_label = $this->get_aria_label();
 
 		$button_classnames = 'e-contact-buttons__chat-button';
 
 		if ( ! empty( $hover_animation ) ) {
 			$button_classnames .= ' elementor-animation-' . $hover_animation;
-		}
-
-		if ( ! empty( $icon_position ) ) {
-			$button_classnames .= ' has-icon-position-' . $icon_position;
 		}
 
 		$link = [
@@ -116,13 +130,12 @@ class Contact_Buttons_Var_7_Render extends Contact_Buttons_Core_Render {
 			'url' => $this->settings['chat_button_url'] ?? '',
 		];
 
-		$chat_button_text = $this->get_chat_button_text();
-
 		if ( $this->is_url_link( $platform ) ) {
 			$this->render_link_attributes( $link, 'formatted-cta' );
 
 			$this->widget->add_render_attribute( 'formatted-cta', [
 				'class' => $button_classnames,
+				'aria-label' => $aria_label,
 			] );
 		} else {
 			$formatted_link = $this->get_formatted_link( $link, 'chat_button' );
@@ -132,20 +145,21 @@ class Contact_Buttons_Var_7_Render extends Contact_Buttons_Core_Render {
 				'href' => $formatted_link,
 				'rel' => 'noopener noreferrer',
 				'target' => '_blank',
+				'aria-label' => $aria_label,
 			] );
 		}
 
 		?>
 		<div class="e-contact-buttons__chat-button-container">
 			<a <?php echo $this->widget->get_render_attribute_string( 'formatted-cta' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<?php
-					$this->render_chat_button_icon();
-				?>
 				<?php if ( ! empty( $chat_button_text ) ) : ?>
 					<span class="e-contact-buttons__chat-button-text">
 						<?php echo esc_html( $chat_button_text ); ?>
 					</span>
 				<?php endif; ?>
+				<?php
+					$this->render_chat_button_icon();
+				?>
 			</a>
 		</div>
 		<?php

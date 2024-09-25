@@ -151,7 +151,7 @@ export class ConditionsProvider extends BaseContext {
 					options: this.conditionsConfig.getOptions(),
 					subOptions: this.conditionsConfig.getSubOptions( condition.name ),
 					subIdAutocomplete: this.conditionsConfig.getSubIdAutocomplete( condition.sub ),
-					supIdOptions: condition.subId ? [ { value: condition.subId, label: '' } ] : [],
+					subIdOptions: condition.subId ? [ { value: condition.subId, label: '' } ] : [],
 				} );
 
 				return {

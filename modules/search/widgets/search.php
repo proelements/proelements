@@ -17,6 +17,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Core\Utils\Collection;
+use ElementorPro\Core\Utils as Pro_Utils;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Query;
 use ElementorPro\Modules\QueryControl\Module as Module_Query;
 use ElementorPro\Plugin;
@@ -45,7 +46,7 @@ class Search extends Base_Widget {
 		'submit_button' => 'submit_button',
 		'submit_text' => 'submit_text',
 		'results_wrapper' => 'results_wrapper',
-		'query_vars' => 'query_vars',
+		'widget_props' => 'widget_props',
 	];
 
 	public function set_search_term( string $search_term ) {
@@ -72,6 +73,20 @@ class Search extends Base_Widget {
 		return [ 'pro-elements' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-search' ];
+	}
+
 	public function get_query() {
 		if ( null === $this->query ) {
 			$this->query_posts();
@@ -93,23 +108,6 @@ class Search extends Base_Widget {
 		}
 
 		return $elementor_query->get_query( $this, $this->get_property_key_prefix(), $query_args, [] );
-	}
-
-	public function get_query_args_for_results_page() {
-		// Fetch the initial query arguments
-		$query = $this->get_query_args()->query;
-
-		// Define the keys to be removed
-		$keys_to_remove = [ 'orderby', 'order' ];
-
-		// Use the Collection class to manipulate the query array
-		$query_collection = new Collection( $query );
-
-		// Remove the specified keys and set the 'posts_per_page' value
-		return $query_collection
-			->except( $keys_to_remove )
-			->merge( [ 'posts_per_page' => -1 ] )
-			->all();
 	}
 
 	protected function register_controls() {
@@ -310,7 +308,11 @@ class Search extends Base_Widget {
 				],
 				'actions' => [
 					'new' => [
-						'visible' => false,
+						'visible' => true,
+						'document_config' => [
+							'type' => LoopDocument::get_type(),
+						],
+						'after_action' => 'redirect',
 					],
 					'edit' => [
 						'visible' => true,
@@ -385,6 +387,21 @@ class Search extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}}' => '--e-search-results-grid-auto-rows: 1fr; --e-search-loop-item-equal-height: 100%',
 				],
+			]
+		);
+
+		$this->add_control(
+			'enable_loader',
+			[
+				'label' => esc_html__( 'Loader', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -1124,7 +1141,7 @@ class Search extends Base_Widget {
 				'name' => 'results_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-search-results',
+				'selector' => '{{WRAPPER}} .e-search-results-container',
 			]
 		);
 
@@ -1132,7 +1149,7 @@ class Search extends Base_Widget {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'results_border_type',
-				'selector' => '{{WRAPPER}} .e-search-results > div',
+				'selector' => '{{WRAPPER}} .e-search-results-container > div',
 			]
 		);
 
@@ -1140,7 +1157,7 @@ class Search extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'results_box_shadow',
-				'selector' => '{{WRAPPER}} .e-search-results > div',
+				'selector' => '{{WRAPPER}} .e-search-results-container > div',
 			]
 		);
 
@@ -1197,6 +1214,21 @@ class Search extends Base_Widget {
 		);
 
 		$this->add_control(
+			'results_is_dropdown_width',
+			[
+				'label' => esc_html__( 'Dropdown Width', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'search_field' => esc_html__( 'Search Field', 'elementor-pro' ),
+					'widget_width' => esc_html__( 'Widget Width', 'elementor-pro' ),
+				],
+				'default' => 'search_field',
+				'separator' => 'before',
+				'frontend_available' => true,
+			],
+		);
+
+		$this->add_control(
 			'results_is_custom_width',
 			[
 				'label' => esc_html__( 'Custom Width', 'elementor-pro' ),
@@ -1204,7 +1236,6 @@ class Search extends Base_Widget {
 				'label_off' => esc_html__( 'On', 'elementor-pro' ),
 				'label_on' => esc_html__( 'Off', 'elementor-pro' ),
 				'default' => '',
-				'separator' => 'before',
 			]
 		);
 
@@ -1318,6 +1349,53 @@ class Search extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--e-search-results-row-gap: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_search_reasult_loader',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Loader', 'elementor-pro' ),
+				'separator' => 'before',
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+					'enable_loader' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'search_result_loader_icon_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+					'enable_loader' => 'yes',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-loader-icon-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'search_result_loader_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+					'enable_loader' => 'yes',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-loader-icon-size: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -1495,6 +1573,18 @@ class Search extends Base_Widget {
 		$document->print_content();
 	}
 
+	protected function render_loader( $settings ) {
+		if ( isset( $settings['enable_loader'] ) && 'yes' === $settings['enable_loader'] ) {
+			?>
+			<div class="e-search-loader">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+					<path fill-rule="evenodd" d="M14 .188c.587 0 1.063.475 1.063 1.062V5.5a1.063 1.063 0 0 1-2.126 0V1.25c0-.587.476-1.063 1.063-1.063ZM4.182 4.181a1.063 1.063 0 0 1 1.503 0L8.73 7.228A1.062 1.062 0 1 1 7.228 8.73L4.182 5.685a1.063 1.063 0 0 1 0-1.503Zm19.636 0a1.063 1.063 0 0 1 0 1.503L20.772 8.73a1.062 1.062 0 1 1-1.502-1.502l3.045-3.046a1.063 1.063 0 0 1 1.503 0ZM.188 14c0-.587.475-1.063 1.062-1.063H5.5a1.063 1.063 0 0 1 0 2.126H1.25A1.063 1.063 0 0 1 .187 14Zm21.25 0c0-.587.475-1.063 1.062-1.063h4.25a1.063 1.063 0 0 1 0 2.126H22.5A1.063 1.063 0 0 1 21.437 14ZM8.73 19.27a1.062 1.062 0 0 1 0 1.502l-3.045 3.046a1.063 1.063 0 0 1-1.503-1.503l3.046-3.046a1.063 1.063 0 0 1 1.502 0Zm10.54 0a1.063 1.063 0 0 1 1.502 0l3.046 3.045a1.063 1.063 0 0 1-1.503 1.503l-3.046-3.046a1.063 1.063 0 0 1 0-1.502ZM14 21.438c.587 0 1.063.475 1.063 1.062v4.25a1.063 1.063 0 0 1-2.126 0V22.5c0-.587.476-1.063 1.063-1.063Z"/>
+				</svg>
+			</div>
+			<?php
+		}
+	}
+
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$attribute_ids = $this->element_attribute_ids;
@@ -1515,9 +1605,19 @@ class Search extends Base_Widget {
 				<div <?php $this->print_render_attribute_string( $attribute_ids['input_wrapper'] ); ?>>
 					<input <?php $this->print_render_attribute_string( $attribute_ids['input'] ); ?>>
 					<?php $this->maybe_render_icon( 'icon_clear' ); ?>
+					<?php if ( ! $this->get_dropdown_width() ) : ?>
 					<output <?php $this->print_render_attribute_string( $attribute_ids['results_wrapper'] ); ?>>
+						<div class="e-search-results"></div>
+						<?php $this->render_loader( $settings ); ?>
 					</output>
+					<?php endif; ?>
 				</div>
+				<?php if ( $this->get_dropdown_width() ) : ?>
+					<output <?php $this->print_render_attribute_string( $attribute_ids['results_wrapper'] ); ?>>
+						<div class="e-search-results"></div>
+						<?php $this->render_loader( $settings ); ?>
+					</output>
+				<?php endif; ?>
 
 				<?php do_action( 'elementor_pro/search/after_input', $this ); ?>
 
@@ -1528,7 +1628,7 @@ class Search extends Base_Widget {
 						<?php echo esc_html( $settings['submit_button_text'] ); ?>
 					</span>
 				</button>
-				<input <?php $this->print_render_attribute_string( $attribute_ids['query_vars'] ); ?>>
+				<input <?php $this->print_render_attribute_string( $attribute_ids['widget_props'] ); ?>>
 			</form>
 		</search>
 		<?php
@@ -1601,17 +1701,17 @@ class Search extends Base_Widget {
 
 		$this->add_render_attribute( $this->element_attribute_ids['results_wrapper'], [
 			'id' => "results-$id",
-			'class' => 'e-search-results',
+			'class' => 'e-search-results-container hide-loader',
 			'aria-live' => 'polite',
 			'aria-atomic' => 'true',
 			'aria-label' => 'Results for search',
 			'tabindex' => '0',
 		] );
 
-		$this->add_render_attribute( $this->element_attribute_ids['query_vars'], [
+		$this->add_render_attribute( $this->element_attribute_ids['widget_props'], [
 			'type' => 'hidden',
-			'name' => 'e_search_query',
-			'value' => wp_json_encode( $this->get_query_args_for_results_page() ),
+			'name' => 'e_search_props',
+			'value' => $this->get_id() . '-' . Pro_Utils::get_current_post_id(),
 		] );
 	}
 
@@ -1621,6 +1721,10 @@ class Search extends Base_Widget {
 
 	private function get_autocomplete_state() {
 		return 'yes' !== $this->get_settings_for_display( 'autocomplete' ) ? 'off' : 'on';
+	}
+
+	private function get_dropdown_width() {
+		return 'widget_width' === $this->get_settings_for_display( 'results_is_dropdown_width' );
 	}
 
 	private function maybe_render_icon( $target ) {

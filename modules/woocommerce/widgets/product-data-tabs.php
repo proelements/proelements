@@ -27,6 +27,20 @@ class Product_Data_Tabs extends Base_Widget {
 		return [ 'woocommerce', 'shop', 'store', 'data', 'product', 'tabs' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-woocommerce' ];
+	}
+
 	protected function register_controls() {
 
 		$this->start_controls_section(

@@ -43,6 +43,20 @@ class Nav_Menu extends Base_Widget {
 		return [ 'smartmenus' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-nav-menu' ];
+	}
+
 	protected function get_nav_menu_index() {
 		return $this->nav_menu_index++;
 	}

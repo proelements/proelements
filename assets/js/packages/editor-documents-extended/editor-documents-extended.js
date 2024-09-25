@@ -122,8 +122,6 @@ module.exports = window["wp"]["i18n"];
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-!function() {
 /*!**************************************************************************!*\
   !*** ./node_modules/@elementor/editor-documents-extended/dist/index.mjs ***!
   \**************************************************************************/
@@ -343,7 +341,6 @@ function initStore() {
 // src/index.ts
 init4();
 //# sourceMappingURL=index.mjs.map
-}();
 (window.elementorV2 = window.elementorV2 || {}).editorDocumentsExtended = __webpack_exports__;
 /******/ })()
 ;

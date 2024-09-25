@@ -64,6 +64,7 @@ class App extends BaseApp {
 				'elementor-app-packages',
 				'elementor-common',
 				'select2',
+				'react-dom',
 			],
 			ELEMENTOR_PRO_VERSION,
 			true

@@ -19,7 +19,7 @@ class Experiments {
 				'<span style="display: block; font-weight: 700; color: #21759b; font-style: italic; line-height: 18px; padding-block-start: 10px; margin-block-end: -5px;">',
 				'</span>',
 			),
-			'release_status' => Manager::RELEASE_STATUS_BETA,
+			'release_status' => Manager::RELEASE_STATUS_STABLE,
 			'default'        => Manager::STATE_ACTIVE,
 		] );
 	}

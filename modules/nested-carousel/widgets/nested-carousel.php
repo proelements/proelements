@@ -36,6 +36,20 @@ class Nested_Carousel extends Widget_Nested_Base {
 		return [ 'Carousel', 'Slides', 'Nested', 'Media', 'Gallery', 'Image' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'e-swiper', 'widget-nested-carousel' ];
+	}
+
 	protected function get_default_children_elements() {
 		return [
 			[

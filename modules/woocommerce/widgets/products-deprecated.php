@@ -52,6 +52,17 @@ class Products_Deprecated extends Products_Base {
 		return false;
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-woocommerce' ];
+	}
+
 	public function on_export( $element ) {
 		$element = Group_Control_Posts::on_export_remove_setting_from_element( $element, 'posts' );
 

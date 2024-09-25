@@ -44,6 +44,7 @@ class Contact_Buttons_Var_4_Render extends Contact_Buttons_Core_Render {
 	protected function render_close_button(): void {
 		$button_size = $this->settings['style_chat_button_size'];
 		$button_classnames = 'e-contact-buttons__close-button e-contact-buttons__chat-button-shadow';
+		$accessible_name = $this->settings['chat_aria_label'];
 
 		if ( ! empty( $button_size ) ) {
 			$button_classnames .= ' has-size-' . $button_size;
@@ -52,10 +53,17 @@ class Contact_Buttons_Var_4_Render extends Contact_Buttons_Core_Render {
 		$this->widget->add_render_attribute( 'close-button', [
 			'class' => $button_classnames,
 			'aria-controls' => 'e-contact-buttons__content-wrapper',
+			'aria-label' => sprintf(
+				/* translators: 1: Accessible name */
+				esc_html__( 'Close %1$s', 'elementor-pro' ),
+				$accessible_name,
+			),
+			'type' => 'button',
+			'aria-expanded' => 'false',
 		] );
 
 		?>
-			<button <?php echo $this->widget->get_render_attribute_string( 'close-button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> type="button" aria-label="<?php echo esc_attr__( 'Close Links Popup', 'elementor-pro' ); ?>" aria-expanded="false">
+			<button <?php echo $this->widget->get_render_attribute_string( 'close-button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<i class="eicon-close"></i>
 			</button>
 		<?php
@@ -68,6 +76,7 @@ class Contact_Buttons_Var_4_Render extends Contact_Buttons_Core_Render {
 		$entrance_animation = $this->settings['style_chat_button_animation'];
 		$entrance_animation_duration = $this->settings['style_chat_button_animation_duration'];
 		$entrance_animation_delay = $this->settings['style_chat_button_animation_delay'];
+		$accessible_name = $this->settings['chat_aria_label'];
 
 		$button_classnames = 'e-contact-buttons__chat-button e-contact-buttons__chat-button-shadow';
 
@@ -94,11 +103,18 @@ class Contact_Buttons_Var_4_Render extends Contact_Buttons_Core_Render {
 		$this->widget->add_render_attribute( 'button-', [
 			'class' => $button_classnames,
 			'aria-controls' => 'e-contact-buttons__content-wrapper',
+			'aria-label' => sprintf(
+				/* translators: 1: Accessible name */
+				esc_html__( 'Expand %1$s', 'elementor-pro' ),
+				$accessible_name,
+			),
+			'type' => 'button',
+			'aria-expanded' => 'true',
 		] );
 
 		?>
 		<div class="e-contact-buttons__chat-button-container">
-			<button <?php echo $this->widget->get_render_attribute_string( 'button-' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> type="button" aria-label="<?php echo esc_attr__( 'Open Links Popup', 'elementor-pro' ); ?>" aria-expanded="true">
+			<button <?php echo $this->widget->get_render_attribute_string( 'button-' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php
 					$this->render_chat_button_icon();
 				?>

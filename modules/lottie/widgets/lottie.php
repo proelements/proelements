@@ -37,16 +37,16 @@ class Lottie extends Base_Widget {
 		return [ 'lottie' ];
 	}
 
-	public function get_style_depends() {
-		return [ 'e-lottie' ];
-	}
-
 	public function get_icon() {
 		return 'eicon-lottie';
 	}
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	public function get_style_depends(): array {
+		return [ 'widget-lottie', 'e-lottie' ];
 	}
 
 	protected function register_controls() {

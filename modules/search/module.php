@@ -1,11 +1,11 @@
 <?php
 namespace ElementorPro\Modules\Search;
 
-use Elementor\Core\Experiments\Manager;
 use Elementor\Utils;
+use ElementorPro\Core\Utils as Pro_Utils;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Plugin;
 use ElementorPro\Modules\Search\Data\Controller;
+use ElementorPro\Modules\QueryControl\Classes\Elementor_Post_Query;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -18,6 +18,7 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'pre_get_posts', [ $this, 'set_query' ] );
 		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'add_localize_data' ] );
 
@@ -28,31 +29,34 @@ class Module extends Module_Base {
 		return self::FEATURE_ID;
 	}
 
-	public static function get_experimental_data() {
-		return [
-			'name' => self::FEATURE_ID,
-			'title' => esc_html__( 'Search', 'elementor-pro' ),
-			'description' => sprintf(
-			/* translators: 1: opening link tag, 2: closing link tag. */
-				esc_html__( 'This feature introduces real-time search functionality, enabling users to view search results instantly as they type. Furthermore, users can limit the search results to certain queries and effortlessly navigate to search archives for comprehensive exploration. %1$sLearn More%2$s', 'elementor-pro' ),
-				'<a href="https://go.elementor.com/wp-dash-search-widget-experiment/" target="_blank">',
-				'</a>',
-			),
-			'release_status' => Manager::RELEASE_STATUS_BETA,
-			'default' => Manager::STATE_INACTIVE,
-			'new_site' => [
-				'default_active' => true,
-				'minimum_installation_version' => '3.23.0',
-			],
-		];
-	}
-
 	protected function get_widgets() {
 		return [ 'Search' ];
 	}
 
-	public static function is_active() {
-		return Plugin::elementor()->experiments->is_feature_active( self::FEATURE_ID );
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/search/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-search.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'widget-search',
+			$this->get_css_assets_url( 'widget-search', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 
 	public function add_localize_data( $config ) {
@@ -65,15 +69,38 @@ class Module extends Module_Base {
 	}
 
 	public function set_query( $query ) {
-		$query_vars = json_decode( stripcslashes( Utils::get_super_global_value( $_GET, 'e_search_query' ) ?? '' ), true ) ?? null;
+		$e_search_props = Utils::get_super_global_value( $_GET, 'e_search_props' );
+		$e_search_query_vars = json_decode( stripcslashes( Utils::get_super_global_value( $_GET, 'e_search_query' ) ?? '' ), true ) ?? null;
 		$search_term = Utils::get_super_global_value( $_GET, 's' );
 
-		if ( ! $query_vars || ! isset( $search_term ) || is_admin() || ! $query->is_main_query() ) {
+		if ( ( empty( $e_search_props ) && ! $e_search_query_vars ) || ! isset( $search_term ) || is_admin() || ! $query->is_main_query() ) {
 			return;
 		}
 
-		foreach ( $query_vars as $key => $value ) {
+		$formatted_query_vars = empty( $e_search_props )
+			? $e_search_query_vars
+			: $this->get_query_based_on_widget_props( $e_search_props );
+
+		if ( ! $formatted_query_vars ) {
+			return;
+		}
+
+		foreach ( $formatted_query_vars as $key => $value ) {
 			$query->set( $key, $value );
 		}
+	}
+
+	private function get_query_based_on_widget_props( $e_search_props ) {
+		list( $widget_id, $post_id ) = explode( '-', $e_search_props );
+		$widget_instance = Pro_Utils::create_widget_instance_from_db( $post_id, $widget_id );
+
+		if ( ! $widget_instance ) {
+			return null;
+		}
+
+		$query_vars = ( new Elementor_Post_Query( $widget_instance, 'search_query' ) )->get_query_args();
+		$query_vars['posts_per_page'] = -1;
+
+		return $query_vars;
 	}
 }

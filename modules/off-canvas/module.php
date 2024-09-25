@@ -18,6 +18,7 @@ class Module extends Module_Base {
 		parent::__construct();
 
 		add_action( 'elementor/dynamic_tags/register', [ $this, 'register_tag' ] );
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 
 	public function get_name() {
@@ -36,5 +37,31 @@ class Module extends Module_Base {
 		$tag = __NAMESPACE__ . '\Tag';
 
 		$dynamic_tags->register( new $tag() );
+	}
+
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/off-canvas/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-off-canvas.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'widget-off-canvas',
+			$this->get_css_assets_url( 'widget-off-canvas', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 }

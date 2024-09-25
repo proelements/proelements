@@ -29,6 +29,20 @@ class Loop_Carousel extends Base {
 		return 'eicon-carousel-loop';
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'e-swiper', 'widget-loop-builder' ];
+	}
+
 	protected function get_initial_config() {
 		$config = parent::get_initial_config();
 

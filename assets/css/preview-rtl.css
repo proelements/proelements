@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 05-08-2024 */
+/*! pro-elements - v3.24.0 - 18-09-2024 */
 *[data-editable-elementor-document] {
   position: relative;
 }
@@ -102,6 +102,26 @@
 
 .elementor-widget.elementor-sticky--effects .elementor-editor-widget-settings {
   right: -14px;
+}
+
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-widget.elementor-global-widget:hover {
+  outline: 1px solid var(--e-p-border-global);
+}
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-widget.elementor-global-widget.elementor-element-editable, .elementor-editor-active .elementor.elementor-edit-mode .elementor-widget.elementor-global-widget.elementor-element-editable:hover {
+  box-shadow: 0 0 0 2px var(--e-p-border-global);
+}
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings {
+  background-color: var(--e-p-border-global);
+}
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting {
+  background-color: var(--e-p-border-global);
+  color: var(--e-p-border-global-invert);
+}
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting:hover {
+  background-color: var(--e-p-border-global-hover);
+}
+.elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting.elementor-editor-element-save {
+  display: none;
 }
 
 .elementor-embedded-editor.elementor-location-header .elementor-section-wrap:not(:empty) + #elementor-add-new-section {

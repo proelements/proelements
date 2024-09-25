@@ -36,15 +36,6 @@ class Module extends Module_Base {
 		register_widget( 'ElementorPro\Modules\Library\WP_Widgets\Elementor_Library' );
 	}
 
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
-
-		return [];
-	}
-
 	public function add_to_results_for_library_widget_templates( $val, $post, $request ) {
 		$document = Plugin::elementor()->documents->get( $post->ID );
 		if ( $document ) {

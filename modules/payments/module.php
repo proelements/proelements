@@ -452,6 +452,32 @@ class Module extends Module_Base {
 		] );
 	}
 
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/payments/assetss/scss/frontend.scss`
+	 * to `/assets/css/widget-payments.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'widget-payments',
+			$this->get_css_assets_url( 'widget-payments', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
 	public function __construct() {
 		parent::__construct();
 
@@ -466,5 +492,7 @@ class Module extends Module_Base {
 		}
 		add_action( 'wp_ajax_' . self::STRIPE_TEST_SECRET_KEY . '_validate', [ $this, 'ajax_validate_secret_key' ] );
 		add_action( 'wp_ajax_' . self::STRIPE_LIVE_SECRET_KEY . '_validate', [ $this, 'ajax_validate_secret_key' ] );
+
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 }

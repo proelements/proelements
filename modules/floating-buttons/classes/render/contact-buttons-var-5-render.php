@@ -44,6 +44,14 @@ class Contact_Buttons_Var_5_Render extends Contact_Buttons_Core_Render {
 		$display_dot = $this->settings['chat_button_show_dot'] ?? '';
 		$button_size = $this->settings['style_chat_button_size'];
 		$hover_animation = $this->settings['style_button_color_hover_animation'];
+		$accessible_name = $this->settings['chat_aria_label'];
+		$icon_text_mapping = Social_Network_Provider::get_text_mapping( $platform );
+		$aria_label = sprintf(
+			/* translators: 1: Accessible name, 2: Platform name */
+			esc_html__( 'Open %1$s %2$s', 'elementor-pro' ),
+			$accessible_name,
+			$icon_text_mapping
+		);
 
 		$button_classnames = 'e-contact-buttons__chat-button e-contact-buttons__chat-button-shadow';
 
@@ -77,6 +85,7 @@ class Contact_Buttons_Var_5_Render extends Contact_Buttons_Core_Render {
 
 			$this->widget->add_render_attribute( 'formatted-cta', [
 				'class' => $button_classnames,
+				'aria-label' => $aria_label,
 			] );
 		} else {
 			$formatted_link = $this->get_formatted_link( $link, 'chat_button' );
@@ -86,6 +95,7 @@ class Contact_Buttons_Var_5_Render extends Contact_Buttons_Core_Render {
 				'href' => $formatted_link,
 				'rel' => 'noopener noreferrer',
 				'target' => '_blank',
+				'aria-label' => $aria_label,
 			] );
 		}
 

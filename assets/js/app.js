@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 05-08-2024 */
+/*! pro-elements - v3.24.0 - 18-09-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1632,7 +1632,7 @@ var React = _react;
 var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
 var _utils = __webpack_require__(/*! ../utils.js */ "../core/app/assets/js/utils.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 const ConnectButton = props => {
   const className = (0, _utils.arrayToClassName)(['e-app-connect-button', props.className]);
   const buttonRef = (0, _react.useRef)(null);
@@ -2014,7 +2014,7 @@ class ConditionsProvider extends _baseContext.default {
           options: this.conditionsConfig.getOptions(),
           subOptions: this.conditionsConfig.getSubOptions(condition.name),
           subIdAutocomplete: this.conditionsConfig.getSubIdAutocomplete(condition.sub),
-          supIdOptions: condition.subId ? [{
+          subIdOptions: condition.subId ? [{
             value: condition.subId,
             label: ''
           }] : []
@@ -2670,7 +2670,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = void 0;
 var dataCommands = _interopRequireWildcard(__webpack_require__(/*! ./commands */ "../core/app/modules/site-editor/assets/js/data/commands/index.js"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 class Component extends $e.modules.ComponentBase {
   static namespace = 'site-editor';
   getNamespace() {
@@ -2701,7 +2701,7 @@ exports["default"] = useTemplatesScreenshot;
 var _templates = __webpack_require__(/*! ../context/templates */ "../core/app/modules/site-editor/assets/js/context/templates.js");
 var _useScreenshot = _interopRequireWildcard(__webpack_require__(/*! modules/screenshots/app/assets/js/hooks/use-screenshot */ "../modules/screenshots/app/assets/js/hooks/use-screenshot.js"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
  * Wrapper function that was made to take screenshots specific for template.
  * it will capture a screenshot and update the templates context with the new screenshot.
@@ -3233,6 +3233,39 @@ function AddNew() {
 
 /***/ }),
 
+/***/ "../core/app/modules/site-editor/assets/js/pages/conditions/condition-button-portal.js":
+/*!*********************************************************************************************!*\
+  !*** ../core/app/modules/site-editor/assets/js/pages/conditions/condition-button-portal.js ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _reactDom = __webpack_require__(/*! react-dom */ "react-dom");
+var _react = __webpack_require__(/*! react */ "react");
+var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+const ConditionButtonPortal = props => {
+  const [shouldCreatePortal, setShouldCreatePortal] = (0, _react.useState)(false),
+    portalRoot = document.getElementById('portal-root');
+  (0, _react.useEffect)(() => {
+    setShouldCreatePortal(!!portalRoot);
+  }, [portalRoot]);
+  return shouldCreatePortal ? (0, _reactDom.createPortal)(props.children, portalRoot) : null;
+};
+ConditionButtonPortal.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
+};
+var _default = exports["default"] = ConditionButtonPortal;
+
+/***/ }),
+
 /***/ "../core/app/modules/site-editor/assets/js/pages/conditions/condition-conflicts.js":
 /*!*****************************************************************************************!*\
   !*** ../core/app/modules/site-editor/assets/js/pages/conditions/condition-conflicts.js ***!
@@ -3544,6 +3577,7 @@ var _conditionName = _interopRequireDefault(__webpack_require__(/*! ./condition-
 var _conditionSub = _interopRequireDefault(__webpack_require__(/*! ./condition-sub */ "../core/app/modules/site-editor/assets/js/pages/conditions/condition-sub.js"));
 var _conditionSubId = _interopRequireDefault(__webpack_require__(/*! ./condition-sub-id */ "../core/app/modules/site-editor/assets/js/pages/conditions/condition-sub-id.js"));
 var _conditionConflicts = _interopRequireDefault(__webpack_require__(/*! ./condition-conflicts */ "../core/app/modules/site-editor/assets/js/pages/conditions/condition-conflicts.js"));
+var _conditionButtonPortal = _interopRequireDefault(__webpack_require__(/*! ./condition-button-portal */ "../core/app/modules/site-editor/assets/js/pages/conditions/condition-button-portal.js"));
 function ConditionsRows(props) {
   const {
     conditions,
@@ -3579,6 +3613,17 @@ function ConditionsRows(props) {
   })), /*#__PURE__*/_react.default.createElement(_conditionConflicts.default, {
     conflicts: condition.conflictErrors
   })));
+  const SaveButton = () => {
+    return /*#__PURE__*/_react.default.createElement(_appUi.Button, {
+      variant: "contained",
+      color: "primary",
+      size: "lg",
+      hideText: isSaving,
+      icon: isSaving ? 'eicon-loading eicon-animation-spin' : '',
+      text: __('Save & Close', 'elementor-pro'),
+      onClick: () => save().then(props.onAfterSave)
+    });
+  };
   const isSaving = action.current === _conditions.ConditionsProvider.actions.SAVE && action.loading;
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, action.error && /*#__PURE__*/_react.default.createElement(_appUi.Dialog, {
     text: action.error,
@@ -3600,18 +3645,11 @@ function ConditionsRows(props) {
     onClick: create
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: "e-site-editor-conditions__footer"
-  }, /*#__PURE__*/_react.default.createElement(_appUi.Button, {
-    variant: "contained",
-    color: "primary",
-    size: "lg",
-    hideText: isSaving,
-    icon: isSaving ? 'eicon-loading eicon-animation-spin' : '',
-    text: __('Save & Close', 'elementor-pro'),
-    onClick: () => save().then(props.onAfterSave)
-  })));
+  }, props?.loadPortal ? /*#__PURE__*/_react.default.createElement(_conditionButtonPortal.default, null, /*#__PURE__*/_react.default.createElement(SaveButton, null)) : /*#__PURE__*/_react.default.createElement(SaveButton, null)));
 }
 ConditionsRows.propTypes = {
-  onAfterSave: PropTypes.func
+  onAfterSave: PropTypes.func,
+  loadPortal: PropTypes.bool
 };
 
 /***/ }),
@@ -3665,7 +3703,8 @@ function Conditions(props) {
     currentTemplate: template,
     onConditionsSaved: updateTemplateItemState
   }, /*#__PURE__*/_react.default.createElement(_conditionsRows.default, {
-    onAfterSave: () => history.back()
+    onAfterSave: () => history.back(),
+    loadPortal: true
   })));
 }
 Conditions.propTypes = {
@@ -3970,7 +4009,7 @@ var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
 var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
 var _templates = __webpack_require__(/*! ../context/templates */ "../core/app/modules/site-editor/assets/js/context/templates.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function DialogRename(props) {
   const {
       findTemplateItemInState,
@@ -4132,7 +4171,7 @@ var _component = _interopRequireDefault(__webpack_require__(/*! ./data/component
 var _useFeatureLock = _interopRequireDefault(__webpack_require__(/*! elementor-pro-app/hooks/use-feature-lock */ "../core/app/assets/js/hooks/use-feature-lock.js"));
 __webpack_require__(/*! ./site-editor.scss */ "../core/app/modules/site-editor/assets/js/site-editor.scss");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function SiteEditor() {
   const {
     isLocked
@@ -4200,11 +4239,14 @@ function SiteEditor() {
   }), /*#__PURE__*/_react.default.createElement(_siteEditor.NotFound, {
     default: true
   }))))), /*#__PURE__*/_react.default.createElement(_appUi.Grid, {
-    item: true,
+    container: true,
+    justify: "space-between",
     className: "e-site-editor__content_container_secondary"
   }, /*#__PURE__*/_react.default.createElement(_appUi.Button, {
     text: __('Switch to table view', 'elementor-pro'),
     url: elementorAppProConfig['site-editor']?.urls?.legacy_view
+  }), window.location.href.indexOf('conditions') !== -1 && /*#__PURE__*/_react.default.createElement("div", {
+    id: "portal-root"
   })))));
 }
 class Module {
@@ -5850,6 +5892,17 @@ module.exports = React;
 
 /***/ }),
 
+/***/ "react-dom":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "@elementor/app-ui":
 /*!*********************************************!*\
   !*** external "elementorAppPackages.appUi" ***!
@@ -6005,6 +6058,7 @@ var createMethod = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIndexedObject($this);
     var length = lengthOfArrayLike(O);
+    if (length === 0) return !IS_INCLUDES && -1;
     var index = toAbsoluteIndex(fromIndex, length);
     var value;
     // Array#includes uses SameValueZero equality algorithm
@@ -6242,28 +6296,6 @@ module.exports = !fails(function () {
 
 /***/ }),
 
-/***/ "../node_modules/core-js/internals/document-all.js":
-/*!*********************************************************!*\
-  !*** ../node_modules/core-js/internals/document-all.js ***!
-  \*********************************************************/
-/***/ ((module) => {
-
-"use strict";
-
-var documentAll = typeof document == 'object' && document.all;
-
-// https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot
-// eslint-disable-next-line unicorn/no-typeof-undefined -- required for testing
-var IS_HTMLDDA = typeof documentAll == 'undefined' && documentAll !== undefined;
-
-module.exports = {
-  all: documentAll,
-  IS_HTMLDDA: IS_HTMLDDA
-};
-
-
-/***/ }),
-
 /***/ "../node_modules/core-js/internals/document-create-element.js":
 /*!********************************************************************!*\
   !*** ../node_modules/core-js/internals/document-create-element.js ***!
@@ -6420,7 +6452,7 @@ module.exports = function (options, source) {
   } else if (STATIC) {
     target = global[TARGET] || defineGlobalProperty(TARGET, {});
   } else {
-    target = (global[TARGET] || {}).prototype;
+    target = global[TARGET] && global[TARGET].prototype;
   }
   if (target) for (key in source) {
     sourceProperty = source[key];
@@ -6618,8 +6650,9 @@ module.exports =
   // eslint-disable-next-line no-restricted-globals -- safe
   check(typeof self == 'object' && self) ||
   check(typeof __webpack_require__.g == 'object' && __webpack_require__.g) ||
+  check(typeof this == 'object' && this) ||
   // eslint-disable-next-line no-new-func -- fallback
-  (function () { return this; })() || this || Function('return this')();
+  (function () { return this; })() || Function('return this')();
 
 
 /***/ }),
@@ -6842,17 +6875,17 @@ module.exports = Array.isArray || function isArray(argument) {
 /*!********************************************************!*\
   !*** ../node_modules/core-js/internals/is-callable.js ***!
   \********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((module) => {
 
 "use strict";
 
-var $documentAll = __webpack_require__(/*! ../internals/document-all */ "../node_modules/core-js/internals/document-all.js");
-
-var documentAll = $documentAll.all;
+// https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot
+var documentAll = typeof document == 'object' && document.all;
 
 // `IsCallable` abstract operation
 // https://tc39.es/ecma262/#sec-iscallable
-module.exports = $documentAll.IS_HTMLDDA ? function (argument) {
+// eslint-disable-next-line unicorn/no-typeof-undefined -- required for testing
+module.exports = typeof documentAll == 'undefined' && documentAll !== undefined ? function (argument) {
   return typeof argument == 'function' || argument === documentAll;
 } : function (argument) {
   return typeof argument == 'function';
@@ -6921,13 +6954,8 @@ module.exports = function (it) {
 "use strict";
 
 var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var $documentAll = __webpack_require__(/*! ../internals/document-all */ "../node_modules/core-js/internals/document-all.js");
 
-var documentAll = $documentAll.all;
-
-module.exports = $documentAll.IS_HTMLDDA ? function (it) {
-  return typeof it == 'object' ? it !== null : isCallable(it) || it === documentAll;
-} : function (it) {
+module.exports = function (it) {
   return typeof it == 'object' ? it !== null : isCallable(it);
 };
 
@@ -7025,7 +7053,7 @@ var TEMPLATE = String(String).split('String');
 
 var makeBuiltIn = module.exports = function (value, name, options) {
   if (stringSlice($String(name), 0, 7) === 'Symbol(') {
-    name = '[' + replace($String(name), /^Symbol\(([^)]*)\)/, '$1') + ']';
+    name = '[' + replace($String(name), /^Symbol\(([^)]*)\).*$/, '$1') + ']';
   }
   if (options && options.getter) name = 'get ' + name;
   if (options && options.setter) name = 'set ' + name;
@@ -7380,13 +7408,20 @@ module.exports = function (key) {
 
 "use strict";
 
-var global = __webpack_require__(/*! ../internals/global */ "../node_modules/core-js/internals/global.js");
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
+var globalThis = __webpack_require__(/*! ../internals/global */ "../node_modules/core-js/internals/global.js");
 var defineGlobalProperty = __webpack_require__(/*! ../internals/define-global-property */ "../node_modules/core-js/internals/define-global-property.js");
 
 var SHARED = '__core-js_shared__';
-var store = global[SHARED] || defineGlobalProperty(SHARED, {});
+var store = module.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
 
-module.exports = store;
+(store.versions || (store.versions = [])).push({
+  version: '3.37.1',
+  mode: IS_PURE ? 'pure' : 'global',
+  copyright: '© 2014-2024 Denis Pushkarev (zloirock.ru)',
+  license: 'https://github.com/zloirock/core-js/blob/v3.37.1/LICENSE',
+  source: 'https://github.com/zloirock/core-js'
+});
 
 
 /***/ }),
@@ -7399,18 +7434,11 @@ module.exports = store;
 
 "use strict";
 
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
 var store = __webpack_require__(/*! ../internals/shared-store */ "../node_modules/core-js/internals/shared-store.js");
 
-(module.exports = function (key, value) {
-  return store[key] || (store[key] = value !== undefined ? value : {});
-})('versions', []).push({
-  version: '3.33.2',
-  mode: IS_PURE ? 'pure' : 'global',
-  copyright: '© 2014-2023 Denis Pushkarev (zloirock.ru)',
-  license: 'https://github.com/zloirock/core-js/blob/v3.33.2/LICENSE',
-  source: 'https://github.com/zloirock/core-js'
-});
+module.exports = function (key, value) {
+  return store[key] || (store[key] = value || {});
+};
 
 
 /***/ }),
@@ -7524,7 +7552,8 @@ var min = Math.min;
 // `ToLength` abstract operation
 // https://tc39.es/ecma262/#sec-tolength
 module.exports = function (argument) {
-  return argument > 0 ? min(toIntegerOrInfinity(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+  var len = toIntegerOrInfinity(argument);
+  return len > 0 ? min(len, 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
 };
 
 
@@ -7760,7 +7789,7 @@ var INCORRECT_TO_LENGTH = fails(function () {
   return [].push.call({ length: 0x100000000 }, 1) !== 4294967297;
 });
 
-// V8 and Safari <= 15.4, FF < 23 throws InternalError
+// V8 <= 121 and Safari <= 15.4; FF < 23 throws InternalError
 // https://bugs.chromium.org/p/v8/issues/detail?id=12681
 var properErrorOnNonWritableLength = function () {
   try {

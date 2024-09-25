@@ -42,6 +42,20 @@ class Archive_Posts extends Posts_Base {
 		return [ 'posts' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-posts' ];
+	}
+
 	protected function register_skins() {
 		$this->add_skin( new Skins\Posts_Archive_Skin_Classic( $this ) );
 		$this->add_skin( new Skins\Posts_Archive_Skin_Cards( $this ) );

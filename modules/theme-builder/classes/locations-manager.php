@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Classes;
 
+use Elementor\Core\Base\Elements_Iteration_Actions\Assets;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module;
@@ -129,6 +130,11 @@ class Locations_Manager {
 				if ( $current_post_id !== $post_id ) {
 					$css_file = new Post_CSS( $post_id );
 					$css_files[] = $css_file;
+
+					$page_assets = get_post_meta( $post_id, Assets::ASSETS_META_KEY, true );
+					if ( ! empty( $page_assets ) ) {
+						Plugin::elementor()->assets_loader->enable_assets( $page_assets );
+					}
 				}
 			}
 		}
@@ -382,6 +388,11 @@ class Locations_Manager {
 		do_action( "elementor/theme/after_do_{$location}", $this );
 
 		return true;
+	}
+
+
+	public function get_documents_for_location( string $location ) : array {
+		return $this->locations_queue[ $location ] ?? [];
 	}
 
 	public function did_location( $location ) {

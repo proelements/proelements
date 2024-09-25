@@ -37,6 +37,20 @@ class Add_To_Cart extends Widget_Button {
 		return [ 'woocommerce', 'shop', 'store', 'cart', 'product', 'button', 'add to cart' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-woocommerce' ];
+	}
+
 	public function on_export( $element ) {
 		unset( $element['settings']['product_id'] );
 

@@ -34,15 +34,15 @@ class Post_Info extends Base {
 		return [ 'post', 'info', 'date', 'time', 'author', 'taxonomy', 'comments', 'terms', 'avatar' ];
 	}
 
-	public function get_style_depends() {
+	public function get_style_depends(): array {
+		$style_depends = [ 'widget-theme-elements', 'widget-icon-list' ];
+
 		if ( Icons_Manager::is_migration_allowed() ) {
-			return [
-				'elementor-icons-fa-regular',
-				'elementor-icons-fa-solid',
-			];
+			$style_depends[] = 'elementor-icons-fa-regular';
+			$style_depends[] = 'elementor-icons-fa-solid';
 		}
 
-		return [];
+		return $style_depends;
 	}
 
 	public function get_inline_css_depends() {

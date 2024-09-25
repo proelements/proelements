@@ -11,6 +11,7 @@ use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Slides\Controls\Control_Slides_Animation;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -40,6 +41,20 @@ class Slides extends Base_Widget {
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'e-swiper', 'widget-slides' ];
 	}
 
 	public static function get_button_sizes() {
@@ -704,32 +719,8 @@ class Slides extends Base_Widget {
 			'content_animation',
 			[
 				'label' => esc_html__( 'Content Animation', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
+				'type' => Control_Slides_Animation::TYPE,
 				'default' => 'fadeInUp',
-				'options' => [
-					'' => esc_html__( 'None', 'elementor-pro' ),
-					'fadeInDown' => esc_html__( 'Down', 'elementor-pro' ),
-					'fadeInUp' => esc_html__( 'Up', 'elementor-pro' ),
-					'fadeInRight' => esc_html__( 'Right', 'elementor-pro' ),
-					'fadeInLeft' => esc_html__( 'Left', 'elementor-pro' ),
-					'zoomIn' => esc_html__( 'Zoom', 'elementor-pro' ),
-				],
-				'assets' => [
-					'styles' => [
-						[
-							'name' => 'e-animations',
-							'conditions' => [
-								'terms' => [
-									[
-										'name' => 'content_animation',
-										'operator' => '!==',
-										'value' => '',
-									],
-								],
-							],
-						],
-					],
-				],
 			]
 		);
 

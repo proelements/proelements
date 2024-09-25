@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 05-08-2024 */
+/*! pro-elements - v3.24.0 - 18-09-2024 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["vendors-node_modules_dompurify_dist_purify_js"],{
 
 /***/ "../node_modules/dompurify/dist/purify.js":

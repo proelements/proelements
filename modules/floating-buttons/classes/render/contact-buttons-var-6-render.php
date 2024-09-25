@@ -34,6 +34,7 @@ class Contact_Buttons_Var_6_Render extends Contact_Buttons_Core_Render {
 		$icons_size = $this->settings['style_contact_button_size'] ?? 'small';
 		$hover_animation = $this->settings['style_contact_button_hover_animation'];
 		$border_radius = $this->settings['style_contact_button_bar_corners'];
+		$accessible_name = $this->settings['contact_aria_label'];
 
 		$links_classnames = 'e-contact-buttons__contact-links';
 
@@ -49,6 +50,13 @@ class Contact_Buttons_Var_6_Render extends Contact_Buttons_Core_Render {
 			<div <?php echo $this->widget->get_render_attribute_string( 'contact-links' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php
 				foreach ( $contact_icons as $key => $icon ) {
+					$icon_text_mapping = Social_Network_Provider::get_text_mapping( $icon['contact_icon_platform'] );
+					$aria_label = sprintf(
+						/* translators: 1: Accessible name, 2: Platform name */
+						esc_html__( 'Access %1$s %2$s', 'elementor-pro' ),
+						$accessible_name,
+						$icon_text_mapping
+					);
 
 					$link = [
 						'platform' => $icon['contact_icon_platform'],
@@ -74,16 +82,17 @@ class Contact_Buttons_Var_6_Render extends Contact_Buttons_Core_Render {
 
 						$this->widget->add_render_attribute( 'icon-link-' . $key, [
 							'class' => $icon_classnames,
+							'aria-label' => $aria_label,
 						] );
 					} else {
 						$formatted_link = $this->get_formatted_link( $link, 'contact_icon' );
 
 						$this->widget->add_render_attribute( 'icon-link-' . $key, [
-							'aria-label' => esc_attr( $icon['contact_icon_platform'] ),
 							'class' => $icon_classnames,
 							'href' => $formatted_link,
 							'rel' => 'noopener noreferrer',
 							'target' => '_blank',
+							'aria-label' => $aria_label,
 						] );
 					}
 

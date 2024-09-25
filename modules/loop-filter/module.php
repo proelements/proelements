@@ -1,13 +1,11 @@
 <?php
 namespace ElementorPro\Modules\LoopFilter;
 
-use Elementor\Core\Experiments\Manager;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\LoopFilter\Query\Taxonomy_Query_Builder;
 use ElementorPro\Modules\LoopFilter\Query\Data\Query_Constants;
 use ElementorPro\Modules\LoopFilter\Data\Controller;
-use ElementorPro\Plugin;
 use ElementorPro\Modules\LoopFilter\Traits\Hierarchical_Taxonomy_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,7 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Module extends Module_Base {
 	use Hierarchical_Taxonomy_Trait;
 
-	const EXPERIMENT_NAME = 'taxonomy-filter';
 	private $operator;
 	private $taxonomy;
 	private $query;
@@ -35,29 +32,30 @@ class Module extends Module_Base {
 		return 'loop-filter';
 	}
 
-	public static function is_active() {
-		return Plugin::elementor()->experiments->is_feature_active( static::EXPERIMENT_NAME );
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
 	}
 
 	/**
-	 * Add to the experiments
+	 * Register styles.
 	 *
-	 * @return array
+	 * At build time, Elementor compiles `/modules/loop-filter/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-loop-filter.min.css`.
+	 *
+	 * @return void
 	 */
-	public static function get_experimental_data() {
-		$experiment_data = [
-			'name' => static::EXPERIMENT_NAME,
-			'title' => esc_html__( 'Taxonomy Filter', 'elementor-pro' ),
-			'description' => sprintf(
-				esc_html__( 'Taxonomy Filter is a powerful tool that enables users to easily filter and sort their posts and product categories. %1$sLearn More%2$s', 'elementor-pro' ),
-				'<a href="https://go.elementor.com/wp-dash-taxonomy-filter/" target="_blank">',
-				'</a>'
-			),
-			'release_status' => Manager::RELEASE_STATUS_BETA,
-			'default' => Manager::STATE_ACTIVE,
-		];
-
-		return $experiment_data;
+	public function register_styles() {
+		wp_register_style(
+			'widget-loop-filter',
+			$this->get_css_assets_url( 'widget-loop-filter', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 
 	public function get_post_type_taxonomies( $data ) {
@@ -387,5 +385,7 @@ class Module extends Module_Base {
 		add_filter( 'elementor_pro/editor/localize_settings', [ $this, 'add_localize_data' ] );
 
 		add_filter( 'paginate_links', [ $this, 'remove_rest_route_parameter' ] );
+
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 }

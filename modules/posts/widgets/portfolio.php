@@ -47,6 +47,20 @@ class Portfolio extends Base_Widget {
 		return [ 'imagesloaded' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-posts' ];
+	}
+
 	public function on_import( $element ) {
 		if ( isset( $element['settings']['posts_post_type'] ) && ! get_post_type_object( $element['settings']['posts_post_type'] ) ) {
 			$element['settings']['posts_post_type'] = 'post';

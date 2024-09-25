@@ -173,29 +173,21 @@ class Plugin {
 	}
 
 	public function enqueue_styles() {
-		$suffix = $this->get_assets_suffix();
-
+		$min_suffix = $this->get_assets_suffix();
 		$direction_suffix = is_rtl() ? '-rtl' : '';
-
-		$frontend_file_name_base = $this->is_optimized_css_mode() ? 'frontend-lite' : 'frontend';
-
-		$frontend_file_name = $frontend_file_name_base . $direction_suffix . $suffix . '.css';
-
 		$has_custom_file = self::elementor()->breakpoints->has_custom_breakpoints();
-
-		$frontend_file_url = $this->get_frontend_file_url( $frontend_file_name, $has_custom_file );
 
 		wp_enqueue_style(
 			'elementor-pro',
-			$frontend_file_url,
+			$this->get_frontend_file_url( "frontend{$direction_suffix}{$min_suffix}.css", $has_custom_file ),
 			[],
 			$has_custom_file ? null : ELEMENTOR_PRO_VERSION
 		);
 	}
 
-	public function get_frontend_file_url( $frontend_file_name, $custom_file ) {
+	public static function get_frontend_file_url( $frontend_file_name, $custom_file ) {
 		if ( $custom_file ) {
-			$frontend_file = $this->get_frontend_file( $frontend_file_name );
+			$frontend_file = self::get_frontend_file( $frontend_file_name );
 
 			$frontend_file_url = $frontend_file->get_url();
 		} else {
@@ -205,9 +197,9 @@ class Plugin {
 		return $frontend_file_url;
 	}
 
-	public function get_frontend_file_path( $frontend_file_name, $custom_file ) {
+	public static function get_frontend_file_path( $frontend_file_name, $custom_file ) {
 		if ( $custom_file ) {
-			$frontend_file = $this->get_frontend_file( $frontend_file_name );
+			$frontend_file = self::get_frontend_file( $frontend_file_name );
 
 			$frontend_file_path = $frontend_file->get_path();
 		} else {
@@ -252,6 +244,9 @@ class Plugin {
 			'urls' => [
 				'assets' => $assets_url,
 				'rest' => get_rest_url(),
+			],
+			'settings' => [
+				'lazy_load_background_images' => ( '1' === get_option( 'elementor_lazy_load_background_images', '1' ) ),
 			],
 		];
 
@@ -391,7 +386,7 @@ class Plugin {
 		return $frontend_depends;
 	}
 
-	private function get_responsive_templates_path() {
+	private static function get_responsive_templates_path() {
 		return ELEMENTOR_PRO_ASSETS_PATH . 'css/templates/';
 	}
 
@@ -428,12 +423,6 @@ class Plugin {
 		add_filter( 'elementor/common/localize_settings', function ( $settings ) {
 			return $this->add_subscription_template_access_level_to_settings( $settings );
 		}, 11 /** After Elementor Core (Library) */ );
-	}
-
-	private function is_optimized_css_mode() {
-		$is_optimized_css_loading = self::elementor()->experiments->is_feature_active( 'e_optimized_css_loading' );
-
-		return ! Utils::is_script_debug() && $is_optimized_css_loading && ! self::elementor()->preview->is_preview_mode();
 	}
 
 	private function get_assets() {
@@ -536,7 +525,7 @@ class Plugin {
 		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	}
 
-	private function get_frontend_file( $frontend_file_name ) {
+	private static function get_frontend_file( $frontend_file_name ) {
 		$template_file_path = self::get_responsive_templates_path() . $frontend_file_name;
 
 		return self::elementor()->frontend->get_frontend_file( $frontend_file_name, 'custom-pro-', $template_file_path );

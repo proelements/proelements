@@ -238,6 +238,16 @@ class Fonts_Manager {
 
 			$font_type->render_preview_column( $post_id );
 		}
+
+		if ( 'font_type' === $column ) {
+			$font_type = $this->get_font_type_by_post_id( $post_id, true );
+
+			if ( false === $font_type ) {
+				return;
+			}
+
+			$font_type->render_type_column( $post_id );
+		}
 	}
 
 	/**
@@ -257,6 +267,10 @@ class Fonts_Manager {
 
 		if ( empty( $data['font'] ) ) {
 			throw new \Exception( 'Font is required.' );
+		}
+
+		if ( 'variable' === $data['type'] ) {
+			$data['type'] = 'custom';
 		}
 
 		$asset = $this->get_font_type_object( $data['type'] );
@@ -297,6 +311,42 @@ class Fonts_Manager {
 		return $title;
 	}
 
+	public function get_font_variables( $font_variables ) {
+		$font_manager_fonts = $this->get_fonts();
+
+		if ( empty( $font_manager_fonts ) ) {
+			return $font_variables;
+		}
+
+		foreach ( $font_manager_fonts as $font_family => $font_data ) {
+			if ( empty( $font_data['variables'] ) ) {
+				continue;
+			}
+
+			$font_variables[ $font_family ] = $font_data['variables'];
+		}
+
+		return $font_variables;
+	}
+
+	public function get_font_variable_ranges( $font_variable_ranges ) {
+		$font_manager_fonts = $this->get_fonts();
+
+		if ( empty( $font_manager_fonts ) ) {
+			return $font_variable_ranges;
+		}
+
+		foreach ( $font_manager_fonts as $font_family => $font_data ) {
+			if ( empty( $font_data['variable_ranges'] ) ) {
+				continue;
+			}
+
+			$font_variable_ranges[ $font_family ] = $font_data['variable_ranges'];
+		}
+
+		return $font_variable_ranges;
+	}
+
 	public function post_row_actions( $actions, $post ) {
 		if ( self::CPT !== $post->post_type ) {
 			return $actions;
@@ -329,6 +379,7 @@ class Fonts_Manager {
 			'cb' => '<input type="checkbox" />',
 			'title' => esc_html__( 'Font Family', 'elementor-pro' ),
 			'font_preview' => esc_html__( 'Preview', 'elementor-pro' ),
+			'font_type' => esc_html__( 'Type', 'elementor-pro' ),
 		];
 	}
 
@@ -348,6 +399,8 @@ class Fonts_Manager {
 		foreach ( $this->get_font_type_object() as $type => $instance ) {
 			$new_groups[ $type ] = $instance->get_name();
 		}
+
+		$new_groups['variable'] = esc_html__( 'Variable Fonts', 'elementor-pro' );
 
 		return array_replace( $new_groups, $font_groups );
 	}
@@ -402,11 +455,14 @@ class Fonts_Manager {
 
 		$new_fonts = [];
 		$font_types = [];
+
 		foreach ( $fonts->posts as $font ) {
 			$font_type = $this->get_font_type_by_post_id( $font->ID, true );
+
 			if ( false === $font_type ) {
 				continue;
 			}
+
 			$font_types = array_replace( $font_types, $font_type->get_font_family_type( $font->ID, $font->post_title ) );
 			$new_fonts = array_replace( $new_fonts, $font_type->get_font_data( $font->ID, $font->post_title ) );
 		}
@@ -506,7 +562,13 @@ class Fonts_Manager {
 				continue;
 			}
 
-			$font_type = $this->get_font_type_object( $font_types[ $font_family ] );
+			$font_type_name = $font_types[ $font_family ];
+
+			if ( 'variable' === $font_type_name ) {
+				$font_type_name = 'custom';
+			}
+
+			$font_type = $this->get_font_type_object( $font_type_name );
 			if ( ! $font_type ) {
 				continue;
 			}
@@ -540,6 +602,14 @@ class Fonts_Manager {
 		}
 
 		return $categories;
+	}
+
+	public function admin_menu_make_open_on_subpage( $parent_file ) {
+		if ( static::MENU_SLUG === $parent_file ) {
+			$parent_file = Settings::PAGE_ID;
+		}
+
+		return $parent_file;
 	}
 
 	/**
@@ -588,6 +658,11 @@ class Fonts_Manager {
 		add_action( 'elementor/css-file/global/parse', [ $this, 'enqueue_fonts' ] );
 		add_filter( 'post_updated_messages', [ $this, 'post_updated_messages' ] );
 		add_filter( 'enter_title_here', [ $this, 'update_enter_title_here' ], 10, 2 );
+
+		add_filter( 'elementor/typography/font_variables', [ $this, 'get_font_variables' ] );
+		add_filter( 'elementor/typography/font_variable_ranges', [ $this, 'get_font_variable_ranges' ] );
+
+		add_filter( 'parent_file', [ $this, 'admin_menu_make_open_on_subpage' ] );
 
 		// Ajax.
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );

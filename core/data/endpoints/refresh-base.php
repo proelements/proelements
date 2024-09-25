@@ -2,6 +2,7 @@
 namespace ElementorPro\Core\Data\Endpoints;
 
 use Elementor\Utils;
+use ElementorPro\Core\Utils as Pro_Utils;
 use ElementorPro\Plugin;
 use ElementorPro\Core\Data\Interfaces\Endpoint;
 
@@ -69,11 +70,7 @@ abstract class Refresh_Base extends Base implements Endpoint {
 	}
 
 	protected function create_widget_instance_from_db( $post_id, $widget_id ) {
-		$document = Plugin::elementor()->documents->get( $post_id );
-
-		$widget_data = Utils::find_element_recursive( $document->get_elements_data(), $widget_id );
-
-		return Plugin::elementor()->elements_manager->create_element_instance( $widget_data );
+		return Pro_Utils::create_widget_instance_from_db( $post_id, $widget_id );
 	}
 
 	protected function is_edit_mode( $post_id ) {

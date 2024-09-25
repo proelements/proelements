@@ -43,6 +43,20 @@ class Table_Of_Contents extends Base_Widget {
 	}
 
 	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-table-of-contents' ];
+	}
+
+	/**
 	 * Get Frontend Settings
 	 *
 	 * In the TOC widget, this implementation is used to pass a pre-rendered version of the icon to the front end,

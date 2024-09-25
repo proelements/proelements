@@ -14,6 +14,7 @@ use ElementorPro\Modules\LoopBuilder\Traits\Alternate_Templates_Trait;
 use Elementor\Utils;
 use Elementor\Core\Files\CSS\Post as Post_CSS;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Css_Trait;
+use ElementorPro\Modules\Posts\Traits\Query_Note_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -30,6 +31,7 @@ class Skin_Loop_Base extends Skin_Base {
 
 	use Alternate_Templates_Trait;
 	use Loop_Css_Trait;
+	use Query_Note_Trait;
 
 	public function get_id() {
 		return MODULE::LOOP_BASE_SKIN_ID;
@@ -59,6 +61,10 @@ class Skin_Loop_Base extends Skin_Base {
 				],
 			]
 		);
+
+		if ( 'loop-grid' === $widget->get_name() && $this->is_editing_archive_template() ) {
+			$this->inject_archive_query_note( 'post_query_query_id', 'post_query_post_type', $widget );
+		}
 	}
 
 	protected function maybe_add_load_more_wrapper_class() {

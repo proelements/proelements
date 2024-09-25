@@ -47,7 +47,7 @@ class Cart extends Base_Widget {
 	}
 
 	public function get_style_depends() {
-		return [ 'select2' ];
+		return [ 'widget-woocommerce', 'select2' ];
 	}
 
 	protected function register_controls() {

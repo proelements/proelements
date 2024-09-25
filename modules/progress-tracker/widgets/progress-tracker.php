@@ -41,6 +41,20 @@ class ProgressTracker extends Base_Widget {
 		return false;
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-progress-tracker' ];
+	}
+
 	private function register_content_controls() {
 		$this->start_controls_section(
 			'section_content_scrolling_tracker',

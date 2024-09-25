@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 05-08-2024 */
+/*! pro-elements - v3.24.0 - 18-09-2024 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05);
 }
@@ -208,7 +208,6 @@
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem;
-  border-block-start: 1px solid var(--hr-color);
   margin-top: 1rem;
 }
 .e-site-editor-conditions__input-wrapper {
@@ -347,10 +346,19 @@
 
 .e-site-editor__content_container_main {
   flex: 1;
+  padding: 1.875rem;
 }
 
 .e-site-editor__content_container_secondary {
   margin: 0 auto;
-  padding-block-start: 2.75rem;
+  align-items: center;
+  border-block-start: 1px solid var(--hr-color);
+  padding-block-start: 1rem;
+  padding-block-end: 1rem;
+  padding-inline: 1.875rem;
+}
+
+.eps-app__content {
+  padding: 0;
 }
 /*# sourceMappingURL=app-rtl.css.map */

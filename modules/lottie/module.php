@@ -12,10 +12,9 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'handle_file_type' ], 10, 3 );
-
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localize_settings' ] );
-
 		add_action( 'elementor/frontend/before_register_scripts', [ $this, 'register_frontend_scripts' ] );
 	}
 
@@ -37,6 +36,32 @@ class Module extends Module_Base {
 		return [
 			'lottie',
 		];
+	}
+
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/lottie/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-lottie.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'widget-lottie',
+			$this->get_css_assets_url( 'widget-lottie', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 
 	// Fixing wordpress problem when `finfo_file()` returns wrong file type

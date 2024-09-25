@@ -975,15 +975,6 @@ class Module extends Module_Base {
 		$ajax_manager->register_ajax_action( 'pro_panel_posts_control_filter_autocomplete_deprecated', [ $this, 'ajax_posts_filter_autocomplete_deprecated' ] );
 	}
 
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
-
-		return [];
-	}
-
 	protected function add_actions() {
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );

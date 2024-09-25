@@ -29,6 +29,20 @@ class Facebook_Button extends Base_Widget {
 		return [ 'facebook', 'social', 'embed', 'button', 'like', 'share', 'recommend', 'follow' ];
 	}
 
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-social' ];
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',

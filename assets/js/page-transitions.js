@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 05-08-2024 */
+/*! pro-elements - v3.24.0 - 18-09-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -538,13 +538,275 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "e-page-transition{--preloader-fade-duration: .5s;--preloader-delay: calc( var( --e-page-transition-animation-duration, 0s ) + var( --e-preloader-delay, 0s ) );--page-transition-delay: var( --preloader-fade-duration );position:fixed;inset:0;display:grid;place-items:center;z-index:10000;background:#fff;animation-fill-mode:both;animation-duration:var(--e-page-transition-animation-duration)}e-page-transition[disabled]{display:none}e-page-transition e-preloader,e-page-transition .e-page-transition--preloader{opacity:0}e-page-transition .e-page-transition--preloader{position:absolute;font-size:var(--e-preloader-size);color:var(--e-preloader-color);fill:var(--e-preloader-color);width:var(--e-preloader-width);max-width:var(--e-preloader-max-width);transform:rotate(var(--e-preloader-rotate, 0deg));animation-name:var(--e-preloader-animation);animation-duration:var(--e-preloader-animation-duration, 1000ms);animation-iteration-count:infinite;animation-timing-function:linear}e-page-transition svg.e-page-transition--preloader{width:var(--e-preloader-size)}.e-page-transition--entering{animation-name:var(--e-page-transition-entrance-animation);animation-delay:var(--preloader-fade-duration, 0s)}.e-page-transition--entering e-preloader,.e-page-transition--entering .e-page-transition--preloader{animation:var(--e-preloader-animation, none) var(--e-preloader-animation-duration, 0s) linear infinite,e-page-transition-fade-out var(--preloader-fade-duration) both;transition:none}.e-page-transition--exiting{animation-name:var(--e-page-transition-exit-animation)}.e-page-transition--exiting e-preloader,.e-page-transition--exiting .e-page-transition--preloader{opacity:var(--e-preloader-opacity, 1);transition:var(--preloader-fade-duration) all;transition-delay:var(--preloader-delay, 0s)}.e-page-transition--entered:not(.e-page-transition--preview){display:none}.e-page-transition--preview{animation-fill-mode:initial}.e-page-transition--preview.e-page-transition--entered e-preloader,.e-page-transition--preview.e-page-transition--entered .e-page-transition--preloader{opacity:var(--e-preloader-opacity, 1)}@media(prefers-reduced-motion: reduce){e-page-transition{display:none}}@keyframes e-page-transition-fade-in{from{opacity:0}to{opacity:1}}@keyframes e-page-transition-fade-in-down{from{opacity:0;transform:translate3d(0, -100%, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-fade-in-left{from{opacity:0;transform:translate3d(-100%, 0, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-fade-in-right{from{opacity:0;transform:translate3d(100%, 0, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-fade-in-up{from{opacity:0;transform:translate3d(0, 100%, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-zoom-in{from{opacity:0;transform:scale3d(0.3, 0.3, 0.3)}50%{opacity:1}}@keyframes e-page-transition-slide-in-down{from{transform:translate3d(0, -100%, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-slide-in-left{from{transform:translate3d(-100%, 0, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-slide-in-right{from{transform:translate3d(100%, 0, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-slide-in-up{from{transform:translate3d(0, 100%, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-fade-out{from{opacity:1}to{opacity:0}}@keyframes e-page-transition-fade-out-up{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(0, -100%, 0)}}@keyframes e-page-transition-fade-out-left{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(-100%, 0, 0)}}@keyframes e-page-transition-fade-out-right{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(100%, 0, 0)}}@keyframes e-page-transition-fade-out-down{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(0, 100%, 0)}}@keyframes e-page-transition-slide-out-up{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(0, -100%, 0);visibility:visible}}@keyframes e-page-transition-slide-out-left{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(-100%, 0, 0);visibility:visible}}@keyframes e-page-transition-slide-out-right{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(100%, 0, 0);visibility:visible}}@keyframes e-page-transition-slide-out-down{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(0, 100%, 0);visibility:visible}}@keyframes e-page-transition-zoom-out{from{opacity:1}50%{opacity:0;transform:scale3d(0.3, 0.3, 0.3)}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `e-page-transition {
+  --preloader-fade-duration: .5s;
+  --preloader-delay: calc( var( --e-page-transition-animation-duration, 0s ) + var( --e-preloader-delay, 0s ) );
+  --page-transition-delay: var( --preloader-fade-duration );
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 10000;
+  background: #FFF;
+  animation-fill-mode: both;
+  animation-duration: var(--e-page-transition-animation-duration);
+}
+e-page-transition[disabled] {
+  display: none;
+}
+e-page-transition e-preloader,
+e-page-transition .e-page-transition--preloader {
+  opacity: 0;
+}
+e-page-transition .e-page-transition--preloader {
+  position: absolute;
+  font-size: var(--e-preloader-size);
+  color: var(--e-preloader-color);
+  fill: var(--e-preloader-color);
+  width: var(--e-preloader-width);
+  max-width: var(--e-preloader-max-width);
+  transform: rotate(var(--e-preloader-rotate, 0deg));
+  animation-name: var(--e-preloader-animation);
+  animation-duration: var(--e-preloader-animation-duration, 1000ms);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+e-page-transition svg.e-page-transition--preloader {
+  width: var(--e-preloader-size);
+}
+
+.e-page-transition--entering {
+  animation-name: var(--e-page-transition-entrance-animation);
+  animation-delay: var(--preloader-fade-duration, 0s);
+}
+.e-page-transition--entering e-preloader,
+.e-page-transition--entering .e-page-transition--preloader {
+  animation: var(--e-preloader-animation, none) var(--e-preloader-animation-duration, 0s) linear infinite, e-page-transition-fade-out var(--preloader-fade-duration) both;
+  transition: none;
+}
+.e-page-transition--exiting {
+  animation-name: var(--e-page-transition-exit-animation);
+}
+.e-page-transition--exiting e-preloader,
+.e-page-transition--exiting .e-page-transition--preloader {
+  opacity: var(--e-preloader-opacity, 1);
+  transition: var(--preloader-fade-duration) all;
+  transition-delay: var(--preloader-delay, 0s);
+}
+.e-page-transition--entered:not(.e-page-transition--preview) {
+  display: none;
+}
+.e-page-transition--preview {
+  /* Fix preview not working for some animations. */
+  animation-fill-mode: initial;
+}
+.e-page-transition--preview.e-page-transition--entered e-preloader,
+.e-page-transition--preview.e-page-transition--entered .e-page-transition--preloader {
+  opacity: var(--e-preloader-opacity, 1);
+}
+
+/* Hide the page transition if the user has disabled animations. */
+@media (prefers-reduced-motion: reduce) {
+  e-page-transition {
+    display: none;
+  }
+}
+/* Animations */
+@keyframes e-page-transition-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes e-page-transition-fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-fade-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-fade-in-right {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes e-page-transition-slide-in-down {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-slide-in-left {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-slide-in-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-slide-in-up {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes e-page-transition-fade-out-up {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+@keyframes e-page-transition-fade-out-left {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes e-page-transition-fade-out-right {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+@keyframes e-page-transition-fade-out-down {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes e-page-transition-slide-out-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-slide-out-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-slide-out-right {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-slide-out-down {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-zoom-out {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -562,13 +824,215 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "e-preloader{--default-duartion: 1000ms;--duration: var( --e-preloader-animation-duration, var( --default-duration ) );display:block;font-size:var(--e-preloader-size)}e-preloader[type=circle],e-preloader[type=circle-dashed],e-preloader[type=spinners]{--e-preloader-animation: e-preloader-spin;height:1em;width:1em;border:.1em solid var(--e-preloader-color);border-top-color:rgba(0,0,0,0);border-radius:100%;animation:var(--duration) var(--e-preloader-animation) linear infinite}e-preloader[type=circle-dashed]{border:.1em solid rgba(255,255,255,.3);border-top-color:var(--e-preloader-color)}e-preloader[type=spinners]{border-bottom-color:rgba(0,0,0,0)}e-preloader[type=bouncing-dots],e-preloader[type=pulsing-dots]{display:flex;gap:1em}e-preloader[type=bouncing-dots] i,e-preloader[type=pulsing-dots] i{height:1em;width:1em;border-radius:100%;background-color:var(--e-preloader-color)}e-preloader[type=bouncing-dots] i:nth-child(2),e-preloader[type=pulsing-dots] i:nth-child(2){animation-delay:var(--delay)}e-preloader[type=bouncing-dots] i:nth-child(3),e-preloader[type=pulsing-dots] i:nth-child(3){animation-delay:calc(var(--delay)*2)}e-preloader[type=bouncing-dots] i:nth-child(4),e-preloader[type=pulsing-dots] i:nth-child(4){animation-delay:calc(var(--delay)*3)}e-preloader[type=bouncing-dots] i{--delay: calc( var( --duration ) / 10 );animation:var(--duration) e-preloader-bounce linear infinite}e-preloader[type=pulsing-dots] i{--delay: calc( var( --duration ) / 6 );animation:var(--duration) e-preloader-pulsing-dots linear infinite}e-preloader[type=pulse]{height:1em;width:1em;position:relative}e-preloader[type=pulse]::before,e-preloader[type=pulse]::after{content:\"\";position:absolute;inset:0;border:.05em solid var(--e-preloader-color);border-radius:100%;animation:1.2s e-preloader-pulse infinite both ease-out}e-preloader[type=pulse]::after{animation-delay:.6s}e-preloader[type=overlap]{height:1em;width:1em;position:relative}e-preloader[type=overlap]::before,e-preloader[type=overlap]::after{content:\"\";inset:0;position:absolute;background:var(--e-preloader-color);border-radius:100%;opacity:.5;animation:2s e-preloader-overlap infinite both ease-in-out}e-preloader[type=overlap]::after{animation-delay:-1s;animation-direction:reverse}e-preloader[type=nested-spinners],e-preloader[type=opposing-nested-spinners],e-preloader[type=opposing-nested-rings]{height:1em;width:1em;position:relative}e-preloader[type=nested-spinners]::before,e-preloader[type=nested-spinners]::after,e-preloader[type=opposing-nested-spinners]::before,e-preloader[type=opposing-nested-spinners]::after,e-preloader[type=opposing-nested-rings]::before,e-preloader[type=opposing-nested-rings]::after{content:\"\";display:block;position:absolute;border-radius:100%;border:.1em solid var(--e-preloader-color);border-top-color:rgba(0,0,0,0);animation:var(--duration) e-preloader-spin linear infinite}e-preloader[type=nested-spinners]::before,e-preloader[type=opposing-nested-spinners]::before,e-preloader[type=opposing-nested-rings]::before{inset:-0.3em}e-preloader[type=nested-spinners]::after,e-preloader[type=opposing-nested-spinners]::after,e-preloader[type=opposing-nested-rings]::after{animation-duration:calc(var(--duration) - .2s);inset:0;opacity:.5}e-preloader[type=nested-spinners]::before,e-preloader[type=nested-spinners]::after,e-preloader[type=opposing-nested-spinners]::before,e-preloader[type=opposing-nested-spinners]::after{border-bottom-color:rgba(0,0,0,0)}e-preloader[type=opposing-nested-rings]::after,e-preloader[type=opposing-nested-spinners]::after{animation-direction:reverse}e-preloader[type=progress-bar],e-preloader[type=two-way-progress-bar],e-preloader[type=repeating-bar]{--e-preloader-animation: e-preloader-progress-bar;height:.05em;width:5em;max-width:50vw;background:var(--e-preloader-color);animation:var(--duration) var(--e-preloader-animation) linear infinite both}e-preloader[type=progress-bar]{transform-origin:0 50%}e-preloader[type=repeating-bar]{--e-preloader-animation: e-preloader-repeating-bar}@media(prefers-reduced-motion: reduce){e-preloader{display:none}}@keyframes e-preloader-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes e-preloader-bounce{0%,40%,100%{transform:translateY(0)}20%{transform:translateY(-80%)}}@keyframes e-preloader-pulsing-dots{0%,40%,100%{transform:scale(1)}20%{transform:scale(1.5)}}@keyframes e-preloader-pulse{from{transform:scale(0);opacity:1}to{transform:scale(1);opacity:0}}@keyframes e-preloader-overlap{0%,100%{transform:scale(0.2)}50%{transform:scale(1)}}@keyframes e-preloader-progress-bar{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}@keyframes e-preloader-repeating-bar{0%{transform:scaleX(0);transform-origin:0 50%}49%{transform-origin:0 50%}50%{transform:scaleX(1);transform-origin:100% 50%}100%{transform:scaleX(0);transform-origin:100% 50%}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `e-preloader {
+  --default-duartion: 1000ms;
+  --duration: var( --e-preloader-animation-duration, var( --default-duration ) );
+  display: block;
+  font-size: var(--e-preloader-size);
+}
+e-preloader[type=circle], e-preloader[type=circle-dashed], e-preloader[type=spinners] {
+  --e-preloader-animation: e-preloader-spin;
+  height: 1em;
+  width: 1em;
+  border: 0.1em solid var(--e-preloader-color);
+  border-top-color: transparent;
+  border-radius: 100%;
+  animation: var(--duration) var(--e-preloader-animation) linear infinite;
+}
+e-preloader[type=circle-dashed] {
+  border: 0.1em solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--e-preloader-color);
+}
+e-preloader[type=spinners] {
+  border-bottom-color: transparent;
+}
+e-preloader[type=bouncing-dots], e-preloader[type=pulsing-dots] {
+  display: flex;
+  gap: 1em;
+}
+e-preloader[type=bouncing-dots] i, e-preloader[type=pulsing-dots] i {
+  height: 1em;
+  width: 1em;
+  border-radius: 100%;
+  background-color: var(--e-preloader-color);
+}
+e-preloader[type=bouncing-dots] i:nth-child(2), e-preloader[type=pulsing-dots] i:nth-child(2) {
+  animation-delay: var(--delay);
+}
+e-preloader[type=bouncing-dots] i:nth-child(3), e-preloader[type=pulsing-dots] i:nth-child(3) {
+  animation-delay: calc(var(--delay) * 2);
+}
+e-preloader[type=bouncing-dots] i:nth-child(4), e-preloader[type=pulsing-dots] i:nth-child(4) {
+  animation-delay: calc(var(--delay) * 3);
+}
+e-preloader[type=bouncing-dots] i {
+  --delay: calc( var( --duration ) / 10 );
+  animation: var(--duration) e-preloader-bounce linear infinite;
+}
+e-preloader[type=pulsing-dots] i {
+  --delay: calc( var( --duration ) / 6 );
+  animation: var(--duration) e-preloader-pulsing-dots linear infinite;
+}
+e-preloader[type=pulse] {
+  height: 1em;
+  width: 1em;
+  position: relative;
+}
+e-preloader[type=pulse]::before, e-preloader[type=pulse]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0.05em solid var(--e-preloader-color);
+  border-radius: 100%;
+  animation: 1.2s e-preloader-pulse infinite both ease-out;
+}
+e-preloader[type=pulse]::after {
+  animation-delay: 0.6s;
+}
+e-preloader[type=overlap] {
+  height: 1em;
+  width: 1em;
+  position: relative;
+}
+e-preloader[type=overlap]::before, e-preloader[type=overlap]::after {
+  content: "";
+  inset: 0;
+  position: absolute;
+  background: var(--e-preloader-color);
+  border-radius: 100%;
+  opacity: 0.5;
+  animation: 2s e-preloader-overlap infinite both ease-in-out;
+}
+e-preloader[type=overlap]::after {
+  animation-delay: -1s;
+  animation-direction: reverse;
+}
+e-preloader[type=nested-spinners], e-preloader[type=opposing-nested-spinners], e-preloader[type=opposing-nested-rings] {
+  height: 1em;
+  width: 1em;
+  position: relative;
+}
+e-preloader[type=nested-spinners]::before, e-preloader[type=nested-spinners]::after, e-preloader[type=opposing-nested-spinners]::before, e-preloader[type=opposing-nested-spinners]::after, e-preloader[type=opposing-nested-rings]::before, e-preloader[type=opposing-nested-rings]::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100%;
+  border: 0.1em solid var(--e-preloader-color);
+  border-top-color: transparent;
+  animation: var(--duration) e-preloader-spin linear infinite;
+}
+e-preloader[type=nested-spinners]::before, e-preloader[type=opposing-nested-spinners]::before, e-preloader[type=opposing-nested-rings]::before {
+  inset: -0.3em;
+}
+e-preloader[type=nested-spinners]::after, e-preloader[type=opposing-nested-spinners]::after, e-preloader[type=opposing-nested-rings]::after {
+  animation-duration: calc(var(--duration) - 0.2s);
+  inset: 0;
+  opacity: 0.5;
+}
+e-preloader[type=nested-spinners]::before, e-preloader[type=nested-spinners]::after, e-preloader[type=opposing-nested-spinners]::before, e-preloader[type=opposing-nested-spinners]::after {
+  border-bottom-color: transparent;
+}
+e-preloader[type=opposing-nested-rings]::after, e-preloader[type=opposing-nested-spinners]::after {
+  animation-direction: reverse;
+}
+e-preloader[type=progress-bar], e-preloader[type=two-way-progress-bar], e-preloader[type=repeating-bar] {
+  --e-preloader-animation: e-preloader-progress-bar;
+  height: 0.05em;
+  width: 5em;
+  max-width: 50vw;
+  background: var(--e-preloader-color);
+  animation: var(--duration) var(--e-preloader-animation) linear infinite both;
+}
+e-preloader[type=progress-bar] {
+  transform-origin: 0 50%;
+}
+e-preloader[type=repeating-bar] {
+  --e-preloader-animation: e-preloader-repeating-bar;
+}
+
+/* Hide the preloader if the user has disabled animations. */
+@media (prefers-reduced-motion: reduce) {
+  e-preloader {
+    display: none;
+  }
+}
+/* Animations */
+@keyframes e-preloader-spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes e-preloader-bounce {
+  0%, 40%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-80%);
+  }
+}
+@keyframes e-preloader-pulsing-dots {
+  0%, 40%, 100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+}
+@keyframes e-preloader-pulse {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@keyframes e-preloader-overlap {
+  0%, 100% {
+    transform: scale(0.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+@keyframes e-preloader-progress-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes e-preloader-repeating-bar {
+  0% {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  49% {
+    transform-origin: 0 50%;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: 100% 50%;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: 100% 50%;
+  }
+}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -588,65 +1052,99 @@ ___CSS_LOADER_EXPORT___.push([module.id, "e-preloader{--default-duartion: 1000ms
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
 */
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
 module.exports = function (cssWithMappingToString) {
-  var list = []; // return the list of modules as css string
+  var list = [];
 
+  // return the list of modules as css string
   list.toString = function toString() {
     return this.map(function (item) {
-      var content = cssWithMappingToString(item);
-
-      if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
+      var content = "";
+      var needLayer = typeof item[5] !== "undefined";
+      if (item[4]) {
+        content += "@supports (".concat(item[4], ") {");
       }
-
+      if (item[2]) {
+        content += "@media ".concat(item[2], " {");
+      }
+      if (needLayer) {
+        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
+      }
+      content += cssWithMappingToString(item);
+      if (needLayer) {
+        content += "}";
+      }
+      if (item[2]) {
+        content += "}";
+      }
+      if (item[4]) {
+        content += "}";
+      }
       return content;
     }).join("");
-  }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
+  };
 
-
-  list.i = function (modules, mediaQuery, dedupe) {
+  // import a list of modules into the list
+  list.i = function i(modules, media, dedupe, supports, layer) {
     if (typeof modules === "string") {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, ""]];
+      modules = [[null, modules, undefined]];
     }
-
     var alreadyImportedModules = {};
-
     if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
-
+      for (var k = 0; k < this.length; k++) {
+        var id = this[k][0];
         if (id != null) {
           alreadyImportedModules[id] = true;
         }
       }
     }
-
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
-
+    for (var _k = 0; _k < modules.length; _k++) {
+      var item = [].concat(modules[_k]);
       if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
         continue;
       }
-
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
+      if (typeof layer !== "undefined") {
+        if (typeof item[5] === "undefined") {
+          item[5] = layer;
         } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
+          item[5] = layer;
         }
       }
-
+      if (media) {
+        if (!item[2]) {
+          item[2] = media;
+        } else {
+          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
+          item[2] = media;
+        }
+      }
+      if (supports) {
+        if (!item[4]) {
+          item[4] = "".concat(supports);
+        } else {
+          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
+          item[4] = supports;
+        }
+      }
       list.push(item);
     }
   };
-
   return list;
+};
+
+/***/ }),
+
+/***/ "../node_modules/css-loader/dist/runtime/noSourceMaps.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function (i) {
+  return i[1];
 };
 
 /***/ }),

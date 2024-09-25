@@ -117,15 +117,6 @@ class Module extends Module_Base {
 		$element->end_injection();
 	}
 
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
-
-		return [];
-	}
-
 	private function add_actions() {
 		add_action( 'elementor/controls/register', [ $this, 'register_controls_group' ] );
 

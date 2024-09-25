@@ -1509,6 +1509,8 @@ class Module extends Module_Base {
 		add_filter( 'elementor/editor/localize_settings', function ( $config ) {
 			return $this->populate_persistent_settings( $config );
 		});
+
+		add_action( 'wp_enqueue_scripts', [ $this, 'register_style' ] );
 	}
 
 	public function add_system_status_data( $response, $system_status, $request ) {
@@ -1642,5 +1644,31 @@ class Module extends Module_Base {
 			self::WC_PERSISTENT_SITE_SETTINGS;
 
 		return $config;
+	}
+
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/woocommerce/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-woocommerce.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_style() {
+		wp_register_style(
+			'widget-woocommerce',
+			$this->get_css_assets_url( 'widget-woocommerce', null, true, true ),
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 }

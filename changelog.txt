@@ -1,4 +1,46 @@
 # PRO Elements - by PROElements.org
+#### 3.24.2 - 2024-09-18
+
+* Fix: Icons not displaying when Inline SVG Icons experiment is active in Link In Bio widgets and Floating Elements
+
+#### 3.24.1 - 2024-09-12
+
+* Fix: Widget styles not loading correctly on front causing alignment inconsistencies ([#28676](https://github.com/elementor/elementor/issues/28676))
+
+#### 3.24.0 - 2024-09-10
+
+* New: Introducing support for Variable Fonts - allowing for more dynamic and flexible text styling ([#6703](https://github.com/elementor/elementor/issues/6703), [#11333](https://github.com/elementor/elementor/issues/11333), [#19277](https://github.com/elementor/elementor/issues/19277), [#25485](https://github.com/elementor/elementor/issues/25485))
+* Tweak: Added 'Structure' indication for widgets with Display Conditions applied ([#28027](https://github.com/elementor/elementor/issues/28027))
+* Tweak: Added a new option for setting the live search results width ([#28280](https://github.com/elementor/elementor/issues/28280))
+* Tweak: Improved Honeypot field functionality in Form widget ([#28480](https://github.com/elementor/elementor/issues/28480))
+* Tweak: Added options to 'Copy', 'Paste', and 'Clear' Display Conditions in Context Menu
+* Tweak: Improved performance of the Menu widget when using Dynamic Tags in the URL field
+* Tweak: Improved performance when using Dynamic Tags in Nested Elements
+* Tweak: Added the option for users to disable Akismet for specific Elementor forms
+* Tweak: Adjusted URL structure when presenting the Search Archive page in Search widget
+* Tweak: Added the 'Create Template' button in Search widget
+* Tweak: Added an option to enable the 'Loader' animation while live results are loading in Search widget
+* Tweak: Load share buttons compatibility styles only when they are in use
+* Tweak: Load dialog styles only when they are in use
+* Tweak: Load global widget styles only during Editor preview
+* Tweak: Conditionally load widget styles only when the widgets are used
+* Tweak: Load styles for CTA hover animations only when they are in use
+* Tweak: Load notes styles only when the WordPress Toolbar is displayed
+* Tweak: Split `animations.min.css` into multiple CSS files and load them conditionally
+* Tweak: Promoted Display Conditions feature to Stable status
+* Tweak: Merged Taxonomy Filter feature into the version
+* Tweak: Merged Search feature into the version
+* Tweak: Added a note to 'Current Query' explaining the impact of WordPress settings on pagination within Archives
+* Tweak: Added the ability to set `aria-label` for the Off-Canvas widget
+* Fix: Manual Selection option is not excluding sticky posts in Posts and Loop Grid widgets ([#18689](https://github.com/elementor/elementor/issues/18689), [#23331](https://github.com/elementor/elementor/issues/23331), [#28179](https://github.com/elementor/elementor/issues/28179))
+* Fix: Template ID does not change according to the imported Loop Item ([#21404](https://github.com/elementor/elementor/issues/21404), [#22202](https://github.com/elementor/elementor/issues/22202))
+* Fix: 'Editing Mode' for the Off-canvas was not functioning correctly in certain scenarios
+* Fix: Added definition to `clear_custom_image_sizes` hook to prevent edge case issues
+* Fix: Flickering issue with search result buttons when closing results using the keyboard escape key in Search widget
+* Fix: Theme Style settings for buttons were overriding the text styling in Search widget
+* Fix: Nesting menu inside another menu causes functionality issues in Menu widget
+* Fix: Error when using array as custom fields value in Dynamic Tags
+
 #### 3.23.3 - 2024-08-05
 
 * Fix: Dropdown area not working in certain scenarios in Menu widget ([#28194](https://github.com/elementor/elementor/issues/28194))
@@ -22,7 +64,7 @@
 * Fix: Missing version string in included CSS query string when Improved CSS Loading is enabled ([#21879](https://github.com/elementor/elementor/issues/21879), [#23821](https://github.com/elementor/elementor/issues/23821))
 * Fix: Form submission icon message does not display correctly when Inline Font Icons feature is activated
 * Fix: Save and Close button position issues in the conditions screen in Theme Builder.
-* Fix: Focus appears on the first element when using the mouse to open Off-Canvas 
+* Fix: Focus appears on the first element when using the mouse to open Off-Canvas
 * Fix: Links to Elementor Settings are broken in various locations
 * Fix: Conditions field not showing all relevant conditions in Theme Builder
 * Fix: Off-Canvas flickering in sticky containers with exit animations triggered by sticky effects

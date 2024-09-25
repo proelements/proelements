@@ -421,4 +421,11 @@ class Utils {
 	public static function format_control_condition( $name, $operator, $value ) {
 		return compact( 'name', 'operator', 'value' );
 	}
+
+	public static function create_widget_instance_from_db( $post_id, $widget_id ) {
+		$document = Plugin::elementor()->documents->get( $post_id );
+		$widget_data = \Elementor\Utils::find_element_recursive( $document->get_elements_data(), $widget_id );
+
+		return Plugin::elementor()->elements_manager->create_element_instance( $widget_data );
+	}
 }

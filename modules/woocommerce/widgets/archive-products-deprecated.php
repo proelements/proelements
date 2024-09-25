@@ -37,6 +37,10 @@ class Archive_Products_Deprecated extends Products {
 		return false;
 	}
 
+	public function get_style_depends(): array {
+		return [ 'widget-woocommerce' ];
+	}
+
 	protected function register_controls() {
 		$this->deprecated_notice( Plugin::get_title(), '2.5.0', '', esc_html__( 'Archive Products', 'elementor-pro' ) );
 

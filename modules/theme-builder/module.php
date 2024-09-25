@@ -114,15 +114,6 @@ class Module extends Module_Base {
 		return $document;
 	}
 
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
-
-		return [];
-	}
-
 	public function document_config( $config, $post_id ) {
 		$document = $this->get_document( $post_id );
 
