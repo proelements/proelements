@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 18-09-2024 */
+/*! pro-elements - v3.24.0 - 09-10-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -84,7 +84,7 @@
 /******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".d4867c919d0858f748df.bundle.js";
 /******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".9e1bbc4fcb37864c89d6.bundle.js";
 /******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".55ffb013a3fe565f55a5.bundle.js";
-/******/ 			if (chunkId === "vendors-node_modules_dompurify_dist_purify_js") return "98217e0c00e1f53421ef.bundle.js";
+/******/ 			if (chunkId === "vendors-node_modules_dompurify_dist_purify_js") return "c62a5d15e98a98580947.bundle.js";
 /******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".cf3f67d6b95e0138bb6b.bundle.js";
 /******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".fd1d31a26340ed74e10a.bundle.js";
 /******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".3eca5f2deb261b97d554.bundle.js";

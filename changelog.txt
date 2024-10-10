@@ -1,4 +1,13 @@
 # PRO Elements - by PROElements.org
+#### 3.24.4 - 2024-10-09
+
+* Security Fix: Improved code security enforcement in Media Carousel widget
+
+#### 3.24.3 - 2024-10-01
+
+* Fix: Floating Elements template not loading when Single Page template is set with All Singular condition
+* Fix: Form field styles not loading properly in various scenarios
+
 #### 3.24.2 - 2024-09-18
 
 * Fix: Icons not displaying when Inline SVG Icons experiment is active in Link In Bio widgets and Floating Elements

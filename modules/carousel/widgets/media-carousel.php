@@ -11,6 +11,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Plugin;
+use ElementorPro\Core\Utils as ProUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -251,6 +252,10 @@ class Media_Carousel extends Base {
 		}
 
 		$attachment_post = get_post( $slide['image']['id'] );
+
+		if ( ProUtils::has_invalid_post_permissions( $attachment_post ) ) {
+			return '';
+		}
 
 		if ( 'caption' === $caption_type ) {
 			return $attachment_post->post_excerpt;

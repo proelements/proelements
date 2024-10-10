@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 18-09-2024 */
+/*! pro-elements - v3.24.0 - 09-10-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1230,6 +1230,13 @@ module.exports = function () {
   this.mailChimp = new ApiValidations('mailchimp_api_key');
   this.mailerLite = new ApiValidations('mailerlite_api_key');
   this.activeCcampaign = new ApiValidations('activecampaign_api_key', 'activecampaign_api_url');
+  jQuery('.e-notice--cta.e-notice--dismissible[data-notice_id="site_mailer_forms_submissions_notice"] a.e-button--cta').on('click', function () {
+    elementorCommon.ajax.addRequest('elementor_site_mailer_campaign', {
+      data: {
+        source: 'sm-submission-install'
+      }
+    });
+  });
 };
 
 /***/ }),

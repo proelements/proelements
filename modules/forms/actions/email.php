@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
+use ElementorPro\Core\Utils\Hints;
 use ElementorPro\Core\Utils;
 use ElementorPro\Core\Utils\Collection;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
@@ -218,6 +219,34 @@ class Email extends Action_Base {
 				],
 			]
 		);
+
+		$notice_id = 'site_mailer_forms_email_notice';
+		if ( Hints::should_show_hint( $notice_id ) ) {
+			$notice_content = esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Site Mailer.', 'elementor-pro' );
+
+			if ( 2 === Utils\Abtest::get_variation( 'plg_site_mailer_submission' ) ) {
+				$notice_content = esc_html__( 'Make sure your emails reach the inbox every time with Site Mailer', 'elementor-pro' );
+			}
+
+			$widget->add_control(
+				$this->get_control_id( 'site_mailer_promo' ),
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => Hints::get_notice_template( [
+						'display' => ! Hints::is_dismissed( $notice_id ),
+						'type' => 'info',
+						'content' => $notice_content,
+						'icon' => true,
+						'dismissible' => $notice_id,
+						'button_text' => Hints::is_plugin_installed( 'site-mailer' ) ? __( 'Activate Plugin', 'elementor-pro' ) : __( 'Install Plugin', 'elementor-pro' ),
+						'button_event' => $notice_id,
+						'button_data' => [
+							'action_url' => Hints::get_plugin_action_url( 'site-mailer' ),
+						],
+					], true ),
+				]
+			);
+		}
 
 		$widget->end_controls_section();
 	}

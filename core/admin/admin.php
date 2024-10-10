@@ -263,6 +263,28 @@ class Admin extends App {
 		return $categories;
 	}
 
+	public function register_ajax_actions( $ajax_manager ) {
+		$ajax_manager->register_ajax_action( 'elementor_site_mailer_campaign', [ $this, 'handle_hints_cta' ] );
+	}
+
+	public function handle_hints_cta( $request ) {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			wp_send_json_error();
+		}
+
+		if ( empty( $request['source'] ) ) {
+			return;
+		}
+
+		$campaign_data = [
+			'source' => sanitize_key( $request['source'] ),
+			'campaign' => 'sm-plg-v' . ProUtils\Abtest::get_variation( 'plg_site_mailer_submission' ),
+			'medium' => 'wp-dash',
+		];
+
+		set_transient( 'elementor_site_mailer_campaign', $campaign_data, 30 * DAY_IN_SECONDS );
+	}
+
 	/**
 	 * Admin constructor.
 	 */
@@ -292,5 +314,7 @@ class Admin extends App {
 		add_action( 'in_plugin_update_message-' . ELEMENTOR_PRO_PLUGIN_BASE, function( $plugin_data ) {
 			Plugin::elementor()->admin->version_update_warning( ELEMENTOR_PRO_VERSION, $plugin_data['new_version'] );
 		} );
+
+		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 	}
 }

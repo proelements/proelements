@@ -52,7 +52,7 @@ class Form extends Form_Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-forms', 'flatpickr' ];
+		return [ 'widget-forms' ];
 	}
 
 	protected function register_controls() {
