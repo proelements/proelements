@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 09-10-2024 */
+/*! pro-elements - v3.25.0 - 28-10-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -67,7 +67,7 @@ const extendDefaultHandlers = defaultHandlers => {
     ...handlers
   };
 };
-elementorProFrontend.on('elementor-pro/modules/init:before', () => {
+elementorProFrontend.on('elementor-pro/modules/init/before', () => {
   elementorFrontend.hooks.addFilter('elementor-pro/frontend/handlers', extendDefaultHandlers);
 });
 
@@ -748,7 +748,7 @@ class BaseFilterFrontendModule extends elementorModules.Module {
     const widgetFilters = this.loopWidgetsStore.getConsolidatedFilters(widgetId),
       helpers = this.getFilterHelperAttributes(filterId);
     const data = {
-      post_id: elementorFrontend.config.post.id || this.getClosestDataElementorId(document.querySelector(`.elementor-element-${widgetId}`)),
+      post_id: this.getClosestDataElementorId(document.querySelector(`.elementor-element-${widgetId}`)) || elementorFrontend.config.post.id,
       widget_filters: widgetFilters,
       widget_id: widgetId,
       pagination_base_url: helpers.baseUrl
@@ -771,8 +771,8 @@ class BaseFilterFrontendModule extends elementorModules.Module {
    * @return {string} elementor id of parent
    */
   getClosestDataElementorId(element) {
-    const closestParent = element.closest('[data-elementor-id]');
-    return closestParent ? closestParent.getAttribute('data-elementor-id') : 0;
+    const closestParent = element?.closest('[data-elementor-id]');
+    return closestParent ? closestParent.getAttribute('data-elementor-id') : null;
   }
 
   /**
@@ -1481,9 +1481,12 @@ class _default extends elementorModules.Module {
     elementorFrontend.hooks.addAction('elementor/frontend/documents-manager/init-classes', this.addDocumentClass);
     elementorFrontend.elementsHandler.attachHandler('form', () => __webpack_require__.e(/*! import() | popup */ "popup").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/forms-action */ "../modules/popup/assets/js/frontend/handlers/forms-action.js")));
     elementorFrontend.on('components:init', () => this.onFrontendComponentsInit());
-    if (!elementorFrontend.isEditMode() && !elementorFrontend.isWPPreviewMode()) {
+    if (this.shouldSetViewsAndSessions()) {
       this.setViewsAndSessions();
     }
+  }
+  shouldSetViewsAndSessions() {
+    return !elementorFrontend.isEditMode() && !elementorFrontend.isWPPreviewMode() && ElementorProFrontendConfig.popup.hasPopUps;
   }
   addDocumentClass(documentsManager) {
     documentsManager.addDocumentClass('popup', _document.default);

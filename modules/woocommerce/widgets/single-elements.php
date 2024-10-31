@@ -35,17 +35,6 @@ class Single_Elements extends Base_Widget {
 	}
 
 	/**
-	 * Get style dependencies.
-	 *
-	 * Retrieve the list of style dependencies the widget requires.
-	 *
-	 * @return array Widget style dependencies.
-	 */
-	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
-	}
-
-	/**
 	 * @return void
 	 */
 	private function init_allowed_functions(): void {

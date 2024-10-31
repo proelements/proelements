@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 09-10-2024 */
+/*! pro-elements - v3.25.0 - 28-10-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6996,7 +6996,7 @@ module.exports = _interopRequireDefault, module.exports.__esModule = true, modul
 /******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
 /******/ 		var document = __webpack_require__.g.document;
 /******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
+/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
 /******/ 				scriptUrl = document.currentScript.src;
 /******/ 			if (!scriptUrl) {
 /******/ 				var scripts = document.getElementsByTagName("script");
@@ -7123,7 +7123,7 @@ $e.components.register(new _formsComponent.default());
 const AppWrapper = elementorCommon.config.isDebug ? _react.default.StrictMode : _react.default.Fragment;
 
 // eslint-disable-next-line react/no-deprecated
-ReactDOM.render( /*#__PURE__*/_react.default.createElement(AppWrapper, null, /*#__PURE__*/_react.default.createElement(_app.default, null)), document.getElementById('e-form-submissions'));
+ReactDOM.render(/*#__PURE__*/_react.default.createElement(AppWrapper, null, /*#__PURE__*/_react.default.createElement(_app.default, null)), document.getElementById('e-form-submissions'));
 })();
 
 /******/ })()

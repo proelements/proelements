@@ -57,10 +57,13 @@ class Products_Deprecated extends Products_Base {
 	 *
 	 * Retrieve the list of style dependencies the widget requires.
 	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-products' ];
 	}
 
 	public function on_export( $element ) {

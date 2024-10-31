@@ -33,7 +33,7 @@ class Product_Additional_Information extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-product-additional-information' ];
 	}
 
 	protected function register_controls() {

@@ -50,7 +50,7 @@ class Price_Table extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-pricing' ];
+		return [ 'widget-price-table' ];
 	}
 
 	protected function register_controls() {

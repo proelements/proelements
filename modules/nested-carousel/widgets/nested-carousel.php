@@ -348,16 +348,12 @@ class Nested_Carousel extends Widget_Nested_Base {
 	}
 
 	protected function get_initial_config(): array {
-		if ( Plugin::elementor()->experiments->is_feature_active( 'e_nested_atomic_repeaters' ) ) {
-			return array_merge( parent::get_initial_config(), [
-				'support_improved_repeaters' => true,
-				'target_container' => [ '.e-n-carousel > .swiper-wrapper' ],
-				'node' => 'div',
-				'is_interlaced' => true,
-			] );
-		}
-
-		return parent::get_initial_config();
+		return array_merge( parent::get_initial_config(), [
+			'support_improved_repeaters' => true,
+			'target_container' => [ '.e-n-carousel > .swiper-wrapper' ],
+			'node' => 'div',
+			'is_interlaced' => true,
+		] );
 	}
 
 	protected function get_default_children_container_placeholder_selector() {

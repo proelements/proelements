@@ -60,5 +60,12 @@ class Module extends Module_Base {
 			[ 'elementor-frontend' ],
 			ELEMENTOR_PRO_VERSION
 		);
+
+		wp_register_style(
+			'e-transitions',
+			$this->get_css_assets_url( 'transitions', 'assets/css/conditionals/', true ),
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 }

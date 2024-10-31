@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 09-10-2024 */
+/*! pro-elements - v3.25.0 - 28-10-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2646,7 +2646,7 @@ class CustomCode extends elementorModules.Module {
     $e.components.register(new _component.default());
 
     // eslint-disable-next-line react/no-deprecated
-    ReactDOM.render( /*#__PURE__*/_react.default.createElement(_conditionsModal.default, null), document.querySelector('.post-conditions'));
+    ReactDOM.render(/*#__PURE__*/_react.default.createElement(_conditionsModal.default, null), document.querySelector('.post-conditions'));
     this.addTipsyToFields();
     this.addDescription();
     this.addLocationChangeHandler();
@@ -2679,7 +2679,7 @@ class CustomCode extends elementorModules.Module {
       document.body.append(rootElement);
 
       // eslint-disable-next-line react/no-deprecated
-      ReactDOM.render( /*#__PURE__*/_react.default.createElement(_elementorAiAdmin.default, {
+      ReactDOM.render(/*#__PURE__*/_react.default.createElement(_elementorAiAdmin.default, {
         type: 'code',
         getControlValue: () => document.querySelector('.CodeMirror').CodeMirror.getValue(),
         setControlValue: value => document.querySelector('.CodeMirror').CodeMirror.setValue(value),

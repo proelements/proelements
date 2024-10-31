@@ -51,7 +51,10 @@ class Skin_Loop_Product extends Skin_Loop_Base {
 
 	protected function render_post() {
 		global $product;
-		$product = wc_get_product( get_the_ID() );
+
+		if ( ! $product instanceof \WC_Product ) {
+			$product = wc_get_product( get_the_ID() );
+		}
 
 		parent::render_post();
 	}

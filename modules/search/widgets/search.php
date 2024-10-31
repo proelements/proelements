@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Text_Shadow;
@@ -35,6 +36,7 @@ class Search extends Base_Widget {
 	protected $query = null;
 
 	protected $search_term = '';
+	protected $page_number = 1;
 
 	private $element_attribute_ids = [
 		'search_wrapper' => 'search_wrapper',
@@ -47,10 +49,16 @@ class Search extends Base_Widget {
 		'submit_text' => 'submit_text',
 		'results_wrapper' => 'results_wrapper',
 		'widget_props' => 'widget_props',
+		'pagination' => 'pagination',
+		'nav' => 'nav',
 	];
 
 	public function set_search_term( string $search_term ) {
 		$this->search_term = $search_term;
+	}
+
+	public function set_page_number( int $page_number ) {
+		$this->page_number = $page_number;
 	}
 
 	public function get_name() {
@@ -101,6 +109,7 @@ class Search extends Base_Widget {
 		$settings = $this->get_settings_for_display();
 		$query_args = [
 			'posts_per_page' => $settings['number_of_items'] ?? -1,
+			'paged' => $this->page_number,
 		];
 
 		if ( ! empty( $this->search_term ) ) {
@@ -119,6 +128,7 @@ class Search extends Base_Widget {
 		$this->register_content_section_search_field();
 		$this->register_content_section_results();
 		$this->register_content_section_query();
+		$this->register_content_section_additional_settings();
 	}
 
 	protected function register_content_section_search_field() {
@@ -503,6 +513,108 @@ class Search extends Base_Widget {
 		$this->end_controls_section();
 	}
 
+	protected function register_content_section_additional_settings() {
+		$this->start_controls_section(
+			'content_section_additional_settings',
+			[
+				'label' => esc_html__( 'Additional Settings', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'heading_pagination',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_type_options',
+			[
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'elementor-pro' ),
+					'numbers' => esc_html__( 'Numbers', 'elementor-pro' ),
+					'previous_next' => esc_html__( 'Previous/Next', 'elementor-pro' ),
+					'numbers_previous_next' => esc_html__( 'Numbers + Previous/Next', 'elementor-pro' ),
+				],
+				'default' => 'none',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'pagination_prev_label',
+			[
+				'label' => esc_html__( 'Previous Label', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => esc_html__( 'Previous', 'elementor-pro' ),
+				'condition' => [
+					'pagination_type_options' => [
+						'previous_next',
+						'numbers_previous_next',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_next_label',
+			[
+				'label' => esc_html__( 'Next Label', 'elementor-pro' ),
+				'default' => esc_html__( 'Next', 'elementor-pro' ),
+				'condition' => [
+					'pagination_type_options' => [
+						'previous_next',
+						'numbers_previous_next',
+					],
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'page_limit_settings',
+			[
+				'label' => esc_html__( 'Page Limit', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 5,
+				'frontend_available' => true,
+				'condition' => [
+					'pagination_type_options' => [
+						'numbers_previous_next',
+						'numbers',
+						'previous_next',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_shorten_settings',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Shorten', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Yes', 'elementor-pro' ),
+				'label_off' => esc_html__( 'No', 'elementor-pro' ),
+				'return_value' => 'yes',
+				'condition' => [
+					'pagination_type_options' => [
+						'numbers_previous_next',
+						'numbers',
+					],
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
 	protected function get_nothing_found_conditions() {
 		return [
 			'enable_nothing_found_message' => 'yes',
@@ -516,6 +628,7 @@ class Search extends Base_Widget {
 		$this->register_style_section_clear();
 		$this->register_style_section_submit();
 		$this->register_style_section_results();
+		$this->register_style_section_additional_settings();
 		$this->register_style_section_nothing_found_message();
 	}
 
@@ -863,6 +976,231 @@ class Search extends Base_Widget {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+	}
+
+	protected function register_style_section_additional_settings() {
+		$this->start_controls_section(
+			'style_additional_settings',
+			[
+				'label' => esc_html__( 'Additional Settings', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'pagination_type_options' => [
+						'numbers_previous_next',
+						'previous_next',
+						'numbers',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_style_additional_settings',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'toggle' => true,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-justify-content: {{VALUE}};',
+				],
+
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_vertical_position',
+			[
+				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'top' => [
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-bottom',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '{{VALUE}}',
+				],
+				'selectors_dictionary' => [
+					'top' => '--e-search-pagination-vertical-position: column-reverse',
+					'bottom' => '--e-search-pagination-vertical-position: column',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'typography_title',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .elementor-pagination',
+			]
+		);
+
+		$this->add_control(
+			'heading_style_additional_settings_colors',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Colors', 'elementor-pro' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_additional_settings_color_tabs',
+		);
+
+		$this->start_controls_tab(
+			'style_additional_settings_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_normal_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_additional_settings_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-hover: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_button_color_tabs_active',
+			[
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_button_color_icon_active',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-current: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'page_numbers_space_between',
+			[
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-page-numbers-gap: {{SIZE}}{{UNIT}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'top_spacing',
+			[
+				'label' => esc_html__( 'Top Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-block-start-spacing: {{SIZE}}{{UNIT}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'bottom_spacing',
+			[
+				'label' => esc_html__( 'Bottom Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-block-end-spacing: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
 
 		$this->end_controls_section();
 	}
@@ -1543,6 +1881,82 @@ class Search extends Base_Widget {
 		wp_reset_postdata();
 	}
 
+	public function render_pagination() {
+		$parent_settings = $this->get_settings_for_display();
+		$pagination_types = $parent_settings['pagination_type_options'];
+		$this->add_render_attibutes_pagination();
+
+		if ( 'none' === $pagination_types ) {
+			return;
+		}
+
+		if ( 1 >= $this->get_query()->max_num_pages ) {
+			return;
+		}
+
+		$total = $parent_settings['page_limit_settings'] > $this->get_query()->max_num_pages ? $this->get_query()->max_num_pages : $parent_settings['page_limit_settings'];
+
+		$paginate_args = [
+			'type' => 'array',
+			'current' => $this->page_number,
+			'total' => $total,
+			'prev_next' => 'numbers' !== $pagination_types,
+			'next_text' => $parent_settings['pagination_next_label'],
+			'prev_text' => $parent_settings['pagination_prev_label'],
+			'show_all' => 'yes' !== $parent_settings['pagination_shorten_settings'],
+			'before_page_number' => '<span class="elementor-screen-only">' . esc_html__( 'Page', 'elementor-pro' ) . '</span>',
+		];
+
+		$paginate_args = $this->get_paginate_args_for_rest_request( $paginate_args );
+
+		$links = [];
+		$links = paginate_links( $paginate_args );
+
+		if ( 1 === $this->page_number && 'numbers' !== $pagination_types ) {
+			$prev = '<span class="prev page-numbers inactive">' . $parent_settings['pagination_prev_label'] . '</span>';
+			array_unshift( $links, $prev );
+		}
+
+		if ( $this->page_number === $total && 'numbers' !== $pagination_types ) {
+			$next = '<span class="next page-numbers inactive">' . $parent_settings['pagination_next_label'] . '</span>';
+			$links[] = $next;
+		}
+
+		$links = $this->add_nofollow_to_links( $links );
+
+		echo implode( PHP_EOL, $links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+
+	protected function add_nofollow_to_links( $content ) {
+		$content = str_replace( '<a ', '<a rel="nofollow" ', $content );
+		return $content;
+	}
+
+	protected function get_paginate_args_for_rest_request( $paginate_args ) {
+
+		$link_unescaped = wp_get_referer();
+		$url_components = wp_parse_url( $link_unescaped );
+		$add_args = [];
+
+		if ( isset( $url_components['query'] ) ) {
+			wp_parse_str( $url_components['query'], $add_args );
+		}
+
+		$url_to_post_id = url_to_postid( $link_unescaped );
+		$pagination_base_url = get_permalink( $url_to_post_id );
+
+		$paginate_args['base'] = trailingslashit( $pagination_base_url ) . '%_%';
+		$paginate_args['format'] = '?e-search-page=%#%';
+		$paginate_args['add_args'] = $add_args;
+
+		if ( 0 === $url_to_post_id ) {
+			unset( $paginate_args['format'] );
+		}
+
+		return $paginate_args;
+	}
+
 	protected function handle_no_posts_found() {
 		$settings = $this->get_settings_for_display();
 
@@ -1642,6 +2056,14 @@ class Search extends Base_Widget {
 		return $this->get_name();
 	}
 
+	private function add_render_attibutes_pagination() {
+		$pagination_class = 'elementor-pagination';
+
+		$this->add_render_attribute( $this->element_attribute_ids['nav'], [
+			'class' => $pagination_class,
+		] );
+	}
+
 	private function add_render_attibutes() {
 		$id = $this->get_id();
 		$settings = $this->get_settings_for_display();
@@ -1651,6 +2073,12 @@ class Search extends Base_Widget {
 			'class' => [ 'e-search', 'hidden' ],
 			'role' => 'search',
 		] );
+
+		if ( 'previous_next' === $settings['pagination_type_options'] ) {
+			$this->add_render_attribute( $this->element_attribute_ids['results_wrapper'], [
+				'class' => 'hide-pagination-numbers',
+			] );
+		}
 
 		$this->add_render_attribute( $this->element_attribute_ids['form'], [
 			'class' => 'e-search-form',

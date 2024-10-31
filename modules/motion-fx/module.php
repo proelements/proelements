@@ -20,6 +20,7 @@ class Module extends Module_Base {
 
 		$this->add_actions();
 	}
+
 	/**
 	 * Get module name.
 	 *
@@ -59,6 +60,70 @@ class Module extends Module_Base {
 				'exclude' => $exclude,
 			]
 		);
+
+		$this->add_asset_loading_control_to_element( $element, $exclude );
+	}
+
+	private function add_asset_loading_control_to_element( Element_Base $element, $exclude = [], $control_suffix = '' ) {
+		$element->add_control(
+			$control_suffix . 'handle_motion_fx_asset_loading',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'assets' => [
+					'styles' => [
+						[
+							'name' => 'e-motion-fx',
+							'conditions' => $this->get_asset_loading_condition_conditions( $exclude, $control_suffix ),
+						],
+					],
+				],
+			]
+		);
+	}
+
+	private function get_asset_loading_condition_conditions( $exclude = [], $control_suffix = '' ) {
+		if ( '' === $control_suffix ) {
+			return [
+				'relation' => 'or',
+				'terms' => $this->get_asset_loading_condition_terms( $exclude, $control_suffix ),
+			];
+		}
+
+		return [
+			'terms' => [
+				[
+					'name' => 'background_background',
+					'operator' => '===',
+					'value' => 'classic',
+				],
+				[
+					'relation' => 'or',
+					'terms' => $this->get_asset_loading_condition_terms( $exclude, $control_suffix ),
+				],
+			],
+		];
+	}
+
+	private function get_asset_loading_condition_terms( $exclude = [], $control_suffix = '' ) {
+		$terms = [
+			[
+				'name' => $control_suffix . 'motion_fx_motion_fx_scrolling',
+				'operator' => '===',
+				'value' => 'yes',
+			],
+		];
+
+		if ( in_array( 'motion_fx_mouse', $exclude, true ) ) {
+			return $terms;
+		}
+
+		$terms[] = [
+			'name' => $control_suffix . 'motion_fx_motion_fx_mouse',
+			'operator' => '===',
+			'value' => 'yes',
+		];
+
+		return $terms;
 	}
 
 	public function add_controls_group_to_element_background( Element_Base $element ) {
@@ -115,6 +180,8 @@ class Module extends Module_Base {
 		$element->update_control( 'background_motion_fx_motion_fx_mouse', $options );
 
 		$element->end_injection();
+
+		$this->add_asset_loading_control_to_element( $element, [], 'background_' );
 	}
 
 	private function add_actions() {

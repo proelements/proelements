@@ -39,7 +39,7 @@ class Product_Images extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-product-images' ];
 	}
 
 	protected function register_controls() {

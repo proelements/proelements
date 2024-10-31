@@ -33,20 +33,6 @@ class Category_Image extends Widget_Image {
 		return [ 'woocommerce', 'category', 'image', 'thumbnail' ];
 	}
 
-	/**
-	 * Get style dependencies.
-	 *
-	 * Retrieve the list of style dependencies the widget requires.
-	 *
-	 * @since 3.24.0
-	 * @access public
-	 *
-	 * @return array Widget style dependencies.
-	 */
-	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
-	}
-
 	public function get_inline_css_depends() {
 		return [
 			[

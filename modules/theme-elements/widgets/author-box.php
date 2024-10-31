@@ -48,7 +48,7 @@ class Author_Box extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-theme-elements' ];
+		return [ 'widget-author-box' ];
 	}
 
 	protected function register_controls() {

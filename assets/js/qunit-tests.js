@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 09-10-2024 */
+/*! pro-elements - v3.25.0 - 28-10-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -72,6 +72,8 @@
 /******/ 	}
 /******/ 	
 /************************************************************************/
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!******************************!*\
   !*** ../tests/qunit/main.js ***!
   \******************************/
@@ -79,6 +81,8 @@
 
 var _editor = __webpack_require__(/*! ./editor/editor */ "../tests/qunit/editor/editor.js");
 new _editor.EditorBootstrapPro();
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=qunit-tests.js.map

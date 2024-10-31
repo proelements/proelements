@@ -51,20 +51,6 @@ class Paypal_Button extends Payment_Button {
 		return 'PayPal';
 	}
 
-	/**
-	 * Get style dependencies.
-	 *
-	 * Retrieve the list of style dependencies the widget requires.
-	 *
-	 * @since 3.24.0
-	 * @access public
-	 *
-	 * @return array Widget style dependencies.
-	 */
-	public function get_style_depends(): array {
-		return [ 'widget-payments' ];
-	}
-
 	// Retrieve a numerical field from settings, and default to $min if it's too small.
 	protected function get_numeric_setting( $key, $min = 0 ) {
 		$num = doubleval( $this->get_settings_for_display( $key ) );

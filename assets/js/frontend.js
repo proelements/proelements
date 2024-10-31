@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 09-10-2024 */
+/*! pro-elements - v3.25.0 - 28-10-2024 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/frontend.js":
@@ -42,10 +42,6 @@ class ElementorProFrontend extends elementorModules.ViewModule {
     };
 
     // Keep this line before applying filter on the handlers.
-    // TODO: BC - Deprecated since 3.7.0
-    elementorProFrontend.trigger('elementor-pro/modules/init:before');
-
-    // TODO: Use this instead.
     elementorProFrontend.trigger('elementor-pro/modules/init/before');
     handlers = elementorFrontend.hooks.applyFilters('elementor-pro/frontend/handlers', handlers);
     jQuery.each(handlers, (moduleName, ModuleClass) => {
@@ -1271,8 +1267,7 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
 
     // The `stickyOptions.parent` value should only be applied to inner elements, and not to top level containers.
     if (elementSettings.sticky_parent && !isParentContainer) {
-      // TODO: The e-container classes should be removed in the next update.
-      stickyOptions.parent = '.e-container, .e-container__inner, .e-con, .e-con-inner, .elementor-widget-wrap';
+      stickyOptions.parent = '.e-con, .e-con-inner, .elementor-widget-wrap';
     }
     return stickyOptions;
   },
@@ -1365,9 +1360,7 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
    * @return {boolean} Is the passed element a container.
    */
   isContainerElement(element) {
-    const containerClasses = [
-    // TODO: The e-container classes should be removed in the next update.
-    'e-container', 'e-container__inner', 'e-con', 'e-con-inner'];
+    const containerClasses = ['e-con', 'e-con-inner'];
     return containerClasses.some(containerClass => {
       return element?.classList.contains(containerClass);
     });

@@ -37,7 +37,7 @@ class Search_Form extends Base {
 	}
 
 	public function get_style_depends(): array {
-		$style_depends = [ 'widget-theme-elements' ];
+		$style_depends = [ 'widget-search-form' ];
 
 		if ( Icons_Manager::is_migration_allowed() ) {
 			$style_depends[] = 'elementor-icons-fa-solid';

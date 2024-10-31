@@ -38,7 +38,7 @@ class Product_Data_Tabs extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-product-data-tabs' ];
 	}
 
 	protected function register_controls() {

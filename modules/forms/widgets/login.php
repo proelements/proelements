@@ -43,7 +43,7 @@ class Login extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-forms' ];
+		return [ 'widget-login', 'widget-form' ];
 	}
 
 	protected function register_controls() {

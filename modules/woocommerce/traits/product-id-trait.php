@@ -8,20 +8,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 trait Product_Id_Trait {
 
 	public function get_product( $product_id = false ) {
+		global $product;
+
+		if ( $product instanceof \WC_Product ) {
+			return $product;
+		}
+
 		if ( 'product_variation' === get_post_type() ) {
-			return $this->get_product_variation( $product_id );
+			return $this->get_product_variation();
 		}
 
-		$product = wc_get_product( $product_id );
+		$product_data = wc_get_product( $product_id );
 
-		if ( ! $product ) {
-			$product = wc_get_product();
+		if ( ! $product_data ) {
+			$product_data = wc_get_product();
 		}
 
-		return $product;
+		return $product_data;
 	}
 
-	public function get_product_variation( $product_id = false ) {
+	public function get_product_variation() {
 		return wc_get_product( get_the_ID() );
 	}
 }

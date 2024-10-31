@@ -11,9 +11,6 @@ class Module extends DynamicTags\Module {
 
 	const PODS_GROUP = 'Pods';
 
-	// TODO: Remove when Core 3.10.0 is released.
-	const DATETIME_CATEGORY = 'datetime';
-
 	/**
 	 * @param array $types
 	 *

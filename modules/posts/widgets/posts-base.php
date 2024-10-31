@@ -888,8 +888,27 @@ abstract class Posts_Base extends Base_Widget {
 	 */
 	private function get_wp_link_page_url_for_custom_page_option( $url, $i, $post_id ) {
 		$base_raw_url = $this->is_rest_request() ? $this->get_base_url_for_rest_request( $post_id, $url ) : $this->get_base_url();
+		$pagination_key = 'e-page-' . $this->get_id();
 
-		return $this->format_query_string_concatenation( $base_raw_url . '&e-page-' . $this->get_id() . '=' . $i );
+		if ( 'yes' === $this->get_settings_for_display( 'pagination_individual_handle' ) ) {
+			$base_raw_url .= $this->get_pagination_query_vars_for_others_individually_paginated_widgets( $pagination_key );
+		}
+
+		return $this->format_query_string_concatenation( $base_raw_url . '&' . $pagination_key . '=' . $i );
+	}
+
+	private function get_pagination_query_vars_for_others_individually_paginated_widgets( string $pagination_key ): string {
+		wp_parse_str( htmlspecialchars_decode( Utils::_unstable_get_super_global_value( $_SERVER, 'QUERY_STRING' ) ), $query_params );
+
+		$e_page = '';
+
+		foreach ( $query_params as $param_key => $param_value ) {
+			if ( false !== strpos( $param_key, 'e-page' ) && $pagination_key !== $param_key ) {
+				$e_page .= '&' . $param_key . '=' . $param_value;
+			}
+		}
+
+		return $e_page;
 	}
 
 	/**

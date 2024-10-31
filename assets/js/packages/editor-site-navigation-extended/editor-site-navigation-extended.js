@@ -62,6 +62,8 @@ module.exports = window["elementorV2"]["icons"];
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
 /*!********************************************************************************!*\
   !*** ./node_modules/@elementor/editor-site-navigation-extended/dist/index.mjs ***!
   \********************************************************************************/
@@ -96,6 +98,7 @@ function init() {
 // src/index.ts
 init();
 
+}();
 (window.elementorV2 = window.elementorV2 || {}).editorSiteNavigationExtended = __webpack_exports__;
 /******/ })()
 ;

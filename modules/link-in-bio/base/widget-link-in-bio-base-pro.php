@@ -11,7 +11,8 @@ abstract class Widget_Link_In_Bio_Base_Pro extends Widget_Link_In_Bio_Base {
 	public function get_style_depends(): array {
 		$style_depends = parent::get_style_depends();
 
-		if ( ! in_array( 'widget-link-in-bio', $style_depends ) ) {
+		// In older Core versions, enqueue the frontend.scss.
+		if ( ! in_array( 'widget-link-in-bio-base', $style_depends ) ) {
 			$style_depends[] = 'widget-link-in-bio';
 		}
 

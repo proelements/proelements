@@ -49,7 +49,7 @@ class Sitemap extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-theme-elements' ];
+		return [ 'widget-sitemap' ];
 	}
 
 	private function register_sitemap_tab() {

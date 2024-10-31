@@ -160,6 +160,21 @@ class Document extends Theme_Section_Document {
 			]
 		);
 
+		$this->add_control(
+			'assets_loading_hidden_control',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'default' => 'hidden',
+				'assets' => [
+					'styles' => [
+						[
+							'name' => 'e-popup',
+						],
+					],
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'width',
 			[

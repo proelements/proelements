@@ -5,7 +5,6 @@ use Elementor\Controls_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\License\API;
-use ElementorPro\Modules\DisplayConditions\Classes\Experiments;
 use ElementorPro\Modules\DisplayConditions\Classes\Or_Condition;
 use ElementorPro\Plugin;
 
@@ -27,12 +26,7 @@ class Module extends Module_Base {
 			return;
 		}
 
-		$this->register_display_conditions_experiments();
 		$this->maybe_add_actions_and_components();
-	}
-
-	public static function is_experiment_active(): bool {
-		return Plugin::elementor()::$instance->experiments->is_feature_active( self::LICENSE_FEATURE_NAME );
 	}
 
 	public static function should_show_promo(): bool {
@@ -205,14 +199,6 @@ class Module extends Module_Base {
 		remove_filter( 'elementor/frontend/' . $element->get_type() . '/should_render', '__return_false' );
 	}
 
-	public function register_display_conditions_experiments() {
-		if ( ! self::can_use_display_conditions() ) {
-			return;
-		}
-
-		Experiments::register_dc_experiment();
-	}
-
 	/**
 	 * @return string
 	 */
@@ -257,11 +243,9 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	private function maybe_add_actions_and_components(): void {
-		if ( self::is_experiment_active() ) {
-			$this->add_common_actions();
-			$this->add_actions();
-			$this->add_components();
-		}
+		$this->add_common_actions();
+		$this->add_actions();
+		$this->add_components();
 	}
 
 	private function get_converted_conditions( $conditions ) {

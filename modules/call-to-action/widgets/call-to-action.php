@@ -15,7 +15,6 @@ use Elementor\Group_Control_Text_Stroke;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -54,7 +53,7 @@ class Call_To_Action extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-call-to-action' ];
+		return [ 'widget-call-to-action', 'e-transitions' ];
 	}
 
 	protected function register_controls() {

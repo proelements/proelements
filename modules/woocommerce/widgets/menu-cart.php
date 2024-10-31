@@ -45,7 +45,7 @@ class Menu_Cart extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-menu-cart' ];
 	}
 
 	protected function register_controls() {

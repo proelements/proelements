@@ -42,7 +42,7 @@ class Archive_Products extends Products {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-products', 'widget-woocommerce-products-archive' ];
 	}
 
 	protected function register_controls() {

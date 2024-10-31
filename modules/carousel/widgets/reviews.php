@@ -41,7 +41,7 @@ class Reviews extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'e-swiper', 'widget-carousel', 'widget-star-rating' ];
+		return [ 'e-swiper', 'widget-testimonial-carousel', 'widget-reviews', 'widget-star-rating', 'widget-carousel-module-base' ];
 	}
 
 	public function get_inline_css_depends() {

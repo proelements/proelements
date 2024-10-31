@@ -1,4 +1,4 @@
-/*! pro-elements - v3.24.0 - 09-10-2024 */
+/*! pro-elements - v3.25.0 - 28-10-2024 */
 .elementor-editor-preview .woocommerce-notices-wrapper {
   padding: 2em 2em 0.3em 2em;
 }
@@ -161,11 +161,11 @@ div.wc-block-components-notice-banner {
   box-sizing: border-box;
 }
 div.wc-block-components-notice-banner > .wc-block-components-notice-banner__content {
-  padding-left: initial;
-  padding-right: var(--wc-blocks-notice-banner-padding);
   align-self: center;
   white-space: normal;
   flex-basis: 100%;
+  padding-left: initial;
+  padding-right: var(--wc-blocks-notice-banner-padding);
 }
 body.rtl div.wc-block-components-notice-banner > .wc-block-components-notice-banner__content {
   padding-right: initial;
@@ -195,7 +195,6 @@ div.wc-block-components-notice-banner > .wc-block-components-notice-banner__cont
   display: block;
 }
 div.wc-block-components-notice-banner > .wc-block-components-notice-banner__content .wc-forward {
-  float: right;
   color: var(--wc-blocks-notice-banner-color) !important;
   background: transparent;
   padding: 0 !important;
@@ -207,6 +206,7 @@ div.wc-block-components-notice-banner > .wc-block-components-notice-banner__cont
   opacity: 0.6;
   text-decoration-line: underline;
   text-underline-position: under;
+  float: right;
 }
 body.rtl div.wc-block-components-notice-banner > .wc-block-components-notice-banner__content .wc-forward {
   float: left;

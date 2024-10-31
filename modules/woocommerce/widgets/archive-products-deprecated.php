@@ -38,7 +38,7 @@ class Archive_Products_Deprecated extends Products {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
+		return [ 'widget-woocommerce-products', 'widget-woocommerce-products-archive' ];
 	}
 
 	protected function register_controls() {

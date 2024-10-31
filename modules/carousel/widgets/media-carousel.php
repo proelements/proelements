@@ -51,7 +51,7 @@ class Media_Carousel extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'e-swiper', 'widget-carousel' ];
+		return [ 'e-swiper', 'widget-media-carousel', 'widget-carousel-module-base' ];
 	}
 
 	protected function render() {

@@ -77,7 +77,7 @@
   transition: all 0.3s;
 }
 #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:hover, #adminmenu #toplevel_page_elementor a[href=elementor_pro_upgrade_license_menu_link]:focus {
-  background-color: #c60055;
+  background-color: rgb(198, 0, 84.8571428571);
   box-shadow: none;
 }
 
@@ -126,6 +126,172 @@
 .elementor-button-spinner.error:before {
   content: "\f335";
   color: #ff0000;
+}
+
+@media screen and (max-width: 782px) {
+  .e-form-submissions-list-table {
+    /* Don't judge me... (need to override WordPress style). */
+  }
+  .e-form-submissions-list-table.wp-list-table tr:not(.inline-edit-row):not(.no-items) > td.bulk-checkbox-column:not(.check-column) {
+    width: 2.2em !important;
+  }
+}
+.e-form-submissions-list-table .bulk-checkbox-column {
+  padding: 9px 0 0 3px;
+  width: 2.2em;
+}
+.e-form-submissions-list-table .column-actions {
+  width: 11%;
+}
+.e-form-submissions-list-table .column-actions i {
+  font-size: 15px;
+}
+.e-form-submissions-list-table .column-id {
+  width: 7%;
+}
+.e-form-submissions-list-table .column-page {
+  width: 17%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.e-form-submissions-list-table .column-date {
+  width: 17%;
+}
+.e-form-submissions-list-table .column-form {
+  width: 20%;
+}
+
+.e-form-submissions-referer-icon {
+  font-size: 18px;
+}
+
+.e-form-submissions-main .postbox {
+  border: none;
+}
+.e-form-submissions-main .postbox-header {
+  border: 1px solid #D5D8DC;
+  border-block-end: none;
+  padding: 8px;
+}
+.e-form-submissions-main__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#e-form-submissions .eicon-success {
+  color: #5cb85c;
+}
+#e-form-submissions .eicon-error {
+  color: #d9534f;
+}
+#e-form-submissions .misc-pub-section {
+  line-height: 1.3rem;
+}
+
+#e-form-submissions .e-form-submissions-item-table {
+  border: none;
+  border-collapse: collapse;
+}
+#e-form-submissions .e-form-submissions-item-table td:first-child {
+  width: 150px;
+  background: #F9FAFA;
+  font-weight: 700;
+}
+@media screen and (max-width: 782px) {
+  #e-form-submissions .e-form-submissions-item-table td:first-child {
+    /* Must set !important because wordpress set also !important. */
+    width: 90px !important;
+  }
+}
+#e-form-submissions .e-form-submissions-item-table td {
+  border: 1px solid #D5D8DC;
+  padding: 15px;
+}
+#e-form-submissions .e-form-submissions-item-table input:not([type=checkbox]):not([type=radio]), #e-form-submissions .e-form-submissions-item-table textarea, #e-form-submissions .e-form-submissions-item-table select {
+  width: 100%;
+  max-width: 400px;
+}
+
+#e-form-submissions .e-export-button {
+  margin-inline-start: 15px;
+}
+@media screen and (max-width: 782px) {
+  #e-form-submissions .e-export-button {
+    display: none;
+  }
+}
+#e-form-submissions .tablenav .actions select {
+  width: 10rem;
+}
+#e-form-submissions .tablenav .actions .select2-container {
+  float: left;
+  margin-right: 6px;
+}
+#e-form-submissions .tablenav .actions .select2-container .select2-selection__arrow {
+  height: 30px;
+}
+#e-form-submissions .tablenav .actions .select2-container .select2-selection--single {
+  height: 30px;
+  border: 1px solid #7e8993;
+}
+
+input[type=search].select2-search__field {
+  line-height: 1;
+}
+
+.e-form-submissions-search {
+  position: relative;
+}
+.e-form-submissions-search__spinner {
+  position: absolute;
+  right: 12px;
+  font-size: 11px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: var(--wp-admin-theme-color-darker-20, #005a87);
+}
+.e-form-submissions-search:focus-within .e-form-submissions-search__spinner, .e-form-submissions-search:hover .e-form-submissions-search__spinner {
+  right: 30px;
+}
+
+.e-form-submissions-action-log--success .e-form-submissions-action-log__message {
+  background: #dff0d8;
+  border-color: #5cb85c;
+}
+.e-form-submissions-action-log--error .e-form-submissions-action-log__message {
+  background: #f2dede;
+  border-color: #d9534f;
+}
+.e-form-submissions-action-log:not(:last-child) {
+  border-block-end: 1px solid #D5D8DC;
+}
+.e-form-submissions-action-log__label {
+  display: inline-block;
+  padding-inline-end: 15px;
+}
+.e-form-submissions-action-log__icon {
+  display: inline-block;
+  padding-inline-end: 3px;
+}
+.e-form-submissions-action-log__date {
+  font-size: 12px;
+  color: #69727D;
+}
+.e-form-submissions-action-log__message {
+  padding: 10px;
+  font-size: 12px;
+  color: #1f2124;
+  background: #F1F2F3;
+  border-inline-start: 4px solid #69727D;
+}
+
+.e-form-submissions-value-label:not(:last-child) {
+  display: block;
+  margin-block-end: 10px;
 }
 
 span.font-variations-count {
@@ -1215,28 +1381,28 @@ span.font-variations-count {
   --button-primary-active-background-color: #F3BAFD;
   --button-primary-color: #0C0D0E;
   --button-secondary-background-color: #69727D;
-  --button-secondary-hover-background-color: #525961;
-  --button-secondary-active-background-color: #3a3f46;
+  --button-secondary-hover-background-color: rgb(81.7173913043, 88.7217391304, 97.2826086957);
+  --button-secondary-active-background-color: rgb(58.4347826087, 63.4434782609, 69.5652173913);
   --button-secondary-color: #ffffff;
   --button-danger-background-color: #DC2626;
-  --button-danger-hover-background-color: #b21d1d;
-  --button-danger-active-background-color: #861616;
+  --button-danger-hover-background-color: rgb(178.25, 28.75, 28.75);
+  --button-danger-active-background-color: rgb(134.3333333333, 21.6666666667, 21.6666666667);
   --button-danger-color: #ffffff;
   --button-cta-background-color: #93003f;
-  --button-cta-hover-background-color: #600029;
-  --button-cta-active-background-color: #2d0013;
+  --button-cta-hover-background-color: rgb(96, 0, 41.1428571429);
+  --button-cta-active-background-color: rgb(45, 0, 19.2857142857);
   --button-cta-color: #ffffff;
   --button-brand-background-color: #93003f;
-  --button-brand-hover-background-color: #600029;
-  --button-brand-active-background-color: #2d0013;
+  --button-brand-hover-background-color: rgb(96, 0, 41.1428571429);
+  --button-brand-active-background-color: rgb(45, 0, 19.2857142857);
   --button-brand-color: #ffffff;
   --button-link-background-color: #515962;
-  --button-link-hover-background-color: #3a4046;
-  --button-link-active-background-color: #23262a;
+  --button-link-hover-background-color: rgb(57.9217877095, 63.6424581006, 70.0782122905);
+  --button-link-active-background-color: rgb(34.843575419, 38.2849162011, 42.156424581);
   --button-link-color: #ffffff;
   --button-disabled-background-color: #D5D8DC;
-  --button-disabled-hover-background-color: #b9bec5;
-  --button-disabled-active-background-color: #9da4ae;
+  --button-disabled-hover-background-color: rgb(185.1818181818, 190.1688311688, 196.8181818182);
+  --button-disabled-active-background-color: rgb(157.3636363636, 164.3376623377, 173.6363636364);
   --button-disabled-color: #ffffff;
   color: var(--button-background-color, currentColor);
   font-size: var(--button-font-size, inherit);
@@ -1258,23 +1424,23 @@ span.font-variations-count {
   --button-primary-active-background-color: #F3BAFD;
   --button-secondary-background-color: #BABFC5;
   --button-secondary-color: #fff;
-  --button-secondary-hover-background-color: #9ea5ae;
-  --button-secondary-active-background-color: #838c96;
+  --button-secondary-hover-background-color: rgb(158.2913385827, 165.2992125984, 173.7086614173);
+  --button-secondary-active-background-color: rgb(130.5826771654, 139.5984251969, 150.4173228346);
   --button-cta-background-color: #93003f;
-  --button-cta-hover-background-color: #600029;
-  --button-cta-active-background-color: #2d0013;
+  --button-cta-hover-background-color: rgb(96, 0, 41.1428571429);
+  --button-cta-active-background-color: rgb(45, 0, 19.2857142857);
   --button-cta-color: #fff;
-  --button-brand-hover-background-color: #600029;
-  --button-brand-active-background-color: #2d0013;
+  --button-brand-hover-background-color: rgb(96, 0, 41.1428571429);
+  --button-brand-active-background-color: rgb(45, 0, 19.2857142857);
   --button-brand-color: #fff;
   --button-brand-background-color: #93003f;
   --button-link-background-color: #515962;
-  --button-link-hover-background-color: #3a4046;
-  --button-link-active-background-color: #23262a;
+  --button-link-hover-background-color: rgb(57.9217877095, 63.6424581006, 70.0782122905);
+  --button-link-active-background-color: rgb(34.843575419, 38.2849162011, 42.156424581);
   --button-link-color: #ffffff;
   --button-disabled-background-color: #69727D;
-  --button-disabled-hover-background-color: #525961;
-  --button-disabled-active-background-color: #3a3f46;
+  --button-disabled-hover-background-color: rgb(81.7173913043, 88.7217391304, 97.2826086957);
+  --button-disabled-active-background-color: rgb(58.4347826087, 63.4434782609, 69.5652173913);
   --button-disabled-color: #fff;
 }
 .eps-button--contained {

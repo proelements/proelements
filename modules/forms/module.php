@@ -2,13 +2,15 @@
 namespace ElementorPro\Modules\Forms;
 
 use Elementor\Controls_Manager;
+use Elementor\Settings;
+use Elementor\Core\Admin\Admin_Notices;
+use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use ElementorPro\Core\Upgrade\Manager as Upgrade_Manager;
+
+use Elementor\User;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\Forms\Data\Controller;
-use Elementor\Core\Experiments\Manager;
-use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Modules\Forms\Actions;
-use ElementorPro\Modules\Forms\Classes;
 use ElementorPro\Modules\Forms\Controls\Fields_Map;
 use ElementorPro\Modules\Forms\Registrars\Form_Actions_Registrar;
 use ElementorPro\Modules\Forms\Registrars\Form_Fields_Registrar;
@@ -68,12 +70,23 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	public function register_styles() {
-		wp_register_style(
-			'widget-forms',
-			$this->get_css_assets_url( 'widget-forms', null, true, true ),
-			[ 'elementor-frontend' ],
-			ELEMENTOR_PRO_VERSION
-		);
+		$widget_styles = $this->get_widgets_style_list();
+
+		foreach ( $widget_styles as $widget_style_name ) {
+			wp_register_style(
+				$widget_style_name,
+				$this->get_css_assets_url( $widget_style_name, null, true, true ),
+				[ 'elementor-frontend' ],
+				ELEMENTOR_PRO_VERSION
+			);
+		}
+	}
+
+	private function get_widgets_style_list(): array {
+		return [
+			'widget-form',
+			'widget-login',
+		];
 	}
 
 	public static function find_element_recursive( $elements, $form_id ) {
@@ -169,22 +182,79 @@ class Module extends Module_Base {
 	 * Register submissions
 	 */
 	private function register_submissions_component() {
-		$experiments_manager = Plugin::elementor()->experiments;
 		$name = Form_Submissions_Component::NAME;
 
-		$experiments_manager->add_feature( [
-			'name' => $name,
-			'title' => esc_html__( 'Form Submissions', 'elementor-pro' ),
-			'description' => esc_html__( 'Never lose another submission! Using “Actions After Submit” you can now choose to save all submissions to an internal database.', 'elementor-pro' ),
-			'release_status' => Manager::RELEASE_STATUS_STABLE,
-			'default' => Manager::STATE_ACTIVE,
-		] );
+		if ( is_admin() ) {
+			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_submissions_admin_fields' ] );
+		}
 
-		if ( ! $experiments_manager->is_feature_active( $name ) ) {
+		if ( '1' === get_option( 'elementor_' . $name ) ) {
 			return;
 		}
 
+		if ( current_user_can( 'manage_options' ) ) {
+			add_action( 'admin_notices', [ $this, 'register_submissions_admin_notice' ] );
+		}
+
 		$this->add_component( $name, new Form_Submissions_Component() );
+	}
+
+	public function register_submissions_admin_fields( Settings $settings ) {
+		$settings->add_field(
+			Settings::TAB_ADVANCED,
+			Settings::TAB_ADVANCED,
+			Form_Submissions_Component::NAME,
+			[
+				'label' => esc_html__( 'Form Submissions', 'elementor-pro' ),
+				'field_args' => [
+					'type' => 'select',
+					'std' => '',
+					'options' => [
+						'' => esc_html__( 'Enable', 'elementor-pro' ),
+						'1' => esc_html__( 'Disable', 'elementor-pro' ),
+					],
+					'desc' => esc_html__( 'Never lose another submission! Using “Actions After Submit” you can now choose to save all submissions to an internal database.', 'elementor-pro' ),
+				],
+			],
+		);
+	}
+
+	public function register_submissions_admin_notice() {
+		$notice_id = 'elementor-pro-forms-submissions';
+		if ( User::is_user_notice_viewed( $notice_id ) ) {
+			return;
+		}
+
+		$is_new_site = Upgrade_Manager::install_compare( '3.25.0', '>=' );
+		if ( $is_new_site ) {
+			return;
+		}
+
+		/**
+		 * @var Admin_Notices $admin_notices
+		 */
+		$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
+
+		$dismiss_url = add_query_arg( [
+			'action' => 'elementor_set_admin_notice_viewed',
+			'notice_id' => esc_attr( $notice_id ),
+		], admin_url( 'admin-post.php' ) );
+
+		$admin_notices->print_admin_notice( [
+			'id' => $notice_id,
+			'title' => esc_html__( 'Form Submissions now activated by default on all websites', 'elementor-pro' ),
+			'description' => sprintf(
+				esc_html__( 'The Form Submissions feature, previously located under the Features tab in Elementor, is now enabled by default on all websites. If you prefer to disable this feature, you can do so by navigating to %1$sSettings → Advanced%2$s.', 'elementor-pro' ),
+				'<a href="' . esc_url( admin_url( 'admin.php?page=elementor-settings#tab-' . Settings::TAB_ADVANCED ) ) . '"><strong>',
+				'</strong></a>'
+			),
+			'button' => [
+				'text' => esc_html__( 'Got it! Keep it enabled', 'elementor-pro' ),
+				'classes' => [ 'e-notice-dismiss' ],
+				'url' => esc_url_raw( $dismiss_url ),
+				'type' => 'cta',
+			],
+		] );
 	}
 
 	/**

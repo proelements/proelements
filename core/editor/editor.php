@@ -166,7 +166,7 @@ class Editor extends App {
 			}
 		}
 
-		if ( Display_Conditions_Module::can_use_display_conditions() && Display_Conditions_Module::is_experiment_active() ) {
+		if ( Display_Conditions_Module::can_use_display_conditions() ) {
 			$settings['displayConditions'] = Display_Conditions_Module::instance()
 				->get_conditions_manager()
 				->get_conditions_config();

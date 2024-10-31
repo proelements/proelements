@@ -61,11 +61,26 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	public function register_styles() {
-		wp_register_style(
-			'widget-theme-elements',
-			$this->get_css_assets_url( 'widget-theme-elements', null, true, true ),
-			[ 'elementor-frontend' ],
-			ELEMENTOR_PRO_VERSION
-		);
+		$widget_styles = $this->get_widgets_style_list();
+
+		foreach ( $widget_styles as $widget_style_name ) {
+			wp_register_style(
+				$widget_style_name,
+				$this->get_css_assets_url( $widget_style_name, null, true, true ),
+				[ 'elementor-frontend' ],
+				ELEMENTOR_PRO_VERSION
+			);
+		}
+	}
+
+	private function get_widgets_style_list(): array {
+		return [
+			'widget-author-box',
+			'widget-breadcrumbs',
+			'widget-post-info',
+			'widget-post-navigation',
+			'widget-search-form',
+			'widget-sitemap',
+		];
 	}
 }

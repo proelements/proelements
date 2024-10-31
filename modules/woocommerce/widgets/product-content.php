@@ -28,18 +28,4 @@ class Product_Content extends Post_Content {
 	public function get_group_name() {
 		return 'woocommerce';
 	}
-
-	/**
-	 * Get style dependencies.
-	 *
-	 * Retrieve the list of style dependencies the widget requires.
-	 *
-	 * @since 3.24.0
-	 * @access public
-	 *
-	 * @return array Widget style dependencies.
-	 */
-	public function get_style_depends(): array {
-		return [ 'widget-woocommerce' ];
-	}
 }

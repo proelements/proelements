@@ -11,7 +11,8 @@ abstract class Widget_Contact_Button_Base_Pro extends Widget_Contact_Button_Base
 	public function get_style_depends(): array {
 		$style_depends = parent::get_style_depends();
 
-		if ( ! in_array( 'widget-floating-buttons', $style_depends ) ) {
+		// In older Core versions, enqueue the frontend.scss.
+		if ( ! in_array( 'widget-contact-buttons-base', $style_depends ) ) {
 			$style_depends[] = 'widget-floating-buttons';
 		}
 

@@ -229,6 +229,21 @@ class Table_Of_Contents extends Base_Widget {
 			]
 		);
 
+		$this->add_control(
+			'no_headings_message',
+			[
+				'label' => esc_html__( 'No Headings Found Message', 'elementor-pro' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'No headings were found on this page.', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
+				'label_block' => true,
+				'separator' => 'before',
+				'frontend_available' => true,
+			]
+		);
+
 		$this->end_controls_section(); // table_of_contents
 
 		$this->start_controls_section(

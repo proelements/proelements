@@ -42,7 +42,7 @@ class Testimonial_Carousel extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'e-swiper', 'widget-carousel' ];
+		return [ 'e-swiper', 'widget-testimonial-carousel', 'widget-carousel-module-base' ];
 	}
 
 	protected function register_controls() {

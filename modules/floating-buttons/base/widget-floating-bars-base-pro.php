@@ -11,7 +11,8 @@ abstract class Widget_Floating_Bars_Base_Pro extends Widget_Floating_Bars_Base {
 	public function get_style_depends(): array {
 		$style_depends = parent::get_style_depends();
 
-		if ( ! in_array( 'widget-floating-buttons', $style_depends ) ) {
+		// In older Core versions, enqueue the frontend.scss.
+		if ( ! in_array( 'widget-floating-bars-base', $style_depends ) ) {
 			$style_depends[] = 'widget-floating-buttons';
 		}
 

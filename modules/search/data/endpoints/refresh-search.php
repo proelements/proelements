@@ -37,14 +37,22 @@ class Refresh_Search extends Refresh_Base {
 
 		/** @var Widget_Base $widget_instance */
 		$widget_instance->set_search_term( $data['search_term'] );
+		$widget_instance->set_page_number( $data['page_number'] ?? 1 );
 		$widget_instance->render_results();
 
 		$markup = ob_get_clean();
 
 		$widget_instance->set_search_term( '' );
 
+		ob_start();
+
+		$widget_instance->render_pagination();
+
+		$pagination = ob_get_clean();
+
 		return [
 			'data' => $markup,
+			'pagination' => $pagination,
 		];
 	}
 

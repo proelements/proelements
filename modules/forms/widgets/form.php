@@ -52,7 +52,7 @@ class Form extends Form_Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-forms' ];
+		return [ 'widget-form' ];
 	}
 
 	protected function register_controls() {
@@ -459,7 +459,11 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'ID', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere in this form. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
+				'description' => sprintf(
+					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
+					'<code>',
+					'</code>'
+				),
 				'render_type' => 'none',
 				'required' => true,
 				'dynamic' => [
@@ -793,7 +797,7 @@ class Form extends Form_Base {
 				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-pro' ),
 				'description' => sprintf(
-					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
+					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
 					'<code>',
 					'</code>'
 				),
@@ -948,7 +952,11 @@ class Form extends Form_Base {
 					'active' => false,
 				],
 				'placeholder' => 'new_form_id',
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
+				'description' => sprintf(
+					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
+					'<code>',
+					'</code>'
+				),
 				'separator' => 'after',
 				'dynamic' => [
 					'active' => true,
