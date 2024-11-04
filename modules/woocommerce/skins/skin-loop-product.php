@@ -33,7 +33,12 @@ class Skin_Loop_Product extends Skin_Loop_Base {
 	public function render() {
 		$this->parent->add_render_attribute( '_wrapper', 'class', 'woocommerce' );
 
+		global $wp_query;
+		$wp_query->is_loop_product = true;
+
 		parent::render();
+
+		$wp_query->is_loop_product = null;
 	}
 
 	/**

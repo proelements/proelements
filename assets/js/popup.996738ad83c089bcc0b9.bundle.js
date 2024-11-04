@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 28-10-2024 */
+/*! pro-elements - v3.25.0 - 03-11-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["popup"],{
 

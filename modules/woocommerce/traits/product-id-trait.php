@@ -10,7 +10,7 @@ trait Product_Id_Trait {
 	public function get_product( $product_id = false ) {
 		global $product;
 
-		if ( $product instanceof \WC_Product ) {
+		if ( $this->product_already_queried( $product ) ) {
 			return $product;
 		}
 
@@ -25,6 +25,16 @@ trait Product_Id_Trait {
 		}
 
 		return $product_data;
+	}
+
+	private function product_already_queried( $product ): bool {
+		global $wp_query;
+
+		if ( empty( $wp_query->is_loop_product ) ) {
+			return false;
+		}
+
+		return $product instanceof \WC_Product;
 	}
 
 	public function get_product_variation() {

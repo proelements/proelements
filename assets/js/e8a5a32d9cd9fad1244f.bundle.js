@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 28-10-2024 */
+/*! pro-elements - v3.25.0 - 03-11-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["modules_floating-buttons_assets_js_shared_frontend_handlers_click-tracking_js"],{
 
