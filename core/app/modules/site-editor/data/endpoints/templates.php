@@ -147,7 +147,12 @@ class Templates extends Base_Endpoint {
 		$types = $this->get_documents_types();
 
 		$template['instances'] = $conditions_manager->get_document_instances( $template['template_id'] );
-		$template['defaultCondition'] = $types[ $template['type'] ]['condition_type'];
+		
+		if (isset($types[$template['type']]) && array_key_exists('condition_type', $types[$template['type']])) {
+		        $template['defaultCondition'] = $types[$template['type']]['condition_type'];
+		} else {
+			$template['defaultCondition'] = null;
+		}
 
 		$has_instances = ! empty( $template['instances'] );
 		$is_active = false;
