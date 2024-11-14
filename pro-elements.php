@@ -14,18 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-
-function pro_elements_plugin_load_plugin() {
-	if ( ! did_action( 'elementor/loaded' ) ) {
-		add_action( 'admin_notices', 'pro_elements_plugin_fail_load' );
-
-		return;
-	}
-	if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-		return;
-	}
-
-	define( 'ELEMENTOR_PRO_VERSION', '3.25.2' );
+define( 'ELEMENTOR_PRO_VERSION', '3.25.2' );
 
 /**
  * All versions should be `major.minor`, without patch, in order to compare them properly.
@@ -44,11 +33,7 @@ define( 'ELEMENTOR_PRO_MODULES_PATH', ELEMENTOR_PRO_PATH . 'modules/' );
 define( 'ELEMENTOR_PRO_URL', plugins_url( '/', ELEMENTOR_PRO__FILE__ ) );
 define( 'ELEMENTOR_PRO_ASSETS_URL', ELEMENTOR_PRO_URL . 'assets/' );
 define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
-	define( 'IS_PRO_ELEMENTS', 'true' );
-	add_action( 'plugins_loaded', 'pro_elements_load_plugin_func' );
-}
-
-
+define( 'IS_PRO_ELEMENTS', 'true' );
 
 /**
  * Load gettext translate for our text domain.
@@ -59,6 +44,16 @@ define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
  */
 function pro_elements_load_plugin_func() {
 	load_plugin_textdomain( 'elementor-pro' );
+
+	if ( ! did_action( 'elementor/loaded' ) ) {
+		add_action( 'admin_notices', 'elementor_pro_fail_load' );
+
+		return;
+	}
+
+	if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+		return;
+	}
 
 	$core_version = ELEMENTOR_VERSION;
 	$core_version_required = ELEMENTOR_PRO_REQUIRED_CORE_VERSION;
@@ -73,7 +68,6 @@ function pro_elements_load_plugin_func() {
 	if ( ! pro_elements_compare_major_version( $core_version, $core_version_recommended, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_admin_notice_upgrade_recommendation' );
 	}
-
 	// Include Composer's autoloader
 	if ( file_exists( ELEMENTOR_PRO_PATH . 'vendor/autoload.php' ) ) {
 		require_once ELEMENTOR_PRO_PATH . 'vendor/autoload.php';
@@ -81,7 +75,6 @@ function pro_elements_load_plugin_func() {
 		// Autoload classmap doesn't include this file.
 		require_once ELEMENTOR_PRO_PATH . 'vendor_prefixed/php-di/php-di/src/functions.php';
 	}
-
 	require ELEMENTOR_PRO_PATH . 'plugin.php';
 }
 
@@ -95,7 +88,7 @@ function pro_elements_compare_major_version( $left, $right, $operator ) {
 	return version_compare( $left, $right, $operator );
 }
 
-pro_elements_plugin_load_plugin();
+add_action( 'plugins_loaded', 'pro_elements_load_plugin_func' );
 
 function pro_elements_print_error( $message ) {
 	if ( ! $message ) {
