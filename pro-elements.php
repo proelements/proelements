@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ELEMENTOR_PRO_VERSION', '3.25.3' );
+define( 'ELEMENTOR_PRO_VERSION', '3.25.2' );
 
 /**
  * All versions should be `major.minor`, without patch, in order to compare them properly.
@@ -34,16 +34,6 @@ define( 'ELEMENTOR_PRO_URL', plugins_url( '/', ELEMENTOR_PRO__FILE__ ) );
 define( 'ELEMENTOR_PRO_ASSETS_URL', ELEMENTOR_PRO_URL . 'assets/' );
 define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
 define( 'IS_PRO_ELEMENTS', 'true' );
-// Include Composer's autoloader
-if ( file_exists( ELEMENTOR_PRO_PATH . 'vendor/autoload.php' ) ) {
-	require_once ELEMENTOR_PRO_PATH . 'vendor/autoload.php';
-	// We need this file because of the DI\create function that we are using.
-	// Autoload classmap doesn't include this file.
-	require_once ELEMENTOR_PRO_PATH . 'vendor_prefixed/php-di/php-di/src/functions.php';
-}
-
-
-
 
 /**
  * Load gettext translate for our text domain.
@@ -78,7 +68,13 @@ function pro_elements_load_plugin_func() {
 	if ( ! pro_elements_compare_major_version( $core_version, $core_version_recommended, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_admin_notice_upgrade_recommendation' );
 	}
-
+	// Include Composer's autoloader
+	if ( file_exists( ELEMENTOR_PRO_PATH . 'vendor/autoload.php' ) ) {
+		require_once ELEMENTOR_PRO_PATH . 'vendor/autoload.php';
+		// We need this file because of the DI\create function that we are using.
+		// Autoload classmap doesn't include this file.
+		require_once ELEMENTOR_PRO_PATH . 'vendor_prefixed/php-di/php-di/src/functions.php';
+	}
 	require ELEMENTOR_PRO_PATH . 'plugin.php';
 }
 
