@@ -36,6 +36,11 @@ class Nested_Carousel extends Widget_Nested_Base {
 		return [ 'Carousel', 'Slides', 'Nested', 'Media', 'Gallery', 'Image' ];
 	}
 
+	// TODO: Replace this check with `is_active_feature` on 3.28.0 to support is_active_feature second parameter.
+	public function show_in_panel() {
+		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements' ) && Plugin::elementor()->experiments->is_feature_active( 'container' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *

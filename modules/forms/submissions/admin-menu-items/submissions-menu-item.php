@@ -85,7 +85,7 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 
 	public function should_show_hint(): bool {
 		return ( Hints::should_show_hint( 'site_mailer_forms_submissions_notice' )
-				 && $this->has_submissions( 10 )
+				 && $this->has_submissions()
 				 && ! User::is_user_notice_viewed( 'site_mailer_forms_submissions_notice' )
 		);
 	}

@@ -9,6 +9,7 @@ use Elementor\Controls_Manager;
 use Elementor\Modules\NestedElements\Base\Widget_Nested_Base;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Plugin;
 
 class Off_Canvas extends Widget_Nested_Base {
 
@@ -34,6 +35,11 @@ class Off_Canvas extends Widget_Nested_Base {
 
 	public function get_categories() {
 		return [ 'pro-elements' ];
+	}
+
+	// TODO: Replace this check with `is_active_feature` on 3.28.0 to support is_active_feature second parameter.
+	public function show_in_panel() {
+		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements' ) && Plugin::elementor()->experiments->is_feature_active( 'container' );
 	}
 
 	/**
