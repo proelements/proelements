@@ -1,4 +1,8 @@
 # PRO Elements - by PROElements.org
+#### 3.25.4 - 2024-11-20
+
+* Tweak: Improved Global Widget loading method to enhance performance
+
 #### 3.25.3 - 2024-11-13
 
 * Fix: Nested Elements are activated even when the Container experiment is inactive

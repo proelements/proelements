@@ -387,6 +387,9 @@ class Native implements Serializable
                     if (\PHP_VERSION >= 7.4 && !$property->isInitialized($instance)) {
                         continue;
                     }
+                    if (\PHP_VERSION >= 8.1 && $property->isReadOnly() && $property->class !== $reflection->name) {
+                        continue;
+                    }
                     $value = $property->getValue($instance);
                     if (\is_array($value) || \is_object($value)) {
                         $this->mapByReference($value);

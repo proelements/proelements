@@ -36,6 +36,7 @@ class Global_Widget extends Base_Widget {
 			$template_data = Plugin::elementor()->templates_manager->get_template_data( [
 				'source' => 'local',
 				'template_id' => $data['templateID'],
+				'check_permissions' => false,
 			] );
 
 			if ( is_wp_error( $template_data ) ) {
