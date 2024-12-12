@@ -3,7 +3,7 @@
         'name' => 'elementor/elementor-pro',
         'pretty_version' => '3.25.x-dev',
         'version' => '3.25.9999999.9999999-dev',
-        'reference' => '841d79144990ad41b9667de1791ca23bea7634ff',
+        'reference' => '4ddfa7c8179189517e039e844deba236eab55c12',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'elementor/elementor-pro' => array(
             'pretty_version' => '3.25.x-dev',
             'version' => '3.25.9999999.9999999-dev',
-            'reference' => '841d79144990ad41b9667de1791ca23bea7634ff',
+            'reference' => '4ddfa7c8179189517e039e844deba236eab55c12',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

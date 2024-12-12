@@ -5,7 +5,7 @@
   display: none;
 }
 
-.elementor-popup-modal {
+.elementor-popup-modal.dialog-type-lightbox {
   display: flex;
   pointer-events: none;
   background-color: transparent;

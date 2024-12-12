@@ -101,7 +101,7 @@ class Webhook extends Action_Base {
 		 */
 		$args = apply_filters( 'elementor_pro/forms/webhooks/request_args', $args, $record );
 
-		$response = wp_remote_post( $settings['webhooks'], $args );
+		$response = wp_safe_remote_post( $settings['webhooks'], $args );
 
 		/**
 		 * Elementor form webhook response.

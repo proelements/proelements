@@ -39,7 +39,7 @@ class Mailchimp_Handler {
 	}
 
 	public function query( $end_point ) {
-		$response = wp_remote_get( $this->api_base_url . $end_point, $this->api_request_args );
+		$response = wp_safe_remote_get( $this->api_base_url . $end_point, $this->api_request_args );
 
 		if ( is_wp_error( $response ) || 200 != (int) wp_remote_retrieve_response_code( $response ) ) {
 			throw new \Exception( 'Mailchimp error.' );
@@ -58,7 +58,7 @@ class Mailchimp_Handler {
 		$this->api_request_args += $request_args;
 		$this->api_request_args['headers']['Content-Type'] = 'application/json; charset=utf-8';
 		$this->api_request_args['body'] = wp_json_encode( $data );
-		$response = wp_remote_post( $this->api_base_url . $end_point, $this->api_request_args );
+		$response = wp_safe_remote_post( $this->api_base_url . $end_point, $this->api_request_args );
 
 		if ( is_wp_error( $response ) ) {
 			throw new \Exception( 'Mailchimp error.' );
