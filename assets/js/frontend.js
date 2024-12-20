@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/frontend.js":
@@ -326,8 +326,12 @@ class _default extends elementorModules.frontend.handlers.Base {
   }
   getDefaultElements() {
     const selectors = this.getSettings('selectors');
+    let container = this.$element.find(selectors.container);
+    if (0 === container.length) {
+      container = this.$element;
+    }
     return {
-      $container: this.$element.find(selectors.container)
+      $container: container
     };
   }
   bindEvents() {
@@ -417,7 +421,8 @@ class _default extends elementorModules.frontend.handlers.Base {
       effect.actions.forEach(action => interactions[interactionName][action] = options);
     });
     let $element = this.$element,
-      $dimensionsElement;
+      $dimensionsElement,
+      $childElement;
     const elementType = this.getElementType();
     if ('element' === type && !['section', 'container'].includes(elementType)) {
       $dimensionsElement = $element;
@@ -427,7 +432,8 @@ class _default extends elementorModules.frontend.handlers.Base {
       } else {
         childElementSelector = '.elementor-widget-container';
       }
-      $element = $element.find('> ' + childElementSelector);
+      $childElement = $element.find('> ' + childElementSelector);
+      $element = 0 === $childElement.length ? this.$element : $childElement;
     }
     const options = {
       type,
@@ -759,25 +765,16 @@ exports["default"] = _default;
 /*!******************************************************************************!*\
   !*** ../modules/motion-fx/assets/js/frontend/motion-fx/interactions/base.js ***!
   \******************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 class _default extends elementorModules.ViewModule {
-  constructor() {
-    super(...arguments);
-    (0, _defineProperty2.default)(this, "onInsideViewport", () => {
-      this.run();
-      this.animationFrameRequest = requestAnimationFrame(this.onInsideViewport);
-    });
-  }
   __construct(options) {
     this.motionFX = options.motionFX;
     if (!this.intersectionObservers) {
@@ -799,6 +796,10 @@ class _default extends elementorModules.ViewModule {
     const observedElement = 'page' === this.motionFX.getSettings('range') ? elementorFrontend.elements.$body[0] : this.motionFX.elements.$parent[0];
     this.intersectionObserver.observe(observedElement);
   }
+  onInsideViewport = () => {
+    this.run();
+    this.animationFrameRequest = requestAnimationFrame(this.onInsideViewport);
+  };
   runCallback() {
     const callback = this.getSettings('callback');
     callback(...arguments);
@@ -1199,7 +1200,7 @@ exports["default"] = _default;
 /*!***************************************************************!*\
   !*** ../modules/sticky/assets/js/frontend/handlers/sticky.js ***!
   \***************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1208,6 +1209,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+var _utils = __webpack_require__(/*! elementor-frontend/utils/utils */ "../../elementor/assets/dev/js/frontend/utils/utils.js");
 var _default = exports["default"] = elementorModules.frontend.handlers.Base.extend({
   currentConfig: {},
   debouncedReactivate: null,
@@ -1255,6 +1257,7 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
           spacer: 'elementor-sticky__spacer'
         },
         isRTL: elementorFrontend.config.is_rtl,
+        isScrollSnapActive: (0, _utils.isScrollSnapActive)(),
         // In edit mode, since the preview is an iframe, the scrollbar is on the left. The scrollbar width is
         // compensated for in this case.
         handleScrollbarWidth: elementorFrontend.isEditMode()
@@ -1402,28 +1405,38 @@ exports["default"] = _default;
 
 /***/ }),
 
-/***/ "../node_modules/@babel/runtime/helpers/defineProperty.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/defineProperty.js ***!
-  \****************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "../../elementor/assets/dev/js/frontend/utils/utils.js":
+/*!*************************************************************!*\
+  !*** ../../elementor/assets/dev/js/frontend/utils/utils.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
 
-var toPropertyKey = __webpack_require__(/*! ./toPropertyKey.js */ "../node_modules/@babel/runtime/helpers/toPropertyKey.js");
-function _defineProperty(obj, key, value) {
-  key = toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.isScrollSnapActive = exports.escapeHTML = void 0;
+// Escape HTML special chars to prevent XSS.
+const escapeHTML = str => {
+  const specialChars = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;'
+  };
+  return str.replace(/[&<>'"]/g, tag => specialChars[tag] || tag);
+};
+
+// Check if Scroll-Snap is active.
+exports.escapeHTML = escapeHTML;
+const isScrollSnapActive = () => {
+  const scrollSnapStatus = elementorFrontend.isEditMode() ? elementor.settings.page.model.attributes?.scroll_snap : elementorFrontend.config.settings.page?.scroll_snap;
+  return 'yes' === scrollSnapStatus ? true : false;
+};
+exports.isScrollSnapActive = isScrollSnapActive;
 
 /***/ }),
 
@@ -1439,62 +1452,6 @@ function _interopRequireDefault(obj) {
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/toPrimitive.js":
-/*!*************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/toPrimitive.js ***!
-  \*************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var _typeof = (__webpack_require__(/*! ./typeof.js */ "../node_modules/@babel/runtime/helpers/typeof.js")["default"]);
-function toPrimitive(t, r) {
-  if ("object" != _typeof(t) || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != _typeof(i)) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/toPropertyKey.js":
-/*!***************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/toPropertyKey.js ***!
-  \***************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var _typeof = (__webpack_require__(/*! ./typeof.js */ "../node_modules/@babel/runtime/helpers/typeof.js")["default"]);
-var toPrimitive = __webpack_require__(/*! ./toPrimitive.js */ "../node_modules/@babel/runtime/helpers/toPrimitive.js");
-function toPropertyKey(t) {
-  var i = toPrimitive(t, "string");
-  return "symbol" == _typeof(i) ? i : i + "";
-}
-module.exports = toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/typeof.js":
-/*!********************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/typeof.js ***!
-  \********************************************************/
-/***/ ((module) => {
-
-function _typeof(o) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
-}
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ })
 

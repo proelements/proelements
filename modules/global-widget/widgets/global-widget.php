@@ -84,6 +84,10 @@ class Global_Widget extends Base_Widget {
 		return false;
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_raw_data( $with_html_content = false ) {
 		$raw_data = parent::get_raw_data( $with_html_content );
 

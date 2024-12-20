@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05);
 }
@@ -358,7 +358,7 @@
   padding-inline: 1.875rem;
 }
 
-.eps-app__content {
+.eps-app__content:has(.e-site-editor__content_container_main) {
   padding: 0;
 }
 /*# sourceMappingURL=app-rtl.css.map */

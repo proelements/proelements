@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -34,6 +35,10 @@ class Post_Info extends Base {
 		return [ 'post', 'info', 'date', 'time', 'author', 'taxonomy', 'comments', 'terms', 'avatar' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends(): array {
 		$style_depends = [ 'widget-post-info', 'widget-icon-list' ];
 
@@ -43,15 +48,6 @@ class Post_Info extends Base {
 		}
 
 		return $style_depends;
-	}
-
-	public function get_inline_css_depends() {
-		return [
-			[
-				'name' => 'icon-list',
-				'is_core_dependency' => true,
-			],
-		];
 	}
 
 	protected function register_controls() {
@@ -134,7 +130,7 @@ class Post_Info extends Base {
 				],
 				'description' => sprintf(
 					/* translators: %s: Allowed data letters (see: http://php.net/manual/en/function.date.php). */
-					__( 'Use the letters: %s', 'elementor-pro' ),
+					esc_html__( 'Use the letters: %s', 'elementor-pro' ),
 					'l D d j S F m M n Y y'
 				),
 				'ai' => [
@@ -174,7 +170,7 @@ class Post_Info extends Base {
 				],
 				'description' => sprintf(
 					/* translators: %s: Allowed time letters (see: http://php.net/manual/en/function.time.php). */
-					__( 'Use the letters: %s', 'elementor-pro' ),
+					esc_html__( 'Use the letters: %s', 'elementor-pro' ),
 					'g G H i a A'
 				),
 				'ai' => [

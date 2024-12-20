@@ -29,6 +29,10 @@ class Facebook_Button extends Base_Widget {
 		return [ 'facebook', 'social', 'embed', 'button', 'like', 'share', 'recommend', 'follow' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *

@@ -81,6 +81,10 @@ class Search extends Base_Widget {
 		return [ 'pro-elements' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *
@@ -2011,7 +2015,7 @@ class Search extends Base_Widget {
 
 				<label <?php $this->print_render_attribute_string( $attribute_ids['label'] ); ?>>
 					<span <?php $this->print_render_attribute_string( $attribute_ids['label_text'] ); ?>>
-						<?php esc_html_e( 'Search', 'elementor-pro' ); ?>
+						<?php echo esc_html__( 'Search', 'elementor-pro' ); ?>
 					</span>
 					<?php $this->maybe_render_icon( 'icon_search' ); ?>
 				</label>
@@ -2132,7 +2136,7 @@ class Search extends Base_Widget {
 			'class' => 'e-search-results-container hide-loader',
 			'aria-live' => 'polite',
 			'aria-atomic' => 'true',
-			'aria-label' => 'Results for search',
+			'aria-label' => esc_attr__( 'Results for search', 'elementor-pro' ),
 			'tabindex' => '0',
 		] );
 

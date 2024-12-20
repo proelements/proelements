@@ -39,6 +39,10 @@ class Purchase_Summary extends Base_Widget {
 		return [ 'woocommerce-elements' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *

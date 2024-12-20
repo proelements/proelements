@@ -97,7 +97,7 @@ class Contact_Buttons_Var_7_Render extends Contact_Buttons_Core_Render {
 		} else {
 			return sprintf(
 				/* translators: 1: Accessible name, 2: Platform name */
-				esc_html__( 'Open %1$s %2$s', 'elementor-pro' ),
+				esc_attr__( 'Open %1$s %2$s', 'elementor-pro' ),
 				$accessible_name,
 				$icon_text_mapping
 			);

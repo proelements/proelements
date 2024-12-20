@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -28,7 +28,9 @@ const htmlDecodeTextContent = input => {
   return doc.documentElement.textContent;
 };
 exports.htmlDecodeTextContent = htmlDecodeTextContent;
-const replaceUtmPlaceholders = (link = '', utms = {}) => {
+const replaceUtmPlaceholders = function () {
+  let link = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  let utms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   if (!link || !utms) {
     return link;
   }
@@ -221,9 +223,10 @@ var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const CacheNotice = ({
-  setCacheNoticeStatus
-}) => {
+const CacheNotice = _ref => {
+  let {
+    setCacheNoticeStatus
+  } = _ref;
   const [open, setOpen] = (0, _react.useState)(true);
   const handleClose = async () => {
     const response = await setCacheNoticeStatus();
@@ -289,10 +292,11 @@ var _utils = __webpack_require__(/*! ../utils/utils */ "../modules/display-condi
 var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const ConditionsRepeaterRow = ({
-  andConditionIndex,
-  orConditionIndex
-}) => {
+const ConditionsRepeaterRow = _ref => {
+  let {
+    andConditionIndex,
+    orConditionIndex
+  } = _ref;
   const {
       selectedConditions,
       conditionsConfig,
@@ -334,21 +338,24 @@ const ConditionsRepeaterRow = ({
     value: andCondition.condition || '',
     onChange: event => handleChangeCondition(event, andConditionIndex),
     controlCount: controlCount
-  }, flattenedConditionOptions.map(({
-    key,
-    label,
-    isGroup
-  }) => isGroup ? /*#__PURE__*/React.createElement(_ui.ListSubheader, {
-    key: key
-  }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-    variant: "caption",
-    controlCount: controlCount
-  }, label)) : /*#__PURE__*/React.createElement(_ui.MenuItem, {
-    key: key,
-    value: key
-  }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-    controlCount: controlCount
-  }, label)))), Object.keys(conditionControls).map(controlKey => /*#__PURE__*/React.createElement(_controlRenderer.default, {
+  }, flattenedConditionOptions.map(_ref2 => {
+    let {
+      key,
+      label,
+      isGroup
+    } = _ref2;
+    return isGroup ? /*#__PURE__*/React.createElement(_ui.ListSubheader, {
+      key: key
+    }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
+      variant: "caption",
+      controlCount: controlCount
+    }, label)) : /*#__PURE__*/React.createElement(_ui.MenuItem, {
+      key: key,
+      value: key
+    }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
+      controlCount: controlCount
+    }, label));
+  })), Object.keys(conditionControls).map(controlKey => /*#__PURE__*/React.createElement(_controlRenderer.default, {
     key: controlKey,
     controlKey: controlKey,
     andConditionIndex: andConditionIndex,
@@ -386,9 +393,10 @@ var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-conditions */ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"));
 var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
 var _conditionsRepeaterRow = _interopRequireDefault(__webpack_require__(/*! ./conditions-repeater-row */ "../modules/display-conditions/assets/js/editor/components/conditions-repeater-row.js"));
-const ConditionsSelectors = ({
-  orConditionIndex
-}) => {
+const ConditionsSelectors = _ref => {
+  let {
+    orConditionIndex
+  } = _ref;
   const {
       selectedConditions
     } = (0, _useConditions.default)(),
@@ -512,14 +520,15 @@ var _cacheNotice = _interopRequireDefault(__webpack_require__(/*! ./cache-notice
 var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const Content = ({
-  getControlValue,
-  setControlValue,
-  conditionsConfig,
-  onClose,
-  fetchData,
-  setCacheNoticeStatus
-}) => {
+const Content = _ref => {
+  let {
+    getControlValue,
+    setControlValue,
+    conditionsConfig,
+    onClose,
+    fetchData,
+    setCacheNoticeStatus
+  } = _ref;
   const inputValue = getControlValue(),
     controlValue = inputValue || [],
     initialState = {
@@ -586,12 +595,13 @@ const Content = ({
       invalidAndConditionIndex
     };
   };
-  const handleInvalidRequiredKeysPerCondition = ({
-    requiredKeys,
-    andCondition,
-    orConditionIndex,
-    andConditionIndex
-  }) => {
+  const handleInvalidRequiredKeysPerCondition = _ref2 => {
+    let {
+      requiredKeys,
+      andCondition,
+      orConditionIndex,
+      andConditionIndex
+    } = _ref2;
     const {
       condition: conditionKey
     } = andCondition;
@@ -715,12 +725,13 @@ var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/displ
 var _utils = __webpack_require__(/*! ../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const ControlRenderer = ({
-  controlKey,
-  andConditionIndex,
-  orConditionIndex,
-  controlCount
-}) => {
+const ControlRenderer = _ref => {
+  let {
+    controlKey,
+    andConditionIndex,
+    orConditionIndex,
+    controlCount
+  } = _ref;
   const {
       conditionsConfig,
       selectedConditions,
@@ -864,18 +875,19 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 const formatValue = valueToFormat => {
   return Array.isArray(valueToFormat) ? valueToFormat : [valueToFormat];
 };
-const AutocompleteControl = ({
-  conditions,
-  condition,
-  controlKey,
-  onChangeOption,
-  options,
-  value,
-  shouldShowError,
-  errorMessage,
-  isMultiple,
-  controlCount
-}) => {
+const AutocompleteControl = _ref => {
+  let {
+    conditions,
+    condition,
+    controlKey,
+    onChangeOption,
+    options,
+    value,
+    shouldShowError,
+    errorMessage,
+    isMultiple,
+    controlCount
+  } = _ref;
   const [controlValue, setControlValue] = (0, _react.useState)(formatValue(value)),
     label = controlValue?.length ? '' : conditions[condition.condition].label || '';
   (0, _react.useEffect)(() => {
@@ -969,14 +981,15 @@ const dateFormat = 'MM-DD-YYYY';
 const formattedValue = dateString => {
   return (0, _dayjs.default)(dateString, dateFormat, true).isValid() ? (0, _dayjs.default)(dateString, dateFormat) : null;
 };
-const DatePickerControl = ({
-  condition,
-  onChangeOption,
-  controlKey,
-  value,
-  shouldShowError,
-  errorMessage
-}) => {
+const DatePickerControl = _ref => {
+  let {
+    condition,
+    onChangeOption,
+    controlKey,
+    value,
+    shouldShowError,
+    errorMessage
+  } = _ref;
   const [controlValue, setControlValue] = (0, _react.useState)(formattedValue(value));
   (0, _react.useEffect)(() => {
     setControlValue(formattedValue(value));
@@ -1048,18 +1061,19 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 const formatValue = valueToFormat => {
   return Array.isArray(valueToFormat) ? valueToFormat : [valueToFormat];
 };
-const QueryControl = ({
-  conditions,
-  condition,
-  control,
-  controlKey,
-  onChangeOption,
-  value,
-  shouldShowError,
-  errorMessage,
-  isMultiple,
-  controlCount
-}) => {
+const QueryControl = _ref => {
+  let {
+    conditions,
+    condition,
+    control,
+    controlKey,
+    onChangeOption,
+    value,
+    shouldShowError,
+    errorMessage,
+    isMultiple,
+    controlCount
+  } = _ref;
   const {
       fetchData
     } = (0, _react.useContext)(_conditionsContext.ConditionsContext),
@@ -1180,15 +1194,16 @@ var _conditionSelectControl = _interopRequireDefault(__webpack_require__(/*! ./u
 var _conditionSelectOption = _interopRequireDefault(__webpack_require__(/*! ./ui/condition-select-option */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const SelectControl = ({
-  condition,
-  control,
-  controlKey,
-  onChangeOption,
-  options,
-  value,
-  controlCount
-}) => {
+const SelectControl = _ref => {
+  let {
+    condition,
+    control,
+    controlKey,
+    onChangeOption,
+    options,
+    value,
+    controlCount
+  } = _ref;
   const [controlValue, setControlValue] = (0, _react.useState)(value);
   (0, _react.useEffect)(() => {
     setControlValue(value);
@@ -1198,7 +1213,8 @@ const SelectControl = ({
     setControlValue(newValue);
   };
   const getOptions = () => {
-    return Object.entries(options).map(([optionKey, optionValue]) => {
+    return Object.entries(options).map(_ref2 => {
+      let [optionKey, optionValue] = _ref2;
       if ('group' === optionValue.type) {
         return /*#__PURE__*/React.createElement(_ui.ListSubheader, {
           key: optionKey
@@ -1260,17 +1276,18 @@ var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
 var _utils = __webpack_require__(/*! ../../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const TextFieldControl = ({
-  condition,
-  controlKey,
-  control,
-  onChangeOption,
-  value,
-  errorMessage,
-  shouldShowError,
-  placeholder,
-  disabled
-}) => {
+const TextFieldControl = _ref => {
+  let {
+    condition,
+    controlKey,
+    control,
+    onChangeOption,
+    value,
+    errorMessage,
+    shouldShowError,
+    placeholder,
+    disabled
+  } = _ref;
   const [controlValue, setControlValue] = (0, _react.useState)(value),
     {
       step = 1,
@@ -1352,14 +1369,15 @@ const timeFormat = 'HH:mm',
 const formattedValue = dateString => {
   return (0, _dayjs.default)(dateString, timeFormat, true).isValid() ? (0, _dayjs.default)(dateString, timeFormat) : null;
 };
-const TimePickerControl = ({
-  condition,
-  controlKey,
-  onChangeOption,
-  value,
-  shouldShowError,
-  errorMessage
-}) => {
+const TimePickerControl = _ref => {
+  let {
+    condition,
+    controlKey,
+    onChangeOption,
+    value,
+    shouldShowError,
+    errorMessage
+  } = _ref;
   const lastInputValue = (0, _react.useRef)(formattedValue(value)),
     [controlValue, setControlValue] = (0, _react.useState)(lastInputValue.current);
   (0, _react.useEffect)(() => {
@@ -1421,34 +1439,37 @@ var _utils = __webpack_require__(/*! ../../../utils/utils */ "../modules/display
 var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const ConditionSelect = ({
-  controlCount,
-  ...props
-}) => /*#__PURE__*/_react.default.createElement(_ui.Select, (0, _extends2.default)({}, props, {
-  size: "small",
-  sx: {
-    flex: 1,
-    textAlign: 'start',
-    alignSelf: 'flex-start',
-    '.MuiSelect-select .MuiTypography-root': {
-      maxWidth: (0, _utils.getControlValueMaxWidth)(controlCount)
-    }
-  },
-  color: "secondary",
-  MenuProps: {
-    PaperProps: {
-      sx: {
-        maxHeight: 280,
-        '& .MuiListSubheader-root': {
-          position: 'initial'
-        }
+const ConditionSelect = _ref => {
+  let {
+    controlCount,
+    ...props
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_ui.Select, (0, _extends2.default)({}, props, {
+    size: "small",
+    sx: {
+      flex: 1,
+      textAlign: 'start',
+      alignSelf: 'flex-start',
+      '.MuiSelect-select .MuiTypography-root': {
+        maxWidth: (0, _utils.getControlValueMaxWidth)(controlCount)
       }
     },
-    classes: {
-      paper: 'e-conditions-select-menu'
+    color: "secondary",
+    MenuProps: {
+      PaperProps: {
+        sx: {
+          maxHeight: 280,
+          '& .MuiListSubheader-root': {
+            position: 'initial'
+          }
+        }
+      },
+      classes: {
+        paper: 'e-conditions-select-menu'
+      }
     }
-  }
-}));
+  }));
+};
 ConditionSelect.propTypes = {
   controlCount: PropTypes.number.isRequired
 };
@@ -1477,19 +1498,22 @@ var _utils = __webpack_require__(/*! ../../../utils/utils */ "../modules/display
 var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const ConditionSelectOption = ({
-  controlCount,
-  sx = {},
-  ...props
-}) => /*#__PURE__*/_react.default.createElement(_ui.Typography, (0, _extends2.default)({
-  noWrap: true
-}, props, {
-  variant: props.variant || 'inherit',
-  sx: {
-    maxWidth: (0, _utils.getSelectOptionMaxWidth)(controlCount),
-    ...sx
-  }
-}));
+const ConditionSelectOption = _ref => {
+  let {
+    controlCount,
+    sx = {},
+    ...props
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_ui.Typography, (0, _extends2.default)({
+    noWrap: true
+  }, props, {
+    variant: props.variant || 'inherit',
+    sx: {
+      maxWidth: (0, _utils.getSelectOptionMaxWidth)(controlCount),
+      ...sx
+    }
+  }));
+};
 ConditionSelectOption.propTypes = {
   sx: PropTypes.object,
   isDropdownItem: PropTypes.bool,
@@ -1519,10 +1543,11 @@ var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
 var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const Footer = ({
-  onClickSaveButton,
-  isButtonDisabled
-}) => {
+const Footer = _ref => {
+  let {
+    onClickSaveButton,
+    isButtonDisabled
+  } = _ref;
   return /*#__PURE__*/React.createElement(_ui.Stack, {
     direction: "row",
     justifyContent: "flex-end",
@@ -1567,9 +1592,10 @@ var _elementorLogo = _interopRequireDefault(__webpack_require__(/*! ./icons/elem
 var _icons = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const Header = ({
-  onClose
-}) => {
+const Header = _ref => {
+  let {
+    onClose
+  } = _ref;
   return /*#__PURE__*/_react.default.createElement(_ui.AppBar, {
     sx: {
       fontWeight: 'normal'
@@ -1676,13 +1702,16 @@ const UnstyledHierarchyIcon = React.forwardRef((props, ref) => {
     d: "M11 3.75C10.3096 3.75 9.75 4.30964 9.75 5V7C9.75 7.69036 10.3096 8.25 11 8.25H13C13.6904 8.25 14.25 7.69036 14.25 7V5C14.25 4.30964 13.6904 3.75 13 3.75H11ZM12.75 9.75H13C14.5188 9.75 15.75 8.51878 15.75 7V5C15.75 3.48122 14.5188 2.25 13 2.25H11C9.48122 2.25 8.25 3.48122 8.25 5V7C8.25 8.51878 9.48122 9.75 11 9.75H11.25V11.25H8C7.27065 11.25 6.57118 11.5397 6.05546 12.0555C5.53973 12.5712 5.25 13.2707 5.25 14V14.25H5C3.48122 14.25 2.25 15.4812 2.25 17V19C2.25 20.5188 3.48122 21.75 5 21.75H7C8.51878 21.75 9.75 20.5188 9.75 19V17C9.75 15.4812 8.51878 14.25 7 14.25H6.75V14C6.75 13.6685 6.8817 13.3505 7.11612 13.1161C7.35054 12.8817 7.66848 12.75 8 12.75H16C16.3315 12.75 16.6495 12.8817 16.8839 13.1161C17.1183 13.3505 17.25 13.6685 17.25 14V14.25H17C15.4812 14.25 14.25 15.4812 14.25 17V19C14.25 20.5188 15.4812 21.75 17 21.75H19C20.5188 21.75 21.75 20.5188 21.75 19V17C21.75 15.4812 20.5188 14.25 19 14.25H18.75V14C18.75 13.2707 18.4603 12.5712 17.9445 12.0555C17.4288 11.5397 16.7293 11.25 16 11.25H12.75V9.75ZM17 15.75C16.3096 15.75 15.75 16.3096 15.75 17V19C15.75 19.6904 16.3096 20.25 17 20.25H19C19.6904 20.25 20.25 19.6904 20.25 19V17C20.25 16.3096 19.6904 15.75 19 15.75H17ZM5 15.75C4.30964 15.75 3.75 16.3096 3.75 17V19C3.75 19.6904 4.30964 20.25 5 20.25H7C7.69036 20.25 8.25 19.6904 8.25 19V17C8.25 16.3096 7.69036 15.75 7 15.75H5Z"
   }));
 });
-const HierarchyIcon = (0, _ui.styled)(UnstyledHierarchyIcon)(({
-  theme
-}) => ({
-  '& path': {
-    fill: theme.palette.text.primary
-  }
-}));
+const HierarchyIcon = (0, _ui.styled)(UnstyledHierarchyIcon)(_ref => {
+  let {
+    theme
+  } = _ref;
+  return {
+    '& path': {
+      fill: theme.palette.text.primary
+    }
+  };
+});
 var _default = exports["default"] = HierarchyIcon;
 
 /***/ }),
@@ -1713,10 +1742,11 @@ var _conditionsOrDivider = _interopRequireDefault(__webpack_require__(/*! ./ui/c
 var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const OrRowGroup = ({
-  showConditions,
-  setShowConditions
-}) => {
+const OrRowGroup = _ref => {
+  let {
+    showConditions,
+    setShowConditions
+  } = _ref;
   const {
       selectedConditions,
       conditionsConfig,
@@ -1816,10 +1846,11 @@ var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../../hooks/
 var _constants = __webpack_require__(/*! ../../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const RowControls = ({
-  orConditionIndex,
-  andConditionIndex
-}) => {
+const RowControls = _ref => {
+  let {
+    orConditionIndex,
+    andConditionIndex
+  } = _ref;
   const {
       conditionsConfig,
       dispatch
@@ -1940,6 +1971,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
 __webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
 var _behavior = _interopRequireDefault(__webpack_require__(/*! ./behavior */ "../modules/display-conditions/assets/js/editor/behavior.js"));
 class Module extends elementorModules.editor.utils.Module {
@@ -2177,7 +2209,8 @@ class Module extends elementorModules.editor.utils.Module {
       conditions = {},
       groups = {}
     } = elementor.config.displayConditions || {};
-    return Object.entries(conditionsByGroup).reduce((optionList, [groupName, conditionKeys]) => {
+    return Object.entries(conditionsByGroup).reduce((optionList, _ref) => {
+      let [groupName, conditionKeys] = _ref;
       const relevantConditions = conditionKeys.map(key => ({
         key,
         label: conditions[key].label,
@@ -2268,24 +2301,26 @@ const conditionsReducer = (state, action) => {
   }
 };
 exports.conditionsReducer = conditionsReducer;
-const _changeConditionType = ({
-  selectedConditions,
-  conditionToChange,
-  orConditionIndex,
-  andConditionIndex
-}) => {
+const _changeConditionType = _ref => {
+  let {
+    selectedConditions,
+    conditionToChange,
+    orConditionIndex,
+    andConditionIndex
+  } = _ref;
   const newOrCondition = selectedConditions[orConditionIndex].map((andCondition, index) => index === andConditionIndex ? conditionToChange : {
     ...andCondition
   });
   return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
 };
-const _changeControlValue = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex,
-  controlKey,
-  value
-}) => {
+const _changeControlValue = _ref2 => {
+  let {
+    selectedConditions,
+    orConditionIndex,
+    andConditionIndex,
+    controlKey,
+    value
+  } = _ref2;
   const existingOrCondition = [...selectedConditions[orConditionIndex]],
     existingAndCondition = {
       ...existingOrCondition[andConditionIndex]
@@ -2299,12 +2334,13 @@ const _changeControlValue = ({
     });
   return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
 };
-const _addAndCondition = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex,
-  andCondition
-}) => {
+const _addAndCondition = _ref3 => {
+  let {
+    selectedConditions,
+    orConditionIndex,
+    andConditionIndex,
+    andCondition
+  } = _ref3;
   const existingOrCondition = selectedConditions[orConditionIndex],
     newOrCondition = existingOrCondition.reduce((newAndConditions, condition, index) => {
       newAndConditions.push({
@@ -2317,11 +2353,12 @@ const _addAndCondition = ({
     }, []);
   return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
 };
-const _removeAndCondition = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex
-}) => {
+const _removeAndCondition = _ref4 => {
+  let {
+    selectedConditions,
+    orConditionIndex,
+    andConditionIndex
+  } = _ref4;
   const newOrCondition = selectedConditions[orConditionIndex].reduce((newAndConditions, condition, index) => {
     if (index !== andConditionIndex) {
       newAndConditions.push({
@@ -2340,12 +2377,13 @@ const _removeAndCondition = ({
     return newOrConditions;
   }, []);
 };
-const _setErrors = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex,
-  errors
-}) => {
+const _setErrors = _ref5 => {
+  let {
+    selectedConditions,
+    orConditionIndex,
+    andConditionIndex,
+    errors
+  } = _ref5;
   const newOrCondition = [...selectedConditions[orConditionIndex]],
     newAndCondition = {
       ...newOrCondition[andConditionIndex]
@@ -2428,6 +2466,7 @@ exports.hasDecimalSeparator = hasDecimalSeparator;
 exports.shouldCastToArray = shouldCastToArray;
 exports.shouldDisableControl = shouldDisableControl;
 exports.shouldEmptyValuePassValidation = shouldEmptyValuePassValidation;
+__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
 var _constants = __webpack_require__(/*! ./constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
 function shouldCastToArray(controlType) {
   return _constants.CONTROL_TYPES.MULTIPLE_SELECT === controlType || _constants.CONTROL_TYPES.QUERY === controlType;
@@ -2435,7 +2474,8 @@ function shouldCastToArray(controlType) {
 function getDefaultActiveCondition(conditionsByGroup) {
   return Object.values(conditionsByGroup)[0][0];
 }
-function getInvalidInputFeedback(type, variant, value, shouldShow = false) {
+function getInvalidInputFeedback(type, variant, value) {
+  let shouldShow = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   return !value?.length ? {
     message: _getErrorMessage(type, variant),
     shouldShow
@@ -2496,7 +2536,8 @@ function getControlValueMaxWidth(controlCount) {
 function getControlValue(value, altValue) {
   return 'undefined' !== typeof value ? value : altValue;
 }
-function _getErrorMessage(controlType, variant = null) {
+function _getErrorMessage(controlType) {
+  let variant = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   if (shouldCastToArray(controlType)) {
     return __('Select an option', 'elementor-pro');
   }
@@ -3732,6 +3773,38 @@ module.exports = function (argument) {
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/add-to-unscopables.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/core-js/internals/add-to-unscopables.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js").f);
+
+var UNSCOPABLES = wellKnownSymbol('unscopables');
+var ArrayPrototype = Array.prototype;
+
+// Array.prototype[@@unscopables]
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+if (ArrayPrototype[UNSCOPABLES] === undefined) {
+  defineProperty(ArrayPrototype, UNSCOPABLES, {
+    configurable: true,
+    value: create(null)
+  });
+}
+
+// add a key to Array.prototype[@@unscopables]
+module.exports = function (key) {
+  ArrayPrototype[UNSCOPABLES][key] = true;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/an-object.js":
 /*!******************************************************!*\
   !*** ../node_modules/core-js/internals/an-object.js ***!
@@ -4411,6 +4484,21 @@ module.exports = {};
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/html.js":
+/*!*************************************************!*\
+  !*** ../node_modules/core-js/internals/html.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/ie8-dom-define.js":
 /*!***********************************************************!*\
   !*** ../node_modules/core-js/internals/ie8-dom-define.js ***!
@@ -4825,6 +4913,134 @@ module.exports = Math.trunc || function trunc(x) {
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/object-create.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/core-js/internals/object-create.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+/* global ActiveXObject -- old IE, WSH */
+var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
+var definePropertiesModule = __webpack_require__(/*! ../internals/object-define-properties */ "../node_modules/core-js/internals/object-define-properties.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "../node_modules/core-js/internals/hidden-keys.js");
+var html = __webpack_require__(/*! ../internals/html */ "../node_modules/core-js/internals/html.js");
+var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "../node_modules/core-js/internals/document-create-element.js");
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "../node_modules/core-js/internals/shared-key.js");
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  // eslint-disable-next-line no-useless-assignment -- avoid memory leak
+  activeXDocument = null;
+  return temp;
+};
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var NullProtoObjectViaIFrame = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+};
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    activeXDocument = new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = typeof document != 'undefined'
+    ? document.domain && activeXDocument
+      ? NullProtoObjectViaActiveX(activeXDocument) // old IE
+      : NullProtoObjectViaIFrame()
+    : NullProtoObjectViaActiveX(activeXDocument); // WSH
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
+
+// `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+// eslint-disable-next-line es/no-object-create -- safe
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = NullProtoObject();
+  return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/object-define-properties.js":
+/*!*********************************************************************!*\
+  !*** ../node_modules/core-js/internals/object-define-properties.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(/*! ../internals/v8-prototype-define-bug */ "../node_modules/core-js/internals/v8-prototype-define-bug.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "../node_modules/core-js/internals/object-keys.js");
+
+// `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+// eslint-disable-next-line es/no-object-defineproperties -- safe
+exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var props = toIndexedObject(Properties);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) definePropertyModule.f(O, key = keys[index++], props[key]);
+  return O;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/object-define-property.js":
 /*!*******************************************************************!*\
   !*** ../node_modules/core-js/internals/object-define-property.js ***!
@@ -4993,6 +5209,27 @@ module.exports = function (object, names) {
     ~indexOf(result, key) || push(result, key);
   }
   return result;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/object-keys.js":
+/*!********************************************************!*\
+  !*** ../node_modules/core-js/internals/object-keys.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "../node_modules/core-js/internals/object-keys-internal.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
 };
 
 
@@ -5484,6 +5721,39 @@ module.exports = function (name) {
       : createWellKnownSymbol('Symbol.' + name);
   } return WellKnownSymbolsStore[name];
 };
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/modules/es.array.includes.js":
+/*!************************************************************!*\
+  !*** ../node_modules/core-js/modules/es.array.includes.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
+var $includes = (__webpack_require__(/*! ../internals/array-includes */ "../node_modules/core-js/internals/array-includes.js").includes);
+var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
+var addToUnscopables = __webpack_require__(/*! ../internals/add-to-unscopables */ "../node_modules/core-js/internals/add-to-unscopables.js");
+
+// FF99+ bug
+var BROKEN_ON_SPARSE = fails(function () {
+  // eslint-disable-next-line es/no-array-prototype-includes -- detection
+  return !Array(1).includes();
+});
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
 
 
 /***/ }),

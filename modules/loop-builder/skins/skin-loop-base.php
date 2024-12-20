@@ -141,6 +141,24 @@ class Skin_Loop_Base extends Skin_Base {
 		}
 	}
 
+	protected function add_render_hooks() {
+		global $wp_query;
+		$wp_query->is_loop_widget = true;
+
+		add_filter( 'elementor-pro/off-canvas/id', [ $this, 'filter_off_canvas_id' ] );
+	}
+
+	protected function remove_render_hooks() {
+		global $wp_query;
+		unset( $wp_query->is_loop_widget );
+
+		remove_filter( 'elementor-pro/off-canvas/id', [ $this, 'filter_off_canvas_id' ] );
+	}
+
+	public function filter_off_canvas_id( $off_canvas_id ) {
+		return $this->parent->get_id() . '-' . get_the_ID() . '-' . $off_canvas_id;
+	}
+
 	protected function handle_no_posts_found() {
 		$settings = $this->parent->get_settings_for_display();
 

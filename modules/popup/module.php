@@ -39,6 +39,8 @@ class Module extends Module_Base {
 
 			add_action( 'wp_footer', [ $this, 'print_popups' ] );
 			add_action( 'elementor_pro/init', [ $this, 'add_form_action' ] );
+
+			add_action( 'elementor/frontend/before_register_styles', [ $this, 'register_styles' ] );
 		} else {
 			add_action( 'load-post.php', [ $this, 'disable_editing' ] );
 			add_action( 'admin_init', [ $this, 'maybe_redirect_to_promotion_page' ] );
@@ -267,5 +269,18 @@ class Module extends Module_Base {
 		$settings['popup']['hasPopUps'] = $this->has_popups();
 
 		return $settings;
+	}
+
+	protected function get_assets_base_url() {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	public function register_styles() {
+		wp_register_style(
+			'e-popup',
+			$this->get_css_assets_url( 'popup', 'assets/css/conditionals/', true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 }

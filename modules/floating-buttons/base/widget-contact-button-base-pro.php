@@ -3,6 +3,7 @@
 namespace ElementorPro\Modules\FloatingButtons\Base;
 
 use Elementor\Modules\FloatingButtons\Base\Widget_Contact_Button_Base;
+use ElementorPro\Plugin;
 
 abstract class Widget_Contact_Button_Base_Pro extends Widget_Contact_Button_Base {
 
@@ -17,5 +18,9 @@ abstract class Widget_Contact_Button_Base_Pro extends Widget_Contact_Button_Base
 		}
 
 		return $style_depends;
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 }

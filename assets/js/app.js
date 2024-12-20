@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1660,7 +1660,7 @@ ConnectButton.defaultProps = {
   color: 'cta',
   target: '_blank',
   rel: 'noopener noreferrer',
-  text: __('Connect & Activate', 'elementor')
+  text: __('Connect & Activate', 'elementor-pro')
 };
 var _default = exports["default"] = React.memo(ConnectButton);
 
@@ -1692,7 +1692,9 @@ const htmlDecodeTextContent = input => {
   return doc.documentElement.textContent;
 };
 exports.htmlDecodeTextContent = htmlDecodeTextContent;
-const replaceUtmPlaceholders = (link = '', utms = {}) => {
+const replaceUtmPlaceholders = function () {
+  let link = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  let utms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   if (!link || !utms) {
     return link;
   }
@@ -1884,12 +1886,12 @@ var _baseContext = _interopRequireDefault(__webpack_require__(/*! ./base-context
 var _commands = __webpack_require__(/*! ../data/commands */ "../core/app/modules/site-editor/assets/js/data/commands/index.js");
 const Context = exports.Context = _react.default.createContext();
 class ConditionsProvider extends _baseContext.default {
-  static propTypes = {
+  static propTypes = (() => ({
     children: PropTypes.any.isRequired,
     currentTemplate: PropTypes.object.isRequired,
     onConditionsSaved: PropTypes.func.isRequired,
     validateConflicts: PropTypes.bool
-  };
+  }))();
   static defaultProps = {
     validateConflicts: true
   };
@@ -2054,7 +2056,8 @@ class ConditionsProvider extends _baseContext.default {
    * @param {any}     args
    * @param {boolean} shouldCheckConflicts
    */
-  updateConditionItemState(id, args, shouldCheckConflicts = true) {
+  updateConditionItemState(id, args) {
+    let shouldCheckConflicts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
     if (args.name) {
       args.subOptions = this.conditionsConfig.getSubOptions(args.name);
     }
@@ -2098,7 +2101,8 @@ class ConditionsProvider extends _baseContext.default {
    *
    * @param {boolean} shouldCheckConflicts
    */
-  createConditionItemInState(shouldCheckConflicts = true) {
+  createConditionItemInState() {
+    let shouldCheckConflicts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     const defaultCondition = this.props.currentTemplate.defaultCondition,
       newCondition = new _condition.default({
         name: defaultCondition,
@@ -2167,7 +2171,7 @@ var _default = exports["default"] = ConditionsProvider;
 /*!*****************************************************************************!*\
   !*** ../core/app/modules/site-editor/assets/js/context/models/condition.js ***!
   \*****************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -2176,8 +2180,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
 class Condition {
-  id = elementorCommon.helpers.getUniqueId();
+  id = (() => elementorCommon.helpers.getUniqueId())();
   default = '';
   type = 'include';
   name = '';
@@ -2280,10 +2285,11 @@ class ConditionsConfig {
    * @return {Array} Condition options
    */
   getOptions() {
-    return this.getSubOptions('general', true).map(({
-      label,
-      value
-    }) => {
+    return this.getSubOptions('general', true).map(_ref => {
+      let {
+        label,
+        value
+      } = _ref;
       return {
         label,
         value
@@ -2298,7 +2304,8 @@ class ConditionsConfig {
    * @param {boolean} isSubItem
    * @return {Array} Sub options
    */
-  getSubOptions(itemName, isSubItem = false) {
+  getSubOptions(itemName) {
+    let isSubItem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     const config = this.config[itemName];
     if (!config) {
       return [];
@@ -2389,9 +2396,9 @@ var _commands = __webpack_require__(/*! ../data/commands */ "../core/app/modules
 var _component = _interopRequireDefault(__webpack_require__(/*! ../data/component */ "../core/app/modules/site-editor/assets/js/data/component.js"));
 const Context = exports.Context = _react.default.createContext();
 class TemplatesProvider extends _baseContext.default {
-  static propTypes = {
+  static propTypes = (() => ({
     children: PropTypes.object.isRequired
-  };
+  }))();
   static actions = {
     FETCH: 'fetch',
     DELETE: 'delete',
@@ -2419,10 +2426,11 @@ class TemplatesProvider extends _baseContext.default {
   componentDidMount() {
     this.fetchTemplates();
   }
-  importTemplates({
-    fileName,
-    fileData
-  }) {
+  importTemplates(_ref) {
+    let {
+      fileName,
+      fileData
+    } = _ref;
     return this.executeAction(TemplatesProvider.actions.IMPORT, () => $e.data.create(_commands.Templates.signature, {
       fileName,
       fileData
@@ -2484,7 +2492,8 @@ class TemplatesProvider extends _baseContext.default {
       };
     });
   }
-  updateTemplatesState(callback, clearCache = true) {
+  updateTemplatesState(callback) {
+    let clearCache = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     if (clearCache) {
       $e.data.deleteCache($e.components.get(_component.default.namespace), _commands.Templates.signature);
     }
@@ -2708,7 +2717,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
  *
  * @param {any} templateType
  */
-function useTemplatesScreenshot(templateType = null) {
+function useTemplatesScreenshot() {
+  let templateType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   const {
     updateTemplateItemState,
     templates
@@ -2743,7 +2753,8 @@ function useTemplatesScreenshot(templateType = null) {
  * @param {any} templateType
  * @return {boolean} should screenshot template
  */
-function shouldScreenshotTemplate(template, templateType = null) {
+function shouldScreenshotTemplate(template) {
+  let templateType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   if (templateType) {
     return false;
   }
@@ -3734,14 +3745,17 @@ var _templates = __webpack_require__(/*! ../context/templates */ "../core/app/mo
 var _backButton = _interopRequireDefault(__webpack_require__(/*! ../molecules/back-button */ "../core/app/modules/site-editor/assets/js/molecules/back-button.js"));
 var _hooks = __webpack_require__(/*! @elementor/hooks */ "@elementor/hooks");
 // The hook `useConfirmAction` comes from the core plugin, so it is possible that it is not available.
-const useConfirmActionFallback = ({
-  action
-}) => ({
-  runAction: action,
-  dialog: {
-    isOpen: false
-  }
-});
+const useConfirmActionFallback = _ref => {
+  let {
+    action
+  } = _ref;
+  return {
+    runAction: action,
+    dialog: {
+      isOpen: false
+    }
+  };
+};
 const useConfirmAction = _hooks.useConfirmAction ?? useConfirmActionFallback;
 function Import() {
   const {
@@ -4334,7 +4348,8 @@ function normalizeInitialPosts(posts) {
  * @param {Object} attrs
  * @return {Array} Posts array
  */
-function updatePostsAttrs(posts, id, attrs = {}) {
+function updatePostsAttrs(posts, id) {
+  let attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   return posts.map(post => {
     if (post.id !== id) {
       return post;
@@ -4394,9 +4409,10 @@ function useIFrameMessageListener(inProgressPosts, setPosts) {
  * @param {number} numberOfScreenshotInParallel
  * @return {{inProgress: Array, succeed: Array, failed: Array, posts: Array, queue: Array}} An array of posts, queue, inProgress, succeed, failed
  */
-function useScreenshot(initialPosts, {
-  numberOfScreenshotInParallel
-} = defaultOptions) {
+function useScreenshot(initialPosts) {
+  let {
+    numberOfScreenshotInParallel
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultOptions;
   const [posts, setPosts] = useState([]);
 
   // Holds some kind of computed value of the `posts` state,
@@ -6019,6 +6035,38 @@ module.exports = function (argument) {
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/add-to-unscopables.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/core-js/internals/add-to-unscopables.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js").f);
+
+var UNSCOPABLES = wellKnownSymbol('unscopables');
+var ArrayPrototype = Array.prototype;
+
+// Array.prototype[@@unscopables]
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+if (ArrayPrototype[UNSCOPABLES] === undefined) {
+  defineProperty(ArrayPrototype, UNSCOPABLES, {
+    configurable: true,
+    value: create(null)
+  });
+}
+
+// add a key to Array.prototype[@@unscopables]
+module.exports = function (key) {
+  ArrayPrototype[UNSCOPABLES][key] = true;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/an-object.js":
 /*!******************************************************!*\
   !*** ../node_modules/core-js/internals/an-object.js ***!
@@ -6698,6 +6746,21 @@ module.exports = {};
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/html.js":
+/*!*************************************************!*\
+  !*** ../node_modules/core-js/internals/html.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/ie8-dom-define.js":
 /*!***********************************************************!*\
   !*** ../node_modules/core-js/internals/ie8-dom-define.js ***!
@@ -7112,6 +7175,134 @@ module.exports = Math.trunc || function trunc(x) {
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/object-create.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/core-js/internals/object-create.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+/* global ActiveXObject -- old IE, WSH */
+var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
+var definePropertiesModule = __webpack_require__(/*! ../internals/object-define-properties */ "../node_modules/core-js/internals/object-define-properties.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "../node_modules/core-js/internals/hidden-keys.js");
+var html = __webpack_require__(/*! ../internals/html */ "../node_modules/core-js/internals/html.js");
+var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "../node_modules/core-js/internals/document-create-element.js");
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "../node_modules/core-js/internals/shared-key.js");
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  // eslint-disable-next-line no-useless-assignment -- avoid memory leak
+  activeXDocument = null;
+  return temp;
+};
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var NullProtoObjectViaIFrame = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+};
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    activeXDocument = new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = typeof document != 'undefined'
+    ? document.domain && activeXDocument
+      ? NullProtoObjectViaActiveX(activeXDocument) // old IE
+      : NullProtoObjectViaIFrame()
+    : NullProtoObjectViaActiveX(activeXDocument); // WSH
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
+
+// `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+// eslint-disable-next-line es/no-object-create -- safe
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = NullProtoObject();
+  return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/object-define-properties.js":
+/*!*********************************************************************!*\
+  !*** ../node_modules/core-js/internals/object-define-properties.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(/*! ../internals/v8-prototype-define-bug */ "../node_modules/core-js/internals/v8-prototype-define-bug.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "../node_modules/core-js/internals/object-keys.js");
+
+// `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+// eslint-disable-next-line es/no-object-defineproperties -- safe
+exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var props = toIndexedObject(Properties);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) definePropertyModule.f(O, key = keys[index++], props[key]);
+  return O;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/object-define-property.js":
 /*!*******************************************************************!*\
   !*** ../node_modules/core-js/internals/object-define-property.js ***!
@@ -7280,6 +7471,27 @@ module.exports = function (object, names) {
     ~indexOf(result, key) || push(result, key);
   }
   return result;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/object-keys.js":
+/*!********************************************************!*\
+  !*** ../node_modules/core-js/internals/object-keys.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "../node_modules/core-js/internals/object-keys-internal.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
 };
 
 
@@ -7771,6 +7983,39 @@ module.exports = function (name) {
       : createWellKnownSymbol('Symbol.' + name);
   } return WellKnownSymbolsStore[name];
 };
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/modules/es.array.includes.js":
+/*!************************************************************!*\
+  !*** ../node_modules/core-js/modules/es.array.includes.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
+var $includes = (__webpack_require__(/*! ../internals/array-includes */ "../node_modules/core-js/internals/array-includes.js").includes);
+var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
+var addToUnscopables = __webpack_require__(/*! ../internals/add-to-unscopables */ "../node_modules/core-js/internals/add-to-unscopables.js");
+
+// FF99+ bug
+var BROKEN_ON_SPARSE = fails(function () {
+  // eslint-disable-next-line es/no-array-prototype-includes -- detection
+  return !Array(1).includes();
+});
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
 
 
 /***/ }),

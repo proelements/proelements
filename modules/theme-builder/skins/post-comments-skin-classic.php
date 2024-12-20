@@ -468,7 +468,7 @@ class Post_Comments_Skin_Classic extends Skin_Base {
 				</div><!-- .comment-metadata -->
 
 				<?php if ( '0' == $comment->comment_approved ) : ?>
-					<p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', 'elementor-pro' ); ?></p>
+					<p class="comment-awaiting-moderation"><?php echo esc_html__( 'Your comment is awaiting moderation.', 'elementor-pro' ); ?></p>
 				<?php endif; ?>
 			</div><!-- .comment-meta -->
 

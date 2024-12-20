@@ -92,6 +92,10 @@ class Share_Buttons extends Base_Widget {
 		return false;
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_buttons_content',
@@ -696,7 +700,7 @@ class Share_Buttons extends Base_Widget {
 		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
 			$icon = Icons_Manager::render_font_icon( $network_icon_data );
 		} else {
-			$icon = sprintf( '<i class="%s" aria-hidden="true"></i>', $network_icon_data['value'] );
+			$icon = sprintf( '<i class="%s" aria-hidden="true"></i>', esc_attr( $network_icon_data['value'] ) );
 		}
 
 		Utils::print_unescaped_internal_string( $icon );

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /*!**************************************************************!*\
@@ -342,7 +342,8 @@ class Screenshot extends elementorModules.ViewModule {
    * @param {boolean} success
    * @param {string}  imageUrl
    */
-  screenshotDone(success, imageUrl = null) {
+  screenshotDone(success) {
+    let imageUrl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     clearTimeout(this.timeoutTimer);
     this.timeoutTimer = null;
 
@@ -364,7 +365,8 @@ class Screenshot extends elementorModules.ViewModule {
    * @param {any}     message
    * @param {string?} timerMethod
    */
-  log(message, timerMethod = 'timeLog') {
+  log(message) {
+    let timerMethod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'timeLog';
     if (!this.getSettings('isDebug')) {
       return;
     }

@@ -120,6 +120,7 @@ class Module extends TagsModule {
 			'Site_URL',
 			'Internal_URL',
 			'Current_Date_Time',
+			'Reload_Page',
 			'Request_Parameter',
 			'Lightbox',
 			'Featured_Image_Data',

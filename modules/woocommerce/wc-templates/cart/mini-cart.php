@@ -29,7 +29,7 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 				?>
 			</div>
 
-			<div class="elementor-menu-cart__product-name product-name" data-title="<?php esc_attr_e( 'Product', 'elementor-pro' ); ?>">
+			<div class="elementor-menu-cart__product-name product-name" data-title="<?php echo esc_attr__( 'Product', 'elementor-pro' ); ?>">
 				<?php
 				if ( ! $product_permalink ) :
 					echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;' );
@@ -44,7 +44,7 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 				?>
 			</div>
 
-			<div class="elementor-menu-cart__product-price product-price" data-title="<?php esc_attr_e( 'Price', 'elementor-pro' ); ?>">
+			<div class="elementor-menu-cart__product-price product-price" data-title="<?php echo esc_attr__( 'Price', 'elementor-pro' ); ?>">
 				<?php echo apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '<span class="product-quantity">%s &times;</span> %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 
@@ -69,7 +69,7 @@ if ( ! function_exists( 'elementor_pro_render_mini_cart_item' ) ) {
 $cart_items = WC()->cart->get_cart();
 
 if ( empty( $cart_items ) ) { ?>
-	<div class="woocommerce-mini-cart__empty-message"><?php esc_attr_e( 'No products in the cart.', 'elementor-pro' ); ?></div>
+	<div class="woocommerce-mini-cart__empty-message"><?php echo esc_attr__( 'No products in the cart.', 'elementor-pro' ); ?></div>
 <?php } else { ?>
 	<div class="elementor-menu-cart__products woocommerce-mini-cart cart woocommerce-cart-form__contents">
 		<?php

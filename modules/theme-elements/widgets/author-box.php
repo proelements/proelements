@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -35,6 +36,10 @@ class Author_Box extends Base {
 
 	public function get_keywords() {
 		return [ 'author', 'user', 'profile', 'biography', 'testimonial', 'avatar' ];
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

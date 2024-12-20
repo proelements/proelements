@@ -925,8 +925,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 
+				$this->add_render_hooks();
 				$this->current_permalink = get_permalink();
 				$this->render_post();
+				$this->remove_render_hooks();
 			}
 		}
 
@@ -934,6 +936,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->render_loop_footer();
 	}
+
+	protected function add_render_hooks() {}
+
+	protected function remove_render_hooks() {}
 
 	public function filter_excerpt_length() {
 		return $this->get_instance_value( 'excerpt_length' );
@@ -1228,7 +1234,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		// PHPCS - Seems that `$links` is safe.
 		?>
-		<nav class="elementor-pagination" aria-label="<?php esc_attr_e( 'Pagination', 'elementor-pro' ); ?>">
+		<nav class="elementor-pagination" aria-label="<?php echo esc_attr__( 'Pagination', 'elementor-pro' ); ?>">
 			<?php echo implode( PHP_EOL, $links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</nav>
 		<?php

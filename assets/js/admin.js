@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -83,7 +83,9 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 class CustomAssetsBase extends elementorModules.ViewModule {
-  showAlertDialog(id, message, onConfirm = false, onHide = false) {
+  showAlertDialog(id, message) {
+    let onConfirm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    let onHide = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     const alertData = {
       id,
       message
@@ -332,6 +334,7 @@ class CustomIcons extends _customAssetsBase.default {
     $publishButton.trigger('click');
   }
   onInit() {
+    var _this = this;
     const {
         $body
       } = elementorCommon.elements,
@@ -353,7 +356,9 @@ class CustomIcons extends _customAssetsBase.default {
       } = this.elements;
     if ('' === config) {
       $dropzone.show('fast');
-      dropzoneField.setSettings('onSuccess', (...args) => this.onSuccess(...args));
+      dropzoneField.setSettings('onSuccess', function () {
+        return _this.onSuccess(...arguments);
+      });
     } else {
       this.renderIcons(config);
     }
@@ -523,12 +528,12 @@ class CustomFontsManager extends _customAssetsBase.default {
   titleRequired() {
     this.elements.$title.prop('required', true);
   }
-  onInit(...args) {
+  onInit() {
     const settings = this.getSettings();
     if (!jQuery('body').hasClass(settings.selectors.editPageClass)) {
       return;
     }
-    super.onInit(...args);
+    super.onInit(...arguments);
     this.removeCloseHandle();
     this.titleRequired();
     settings.fields.upload.init();

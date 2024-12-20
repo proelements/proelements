@@ -77,7 +77,7 @@ class Utils {
 	}
 
 	public static function get_current_post_id() {
-		if ( isset( Plugin::elementor()->documents ) ) {
+		if ( isset( Plugin::elementor()->documents ) && Plugin::elementor()->documents->get_current() ) {
 			return Plugin::elementor()->documents->get_current()->get_main_id();
 		}
 

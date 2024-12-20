@@ -63,7 +63,7 @@ class Floating_Bars_Var_2_Render extends Floating_Bars_Core_Render {
 			'class' => 'e-floating-bars__pause-button',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name. */
-				esc_html__( 'Pause %1$s', 'elementor-pro' ),
+				esc_attr__( 'Pause %1$s', 'elementor-pro' ),
 				$accessible_name,
 			),
 		] );
@@ -72,7 +72,7 @@ class Floating_Bars_Var_2_Render extends Floating_Bars_Core_Render {
 			'class' => 'e-floating-bars__play-button',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name. */
-				esc_html__( 'Play %1$s', 'elementor-pro' ),
+				esc_attr__( 'Play %1$s', 'elementor-pro' ),
 				$accessible_name,
 			),
 		] );

@@ -186,7 +186,7 @@ class Akismet {
 		// http://blog.akismet.com/2012/06/19/pro-tip-tell-us-your-comment_type/
 		$params['comment_type'] = 'contact-form';
 
-		$ignore = array( 'HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW' );
+		$ignore = [ 'HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW' ];
 		foreach ( $_SERVER as $key => $value ) {
 			if ( ! in_array( $key, $ignore ) && is_string( $value ) ) {
 				$params[ $key ] = $value;

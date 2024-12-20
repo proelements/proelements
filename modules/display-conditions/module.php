@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Module extends Module_Base {
 
-	private $hidden_elements_ids = array();
+	private $hidden_elements_ids = [];
 
 	const LICENSE_FEATURE_NAME = 'display-conditions';
 
@@ -79,12 +79,13 @@ class Module extends Module_Base {
 	}
 
 	private function add_advanced_tab_actions() {
-		$hooks = array(
+		$hooks = [
 			'elementor/element/section/section_advanced/after_section_end' => 'css_classes', // Sections
 			'elementor/element/column/section_advanced/after_section_end' => 'css_classes', // Columns
 			'elementor/element/common/_section_style/after_section_end' => '_css_classes', // Widgets
+			'elementor/element/common-optimized/_section_style/after_section_end' => '_css_classes', // Optimized Widgets
 			'elementor/element/container/section_layout/after_section_end' => 'css_classes', // Containers
-		);
+		];
 
 		foreach ( $hooks as $hook => $injection_position ) {
 			add_action(
@@ -99,40 +100,40 @@ class Module extends Module_Base {
 	}
 
 	protected function add_render_actions() {
-		$element_types = array(
+		$element_types = [
 			'section',
 			'column',
 			'widget',
 			'container',
-		);
+		];
 
 		foreach ( $element_types as $el ) {
-			add_action( 'elementor/frontend/' . $el . '/before_render', array( $this, 'before_element_render' ) );
-			add_action( 'elementor/frontend/' . $el . '/after_render', array( $this, 'after_element_render' ) );
+			add_action( 'elementor/frontend/' . $el . '/before_render', [ $this, 'before_element_render' ] );
+			add_action( 'elementor/frontend/' . $el . '/after_render', [ $this, 'after_element_render' ] );
 		}
 	}
 
 	private function add_control_to_advanced_tab( $element, $args, $injection_position ) {
 		$element->start_injection(
-			array(
+			[
 				'of' => $injection_position,
-			)
+			]
 		);
 
 		$element->add_control(
 			'e_display_conditions_trigger',
-			array(
+			[
 				'type'      => Controls_Manager::RAW_HTML,
 				'separator' => 'before',
 				'raw'       => $this->get_display_conditions_control_template(),
-			)
+			]
 		);
 
 		$element->add_control(
 			'e_display_conditions',
-			array(
+			[
 				'type'      => Controls_Manager::HIDDEN,
-			)
+			]
 		);
 
 		$element->end_injection();

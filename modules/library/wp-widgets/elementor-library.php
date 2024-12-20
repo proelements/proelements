@@ -99,12 +99,12 @@ class Elementor_Library extends \WP_Widget {
 		}
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title', 'elementor-pro' ); ?>:</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php echo esc_attr__( 'Title', 'elementor-pro' ); ?>:</label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'template_id' ) ); ?>"><?php esc_attr_e( 'Choose Template', 'elementor-pro' ); ?>:</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'template_id' ) ); ?>"><?php echo esc_attr__( 'Choose Template', 'elementor-pro' ); ?>:</label>
 			<select class="widefat elementor-widget-template-select" id="<?php echo esc_attr( $this->get_field_id( 'template_id' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'template_id' ) ); ?>">
 				<option value="">— <?php echo esc_html__( 'Select', 'elementor-pro' ); ?> —</option>
 				<?php

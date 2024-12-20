@@ -219,6 +219,12 @@ class Plugin {
 		return $frontend_file_path;
 	}
 
+	/**
+	 * @deprecated 3.26.0
+	 * @return void
+	 */
+	public function enqueue_styles(): void {}
+
 	public function enqueue_frontend_scripts() {
 		$suffix = $this->get_assets_suffix();
 
@@ -421,8 +427,6 @@ class Plugin {
 		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'register_preview_scripts' ] );
 
 		add_action( 'elementor/frontend/before_enqueue_scripts', [ $this, 'enqueue_frontend_scripts' ] );
-		// TODO: Load popup styling only when needed [ED-16076]
-		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueue_styles' ] );
 
 		add_filter( 'elementor/core/breakpoints/get_stylesheet_template', [ $this, 'get_responsive_stylesheet_templates' ] );
 		add_action( 'elementor/document/save_version', [ $this, 'on_document_save_version' ] );
@@ -434,18 +438,6 @@ class Plugin {
 		add_filter( 'elementor/common/localize_settings', function ( $settings ) {
 			return $this->add_subscription_template_access_level_to_settings( $settings );
 		}, 11 /** After Elementor Core (Library) */ );
-	}
-
-	// TODO: Load popup styling only when needed [ED-16076]
-	public function enqueue_styles(): void {
-		$suffix = $this->get_assets_suffix();
-
-		wp_enqueue_style(
-			'e-popup-style',
-			ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
-			null,
-			ELEMENTOR_PRO_VERSION
-		);
 	}
 
 	private function get_assets() {
@@ -460,6 +452,11 @@ class Plugin {
 				],
 				'e-sticky' => [
 					'src' => ELEMENTOR_PRO_URL . 'assets/css/modules/sticky' . $suffix . '.css',
+					'version' => ELEMENTOR_PRO_VERSION,
+					'dependencies' => [],
+				],
+				'e-popup' => [
+					'src' => ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
 					'version' => ELEMENTOR_PRO_VERSION,
 					'dependencies' => [],
 				],
@@ -531,29 +528,28 @@ class Plugin {
 				'access_token'       => '',
 			);
 
-		if ( is_admin() ) {
-			$this->admin = new Admin();
+			if ( is_admin() ) {
+				$this->admin = new Admin();
 
-			$this->license_admin->register_actions();
+				$this->license_admin->register_actions();
 
-			require_once __DIR__ . '/updater/updater.php';
-			$config = array(
-				'slug'               => 'pro-elements.php',
-				'plugin_basename'    => ELEMENTOR_PRO_PLUGIN_BASE,
-				'proper_folder_name' => 'pro-elements',
-				'api_url'            => 'https://api.github.com/repos/proelements/proelements',
-				'raw_url'            => 'https://raw.githubusercontent.com/proelements/proelements/master',
-				'github_url'         => 'https://github.com/proelements/proelements',
-				'zip_url'            => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
-				'sslverify'          => true,
-				'requires'           => '5.0',
-				'tested'             => '5.4.2',
-				'readme'             => 'README.md',
-				'access_token'       => '',
-			);
-		}
-
-			new Updater( $config );
+				require_once __DIR__ . '/updater/updater.php';
+				$config = array(
+					'slug'               => 'pro-elements.php',
+					'plugin_basename'    => ELEMENTOR_PRO_PLUGIN_BASE,
+					'proper_folder_name' => 'pro-elements',
+					'api_url'            => 'https://api.github.com/repos/proelements/proelements',
+					'raw_url'            => 'https://raw.githubusercontent.com/proelements/proelements/master',
+					'github_url'         => 'https://github.com/proelements/proelements',
+					'zip_url'            => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
+					'sslverify'          => true,
+					'requires'           => '5.0',
+					'tested'             => '5.4.2',
+					'readme'             => 'README.md',
+					'access_token'       => '',
+				);
+				new Updater( $config );
+			}
 		}
 	}
 

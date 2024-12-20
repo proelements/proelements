@@ -55,12 +55,8 @@ class Gallery extends Base_Widget {
 		return false;
 	}
 
-	public function get_inline_css_depends() {
-		if ( 'multiple' === $this->get_settings_for_display( 'gallery_type' ) ) {
-			return [ 'nav-menu' ];
-		}
-
-		return [];
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	protected function register_controls() {
@@ -301,6 +297,27 @@ class Gallery extends Base_Widget {
 				],
 				'condition' => [
 					'link_to' => 'file',
+				],
+				'assets' => [
+					'styles' => [
+						[
+							'name' => 'e-swiper',
+							'conditions' => [
+								'terms' => [
+									[
+										'name' => 'link_to',
+										'operator' => '===',
+										'value' => 'file',
+									],
+									[
+										'name' => 'open_lightbox',
+										'operator' => '!==',
+										'value' => 'no',
+									],
+								],
+							],
+						],
+					],
 				],
 			]
 		);
@@ -1394,10 +1411,12 @@ class Gallery extends Base_Widget {
 
 		foreach ( $galleries as $gallery ) {
 			foreach ( $gallery as $item ) {
-				$image_src = wp_get_attachment_image_src( $item['id'] );
+				$image_src = 'custom' !== $settings['thumbnail_image_size']
+					? wp_get_attachment_image_src( $item['id'], $settings['thumbnail_image_size'] )[0]
+					: Group_Control_Image_Size::get_attachment_image_src( $item['id'], 'thumbnail_image', $settings );
 
 				$this->add_render_attribute( 'gallery_item_image_' . $item['id'], [
-					'style' => "background-image: url('{$image_src[0]}');",
+					'style' => "background-image: url('{$image_src}');",
 				] );
 			}
 		}
@@ -1430,7 +1449,7 @@ class Gallery extends Base_Widget {
 				'titles-container',
 				[
 					'class' => 'elementor-gallery__titles-container',
-					'aria-label' => esc_html__( 'Gallery filter', 'elementor-pro' ),
+					'aria-label' => esc_attr__( 'Gallery filter', 'elementor-pro' ),
 				]
 			);
 
@@ -1519,16 +1538,8 @@ class Gallery extends Base_Widget {
 					continue;
 				}
 				$attachment = get_post( $id );
-				$image_data = [
-					'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
-					'media' => wp_get_attachment_image_src( $id, 'full' )['0'],
-					'src' => $image_src['0'],
-					'width' => $image_src['1'],
-					'height' => $image_src['2'],
-					'caption' => $attachment->post_excerpt,
-					'description' => $attachment->post_content,
-					'title' => $attachment->post_title,
-				];
+
+				$image_data = $this->get_image_data( $attachment, $id, $image_src, $settings );
 
 				$this->add_render_attribute( 'gallery_item_' . $unique_index, [
 					'class' => [
@@ -1612,5 +1623,28 @@ class Gallery extends Base_Widget {
 			//endforeach; ?>
 		</div>
 	<?php }
+	}
+
+	protected function get_image_data( $attachment, $image_id, $image_src, $settings ): array {
+		$image_data = [
+			'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
+			'media' => wp_get_attachment_image_src( $image_id, 'full' )['0'],
+			'src' => $image_src['0'],
+			'width' => $image_src['1'],
+			'height' => $image_src['2'],
+			'caption' => $attachment->post_excerpt,
+			'description' => $attachment->post_content,
+			'title' => $attachment->post_title,
+		];
+
+		if ( 'custom' !== $settings['thumbnail_image_size'] ) {
+			return $image_data;
+		}
+
+		$image_data['src'] = Group_Control_Image_Size::get_attachment_image_src( $image_id, 'thumbnail_image', $settings );
+		$image_data['width'] = $settings['thumbnail_image_custom_dimension']['width'];
+		$image_data['height'] = $settings['thumbnail_image_custom_dimension']['height'];
+
+		return $image_data;
 	}
 }

@@ -281,6 +281,14 @@ class Loop extends Theme_Document {
 	public function get_content( $with_css = false ) {
 		$edit_mode = Plugin::elementor()->editor->is_edit_mode();
 
+		$document = Plugin::elementor()->documents->get_current();
+
+		$should_switch_document = $document && $document::get_type() !== self::DOCUMENT_TYPE;
+
+		if ( $should_switch_document ) {
+			Plugin::elementor()->documents->switch_to_document( $this );
+		}
+
 		add_filter( 'elementor/frontend/builder_content/before_print_css', [ $this, 'prevent_inline_css_printing' ] );
 
 		$this->enqueue_loop_css();
@@ -292,6 +300,10 @@ class Loop extends Theme_Document {
 		remove_filter( 'elementor/frontend/builder_content/before_print_css', [ $this, 'prevent_inline_css_printing' ] );
 
 		Plugin::elementor()->editor->set_edit_mode( $edit_mode );
+
+		if ( $should_switch_document ) {
+			Plugin::elementor()->documents->restore_document();
+		}
 
 		return $content;
 	}

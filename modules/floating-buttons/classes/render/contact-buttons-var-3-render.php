@@ -50,7 +50,7 @@ class Contact_Buttons_Var_3_Render extends Contact_Buttons_Core_Render {
 			'type' => 'button',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name */
-				esc_html__( 'Toggle %1$s', 'elementor-pro' ),
+				esc_attr__( 'Toggle %1$s', 'elementor-pro' ),
 				$accessible_name,
 			),
 			'aria-expanded' => 'true',
@@ -77,7 +77,7 @@ class Contact_Buttons_Var_3_Render extends Contact_Buttons_Core_Render {
 			'aria-controls' => 'e-contact-buttons__content-wrapper',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name */
-				esc_html__( 'Close %1$s', 'elementor-pro' ),
+				esc_attr__( 'Close %1$s', 'elementor-pro' ),
 				$accessible_name,
 			),
 			'type' => 'button',
@@ -195,7 +195,7 @@ class Contact_Buttons_Var_3_Render extends Contact_Buttons_Core_Render {
 		$formatted_link = $this->settings['send_button_url']['url'];
 
 		$this->widget->add_render_attribute( 'send-button', [
-			'aria-label' => esc_html( $button_text ),
+			'aria-label' => esc_attr( $button_text ),
 			'class' => $button_classnames,
 			'href' => esc_url( $formatted_link ),
 			'rel' => 'noopener noreferrer',

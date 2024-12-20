@@ -1432,7 +1432,7 @@ class Mega_Menu extends Widget_Nested_Base {
 
 		$this->start_controls_tabs( 'style_menu_dropdown_indicator' );
 
-		foreach ( array( 'normal', 'hover', 'active' ) as $state ) {
+		foreach ( [ 'normal', 'hover', 'active' ] as $state ) {
 			$this->add_dropdown_indicator_state_based_style_controls( $state );
 		}
 
@@ -2035,7 +2035,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			'aria-haspopup' => 'true',
 			'aria-expanded' => 'false',
 			'aria-controls' => 'menubar-' . $this->get_widget_number(),
-			'aria-label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
+			'aria-label' => esc_attr__( 'Menu Toggle', 'elementor-pro' ),
 		] );
 
 		$open_class = 'e-n-menu-toggle-icon e-open';
@@ -2084,7 +2084,7 @@ class Mega_Menu extends Widget_Nested_Base {
 					'aria-haspopup': 'true',
 					'aria-expanded': 'false',
 					'aria-controls': 'menubar-' + elementUid,
-					'aria-label': '<?php echo esc_html__( 'Menu Toggle', 'elementor-pro' ); ?>',
+					'aria-label': '<?php echo esc_attr__( 'Menu Toggle', 'elementor-pro' ); ?>',
 				} );
 			#>
 			<button {{{ view.getRenderAttributeString( menuToggleKey ) }}}>
@@ -2180,11 +2180,11 @@ class Mega_Menu extends Widget_Nested_Base {
 						<button <?php echo wp_kses_post( $this->get_render_attribute_string( $key . '_link' ) ); ?> >
 							<span class="e-n-menu-dropdown-icon-opened">
 								<?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								<span class="elementor-screen-only"><?php printf( esc_html__( 'Close %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+								<span class="elementor-screen-only"><?php echo sprintf( esc_html__( 'Close %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 							</span>
 							<span class="e-n-menu-dropdown-icon-closed">
 								<?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								<span class="elementor-screen-only"><?php printf( esc_html__( 'Open %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+								<span class="elementor-screen-only"><?php echo sprintf( esc_html__( 'Open %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 							</span>
 						</button>
 					<?php } ?>

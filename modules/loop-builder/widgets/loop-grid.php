@@ -46,7 +46,7 @@ class Loop_Grid extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-loop-builder' ];
+		return [ 'widget-loop-grid' ];
 	}
 
 	protected function register_layout_section() {

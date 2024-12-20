@@ -55,7 +55,7 @@ class Contact_Buttons_Var_4_Render extends Contact_Buttons_Core_Render {
 			'aria-controls' => 'e-contact-buttons__content-wrapper',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name */
-				esc_html__( 'Close %1$s', 'elementor-pro' ),
+				esc_attr__( 'Close %1$s', 'elementor-pro' ),
 				$accessible_name,
 			),
 			'type' => 'button',
@@ -105,7 +105,7 @@ class Contact_Buttons_Var_4_Render extends Contact_Buttons_Core_Render {
 			'aria-controls' => 'e-contact-buttons__content-wrapper',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name */
-				esc_html__( 'Expand %1$s', 'elementor-pro' ),
+				esc_attr__( 'Expand %1$s', 'elementor-pro' ),
 				$accessible_name,
 			),
 			'type' => 'button',

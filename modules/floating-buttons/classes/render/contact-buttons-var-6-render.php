@@ -53,7 +53,7 @@ class Contact_Buttons_Var_6_Render extends Contact_Buttons_Core_Render {
 					$icon_text_mapping = Social_Network_Provider::get_text_mapping( $icon['contact_icon_platform'] );
 					$aria_label = sprintf(
 						/* translators: 1: Accessible name, 2: Platform name */
-						esc_html__( 'Access %1$s %2$s', 'elementor-pro' ),
+						esc_attr__( 'Access %1$s %2$s', 'elementor-pro' ),
 						$accessible_name,
 						$icon_text_mapping
 					);

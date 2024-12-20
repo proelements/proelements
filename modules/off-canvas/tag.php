@@ -69,7 +69,7 @@ class Tag extends DynamicTagsTag {
 		}
 
 		$link_action_url = Plugin::elementor()->frontend->create_action_hash( 'off_canvas:' . $settings['action'], [
-			'id' => $settings['off_canvas'],
+			'id' => apply_filters( 'elementor-pro/off-canvas/id', $settings['off_canvas'] ),
 			'displayMode' => $settings['action'],
 		] );
 

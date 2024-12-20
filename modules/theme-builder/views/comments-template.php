@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $skin = $GLOBALS['post_comment_skin_classic'];
 
 if ( post_password_required() ) { ?>
-	<p class="nocomments"><?php esc_html_e( 'This post is password protected. Enter the password to view comments.', 'elementor-pro' ); ?></p>
+	<p class="nocomments"><?php echo esc_html__( 'This post is password protected. Enter the password to view comments.', 'elementor-pro' ); ?></p>
 	<?php
 	return;
 }
@@ -47,7 +47,7 @@ if ( $comment_count ) :
 
 	<?php else : ?>
 		<!-- If comments are closed. -->
-		<p class="nocomments"><?php esc_html_e( 'Comments are closed.', 'elementor-pro' ); ?></p>
+		<p class="nocomments"><?php echo esc_html__( 'Comments are closed.', 'elementor-pro' ); ?></p>
 		<?php
 	endif;
 endif;

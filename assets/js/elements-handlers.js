@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["elements-handlers"],{
 
@@ -14,53 +14,55 @@ var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/inte
 var _frontend = _interopRequireDefault(__webpack_require__(/*! modules/animated-headline/assets/js/frontend/frontend */ "../modules/animated-headline/assets/js/frontend/frontend.js"));
 var _frontend2 = _interopRequireDefault(__webpack_require__(/*! modules/carousel/assets/js/frontend/frontend */ "../modules/carousel/assets/js/frontend/frontend.js"));
 var _frontend3 = _interopRequireDefault(__webpack_require__(/*! modules/countdown/assets/js/frontend/frontend */ "../modules/countdown/assets/js/frontend/frontend.js"));
-var _frontend4 = _interopRequireDefault(__webpack_require__(/*! modules/hotspot/assets/js/frontend/frontend */ "../modules/hotspot/assets/js/frontend/frontend.js"));
-var _frontend5 = _interopRequireDefault(__webpack_require__(/*! modules/forms/assets/js/frontend/frontend */ "../modules/forms/assets/js/frontend/frontend.js"));
-var _frontend6 = _interopRequireDefault(__webpack_require__(/*! modules/gallery/assets/js/frontend/frontend */ "../modules/gallery/assets/js/frontend/frontend.js"));
-var _frontend7 = _interopRequireDefault(__webpack_require__(/*! modules/lottie/assets/js/frontend/frontend */ "../modules/lottie/assets/js/frontend/frontend.js"));
-var _frontend8 = _interopRequireDefault(__webpack_require__(/*! modules/nav-menu/assets/js/frontend/frontend */ "../modules/nav-menu/assets/js/frontend/frontend.js"));
-var _frontend9 = _interopRequireDefault(__webpack_require__(/*! modules/popup/assets/js/frontend/frontend */ "../modules/popup/assets/js/frontend/frontend.js"));
-var _frontend10 = _interopRequireDefault(__webpack_require__(/*! modules/posts/assets/js/frontend/frontend */ "../modules/posts/assets/js/frontend/frontend.js"));
-var _frontend11 = _interopRequireDefault(__webpack_require__(/*! modules/share-buttons/assets/js/frontend/frontend */ "../modules/share-buttons/assets/js/frontend/frontend.js"));
-var _frontend12 = _interopRequireDefault(__webpack_require__(/*! modules/slides/assets/js/frontend/frontend */ "../modules/slides/assets/js/frontend/frontend.js"));
-var _frontend13 = _interopRequireDefault(__webpack_require__(/*! modules/social/assets/js/frontend/frontend */ "../modules/social/assets/js/frontend/frontend.js"));
-var _frontend14 = _interopRequireDefault(__webpack_require__(/*! modules/table-of-contents/assets/js/frontend/frontend */ "../modules/table-of-contents/assets/js/frontend/frontend.js"));
-var _frontend15 = _interopRequireDefault(__webpack_require__(/*! modules/theme-builder/assets/js/frontend/frontend */ "../modules/theme-builder/assets/js/frontend/frontend.js"));
-var _frontend16 = _interopRequireDefault(__webpack_require__(/*! modules/theme-elements/assets/js/frontend/frontend */ "../modules/theme-elements/assets/js/frontend/frontend.js"));
-var _frontend17 = _interopRequireDefault(__webpack_require__(/*! modules/woocommerce/assets/js/frontend/frontend */ "../modules/woocommerce/assets/js/frontend/frontend.js"));
-var _frontend18 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/frontend/frontend */ "../modules/loop-builder/assets/js/frontend/frontend.js"));
-var _frontend19 = _interopRequireDefault(__webpack_require__(/*! modules/mega-menu/assets/js/frontend/frontend */ "../modules/mega-menu/assets/js/frontend/frontend.js"));
-var _frontend20 = _interopRequireDefault(__webpack_require__(/*! modules/nested-carousel/assets/js/frontend/frontend */ "../modules/nested-carousel/assets/js/frontend/frontend.js"));
-var _frontend21 = _interopRequireDefault(__webpack_require__(/*! modules/loop-filter/assets/js/frontend/frontend */ "../modules/loop-filter/assets/js/frontend/frontend.js"));
-var _frontend22 = _interopRequireDefault(__webpack_require__(/*! modules/off-canvas/assets/js/frontend/frontend */ "../modules/off-canvas/assets/js/frontend/frontend.js"));
-var _frontend23 = _interopRequireDefault(__webpack_require__(/*! modules/floating-buttons/assets/js/frontend/frontend */ "../modules/floating-buttons/assets/js/frontend/frontend.js"));
-var _frontend24 = _interopRequireDefault(__webpack_require__(/*! modules/search/assets/js/frontend/frontend */ "../modules/search/assets/js/frontend/frontend.js"));
+var _frontend4 = _interopRequireDefault(__webpack_require__(/*! modules/dynamic-tags/assets/js/frontend/frontend */ "../modules/dynamic-tags/assets/js/frontend/frontend.js"));
+var _frontend5 = _interopRequireDefault(__webpack_require__(/*! modules/hotspot/assets/js/frontend/frontend */ "../modules/hotspot/assets/js/frontend/frontend.js"));
+var _frontend6 = _interopRequireDefault(__webpack_require__(/*! modules/forms/assets/js/frontend/frontend */ "../modules/forms/assets/js/frontend/frontend.js"));
+var _frontend7 = _interopRequireDefault(__webpack_require__(/*! modules/gallery/assets/js/frontend/frontend */ "../modules/gallery/assets/js/frontend/frontend.js"));
+var _frontend8 = _interopRequireDefault(__webpack_require__(/*! modules/lottie/assets/js/frontend/frontend */ "../modules/lottie/assets/js/frontend/frontend.js"));
+var _frontend9 = _interopRequireDefault(__webpack_require__(/*! modules/nav-menu/assets/js/frontend/frontend */ "../modules/nav-menu/assets/js/frontend/frontend.js"));
+var _frontend10 = _interopRequireDefault(__webpack_require__(/*! modules/popup/assets/js/frontend/frontend */ "../modules/popup/assets/js/frontend/frontend.js"));
+var _frontend11 = _interopRequireDefault(__webpack_require__(/*! modules/posts/assets/js/frontend/frontend */ "../modules/posts/assets/js/frontend/frontend.js"));
+var _frontend12 = _interopRequireDefault(__webpack_require__(/*! modules/share-buttons/assets/js/frontend/frontend */ "../modules/share-buttons/assets/js/frontend/frontend.js"));
+var _frontend13 = _interopRequireDefault(__webpack_require__(/*! modules/slides/assets/js/frontend/frontend */ "../modules/slides/assets/js/frontend/frontend.js"));
+var _frontend14 = _interopRequireDefault(__webpack_require__(/*! modules/social/assets/js/frontend/frontend */ "../modules/social/assets/js/frontend/frontend.js"));
+var _frontend15 = _interopRequireDefault(__webpack_require__(/*! modules/table-of-contents/assets/js/frontend/frontend */ "../modules/table-of-contents/assets/js/frontend/frontend.js"));
+var _frontend16 = _interopRequireDefault(__webpack_require__(/*! modules/theme-builder/assets/js/frontend/frontend */ "../modules/theme-builder/assets/js/frontend/frontend.js"));
+var _frontend17 = _interopRequireDefault(__webpack_require__(/*! modules/theme-elements/assets/js/frontend/frontend */ "../modules/theme-elements/assets/js/frontend/frontend.js"));
+var _frontend18 = _interopRequireDefault(__webpack_require__(/*! modules/woocommerce/assets/js/frontend/frontend */ "../modules/woocommerce/assets/js/frontend/frontend.js"));
+var _frontend19 = _interopRequireDefault(__webpack_require__(/*! modules/loop-builder/assets/js/frontend/frontend */ "../modules/loop-builder/assets/js/frontend/frontend.js"));
+var _frontend20 = _interopRequireDefault(__webpack_require__(/*! modules/mega-menu/assets/js/frontend/frontend */ "../modules/mega-menu/assets/js/frontend/frontend.js"));
+var _frontend21 = _interopRequireDefault(__webpack_require__(/*! modules/nested-carousel/assets/js/frontend/frontend */ "../modules/nested-carousel/assets/js/frontend/frontend.js"));
+var _frontend22 = _interopRequireDefault(__webpack_require__(/*! modules/loop-filter/assets/js/frontend/frontend */ "../modules/loop-filter/assets/js/frontend/frontend.js"));
+var _frontend23 = _interopRequireDefault(__webpack_require__(/*! modules/off-canvas/assets/js/frontend/frontend */ "../modules/off-canvas/assets/js/frontend/frontend.js"));
+var _frontend24 = _interopRequireDefault(__webpack_require__(/*! modules/floating-buttons/assets/js/frontend/frontend */ "../modules/floating-buttons/assets/js/frontend/frontend.js"));
+var _frontend25 = _interopRequireDefault(__webpack_require__(/*! modules/search/assets/js/frontend/frontend */ "../modules/search/assets/js/frontend/frontend.js"));
 const extendDefaultHandlers = defaultHandlers => {
   const handlers = {
     animatedText: _frontend.default,
     carousel: _frontend2.default,
     countdown: _frontend3.default,
-    hotspot: _frontend4.default,
-    form: _frontend5.default,
-    gallery: _frontend6.default,
-    lottie: _frontend7.default,
-    nav_menu: _frontend8.default,
-    popup: _frontend9.default,
-    posts: _frontend10.default,
-    share_buttons: _frontend11.default,
-    slides: _frontend12.default,
-    social: _frontend13.default,
-    themeBuilder: _frontend15.default,
-    themeElements: _frontend16.default,
-    woocommerce: _frontend17.default,
-    tableOfContents: _frontend14.default,
-    loopBuilder: _frontend18.default,
-    megaMenu: _frontend19.default,
-    nestedCarousel: _frontend20.default,
-    taxonomyFilter: _frontend21.default,
-    offCanvas: _frontend22.default,
-    contactButtons: _frontend23.default,
-    search: _frontend24.default
+    dynamicTags: _frontend4.default,
+    hotspot: _frontend5.default,
+    form: _frontend6.default,
+    gallery: _frontend7.default,
+    lottie: _frontend8.default,
+    nav_menu: _frontend9.default,
+    popup: _frontend10.default,
+    posts: _frontend11.default,
+    share_buttons: _frontend12.default,
+    slides: _frontend13.default,
+    social: _frontend14.default,
+    themeBuilder: _frontend16.default,
+    themeElements: _frontend17.default,
+    woocommerce: _frontend18.default,
+    tableOfContents: _frontend15.default,
+    loopBuilder: _frontend19.default,
+    megaMenu: _frontend20.default,
+    nestedCarousel: _frontend21.default,
+    taxonomyFilter: _frontend22.default,
+    offCanvas: _frontend23.default,
+    contactButtons: _frontend24.default,
+    search: _frontend25.default
   };
   return {
     ...defaultHandlers,
@@ -157,17 +159,17 @@ const close = exports.close = {
 /*!********************************************************!*\
   !*** ../assets/dev/js/frontend/utils/icons/manager.js ***!
   \********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 class IconsManager {
+  static symbolsContainer;
+  static iconsUsageList = [];
   constructor(elementsPrefix) {
     this.prefix = `${elementsPrefix}-`;
     if (!IconsManager.symbolsContainer) {
@@ -208,8 +210,6 @@ class IconsManager {
   }
 }
 exports["default"] = IconsManager;
-(0, _defineProperty2.default)(IconsManager, "symbolsContainer", void 0);
-(0, _defineProperty2.default)(IconsManager, "iconsUsageList", []);
 
 /***/ }),
 
@@ -221,18 +221,16 @@ exports["default"] = IconsManager;
 
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _focusableElementSelectors = __webpack_require__(/*! ./focusable-element-selectors */ "../assets/dev/js/frontend/utils/focusable-element-selectors.js");
 class ModalKeyboardHandler {
+  lastFocusableElement = null;
+  firstFocusableElement = null;
+  modalTriggerElement = null;
   constructor(elementConfig) {
-    (0, _defineProperty2.default)(this, "lastFocusableElement", null);
-    (0, _defineProperty2.default)(this, "firstFocusableElement", null);
-    (0, _defineProperty2.default)(this, "modalTriggerElement", null);
     this.config = elementConfig;
     this.changeFocusAfterAnimation = false;
   }
@@ -418,6 +416,31 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ "../modules/dynamic-tags/assets/js/frontend/frontend.js":
+/*!**************************************************************!*\
+  !*** ../modules/dynamic-tags/assets/js/frontend/frontend.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class _default extends elementorModules.Module {
+  constructor() {
+    super();
+    elementorFrontend.on('components:init', () => this.onFrontendComponentsInit());
+  }
+  onFrontendComponentsInit() {
+    elementorFrontend.utils.urlActions.addAction('reload-page', () => document.location.reload());
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
 /***/ "../modules/floating-buttons/assets/js/frontend/frontend.js":
 /*!******************************************************************!*\
   !*** ../modules/floating-buttons/assets/js/frontend/frontend.js ***!
@@ -435,11 +458,11 @@ class _default extends elementorModules.Module {
     super();
     if (elementorFrontend.config.experimentalFeatures.container) {
       ['contact-buttons-var-1', 'contact-buttons-var-3', 'contact-buttons-var-4', 'contact-buttons-var-5', 'contact-buttons-var-6', 'contact-buttons-var-7', 'contact-buttons-var-8', 'contact-buttons-var-9'].forEach(handler => {
-        elementorFrontend.elementsHandler.attachHandler(handler, () => Promise.all(/*! import() | contact-buttons */[__webpack_require__.e("modules_floating-buttons_assets_js_shared_frontend_handlers_click-tracking_js"), __webpack_require__.e("contact-buttons")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/contact-buttons */ "../modules/floating-buttons/assets/js/frontend/handlers/contact-buttons.js")));
+        elementorFrontend.elementsHandler.attachHandler(handler, () => __webpack_require__.e(/*! import() | contact-buttons */ "contact-buttons").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/contact-buttons */ "../modules/floating-buttons/assets/js/frontend/handlers/contact-buttons.js")));
       });
-      elementorFrontend.elementsHandler.attachHandler('contact-buttons-var-10', () => Promise.all(/*! import() | contact-buttons-var-10 */[__webpack_require__.e("modules_floating-buttons_assets_js_shared_frontend_handlers_click-tracking_js"), __webpack_require__.e("contact-buttons-var-10")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/contact-buttons-v10 */ "../modules/floating-buttons/assets/js/frontend/handlers/contact-buttons-v10.js")));
-      elementorFrontend.elementsHandler.attachHandler('floating-bars-var-2', () => Promise.all(/*! import() | floating-bars-var-2 */[__webpack_require__.e("modules_floating-buttons_assets_js_shared_frontend_handlers_click-tracking_js"), __webpack_require__.e("floating-bars-var-2")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/floating-bars-v2 */ "../modules/floating-buttons/assets/js/frontend/handlers/floating-bars-v2.js")));
-      elementorFrontend.elementsHandler.attachHandler('floating-bars-var-3', () => Promise.all(/*! import() | floating-bars-var-3 */[__webpack_require__.e("modules_floating-buttons_assets_js_shared_frontend_handlers_click-tracking_js"), __webpack_require__.e("floating-bars-var-3")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/floating-bars-v3 */ "../modules/floating-buttons/assets/js/frontend/handlers/floating-bars-v3.js")));
+      elementorFrontend.elementsHandler.attachHandler('contact-buttons-var-10', () => __webpack_require__.e(/*! import() | contact-buttons-var-10 */ "contact-buttons-var-10").then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/contact-buttons-v10 */ "../modules/floating-buttons/assets/js/frontend/handlers/contact-buttons-v10.js")));
+      elementorFrontend.elementsHandler.attachHandler('floating-bars-var-2', () => Promise.all(/*! import() | floating-bars-var-2 */[__webpack_require__.e("modules_floating-buttons_assets_js_frontend_classes_floatin-bar-dom_js-modules_floating-butto-2c1e90"), __webpack_require__.e("floating-bars-var-2")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/floating-bars-v2 */ "../modules/floating-buttons/assets/js/frontend/handlers/floating-bars-v2.js")));
+      elementorFrontend.elementsHandler.attachHandler('floating-bars-var-3', () => Promise.all(/*! import() | floating-bars-var-3 */[__webpack_require__.e("modules_floating-buttons_assets_js_frontend_classes_floatin-bar-dom_js-modules_floating-butto-2c1e90"), __webpack_require__.e("floating-bars-var-3")]).then(__webpack_require__.bind(__webpack_require__, /*! ./handlers/floating-bars-v3 */ "../modules/floating-buttons/assets/js/frontend/handlers/floating-bars-v3.js")));
     }
   }
 }
@@ -1225,7 +1248,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _triggers = _interopRequireDefault(__webpack_require__(/*! ./triggers */ "../modules/popup/assets/js/frontend/triggers.js"));
 var _timing = _interopRequireDefault(__webpack_require__(/*! ./timing */ "../modules/popup/assets/js/frontend/timing.js"));
 var _eIcons = __webpack_require__(/*! @elementor-pro/e-icons */ "../assets/dev/js/frontend/utils/icons/e-icons.js");
@@ -1233,10 +1255,7 @@ var _modalKeyboardHandler = _interopRequireDefault(__webpack_require__(/*! eleme
 // Temporary solution, when core 3.5.0 will be the minimum version, is should be replaced with @elementor/e-icons.
 
 class _default extends elementorModules.frontend.Document {
-  constructor() {
-    super(...arguments);
-    (0, _defineProperty2.default)(this, "keyboardHandler", null);
-  }
+  keyboardHandler = null;
   bindEvents() {
     const openSelector = this.getDocumentSettings('open_selector');
     if (openSelector) {
@@ -1764,28 +1783,16 @@ exports["default"] = _default;
 /*!********************************************************************!*\
   !*** ../modules/popup/assets/js/frontend/timing/schedule-utils.js ***!
   \********************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 class ScheduleUtils {
   constructor(args) {
-    (0, _defineProperty2.default)(this, "shouldDisplay", () => {
-      if (!this.settings.startDate && !this.settings.endDate) {
-        return true;
-      }
-      const now = this.getCurrentDateTime();
-      if ((!this.settings.startDate || now >= this.settings.startDate) && (!this.settings.endDate || now <= this.settings.endDate)) {
-        return true;
-      }
-      return false;
-    });
     this.settings = args.settings;
   }
   getCurrentDateTime() {
@@ -1795,6 +1802,16 @@ class ScheduleUtils {
     }
     return now;
   }
+  shouldDisplay = () => {
+    if (!this.settings.startDate && !this.settings.endDate) {
+      return true;
+    }
+    const now = this.getCurrentDateTime();
+    if ((!this.settings.startDate || now >= this.settings.startDate) && (!this.settings.endDate || now <= this.settings.endDate)) {
+      return true;
+    }
+    return false;
+  };
 }
 exports["default"] = ScheduleUtils;
 
@@ -2134,6 +2151,7 @@ var _scrollingTo = _interopRequireDefault(__webpack_require__(/*! ./triggers/scr
 var _click = _interopRequireDefault(__webpack_require__(/*! ./triggers/click */ "../modules/popup/assets/js/frontend/triggers/click.js"));
 var _inactivity = _interopRequireDefault(__webpack_require__(/*! ./triggers/inactivity */ "../modules/popup/assets/js/frontend/triggers/inactivity.js"));
 var _exitIntent = _interopRequireDefault(__webpack_require__(/*! ./triggers/exit-intent */ "../modules/popup/assets/js/frontend/triggers/exit-intent.js"));
+var _adblockDetection = _interopRequireDefault(__webpack_require__(/*! ./triggers/adblock-detection */ "../modules/popup/assets/js/frontend/triggers/adblock-detection.js"));
 class _default extends elementorModules.Module {
   constructor(settings, document) {
     super(settings);
@@ -2145,7 +2163,8 @@ class _default extends elementorModules.Module {
       scrolling_to: _scrollingTo.default,
       click: _click.default,
       inactivity: _inactivity.default,
-      exit_intent: _exitIntent.default
+      exit_intent: _exitIntent.default,
+      adblock_detection: _adblockDetection.default
     };
     this.runTriggers();
   }
@@ -2167,6 +2186,74 @@ class _default extends elementorModules.Module {
   onTriggerFired() {
     this.document.showModal(true);
     this.destroyTriggers();
+  }
+}
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../modules/popup/assets/js/frontend/triggers/adblock-detection.js":
+/*!*************************************************************************!*\
+  !*** ../modules/popup/assets/js/frontend/triggers/adblock-detection.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/popup/assets/js/frontend/triggers/base.js"));
+class _default extends _base.default {
+  getName() {
+    return 'adblock_detection';
+  }
+  generateRandomString() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      result += chars[randomIndex];
+    }
+    return result;
+  }
+  hasAdblock() {
+    const elementId = `elementor-adblock-detection-${this.generateRandomString()}`;
+    this.createEmptyAdBlockElement(elementId);
+    const tempAdBlockEle = document.querySelector(`#${elementId}`);
+    if (!tempAdBlockEle) {
+      return true;
+    }
+    const hasAdBlock = 'none' === window.getComputedStyle(tempAdBlockEle)?.display;
+    this.removeEmptyAdBlockElement(tempAdBlockEle);
+    return hasAdBlock;
+  }
+  createEmptyAdBlockElement(elementId) {
+    const tempAdDiv = document.createElement('div');
+    tempAdDiv.id = elementId;
+    tempAdDiv.className = 'ad-box';
+    tempAdDiv.style.position = 'fixed';
+    tempAdDiv.style.top = '0';
+    tempAdDiv.style.left = '0';
+    tempAdDiv.setAttribute('aria-hidden', 'true');
+    tempAdDiv.innerHTML = '&nbsp;';
+    document.body.appendChild(tempAdDiv);
+  }
+  removeEmptyAdBlockElement(tempAdBlockEle) {
+    tempAdBlockEle.remove();
+  }
+  run() {
+    this.timeout = setTimeout(() => {
+      const hasAdBlock = this.hasAdblock();
+      if (hasAdBlock) {
+        this.callback();
+      }
+    }, this.getTriggerSetting('delay') * 1000);
+  }
+  destroy() {
+    clearTimeout(this.timeout);
   }
 }
 exports["default"] = _default;

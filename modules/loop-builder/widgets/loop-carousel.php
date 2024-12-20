@@ -40,7 +40,7 @@ class Loop_Carousel extends Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'e-swiper', 'widget-loop-builder' ];
+		return [ 'widget-loop-carousel' ];
 	}
 
 	protected function get_initial_config() {
@@ -174,7 +174,8 @@ class Loop_Carousel extends Base {
 
 
 	public function get_loop_header_widget_classes(): array {
-		$swiper_class = Plugin::elementor()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
+		// TODO: Remove conditional logic in v3.28 [ED-15983].
+		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
 		return [ $swiper_class ];
 	}
 

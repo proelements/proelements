@@ -907,7 +907,7 @@ class Table_Of_Contents extends Base_Widget {
 					'tabindex' => '0',
 					'aria-controls' => $toc_id,
 					'aria-expanded' => 'true',
-					'aria-label' => esc_html__( 'Open table of contents', 'elementor-pro' ),
+					'aria-label' => esc_attr__( 'Open table of contents', 'elementor-pro' ),
 				]
 			);
 			$this->add_render_attribute(
@@ -918,7 +918,7 @@ class Table_Of_Contents extends Base_Widget {
 					'tabindex' => '0',
 					'aria-controls' => $toc_id,
 					'aria-expanded' => 'true',
-					'aria-label' => esc_html__( 'Close table of contents', 'elementor-pro' ),
+					'aria-label' => esc_attr__( 'Close table of contents', 'elementor-pro' ),
 				]
 			);
 		}

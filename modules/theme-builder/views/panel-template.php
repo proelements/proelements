@@ -72,24 +72,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="elementor-theme-builder-conditions-repeater-row-controls"></div>
 	<div class="elementor-repeater-row-tool elementor-repeater-tool-remove">
 		<i class="eicon-close" aria-hidden="true"></i>
-		<span class="elementor-screen-only"><?php esc_html_e( 'Remove this item', 'elementor-pro' ); ?></span>
+		<span class="elementor-screen-only"><?php echo esc_html__( 'Remove this item', 'elementor-pro' ); ?></span>
 	</div>
 </script>
 
 <script type="text/template" id="tmpl-elementor-theme-builder-button-preview">
-	<i class="eicon-preview-medium tooltip-target" aria-hidden="true"  data-tooltip="<?php esc_attr_e( 'Preview Changes', 'elementor-pro' ); ?>"></i>
+	<i class="eicon-preview-medium tooltip-target" aria-hidden="true"  data-tooltip="<?php echo esc_attr__( 'Preview Changes', 'elementor-pro' ); ?>"></i>
 	<span class="elementor-screen-only">
-		<?php esc_attr_e( 'Preview Changes', 'elementor-pro' ); ?>
+		<?php echo esc_attr__( 'Preview Changes', 'elementor-pro' ); ?>
 	</span>
 	<div class="elementor-panel-footer-sub-menu-wrapper">
 		<div class="elementor-panel-footer-sub-menu">
 			<div onclick="$e.run( 'theme-builder-publish/preview-settings' );" id="elementor-panel-footer-theme-builder-button-preview-settings" class="elementor-panel-footer-sub-menu-item">
 				<i class="eicon-wrench" aria-hidden="true"></i>
-				<span class="elementor-title"><?php esc_html_e( 'Settings', 'elementor-pro' ); ?></span>
+				<span class="elementor-title"><?php echo esc_html__( 'Settings', 'elementor-pro' ); ?></span>
 			</div>
 			<div onclick="$e.run( 'editor/documents/preview', { id: elementor.documents.getCurrent().id, force: true } );" id="elementor-panel-footer-theme-builder-button-open-preview" class="elementor-panel-footer-sub-menu-item">
 				<i class="eicon-editor-external-link" aria-hidden="true"></i>
-				<span class="elementor-title"><?php esc_html_e( 'Preview', 'elementor-pro' ); ?></span>
+				<span class="elementor-title"><?php echo esc_html__( 'Preview', 'elementor-pro' ); ?></span>
 			</div>
 		</div>
 	</div>

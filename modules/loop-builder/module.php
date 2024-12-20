@@ -63,17 +63,34 @@ class Module extends Module_Base {
 	/**
 	 * Register styles.
 	 *
-	 * At build time, Elementor compiles `/modules/loop-builder/assets/scss/frontend.scss`
-	 * to `/assets/css/widget-loop-builder.min.css`.
+	 * At build time, Elementor compiles `/modules/loop-builder/assets/scss/widgets/*.scss`
+	 * to `/assets/css/widget-*.min.css`.
 	 *
 	 * @return void
 	 */
 	public function register_styles() {
 		wp_register_style(
-			'widget-loop-builder',
-			$this->get_css_assets_url( 'widget-loop-builder', null, true, true ),
+			'widget-loop-common',
+			$this->get_css_assets_url( 'widget-loop-common', null, true, true ),
 			[ 'elementor-frontend' ],
 			ELEMENTOR_PRO_VERSION
+		);
+
+		wp_register_style(
+			'widget-loop-carousel',
+			$this->get_css_assets_url( 'widget-loop-carousel', null, true, true ),
+			[ 'elementor-frontend', 'e-swiper', 'widget-loop-common' ],
+			ELEMENTOR_PRO_VERSION
+		);
+
+		$direction_suffix = is_rtl() ? '-rtl' : '';
+		$has_custom_breakpoints = Plugin::elementor()->breakpoints->has_custom_breakpoints();
+
+		wp_register_style(
+			'widget-loop-grid',
+			Plugin::get_frontend_file_url( "widget-loop-grid{$direction_suffix}.min.css", $has_custom_breakpoints ),
+			[ 'elementor-frontend', 'widget-loop-common' ],
+			$has_custom_breakpoints ? null : ELEMENTOR_PRO_VERSION
 		);
 	}
 

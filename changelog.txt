@@ -1,4 +1,37 @@
 # PRO Elements - by PROElements.org
+#### 3.26.1 - 2024-12-17
+
+Fix: Restore deprecated `Plugin::enqueue_styles()` function to avoid errors with 3rd party plugins
+
+#### 3.26.0 - 2024-12-16
+
+* New: Introducing dynamic content support for Off-canvas in Loop Grid widget templates - enabling seamless display of additional content dynamically ([#29049](https://github.com/elementor/elementor/issues/29049), [#28935](https://github.com/elementor/elementor/issues/28935), [#7106](https://github.com/elementor/elementor/issues/7106))
+* New: AdBlock Detection trigger for Popups - display targeted popups for visitors using ad blockers
+* New: Added Reload Page link action for Dynamic Tags
+* Tweak: Added "Space Between Dots" control to Carousel widgets ([#2526](https://github.com/elementor/elementor/issues/2526), [#3277](https://github.com/elementor/elementor/issues/3277), [#21697](https://github.com/elementor/elementor/issues/21697))
+* Tweak: Replaced hidden `elementor-screen-only` div with `aria-label` attributes
+* Tweak: Removed `elementor-widget-container` div from Elementor widgets as part of the Optimized Markup experiment
+* Tweak: Optimize popup styling by loading it only when necessary
+* Tweak: Updated Gap between slides control to support only PX units in Carousel widget
+* Tweak: Removed the dependency between the Tabs handler and the Menu handler
+* Tweak: Added the ability to set `aria-label` in Carousel widgets
+* Tweak: Added `aria-roledescription=carousel` to carousel wrapper
+* Tweak: Added `aria-roledescription=slide` to slide wrapper
+* Tweak: Optimized carousel widgets markup as part of the Optimized Markup experiment
+* Tweak: Updated minimum required Safari version to 15.5
+* Tweak: Facebook widgets are no longer supported on mobile due to Facebook functionality changes
+* Fix: Motion Effects sticky feature is not working when Scroll Snap is enabled
+* Fix: Custom Image Resolution option is not working in Gallery widget
+* Fix: 'Reading Settings' unexpectedly reduces the number of posts displayed when using the Archive with Pagination setting
+* Fix: Step Form does not scroll to the top when the first field is not an input field in Form widget
+* Fix: Display Condition feature is available without an active Elementor license in Floating Elements
+* Fix: Background options of Flip Box in Loop Grid widget are not working when images are added using ACF Dynamic Tags
+* Fix: Dropdown icon in the Select field of the Form widget is cut off when the Inline Font Icons feature is activated
+* Fix: Incompatibility between Form widget and WPML when using Nested Elements
+* Fix: Performance issues when changing the title name in the Menu widget
+* Fix: Warnings appear when Element Caching is set to Inactive in Carousel widgets
+* Fix: Swiper styling missing from Lightbox inside Gallery widgets
+
 #### 3.25.5 - 2024-12-10
 
 * Security Fix: Improved code security enforcement in Form widget

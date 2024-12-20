@@ -5,6 +5,7 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
+use ElementorPro\Plugin;
 use WPSEO_Breadcrumbs;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,6 +28,10 @@ class Breadcrumbs extends Base {
 
 	public function get_script_depends() {
 		return [ 'breadcrumbs' ];
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

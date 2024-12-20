@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["load-more"],{
 

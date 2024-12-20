@@ -6,6 +6,7 @@ use Elementor\Core\Base\Module as BaseModule;
 use Elementor\Core\Documents_Manager;
 use Elementor\Plugin;
 use Elementor\Utils as ElementorUtils;
+use ElementorPro\License\API;
 use ElementorPro\Modules\FloatingButtons\Documents\Floating_Buttons;
 use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 
@@ -71,12 +72,14 @@ class Module extends BaseModule {
 		add_action( 'elementor/theme/register_locations', [ $this, 'register_location' ] );
 		add_action( 'wp_footer', [ $this, 'print_floating_buttons' ] );
 
-		add_action( 'elementor/documents/register', function ( Documents_Manager $documents_manager ) {
-			$documents_manager->register_document_type(
-				self::FLOATING_BUTTONS_DOCUMENT_TYPE,
-				Floating_Buttons::class
-			);
-		} );
+		if ( API::is_license_active() ) {
+			add_action( 'elementor/documents/register', function ( Documents_Manager $documents_manager ) {
+				$documents_manager->register_document_type(
+					self::FLOATING_BUTTONS_DOCUMENT_TYPE,
+					Floating_Buttons::class
+				);
+			}, 11 );
+		}
 
 		add_action( 'elementor/theme/before_do_floating_buttons', function ( Locations_Manager $locations_manager ) {
 			$documents = $locations_manager->get_documents_for_location( 'floating_buttons' );

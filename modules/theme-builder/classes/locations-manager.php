@@ -40,6 +40,7 @@ class Locations_Manager {
 		}
 
 		add_filter( 'pre_handle_404', [ $this, 'should_allow_pagination_on_single_templates' ], 10, 2 );
+		add_filter( 'pre_handle_404', [ $this, 'should_allow_pagination_on_archive_templates' ], 11, 2 );
 	}
 
 	/**
@@ -80,6 +81,54 @@ class Locations_Manager {
 			$document = Plugin::elementor()->documents->get( $post_id );
 
 			if ( $this->is_valid_pagination( $document->get_elements_data(), $wp_query->query_vars['page'] ) ) {
+				$handled = true;
+			}
+		}
+
+		return $handled;
+	}
+
+	/**
+	 * Fix WP 5.5 pagination issue.
+	 *
+	 * Return true to mark that it's handled and avoid WP to set it as 404.
+	 *
+	 * @see https://github.com/elementor/elementor/issues/12126
+	 * @see https://core.trac.wordpress.org/ticket/50976
+	 *
+	 * Based on the logic at \WP::handle_404.
+	 *
+	 * @param $handled - Default false.
+	 * @param $wp_query
+	 *
+	 * @return bool
+	 */
+	public function should_allow_pagination_on_archive_templates( $handled, $wp_query ) {
+		$is_archive = is_archive() || is_home() || is_search();
+
+		if ( $handled || ! $is_archive ) {
+			return $handled;
+		}
+
+		$current_post_id = $wp_query->query['page_id'] ?? ( $wp_query->queried_object->ID ?? null );
+		$documents = Module::instance()->get_conditions_manager()->get_documents_for_location( 'archive' );
+
+		if ( empty( $documents ) ) {
+			return $handled;
+		}
+
+		foreach ( $documents as $document ) {
+			$post_id = $document->get_post()->ID;
+
+			// Will be handled by the pre_handle_404 filter in the posts module.
+			if ( $current_post_id === $post_id ) {
+				continue;
+			}
+
+			$document = Plugin::elementor()->documents->get( $post_id );
+			$current_page = max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) );
+
+			if ( $this->is_valid_pagination( $document->get_elements_data(), $current_page ) ) {
 				$handled = true;
 			}
 		}

@@ -1,6 +1,8 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Widgets;
 
+use ElementorPro\Plugin;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -14,15 +16,6 @@ class Page_Title extends Title_Widget_Base {
 	public function get_name() {
 		// `theme` prefix is to avoid conflicts with a dynamic-tag with same name.
 		return 'theme-page-title';
-	}
-
-	public function get_inline_css_depends() {
-		return [
-			[
-				'name' => 'heading',
-				'is_core_dependency' => true,
-			],
-		];
 	}
 
 	public function get_title() {
@@ -39,5 +32,9 @@ class Page_Title extends Title_Widget_Base {
 
 	public function get_keywords() {
 		return [ 'title', 'heading', 'page' ];
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 }

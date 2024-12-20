@@ -8,6 +8,7 @@ use Elementor\Group_Control_Typography;
 use ElementorPro\Modules\Posts\Widgets\Posts_Base;
 use ElementorPro\Modules\ThemeBuilder\Skins;
 use ElementorPro\Modules\QueryControl\Module as Query_Control;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -38,8 +39,8 @@ class Archive_Posts extends Posts_Base {
 		return [ 'posts', 'cpt', 'archive', 'loop', 'query', 'cards', 'custom post type' ];
 	}
 
-	public function get_inline_css_depends() {
-		return [ 'posts' ];
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

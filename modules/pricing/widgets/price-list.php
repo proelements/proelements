@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Repeater;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -35,6 +36,10 @@ class Price_List extends Base_Widget {
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

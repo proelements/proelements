@@ -241,12 +241,12 @@ abstract class Assets_Base {
 				<?php echo $input_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php echo $this->get_field_label( $field ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<div class="elementor-button elementor--dropzone--upload__browse">
-					<span><?php esc_html_e( 'Click here to browse', 'elementor-pro' ); ?></span>
+					<span><?php echo esc_html__( 'Click here to browse', 'elementor-pro' ); ?></span>
 				</div>
 			</div>
-			<div class="box__uploading"><?php esc_html_e( 'Uploading&hellip;', 'elementor-pro' ); ?></div>
-			<div class="box__success"><?php esc_html_e( 'Done!', 'elementor-pro' ); ?></div>
-			<div class="box__error"><?php esc_html_e( 'Error!', 'elementor-pro' ); ?> <span></span>.</div>
+			<div class="box__uploading"><?php echo esc_html__( 'Uploading&hellip;', 'elementor-pro' ); ?></div>
+			<div class="box__success"><?php echo esc_html__( 'Done!', 'elementor-pro' ); ?></div>
+			<div class="box__error"><?php echo esc_html__( 'Error!', 'elementor-pro' ); ?> <span></span>.</div>
 		</div>
 		<?php
 		return ob_get_clean();

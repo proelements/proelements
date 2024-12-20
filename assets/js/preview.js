@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports.SAVE_CONTEXT = exports.EDIT_CONTEXT = void 0;
 exports.createElement = createElement;
 exports["default"] = addDocumentHandle;
+__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
 __webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
 const EDIT_HANDLE_CLASS_NAME = 'elementor-document-handle';
 const EDIT_MODE_CLASS_NAME = 'elementor-edit-mode';
@@ -34,11 +35,15 @@ const SAVE_CONTEXT = exports.SAVE_CONTEXT = 'save';
  * @param {Function|null} onCloseDocument      - Callback to run when outgoing document is closed.
  * @param {string}        selector
  */
-function addDocumentHandle({
-  element,
-  id,
-  title = __('Template', 'elementor-pro')
-}, context = EDIT_CONTEXT, onCloseDocument = null, selector = null) {
+function addDocumentHandle(_ref) {
+  let {
+    element,
+    id,
+    title = __('Template', 'elementor-pro')
+  } = _ref;
+  let context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : EDIT_CONTEXT;
+  let onCloseDocument = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  let selector = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
   if (EDIT_CONTEXT === context) {
     if (!id || !element) {
       throw Error('`id` and `element` are required.');
@@ -84,10 +89,12 @@ function hasHandle(element) {
  *
  * @return {HTMLElement} The newly generated Handle element
  */
-function createHandleElement({
-  title,
-  onClick
-}, context, element = null) {
+function createHandleElement(_ref2, context) {
+  let {
+    title,
+    onClick
+  } = _ref2;
+  let element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : __('Edit %s', 'elementor-pro');
   const innerElement = createElement({
     tag: 'div',
@@ -131,11 +138,12 @@ function getHandleIcon(context) {
  *
  * @return {HTMLElement} Generated Element
  */
-function createElement({
-  tag,
-  classNames = [],
-  children = []
-}) {
+function createElement(_ref3) {
+  let {
+    tag,
+    classNames = [],
+    children = []
+  } = _ref3;
   const element = document.createElement(tag);
   element.classList.add(...classNames);
   children.forEach(child => element.appendChild(child));
@@ -149,7 +157,9 @@ function createElement({
  * @param {string}        selector
  * @return {Promise<void>}
  */
-async function onDocumentClick(id, context, onCloseDocument = null, selector = null) {
+async function onDocumentClick(id, context) {
+  let onCloseDocument = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  let selector = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
   if (EDIT_CONTEXT === context) {
     window.top.$e.internal('panel/state-loading');
     await window.top.$e.run('editor/documents/switch', {
@@ -197,6 +207,37 @@ var $TypeError = TypeError;
 module.exports = function (argument) {
   if (isCallable(argument)) return argument;
   throw new $TypeError(tryToString(argument) + ' is not a function');
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/add-to-unscopables.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/core-js/internals/add-to-unscopables.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js").f);
+
+var UNSCOPABLES = wellKnownSymbol('unscopables');
+var ArrayPrototype = Array.prototype;
+
+// Array.prototype[@@unscopables]
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+if (ArrayPrototype[UNSCOPABLES] === undefined) {
+  defineProperty(ArrayPrototype, UNSCOPABLES, {
+    configurable: true,
+    value: create(null)
+  });
+}
+
+// add a key to Array.prototype[@@unscopables]
+module.exports = function (key) {
+  ArrayPrototype[UNSCOPABLES][key] = true;
 };
 
 
@@ -855,6 +896,20 @@ module.exports = {};
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/html.js":
+/*!*************************************************!*\
+  !*** ../node_modules/core-js/internals/html.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/ie8-dom-define.js":
 /*!***********************************************************!*\
   !*** ../node_modules/core-js/internals/ie8-dom-define.js ***!
@@ -1255,6 +1310,132 @@ module.exports = Math.trunc || function trunc(x) {
 
 /***/ }),
 
+/***/ "../node_modules/core-js/internals/object-create.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/core-js/internals/object-create.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+/* global ActiveXObject -- old IE, WSH */
+var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
+var definePropertiesModule = __webpack_require__(/*! ../internals/object-define-properties */ "../node_modules/core-js/internals/object-define-properties.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "../node_modules/core-js/internals/hidden-keys.js");
+var html = __webpack_require__(/*! ../internals/html */ "../node_modules/core-js/internals/html.js");
+var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "../node_modules/core-js/internals/document-create-element.js");
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "../node_modules/core-js/internals/shared-key.js");
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  // eslint-disable-next-line no-useless-assignment -- avoid memory leak
+  activeXDocument = null;
+  return temp;
+};
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var NullProtoObjectViaIFrame = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+};
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    activeXDocument = new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = typeof document != 'undefined'
+    ? document.domain && activeXDocument
+      ? NullProtoObjectViaActiveX(activeXDocument) // old IE
+      : NullProtoObjectViaIFrame()
+    : NullProtoObjectViaActiveX(activeXDocument); // WSH
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
+
+// `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+// eslint-disable-next-line es/no-object-create -- safe
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = NullProtoObject();
+  return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/object-define-properties.js":
+/*!*********************************************************************!*\
+  !*** ../node_modules/core-js/internals/object-define-properties.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(/*! ../internals/v8-prototype-define-bug */ "../node_modules/core-js/internals/v8-prototype-define-bug.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "../node_modules/core-js/internals/object-keys.js");
+
+// `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+// eslint-disable-next-line es/no-object-defineproperties -- safe
+exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var props = toIndexedObject(Properties);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) definePropertyModule.f(O, key = keys[index++], props[key]);
+  return O;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/core-js/internals/object-define-property.js":
 /*!*******************************************************************!*\
   !*** ../node_modules/core-js/internals/object-define-property.js ***!
@@ -1417,6 +1598,26 @@ module.exports = function (object, names) {
     ~indexOf(result, key) || push(result, key);
   }
   return result;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/internals/object-keys.js":
+/*!********************************************************!*\
+  !*** ../node_modules/core-js/internals/object-keys.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "../node_modules/core-js/internals/object-keys-internal.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
 };
 
 
@@ -1887,6 +2088,38 @@ module.exports = function (name) {
       : createWellKnownSymbol('Symbol.' + name);
   } return WellKnownSymbolsStore[name];
 };
+
+
+/***/ }),
+
+/***/ "../node_modules/core-js/modules/es.array.includes.js":
+/*!************************************************************!*\
+  !*** ../node_modules/core-js/modules/es.array.includes.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
+var $includes = (__webpack_require__(/*! ../internals/array-includes */ "../node_modules/core-js/internals/array-includes.js").includes);
+var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
+var addToUnscopables = __webpack_require__(/*! ../internals/add-to-unscopables */ "../node_modules/core-js/internals/add-to-unscopables.js");
+
+// FF99+ bug
+var BROKEN_ON_SPARSE = fails(function () {
+  // eslint-disable-next-line es/no-array-prototype-includes -- detection
+  return !Array(1).includes();
+});
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
 
 
 /***/ }),

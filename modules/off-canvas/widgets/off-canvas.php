@@ -42,6 +42,10 @@ class Off_Canvas extends Widget_Nested_Base {
 		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements' ) && Plugin::elementor()->experiments->is_feature_active( 'container' );
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *
@@ -578,7 +582,7 @@ class Off_Canvas extends Widget_Nested_Base {
 
 	protected function add_wrapper_attributes() {
 		$this->add_render_attribute( 'off-canvas__wrapper', [
-			'id' => 'off-canvas-' . $this->get_id(),
+			'id' => 'off-canvas-' . apply_filters( 'elementor-pro/off-canvas/id', $this->get_id() ),
 			'class' => 'e-off-canvas',
 			'role' => 'dialog',
 			'aria-hidden' => 'true',
@@ -591,5 +595,15 @@ class Off_Canvas extends Widget_Nested_Base {
 		$this->add_render_attribute( 'off-canvas__overlay', [
 			'class' => 'e-off-canvas__overlay',
 		] );
+	}
+
+	protected function is_dynamic_content(): bool {
+		global $wp_query;
+
+		if ( ! isset( $wp_query->is_loop_widget ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }

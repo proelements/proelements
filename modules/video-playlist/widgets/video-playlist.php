@@ -12,6 +12,7 @@ use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Icons_Manager;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -33,6 +34,10 @@ class Video_Playlist extends Base_Widget {
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -1740,7 +1745,7 @@ class Video_Playlist extends Base_Widget {
 	}
 
 	private function create_playlist_items_array( $playlist_items ) {
-		$playlist_items_array = array();
+		$playlist_items_array = [];
 		$id_int = substr( $this->get_id_int(), 0, 3 );
 
 		foreach ( $playlist_items as $index => $playlist_item ) {
@@ -1935,9 +1940,8 @@ class Video_Playlist extends Base_Widget {
 							<?php if ( $item->show_overlay_image ) : ?>
 								<div class="elementor-custom-embed-image-overlay elementor-clickable" style="background-image: url('<?php echo esc_url( $playlist_object->image_overlay_image ); ?>');">
 									<?php if ( ! empty( $playlist_object->image_overlay_icon['value'] ) ) : ?>
-										<div class="elementor-custom-embed-play" role="button">
+										<div class="elementor-custom-embed-play" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Play Video', 'elementor-pro' ); ?>">
 											<?php Icons_Manager::render_icon( $playlist_object->image_overlay_icon, [ 'aria-hidden' => 'true' ] ); ?>
-											<span class="elementor-screen-only"><?php echo esc_html__( 'Play Video', 'elementor-pro' ); ?></span>
 										</div>
 									<?php endif; ?>
 								</div>

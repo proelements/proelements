@@ -1,6 +1,8 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Widgets;
 
+use ElementorPro\Plugin;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -32,12 +34,7 @@ class Archive_Title extends Title_Widget_Base {
 		return [ 'title', 'heading', 'archive' ];
 	}
 
-	public function get_inline_css_depends() {
-		return [
-			[
-				'name' => 'heading',
-				'is_core_dependency' => true,
-			],
-		];
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 }

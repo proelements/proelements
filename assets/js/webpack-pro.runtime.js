@@ -1,4 +1,4 @@
-/*! pro-elements - v3.25.0 - 10-12-2024 */
+/*! pro-elements - v3.26.0 - 17-12-2024 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -92,10 +92,10 @@
 /******/ 			if (chunkId === "carousel") return "" + chunkId + ".298f1fc9c115422aad0e.bundle.js";
 /******/ 			if (chunkId === "countdown") return "" + chunkId + ".6e87ca40d36793d92aea.bundle.js";
 /******/ 			if (chunkId === "hotspot") return "" + chunkId + ".d513dd152bf605a2ffbf.bundle.js";
-/******/ 			if (chunkId === "form") return "form.3b797cf593ad0ec04b83.bundle.js";
+/******/ 			if (chunkId === "form") return "form.16e51aca8a5ca0d38ae6.bundle.js";
 /******/ 			if (chunkId === "gallery") return "" + chunkId + ".b7d55bc976e04f751975.bundle.js";
 /******/ 			if (chunkId === "lottie") return "" + chunkId + ".a02a01f29c0733918ac7.bundle.js";
-/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".1a66dd30011cc2fc8842.bundle.js";
+/******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".e135a0d0f766c7f455ff.bundle.js";
 /******/ 			if (chunkId === "popup") return "" + chunkId + ".996738ad83c089bcc0b9.bundle.js";
 /******/ 			if (chunkId === "load-more") return "" + chunkId + ".f5ecc1c66872d0bd2d17.bundle.js";
 /******/ 			if (chunkId === "posts") return "" + chunkId + ".e99f84b83c36d4568ffe.bundle.js";
@@ -103,7 +103,7 @@
 /******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".fda49c1691f4a352c7ef.bundle.js";
 /******/ 			if (chunkId === "slides") return "" + chunkId + ".bcd16bbde90338846bd7.bundle.js";
 /******/ 			if (chunkId === "social") return "" + chunkId + ".ac16c075939dcb93f70c.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".a69f0926fa4d59c22200.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".8d46d3a531c49309b7eb.bundle.js";
 /******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".6e398ddd4a81a78bcea3.bundle.js";
 /******/ 			if (chunkId === "search-form") return "" + chunkId + ".8941aba5c12cdb05fb7c.bundle.js";
 /******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".81f5bafc26b94cc86238.bundle.js";
@@ -116,18 +116,18 @@
 /******/ 			if (chunkId === "loop") return "loop.da94e53412e56933f721.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".5108cb72ebb124297adb.bundle.js";
 /******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".2390838f542f1a8d5ed4.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".874d0f2de4fd151185dc.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".e2d6b6d5ad4a5e078bae.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".0d76e4a3b7bf65ff6f9b.bundle.js";
-/******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".77332e668c3cf609c924.bundle.js";
-/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".89e4316f7581676fce8a.bundle.js";
+/******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".ad6efd6a78bf25450d5a.bundle.js";
+/******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".adf1d39e8be72ec094f0.bundle.js";
 /******/ 			if (chunkId === "taxonomy-filter") return "" + chunkId + ".ce05524d53c2d4c5aa24.bundle.js";
-/******/ 			if (chunkId === "off-canvas") return "" + chunkId + ".c95061fdc941d4af3b58.bundle.js";
-/******/ 			if (chunkId === "modules_floating-buttons_assets_js_shared_frontend_handlers_click-tracking_js") return "e8a5a32d9cd9fad1244f.bundle.js";
-/******/ 			if (chunkId === "contact-buttons") return "" + chunkId + ".b9e4576d72aaeeaa8e80.bundle.js";
-/******/ 			if (chunkId === "contact-buttons-var-10") return "" + chunkId + ".fc383e580d728636b0fa.bundle.js";
-/******/ 			if (chunkId === "floating-bars-var-2") return "" + chunkId + ".c6ca10c575bf96977799.bundle.js";
-/******/ 			if (chunkId === "floating-bars-var-3") return "" + chunkId + ".f126e30880b01ca9a308.bundle.js";
-/******/ 			if (chunkId === "search") return "" + chunkId + ".c1431bd892d9870d7053.bundle.js";
+/******/ 			if (chunkId === "off-canvas") return "" + chunkId + ".02e30e192bc782084e8a.bundle.js";
+/******/ 			if (chunkId === "contact-buttons") return "" + chunkId + ".6f0dc663eb685c187fea.bundle.js";
+/******/ 			if (chunkId === "contact-buttons-var-10") return "" + chunkId + ".49a45dadc9c2facb4972.bundle.js";
+/******/ 			if (chunkId === "modules_floating-buttons_assets_js_frontend_classes_floatin-bar-dom_js-modules_floating-butto-2c1e90") return "e8eba20060a4b0fa29dc.bundle.js";
+/******/ 			if (chunkId === "floating-bars-var-2") return "" + chunkId + ".c6f25c32db86d04f5e8b.bundle.js";
+/******/ 			if (chunkId === "floating-bars-var-3") return "" + chunkId + ".6cef001471f04cdb931e.bundle.js";
+/******/ 			if (chunkId === "search") return "" + chunkId + ".5c7852be6fc67209b3a8.bundle.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

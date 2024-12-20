@@ -258,6 +258,13 @@ class API {
 				'beta' => 'yes' === get_option( 'elementor_beta', 'no' ),
 			];
 
+			if ( method_exists( '\\Elementor\\Api', 'get_site_key' ) ) {
+				$site_key = \Elementor\Api::get_site_key();
+				if ( ! empty( $site_key ) ) {
+					$body_args['site_key'] = $site_key;
+				}
+			}
+
 			$info_data = self::remote_post( 'pro/info', $body_args );
 
 			if ( is_wp_error( $info_data ) || empty( $info_data['new_version'] ) ) {

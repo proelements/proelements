@@ -251,7 +251,7 @@ class Module extends Module_Base {
 				<span class="elementor-button-icon">
 					<span class="elementor-button-icon-qty" data-counter="<?php echo esc_attr( $product_count ); ?>"><?php echo $product_count; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 					<?php self::render_menu_icon( $settings, $icon ); ?>
-					<span class="elementor-screen-only"><?php esc_html_e( 'Cart', 'elementor-pro' ); ?></span>
+					<span class="elementor-screen-only"><?php echo esc_html__( 'Cart', 'elementor-pro' ); ?></span>
 				</span>
 			</a>
 		</div>

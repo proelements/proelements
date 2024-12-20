@@ -7,6 +7,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Utils;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -30,6 +31,10 @@ class Reviews extends Base {
 		return [ 'reviews', 'social', 'rating', 'testimonial', 'carousel' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *
@@ -42,23 +47,6 @@ class Reviews extends Base {
 	 */
 	public function get_style_depends(): array {
 		return [ 'e-swiper', 'widget-testimonial-carousel', 'widget-reviews', 'widget-star-rating', 'widget-carousel-module-base' ];
-	}
-
-	public function get_inline_css_depends() {
-		$slides = $this->get_settings_for_display( 'slides' );
-
-		foreach ( $slides as $slide ) {
-			if ( $slide['rating'] ) {
-				return [
-					[
-						'name' => 'star-rating',
-						'is_core_dependency' => true,
-					],
-				];
-			}
-		}
-
-		return [];
 	}
 
 	protected function register_controls() {
@@ -836,9 +824,8 @@ class Reviews extends Base {
 		}
 
 		$this->add_render_attribute( 'icon_wrapper_' . $element_key, 'class', 'elementor-testimonial__icon elementor-icon' );
-
-		$icon .= '<span class="elementor-screen-only">' . esc_html__( 'Read More', 'elementor-pro' ) . '</span>';
 		$this->add_render_attribute( 'icon_wrapper_' . $element_key, 'class', 'elementor-icon-' . $social );
+		$this->add_render_attribute( 'icon_wrapper_' . $element_key, 'aria-label', esc_attr__( 'Read More', 'elementor-pro' ) );
 
 		// Icon is escaped above, get_render_attribute_string() is safe
 		echo '<div ' . $this->get_render_attribute_string( 'icon_wrapper_' . $element_key ) . '>' . $icon . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -18,6 +18,6 @@
 	padding-inline: spacing(30);
 }
 
-.eps-app__content {
+.eps-app__content:has(.e-site-editor__content_container_main) {
 	padding: 0;
 }

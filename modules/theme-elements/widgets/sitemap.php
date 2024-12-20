@@ -9,6 +9,7 @@ use Elementor\Repeater;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
 use ElementorPro\Core\Utils as Pro_Utils;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -36,6 +37,10 @@ class Sitemap extends Base {
 
 	public function get_keywords() {
 		return [ 'taxonomy', 'custom post type', 'cpt', 'sitemap', 'site map', 'link', 'menu', 'tree' ];
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

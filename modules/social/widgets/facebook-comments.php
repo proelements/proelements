@@ -5,6 +5,7 @@ use Elementor\Controls_Manager;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Modules\Social\Classes\Facebook_SDK_Manager;
 use ElementorPro\Modules\Social\Module;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -26,6 +27,10 @@ class Facebook_Comments extends Base_Widget {
 
 	public function get_keywords() {
 		return [ 'facebook', 'comments', 'embed' ];
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

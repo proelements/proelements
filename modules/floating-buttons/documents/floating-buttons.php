@@ -127,7 +127,7 @@ class Floating_Buttons extends Theme_Document {
 			$actions['edit_with_elementor'] = sprintf(
 				'<a href="%1$s">%2$s</a>',
 				$edit_url,
-				__( 'Edit with Elementor', 'elementor-pro' )
+				esc_html__( 'Edit with Elementor', 'elementor-pro' )
 			);
 		}
 

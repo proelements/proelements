@@ -49,7 +49,11 @@ class Module extends Module_Base {
 		} elseif ( $element instanceof Element_Column ) {
 			$selector .= ' > .elementor-widget-wrap';
 		} elseif ( $element instanceof Widget_Base ) {
-			$selector .= ' > .elementor-widget-container';
+			if ( defined( get_class( $element ) . '::WRAPPER_SELECTOR' ) ) {
+				$selector = $element::WRAPPER_SELECTOR;
+			} else {
+				$selector .= ' > .elementor-widget-container';
+			}
 		}
 
 		$element->add_group_control(
@@ -191,6 +195,7 @@ class Module extends Module_Base {
 		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/column/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
+		add_action( 'elementor/element/common-optimized/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 
 		add_action( 'elementor/element/section/section_background/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );
 		add_action( 'elementor/element/container/section_background/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );

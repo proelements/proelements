@@ -56,7 +56,7 @@ class Floating_Bars_Var_3_Render extends Floating_Bars_Core_Render {
 			'type' => 'button',
 			'aria-label' => sprintf(
 				/* translators: 1: Accessible name. */
-				esc_html__( 'Copy %1$s coupon code', 'elementor-pro' ),
+				esc_attr__( 'Copy %1$s coupon code', 'elementor-pro' ),
 				$accessible_name,
 			),
 		] );
