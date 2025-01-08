@@ -683,7 +683,7 @@ class Media_Carousel extends Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-main-swiper' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-main-swiper:not(.elementor-thumbnails-swiper)' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'skin' => 'slideshow',

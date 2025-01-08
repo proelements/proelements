@@ -70,16 +70,13 @@ class Module extends Module_Base {
 
 	public function set_query( $query ) {
 		$e_search_props = Utils::get_super_global_value( $_GET, 'e_search_props' );
-		$e_search_query_vars = json_decode( stripcslashes( Utils::get_super_global_value( $_GET, 'e_search_query' ) ?? '' ), true ) ?? null;
 		$search_term = Utils::get_super_global_value( $_GET, 's' );
 
-		if ( ( empty( $e_search_props ) && ! $e_search_query_vars ) || ! isset( $search_term ) || is_admin() || ! $query->is_main_query() ) {
+		if ( empty( $e_search_props ) || ! isset( $search_term ) || is_admin() || ! $query->is_main_query() ) {
 			return;
 		}
 
-		$formatted_query_vars = empty( $e_search_props )
-			? $e_search_query_vars
-			: $this->get_query_based_on_widget_props( $e_search_props );
+		$formatted_query_vars = $this->get_query_based_on_widget_props( $e_search_props );
 
 		if ( ! $formatted_query_vars ) {
 			return;

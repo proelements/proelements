@@ -180,10 +180,7 @@ class Locations_Manager {
 					$css_file = new Post_CSS( $post_id );
 					$css_files[] = $css_file;
 
-					$page_assets = get_post_meta( $post_id, Assets::ASSETS_META_KEY, true );
-					if ( ! empty( $page_assets ) ) {
-						Plugin::elementor()->assets_loader->enable_assets( $page_assets );
-					}
+					$this->handle_page_assets( $post_id, $document );
 				}
 			}
 		}
@@ -197,6 +194,30 @@ class Locations_Manager {
 				$css_file->enqueue();
 			}
 		}
+	}
+
+	/**
+	 * @param int $post_id
+	 * @param Theme_Document $document
+	 *
+	 * @return void
+	 */
+	private function handle_page_assets( $post_id, $document ): void {
+		$page_assets = get_post_meta( $post_id, Assets::ASSETS_META_KEY, true );
+		if ( ! empty( $page_assets ) ) {
+			Plugin::elementor()->assets_loader->enable_assets( $page_assets );
+			return;
+		}
+
+		if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_head_loading_styles' ) ) {
+			return;
+		}
+
+		if ( ! method_exists( $document, 'update_runtime_elements' ) ) {
+			return;
+		}
+
+		$document->update_runtime_elements();
 	}
 
 	public function template_include( $template ) {

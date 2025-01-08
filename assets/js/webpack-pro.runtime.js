@@ -1,4 +1,4 @@
-/*! pro-elements - v3.26.0 - 17-12-2024 */
+/*! pro-elements - v3.26.0 - 07-01-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -116,7 +116,7 @@
 /******/ 			if (chunkId === "loop") return "loop.da94e53412e56933f721.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".5108cb72ebb124297adb.bundle.js";
 /******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".2390838f542f1a8d5ed4.bundle.js";
-/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".e2d6b6d5ad4a5e078bae.bundle.js";
+/******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".4a05edbefebc8de41e36.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".0d76e4a3b7bf65ff6f9b.bundle.js";
 /******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".ad6efd6a78bf25450d5a.bundle.js";
 /******/ 			if (chunkId === "nested-carousel") return "" + chunkId + ".adf1d39e8be72ec094f0.bundle.js";

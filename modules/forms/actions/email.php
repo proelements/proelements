@@ -36,6 +36,8 @@ class Email extends Action_Base {
 			]
 		);
 
+		$this->maybe_add_site_mailer_notice( $widget );
+
 		$widget->add_control(
 			$this->get_control_id( 'email_to' ),
 			[
@@ -220,35 +222,38 @@ class Email extends Action_Base {
 			]
 		);
 
+		$widget->end_controls_section();
+	}
+
+	public function maybe_add_site_mailer_notice( $widget ) {
 		$notice_id = 'site_mailer_forms_email_notice';
-		if ( Hints::should_show_hint( $notice_id ) ) {
-			$notice_content = esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Site Mailer.', 'elementor-pro' );
+		if ( ! Hints::should_show_hint( $notice_id ) ) {
+			return;
+		}
+		$notice_content = esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Site Mailer.', 'elementor-pro' );
 
-			if ( 2 === Utils\Abtest::get_variation( 'plg_site_mailer_submission' ) ) {
-				$notice_content = esc_html__( 'Make sure your emails reach the inbox every time with Site Mailer', 'elementor-pro' );
-			}
-
-			$widget->add_control(
-				$this->get_control_id( 'site_mailer_promo' ),
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => Hints::get_notice_template( [
-						'display' => ! Hints::is_dismissed( $notice_id ),
-						'type' => 'info',
-						'content' => $notice_content,
-						'icon' => true,
-						'dismissible' => $notice_id,
-						'button_text' => Hints::is_plugin_installed( 'site-mailer' ) ? __( 'Activate Plugin', 'elementor-pro' ) : __( 'Install Plugin', 'elementor-pro' ),
-						'button_event' => $notice_id,
-						'button_data' => [
-							'action_url' => Hints::get_plugin_action_url( 'site-mailer' ),
-						],
-					], true ),
-				]
-			);
+		if ( 2 === Utils\Abtest::get_variation( 'plg_site_mailer_submission' ) ) {
+			$notice_content = esc_html__( 'Make sure your emails reach the inbox every time with Site Mailer', 'elementor-pro' );
 		}
 
-		$widget->end_controls_section();
+		$widget->add_control(
+			$this->get_control_id( 'site_mailer_promo' ),
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => Hints::get_notice_template( [
+					'display' => ! Hints::is_dismissed( $notice_id ),
+					'type' => 'info',
+					'content' => $notice_content,
+					'icon' => true,
+					'dismissible' => $notice_id,
+					'button_text' => Hints::is_plugin_installed( 'site-mailer' ) ? __( 'Activate Plugin', 'elementor-pro' ) : __( 'Install Plugin', 'elementor-pro' ),
+					'button_event' => $notice_id,
+					'button_data' => [
+						'action_url' => Hints::get_plugin_action_url( 'site-mailer' ),
+					],
+				], true ),
+			]
+		);
 	}
 
 	public function on_export( $element ) {
