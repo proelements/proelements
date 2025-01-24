@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Hints extends Core_Hints {
 	public static function should_show_hint( $hint_id ): bool {
 		// Check if needed functions exists - if not, require them
-		// TODO: Remove in v3.27.0 [ED-15717]
 		if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}

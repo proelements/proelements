@@ -1,4 +1,4 @@
-/*! pro-elements - v3.26.0 - 07-01-2025 */
+/*!pro-elements - v3.27.0 - 20-01-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({

@@ -43,6 +43,10 @@ class Loop_Carousel extends Base {
 		return [ 'widget-loop-carousel' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	protected function get_initial_config() {
 		$config = parent::get_initial_config();
 

@@ -62,6 +62,10 @@ class Mega_Menu extends Widget_Nested_Base {
 		return [ 'widget-mega-menu' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * @return array[]
 	 */
@@ -137,10 +141,13 @@ class Mega_Menu extends Widget_Nested_Base {
 	 * @since 3.12.0
 	 */
 	protected function get_control_selector_class( $control_item, $state = '' ) {
+		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+		$widget_container_selector = $optimized_markup ? '' : ' > .elementor-widget-container';
+
 		if ( 'menu_toggle_icon' === $control_item ) {
-			return "{{WRAPPER}} > .elementor-widget-container > .e-n-menu > .e-n-menu-toggle{$state} > .e-n-menu-toggle-icon";
+			return "{{WRAPPER}}{$widget_container_selector} > .e-n-menu > .e-n-menu-toggle{$state} > .e-n-menu-toggle-icon";
 		} elseif ( 'active_content_container' === $control_item ) {
-			return ":where( {{WRAPPER}} > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content ) > .e-con{$state}";
+			return ":where( {{WRAPPER}}{$widget_container_selector} > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content ) > .e-con{$state}";
 		}
 	}
 
@@ -162,7 +169,9 @@ class Mega_Menu extends Widget_Nested_Base {
 	}
 
 	protected function register_controls() {
-		$heading_selector = '{{WRAPPER}} > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading';
+		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+		$widget_container_selector = $optimized_markup ? '' : ' > .elementor-widget-container';
+		$heading_selector = "{{WRAPPER}}{$widget_container_selector} > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading";
 		$start = is_rtl() ? 'right' : 'left';
 		$end = is_rtl() ? 'left' : 'right';
 		$logical_dimensions_inline_start = is_rtl() ? '{{RIGHT}}{{UNIT}}' : '{{LEFT}}{{UNIT}}';
@@ -1789,7 +1798,7 @@ class Mega_Menu extends Widget_Nested_Base {
 					$this->get_control_selector_class( 'active_content_container' ) => '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};',
 					// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
 					// Remove together with support for physical properties inside the container widget.
-					':where( [data-core-v316-plus="true"] .elementor-element.elementor-widget-n-menu > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content ) > .e-con' => "--padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
+					":where( [data-core-v316-plus='true'] .elementor-element.elementor-widget-n-menu{$widget_container_selector} > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content ) > .e-con" => "--padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
 				],
 				'separator' => 'before',
 			]
@@ -1842,7 +1851,7 @@ class Mega_Menu extends Widget_Nested_Base {
 				'name' => 'dropdown_menu_item_background_color_normal',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} > .elementor-widget-container > .e-n-menu[data-layout="dropdown"] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title:not( .e-current )',
+				'selector' => "{{WRAPPER}}{$widget_container_selector} > .e-n-menu[data-layout='dropdown'] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title:not( .e-current )",
 				'fields_options' => [
 					'color' => [
 						'label' => esc_html__( 'Background Color', 'elementor-pro' ),
@@ -1858,7 +1867,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'dropdown_menu_item_box_shadow_normal',
-				'selector' => '{{WRAPPER}} > .elementor-widget-container > .e-n-menu[data-layout="dropdown"] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title:not( .e-current )',
+				'selector' => "{{WRAPPER}}{$widget_container_selector} > .e-n-menu[data-layout='dropdown'] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title:not( .e-current )",
 
 			]
 		);
@@ -1886,7 +1895,7 @@ class Mega_Menu extends Widget_Nested_Base {
 				'name' => 'dropdown_menu_item_background_color_active',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} > .elementor-widget-container > .e-n-menu[data-layout="dropdown"] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title.e-current',
+				'selector' => "{{WRAPPER}}{$widget_container_selector} > .e-n-menu[data-layout='dropdown'] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title.e-current",
 				'fields_options' => [
 					'color' => [
 						'label' => esc_html__( 'Background Color', 'elementor-pro' ),
@@ -1899,7 +1908,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'dropdown_menu_item_box_shadow_active',
-				'selector' => '{{WRAPPER}} > .elementor-widget-container > .e-n-menu[data-layout="dropdown"] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title.e-current',
+				'selector' => "{{WRAPPER}}{$widget_container_selector} > .e-n-menu[data-layout='dropdown'] > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title.e-current",
 
 			]
 		);
@@ -2495,11 +2504,11 @@ class Mega_Menu extends Widget_Nested_Base {
 								<button {{{ view.getRenderAttributeString( menuItemDropdownIconKey ) }}}>
 									<span class="e-n-menu-dropdown-icon-opened">
 										{{{ menuItemIconActive.value }}}
-										<span class="elementor-screen-only"><?php echo esc_html__( 'Close ', 'elementor-pro' ); ?>{{{ item.item_title }}}</span>
+										<span class="elementor-screen-only"><?php echo esc_html__( 'Close', 'elementor-pro' ); ?> {{{ item.item_title }}}</span>
 									</span>
 									<span class="e-n-menu-dropdown-icon-closed">
 										{{{ menuItemIcon.value }}}
-										<span class="elementor-screen-only"><?php echo esc_html__( 'Open ', 'elementor-pro' ); ?>{{{ item.item_title }}}</span>
+										<span class="elementor-screen-only"><?php echo esc_html__( 'Open', 'elementor-pro' ); ?> {{{ item.item_title }}}</span>
 									</span>
 								</button>
 							<# } #>
@@ -2624,11 +2633,11 @@ class Mega_Menu extends Widget_Nested_Base {
 				<button {{{ view.getRenderAttributeString( menuItemDropdownIconKey ) }}}>
 						<span class="e-n-menu-dropdown-icon-opened">
 							{{{ menuItemIconActive.value }}}
-							<span class="elementor-screen-only"><?php echo esc_html__( 'Close ', 'elementor-pro' ); ?>{{{ data.item_title }}}</span>
+							<span class="elementor-screen-only"><?php echo esc_html__( 'Close', 'elementor-pro' ); ?> {{{ data.item_title }}}</span>
 						</span>
 					<span class="e-n-menu-dropdown-icon-closed">
 							{{{ menuItemIcon.value }}}
-							<span class="elementor-screen-only"><?php echo esc_html__( 'Open ', 'elementor-pro' ); ?>{{{ data.item_title }}}</span>
+							<span class="elementor-screen-only"><?php echo esc_html__( 'Open', 'elementor-pro' ); ?> {{{ data.item_title }}}</span>
 						</span>
 				</button>
 				<# } #>

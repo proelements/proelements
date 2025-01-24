@@ -486,7 +486,7 @@ class Checkout extends Base_Widget {
 			'terms_conditions_heading',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Terms &amp; Conditions', 'elementor-pro' ),
+				'label' => esc_html__( 'Terms & Conditions', 'elementor-pro' ),
 			]
 		);
 

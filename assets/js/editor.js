@@ -1,4 +1,4 @@
-/*! pro-elements - v3.26.0 - 07-01-2025 */
+/*!pro-elements - v3.27.0 - 20-01-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -3423,7 +3423,7 @@ class Module extends elementorModules.editor.utils.Module {
    * @deprecated since 3.5.0, use `$e.data.getCache( `document/global/global-widget/templates/${ id }` )` instead.
    */
   getGlobalModels(id) {
-    elementorCommon.helpers.softDeprecated('elementorPro.modules.globalWidget.getGlobalModels( id )', '3.5.0', '$e.data.getCache( `document/global/global-widget/templates/${ id }` )');
+    elementorDevTools.deprecation.deprecated('elementorPro.modules.globalWidget.getGlobalModels( id )', '3.5.0', '$e.data.getCache( `document/global/global-widget/templates/${ id }` )');
     return $e.data.getCache(this.component, `document/global/global-widget/templates/${id}`);
   }
 
@@ -3431,7 +3431,7 @@ class Module extends elementorModules.editor.utils.Module {
    * @deprecated since 3.5.0, use `$e.internal( 'document/global/save-templates' )` instead.
    */
   saveTemplates() {
-    elementorCommon.helpers.softDeprecated('elementorPro.modules.globalWidget.saveTemplates()', '3.5.0', "$e.internal( 'document/global/save-templates' )");
+    elementorDevTools.deprecation.deprecated('elementorPro.modules.globalWidget.saveTemplates()', '3.5.0', "$e.internal( 'document/global/save-templates' )");
     $e.internal('document/global/save-templates');
   }
 
@@ -3441,7 +3441,7 @@ class Module extends elementorModules.editor.utils.Module {
    * @deprecated since 3.5.0, use `$e.data.get( 'document/global/templates' )` instead.
    */
   requestGlobalModelSettings(globalModel, callback) {
-    elementorCommon.helpers.softDeprecated('elementorPro.modules.globalWidget.requestGlobalModelSettings()', '3.5.0', "$e.data.get( 'document/global/templates' )");
+    elementorDevTools.deprecation.deprecated('elementorPro.modules.globalWidget.requestGlobalModelSettings()', '3.5.0', "$e.data.get( 'document/global/templates' )");
     $e.data.get('document/global/templates', {
       ids: globalModel.id
     }).then(data => {
@@ -6664,7 +6664,7 @@ class ThemeBuilderModule extends elementorModules.editor.utils.Module {
     super.__construct(...arguments);
     Object.defineProperty(elementorPro.config, 'theme_builder', {
       get() {
-        elementorCommon.helpers.softDeprecated('theme_builder', '2.9.0', 'elementor.config.document.theme_builder');
+        elementorDevTools.deprecation.deprecated('theme_builder', '2.9.0', 'elementor.config.document.theme_builder');
         return elementor.config.document.theme_builder;
       }
     });
@@ -7648,9 +7648,9 @@ module.exports = wp.i18n;
   \***********************************************************************/
 /***/ ((module) => {
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
+function _interopRequireDefault(e) {
+  return e && e.__esModule ? e : {
+    "default": e
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;

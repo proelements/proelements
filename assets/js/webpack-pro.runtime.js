@@ -1,4 +1,4 @@
-/*! pro-elements - v3.26.0 - 07-01-2025 */
+/*!pro-elements - v3.27.0 - 20-01-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -87,12 +87,12 @@
 /******/ 			if (chunkId === "vendors-node_modules_dompurify_dist_purify_js") return "cafdcd40a3ed0f7a7a4a.bundle.js";
 /******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".cf3f67d6b95e0138bb6b.bundle.js";
 /******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".fd1d31a26340ed74e10a.bundle.js";
-/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".3eca5f2deb261b97d554.bundle.js";
+/******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".375998d4790797e91f21.bundle.js";
 /******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".04412cb9b4479aa37408.bundle.js";
 /******/ 			if (chunkId === "carousel") return "" + chunkId + ".298f1fc9c115422aad0e.bundle.js";
 /******/ 			if (chunkId === "countdown") return "" + chunkId + ".6e87ca40d36793d92aea.bundle.js";
 /******/ 			if (chunkId === "hotspot") return "" + chunkId + ".d513dd152bf605a2ffbf.bundle.js";
-/******/ 			if (chunkId === "form") return "form.16e51aca8a5ca0d38ae6.bundle.js";
+/******/ 			if (chunkId === "form") return "form.a7e78a23dbf43d6f2639.bundle.js";
 /******/ 			if (chunkId === "gallery") return "" + chunkId + ".b7d55bc976e04f751975.bundle.js";
 /******/ 			if (chunkId === "lottie") return "" + chunkId + ".a02a01f29c0733918ac7.bundle.js";
 /******/ 			if (chunkId === "nav-menu") return "" + chunkId + ".e135a0d0f766c7f455ff.bundle.js";
@@ -115,7 +115,7 @@
 /******/ 			if (chunkId === "product-add-to-cart") return "" + chunkId + ".d5883897e035f9c53c5e.bundle.js";
 /******/ 			if (chunkId === "loop") return "loop.da94e53412e56933f721.bundle.js";
 /******/ 			if (chunkId === "loop-carousel") return "" + chunkId + ".5108cb72ebb124297adb.bundle.js";
-/******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".2390838f542f1a8d5ed4.bundle.js";
+/******/ 			if (chunkId === "ajax-pagination") return "" + chunkId + ".45dafe7f88c8058e3099.bundle.js";
 /******/ 			if (chunkId === "mega-menu") return "" + chunkId + ".4a05edbefebc8de41e36.bundle.js";
 /******/ 			if (chunkId === "mega-menu-stretch-content") return "" + chunkId + ".0d76e4a3b7bf65ff6f9b.bundle.js";
 /******/ 			if (chunkId === "menu-title-keyboard-handler") return "" + chunkId + ".ad6efd6a78bf25450d5a.bundle.js";

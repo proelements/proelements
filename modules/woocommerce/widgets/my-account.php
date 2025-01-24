@@ -1382,7 +1382,7 @@ class My_Account extends Base_Widget {
 			'tables_titles',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Titles &amp; Totals', 'elementor-pro' ),
+				'label' => esc_html__( 'Titles & Totals', 'elementor-pro' ),
 			]
 		);
 

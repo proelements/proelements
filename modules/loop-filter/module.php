@@ -7,6 +7,7 @@ use ElementorPro\Modules\LoopFilter\Query\Taxonomy_Query_Builder;
 use ElementorPro\Modules\LoopFilter\Query\Data\Query_Constants;
 use ElementorPro\Modules\LoopFilter\Data\Controller;
 use ElementorPro\Modules\LoopFilter\Traits\Hierarchical_Taxonomy_Trait;
+use WP_Term;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -273,10 +274,31 @@ class Module extends Module_Base {
 	 * @return boolean
 	 */
 	public function is_term_not_selected_for_inclusion( $loop_widget_settings, $term, $skin ) {
+		if ( ! $this->is_loop_grid_include_exclude_tax_belong_to_filter_tax( $loop_widget_settings, $term, $skin ) ) {
+			return false;
+		}
+
 		return ! empty( $loop_widget_settings[ $skin . '_query_include' ] ) &&
 			in_array( 'terms', $loop_widget_settings[ $skin . '_query_include' ] ) &&
 			isset( $loop_widget_settings[ $skin . '_query_include_term_ids' ] ) &&
 			! in_array( $term->term_id, $loop_widget_settings[ $skin . '_query_include_term_ids' ] );
+	}
+
+	public function is_loop_grid_include_exclude_tax_belong_to_filter_tax( array $loop_widget_settings, WP_Term $term, string $skin ) : bool {
+		$include_exclude_term_ids = array_merge(
+			$loop_widget_settings[ $skin . '_query_include_term_ids' ] ?? [],
+			$loop_widget_settings[ $skin . '_query_exclude_term_ids' ] ?? []
+		);
+
+		foreach ( $include_exclude_term_ids as $term_id ) {
+			$term_to_include_exclude = get_term_by( 'term_taxonomy_id', $term_id );
+
+			if ( $term_to_include_exclude && $term_to_include_exclude->taxonomy === $term->taxonomy ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

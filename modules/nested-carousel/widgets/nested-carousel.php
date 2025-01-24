@@ -59,6 +59,20 @@ class Nested_Carousel extends Widget_Nested_Base {
 		return [ 'e-swiper', 'widget-nested-carousel' ];
 	}
 
+	/**
+	 * Get script dependencies.
+	 *
+	 * Retrieve the list of script dependencies the widget requires.
+	 *
+	 * @since 3.27.0
+	 * @access public
+	 *
+	 * @return array Widget script dependencies.
+	 */
+	public function get_script_depends(): array {
+		return [ 'swiper' ];
+	}
+
 	protected function get_default_children_elements() {
 		return [
 			[

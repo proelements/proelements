@@ -69,7 +69,11 @@ class Elementor_Post_Query {
 		remove_action( 'pre_get_posts', [ $this, 'fix_query_offset' ], 1 );
 		remove_filter( 'found_posts', [ $this, 'fix_query_found_posts' ], 1 );
 
-		Module::add_to_avoid_list( wp_list_pluck( $query->posts, 'ID' ) );
+		$ids = isset( $this->query_args['fields'] ) && 'ids' === $this->query_args['fields']
+			? $query->posts
+			: wp_list_pluck( $query->posts, 'ID' );
+
+		Module::add_to_avoid_list( $ids );
 
 		/**
 		 * Elementor Pro query results.

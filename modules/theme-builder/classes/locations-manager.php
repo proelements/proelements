@@ -209,10 +209,6 @@ class Locations_Manager {
 			return;
 		}
 
-		if ( ! Plugin::elementor()->experiments->is_feature_active( 'e_head_loading_styles' ) ) {
-			return;
-		}
-
 		if ( ! method_exists( $document, 'update_runtime_elements' ) ) {
 			return;
 		}

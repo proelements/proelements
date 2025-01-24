@@ -105,7 +105,7 @@ class Archive_Products_Deprecated extends Products {
 			[
 				'label' => esc_html__( 'Nothing Found Message', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'It seems we can\'t find what you\'re looking for.', 'elementor-pro' ),
+				'default' => esc_html__( 'It seems we can’t find what you’re looking for.', 'elementor-pro' ),
 			]
 		);
 

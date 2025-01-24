@@ -68,24 +68,24 @@ var __webpack_exports__ = {};
   !*** ./node_modules/@elementor/editor-site-navigation-extended/dist/index.mjs ***!
   \********************************************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
-/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-site-navigation */ "@elementor/editor-site-navigation");
+/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-site-navigation */ "@elementor/editor-site-navigation");
+/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
 // src/icons-map.ts
 
 
 function extendDocumentsIcons() {
-  if (_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_1__.extendIconsMap) {
-    (0,_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_1__.extendIconsMap)({
-      header: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.HeaderTemplateIcon,
-      footer: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.FooterTemplateIcon,
-      "single-post": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.PostTypeIcon,
-      "single-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.PageTypeIcon,
-      popup: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.PopupTemplateIcon,
-      archive: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.ArchiveTemplateIcon,
-      "search-results": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.SearchResultsTemplateIcon,
-      "loop-item": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.LoopItemTemplateIcon,
-      "error-404": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.Error404TemplateIcon,
-      "landing-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.LandingPageTemplateIcon
+  if (_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap) {
+    (0,_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap)({
+      header: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.HeaderTemplateIcon,
+      footer: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.FooterTemplateIcon,
+      "single-post": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PostTypeIcon,
+      "single-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PageTypeIcon,
+      popup: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PopupTemplateIcon,
+      archive: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.ArchiveTemplateIcon,
+      "search-results": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.SearchResultsTemplateIcon,
+      "loop-item": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LoopItemTemplateIcon,
+      "error-404": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.Error404TemplateIcon,
+      "landing-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LandingPageTemplateIcon
     });
   }
 }

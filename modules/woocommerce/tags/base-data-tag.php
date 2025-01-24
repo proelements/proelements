@@ -18,4 +18,12 @@ abstract class Base_Data_Tag extends Data_Tag {
 	public function get_group() {
 		return Module::WOOCOMMERCE_GROUP;
 	}
+
+	public function get_editor_config() {
+		$conf = parent::get_editor_config();
+
+		$conf['force_convert_to_atomic'] = true;
+
+		return $conf;
+	}
 }

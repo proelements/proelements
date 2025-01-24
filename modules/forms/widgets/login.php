@@ -888,8 +888,7 @@ class Login extends Base_Widget {
 		}
 
 		$this->add_render_attribute( 'field-group', 'class', 'elementor-field-required' )
-			 ->add_render_attribute( 'input', 'required', true )
-			 ->add_render_attribute( 'input', 'aria-required', 'true' );
+			 ->add_render_attribute( 'input', 'required', true );
 
 	}
 

@@ -1,4 +1,14 @@
 # PRO Elements - by PROElements.org
+#### 3.27.0 - 2025-01-20
+
+* Tweak: Removed the `elementor-widget-container` div from the Menu, Loop, Table of Contents, Form, and Hotspot widgets as part of the Optimized Markup experiment to improve HTML structure
+* Tweak: Reduced DOM size by optimizing the submit button markup in Search widget
+* Tweak: Moved style loading to the head instead of the footer to improve CLS
+* Tweak: Enabled conditional loading of Swiper.js based on widget dependencies to reduce unnecessary assets and improve page load times
+* Tweak: Standardized navigation elements like arrows and bullets across all carousel and slider widgets for improved accessibility
+* Tweak: Improved accessibility when the submit button has only an icon and no text in Search widget
+* Tweak: Removed `load_plugin_textdomain()` function from Elementor Pro
+
 #### 3.26.3 - 2025-01-07
 
 * Security Fix: Improved code security enforcement in Search widget

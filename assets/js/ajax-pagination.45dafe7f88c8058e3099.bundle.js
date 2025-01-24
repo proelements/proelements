@@ -1,4 +1,4 @@
-/*! pro-elements - v3.26.0 - 07-01-2025 */
+/*!pro-elements - v3.27.0 - 20-01-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["ajax-pagination"],{
 
@@ -22,7 +22,6 @@ class AjaxPagination extends elementorModules.frontend.handlers.Base {
     return {
       selectors: {
         links: 'a.page-numbers:not(.current)',
-        widgetContainer: '.elementor-widget-container',
         postWrapperTag: '.e-loop-item'
       }
     };
@@ -30,8 +29,7 @@ class AjaxPagination extends elementorModules.frontend.handlers.Base {
   getDefaultElements() {
     const selectors = this.getSettings('selectors');
     return {
-      links: this.$element[0].querySelectorAll(selectors.links),
-      widgetContainer: this.$element[0].querySelector(selectors.widgetContainer)
+      links: this.$element[0].querySelectorAll(selectors.links)
     };
   }
   bindEvents() {
@@ -116,16 +114,21 @@ class AjaxPagination extends elementorModules.frontend.handlers.Base {
   }
   handleSuccessFetch(result) {
     this.handleUiAfterLoading();
-    const selectors = this.getSettings('selectors');
-    const newWidgetContainer = result.querySelector(`[data-id="${this.elementId}"] ${selectors.widgetContainer}`);
-    const existingWidgetContainer = this.elements.widgetContainer;
-    this.$element[0].replaceChild(newWidgetContainer, existingWidgetContainer);
+    const newWidgetContainer = result.querySelector(`[data-id="${this.elementId}"]`);
+    const existingWidgetContainer = document.querySelector(`[data-id="${this.elementId}"]`);
+    if (!newWidgetContainer || !existingWidgetContainer) {
+      return;
+    }
+    const parentElement = existingWidgetContainer.parentNode;
+    if (parentElement) {
+      parentElement.replaceChild(newWidgetContainer, existingWidgetContainer);
+    }
     this.afterInsertPosts();
   }
   afterInsertPosts() {
     const selectors = this.getSettings('selectors'),
       postsElements = document.querySelectorAll(`[data-id="${this.elementId}"] ${selectors.postWrapperTag}`);
-    elementorFrontend.elementsHandler.runReadyTrigger(this.$element[0]);
+    elementorFrontend.elementsHandler.runReadyTrigger(document.querySelector(`.elementor-element-${this.elementId}`));
     (0, _runElementHandlers.default)(postsElements);
     if (ElementorProFrontendConfig.settings.lazy_load_background_images) {
       document.dispatchEvent(new Event('elementor/lazyload/observe'));
@@ -143,4 +146,4 @@ exports["default"] = AjaxPagination;
 /***/ })
 
 }]);
-//# sourceMappingURL=ajax-pagination.2390838f542f1a8d5ed4.bundle.js.map
+//# sourceMappingURL=ajax-pagination.45dafe7f88c8058e3099.bundle.js.map

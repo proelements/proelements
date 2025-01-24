@@ -89,9 +89,9 @@ var __webpack_exports__ = {};
   \*************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _elementor_editor_app_bar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-app-bar */ "@elementor/editor-app-bar");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
-/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
+/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 // src/init.ts
 
 
@@ -100,12 +100,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function useNotesActionProps() {
-  const { isActive, isBlocked } = (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.__privateUseRouteStatus)("notes", {
+  const { isActive, isBlocked } = (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateUseRouteStatus)("notes", {
     blockOnPreviewMode: false
   });
   return {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Notes", "elementor-pro"),
-    icon: _elementor_icons__WEBPACK_IMPORTED_MODULE_3__.MessageIcon,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Notes", "elementor-pro"),
+    icon: _elementor_icons__WEBPACK_IMPORTED_MODULE_2__.MessageIcon,
     onClick: () => {
       const extendedWindow = window;
       const config = extendedWindow?.elementor?.editorEvents?.config;
@@ -117,7 +117,7 @@ function useNotesActionProps() {
           element: config.elements.buttonIcon
         });
       }
-      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.__privateRunCommand)("notes/toggle");
+      (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateRunCommand)("notes/toggle");
     },
     selected: isActive,
     disabled: isBlocked

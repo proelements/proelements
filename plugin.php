@@ -288,6 +288,31 @@ class Plugin {
 		);
 	}
 
+	public function register_frontend_styles() {
+		$suffix = $this->get_assets_suffix();
+
+		wp_register_style(
+			'e-motion-fx',
+			ELEMENTOR_PRO_URL . 'assets/css/modules/motion-fx' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+
+		wp_register_style(
+			'e-sticky',
+			ELEMENTOR_PRO_URL . 'assets/css/modules/sticky' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+
+		wp_register_style(
+			'e-popup',
+			ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
 	public function register_frontend_scripts() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
@@ -349,6 +374,12 @@ class Plugin {
 			ELEMENTOR_PRO_VERSION,
 			true
 		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-motion-fx' );
+		wp_enqueue_style( 'e-sticky' );
+		wp_enqueue_style( 'e-popup' );
 	}
 
 	public function get_responsive_stylesheet_templates( $templates ) {
@@ -423,6 +454,9 @@ class Plugin {
 	private function setup_hooks() {
 		add_action( 'elementor/init', [ $this, 'on_elementor_init' ] );
 
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		add_action( 'elementor/frontend/before_register_scripts', [ $this, 'register_frontend_scripts' ] );
 		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'register_preview_scripts' ] );
 
@@ -444,23 +478,6 @@ class Plugin {
 		$suffix = $this->get_assets_suffix();
 
 		return [
-			'styles' => [
-				'e-motion-fx' => [
-					'src' => ELEMENTOR_PRO_URL . 'assets/css/modules/motion-fx' . $suffix . '.css',
-					'version' => ELEMENTOR_PRO_VERSION,
-					'dependencies' => [],
-				],
-				'e-sticky' => [
-					'src' => ELEMENTOR_PRO_URL . 'assets/css/modules/sticky' . $suffix . '.css',
-					'version' => ELEMENTOR_PRO_VERSION,
-					'dependencies' => [],
-				],
-				'e-popup' => [
-					'src' => ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
-					'version' => ELEMENTOR_PRO_VERSION,
-					'dependencies' => [],
-				],
-			],
 			'scripts' => [
 				'e-sticky' => [
 					'src' => ELEMENTOR_PRO_URL . 'assets/lib/sticky/jquery.sticky' . $suffix . '.js',

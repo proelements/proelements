@@ -18,7 +18,6 @@ use Elementor\Settings;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
 use ElementorPro\Modules\Woocommerce\Widgets\Products as Products_Widget;
-use ElementorPro\Modules\Woocommerce\Data\Controller as WoocommerceDataController;
 use Elementor\Icons_Manager;
 use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
 use ElementorPro\License\API;
@@ -993,20 +992,6 @@ class Module extends Module_Base {
 		return ! empty( $this->woocommerce_notices_elements ) ? $this->woocommerce_notices_elements : [];
 	}
 
-	public function custom_gutenberg_woocommerce_notice() {
-		$min_suffix = Utils::is_script_debug() ? '' : '.min';
-
-		wp_enqueue_script(
-			'elementor-gutenberg-woocommerce-notice',
-			ELEMENTOR_PRO_URL . '/assets/js/gutenberg-woocommerce-notice' . $min_suffix . '.js',
-			[ 'wp-blocks' ],
-			ELEMENTOR_PRO_VERSION,
-			false
-		);
-
-		wp_set_script_translations( 'elementor-gutenberg-woocommerce-notice', 'elementor-pro' );
-	}
-
 	public function e_notices_css() {
 		if ( ! $this->should_load_wc_notices_styles() ) {
 			return false;
@@ -1378,8 +1363,6 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
-		new WoocommerceDataController();
-
 		add_action( 'elementor/kit/register_tabs', [ $this, 'init_site_settings' ], 1, 40 );
 		$this->add_update_kit_settings_hooks();
 
@@ -1497,7 +1480,6 @@ class Module extends Module_Base {
 		// WooCommerce Notice Site Settings
 		add_filter( 'body_class', [ $this, 'e_notices_body_classes' ] );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'e_notices_css' ] );
-		add_action( 'enqueue_block_editor_assets', [ $this, 'custom_gutenberg_woocommerce_notice' ] );
 
 		add_filter( 'elementor/query/query_args', function( $query_args, $widget ) {
 			return $this->loop_query( $query_args, $widget );
@@ -1561,6 +1543,8 @@ class Module extends Module_Base {
 	}
 
 	private function parse_loop_query_args( $widget, $query_args ) {
+		global $wp_query;
+
 		$settings = $this->adjust_setting_for_product_renderer( $widget );
 
 		// For Products_Renderer.
@@ -1572,7 +1556,9 @@ class Module extends Module_Base {
 
 		$parsed_query_args = $shortcode->parse_query_args();
 
-		unset( $parsed_query_args['fields'] );
+		if ( empty( $wp_query->include_field_ids_arg ) ) {
+			unset( $parsed_query_args['fields'] );
+		}
 
 		$override_various_query_args = array_filter( $query_args, function( $key ) {
 			return in_array( $key, [ 'posts_per_page', 'offset', 'paged' ], true );

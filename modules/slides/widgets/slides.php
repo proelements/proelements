@@ -36,7 +36,7 @@ class Slides extends Base_Widget {
 	}
 
 	public function get_script_depends() {
-		return [ 'imagesloaded' ];
+		return [ 'imagesloaded', 'swiper' ];
 	}
 
 	protected function is_dynamic_content(): bool {
@@ -1472,9 +1472,6 @@ class Slides extends Base_Widget {
 					<?php echo implode( '', $slides ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 				<?php if ( 1 < $slides_count ) : ?>
-					<?php if ( $show_dots ) : ?>
-						<div class="swiper-pagination"></div>
-					<?php endif; ?>
 					<?php if ( $show_arrows ) : ?>
 						<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Previous slide', 'elementor-pro' ); ?>">
 							<?php $this->render_swiper_button( 'previous' ); ?>
@@ -1482,6 +1479,9 @@ class Slides extends Base_Widget {
 						<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Next slide', 'elementor-pro' ); ?>">
 							<?php $this->render_swiper_button( 'next' ); ?>
 						</div>
+					<?php endif; ?>
+					<?php if ( $show_dots ) : ?>
+						<div class="swiper-pagination"></div>
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>
@@ -1560,9 +1560,6 @@ class Slides extends Base_Widget {
 					<# } ); #>
 				</div>
 				<# if ( 1 < settings.slides.length ) { #>
-					<# if ( showDots ) { #>
-						<div class="swiper-pagination"></div>
-					<# } #>
 					<# if ( showArrows ) { #>
 						<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Previous slide', 'elementor-pro' ); ?>">
 							<i class="eicon-chevron-{{ prev }}" aria-hidden="true"></i>
@@ -1570,6 +1567,9 @@ class Slides extends Base_Widget {
 						<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Next slide', 'elementor-pro' ); ?>">
 							<i class="eicon-chevron-{{ next }}" aria-hidden="true"></i>
 						</div>
+					<# } #>
+					<# if ( showDots ) { #>
+						<div class="swiper-pagination"></div>
 					<# } #>
 				<# } #>
 			</div>

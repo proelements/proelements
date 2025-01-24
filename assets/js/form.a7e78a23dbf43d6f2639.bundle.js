@@ -1,4 +1,4 @@
-/*! pro-elements - v3.26.0 - 07-01-2025 */
+/*!pro-elements - v3.27.0 - 20-01-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["form"],{
 
@@ -381,12 +381,16 @@ class FormSteps extends elementorModules.frontend.handlers.Base {
     if (!this.isStepsExist()) {
       return;
     }
+    const {
+      selectors
+    } = this.getSettings();
     this.elements.$form.on({
       submit: () => this.resetForm(),
       keydown: e => {
         if (13 === e.keyCode && !this.isLastStep() && 'textarea' !== e.target.localName) {
           e.preventDefault();
-          this.applyStep('next');
+          const direction = e.target.closest(selectors.button)?.dataset?.direction || 'next';
+          this.applyStep(direction);
         }
       },
       error: () => this.onFormError()
@@ -679,7 +683,8 @@ class FormSteps extends elementorModules.frontend.handlers.Base {
     return jQuery('<button>', {
       type: 'button',
       text: this.getButtonLabel(buttonType, index),
-      class: buttonClasses.join(' ')
+      class: buttonClasses.join(' '),
+      'data-direction': buttonType
     });
   }
   getButtonLabel(buttonType, index) {
@@ -976,4 +981,4 @@ exports["default"] = Recaptcha;
 /***/ })
 
 }]);
-//# sourceMappingURL=form.16e51aca8a5ca0d38ae6.bundle.js.map
+//# sourceMappingURL=form.a7e78a23dbf43d6f2639.bundle.js.map

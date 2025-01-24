@@ -1,11 +1,11 @@
-/*! pro-elements - v3.26.0 - 07-01-2025 */
+/*!pro-elements - v3.27.0 - 20-01-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["animated-headline"],{
 
-/***/ "../assets/dev/js/frontend/utils/scroll.js":
-/*!*************************************************!*\
-  !*** ../assets/dev/js/frontend/utils/scroll.js ***!
-  \*************************************************/
+/***/ "../modules/animated-headline/assets/js/frontend/handlers/animated-headlines.js":
+/*!**************************************************************************************!*\
+  !*** ../modules/animated-headline/assets/js/frontend/handlers/animated-headlines.js ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -14,27 +14,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-if (window.elementorCommon) {
-  window.elementorCommon.helpers.softDeprecated('Scroll util from "/dev/js/frontend/utils/scroll"', '3.1.0', 'elementorModules.utils.Scroll');
-}
-var _default = exports["default"] = elementorModules.utils.Scroll;
-
-/***/ }),
-
-/***/ "../modules/animated-headline/assets/js/frontend/handlers/animated-headlines.js":
-/*!**************************************************************************************!*\
-  !*** ../modules/animated-headline/assets/js/frontend/handlers/animated-headlines.js ***!
-  \**************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _scroll = _interopRequireDefault(__webpack_require__(/*! elementor-pro/frontend/utils/scroll */ "../assets/dev/js/frontend/utils/scroll.js"));
 var _default = exports["default"] = elementorModules.frontend.handlers.Base.extend({
   svgPaths: {
     circle: ['M325,18C228.7-8.3,118.5,8.3,78,21C22.4,38.4,4.6,54.6,5.6,77.6c1.4,32.4,52.2,54,142.6,63.7 c66.2,7.1,212.2,7.5,273.5-8.3c64.4-16.6,104.3-57.6,33.8-98.2C386.7-4.9,179.4-1.4,126.3,20.7'],
@@ -278,7 +257,7 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
   },
   activateScrollListener() {
     const scrollBuffer = -100;
-    this.intersectionObservers.startAnimation.observer = _scroll.default.scrollObserver({
+    this.intersectionObservers.startAnimation.observer = elementorModules.utils.Scroll.scrollObserver({
       offset: `0px 0px ${scrollBuffer}px`,
       callback: event => {
         if (event.isInViewport) {
@@ -308,4 +287,4 @@ var _default = exports["default"] = elementorModules.frontend.handlers.Base.exte
 /***/ })
 
 }]);
-//# sourceMappingURL=animated-headline.3eca5f2deb261b97d554.bundle.js.map
+//# sourceMappingURL=animated-headline.375998d4790797e91f21.bundle.js.map

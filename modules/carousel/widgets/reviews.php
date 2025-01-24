@@ -49,6 +49,20 @@ class Reviews extends Base {
 		return [ 'e-swiper', 'widget-testimonial-carousel', 'widget-reviews', 'widget-star-rating', 'widget-carousel-module-base' ];
 	}
 
+	/**
+	 * Get script dependencies.
+	 *
+	 * Retrieve the list of script dependencies the widget requires.
+	 *
+	 * @since 3.27.0
+	 * @access public
+	 *
+	 * @return array Widget script dependencies.
+	 */
+	public function get_script_depends(): array {
+		return [ 'swiper' ];
+	}
+
 	protected function register_controls() {
 		parent::register_controls();
 

@@ -1377,7 +1377,7 @@ class Search extends Base_Widget {
 		$this->add_responsive_control(
 			'submit_border_radius',
 			[
-				'label' => esc_html__( 'Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
@@ -2042,9 +2042,11 @@ class Search extends Base_Widget {
 				<button <?php $this->print_render_attribute_string( $attribute_ids['submit_button'] ); ?>>
 					<?php $this->maybe_render_icon( 'icon_submit' ); ?>
 
+					<?php if ( ! empty( $settings['submit_button_text'] ) ) : ?>
 					<span <?php $this->print_render_attribute_string( $attribute_ids['submit_text'] ); ?>>
 						<?php echo esc_html( $settings['submit_button_text'] ); ?>
 					</span>
+					<?php endif; ?>
 				</button>
 				<input <?php $this->print_render_attribute_string( $attribute_ids['widget_props'] ); ?>>
 			</form>
@@ -2126,6 +2128,10 @@ class Search extends Base_Widget {
 			],
 			'type' => 'submit',
 		] );
+
+		if ( empty( $settings['submit_button_text'] ) ) {
+			$this->add_render_attribute( $this->element_attribute_ids['submit_button'], 'aria-label', esc_html__( 'Search', 'elementor-pro' ) );
+		}
 
 		$this->add_render_attribute( $this->element_attribute_ids['submit_text'], [
 			'class' => $this->is_submit_button_shown() ? '' : $screen_only_class,

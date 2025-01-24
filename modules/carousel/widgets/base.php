@@ -291,7 +291,7 @@ abstract class Base extends Base_Widget {
 		$this->add_control(
 			'lazyload',
 			[
-				'label' => esc_html__( 'Lazyload', 'elementor-pro' ),
+				'label' => esc_html__( 'Lazy Load', 'elementor-pro' ),
 				'type' => Controls_Manager::SWITCHER,
 				'separator' => 'before',
 				'frontend_available' => true,
@@ -617,9 +617,6 @@ abstract class Base extends Base_Widget {
 					<?php endforeach; ?>
 				</div>
 				<?php if ( 1 < $slides_count ) : ?>
-					<?php if ( $settings['pagination'] ) : ?>
-						<div class="swiper-pagination"></div>
-					<?php endif; ?>
 					<?php if ( $settings['show_arrows'] ) : ?>
 						<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Previous', 'elementor-pro' ); ?>">
 							<?php $this->render_swiper_button( 'previous' ); ?>
@@ -627,6 +624,9 @@ abstract class Base extends Base_Widget {
 						<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Next', 'elementor-pro' ); ?>">
 							<?php $this->render_swiper_button( 'next' ); ?>
 						</div>
+					<?php endif; ?>
+					<?php if ( $settings['pagination'] ) : ?>
+						<div class="swiper-pagination"></div>
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>

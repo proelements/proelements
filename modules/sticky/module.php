@@ -130,42 +130,38 @@ class Module extends Module_Base {
 			]
 		);
 
-		$version_3_25_beta_or_higher = '3.24.100';
-		// TODO: Remove this condition in Elementor Pro v3.27.0 [ED-15717].
-		if ( version_compare( ELEMENTOR_VERSION, $version_3_25_beta_or_higher, '>' ) ) {
-			$element->add_responsive_control(
-				'sticky_anchor_link_offset',
-				[
-					'label' => esc_html__( 'Anchor Offset', 'elementor-pro' ),
-					'type' => Controls_Manager::NUMBER,
-					'default' => 0,
-					'min' => 0,
-					'max' => 500,
-					'required' => true,
-					'condition' => [
-						'sticky!' => '',
-					],
-					'render_type' => 'none',
-					'frontend_available' => true,
-				]
-			);
+		$element->add_responsive_control(
+			'sticky_anchor_link_offset',
+			[
+				'label' => esc_html__( 'Anchor Offset', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
+				'max' => 500,
+				'required' => true,
+				'condition' => [
+					'sticky!' => '',
+				],
+				'render_type' => 'none',
+				'frontend_available' => true,
+			]
+		);
 
-			$element->add_control(
-				'anchor_offset_description',
-				[
-					'raw' => sprintf(
-						esc_html__( 'Using the Anchor offset may require you to adjust the offset of other sticky elements. %1$s Learn more %2$s', 'elementor-pro' ),
-						'<a href="https://elementor.com/help/sticky-headers/" target="_blank">',
-						'</a>'
-					),
-					'type' => Controls_Manager::RAW_HTML,
-					'content_classes' => 'elementor-control-field-description',
-					'condition' => [
-						'sticky!' => '',
-					],
-				]
-			);
-		}
+		$element->add_control(
+			'anchor_offset_description',
+			[
+				'raw' => sprintf(
+					esc_html__( 'Using the Anchor offset may require you to adjust the offset of other sticky elements. %1$s Learn more %2$s', 'elementor-pro' ),
+					'<a href="https://elementor.com/help/sticky-headers/" target="_blank">',
+					'</a>'
+				),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-control-field-description',
+				'condition' => [
+					'sticky!' => '',
+				],
+			]
+		);
 
 		// Add `Stay In Column` only to the following types:
 		$types = [

@@ -1205,7 +1205,7 @@ class Purchase_Summary extends Base_Widget {
 			'order_details_titles_totals',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Titles &amp; Totals', 'elementor-pro' ),
+				'label' => esc_html__( 'Titles & Totals', 'elementor-pro' ),
 			]
 		);
 

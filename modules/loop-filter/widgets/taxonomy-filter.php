@@ -58,6 +58,10 @@ class Taxonomy_Filter extends Base_Widget {
 		return [ 'widget-loop-filter' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_taxonomy_filter',
