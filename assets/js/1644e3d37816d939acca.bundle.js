@@ -1,4 +1,4 @@
-/*!pro-elements - v3.27.0 - 20-01-2025 */
+/*! pro-elements - v3.27.0 - 06-02-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["modules_query-control_assets_js_editor_template-query-control_js"],{
 

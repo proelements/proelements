@@ -2,9 +2,11 @@
 
 namespace ElementorPro\Modules\DisplayConditions\Classes\DynamicTags;
 
+use ElementorPro\Core\Admin\Post_Status;
+
 class Custom_Fields_Data_Provider implements Data_Provider {
 
-	const CUSTOM_FIELDS_META_LIMIT = 50;
+	const CUSTOM_FIELDS_META_LIMIT = 500;
 
 	/**
 	 * Build the custom fields options for the control. Add the groups and the items.
@@ -12,6 +14,16 @@ class Custom_Fields_Data_Provider implements Data_Provider {
 	 * @return array
 	 */
 	public function get_control_options(): array {
+		$combined_options = array_merge( $this->get_custom_fields_options(), $this->get_acf_options() );
+
+		if ( empty( $combined_options ) ) {
+			return [];
+		}
+
+		return $this->get_control_groups() + $combined_options;
+	}
+
+	private function get_custom_fields_options(): array {
 		global $wpdb;
 
 		$keys = $wpdb->get_col(
@@ -27,11 +39,22 @@ class Custom_Fields_Data_Provider implements Data_Provider {
 			)
 		);
 
-		if ( empty( $keys ) ) {
-			return [];
-		}
+		return array_combine( $keys, $keys );
+	}
 
-		return $this->get_control_groups() + array_combine( $keys, $keys );
+	private function get_acf_options(): array {
+		global $wpdb;
+
+		$acf_keys = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT post_excerpt
+				FROM {$wpdb->posts}
+				WHERE post_type = 'acf-field' AND post_status = %s",
+				Post_Status::PUBLISH
+			)
+		);
+
+		return array_combine( $acf_keys, $acf_keys );
 	}
 
 	/**

@@ -8,6 +8,8 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Core\Isolation\Wordpress_Adapter;
+use ElementorPro\Modules\Lottie\Classes\Caption_Helper;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -792,27 +794,13 @@ class Lottie extends Base_Widget {
 		$this->end_controls_section();
 	}
 
+	private function wp_adapter() {
+		return new Wordpress_Adapter();
+	}
+
 	private function get_caption( $settings ) {
-		$is_media_file_caption = $this->is_media_file_caption( $settings );
-		$is_external_url_caption = $this->is_external_url_caption( $settings );
-
-		if ( ( $is_media_file_caption && 'custom' === $settings['caption_source'] ) || $is_external_url_caption ) {
-			return $settings['caption'];
-		} else if ( 'caption' === $settings['caption_source'] ) {
-			return wp_get_attachment_caption( $settings['source_json']['id'] );
-		} else if ( 'title' === $settings['caption_source'] ) {
-			return get_the_title( $settings['source_json']['id'] );
-		}
-
-		return '';
-	}
-
-	private function is_media_file_caption( $settings ) {
-		return 'media_file' === $settings['source'] && 'none' !== $settings['caption_source'];
-	}
-
-	private function is_external_url_caption( $settings ) {
-		return 'external_url' === $settings['source'] && '' !== $settings['caption'];
+		return ( new Caption_Helper( $this->wp_adapter(), $settings ) )
+			->get_caption();
 	}
 
 	protected function render() {

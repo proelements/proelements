@@ -82,7 +82,12 @@ class ACF_Text extends Tag {
 			$value = get_field( $meta_key );
 		} // End if().
 
-		echo wp_kses_post( $value );
+		if ( ! is_string( $value ) ) {
+			$type = gettype( $value );
+			wp_trigger_error( 'acf-text', "ACF Text Field value must be string, but is type of: $type", E_CORE_WARNING );
+		} else {
+			echo wp_kses_post( $value );
+		}
 	}
 
 	public function get_panel_template_setting_key() {
