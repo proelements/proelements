@@ -4,9 +4,11 @@ namespace ElementorPro\Modules\QueryControl;
 use Elementor\Controls_Manager;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use Elementor\Core\Editor\Editor;
+use Elementor\Modules\System_Info\Reporters\WordPress;
 use Elementor\TemplateLibrary\Source_Local;
 use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Core\Security\Access_Control;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Taxonomy;
 use ElementorPro\Modules\QueryControl\Controls\Template_Query;
@@ -290,7 +292,7 @@ class Module extends Module_Base {
 				'user_nicename',
 			],
 		];
-		if ( 'detailed' === $data['autocomplete']['display'] ) {
+		if ( 'detailed' === $data['autocomplete']['display'] && Access_Control::user_can_access_private_posts() ) {
 			$query['fields'][] = 'user_email';
 		}
 		return $query;
@@ -384,7 +386,7 @@ class Module extends Module_Base {
 			],
 			'include' => (array) $data['id'],
 		];
-		if ( 'detailed' === $data['get_titles']['display'] ) {
+		if ( 'detailed' === $data['get_titles']['display'] && Access_Control::user_can_access_private_posts() ) {
 			$query['fields'][] = 'user_email';
 		}
 		return $query;
@@ -518,15 +520,24 @@ class Module extends Module_Base {
 	}
 
 	/**
+	 * @throws \Exception
+	 */
+	public static function verify_user_access_for_editing( array $data ): void {
+		Access_Control::verify_user_editing_capability();
+
+		if ( isset( $data['editor_post_id'] ) ) {
+			Access_Control::verify_post_edit_access( (int) $data['editor_post_id'] );
+		}
+	}
+
+	/**
 	 * @param array $data
 	 *
 	 * @return array
 	 * @throws \Exception
 	 */
 	public function ajax_posts_filter_autocomplete( array $data ) {
-		if ( ! current_user_can( Editor::EDITING_CAPABILITY ) ) {
-			throw new \Exception( 'Access denied.' );
-		}
+		$this->verify_user_access_for_editing( $data );
 
 		$query_data = $this->autocomplete_query_data( $data );
 		if ( is_wp_error( $query_data ) ) {
@@ -560,6 +571,10 @@ class Module extends Module_Base {
 				$query = new \WP_Query( $query_args );
 
 				foreach ( $query->posts as $post ) {
+					if ( ! Access_Control::user_can_edit( $post->ID ) ) {
+						continue;
+					}
+
 					if ( apply_filters( "elementor/query/get_autocomplete/custom/{$display}", true, $post, $data ) ) {
 						$text = $this->format_post_for_display( $post, $display, $data );
 						$results[] = [
@@ -573,6 +588,10 @@ class Module extends Module_Base {
 				$query = new \WP_Query( $query_args );
 
 				foreach ( $query->posts as $post ) {
+					if ( ! Access_Control::user_can_edit( $post->ID ) ) {
+						continue;
+					}
+
 					$document = Plugin::elementor()->documents->get( $post->ID );
 					if ( $document ) {
 						$text = esc_html( $post->post_title ) . ' (' . $document->get_post_type_title() . ')';
@@ -688,9 +707,7 @@ class Module extends Module_Base {
 	 * @throws \Exception
 	 */
 	public function ajax_posts_control_value_titles( $request ) {
-		if ( ! current_user_can( Editor::EDITING_CAPABILITY ) ) {
-			throw new \Exception( 'Access denied.' );
-		}
+		$this->verify_user_access_for_editing( $request );
 
 		$query_data = $this->get_titles_query_data( $request );
 		if ( is_wp_error( $query_data ) ) {
@@ -728,6 +745,10 @@ class Module extends Module_Base {
 				$query = new \WP_Query( $query_args );
 
 				foreach ( $query->posts as $post ) {
+					if ( ! Access_Control::user_can_edit( $post->ID ) ) {
+						continue;
+					}
+
 					if ( apply_filters( "elementor/query/get_value_titles/custom/{$display}", true, $post, $request ) ) {
 						$results[ $post->ID ] = $this->format_post_for_display( $post, $display, $request, 'get_value_titles' );
 					}
@@ -737,6 +758,10 @@ class Module extends Module_Base {
 				$query = new \WP_Query( $query_args );
 
 				foreach ( $query->posts as $post ) {
+					if ( ! Access_Control::user_can_edit( $post->ID ) ) {
+						continue;
+					}
+
 					$document = Plugin::elementor()->documents->get( $post->ID );
 					if ( $document ) {
 						$results[ $post->ID ] = htmlentities( esc_html( $post->post_title ) ) . ' (' . $document->get_post_type_title() . ')';
@@ -816,7 +841,11 @@ class Module extends Module_Base {
 				$text = $user->display_name;
 				break;
 			case 'detailed':
-				$text = sprintf( '%s (%s)', $user->display_name, $user->user_email );
+				if ( Access_Control::user_can_access_private_posts() ) {
+					$text = sprintf( '%s (%s)', $user->display_name, $user->user_email );
+				} else {
+					$text = $user->display_name;
+				}
 				break;
 			default:
 				$text = apply_filters( "elementor/query/{$filter_name}/display/{$display}", $user, $data );

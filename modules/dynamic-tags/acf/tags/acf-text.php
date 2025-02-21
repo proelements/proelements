@@ -76,6 +76,9 @@ class ACF_Text extends Tag {
 					$meta = $this->get_queried_object_meta( $meta_key );
 					$value = isset( $meta['address'] ) ? $meta['address'] : '';
 					break;
+				case 'true_false':
+					$value = (string) $value;
+					break;
 			} // End switch().
 		} else {
 			// Field settings has been deleted or not available.
