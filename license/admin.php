@@ -739,7 +739,7 @@ class Admin {
 		add_action( 'admin_post_elementor_pro_activate_license', [ $this, 'action_activate_license' ] );
 		add_action( 'admin_post_elementor_pro_deactivate_license', [ $this, 'action_deactivate_license' ] );
 
-		add_action( 'admin_notices', [ $this, 'admin_license_details' ], 20 );
+		//add_action( 'admin_notices', [ $this, 'admin_license_details' ], 20 );
 
 		add_filter( 'elementor/core/admin/notices', function( $notices ) {
 			$notices[] = new Trial_Period_Notice();
