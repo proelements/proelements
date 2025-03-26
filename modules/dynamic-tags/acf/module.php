@@ -2,11 +2,8 @@
 namespace ElementorPro\Modules\DynamicTags\ACF;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Base\Document;
 use Elementor\Core\DynamicTags\Base_Tag;
 use Elementor\Modules\DynamicTags;
-use ElementorPro\Plugin;
-use WP_Post;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -39,8 +36,12 @@ class Module extends DynamicTags\Module {
 			return $null;
 		}
 
-		if ( $post_id instanceof WP_Post ) {
+		if ( $post_id instanceof \WP_Post ) {
 			return $post_id->ID;
+		}
+
+		if ( $post_id instanceof \WP_Term ) {
+			return $post_id->term_id;
 		}
 
 		return $post_id;

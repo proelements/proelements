@@ -87,7 +87,7 @@ class ACF_Text extends Tag {
 
 		if ( ! is_string( $value ) ) {
 			$type = gettype( $value );
-			wp_trigger_error( 'acf-text', "ACF Text Field value must be string, but is type of: $type", E_CORE_WARNING );
+			wp_trigger_error( 'acf-text', "ACF Text Field value must be string, but is type of: $type", E_USER_WARNING );
 		} else {
 			echo wp_kses_post( $value );
 		}

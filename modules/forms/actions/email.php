@@ -58,7 +58,7 @@ class Email extends Action_Base {
 		);
 
 		/* translators: %s: Site title. */
-		$default_message = sprintf( esc_html__( 'New message from "%s"', 'elementor-pro' ), get_option( 'blogname' ) );
+		$default_message = sprintf( __( 'New message from "%s"', 'elementor-pro' ), get_option( 'blogname' ) );
 
 		$widget->add_control(
 			$this->get_control_id( 'email_subject' ),

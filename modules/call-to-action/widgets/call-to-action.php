@@ -899,6 +899,14 @@ class Call_To_Action extends Base_Widget {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'title_text_shadow',
+				'selector' => '{{WRAPPER}} .elementor-cta__title',
+			]
+		);
+
 		$this->add_responsive_control(
 			'title_spacing',
 			[

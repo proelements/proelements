@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Element_Column;
 use Elementor\Element_Section;
+use Elementor\Utils;
 use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
 
@@ -188,7 +189,25 @@ class Module extends Module_Base {
 		$this->add_asset_loading_control_to_element( $element, [], 'background_' );
 	}
 
+	public function register_frontend_styles() {
+		$suffix = Utils::is_script_debug() ? '' : '.min';
+
+		wp_register_style(
+			'e-motion-fx',
+			ELEMENTOR_PRO_URL . 'assets/css/modules/motion-fx' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-motion-fx' );
+	}
+
 	private function add_actions() {
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		add_action( 'elementor/controls/register', [ $this, 'register_controls_group' ] );
 
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );

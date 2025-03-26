@@ -1306,9 +1306,6 @@ class Slides extends Base_Widget {
 			]
 		);
 
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
-
 		$this->add_responsive_control(
 			'dots_size',
 			[
@@ -1328,7 +1325,7 @@ class Slides extends Base_Widget {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .swiper-pagination-bullet' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .' . $swiper_class . '-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .swiper-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .swiper-pagination-fraction' => 'font-size: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
@@ -1376,15 +1373,12 @@ class Slides extends Base_Widget {
 			return;
 		}
 
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
-
 		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 		$direction = is_rtl() ? 'rtl' : 'ltr';
 
 		$this->add_render_attribute( [
 			'wrapper' => [
-				'class' => [ 'elementor-slides-wrapper', 'elementor-main-swiper', $swiper_class ],
+				'class' => [ 'elementor-slides-wrapper', 'elementor-main-swiper', 'swiper' ],
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
 				'aria-label' => $settings['slides_name'],

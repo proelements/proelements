@@ -288,33 +288,8 @@ class Plugin {
 		);
 	}
 
-	public function register_frontend_styles() {
-		$suffix = $this->get_assets_suffix();
-
-		wp_register_style(
-			'e-motion-fx',
-			ELEMENTOR_PRO_URL . 'assets/css/modules/motion-fx' . $suffix . '.css',
-			[],
-			ELEMENTOR_PRO_VERSION
-		);
-
-		wp_register_style(
-			'e-sticky',
-			ELEMENTOR_PRO_URL . 'assets/css/modules/sticky' . $suffix . '.css',
-			[],
-			ELEMENTOR_PRO_VERSION
-		);
-
-		wp_register_style(
-			'e-popup',
-			ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
-			[],
-			ELEMENTOR_PRO_VERSION
-		);
-	}
-
 	public function register_frontend_scripts() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = $this->get_assets_suffix();
 
 		wp_register_script(
 			'elementor-pro-webpack-runtime',
@@ -362,7 +337,7 @@ class Plugin {
 	}
 
 	public function register_preview_scripts() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = $this->get_assets_suffix();
 
 		wp_enqueue_script(
 			'elementor-pro-preview',
@@ -374,12 +349,6 @@ class Plugin {
 			ELEMENTOR_PRO_VERSION,
 			true
 		);
-	}
-
-	public function enqueue_preview_styles() {
-		wp_enqueue_style( 'e-motion-fx' );
-		wp_enqueue_style( 'e-sticky' );
-		wp_enqueue_style( 'e-popup' );
 	}
 
 	public function get_responsive_stylesheet_templates( $templates ) {
@@ -454,9 +423,6 @@ class Plugin {
 	private function setup_hooks() {
 		add_action( 'elementor/init', [ $this, 'on_elementor_init' ] );
 
-		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
-		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
-
 		add_action( 'elementor/frontend/before_register_scripts', [ $this, 'register_frontend_scripts' ] );
 		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'register_preview_scripts' ] );
 
@@ -529,26 +495,10 @@ class Plugin {
 			$this->integrations = new Integrations_Manager(); // TODO: This one is safe to move out of the condition.
 
 			$this->notifications = new Notifications_Manager();
-			require_once __DIR__ . '/updater/updater.php';
-			$config = array(
-				'slug'               => 'pro-elements.php',
-				'plugin_basename'    => ELEMENTOR_PRO_PLUGIN_BASE,
-				'proper_folder_name' => 'pro-elements',
-				'api_url'            => 'https://api.github.com/repos/proelements/proelements',
-				'raw_url'            => 'https://raw.githubusercontent.com/proelements/proelements/master',
-				'github_url'         => 'https://github.com/proelements/proelements',
-				'zip_url'            => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
-				'sslverify'          => true,
-				'requires'           => '5.0',
-				'tested'             => '5.4.2',
-				'readme'             => 'README.md',
-				'access_token'       => '',
-			);
+		if ( is_admin() ) {
+			$this->admin = new Admin();
 
-			if ( is_admin() ) {
-				$this->admin = new Admin();
-
-				$this->license_admin->register_actions();
+			$this->license_admin->register_actions();
 
 				require_once __DIR__ . '/updater/updater.php';
 				$config = array(
@@ -566,12 +516,12 @@ class Plugin {
 					'access_token'       => '',
 				);
 				new Updater( $config );
-			}
+		}
 		}
 	}
 
 	private function get_assets_suffix() {
-		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		return Utils::is_script_debug() ? '' : '.min';
 	}
 
 	private static function get_frontend_file( $frontend_file_name ) {

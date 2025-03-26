@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\Sticky;
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Element_Section;
+use Elementor\Utils;
 use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Plugin;
@@ -240,7 +241,25 @@ class Module extends Module_Base {
 		];
 	}
 
+	public function register_frontend_styles() {
+		$suffix = Utils::is_script_debug() ? '' : '.min';
+
+		wp_register_style(
+			'e-sticky',
+			ELEMENTOR_PRO_URL . 'assets/css/modules/sticky' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-sticky' );
+	}
+
 	private function add_actions() {
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'register_controls' ] );

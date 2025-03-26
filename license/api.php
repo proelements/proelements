@@ -196,6 +196,7 @@ class API {
 
 	public static function get_license_data( $force_request = false ) {
 		$license_data['success'] = true;
+		$license_data['expires'] = 'lifetime';
 		$license_data['features'] = [  
 		                             'custom-attributes',
 		                             'custom_code',

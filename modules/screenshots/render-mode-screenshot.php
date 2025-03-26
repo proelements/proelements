@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Screenshots;
 
 use Elementor\Core\Frontend\RenderModes\Render_Mode_Base;
+use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -37,7 +38,7 @@ class Render_Mode_Screenshot extends Render_Mode_Base {
 	}
 
 	public function enqueue_scripts() {
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || defined( 'ELEMENTOR_TESTS' ) && ELEMENTOR_PRO_TESTS ) ? '' : '.min';
+		$suffix = ( Utils::is_script_debug() || Utils::is_elementor_tests() && ELEMENTOR_PRO_TESTS ) ? '' : '.min';
 
 		wp_enqueue_script(
 			'dom-to-image',

@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 return [
 	'handle' => 'elementor-v2-ui',
 	'deps' => [
+		'elementor-v2-design-tokens',
 		'react',
 		'react-dom',
 	],

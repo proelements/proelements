@@ -97,7 +97,7 @@ class Admin {
 	}
 
 	public static function get_license_key() {
-		return trim( get_option( self::LICENSE_KEY_OPTION_NAME ) );
+		return trim( get_option( self::LICENSE_KEY_OPTION_NAME, true ) );
 	}
 
 	public static function set_license_key( $license_key ) {
@@ -236,7 +236,7 @@ class Admin {
 					<h3>
 						<?php $this->render_part_license_status_header( $license_data ); ?>
 						<small>
-							<?php // Fake link to make the user think something is going on. In fact, every refresh of this page will re-check the license status. ?>
+							<?php // Force-refresh this page to re-check the license status. ?>
 							<a class="button" href="<?php echo esc_url( static::get_url() . '&check-license=1' ); ?>">
 								<i class="eicon-sync" aria-hidden="true"></i>
 								<?php echo esc_html__( 'Check license status', 'elementor-pro' ); ?>
@@ -439,7 +439,9 @@ class Admin {
 			return;
 		}
 
-		if ( API::is_license_active() && API::is_license_about_to_expire() ) {
+		$should_show_renew_license_notice = apply_filters( 'elementor_pro/license/should_show_renew_license_notice', true );
+
+		if ( API::is_license_active() && API::is_license_about_to_expire() && $should_show_renew_license_notice ) {
 			$title = sprintf(
 				/* translators: %s: Days to expire. */
 				esc_html__( 'Your License Will Expire in %s.', 'elementor-pro' ),
@@ -459,6 +461,12 @@ class Admin {
 				$description = esc_html__( 'Renew your license today, to keep getting feature updates, premium support, Pro widgets & unlimited access to the template library.', 'elementor-pro' );
 			}
 
+			$should_show_renew_license_notice = apply_filters( 'elementor_pro/license/should_show_renew_license_notice', true );
+
+			if ( ! $should_show_renew_license_notice ) {
+				return;
+			}
+
 			$admin_notices->print_admin_notice( [
 				'title' => $title,
 				'description' => $description,
@@ -468,7 +476,7 @@ class Admin {
 					'url' => $renew_url,
 					'type' => 'warning',
 				],
-			] );
+			]);
 		}
 	}
 

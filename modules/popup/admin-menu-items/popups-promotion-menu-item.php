@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Popups_Promotion_Menu_Item extends Base_Promotion_Item {
 
+	public function get_name() {
+		return 'popups';
+	}
+
 	public function get_position() {
 		return null;
 	}

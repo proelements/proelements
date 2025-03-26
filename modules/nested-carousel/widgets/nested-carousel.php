@@ -323,28 +323,13 @@ class Nested_Carousel extends Widget_Nested_Base {
 		] );
 	}
 
-	// TODO: Remove this in v3.28 [ED-15983].
-	private function is_swiper_upgrade_experiment_state_inactive() {
-		$experiment_exists = ! empty( Plugin::elementor()->experiments->get_features( 'e_swiper_latest' ) );
-
-		if ( ! $experiment_exists ) {
-			return false;
-		}
-
-		$is_experiment_active = Plugin::elementor()->experiments->is_feature_active( 'e_swiper_latest' );
-
-		return ! $is_experiment_active;
-	}
-
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$this->num_of_carousel_items = count( $settings['carousel_items'] ?? [] );
 		$slides = $settings['carousel_items'];
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_wrapper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
 		$direction = $settings['direction'];
 		$has_autoplay_enabled = 'yes' === $settings['autoplay'];
-		$outside_wrapper_classes = [ 'e-n-carousel', $swiper_wrapper_class ];
+		$outside_wrapper_classes = [ 'e-n-carousel', 'swiper' ];
 
 		$this->add_render_attribute( [
 			'carousel-outside-wrapper' => [

@@ -6,6 +6,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Stroke;
+use Elementor\Group_Control_Text_Shadow;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
@@ -438,6 +439,14 @@ class Animated_Headline extends Base_Widget {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'title_text_shadow',
+				'selector' => '{{WRAPPER}} .elementor-headline .elementor-headline-plain-text',
+			]
+		);
+
 		$this->add_control(
 			'heading_words_style',
 			[
@@ -477,6 +486,14 @@ class Animated_Headline extends Base_Widget {
 			Group_Control_Text_Stroke::get_type(),
 			[
 				'name' => 'animated_text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-headline .elementor-headline-dynamic-wrapper',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'animated_text_shadow',
 				'selector' => '{{WRAPPER}} .elementor-headline .elementor-headline-dynamic-wrapper',
 			]
 		);
@@ -593,9 +610,10 @@ class Animated_Headline extends Base_Widget {
 		<#
 		var headlineClasses = 'elementor-headline',
 			tag = elementor.helpers.validateHTMLTag( settings.tag );
+		const sanitizedAnimationType = elementor.helpers.sanitize( settings.animation_type ).replaceAll(/'|"/g, '');
 
 		if ( 'rotate' === settings.headline_style ) {
-			headlineClasses += ' elementor-headline-animation-type-' + settings.animation_type;
+			headlineClasses += ' elementor-headline-animation-type-' + sanitizedAnimationType;
 
 			var isLetterAnimation = -1 !== [ 'typing', 'swirl', 'blinds', 'wave' ].indexOf( settings.animation_type );
 

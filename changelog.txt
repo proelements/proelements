@@ -1,4 +1,35 @@
 # PRO Elements - by PROElements.org
+#### 3.28.1 - 2025-03-23
+
+* Security Fix: Improved code security enforcement in Animated Headline and Form widgets
+
+#### 3.28.0 - 2025-03-17
+
+* Tweak: Ensured File Upload field styles are overridden by global styles in Form widget ([#11651](https://github.com/elementor/elementor/issues/11651), [#17223](https://github.com/elementor/elementor/issues/17223))
+* Tweak: Updated Scroll Snap description to clarify incompatibility with animations and motion effects
+* Tweak: Prevented special characters from being encoded in the email subject field in Form widget
+* Tweak: Loaded module styles within the module instead of registering them in `plugin.php`
+* Tweak: Updated minimum required WordPress version to 6.5
+* Tweak: Improved keyboard accessibility for menus in Editor Top Bar
+* Tweak: Made the edit button accessible in the Template widget
+* Tweak: Optimized Form widget performance by caching field assets `using get_style_depends()` and `get_script_depends()` methods
+* Tweak: Added Text Shadow control in Testimonial Carousel, Call to Action and Animated Headline widgets
+* Fix: Button icon alignment breaks when Inline Font Icons feature is activated ([#16077](https://github.com/elementor/elementor/issues/16077), [#16511](https://github.com/elementor/elementor/issues/16511), [#17692](https://github.com/elementor/elementor/issues/17692), [#17922](https://github.com/elementor/elementor/issues/17922), [#19253](https://github.com/elementor/elementor/issues/19253), [#19370](https://github.com/elementor/elementor/issues/19370), [#21236](https://github.com/elementor/elementor/issues/21236), [#21844](https://github.com/elementor/elementor/issues/21844), [#28080](https://github.com/elementor/elementor/issues/28080))
+* Fix: Dropdown caret color did not follow menu item color when Inline Font Icons feature is activated ([#17500](https://github.com/elementor/elementor/issues/17500), [#18466](https://github.com/elementor/elementor/issues/18466), [#21664](https://github.com/elementor/elementor/issues/21664), [#24929](https://github.com/elementor/elementor/issues/24929), [#28064](https://github.com/elementor/elementor/issues/28064))
+* Fix: Page doesn't scroll up when a coupon error notice appears in Checkout widget
+
+#### 3.27.7 - 2025-03-13
+
+* Security Fix: Improved code security enforcement in Lottie widget
+
+#### 3.27.6 - 2025-03-10
+
+* Security Fix: Improved code security enforcement in Template Condition
+
+#### 3.27.5 - 2025-03-03
+
+* Fix: The `wp_trigger_error` function causes the site to crash instead of triggering a warning when used with ACF text
+
 #### 3.27.4 - 2025-02-16
 
 * Security Fix: Improved code security enforcement in Screenshots module

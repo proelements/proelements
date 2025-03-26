@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Core\Editor;
 
+use Elementor\Core\Utils\Promotions\Filtered_Promotions_Manager;
 use ElementorPro\License\API;
 use ElementorPro\License\Admin;
 use Elementor\Core\Editor\Promotion as Base_Promotion;
@@ -52,7 +53,7 @@ class Promotion extends Base_Promotion {
 	}
 
 	private function get_elements_promotion__higher_tiers() {
-		return [
+		$promotion_data = [
 			/* translators: %s: Widget title. */
 			'title' => __( '%s Widget', 'elementor-pro' ),
 			/* translators: %s: Widget title. */
@@ -63,5 +64,8 @@ class Promotion extends Base_Promotion {
 				'classes' => [ 'elementor-button', 'elementor-button-brand', 'go-pro' ],
 			],
 		];
+
+		$promotion_data = Filtered_Promotions_Manager::get_filtered_promotion_data( $promotion_data, 'elementor-pro/advanced-pro-widgets/promotion', 'action_button', 'url' );
+		return $promotion_data;
 	}
 }

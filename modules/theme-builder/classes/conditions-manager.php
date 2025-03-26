@@ -76,8 +76,7 @@ class Conditions_Manager {
 		$instances = $this->get_document_instances( $post_id );
 
 		if ( ! empty( $instances ) ) {
-			// PHPCS - the method get_document_instances is safe.
-			echo implode( '<br />', $instances ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( implode( '<br />', $instances ) );
 		} else {
 			echo esc_html__( 'None', 'elementor-pro' );
 		}

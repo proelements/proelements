@@ -511,9 +511,6 @@ abstract class Base extends Base_Widget {
 			]
 		);
 
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
-
 		$this->add_responsive_control(
 			'pagination_size',
 			[
@@ -534,7 +531,6 @@ abstract class Base extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .swiper-pagination-bullet' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .swiper-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .' . $swiper_class . '-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
 					'pagination!' => '',
@@ -589,13 +585,11 @@ abstract class Base extends Base_Widget {
 		$settings = array_merge( $default_settings, $settings );
 
 		$slides_count = count( $settings['slides'] );
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
 		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 
 		$this->add_render_attribute( [
 			'wrapper' => [
-				'class' => [ $settings['container_class'], $swiper_class ],
+				'class' => [ $settings['container_class'], 'swiper' ],
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
 				'aria-label' => $settings['slides_name'],
