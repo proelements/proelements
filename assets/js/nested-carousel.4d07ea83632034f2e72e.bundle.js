@@ -1,4 +1,4 @@
-/*! pro-elements - v3.27.0 - 16-02-2025 */
+/*! pro-elements - v3.28.0 - 23-03-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["nested-carousel"],{
 
@@ -45,21 +45,7 @@ class NestedCarousel extends elementorModules.frontend.handlers.CarouselBase {
   async onInit() {
     this.wrapSlideContent();
     super.onInit(...arguments);
-
-    // TODO: Remove this in v3.28 [ED-15983].
-    if (this.isSwiperUpgradeExperimentStateInactive()) {
-      this.reInitBackgroundSlideshow();
-    }
     this.ranElementHandlers = false;
-  }
-
-  // TODO: Remove this in v3.28 [ED-15983].
-  isSwiperUpgradeExperimentStateInactive() {
-    const experimentExists = elementorFrontend.config.experimentalFeatures.hasOwnProperty('e_swiper_latest');
-    if (!experimentExists) {
-      return false;
-    }
-    return !elementorFrontend.config.experimentalFeatures.e_swiper_latest;
   }
   async initSwiper() {
     const Swiper = elementorFrontend.utils.swiper;
@@ -117,18 +103,6 @@ class NestedCarousel extends elementorModules.frontend.handlers.CarouselBase {
   }
   isTouchDevice() {
     return elementorFrontend.utils.environment.isTouchDevice;
-  }
-
-  // TODO: Remove this function in v3.28 [ED-15983].
-  reInitBackgroundSlideshow() {
-    const slideshows = this.elements.$swiperContainer.find('.elementor-background-slideshow');
-    for (const element of slideshows) {
-      if (!element.swiper) {
-        return;
-      }
-      element.swiper.initialized = false;
-      element.swiper.init();
-    }
   }
   async linkContainer(event) {
     const {
@@ -209,4 +183,4 @@ exports["default"] = NestedCarousel;
 /***/ })
 
 }]);
-//# sourceMappingURL=nested-carousel.adf1d39e8be72ec094f0.bundle.js.map
+//# sourceMappingURL=nested-carousel.4d07ea83632034f2e72e.bundle.js.map

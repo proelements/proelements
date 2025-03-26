@@ -1,4 +1,4 @@
-/*! pro-elements - v3.27.0 - 16-02-2025 */
+/*! pro-elements - v3.28.0 - 23-03-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["woocommerce-checkout-page"],{
 
@@ -261,6 +261,11 @@ class Checkout extends _base.default {
       success(code) {
         jQuery('.woocommerce-error, .woocommerce-message').remove();
         this.elements.$couponBox.removeClass('processing').unblock();
+        if (code.includes('woocommerce-error') || code.includes('does not exist')) {
+          jQuery('html, body').animate({
+            scrollTop: 0
+          }, 'fast');
+        }
         if (code) {
           this.elements.$checkoutForm.before(code);
           this.elements.$couponSection.slideUp();
@@ -324,4 +329,4 @@ exports["default"] = Checkout;
 /***/ })
 
 }]);
-//# sourceMappingURL=woocommerce-checkout-page.10d97c3a8cb77aebc1bf.bundle.js.map
+//# sourceMappingURL=woocommerce-checkout-page.470384546c61ebcaa89d.bundle.js.map
