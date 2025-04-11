@@ -33,15 +33,6 @@ class Module extends Module_Base {
 		return $this->asset_managers;
 	}
 
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
-
-		return [];
-	}
-
 	public function __construct() {
 		parent::__construct();
 

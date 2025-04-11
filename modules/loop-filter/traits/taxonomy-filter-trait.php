@@ -2,6 +2,11 @@
 
 namespace ElementorPro\Modules\LoopFilter\Traits;
 
+use WP_Query;
+use ElementorPro\Core\Utils;
+use Elementor\Plugin;
+use ElementorPro\Modules\QueryControl\Module as QueryControl;
+
 trait Taxonomy_Filter_Trait {
 	use Hierarchical_Taxonomy_Trait;
 
@@ -27,6 +32,105 @@ trait Taxonomy_Filter_Trait {
 		return $control_options;
 	}
 
+	private function get_loop_widget_data( $document, $selected_element = null ) {
+		$elements_data = $document->get_elements_data();
+
+		return \Elementor\Utils::find_element_recursive(
+			$elements_data,
+			$selected_element,
+		);
+	}
+
+	private function get_loop_widget( $selected_element ) {
+		$post_id = Utils::get_current_post_id();
+
+		if ( ! $post_id ) {
+			return false;
+		}
+
+		$document = Plugin::$instance->documents->get_doc_for_frontend( $post_id );
+		$widget_data = $this->get_loop_widget_data( $document, $selected_element );
+
+		if ( ! $widget_data ) {
+			return false;
+		}
+
+		return Plugin::$instance->elements_manager->create_element_instance( $widget_data );
+	}
+
+	/**
+	 * Adjusts Elementor query arguments to prevent taxonomy filter conflicts.
+	 *
+	 * Resolves an issue where the taxonomy filter unintentionally affects itself
+	 * when a Loop Grid widget is filtered by taxonomy. Without this adjustment,
+	 * taxonomy terms added by the filter itself may be included in the query results,
+	 * leading to unexpected behavior.
+	 *
+	 * This function ensures that only taxonomy terms specified via the query control
+	 * (with the `term_taxonomy_id` field) are considered in the `tax_query`,
+	 * excluding any others introduced by the filter.
+	 *
+	 * @param array $query_args The query arguments for the Elementor widget.
+	 * @param object $widget The Elementor widget instance.
+	 * @return array The modified query arguments.
+	 */
+	public function modify_elementor_query_args( $query_args, $widget ) {
+		global $wp_query;
+
+		if ( isset( $query_args['tax_query'] ) && ! empty( $wp_query->include_field_ids_arg ) ) {
+			$query_args['tax_query'] = array_filter(
+				$query_args['tax_query'],
+				function( $tax ) {
+					return isset( $tax['field'] ) && 'term_taxonomy_id' === $tax['field'];
+				}
+			);
+		}
+
+		return $query_args;
+	}
+
+	private function get_elementor_post_query( $loop_widget ): WP_Query {
+		global $wp_query;
+
+		$wp_query->include_field_ids_arg = true;
+		$query_args = [
+			'posts_per_page' => -1,
+			'fields' => 'ids',
+		];
+
+		add_filter( 'elementor/query/query_args', [ $this, 'modify_elementor_query_args' ], 15, 2 );
+
+		$query = QueryControl::instance()->get_query( $loop_widget, $loop_widget->get_query_name(), $query_args );
+
+		remove_filter( 'elementor/query/query_args', [ $this, 'modify_elementor_query_args' ] );
+
+		unset( $wp_query->include_field_ids_arg );
+
+		return $query;
+	}
+
+	/**
+	 * @param array $settings
+	 * @return bool
+	 */
+	public function should_exclude_child_taxonomies( array $settings ): bool {
+		return ! isset( $settings['show_child_taxonomy'] ) || 'yes' !== $settings['show_child_taxonomy'];
+	}
+
+	public function should_hide_empty_items( array $settings ): bool {
+		return 'yes' !== $settings['show_empty_items'];
+	}
+
+	private function maybe_add_filtered_post_ids_to_args( array $args, $loop_widget, array $settings ): array {
+		if ( $loop_widget && $this->should_hide_empty_items( $settings ) ) {
+			$post_query = $this->get_elementor_post_query( $loop_widget );
+			$post_ids = $post_query->posts;
+
+			$args['object_ids'] = $post_ids;
+		}
+
+		return $args;
+	}
 	/**
 	 * @param array $settings
 	 * @param array $display_settings
@@ -35,12 +139,17 @@ trait Taxonomy_Filter_Trait {
 	public function get_filtered_taxonomies( $settings, $display_settings ) {
 		$args = [
 			'taxonomy' => $settings['taxonomy'],
-			'hide_empty' => 'yes' !== $settings['show_empty_items'],
+			'hide_empty' => $this->should_hide_empty_items( $settings ),
 		];
 		$avoid_reset_parent = ! empty( $settings['avoid_reset_parent'] );
 
-		if ( ( ! isset( $settings['show_child_taxonomy'] ) || 'yes' !== $settings['show_child_taxonomy'] ) && ! $avoid_reset_parent ) {
+		if ( $this->should_exclude_child_taxonomies( $settings ) && ! $avoid_reset_parent ) {
 			$args['parent'] = 0;
+		}
+
+		if ( isset( $settings['selected_element'] ) && ! wp_doing_ajax() ) {
+			$loop_widget = $this->get_loop_widget( $settings['selected_element'] );
+			$args = $this->maybe_add_filtered_post_ids_to_args( $args, $loop_widget, $settings );
 		}
 
 		$args = apply_filters(

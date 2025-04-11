@@ -33,7 +33,7 @@ export default function Conditions( props ) {
 				</Text>
 			</div>
 			<ConditionsProvider currentTemplate={ template } onConditionsSaved={ updateTemplateItemState }>
-				<ConditionsRows onAfterSave={ () => history.back() } />
+				<ConditionsRows onAfterSave={ () => history.back() } loadPortal={ true } />
 			</ConditionsProvider>
 		</section>
 	);

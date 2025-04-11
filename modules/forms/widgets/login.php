@@ -32,7 +32,28 @@ class Login extends Base_Widget {
 		return [ 'login', 'user', 'form' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-login', 'widget-form' ];
+	}
+
 	protected function register_controls() {
+		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+		$widget_container_selector = $optimized_markup ? '' : ' .elementor-widget-container';
+
 		$this->start_controls_section(
 			'section_fields_content',
 			[
@@ -757,7 +778,7 @@ class Login extends Base_Widget {
 				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-container .elementor-login__logged-in-message' => 'color: {{VALUE}};',
+					"{{WRAPPER}}{$widget_container_selector} .elementor-login__logged-in-message" => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -772,7 +793,7 @@ class Login extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'message_typography',
-				'selector' => '{{WRAPPER}} .elementor-widget-container .elementor-login__logged-in-message',
+				'selector' => "{{WRAPPER}}{$widget_container_selector} .elementor-login__logged-in-message",
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -867,8 +888,7 @@ class Login extends Base_Widget {
 		}
 
 		$this->add_render_attribute( 'field-group', 'class', 'elementor-field-required' )
-			 ->add_render_attribute( 'input', 'required', true )
-			 ->add_render_attribute( 'input', 'aria-required', 'true' );
+			 ->add_render_attribute( 'input', 'required', true );
 
 	}
 

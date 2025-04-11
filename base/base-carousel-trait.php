@@ -631,7 +631,7 @@ trait Base_Carousel_Trait {
 
 		$this->start_controls_tabs( 'arrows_colors_border_shadow' );
 
-		foreach ( array( 'normal', 'hover' ) as $state ) {
+		foreach ( [ 'normal', 'hover' ] as $state ) {
 			$this->add_navigation_state_based_style_controls( $state, $params['css_prefix'] );
 		}
 
@@ -748,6 +748,26 @@ trait Base_Carousel_Trait {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Dots', 'elementor-pro' ),
+				'condition' => [
+					'pagination' => 'bullets',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'dots_gap',
+			[
+				'label' => esc_html__( 'Space Between Dots', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination-bullet' => '--swiper-pagination-bullet-horizontal-gap: {{SIZE}}{{UNIT}}; --swiper-pagination-bullet-vertical-gap: {{SIZE}}{{UNIT}};',
+				],
 				'condition' => [
 					'pagination' => 'bullets',
 				],
@@ -1093,10 +1113,10 @@ trait Base_Carousel_Trait {
 	public function render_carousel_footer( $settings ) {
 		$should_render_pagination_and_arrows = $this->should_render_pagination_and_arrows( $settings );
 		if ( 'yes' === $settings['arrows'] && $should_render_pagination_and_arrows ) : ?>
-			<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
+			<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Previous', 'elementor-pro' ); ?>">
 				<?php $this->render_swiper_button( 'previous' ); ?>
 			</div>
-			<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0">
+			<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Next', 'elementor-pro' ); ?>">
 				<?php $this->render_swiper_button( 'next' ); ?>
 			</div>
 		<?php endif;

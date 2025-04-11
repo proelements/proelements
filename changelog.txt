@@ -1,4 +1,225 @@
 # PRO Elements - by PROElements.org
+#### 3.28.1 - 2025-03-23
+
+* Security Fix: Improved code security enforcement in Animated Headline and Form widgets
+
+#### 3.28.0 - 2025-03-17
+
+* Tweak: Ensured File Upload field styles are overridden by global styles in Form widget ([#11651](https://github.com/elementor/elementor/issues/11651), [#17223](https://github.com/elementor/elementor/issues/17223))
+* Tweak: Updated Scroll Snap description to clarify incompatibility with animations and motion effects
+* Tweak: Prevented special characters from being encoded in the email subject field in Form widget
+* Tweak: Loaded module styles within the module instead of registering them in `plugin.php`
+* Tweak: Updated minimum required WordPress version to 6.5
+* Tweak: Improved keyboard accessibility for menus in Editor Top Bar
+* Tweak: Made the edit button accessible in the Template widget
+* Tweak: Optimized Form widget performance by caching field assets `using get_style_depends()` and `get_script_depends()` methods
+* Tweak: Added Text Shadow control in Testimonial Carousel, Call to Action and Animated Headline widgets
+* Fix: Button icon alignment breaks when Inline Font Icons feature is activated ([#16077](https://github.com/elementor/elementor/issues/16077), [#16511](https://github.com/elementor/elementor/issues/16511), [#17692](https://github.com/elementor/elementor/issues/17692), [#17922](https://github.com/elementor/elementor/issues/17922), [#19253](https://github.com/elementor/elementor/issues/19253), [#19370](https://github.com/elementor/elementor/issues/19370), [#21236](https://github.com/elementor/elementor/issues/21236), [#21844](https://github.com/elementor/elementor/issues/21844), [#28080](https://github.com/elementor/elementor/issues/28080))
+* Fix: Dropdown caret color did not follow menu item color when Inline Font Icons feature is activated ([#17500](https://github.com/elementor/elementor/issues/17500), [#18466](https://github.com/elementor/elementor/issues/18466), [#21664](https://github.com/elementor/elementor/issues/21664), [#24929](https://github.com/elementor/elementor/issues/24929), [#28064](https://github.com/elementor/elementor/issues/28064))
+* Fix: Page doesn't scroll up when a coupon error notice appears in Checkout widget
+
+#### 3.27.7 - 2025-03-13
+
+* Security Fix: Improved code security enforcement in Lottie widget
+
+#### 3.27.6 - 2025-03-10
+
+* Security Fix: Improved code security enforcement in Template Condition
+
+#### 3.27.5 - 2025-03-03
+
+* Fix: The `wp_trigger_error` function causes the site to crash instead of triggering a warning when used with ACF text
+
+#### 3.27.4 - 2025-02-16
+
+* Security Fix: Improved code security enforcement in Screenshots module
+* Security Fix: Improved code security enforcement in Query control
+* Fix: ACF `true_false` field causing a fatal error when used as a dynamic tag with third-party plugins ([#30170](https://github.com/elementor/elementor/issues/30170))
+
+#### 3.27.3 - 2025-02-06
+
+* Security Fix: Improved code security enforcement in Stripe Button widget
+
+#### 3.27.2 - 2025-02-03
+
+* Fix: Value type configuration issue causing errors when using ACF
+* Fix: Hide content on responsive breakpoint option is not working on WordPress Menu widget when Optimized Markup experiment is activated
+
+#### 3.27.1 - 2025-01-27
+
+* Tweak: Increased the number of items allowed in Dynamic Tags options in Display Conditions for Elements
+* Security Fix: Improved code security enforcement in Global widget
+* Security Fix: Improved code security enforcement in Lottie widget
+* Security Fix: Improved code security enforcement in Admin settings
+* Fix: Accessible navigation in popups caused unintended scrolling of the page when triggered ([#29175](https://github.com/elementor/elementor/issues/29175))
+* Fix: Empty custom fields are missing in the Dynamic Tags options in Display Conditions for Elements
+
+#### 3.27.0 - 2025-01-20
+
+* Tweak: Removed the `elementor-widget-container` div from the Menu, Loop, Table of Contents, Form, and Hotspot widgets as part of the Optimized Markup experiment to improve HTML structure
+* Tweak: Reduced DOM size by optimizing the submit button markup in Search widget
+* Tweak: Moved style loading to the head instead of the footer to improve CLS
+* Tweak: Enabled conditional loading of Swiper.js based on widget dependencies to reduce unnecessary assets and improve page load times
+* Tweak: Standardized navigation elements like arrows and bullets across all carousel and slider widgets for improved accessibility
+* Tweak: Improved accessibility when the submit button has only an icon and no text in Search widget
+* Tweak: Removed `load_plugin_textdomain()` function from Elementor Pro
+
+#### 3.26.3 - 2025-01-07
+
+* Security Fix: Improved code security enforcement in Search widget
+* Fix: Height issues cause slideshow thumbnails to display incorrectly in Media Carousel ([#29663](https://github.com/elementor/elementor/issues/29663))
+
+#### 3.26.2 - 2024-12-22
+
+* Fix: Menu items are not clickable in various scenarios in Menu widget ([#29191](https://github.com/elementor/elementor/issues/29191))
+
+#### 3.26.1 - 2024-12-17
+
+* Fix: Restore deprecated `Plugin::enqueue_styles()` function to avoid errors with 3rd party plugins
+
+#### 3.26.0 - 2024-12-16
+
+* New: Introducing dynamic content support for Off-canvas in Loop Grid widget templates - enabling seamless display of additional content dynamically ([#29049](https://github.com/elementor/elementor/issues/29049), [#28935](https://github.com/elementor/elementor/issues/28935), [#7106](https://github.com/elementor/elementor/issues/7106))
+* New: AdBlock Detection trigger for Popups - display targeted popups for visitors using ad blockers
+* New: Added Reload Page link action for Dynamic Tags
+* Tweak: Added "Space Between Dots" control to Carousel widgets ([#2526](https://github.com/elementor/elementor/issues/2526), [#3277](https://github.com/elementor/elementor/issues/3277), [#21697](https://github.com/elementor/elementor/issues/21697))
+* Tweak: Replaced hidden `elementor-screen-only` div with `aria-label` attributes
+* Tweak: Removed `elementor-widget-container` div from Elementor widgets as part of the Optimized Markup experiment
+* Tweak: Optimize popup styling by loading it only when necessary
+* Tweak: Updated Gap between slides control to support only PX units in Carousel widget
+* Tweak: Removed the dependency between the Tabs handler and the Menu handler
+* Tweak: Added the ability to set `aria-label` in Carousel widgets
+* Tweak: Added `aria-roledescription=carousel` to carousel wrapper
+* Tweak: Added `aria-roledescription=slide` to slide wrapper
+* Tweak: Optimized carousel widgets markup as part of the Optimized Markup experiment
+* Tweak: Updated minimum required Safari version to 15.5
+* Tweak: Facebook widgets are no longer supported on mobile due to Facebook functionality changes
+* Fix: Motion Effects sticky feature is not working when Scroll Snap is enabled
+* Fix: Custom Image Resolution option is not working in Gallery widget
+* Fix: 'Reading Settings' unexpectedly reduces the number of posts displayed when using the Archive with Pagination setting
+* Fix: Step Form does not scroll to the top when the first field is not an input field in Form widget
+* Fix: Display Condition feature is available without an active Elementor license in Floating Elements
+* Fix: Background options of Flip Box in Loop Grid widget are not working when images are added using ACF Dynamic Tags
+* Fix: Dropdown icon in the Select field of the Form widget is cut off when the Inline Font Icons feature is activated
+* Fix: Incompatibility between Form widget and WPML when using Nested Elements
+* Fix: Performance issues when changing the title name in the Menu widget
+* Fix: Warnings appear when Element Caching is set to Inactive in Carousel widgets
+* Fix: Swiper styling missing from Lightbox inside Gallery widgets
+
+#### 3.25.5 - 2024-12-10
+
+* Security Fix: Improved code security enforcement in Form widget
+* Fix: Accessible navigation in popups caused unintended scrolling of the page when triggered ([#29175](https://github.com/elementor/elementor/issues/29175))
+* Fix: Popup overlay shown for non-logged users even when disabled
+
+#### 3.25.4 - 2024-11-20
+
+* Tweak: Improved Global Widget loading method to enhance performance
+
+#### 3.25.3 - 2024-11-13
+
+* Fix: Nested Elements are activated even when the Container experiment is inactive
+
+#### 3.25.2 - 2024-11-03
+
+* Fix: Styling issues affecting popup layout when using a Dynamic Tag to open the popup
+* Fix: Image captions are not displaying for non-logged-in users in Media Carousel widget
+* Fix: Custom Add to Cart widget with Quantity enabled causes critical error ([#29159](https://github.com/elementor/elementor/issues/29159))
+
+#### 3.25.1 - 2024-10-31
+
+* Fix: Multiple Custom Add to Cart widgets on the same page are adding the same product
+
+#### 3.25.0 - 2024-10-28
+
+* Tweak: Added pagination functionality to the Live Results in Search widget
+* Tweak: Added Anchor Offset control to allow precise positioning when scrolling to anchor links on the page
+* Tweak: Load motion effects styles only when they are in use
+* Tweak: Load sticky styles only when they are in use
+* Tweak: Load popup styles only when they are in use
+* Tweak: Load theme builder styles only when they are in use
+* Tweak: Load transition styles for Call to Action and Gallery widgets only when they are in use
+* Tweak: Load styles for Form widgets separately to enhance performance
+* Tweak: Load styles for WooCommerce widgets separately to enhance performance
+* Tweak: Load styles for Theme Elements widgets separately to enhance performance
+* Tweak: Load styles for Carousel widgets separately to enhance performance
+* Tweak: Load styles for Pricing widgets separately to enhance performance
+* Tweak: Load styles for Floating Elements separately to enhance performance
+* Tweak: Load styles for Link in Bio widgets separately to enhance performance
+* Tweak: Load minified CSS in the Loop Builder's Call to Action button in the Editor
+* Tweak: Removed "Payments" module styles
+* Tweak: Removed `elementor-button-wrapper` div from Payapl widget as part of the Optimized Markup experiment
+* Tweak: Removed `elementor-button-wrapper` div from Stripe widget as part of the Optimized Markup experiment
+* Tweak: Merged "Form Submissions" feature into the version and moved it to the Advanced tab
+* Tweak: Merged "Display Conditions" into the version
+* Fix: Missing translation string for the empty message in the Table of Contents widget ([#27580](https://github.com/elementor/elementor/issues/27580))
+* Fix: Local Storage and Session Storage were being used even when popups were not in use ([#7151](https://github.com/elementor/elementor/issues/7151))
+* Fix: Masonry layout is not working when pagination is set to "Load More" or "Infinite Scroll" in Loop Grid widget ([#23684](https://github.com/elementor/elementor/issues/23684))
+* Fix: Extra gap between widgets on the frontend when using Off-canvas widget ([#27706](https://github.com/elementor/elementor/issues/27706))
+* Fix: Pagination and custom queries did not work when the Posts Widget was saved as a Global Widget or used via shortcode
+* Fix: Lightbox videos are missing controls and displayed at the wrong size in Media Carousel widget
+* Fix: Pagination options with Individual Pagination not working as expected in Posts and Loop Grid widgets
+* Fix: Justified or Masonry layouts for the Pro Gallery would not display images on the frontend when inserted via nested tabs
+* Fix: Error issue in the Loop Grid widget when used in theme parts with the Taxonomy Filter
+* Fix: Removed the focus ring after clicking to open the Off Canvas inside the Editor
+* Fix: Background gradient colors from the dynamic color tag values are not rendering on the frontend
+* Fix: Excessive database requests generated by the Loop Grid widget
+* Fix: Colors from Dynamic Tags were not rendered on the frontend
+* Fix: Display issue in the Menu widget caused by the 'Native Intersection Observer API
+* Fix: Dropdown area not working in certain scenarios in Menu widget
+* Fix: Content Width control inside the Mega Menu is displaying an empty value
+
+#### 3.24.4 - 2024-10-09
+
+* Security Fix: Improved code security enforcement in Media Carousel widget
+
+#### 3.24.3 - 2024-10-01
+
+* Fix: Floating Elements template not loading when Single Page template is set with All Singular condition
+* Fix: Form field styles not loading properly in various scenarios
+
+#### 3.24.2 - 2024-09-18
+
+* Fix: Icons not displaying when Inline SVG Icons experiment is active in Link In Bio widgets and Floating Elements
+
+#### 3.24.1 - 2024-09-12
+
+* Fix: Widget styles not loading correctly on front causing alignment inconsistencies ([#28676](https://github.com/elementor/elementor/issues/28676))
+
+#### 3.24.0 - 2024-09-10
+
+* New: Introducing support for Variable Fonts - allowing for more dynamic and flexible text styling ([#6703](https://github.com/elementor/elementor/issues/6703), [#11333](https://github.com/elementor/elementor/issues/11333), [#19277](https://github.com/elementor/elementor/issues/19277), [#25485](https://github.com/elementor/elementor/issues/25485))
+* Tweak: Added 'Structure' indication for widgets with Display Conditions applied ([#28027](https://github.com/elementor/elementor/issues/28027))
+* Tweak: Added a new option for setting the live search results width ([#28280](https://github.com/elementor/elementor/issues/28280))
+* Tweak: Improved Honeypot field functionality in Form widget ([#28480](https://github.com/elementor/elementor/issues/28480))
+* Tweak: Added options to 'Copy', 'Paste', and 'Clear' Display Conditions in Context Menu
+* Tweak: Improved performance of the Menu widget when using Dynamic Tags in the URL field
+* Tweak: Improved performance when using Dynamic Tags in Nested Elements
+* Tweak: Added the option for users to disable Akismet for specific Elementor forms
+* Tweak: Adjusted URL structure when presenting the Search Archive page in Search widget
+* Tweak: Added the 'Create Template' button in Search widget
+* Tweak: Added an option to enable the 'Loader' animation while live results are loading in Search widget
+* Tweak: Load share buttons compatibility styles only when they are in use
+* Tweak: Load dialog styles only when they are in use
+* Tweak: Load global widget styles only during Editor preview
+* Tweak: Conditionally load widget styles only when the widgets are used
+* Tweak: Load styles for CTA hover animations only when they are in use
+* Tweak: Load notes styles only when the WordPress Toolbar is displayed
+* Tweak: Split `animations.min.css` into multiple CSS files and load them conditionally
+* Tweak: Promoted Display Conditions feature to Stable status
+* Tweak: Merged Taxonomy Filter feature into the version
+* Tweak: Merged Search feature into the version
+* Tweak: Added a note to 'Current Query' explaining the impact of WordPress settings on pagination within Archives
+* Tweak: Added the ability to set `aria-label` for the Off-Canvas widget
+* Fix: Manual Selection option is not excluding sticky posts in Posts and Loop Grid widgets ([#18689](https://github.com/elementor/elementor/issues/18689), [#23331](https://github.com/elementor/elementor/issues/23331), [#28179](https://github.com/elementor/elementor/issues/28179))
+* Fix: Template ID does not change according to the imported Loop Item ([#21404](https://github.com/elementor/elementor/issues/21404), [#22202](https://github.com/elementor/elementor/issues/22202))
+* Fix: 'Editing Mode' for the Off-canvas was not functioning correctly in certain scenarios
+* Fix: Added definition to `clear_custom_image_sizes` hook to prevent edge case issues
+* Fix: Flickering issue with search result buttons when closing results using the keyboard escape key in Search widget
+* Fix: Theme Style settings for buttons were overriding the text styling in Search widget
+* Fix: Nesting menu inside another menu causes functionality issues in Menu widget
+* Fix: Error when using array as custom fields value in Dynamic Tags
+
 #### 3.23.3 - 2024-08-05
 
 * Fix: Dropdown area not working in certain scenarios in Menu widget ([#28194](https://github.com/elementor/elementor/issues/28194))
@@ -22,7 +243,7 @@
 * Fix: Missing version string in included CSS query string when Improved CSS Loading is enabled ([#21879](https://github.com/elementor/elementor/issues/21879), [#23821](https://github.com/elementor/elementor/issues/23821))
 * Fix: Form submission icon message does not display correctly when Inline Font Icons feature is activated
 * Fix: Save and Close button position issues in the conditions screen in Theme Builder.
-* Fix: Focus appears on the first element when using the mouse to open Off-Canvas 
+* Fix: Focus appears on the first element when using the mouse to open Off-Canvas
 * Fix: Links to Elementor Settings are broken in various locations
 * Fix: Conditions field not showing all relevant conditions in Theme Builder
 * Fix: Off-Canvas flickering in sticky containers with exit animations triggered by sticky effects

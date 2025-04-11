@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Text_Shadow;
@@ -17,6 +18,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Core\Utils\Collection;
+use ElementorPro\Core\Utils as Pro_Utils;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Query;
 use ElementorPro\Modules\QueryControl\Module as Module_Query;
 use ElementorPro\Plugin;
@@ -34,6 +36,7 @@ class Search extends Base_Widget {
 	protected $query = null;
 
 	protected $search_term = '';
+	protected $page_number = 1;
 
 	private $element_attribute_ids = [
 		'search_wrapper' => 'search_wrapper',
@@ -45,11 +48,17 @@ class Search extends Base_Widget {
 		'submit_button' => 'submit_button',
 		'submit_text' => 'submit_text',
 		'results_wrapper' => 'results_wrapper',
-		'query_vars' => 'query_vars',
+		'widget_props' => 'widget_props',
+		'pagination' => 'pagination',
+		'nav' => 'nav',
 	];
 
 	public function set_search_term( string $search_term ) {
 		$this->search_term = $search_term;
+	}
+
+	public function set_page_number( int $page_number ) {
+		$this->page_number = $page_number;
 	}
 
 	public function get_name() {
@@ -72,6 +81,24 @@ class Search extends Base_Widget {
 		return [ 'pro-elements' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-search' ];
+	}
+
 	public function get_query() {
 		if ( null === $this->query ) {
 			$this->query_posts();
@@ -86,6 +113,7 @@ class Search extends Base_Widget {
 		$settings = $this->get_settings_for_display();
 		$query_args = [
 			'posts_per_page' => $settings['number_of_items'] ?? -1,
+			'paged' => $this->page_number,
 		];
 
 		if ( ! empty( $this->search_term ) ) {
@@ -93,23 +121,6 @@ class Search extends Base_Widget {
 		}
 
 		return $elementor_query->get_query( $this, $this->get_property_key_prefix(), $query_args, [] );
-	}
-
-	public function get_query_args_for_results_page() {
-		// Fetch the initial query arguments
-		$query = $this->get_query_args()->query;
-
-		// Define the keys to be removed
-		$keys_to_remove = [ 'orderby', 'order' ];
-
-		// Use the Collection class to manipulate the query array
-		$query_collection = new Collection( $query );
-
-		// Remove the specified keys and set the 'posts_per_page' value
-		return $query_collection
-			->except( $keys_to_remove )
-			->merge( [ 'posts_per_page' => -1 ] )
-			->all();
 	}
 
 	protected function register_controls() {
@@ -121,6 +132,7 @@ class Search extends Base_Widget {
 		$this->register_content_section_search_field();
 		$this->register_content_section_results();
 		$this->register_content_section_query();
+		$this->register_content_section_additional_settings();
 	}
 
 	protected function register_content_section_search_field() {
@@ -310,7 +322,11 @@ class Search extends Base_Widget {
 				],
 				'actions' => [
 					'new' => [
-						'visible' => false,
+						'visible' => true,
+						'document_config' => [
+							'type' => LoopDocument::get_type(),
+						],
+						'after_action' => 'redirect',
 					],
 					'edit' => [
 						'visible' => true,
@@ -385,6 +401,21 @@ class Search extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}}' => '--e-search-results-grid-auto-rows: 1fr; --e-search-loop-item-equal-height: 100%',
 				],
+			]
+		);
+
+		$this->add_control(
+			'enable_loader',
+			[
+				'label' => esc_html__( 'Loader', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -486,6 +517,108 @@ class Search extends Base_Widget {
 		$this->end_controls_section();
 	}
 
+	protected function register_content_section_additional_settings() {
+		$this->start_controls_section(
+			'content_section_additional_settings',
+			[
+				'label' => esc_html__( 'Additional Settings', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'heading_pagination',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_type_options',
+			[
+				'label' => esc_html__( 'Type', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'elementor-pro' ),
+					'numbers' => esc_html__( 'Numbers', 'elementor-pro' ),
+					'previous_next' => esc_html__( 'Previous/Next', 'elementor-pro' ),
+					'numbers_previous_next' => esc_html__( 'Numbers + Previous/Next', 'elementor-pro' ),
+				],
+				'default' => 'none',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'pagination_prev_label',
+			[
+				'label' => esc_html__( 'Previous Label', 'elementor-pro' ),
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => esc_html__( 'Previous', 'elementor-pro' ),
+				'condition' => [
+					'pagination_type_options' => [
+						'previous_next',
+						'numbers_previous_next',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_next_label',
+			[
+				'label' => esc_html__( 'Next Label', 'elementor-pro' ),
+				'default' => esc_html__( 'Next', 'elementor-pro' ),
+				'condition' => [
+					'pagination_type_options' => [
+						'previous_next',
+						'numbers_previous_next',
+					],
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'page_limit_settings',
+			[
+				'label' => esc_html__( 'Page Limit', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 5,
+				'frontend_available' => true,
+				'condition' => [
+					'pagination_type_options' => [
+						'numbers_previous_next',
+						'numbers',
+						'previous_next',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_shorten_settings',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Shorten', 'elementor-pro' ),
+				'label_on' => esc_html__( 'Yes', 'elementor-pro' ),
+				'label_off' => esc_html__( 'No', 'elementor-pro' ),
+				'return_value' => 'yes',
+				'condition' => [
+					'pagination_type_options' => [
+						'numbers_previous_next',
+						'numbers',
+					],
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
 	protected function get_nothing_found_conditions() {
 		return [
 			'enable_nothing_found_message' => 'yes',
@@ -499,6 +632,7 @@ class Search extends Base_Widget {
 		$this->register_style_section_clear();
 		$this->register_style_section_submit();
 		$this->register_style_section_results();
+		$this->register_style_section_additional_settings();
 		$this->register_style_section_nothing_found_message();
 	}
 
@@ -850,6 +984,231 @@ class Search extends Base_Widget {
 		$this->end_controls_section();
 	}
 
+	protected function register_style_section_additional_settings() {
+		$this->start_controls_section(
+			'style_additional_settings',
+			[
+				'label' => esc_html__( 'Additional Settings', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'pagination_type_options' => [
+						'numbers_previous_next',
+						'previous_next',
+						'numbers',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_style_additional_settings',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Pagination', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Middle', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'toggle' => true,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-justify-content: {{VALUE}};',
+				],
+
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_vertical_position',
+			[
+				'label' => esc_html__( 'Vertical Position', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'top' => [
+						'title' => esc_html__( 'Top', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'elementor-pro' ),
+						'icon' => 'eicon-v-align-bottom',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '{{VALUE}}',
+				],
+				'selectors_dictionary' => [
+					'top' => '--e-search-pagination-vertical-position: column-reverse',
+					'bottom' => '--e-search-pagination-vertical-position: column',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'typography_title',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .elementor-pagination',
+			]
+		);
+
+		$this->add_control(
+			'heading_style_additional_settings_colors',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Colors', 'elementor-pro' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_additional_settings_color_tabs',
+		);
+
+		$this->start_controls_tab(
+			'style_additional_settings_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_normal_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_additional_settings_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_additional_settings_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-hover: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_button_color_tabs_active',
+			[
+				'label' => esc_html__( 'Active', 'elementor-pro' ),
+			]
+		);
+
+		$this->add_control(
+			'style_button_color_icon_active',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-current: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'page_numbers_space_between',
+			[
+				'label' => esc_html__( 'Space Between', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-page-numbers-gap: {{SIZE}}{{UNIT}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'top_spacing',
+			[
+				'label' => esc_html__( 'Top Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-block-start-spacing: {{SIZE}}{{UNIT}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'bottom_spacing',
+			[
+				'label' => esc_html__( 'Bottom Spacing', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-pagination-block-end-spacing: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	protected function register_style_section_submit() {
 		$this->start_controls_section(
 			'style_section_submit',
@@ -1018,7 +1377,7 @@ class Search extends Base_Widget {
 		$this->add_responsive_control(
 			'submit_border_radius',
 			[
-				'label' => esc_html__( 'Radius', 'elementor-pro' ),
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
@@ -1124,7 +1483,7 @@ class Search extends Base_Widget {
 				'name' => 'results_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-search-results',
+				'selector' => '{{WRAPPER}} .e-search-results-container',
 			]
 		);
 
@@ -1132,7 +1491,7 @@ class Search extends Base_Widget {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'results_border_type',
-				'selector' => '{{WRAPPER}} .e-search-results > div',
+				'selector' => '{{WRAPPER}} .e-search-results-container > div',
 			]
 		);
 
@@ -1140,7 +1499,7 @@ class Search extends Base_Widget {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'results_box_shadow',
-				'selector' => '{{WRAPPER}} .e-search-results > div',
+				'selector' => '{{WRAPPER}} .e-search-results-container > div',
 			]
 		);
 
@@ -1197,6 +1556,21 @@ class Search extends Base_Widget {
 		);
 
 		$this->add_control(
+			'results_is_dropdown_width',
+			[
+				'label' => esc_html__( 'Dropdown Width', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'search_field' => esc_html__( 'Search Field', 'elementor-pro' ),
+					'widget_width' => esc_html__( 'Widget Width', 'elementor-pro' ),
+				],
+				'default' => 'search_field',
+				'separator' => 'before',
+				'frontend_available' => true,
+			],
+		);
+
+		$this->add_control(
 			'results_is_custom_width',
 			[
 				'label' => esc_html__( 'Custom Width', 'elementor-pro' ),
@@ -1204,7 +1578,6 @@ class Search extends Base_Widget {
 				'label_off' => esc_html__( 'On', 'elementor-pro' ),
 				'label_on' => esc_html__( 'Off', 'elementor-pro' ),
 				'default' => '',
-				'separator' => 'before',
 			]
 		);
 
@@ -1318,6 +1691,53 @@ class Search extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--e-search-results-row-gap: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_search_reasult_loader',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Loader', 'elementor-pro' ),
+				'separator' => 'before',
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+					'enable_loader' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'search_result_loader_icon_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+					'enable_loader' => 'yes',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-loader-icon-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'search_result_loader_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
+				'condition' => [
+					'live_results' => 'yes',
+					'template_id!' => '',
+					'enable_loader' => 'yes',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--e-search-loader-icon-size: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -1465,6 +1885,82 @@ class Search extends Base_Widget {
 		wp_reset_postdata();
 	}
 
+	public function render_pagination() {
+		$parent_settings = $this->get_settings_for_display();
+		$pagination_types = $parent_settings['pagination_type_options'];
+		$this->add_render_attibutes_pagination();
+
+		if ( 'none' === $pagination_types ) {
+			return;
+		}
+
+		if ( 1 >= $this->get_query()->max_num_pages ) {
+			return;
+		}
+
+		$total = $parent_settings['page_limit_settings'] > $this->get_query()->max_num_pages ? $this->get_query()->max_num_pages : $parent_settings['page_limit_settings'];
+
+		$paginate_args = [
+			'type' => 'array',
+			'current' => $this->page_number,
+			'total' => $total,
+			'prev_next' => 'numbers' !== $pagination_types,
+			'next_text' => $parent_settings['pagination_next_label'],
+			'prev_text' => $parent_settings['pagination_prev_label'],
+			'show_all' => 'yes' !== $parent_settings['pagination_shorten_settings'],
+			'before_page_number' => '<span class="elementor-screen-only">' . esc_html__( 'Page', 'elementor-pro' ) . '</span>',
+		];
+
+		$paginate_args = $this->get_paginate_args_for_rest_request( $paginate_args );
+
+		$links = [];
+		$links = paginate_links( $paginate_args );
+
+		if ( 1 === $this->page_number && 'numbers' !== $pagination_types ) {
+			$prev = '<span class="prev page-numbers inactive">' . $parent_settings['pagination_prev_label'] . '</span>';
+			array_unshift( $links, $prev );
+		}
+
+		if ( $this->page_number === $total && 'numbers' !== $pagination_types ) {
+			$next = '<span class="next page-numbers inactive">' . $parent_settings['pagination_next_label'] . '</span>';
+			$links[] = $next;
+		}
+
+		$links = $this->add_nofollow_to_links( $links );
+
+		echo implode( PHP_EOL, $links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+
+	protected function add_nofollow_to_links( $content ) {
+		$content = str_replace( '<a ', '<a rel="nofollow" ', $content );
+		return $content;
+	}
+
+	protected function get_paginate_args_for_rest_request( $paginate_args ) {
+
+		$link_unescaped = wp_get_referer();
+		$url_components = wp_parse_url( $link_unescaped );
+		$add_args = [];
+
+		if ( isset( $url_components['query'] ) ) {
+			wp_parse_str( $url_components['query'], $add_args );
+		}
+
+		$url_to_post_id = url_to_postid( $link_unescaped );
+		$pagination_base_url = get_permalink( $url_to_post_id );
+
+		$paginate_args['base'] = trailingslashit( $pagination_base_url ) . '%_%';
+		$paginate_args['format'] = '?e-search-page=%#%';
+		$paginate_args['add_args'] = $add_args;
+
+		if ( 0 === $url_to_post_id ) {
+			unset( $paginate_args['format'] );
+		}
+
+		return $paginate_args;
+	}
+
 	protected function handle_no_posts_found() {
 		$settings = $this->get_settings_for_display();
 
@@ -1495,6 +1991,18 @@ class Search extends Base_Widget {
 		$document->print_content();
 	}
 
+	protected function render_loader( $settings ) {
+		if ( isset( $settings['enable_loader'] ) && 'yes' === $settings['enable_loader'] ) {
+			?>
+			<div class="e-search-loader">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+					<path fill-rule="evenodd" d="M14 .188c.587 0 1.063.475 1.063 1.062V5.5a1.063 1.063 0 0 1-2.126 0V1.25c0-.587.476-1.063 1.063-1.063ZM4.182 4.181a1.063 1.063 0 0 1 1.503 0L8.73 7.228A1.062 1.062 0 1 1 7.228 8.73L4.182 5.685a1.063 1.063 0 0 1 0-1.503Zm19.636 0a1.063 1.063 0 0 1 0 1.503L20.772 8.73a1.062 1.062 0 1 1-1.502-1.502l3.045-3.046a1.063 1.063 0 0 1 1.503 0ZM.188 14c0-.587.475-1.063 1.062-1.063H5.5a1.063 1.063 0 0 1 0 2.126H1.25A1.063 1.063 0 0 1 .187 14Zm21.25 0c0-.587.475-1.063 1.062-1.063h4.25a1.063 1.063 0 0 1 0 2.126H22.5A1.063 1.063 0 0 1 21.437 14ZM8.73 19.27a1.062 1.062 0 0 1 0 1.502l-3.045 3.046a1.063 1.063 0 0 1-1.503-1.503l3.046-3.046a1.063 1.063 0 0 1 1.502 0Zm10.54 0a1.063 1.063 0 0 1 1.502 0l3.046 3.045a1.063 1.063 0 0 1-1.503 1.503l-3.046-3.046a1.063 1.063 0 0 1 0-1.502ZM14 21.438c.587 0 1.063.475 1.063 1.062v4.25a1.063 1.063 0 0 1-2.126 0V22.5c0-.587.476-1.063 1.063-1.063Z"/>
+				</svg>
+			</div>
+			<?php
+		}
+	}
+
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$attribute_ids = $this->element_attribute_ids;
@@ -1507,7 +2015,7 @@ class Search extends Base_Widget {
 
 				<label <?php $this->print_render_attribute_string( $attribute_ids['label'] ); ?>>
 					<span <?php $this->print_render_attribute_string( $attribute_ids['label_text'] ); ?>>
-						<?php esc_html_e( 'Search', 'elementor-pro' ); ?>
+						<?php echo esc_html__( 'Search', 'elementor-pro' ); ?>
 					</span>
 					<?php $this->maybe_render_icon( 'icon_search' ); ?>
 				</label>
@@ -1515,20 +2023,32 @@ class Search extends Base_Widget {
 				<div <?php $this->print_render_attribute_string( $attribute_ids['input_wrapper'] ); ?>>
 					<input <?php $this->print_render_attribute_string( $attribute_ids['input'] ); ?>>
 					<?php $this->maybe_render_icon( 'icon_clear' ); ?>
+					<?php if ( ! $this->get_dropdown_width() ) : ?>
 					<output <?php $this->print_render_attribute_string( $attribute_ids['results_wrapper'] ); ?>>
+						<div class="e-search-results"></div>
+						<?php $this->render_loader( $settings ); ?>
 					</output>
+					<?php endif; ?>
 				</div>
+				<?php if ( $this->get_dropdown_width() ) : ?>
+					<output <?php $this->print_render_attribute_string( $attribute_ids['results_wrapper'] ); ?>>
+						<div class="e-search-results"></div>
+						<?php $this->render_loader( $settings ); ?>
+					</output>
+				<?php endif; ?>
 
 				<?php do_action( 'elementor_pro/search/after_input', $this ); ?>
 
 				<button <?php $this->print_render_attribute_string( $attribute_ids['submit_button'] ); ?>>
 					<?php $this->maybe_render_icon( 'icon_submit' ); ?>
 
+					<?php if ( ! empty( $settings['submit_button_text'] ) ) : ?>
 					<span <?php $this->print_render_attribute_string( $attribute_ids['submit_text'] ); ?>>
 						<?php echo esc_html( $settings['submit_button_text'] ); ?>
 					</span>
+					<?php endif; ?>
 				</button>
-				<input <?php $this->print_render_attribute_string( $attribute_ids['query_vars'] ); ?>>
+				<input <?php $this->print_render_attribute_string( $attribute_ids['widget_props'] ); ?>>
 			</form>
 		</search>
 		<?php
@@ -1542,6 +2062,14 @@ class Search extends Base_Widget {
 		return $this->get_name();
 	}
 
+	private function add_render_attibutes_pagination() {
+		$pagination_class = 'elementor-pagination';
+
+		$this->add_render_attribute( $this->element_attribute_ids['nav'], [
+			'class' => $pagination_class,
+		] );
+	}
+
 	private function add_render_attibutes() {
 		$id = $this->get_id();
 		$settings = $this->get_settings_for_display();
@@ -1551,6 +2079,12 @@ class Search extends Base_Widget {
 			'class' => [ 'e-search', 'hidden' ],
 			'role' => 'search',
 		] );
+
+		if ( 'previous_next' === $settings['pagination_type_options'] ) {
+			$this->add_render_attribute( $this->element_attribute_ids['results_wrapper'], [
+				'class' => 'hide-pagination-numbers',
+			] );
+		}
 
 		$this->add_render_attribute( $this->element_attribute_ids['form'], [
 			'class' => 'e-search-form',
@@ -1595,23 +2129,27 @@ class Search extends Base_Widget {
 			'type' => 'submit',
 		] );
 
+		if ( empty( $settings['submit_button_text'] ) ) {
+			$this->add_render_attribute( $this->element_attribute_ids['submit_button'], 'aria-label', esc_html__( 'Search', 'elementor-pro' ) );
+		}
+
 		$this->add_render_attribute( $this->element_attribute_ids['submit_text'], [
 			'class' => $this->is_submit_button_shown() ? '' : $screen_only_class,
 		] );
 
 		$this->add_render_attribute( $this->element_attribute_ids['results_wrapper'], [
 			'id' => "results-$id",
-			'class' => 'e-search-results',
+			'class' => 'e-search-results-container hide-loader',
 			'aria-live' => 'polite',
 			'aria-atomic' => 'true',
-			'aria-label' => 'Results for search',
+			'aria-label' => esc_attr__( 'Results for search', 'elementor-pro' ),
 			'tabindex' => '0',
 		] );
 
-		$this->add_render_attribute( $this->element_attribute_ids['query_vars'], [
+		$this->add_render_attribute( $this->element_attribute_ids['widget_props'], [
 			'type' => 'hidden',
-			'name' => 'e_search_query',
-			'value' => wp_json_encode( $this->get_query_args_for_results_page() ),
+			'name' => 'e_search_props',
+			'value' => $this->get_id() . '-' . Pro_Utils::get_current_post_id(),
 		] );
 	}
 
@@ -1621,6 +2159,10 @@ class Search extends Base_Widget {
 
 	private function get_autocomplete_state() {
 		return 'yes' !== $this->get_settings_for_display( 'autocomplete' ) ? 'off' : 'on';
+	}
+
+	private function get_dropdown_width() {
+		return 'widget_width' === $this->get_settings_for_display( 'results_is_dropdown_width' );
 	}
 
 	private function maybe_render_icon( $target ) {

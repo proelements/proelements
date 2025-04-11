@@ -4,6 +4,7 @@ namespace ElementorPro\Modules\Sticky;
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Element_Section;
+use Elementor\Utils;
 use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Plugin;
@@ -99,7 +100,7 @@ class Module extends Module_Base {
 		$element->add_responsive_control(
 			'sticky_offset',
 			[
-				'label' => esc_html__( 'Offset', 'elementor-pro' ),
+				'label' => esc_html__( 'Sticky Offset', 'elementor-pro' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 0,
 				'min' => 0,
@@ -127,6 +128,39 @@ class Module extends Module_Base {
 				],
 				'render_type' => 'none',
 				'frontend_available' => true,
+			]
+		);
+
+		$element->add_responsive_control(
+			'sticky_anchor_link_offset',
+			[
+				'label' => esc_html__( 'Anchor Offset', 'elementor-pro' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
+				'max' => 500,
+				'required' => true,
+				'condition' => [
+					'sticky!' => '',
+				],
+				'render_type' => 'none',
+				'frontend_available' => true,
+			]
+		);
+
+		$element->add_control(
+			'anchor_offset_description',
+			[
+				'raw' => sprintf(
+					esc_html__( 'Using the Anchor offset may require you to adjust the offset of other sticky elements. %1$s Learn more %2$s', 'elementor-pro' ),
+					'<a href="https://elementor.com/help/sticky-headers/" target="_blank">',
+					'</a>'
+				),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-control-field-description',
+				'condition' => [
+					'sticky!' => '',
+				],
 			]
 		);
 
@@ -176,6 +210,20 @@ class Module extends Module_Base {
 
 	private function get_asset_conditions_data() {
 		return [
+			'styles' => [
+				[
+					'name' => 'e-sticky',
+					'conditions' => [
+						'terms' => [
+							[
+								'name' => 'sticky',
+								'operator' => '!==',
+								'value' => '',
+							],
+						],
+					],
+				],
+			],
 			'scripts' => [
 				[
 					'name' => 'e-sticky',
@@ -193,9 +241,28 @@ class Module extends Module_Base {
 		];
 	}
 
+	public function register_frontend_styles() {
+		$suffix = Utils::is_script_debug() ? '' : '.min';
+
+		wp_register_style(
+			'e-sticky',
+			ELEMENTOR_PRO_URL . 'assets/css/modules/sticky' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-sticky' );
+	}
+
 	private function add_actions() {
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'register_controls' ] );
+		add_action( 'elementor/element/common-optimized/section_effects/after_section_start', [ $this, 'register_controls' ] );
 	}
 }

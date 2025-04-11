@@ -2,13 +2,13 @@
 
 namespace ElementorPro\Modules\LinkInBio\Widgets;
 
-use Elementor\Modules\LinkInBio\Base\Widget_Link_In_Bio_Base;
+use ElementorPro\Modules\LinkInBio\Base\Widget_Link_In_Bio_Base_Pro;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Link_In_Bio_Var_3 extends Widget_Link_In_Bio_Base {
+class Link_In_Bio_Var_3 extends Widget_Link_In_Bio_Base_Pro {
 
 	public static function get_configuration() {
 		$config = parent::get_configuration();
@@ -31,5 +31,4 @@ class Link_In_Bio_Var_3 extends Widget_Link_In_Bio_Base {
 	public function get_title(): string {
 		return esc_html__( 'Showcase', 'elementor-pro' );
 	}
-
 }

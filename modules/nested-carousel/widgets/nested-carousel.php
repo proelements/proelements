@@ -36,6 +36,43 @@ class Nested_Carousel extends Widget_Nested_Base {
 		return [ 'Carousel', 'Slides', 'Nested', 'Media', 'Gallery', 'Image' ];
 	}
 
+	// TODO: Replace this check with `is_active_feature` on 3.28.0 to support is_active_feature second parameter.
+	public function show_in_panel() {
+		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements' ) && Plugin::elementor()->experiments->is_feature_active( 'container' );
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'e-swiper', 'widget-nested-carousel' ];
+	}
+
+	/**
+	 * Get script dependencies.
+	 *
+	 * Retrieve the list of script dependencies the widget requires.
+	 *
+	 * @since 3.27.0
+	 * @access public
+	 *
+	 * @return array Widget script dependencies.
+	 */
+	public function get_script_depends(): array {
+		return [ 'swiper' ];
+	}
+
 	protected function get_default_children_elements() {
 		return [
 			[
@@ -98,6 +135,15 @@ class Nested_Carousel extends Widget_Nested_Base {
 					'active' => true,
 				],
 				'label_block' => true,
+			]
+		);
+
+		$this->add_control(
+			'carousel_name',
+			[
+				'label' => esc_html__( 'Carousel Name', 'elementor-pro' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Carousel', 'elementor-pro' ),
 			]
 		);
 
@@ -180,16 +226,10 @@ class Nested_Carousel extends Widget_Nested_Base {
 			[
 				'label' => esc_html__( 'Gap between slides', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
 						'max' => 400,
-					],
-					'em' => [
-						'max' => 40,
-					],
-					'rem' => [
-						'max' => 40,
 					],
 				],
 				'default' => [
@@ -287,14 +327,16 @@ class Nested_Carousel extends Widget_Nested_Base {
 		$settings = $this->get_settings_for_display();
 		$this->num_of_carousel_items = count( $settings['carousel_items'] ?? [] );
 		$slides = $settings['carousel_items'];
-		$swiper_wrapper_class = Plugin::elementor()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
 		$direction = $settings['direction'];
 		$has_autoplay_enabled = 'yes' === $settings['autoplay'];
-		$outside_wrapper_classes = [ 'e-n-carousel', $swiper_wrapper_class ];
+		$outside_wrapper_classes = [ 'e-n-carousel', 'swiper' ];
 
 		$this->add_render_attribute( [
 			'carousel-outside-wrapper' => [
 				'class' => $outside_wrapper_classes,
+				'role' => 'region',
+				'aria-roledescription' => 'carousel',
+				'aria-label' => $settings['carousel_name'],
 			],
 			'carousel-inside-wrapper' => [
 				'class' => 'swiper-wrapper',
@@ -318,7 +360,12 @@ class Nested_Carousel extends Widget_Nested_Base {
 						'data-slide' => $slide_count,
 						'role' => 'group',
 						'aria-roledescription' => 'slide',
-						'aria-label' => $slide_count . ' ' . esc_html__( 'of', 'elementor-pro' ) . ' ' . count( $slides ),
+						'aria-label' => sprintf(
+							/* translators: 1: Slide number. 2: Total amount of slides. */
+							esc_attr__( '%1$s of %2$s', 'elementor-pro' ),
+							$slide_count,
+							count( $slides )
+						),
 					] );
 					?>
 						<div <?php $this->print_render_attribute_string( $slide_setting_key ); ?>>
@@ -334,16 +381,12 @@ class Nested_Carousel extends Widget_Nested_Base {
 	}
 
 	protected function get_initial_config(): array {
-		if ( Plugin::elementor()->experiments->is_feature_active( 'e_nested_atomic_repeaters' ) ) {
-			return array_merge( parent::get_initial_config(), [
-				'support_improved_repeaters' => true,
-				'target_container' => [ '.e-n-carousel > .swiper-wrapper' ],
-				'node' => 'div',
-				'is_interlaced' => true,
-			] );
-		}
-
-		return parent::get_initial_config();
+		return array_merge( parent::get_initial_config(), [
+			'support_improved_repeaters' => true,
+			'target_container' => [ '.e-n-carousel > .swiper-wrapper' ],
+			'node' => 'div',
+			'is_interlaced' => true,
+		] );
 	}
 
 	protected function get_default_children_container_placeholder_selector() {
@@ -365,7 +408,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 			'data-slide': slideCount,
 			'role': 'group',
 			'aria-roledescription': 'slide',
-			'aria-label': slideCount + ' <?php echo esc_html__( 'of', 'elementor-pro' ); ?> ' + numOfSlides,
+			'aria-label': slideCount + ' <?php echo esc_attr__( 'of', 'elementor-pro' ); ?> ' + numOfSlides,
 		};
 
 		view.addRenderAttribute( 'single-slide', slideWrapperKeyItem, null, true );
@@ -387,6 +430,9 @@ class Nested_Carousel extends Widget_Nested_Base {
 
 			view.addRenderAttribute( carouselOutsideWrapperKey, {
 				'class': outsideWrapperClasses,
+				'role': 'region',
+				'aria-roledescription': 'carousel',
+				'aria-label': settings['carousel_name'],
 			} );
 
 			view.addRenderAttribute( carouselInsideWrapperKey, {
@@ -410,7 +456,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 								'data-slide': slideCount,
 								'role': 'group',
 								'aria-roledescription': 'slide',
-								'aria-label': slideCount + ' <?php echo esc_html__( 'of', 'elementor-pro' ); ?> ' + settings['carousel_items'].length,
+								'aria-label': slideCount + ' <?php echo esc_attr__( 'of', 'elementor-pro' ); ?> ' + settings['carousel_items'].length,
 							} );
 						#>
 							<div {{{ view.getRenderAttributeString( slideWrapperKey ) }}}></div>
@@ -429,7 +475,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 
 	protected function content_template_navigation_arrows() {
 		?>
-		<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
+		<div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Previous', 'elementor-pro' ); ?>">
 			<#
 			const iconSettingsPrevious = settings['navigation_previous_icon'],
 				iconPreviousHTML = elementor.helpers.renderIcon( view, iconSettingsPrevious, { 'aria-hidden': true }, 'i' , 'object' );
@@ -445,7 +491,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 				{{{ iconPreviousHTML.value }}}
 			<# } #>
 		</div>
-		<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0">
+		<div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Next', 'elementor-pro' ); ?>">
 			<#
 			const iconSettingsNext = settings['navigation_next_icon'],
 				iconNextHTML = elementor.helpers.renderIcon( view, iconSettingsNext, { 'aria-hidden': true }, 'i' , 'object' );

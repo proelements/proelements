@@ -35,7 +35,14 @@ class Post_Excerpt extends Base_Widget {
 		return [ 'post', 'excerpt', 'description' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	protected function register_controls() {
+		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' ) && ! $this->has_widget_inner_wrapper();
+		$widget_container_selector = $optimized_markup ? '' : ' .elementor-widget-container';
+
 		$this->start_controls_section(
 			'section_content',
 			[
@@ -89,7 +96,7 @@ class Post_Excerpt extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-container' => 'text-align: {{VALUE}};',
+					"{{WRAPPER}}{$widget_container_selector}" => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -103,7 +110,7 @@ class Post_Excerpt extends Base_Widget {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-container' => 'color: {{VALUE}};',
+					"{{WRAPPER}}{$widget_container_selector}" => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -115,7 +122,7 @@ class Post_Excerpt extends Base_Widget {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				'selector' => '{{WRAPPER}} .elementor-widget-container',
+				'selector' => "{{WRAPPER}}{$widget_container_selector}",
 			]
 		);
 

@@ -3,14 +3,14 @@
 namespace ElementorPro\Modules\FloatingButtons\Widgets;
 
 use Elementor\Core\Base\Providers\Social_Network_Provider;
-use Elementor\Modules\FloatingButtons\Base\Widget_Contact_Button_Base;
+use ElementorPro\Modules\FloatingButtons\Base\Widget_Contact_Button_Base_Pro;
 use ElementorPro\Modules\FloatingButtons\Classes\Render\Contact_Buttons_Var_5_Render;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Contact_Buttons_Var_5 extends Widget_Contact_Button_Base {
+class Contact_Buttons_Var_5 extends Widget_Contact_Button_Base_Pro {
 
 	public static function get_configuration() {
 		$config = parent::get_configuration();
@@ -26,6 +26,7 @@ class Contact_Buttons_Var_5 extends Widget_Contact_Button_Base {
 			Social_Network_Provider::VIBER,
 			Social_Network_Provider::WAZE,
 		];
+		$config['content']['chat_button_section']['chat_aria_label'] = esc_html__( 'Chat', 'elementor-pro' );
 		$config['style']['send_button_section']['has_typography'] = false;
 
 		return $config;

@@ -31,6 +31,9 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		if ( $this->can_use_popups() ) {
 			add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
 			add_action( 'elementor/theme/register_locations', [ $this, 'register_location' ] );
@@ -39,6 +42,8 @@ class Module extends Module_Base {
 
 			add_action( 'wp_footer', [ $this, 'print_popups' ] );
 			add_action( 'elementor_pro/init', [ $this, 'add_form_action' ] );
+
+			add_action( 'elementor/frontend/before_register_styles', [ $this, 'register_styles' ] );
 		} else {
 			add_action( 'load-post.php', [ $this, 'disable_editing' ] );
 			add_action( 'admin_init', [ $this, 'maybe_redirect_to_promotion_page' ] );
@@ -64,6 +69,22 @@ class Module extends Module_Base {
 		}
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
+		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localize_settings' ] );
+	}
+
+	public function register_frontend_styles() {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_style(
+			'e-popup',
+			ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-popup' );
 	}
 
 	public function disable_editing() {
@@ -155,15 +176,6 @@ class Module extends Module_Base {
 
 	public function register_ajax_actions( Ajax $ajax ) {
 		$ajax->register_ajax_action( 'pro_popup_save_display_settings', [ $this, 'save_display_settings' ] );
-	}
-
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
-
-		return [];
 	}
 
 	/**
@@ -269,5 +281,24 @@ class Module extends Module_Base {
 		$this->has_popups = $existing_popups->post_count > 0;
 
 		return $this->has_popups;
+	}
+
+	public function localize_settings( array $settings ): array {
+		$settings['popup']['hasPopUps'] = $this->has_popups();
+
+		return $settings;
+	}
+
+	protected function get_assets_base_url() {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	public function register_styles() {
+		wp_register_style(
+			'e-popup',
+			$this->get_css_assets_url( 'popup', 'assets/css/conditionals/', true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
 	}
 }

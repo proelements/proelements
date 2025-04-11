@@ -144,7 +144,7 @@ class Rest_Client {
 			$this->request_cache[ $cache_key ]['parsed'];
 		}
 
-		$response = wp_remote_request( $request_url, $api_request_args );
+		$response = wp_safe_remote_request( $request_url, $api_request_args );
 		$response_code = (int) wp_remote_retrieve_response_code( $response );
 
 		$this->request_cache[ $cache_key ]['raw'] = $response;

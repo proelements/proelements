@@ -50,6 +50,11 @@ class Custom_Fonts extends Classes\Font_Base {
 
 		$fields = [
 			[
+				'id' => 'font_type',
+				'field_type' => 'input',
+				'input_type' => 'hidden',
+			],
+			[
 				'id' => 'open_div',
 				'field_type' => 'html_tag',
 				'label' => false,
@@ -80,7 +85,7 @@ class Custom_Fonts extends Classes\Font_Base {
 				'id' => 'preview_label',
 				'field_type' => 'html',
 				'label' => false,
-				'raw_html' => sprintf( '<div class="inline-preview">%s</div>', esc_html__( 'Elementor Is Making the Web Beautiful!!!', 'elementor-pro' ) ),
+				'raw_html' => sprintf( '<div class="inline-preview">%s</div>', esc_html__( 'Elementor Is Making the Web Beautiful', 'elementor-pro' ) ),
 			],
 			[
 				'id' => 'toolbar',
@@ -102,6 +107,85 @@ class Custom_Fonts extends Classes\Font_Base {
 				'attributes' => [
 					'class' => 'repeater-content-bottom',
 				],
+			],
+			[
+				'id' => 'variable_description',
+				'field_type' => 'html',
+				'label' => false,
+				'raw_html' => sprintf( '<div class="variable-description">%s %s</div>',
+					esc_html__( 'Check the boxes to enable Width and Weight, then define the minimum and maximum values for each.', 'elementor-pro' ),
+					'<a href="https://go.elementor.com/wp-dash-variable-fonts-help/" target="_blank">' . esc_html__( 'Learn More', 'elementor-pro' ) . '.</a>'
+				),
+			],
+			[
+				'id' => 'open_div',
+				'field_type' => 'html_tag',
+				'label' => false,
+				'tag' => 'div',
+				'attributes' => [
+					'class' => 'variable-width-wrap',
+				],
+			],
+			[
+				'id' => 'variable_width',
+				'field_type' => 'input',
+				'input_type' => 'checkbox',
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
+				'value' => 'yes',
+			],
+			[
+				'id' => 'variable_width_min',
+				'field_type' => 'input',
+				'input_type' => 'number',
+				'label' => esc_html__( 'Min Width', 'elementor-pro' ),
+			],
+			[
+				'id' => 'variable_width_max',
+				'field_type' => 'input',
+				'input_type' => 'number',
+				'label' => esc_html__( 'Max Width', 'elementor-pro' ),
+			],
+			[
+				'id' => 'close_div',
+				'field_type' => 'html_tag',
+				'label' => false,
+				'tag' => 'div',
+				'close' => true,
+			],
+			[
+				'id' => 'open_div',
+				'field_type' => 'html_tag',
+				'label' => false,
+				'tag' => 'div',
+				'attributes' => [
+					'class' => 'variable-weight-wrap',
+				],
+			],
+			[
+				'id' => 'variable_weight',
+				'field_type' => 'input',
+				'input_type' => 'checkbox',
+				'label' => esc_html__( 'Weight', 'elementor-pro' ),
+				'value' => 'yes',
+			],
+			[
+				'id' => 'variable_weight_min',
+				'field_type' => 'input',
+				'input_type' => 'number',
+				'label' => esc_html__( 'Min Weight', 'elementor-pro' ),
+			],
+			[
+				'id' => 'variable_weight_max',
+				'field_type' => 'input',
+				'input_type' => 'number',
+				'label' => esc_html__( 'Max Weight', 'elementor-pro' ),
+			],
+			[
+				'id' => 'close_div',
+				'field_type' => 'html_tag',
+				'label' => false,
+				'tag' => 'div',
+				'close' => true,
 			],
 		];
 
@@ -136,7 +220,7 @@ class Custom_Fonts extends Classes\Font_Base {
 			'fields' => $fields,
 			'id' => 'font_face',
 			'label' => false,
-			'add_label' => esc_html__( 'Add Font Variation', 'elementor-pro' ),
+			'add_label' => esc_html__( 'Add Static Font', 'elementor-pro' ),
 			'toggle_title' => esc_html__( 'Edit', 'elementor-pro' ),
 			'remove_title' => esc_html__( 'Delete', 'elementor-pro' ),
 			'field_type' => 'repeater',
@@ -147,7 +231,15 @@ class Custom_Fonts extends Classes\Font_Base {
 			'saved' => $font_data,
 		];
 
-		$this->print_metabox( [ $repeater ] );
+		$add_variable_font_button = [
+			'id' => 'add-variable-font',
+			'field_type' => 'input',
+			'input_type' => 'button',
+			'value' => esc_html__( 'Add Variable Font', 'elementor-pro' ),
+			'class' => 'button button-secondary',
+		];
+
+		$this->print_metabox( [ $repeater, $add_variable_font_button ] );
 
 		// PHPCS - Dedicated for CSS.
 		printf( '<style>%s</style>', get_post_meta( $post->ID, self::FONT_FACE_META_KEY, true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -252,6 +344,87 @@ class Custom_Fonts extends Classes\Font_Base {
 		return $font_face;
 	}
 
+	private function get_font_variables( $post_id ) {
+		$saved = get_post_meta( $post_id, self::FONT_META_KEY, true );
+		if ( ! is_array( $saved ) ) {
+			return false;
+		}
+
+		$variables = [];
+
+		foreach ( $saved as $font_data ) {
+			if ( ! empty( $font_data['variable_weight'] ) ) {
+				$variables[] = 'weight';
+			}
+
+			if ( ! empty( $font_data['variable_width'] ) ) {
+				$variables[] = 'width';
+			}
+
+			break;
+		}
+
+		return $variables;
+	}
+
+	private function get_font_variable_ranges( $post_id ) {
+		$saved = get_post_meta( $post_id, self::FONT_META_KEY, true );
+		if ( ! is_array( $saved ) ) {
+			return false;
+		}
+
+		$variable_ranges = [];
+
+		foreach ( $saved as $font_data ) {
+			if ( ! empty( $font_data['variable_weight'] ) ) {
+				$variable_ranges['weight'] = [
+					'min' => 1,
+					'max' => 1000,
+				];
+
+				if ( ! empty( $font_data['variable_weight_min'] ) ) {
+					$variable_ranges['weight']['min'] = (int) $font_data['variable_weight_min'];
+				}
+
+				if ( ! empty( $font_data['variable_weight_max'] ) ) {
+					$variable_ranges['weight']['max'] = (int) $font_data['variable_weight_max'];
+				}
+			}
+
+			if ( ! empty( $font_data['variable_width'] ) ) {
+				$variable_ranges['width'] = [
+					'min' => 0,
+					'max' => 150,
+				];
+
+				if ( ! empty( $font_data['variable_width_min'] ) ) {
+					$variable_ranges['width']['min'] = (int) $font_data['variable_width_min'];
+				}
+
+				if ( ! empty( $font_data['variable_width_max'] ) ) {
+					$variable_ranges['width']['max'] = (int) $font_data['variable_width_max'];
+				}
+			}
+
+			break;
+		}
+
+		return $variable_ranges;
+	}
+
+	private function is_font_variable( $post_id ): bool {
+		$saved = get_post_meta( $post_id, self::FONT_META_KEY, true );
+		if ( ! is_array( $saved ) ) {
+			return false;
+		}
+
+		foreach ( $saved as $font_data ) {
+			return ! empty( $font_data['font_type'] ) && 'variable' === $font_data['font_type'];
+		}
+
+		return false;
+	}
+
 	public function get_font_face_from_data( $font_family, $data ) {
 		$src = [];
 		foreach ( [ 'eot', 'woff2', 'woff', 'ttf', 'svg' ] as $type ) {
@@ -268,8 +441,12 @@ class Custom_Fonts extends Classes\Font_Base {
 
 		$font_face = '@font-face {' . PHP_EOL;
 		$font_face .= "\tfont-family: '" . $font_family . "';" . PHP_EOL;
-		$font_face .= "\tfont-style: " . $data['font_style'] . ';' . PHP_EOL;
-		$font_face .= "\tfont-weight: " . $data['font_weight'] . ';' . PHP_EOL;
+
+		if ( empty( $data['font_type'] ) || 'variable' !== $data['font_type'] ) {
+			$font_face .= "\tfont-style: " . $data['font_style'] . ';' . PHP_EOL;
+			$font_face .= "\tfont-weight: " . $data['font_weight'] . ';' . PHP_EOL;
+		}
+
 		$font_face .= "\tfont-display: " . apply_filters( 'elementor_pro/custom_fonts/font_display', 'auto', $font_family, $data ) . ';' . PHP_EOL;
 
 		if ( isset( $data['eot'] ) && isset( $data['eot']['url'] ) && ! empty( $data['eot']['url'] ) ) {
@@ -348,18 +525,40 @@ class Custom_Fonts extends Classes\Font_Base {
 		printf( '<style>%s</style><span style="font-family: \'%s\';">%s</span>', $font_face, esc_html( get_the_title( $post_id ) ), $this->font_preview_phrase ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
+	public function render_type_column( $post_id ) {
+		echo $this->is_font_variable( $post_id ) ? esc_html__( 'Variable', 'elementor-pro' ) : esc_html__( 'Static', 'elementor-pro' );
+	}
+
 	public function get_font_family_type( $post_id, $post_title ) {
+		$type = $this->get_type();
+
+		if ( $this->is_font_variable( $post_id ) ) {
+			$type = 'variable';
+		}
+
 		return [
-			$post_title => $this->get_type(),
+			$post_title => $type,
 		];
 	}
 
 	public function get_font_data( $post_id, $post_title ) {
+		$font_data = [
+			'font_face' => $this->generate_font_face( $post_id ),
+			'post_id' => $post_id,
+		];
+
+		$variables = $this->get_font_variables( $post_id );
+		if ( ! empty( $variables ) ) {
+			$font_data['variables'] = $variables;
+		}
+
+		$variable_ranges = $this->get_font_variable_ranges( $post_id );
+		if ( ! empty( $variable_ranges ) ) {
+			$font_data['variable_ranges'] = $variable_ranges;
+		}
+
 		return [
-			$post_title => [
-				'font_face' => $this->generate_font_face( $post_id ),
-				'post_id' => $post_id,
-			],
+			$post_title => $font_data,
 		];
 	}
 

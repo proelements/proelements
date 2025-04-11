@@ -18,7 +18,6 @@ use Elementor\Settings;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
 use ElementorPro\Modules\Woocommerce\Widgets\Products as Products_Widget;
-use ElementorPro\Modules\Woocommerce\Data\Controller as WoocommerceDataController;
 use Elementor\Icons_Manager;
 use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
 use ElementorPro\License\API;
@@ -80,6 +79,7 @@ class Module extends Module_Base {
 		'woocommerce-notices' => 'Notices',
 		'wc-single-elements' => 'Single_Elements',
 	];
+	const WIDGET_HAS_CUSTOM_BREAKPOINTS = true;
 
 	protected $docs_types = [];
 	protected $use_mini_cart_template;
@@ -250,7 +250,7 @@ class Module extends Module_Base {
 				<span class="elementor-button-icon">
 					<span class="elementor-button-icon-qty" data-counter="<?php echo esc_attr( $product_count ); ?>"><?php echo $product_count; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 					<?php self::render_menu_icon( $settings, $icon ); ?>
-					<span class="elementor-screen-only"><?php esc_html_e( 'Cart', 'elementor-pro' ); ?></span>
+					<span class="elementor-screen-only"><?php echo esc_html__( 'Cart', 'elementor-pro' ); ?></span>
 				</span>
 			</a>
 		</div>
@@ -992,20 +992,6 @@ class Module extends Module_Base {
 		return ! empty( $this->woocommerce_notices_elements ) ? $this->woocommerce_notices_elements : [];
 	}
 
-	public function custom_gutenberg_woocommerce_notice() {
-		$min_suffix = Utils::is_script_debug() ? '' : '.min';
-
-		wp_enqueue_script(
-			'elementor-gutenberg-woocommerce-notice',
-			ELEMENTOR_PRO_URL . '/assets/js/gutenberg-woocommerce-notice' . $min_suffix . '.js',
-			[ 'wp-blocks' ],
-			ELEMENTOR_PRO_VERSION,
-			false
-		);
-
-		wp_set_script_translations( 'elementor-gutenberg-woocommerce-notice', 'elementor-pro' );
-	}
-
 	public function e_notices_css() {
 		if ( ! $this->should_load_wc_notices_styles() ) {
 			return false;
@@ -1377,8 +1363,6 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
-		new WoocommerceDataController();
-
 		add_action( 'elementor/kit/register_tabs', [ $this, 'init_site_settings' ], 1, 40 );
 		$this->add_update_kit_settings_hooks();
 
@@ -1496,7 +1480,6 @@ class Module extends Module_Base {
 		// WooCommerce Notice Site Settings
 		add_filter( 'body_class', [ $this, 'e_notices_body_classes' ] );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'e_notices_css' ] );
-		add_action( 'enqueue_block_editor_assets', [ $this, 'custom_gutenberg_woocommerce_notice' ] );
 
 		add_filter( 'elementor/query/query_args', function( $query_args, $widget ) {
 			return $this->loop_query( $query_args, $widget );
@@ -1509,6 +1492,8 @@ class Module extends Module_Base {
 		add_filter( 'elementor/editor/localize_settings', function ( $config ) {
 			return $this->populate_persistent_settings( $config );
 		});
+
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 
 	public function add_system_status_data( $response, $system_status, $request ) {
@@ -1558,6 +1543,8 @@ class Module extends Module_Base {
 	}
 
 	private function parse_loop_query_args( $widget, $query_args ) {
+		global $wp_query;
+
 		$settings = $this->adjust_setting_for_product_renderer( $widget );
 
 		// For Products_Renderer.
@@ -1569,7 +1556,9 @@ class Module extends Module_Base {
 
 		$parsed_query_args = $shortcode->parse_query_args();
 
-		unset( $parsed_query_args['fields'] );
+		if ( empty( $wp_query->include_field_ids_arg ) ) {
+			unset( $parsed_query_args['fields'] );
+		}
 
 		$override_various_query_args = array_filter( $query_args, function( $key ) {
 			return in_array( $key, [ 'posts_per_page', 'offset', 'paged' ], true );
@@ -1642,5 +1631,60 @@ class Module extends Module_Base {
 			self::WC_PERSISTENT_SITE_SETTINGS;
 
 		return $config;
+	}
+
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/woocommerce/assets/scss/widgets/*.scss`
+	 * to `/assets/css/widget-*.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles(): void {
+		$direction_suffix = is_rtl() ? '-rtl' : '';
+		$widget_styles = $this->get_widgets_style_list();
+		$has_custom_breakpoints = Plugin::elementor()->breakpoints->has_custom_breakpoints();
+
+		foreach ( $widget_styles as $widget_style_name => $widget_has_responsive_style ) {
+			$should_load_responsive_css = $widget_has_responsive_style ? $has_custom_breakpoints : false;
+
+			wp_register_style(
+				$widget_style_name,
+				Plugin::get_frontend_file_url( "{$widget_style_name}{$direction_suffix}.min.css", $should_load_responsive_css ),
+				[ 'elementor-frontend' ],
+				$should_load_responsive_css ? null : ELEMENTOR_PRO_VERSION
+			);
+		}
+	}
+
+	private function get_widgets_style_list(): array {
+		return [
+			'widget-woocommerce-cart' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-categories' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-checkout-page' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-menu-cart' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-my-account' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-notices' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-add-to-cart' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-additional-information' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-data-tabs' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-images' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-meta' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-price' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-product-rating' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-products' => ! self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-products-archive' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+			'widget-woocommerce-purchase-summary' => self::WIDGET_HAS_CUSTOM_BREAKPOINTS,
+		];
 	}
 }

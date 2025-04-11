@@ -38,13 +38,8 @@ class Site_Logo extends Widget_Image {
 		return [ 'site', 'logo', 'branding' ];
 	}
 
-	public function get_inline_css_depends() {
-		return [
-			[
-				'name' => 'image',
-				'is_core_dependency' => true,
-			],
-		];
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	protected function register_controls() {

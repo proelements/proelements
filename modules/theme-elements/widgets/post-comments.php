@@ -32,6 +32,10 @@ class Post_Comments extends Base {
 		return [ 'comments', 'post', 'response', 'form' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
@@ -103,10 +107,10 @@ class Post_Comments extends Base {
 			?>
 			<div class="elementor-alert elementor-alert-danger" role="alert">
 				<span class="elementor-alert-title">
-					<?php esc_html_e( 'Comments are closed.', 'elementor-pro' ); ?>
+					<?php echo esc_html__( 'Comments are closed.', 'elementor-pro' ); ?>
 				</span>
 				<span class="elementor-alert-description">
-					<?php esc_html_e( 'Switch on comments from either the discussion box on the WordPress post edit screen or from the WordPress discussion settings.', 'elementor-pro' ); ?>
+					<?php echo esc_html__( 'Switch on comments from either the discussion box on the WordPress post edit screen or from the WordPress discussion settings.', 'elementor-pro' ); ?>
 				</span>
 			</div>
 			<?php

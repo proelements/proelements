@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
+use Elementor\Controls_Manager;
 use Elementor\Core\DocumentTypes\Post;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,6 +37,24 @@ abstract class Header_Footer_Base extends Theme_Section_Document {
 				'label' => esc_html__( 'Style', 'elementor-pro' ),
 			]
 		);
+
+		$this->start_injection( [
+			'of' => 'margin',
+		] );
+
+		$this->add_control(
+			'hidden_header_footer_style_control',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'default' => 'hidden_control',
+				'selectors' => [
+					'.elementor-theme-builder-content-area' => 'height: 400px;',
+					'.elementor-location-header:before, .elementor-location-footer:before' => 'content: ""; display: table; clear: both;',
+				],
+			]
+		);
+
+		$this->end_injection();
 	}
 
 	protected function get_remote_library_config() {

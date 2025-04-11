@@ -53,7 +53,7 @@ class Module extends Module_Base {
 		?>
 		<label for="<?php echo esc_attr( $id ); ?>">
 			<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" value="design" <?php checked( in_array( 'design', $checked ), true ); ?>>
-			<?php esc_html_e( 'Access to edit content only', 'elementor-pro' ); ?>
+			<?php echo esc_html__( 'Access to edit content only', 'elementor-pro' ); ?>
 		</label>
 		<?php
 	}

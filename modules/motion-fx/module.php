@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Element_Column;
 use Elementor\Element_Section;
+use Elementor\Utils;
 use Elementor\Widget_Base;
 use ElementorPro\Base\Module_Base;
 
@@ -20,6 +21,7 @@ class Module extends Module_Base {
 
 		$this->add_actions();
 	}
+
 	/**
 	 * Get module name.
 	 *
@@ -48,7 +50,11 @@ class Module extends Module_Base {
 		} elseif ( $element instanceof Element_Column ) {
 			$selector .= ' > .elementor-widget-wrap';
 		} elseif ( $element instanceof Widget_Base ) {
-			$selector .= ' > .elementor-widget-container';
+			if ( defined( get_class( $element ) . '::WRAPPER_SELECTOR' ) ) {
+				$selector = $element::WRAPPER_SELECTOR;
+			} else {
+				$selector .= ' > .elementor-widget-container';
+			}
 		}
 
 		$element->add_group_control(
@@ -59,6 +65,70 @@ class Module extends Module_Base {
 				'exclude' => $exclude,
 			]
 		);
+
+		$this->add_asset_loading_control_to_element( $element, $exclude );
+	}
+
+	private function add_asset_loading_control_to_element( Element_Base $element, $exclude = [], $control_suffix = '' ) {
+		$element->add_control(
+			$control_suffix . 'handle_motion_fx_asset_loading',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'assets' => [
+					'styles' => [
+						[
+							'name' => 'e-motion-fx',
+							'conditions' => $this->get_asset_loading_condition_conditions( $exclude, $control_suffix ),
+						],
+					],
+				],
+			]
+		);
+	}
+
+	private function get_asset_loading_condition_conditions( $exclude = [], $control_suffix = '' ) {
+		if ( '' === $control_suffix ) {
+			return [
+				'relation' => 'or',
+				'terms' => $this->get_asset_loading_condition_terms( $exclude, $control_suffix ),
+			];
+		}
+
+		return [
+			'terms' => [
+				[
+					'name' => 'background_background',
+					'operator' => '===',
+					'value' => 'classic',
+				],
+				[
+					'relation' => 'or',
+					'terms' => $this->get_asset_loading_condition_terms( $exclude, $control_suffix ),
+				],
+			],
+		];
+	}
+
+	private function get_asset_loading_condition_terms( $exclude = [], $control_suffix = '' ) {
+		$terms = [
+			[
+				'name' => $control_suffix . 'motion_fx_motion_fx_scrolling',
+				'operator' => '===',
+				'value' => 'yes',
+			],
+		];
+
+		if ( in_array( 'motion_fx_mouse', $exclude, true ) ) {
+			return $terms;
+		}
+
+		$terms[] = [
+			'name' => $control_suffix . 'motion_fx_motion_fx_mouse',
+			'operator' => '===',
+			'value' => 'yes',
+		];
+
+		return $terms;
 	}
 
 	public function add_controls_group_to_element_background( Element_Base $element ) {
@@ -115,24 +185,36 @@ class Module extends Module_Base {
 		$element->update_control( 'background_motion_fx_motion_fx_mouse', $options );
 
 		$element->end_injection();
+
+		$this->add_asset_loading_control_to_element( $element, [], 'background_' );
 	}
 
-	/**
-	 * @deprecated 3.1.0
-	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
+	public function register_frontend_styles() {
+		$suffix = Utils::is_script_debug() ? '' : '.min';
 
-		return [];
+		wp_register_style(
+			'e-motion-fx',
+			ELEMENTOR_PRO_URL . 'assets/css/modules/motion-fx' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-motion-fx' );
 	}
 
 	private function add_actions() {
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		add_action( 'elementor/controls/register', [ $this, 'register_controls_group' ] );
 
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/column/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
+		add_action( 'elementor/element/common-optimized/section_effects/after_section_start', [ $this, 'add_controls_group_to_element' ] );
 
 		add_action( 'elementor/element/section/section_background/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );
 		add_action( 'elementor/element/container/section_background/before_section_end', [ $this, 'add_controls_group_to_element_background' ] );

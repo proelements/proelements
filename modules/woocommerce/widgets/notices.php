@@ -31,8 +31,26 @@ class Notices extends Base_Widget {
 		return [ 'woocommerce-elements' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_help_url() {
 		return 'https://go.elementor.com/widget-woocommerce-notices-location';
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-woocommerce-notices' ];
 	}
 
 	protected function register_controls() {
@@ -70,8 +88,7 @@ class Notices extends Base_Widget {
 		$this->add_control(
 			'one_per_page_notice',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'heading' => esc_html__( 'Note:', 'elementor-pro' ),
 				'content' => esc_html__( 'You can only add the Notices widget once per page.', 'elementor-pro' ),

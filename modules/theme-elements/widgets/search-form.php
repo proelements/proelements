@@ -9,7 +9,6 @@ use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Plugin;
-use ElementorPro\Modules\Search\Module as Search_Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -33,15 +32,22 @@ class Search_Form extends Base {
 		return [ 'search', 'form' ];
 	}
 
-	public function show_in_panel(): bool {
-		return ! Plugin::elementor()->experiments->is_feature_active( Search_Module::FEATURE_ID );
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
-	public function get_style_depends() {
+	public function show_in_panel(): bool {
+		return false;
+	}
+
+	public function get_style_depends(): array {
+		$style_depends = [ 'widget-search-form' ];
+
 		if ( Icons_Manager::is_migration_allowed() ) {
-			return [ 'elementor-icons-fa-solid' ];
+			$style_depends[] = 'elementor-icons-fa-solid';
 		}
-		return [];
+
+		return $style_depends;
 	}
 
 	protected function register_controls() {
@@ -52,16 +58,11 @@ class Search_Form extends Base {
 			]
 		);
 
-		if ( Plugin::elementor()->experiments->is_feature_active( Search_Module::FEATURE_ID ) ) {
-			$this->add_deprecation_message(
-				'3.23.0',
-				esc_html__(
-					'You are currently editing a Search Form Widget in its old version. Any new Search widget dragged into the canvas will be the new Search widget, with the improved search capabilities.',
-					'elementor-pro'
-				),
-				'search'
-			);
-		}
+		$this->add_deprecation_message(
+			'3.24.0',
+			esc_html__( 'You are currently editing a Search Form Widget in its old version. Any new Search widget dragged into the canvas will be the new Search widget, with the improved search capabilities.', 'elementor-pro' ),
+			'search'
+		);
 
 		$this->add_control(
 			'skin',
@@ -812,18 +813,17 @@ class Search_Form extends Base {
 				do_action( 'elementor_pro/search_form/before_input', $this );
 				?>
 				<?php if ( 'full_screen' === $settings['skin'] ) : ?>
-				<div class="elementor-search-form__toggle" tabindex="0" role="button">
+				<div class="elementor-search-form__toggle" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Search', 'elementor-pro' ); ?>">
 					<?php $this->render_search_icon( $icon, [ 'aria-hidden' => 'true' ] ); ?>
-					<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
 				</div>
 				<?php endif; ?>
 				<div <?php $this->print_render_attribute_string( 'container' ); ?>>
-					<label <?php $this->print_render_attribute_string( 'label' ); ?>><?php esc_html_e( 'Search', 'elementor-pro' ); ?></label>
+					<label <?php $this->print_render_attribute_string( 'label' ); ?>><?php echo esc_html__( 'Search', 'elementor-pro' ); ?></label>
 
 					<?php if ( 'minimal' === $settings['skin'] ) : ?>
 						<div class="elementor-search-form__icon">
 							<?php $this->render_search_icon( $icon, [ 'aria-hidden' => 'true' ] ); ?>
-							<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
+							<span class="elementor-screen-only"><?php echo esc_html__( 'Search', 'elementor-pro' ); ?></span>
 						</div>
 					<?php endif; ?>
 
@@ -841,10 +841,9 @@ class Search_Form extends Base {
 					?>
 
 					<?php if ( 'classic' === $settings['skin'] ) : ?>
-						<button class="elementor-search-form__submit" type="submit" aria-label="<?php esc_attr_e( 'Search', 'elementor-pro' ); ?>">
+						<button class="elementor-search-form__submit" type="submit" aria-label="<?php echo esc_attr__( 'Search', 'elementor-pro' ); ?>">
 							<?php if ( 'icon' === $settings['button_type'] ) : ?>
 								<?php $this->render_search_icon( $icon, $this->get_render_attributes( 'icon' ) ); ?>
-								<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
 							<?php elseif ( ! empty( $settings['button_text'] ) ) : ?>
 								<?php $this->print_unescaped_setting( 'button_text' ); ?>
 							<?php endif; ?>
@@ -852,14 +851,13 @@ class Search_Form extends Base {
 					<?php endif; ?>
 
 					<?php if ( 'full_screen' === $settings['skin'] ) : ?>
-					<div class="dialog-lightbox-close-button dialog-close-button" role="button" tabindex="0">
+					<div class="dialog-lightbox-close-button dialog-close-button" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Close this search box.', 'elementor-pro' ); ?>">
 						<?php
 							Icons_Manager::render_icon( [
 								'library' => 'eicons',
 								'value' => 'eicon-close',
 							], [ 'aria-hidden' => 'true' ] );
 						?>
-						<span class="elementor-screen-only"><?php esc_html_e( 'Close this search box.', 'elementor-pro' ); ?></span>
 					</div>
 					<?php endif ?>
 				</div>
@@ -927,18 +925,17 @@ class Search_Form extends Base {
 		<search role="search">
 			<form {{{ view.getRenderAttributeString( 'form' ) }}}>
 				<# if ( 'full_screen' === settings.skin ) { #>
-					<div class="elementor-search-form__toggle" tabindex="0" role="button">
+					<div class="elementor-search-form__toggle" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Search', 'elementor-pro' ); ?>">
 						<i class="fa fas fa-search" aria-hidden="true"></i>
-						<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
 					</div>
 				<# } #>
 				<div {{{ view.getRenderAttributeString( 'container' ) }}}>
-					<label {{{ view.getRenderAttributeString( 'label' ) }}}><?php esc_html_e( 'Search', 'elementor-pro' ); ?></label>
+					<label {{{ view.getRenderAttributeString( 'label' ) }}}><?php echo esc_html__( 'Search', 'elementor-pro' ); ?></label>
 
 					<# if ( 'minimal' === settings.skin ) { #>
 						<div class="elementor-search-form__icon">
 							<i class="fa fas fa-search" aria-hidden="true"></i>
-							<span class="elementor-screen-only"><?php esc_html_e( 'Search', 'elementor-pro' ); ?></span>
+							<span class="elementor-screen-only"><?php echo esc_html__( 'Search', 'elementor-pro' ); ?></span>
 						</div>
 					<# } #>
 
@@ -948,7 +945,7 @@ class Search_Form extends Base {
 						<button class="elementor-search-form__submit" type="submit">
 							<# if ( 'icon' === settings.button_type ) { #>
 								<i class="{{ iconClass }}" aria-hidden="true"></i>
-								<span class="elementor-screen-only"><?php esc_html_e( 'Submit', 'elementor-pro' ); ?></span>
+								<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'elementor-pro' ); ?></span>
 							<# } else if ( settings.button_text ) { #>
 								{{{ settings.button_text }}}
 							<# } #>

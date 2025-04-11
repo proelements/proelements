@@ -34,7 +34,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const store = window.top.$e.store.getReduxStore();
 function App() {
   const {
@@ -79,7 +78,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_use_reverse_html_entities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../hooks/use-reverse-html-entities */ "../assets/js/app/hooks/use-reverse-html-entities.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -163,7 +161,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledPortal = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])((0,_radix_ui_react_portal__WEBPACK_IMPORTED_MODULE_3__.Portal)).withConfig({
   shouldForwardProp: prop => 'position' !== prop
 })`
@@ -229,7 +226,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils */ "../assets/js/app/utils.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -329,7 +325,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_9__["default"])((0,_ui_div_base__WEBPACK_IMPORTED_MODULE_6__["default"]))`
 	display: flex !important;
 	flex-direction: column !important;
@@ -393,7 +388,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function MarksNoteActionsDeleteDialog(props) {
   const deleteMutation = (0,_hooks_use_notes_mutations__WEBPACK_IMPORTED_MODULE_4__.useDeleteMutation)();
   (0,_hooks_use_watch__WEBPACK_IMPORTED_MODULE_3__["default"])(() => {
@@ -445,7 +439,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function MarksNoteActionsRead(props) {
   const alreadyRead = props.note.isRead,
     readMutation = (0,_hooks_use_notes_mutations__WEBPACK_IMPORTED_MODULE_2__.useReadMutation)();
@@ -488,7 +481,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_note__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../models/note */ "../assets/js/app/models/note.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -561,7 +553,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const TooltipContent = (0,styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])(_components_ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_1__["default"].Content)`
   max-width: 200px;
 `;
@@ -626,7 +617,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_note__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../models/note */ "../assets/js/app/models/note.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -739,7 +729,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_8__["default"])((0,_ui_div_base__WEBPACK_IMPORTED_MODULE_7__["default"]))`
   position: relative;
 `;
@@ -809,7 +798,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const Text = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].p`
   all: revert;
 
@@ -873,7 +861,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_div_base__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui/div-base */ "../assets/js/app/components/ui/div-base.js");
 /* harmony import */ var _hooks_use_reverse_html_entities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../hooks/use-reverse-html-entities */ "../assets/js/app/hooks/use-reverse-html-entities.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -1017,7 +1004,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function MarksReplyForm(props) {
   const formId = `e-notes-new-reply-for-${props.thread.id}`;
   const createMutation = (0,_hooks_use_notes_mutations__WEBPACK_IMPORTED_MODULE_2__.useCreateMutation)(),
@@ -1090,7 +1076,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/icon */ "../assets/js/app/components/ui/icon.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -1225,7 +1210,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_11__["default"])((0,_ui_div_base__WEBPACK_IMPORTED_MODULE_8__["default"]))`
   display: flex !important;
   flex-direction: column !important;
@@ -1307,7 +1291,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function Marks() {
   const {
       data: notes = []
@@ -1368,7 +1351,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ui/icon */ "../assets/js/app/components/ui/icon.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -1555,7 +1537,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const defaultParams = {
   limit: 5,
   order_by: 'user_registered',
@@ -1722,7 +1703,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function PanelBodyCurrentRoute(props) {
   const {
       route
@@ -1812,7 +1792,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].a`
 	position: absolute !important;
 	font-size: 14px !important;
@@ -1868,7 +1847,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function PanelCloseButton() {
   const handleClick = () => window.top.$e.run('notes/close');
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui_tooltip_tooltip__WEBPACK_IMPORTED_MODULE_1__["default"].Trigger, {
@@ -1897,7 +1875,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_div_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/div-base */ "../assets/js/app/components/ui/div-base.js");
 /* harmony import */ var _ui_icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui/icon */ "../assets/js/app/components/ui/icon.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
 
 
 
@@ -2014,7 +1991,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const Container = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])((0,_ui_div_base__WEBPACK_IMPORTED_MODULE_1__["default"]))`
   display: flex !important;
   align-items: center !important;
@@ -2068,7 +2044,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_animation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../styles/animation */ "../assets/js/app/styles/animation.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -2142,7 +2117,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_use_reverse_html_entities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../hooks/use-reverse-html-entities */ "../assets/js/app/hooks/use-reverse-html-entities.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -2296,7 +2270,6 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
 
 
-
 const StyledPanelPageTitle = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].h4`
   all: revert;
 
@@ -2357,7 +2330,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../hooks/use-notes-config */ "../assets/js/app/hooks/use-notes-config.js");
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -2468,7 +2440,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function Panel() {
   const {
       direction
@@ -2546,7 +2517,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _note_content_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./note-content-link */ "../assets/js/app/components/shared/note-content/note-content-link.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 function NoteContentEmail(props) {
@@ -2687,7 +2657,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const componentMap = {
   Paragraph: _note_content_paragraph__WEBPACK_IMPORTED_MODULE_1__["default"],
   Mention: _note_content_mention__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -2733,7 +2702,6 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
 
 
-
 function NoteContentUrl(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_note_content_link__WEBPACK_IMPORTED_MODULE_1__["default"], {
     href: props.token.value
@@ -2762,7 +2730,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -2856,7 +2823,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const richTextParser = (0,_services_rich_text_parser__WEBPACK_IMPORTED_MODULE_2__["default"])();
 const Wrapper = (0,styled_components__WEBPACK_IMPORTED_MODULE_4__["default"])((0,_ui_div_base__WEBPACK_IMPORTED_MODULE_3__["default"]))`
   white-space: normal;
@@ -2906,7 +2872,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_div_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/div-base */ "../assets/js/app/components/ui/div-base.js");
 /* harmony import */ var _hooks_use_forms_in_writing_mode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/use-forms-in-writing-mode */ "../assets/js/app/hooks/use-forms-in-writing-mode.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -3002,7 +2967,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_use_notes_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../hooks/use-notes-config */ "../assets/js/app/hooks/use-notes-config.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils */ "../assets/js/app/utils.js");
 /* harmony import */ var _hooks_use_forms_in_writing_mode__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../hooks/use-forms-in-writing-mode */ "../assets/js/app/hooks/use-forms-in-writing-mode.js");
-
 
 
 
@@ -3184,7 +3148,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _radix_ui_react_alert_dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @radix-ui/react-alert-dialog */ "../../../node_modules/@radix-ui/react-alert-dialog/dist/index.module.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils */ "../assets/js/app/utils.js");
-
 
 
 
@@ -3660,7 +3623,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledCheckbox = (0,styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])((0,_button_base__WEBPACK_IMPORTED_MODULE_1__["default"])).attrs(() => ({
   as: _radix_ui_react_checkbox__WEBPACK_IMPORTED_MODULE_4__.Root
 }))`
@@ -3839,7 +3801,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const variants = {
   default: {
     hoverTextColor: '#6d7882',
@@ -3992,7 +3953,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _button_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../button-base */ "../assets/js/app/components/ui/button-base.js");
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icon */ "../assets/js/app/components/ui/icon.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -4270,7 +4230,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledPanelBody = (0,styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])((0,_div_base__WEBPACK_IMPORTED_MODULE_1__["default"]))`
   position: relative !important;
   display: flex !important;
@@ -4303,7 +4262,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_use_debounced_callback__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../hooks/use-debounced-callback */ "../assets/js/app/hooks/use-debounced-callback.js");
 /* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./panel */ "../assets/js/app/components/ui/panel/panel.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -4515,7 +4473,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledPanelHeader = (0,styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])((0,_div_base__WEBPACK_IMPORTED_MODULE_2__["default"]))`
   display: grid !important;
   grid-template-columns: 1fr 2fr 1fr !important;
@@ -4569,7 +4526,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledPanelLoading = (0,styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])((0,_div_base__WEBPACK_IMPORTED_MODULE_1__["default"]))`
   position: absolute !important;
   inset: 0 !important;
@@ -4614,7 +4570,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _div_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../div-base */ "../assets/js/app/components/ui/div-base.js");
 /* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./panel */ "../assets/js/app/components/ui/panel/panel.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -4742,7 +4697,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../utils */ "../assets/js/app/utils.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -4888,7 +4842,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledCloseButton = (0,styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])((0,_icon_button_icon_button__WEBPACK_IMPORTED_MODULE_2__["default"]))`
   --position-spacing: 4px;
 
@@ -5018,7 +4971,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledItem = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__["default"])((0,_button_base__WEBPACK_IMPORTED_MODULE_1__["default"])).attrs(() => ({
   as: _radix_ui_react_radio_group__WEBPACK_IMPORTED_MODULE_3__.Item
 }))`
@@ -5096,7 +5048,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledSeparator = (0,styled_components__WEBPACK_IMPORTED_MODULE_1__["default"])((0,_radix_ui_react_separator__WEBPACK_IMPORTED_MODULE_2__.Root))`
   background: #f1f3f5;
 
@@ -5137,7 +5088,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "../../../node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _div_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./div-base */ "../assets/js/app/components/ui/div-base.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -5697,7 +5647,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const StyledItem = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].li`
 	all: revert;
 
@@ -5803,7 +5752,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _typeahead_list_footer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./typeahead-list-footer */ "../assets/js/app/components/ui/typeahead/typeahead-list-footer.js");
 /* harmony import */ var _github_text_expander_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @github/text-expander-element */ "../../../node_modules/@github/text-expander-element/dist/index.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
-
 
 
 
@@ -5926,7 +5874,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "../../../node_modules/@babel/runtime/helpers/esm/extends.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-
 
 
 
@@ -6639,7 +6586,6 @@ function useReadMutation() {
     }
   });
 }
-
 function useInvalidateSingle() {
   const queryClient = (0,react_query__WEBPACK_IMPORTED_MODULE_4__.useQueryClient)();
   return (0,react__WEBPACK_IMPORTED_MODULE_3__.useCallback)(({

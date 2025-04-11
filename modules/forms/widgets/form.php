@@ -41,6 +41,24 @@ class Form extends Form_Base {
 		return false;
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-form' ];
+	}
+
 	protected function register_controls() {
 		$repeater = new Repeater();
 
@@ -445,7 +463,11 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'ID', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere in this form. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
+				'description' => sprintf(
+					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
+					'<code>',
+					'</code>'
+				),
 				'render_type' => 'none',
 				'required' => true,
 				'dynamic' => [
@@ -779,7 +801,7 @@ class Form extends Form_Base {
 				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-pro' ),
 				'description' => sprintf(
-					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
+					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
 					'<code>',
 					'</code>'
 				),
@@ -858,13 +880,13 @@ class Form extends Form_Base {
 				'frontend_available' => true,
 				'render_type' => 'none',
 				'options' => [
-					'none' => 'None',
-					'text' => 'Text',
-					'icon' => 'Icon',
-					'number' => 'Number',
-					'progress_bar' => 'Progress Bar',
-					'number_text' => 'Number & Text',
-					'icon_text' => 'Icon & Text',
+					'none' => esc_html__( 'None', 'elementor-pro' ),
+					'text' => esc_html__( 'Text', 'elementor-pro' ),
+					'icon' => esc_html__( 'Icon', 'elementor-pro' ),
+					'number' => esc_html__( 'Number', 'elementor-pro' ),
+					'progress_bar' => esc_html__( 'Progress Bar', 'elementor-pro' ),
+					'number_text' => esc_html__( 'Number & Text', 'elementor-pro' ),
+					'icon_text' => esc_html__( 'Icon & Text', 'elementor-pro' ),
 				],
 				'default' => 'number_text',
 			]
@@ -878,9 +900,9 @@ class Form extends Form_Base {
 				'frontend_available' => true,
 				'render_type' => 'none',
 				'options' => [
-					'circle' => 'Circle',
-					'square' => 'Square',
-					'rounded' => 'Rounded',
+					'circle' => esc_html__( 'Circle', 'elementor-pro' ),
+					'square' => esc_html__( 'Square', 'elementor-pro' ),
+					'rounded' => esc_html__( 'Rounded', 'elementor-pro' ),
 					'none' => 'None',
 				],
 				'default' => 'circle',
@@ -934,7 +956,11 @@ class Form extends Form_Base {
 					'active' => false,
 				],
 				'placeholder' => 'new_form_id',
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
+				'description' => sprintf(
+					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'elementor-pro' ),
+					'<code>',
+					'</code>'
+				),
 				'separator' => 'after',
 				'dynamic' => [
 					'active' => true,
@@ -1306,7 +1332,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-field:not(.elementor-select-wrapper)' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'background-color: {{VALUE}};',
 				],
 				'separator' => 'before',
@@ -1319,7 +1345,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-field:not(.elementor-select-wrapper)' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper::before' => 'color: {{VALUE}};',
 				],
@@ -1335,7 +1361,7 @@ class Form extends Form_Base {
 				'placeholder' => '1',
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-field:not(.elementor-select-wrapper)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
@@ -1348,7 +1374,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-field:not(.elementor-select-wrapper)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
@@ -2239,8 +2265,8 @@ class Form extends Form_Base {
 			/**
 			 * Elementor form pre render.
 			 *
-			 * Fires before the from is rendered in the frontend. This hook allows
-			 * developers to add functionality before the from is rendered.
+			 * Fires before the form is rendered in the frontend. This hook allows
+			 * developers to add functionality before the form is rendered.
 			 *
 			 * @since 2.4.0
 			 *

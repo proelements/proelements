@@ -30,7 +30,7 @@ class Module extends Module_Base {
 	 * @return string
 	 */
 	public function get_proxy_data( $url ) {
-		$response = wp_remote_get( utf8_decode( $url ) );
+		$response = wp_safe_remote_get( utf8_decode( $url ) );
 
 		if ( is_wp_error( $response ) ) {
 			return '';

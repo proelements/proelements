@@ -41,6 +41,20 @@ class Products extends Products_Base {
 	}
 
 	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-woocommerce-products' ];
+	}
+
+	/**
 	 * @throws \Exception
 	 */
 	protected function register_query_section() {
@@ -113,8 +127,7 @@ class Products extends Products_Base {
 		$this->add_control(
 			'wc_notice_frontpage',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => esc_html__( 'Ordering is not available if this widget is placed in your front page. Visible on frontend only.', 'elementor-pro' ),
 				'condition' => [

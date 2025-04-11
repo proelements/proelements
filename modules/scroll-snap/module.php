@@ -46,7 +46,7 @@ class Module extends Module_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'On', 'elementor-pro' ),
 				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
-				'description' => esc_html__( 'Scroll Snap makes the viewport stop on a specific position of a section when scrolling ends.', 'elementor-pro' ),
+				'description' => sprintf( esc_html__( 'Scroll Snap makes the viewport stop on a specific position of a section when scrolling ends.%sTo avoid glitches and conflicts, we recommend not to use Scroll Snap together with animations or Motion effects.', 'elementor-pro' ), '<br><br>' ),
 				'selectors' => [
 					'html' => 'height: 100vh; margin: 0; overflow: hidden;',
 					'body' => 'height: 100vh; overflow: auto; scroll-snap-type: y mandatory;',

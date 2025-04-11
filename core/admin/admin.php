@@ -234,12 +234,6 @@ class Admin extends App {
 		wp_die( '', esc_html__( 'Rollback to Previous Version', 'elementor-pro' ), [ 'response' => 200 ] );
 	}
 
-	public function plugin_action_links( $links ) {
-		unset( $links['go_pro'] );
-
-		return $links;
-	}
-
 	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
 		if ( ELEMENTOR_PRO_PLUGIN_BASE === $plugin_file ) {
 			$row_meta = [
@@ -263,6 +257,28 @@ class Admin extends App {
 		return $categories;
 	}
 
+	public function register_ajax_actions( $ajax_manager ) {
+		$ajax_manager->register_ajax_action( 'elementor_site_mailer_campaign', [ $this, 'handle_hints_cta' ] );
+	}
+
+	public function handle_hints_cta( $request ) {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			wp_send_json_error();
+		}
+
+		if ( empty( $request['source'] ) ) {
+			return;
+		}
+
+		$campaign_data = [
+			'source' => sanitize_key( $request['source'] ),
+			'campaign' => 'sm-plg-v' . ProUtils\Abtest::get_variation( 'plg_site_mailer_submission' ),
+			'medium' => 'wp-dash',
+		];
+
+		set_transient( 'elementor_site_mailer_campaign', $campaign_data, 30 * DAY_IN_SECONDS );
+	}
+
 	/**
 	 * Admin constructor.
 	 */
@@ -283,7 +299,13 @@ class Admin extends App {
 
 		add_action( 'elementor/admin/after_create_settings/' . Tools::PAGE_ID, [ $this, 'register_admin_tools_fields' ], 50 );
 
-		add_filter( 'plugin_action_links_' . ELEMENTOR_PLUGIN_BASE, [ $this, 'plugin_action_links' ], 50 );
+		add_filter( 'plugin_action_links_' . ELEMENTOR_PLUGIN_BASE, function ( $links ) {
+			return Action_Links::get_links( $links );
+		}, 50 );
+		add_filter( 'plugin_action_links_' . ELEMENTOR_PRO_PLUGIN_BASE, function ( $links ) {
+			return Action_Links::get_pro_links( $links );
+		}, 50 );
+
 		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
@@ -292,5 +314,7 @@ class Admin extends App {
 		add_action( 'in_plugin_update_message-' . ELEMENTOR_PRO_PLUGIN_BASE, function( $plugin_data ) {
 			Plugin::elementor()->admin->version_update_warning( ELEMENTOR_PRO_VERSION, $plugin_data['new_version'] );
 		} );
+
+		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 	}
 }

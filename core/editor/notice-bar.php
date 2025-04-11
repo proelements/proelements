@@ -85,7 +85,9 @@ class Notice_Bar extends Base_Notice_Bar {
 			];
 		}
 
-		if ( ! License_API::is_license_about_to_expire() ) {
+		$should_show_renew_license_notice = apply_filters( 'elementor_pro/license/should_show_renew_license_notice', true );
+
+		if ( ! License_API::is_license_about_to_expire() || ! $should_show_renew_license_notice ) {
 			return [];
 		}
 

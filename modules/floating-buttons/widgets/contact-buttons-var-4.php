@@ -3,7 +3,7 @@
 namespace ElementorPro\Modules\FloatingButtons\Widgets;
 
 use Elementor\Core\Base\Providers\Social_Network_Provider;
-use Elementor\Modules\FloatingButtons\Base\Widget_Contact_Button_Base;
+use ElementorPro\Modules\FloatingButtons\Base\Widget_Contact_Button_Base_Pro;
 use ElementorPro\Modules\FloatingButtons\Classes\Render\Contact_Buttons_Var_4_Render;
 
 
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Contact_Buttons_Var_4 extends Widget_Contact_Button_Base {
+class Contact_Buttons_Var_4 extends Widget_Contact_Button_Base_Pro {
 
 	public static function get_configuration() {
 		$config = parent::get_configuration();
@@ -25,6 +25,7 @@ class Contact_Buttons_Var_4 extends Widget_Contact_Button_Base {
 		];
 		$config['content']['chat_button_section']['has_notification_dot'] = false;
 		$config['content']['chat_button_section']['has_active_tab'] = true;
+		$config['content']['chat_button_section']['chat_aria_label'] = esc_html__( 'Links', 'elementor-pro' );
 		$config['content']['contact_section']['platform']['group-1'] = [
 			Social_Network_Provider::EMAIL,
 			Social_Network_Provider::TELEPHONE,
@@ -54,6 +55,7 @@ class Contact_Buttons_Var_4 extends Widget_Contact_Button_Base {
 		$config['content']['contact_section']['repeater']['has_tooltip'] = true;
 		$config['content']['contact_section']['repeater']['tooltip_label'] = esc_html__( 'Tooltip', 'elementor-pro' );
 		$config['content']['contact_section']['platform']['limit'] = null;
+		$config['content']['contact_section']['has_accessible_name'] = false;
 		$config['style']['contact_section']['has_buttons_heading'] = false;
 		$config['style']['contact_section']['has_buttons_size'] = false;
 		$config['style']['contact_section']['has_box_shadow'] = true;

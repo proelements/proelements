@@ -166,8 +166,7 @@ trait Products_Trait {
 		$this->add_control(
 			'related_products_note',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => esc_html__( 'Note: The Related Products Query is available when creating a Single Product template', 'elementor-pro' ),
 				'condition' => [
@@ -179,8 +178,7 @@ trait Products_Trait {
 		$this->add_control(
 			'upsells_products_note',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => esc_html__( 'Note: The Upsells Query is available when creating a Single Product template', 'elementor-pro' ),
 				'condition' => [
@@ -192,8 +190,7 @@ trait Products_Trait {
 		$this->add_control(
 			'cross_sells_products_note',
 			[
-				// TODO: Remove define() with the release of Elementor 3.22
-				'type' => defined( 'Controls_Manager::ALERT' ) ? Controls_Manager::ALERT : 'alert',
+				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => esc_html__( 'Note: The Cross-Sells Query is available when creating a Cart page', 'elementor-pro' ),
 				'condition' => [

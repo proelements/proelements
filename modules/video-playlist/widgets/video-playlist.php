@@ -12,6 +12,7 @@ use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Icons_Manager;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -33,6 +34,24 @@ class Video_Playlist extends Base_Widget {
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-video-playlist' ];
 	}
 
 	protected function register_controls() {
@@ -534,7 +553,7 @@ class Video_Playlist extends Base_Widget {
 				],
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .collapsible .e-inner-tab-text' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-inner-tabs-content-wrapper .collapsible .e-inner-tab-text' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'inner_tab_is_content_collapsible' => 'collapsible',
@@ -808,7 +827,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Background', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-header' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-header' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -820,7 +839,7 @@ class Video_Playlist extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-header .e-tabs-title' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-header .e-tabs-title' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -851,9 +870,9 @@ class Video_Playlist extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-header .e-tabs-videos-count' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-header .e-tabs-header-right-side i' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-header .e-tabs-header-right-side svg' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-header .e-tabs-videos-count' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-header .e-tabs-header-right-side i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-header .e-tabs-header-right-side svg' => 'fill: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -902,10 +921,10 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Background', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-items-wrapper' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-items-wrapper .shadow-bottom' => 'background: linear-gradient(180deg, transparent 0%, {{VALUE}} 100%)',
-					'{{WRAPPER}} .e-tabs-items-wrapper .shadow-top' => 'background: linear-gradient(0deg, transparent 0%, {{VALUE}} 100%);',
+					'{{WRAPPER}} .e-tabs-items .e-tab-title:not(:where( .e-active ))' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-items-wrapper' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-items-wrapper .shadow-bottom' => 'background: linear-gradient(180deg, transparent 0%, {{VALUE}} 100%)',
+					'{{WRAPPER}} .e-tabs-wrapper .e-tabs-items-wrapper .shadow-top' => 'background: linear-gradient(0deg, transparent 0%, {{VALUE}} 100%);',
 				],
 			]
 		);
@@ -916,8 +935,8 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title .e-tab-title-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tab-title .e-tab-title-text a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text a' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -929,7 +948,7 @@ class Video_Playlist extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'normal_typography',
-				'selector' => '{{WRAPPER}} .e-tab-title .e-tab-title-text',
+				'selector' => '{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -950,7 +969,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title .e-tab-duration' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-duration' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -980,9 +999,9 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title i' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tab-title svg' => 'fill: {{VALUE}};',
-					'{{WRAPPER}} .e-tab-title svg path' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title svg' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title svg path' => 'fill: {{VALUE}};',
 				],
 			]
 		);
@@ -998,8 +1017,8 @@ class Video_Playlist extends Base_Widget {
 					],
 					'text_shadow' => [
 						'selectors' => [
-							'{{WRAPPER}} .e-tab-title i' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
-							'{{WRAPPER}} .e-tab-title svg' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}});',
+							'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title i' => 'text-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}};',
+							'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title svg' => 'filter: drop-shadow({{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{COLOR}});',
 						],
 					],
 				],
@@ -1056,7 +1075,7 @@ class Video_Playlist extends Base_Widget {
 					'groove' => _x( 'Groove', 'Border Control', 'elementor-pro' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title' => 'border-style: {{VALUE}};',
 				],
 			]
 		);
@@ -1079,7 +1098,7 @@ class Video_Playlist extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title' => 'border-width: 0 0 {{SIZE}}{{UNIT}} 0;',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title' => 'border-width: 0 0 {{SIZE}}{{UNIT}} 0;',
 				],
 				'condition' => [
 					'normal_separator_style!' => '',
@@ -1093,7 +1112,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
 					'normal_separator_style!' => '',
@@ -1124,7 +1143,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Background', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-items-wrapper .e-tabs-items .e-tab-title:where( .e-active, :hover )' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover )' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1242,8 +1261,8 @@ class Video_Playlist extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span i' => 'font-size: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) span svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) span i' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) span svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1309,7 +1328,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-items-wrapper .e-tabs-items .e-tab-title.e-active' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title.e-active' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
 					'active_separator_style!' => '',
@@ -1443,8 +1462,8 @@ class Video_Playlist extends Base_Widget {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper' => '--inner-tabs-border-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title.e-inner-tab-active' => 'border-width: 0 0 {{SIZE}}{{UNIT}} 0;',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper' => '--inner-tabs-border-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title.e-inner-tab-active' => 'border-width: 0 0 {{SIZE}}{{UNIT}} 0;',
 				],
 			]
 		);
@@ -1455,7 +1474,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Border Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper' => '--inner-tabs-border-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper' => '--inner-tabs-border-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1466,9 +1485,9 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-active' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-content-wrapper .e-inner-tab-content' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-content-wrapper .e-inner-tab-title' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-active' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-content-wrapper .e-inner-tab-content' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-content-wrapper .e-inner-tab-title' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1488,7 +1507,7 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title a' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1499,8 +1518,8 @@ class Video_Playlist extends Base_Widget {
 				'label' => esc_html__( 'Active Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title.e-inner-tab-active a' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title.e-inner-tab-active' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title.e-inner-tab-active a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs .e-tabs-inner-tabs .e-inner-tabs-wrapper .e-inner-tab-title.e-inner-tab-active' => 'border-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1726,7 +1745,7 @@ class Video_Playlist extends Base_Widget {
 	}
 
 	private function create_playlist_items_array( $playlist_items ) {
-		$playlist_items_array = array();
+		$playlist_items_array = [];
 		$id_int = substr( $this->get_id_int(), 0, 3 );
 
 		foreach ( $playlist_items as $index => $playlist_item ) {
@@ -1921,9 +1940,8 @@ class Video_Playlist extends Base_Widget {
 							<?php if ( $item->show_overlay_image ) : ?>
 								<div class="elementor-custom-embed-image-overlay elementor-clickable" style="background-image: url('<?php echo esc_url( $playlist_object->image_overlay_image ); ?>');">
 									<?php if ( ! empty( $playlist_object->image_overlay_icon['value'] ) ) : ?>
-										<div class="elementor-custom-embed-play" role="button">
+										<div class="elementor-custom-embed-play" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Play Video', 'elementor-pro' ); ?>">
 											<?php Icons_Manager::render_icon( $playlist_object->image_overlay_icon, [ 'aria-hidden' => 'true' ] ); ?>
-											<span class="elementor-screen-only"><?php echo esc_html__( 'Play Video', 'elementor-pro' ); ?></span>
 										</div>
 									<?php endif; ?>
 								</div>

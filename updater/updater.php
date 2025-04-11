@@ -292,7 +292,7 @@ class Updater {
 		if ( ! is_file( $plugin_file ) ) {
 			return false;
 		}
-		$data = get_plugin_data( $plugin_file );
+		$data = get_plugin_data( $plugin_file, false, false );
 		return $data;
 	}
 

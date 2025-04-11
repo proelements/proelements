@@ -40,14 +40,15 @@ class Share_Buttons extends Base_Widget {
 		],
 	];
 
-	public function get_style_depends() {
+	public function get_style_depends(): array {
+		$style_depends = [ 'widget-share-buttons', 'e-apple-webkit' ];
+
 		if ( Icons_Manager::is_migration_allowed() ) {
-			return [
-				'elementor-icons-fa-solid',
-				'elementor-icons-fa-brands',
-			];
+			$style_depends[] = 'elementor-icons-fa-solid';
+			$style_depends[] = 'elementor-icons-fa-brands';
 		}
-		return [];
+
+		return $style_depends;
 	}
 
 	private static function get_network_icon_data( $network_name ) {
@@ -89,6 +90,10 @@ class Share_Buttons extends Base_Widget {
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	protected function register_controls() {
@@ -695,7 +700,7 @@ class Share_Buttons extends Base_Widget {
 		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
 			$icon = Icons_Manager::render_font_icon( $network_icon_data );
 		} else {
-			$icon = sprintf( '<i class="%s" aria-hidden="true"></i>', $network_icon_data['value'] );
+			$icon = sprintf( '<i class="%s" aria-hidden="true"></i>', esc_attr( $network_icon_data['value'] ) );
 		}
 
 		Utils::print_unescaped_internal_string( $icon );

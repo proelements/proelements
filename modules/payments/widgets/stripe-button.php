@@ -9,6 +9,7 @@ use Elementor\Utils;
 use ElementorPro\Core\Utils as ProUtils;
 use ElementorPro\Modules\Payments\Classes\Payment_Button;
 use ElementorPro\Modules\Payments\Module;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -44,6 +45,10 @@ class Stripe_Button extends Payment_Button {
 
 	protected function get_merchant_name() {
 		return 'Stripe';
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**

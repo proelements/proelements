@@ -12,6 +12,7 @@ use Elementor\Group_Control_Text_Stroke;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -33,6 +34,24 @@ class Flip_Box extends Base_Widget {
 
 	protected function is_dynamic_content(): bool {
 		return false;
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-flip-box' ];
 	}
 
 	protected function register_controls() {
@@ -648,7 +667,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'image_spacing',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -806,7 +825,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'icon_spacing',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -995,7 +1014,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'title_spacing_a',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -1201,7 +1220,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'title_spacing_b',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -1276,7 +1295,7 @@ class Flip_Box extends Base_Widget {
 		$this->add_control(
 			'description_spacing_b',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Gap', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [

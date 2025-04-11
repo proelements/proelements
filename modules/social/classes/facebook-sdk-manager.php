@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Facebook_SDK_Manager {
 
 	const OPTION_NAME_APP_ID = 'elementor_pro_facebook_app_id';
+	const FACEBOOK_PLUGINS_FAQ_URL = 'https://developers.facebook.com/docs/plugins/faqs?__cft__[0]=AZWTalTI1B5jfnDA1jij6GA2PisutktOCj7s5QwreTg5em5ewsd2SG3kRoKU88Q8v_2xyZHRsZs9mYrtQT1qBH05IIvy1T5a4SwAkTrZ7ZjuKqqahQEdc3dP-VZPvPApR-KDDeJmV2Auvjw_MKpySqgq&__tn__=R]-R#faq_1585575021764180';
 
 	public static function get_app_id() {
 		return get_option( self::OPTION_NAME_APP_ID, '' );

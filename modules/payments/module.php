@@ -147,7 +147,7 @@ class Module extends Module_Base {
 	 *
 	 */
 	public function get_stripe_tax_rates( array $data ) {
-		Utils::_unstable_check_document_permissions( $data['editor_post_id'] );
+		Utils::_unstable_get_document_for_edit( $data['editor_post_id'] );
 
 		$tax_rates_lists = [];
 		$tax_rates_lists['live_api_key'] = $this->get_tax_rates( $this->get_global_stripe_live_secret_key() );
@@ -221,7 +221,7 @@ class Module extends Module_Base {
 		if ( ! empty( $data ) ) {
 			foreach ( $data as $k => $v ) {
 				$is_inclusive = ( true === $v['inclusive'] ? 'inclusive' : 'exclusive' );
-				$joint_tax_data = serialize( [ $v['id'], $is_inclusive ] );
+				$joint_tax_data = wp_json_encode( [ $v['id'], $is_inclusive ] );
 				$display_name = $v['description'] ? $v['display_name'] . ' - ' . $v['description'] : $v['display_name'];
 				$tax_rates_options[ $joint_tax_data ] = $display_name;
 			}
@@ -359,7 +359,7 @@ class Module extends Module_Base {
 		}
 
 		if ( isset( $args['tax_rates'] ) ) {
-			$tax_rate = unserialize( $args['tax_rates'] );
+			$tax_rate = json_decode( $args['tax_rates'] );
 			$tax_id = [ $tax_rate[0] ];
 			$tax_behavior = $tax_rate[1];
 
@@ -450,6 +450,15 @@ class Module extends Module_Base {
 				],
 			],
 		] );
+	}
+
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
 	}
 
 	public function __construct() {

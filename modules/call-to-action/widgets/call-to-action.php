@@ -43,6 +43,24 @@ class Call_To_Action extends Base_Widget {
 		return false;
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-call-to-action', 'e-transitions' ];
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_main_image',
@@ -877,6 +895,14 @@ class Call_To_Action extends Base_Widget {
 			Group_Control_Text_Stroke::get_type(),
 			[
 				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-cta__title',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'title_text_shadow',
 				'selector' => '{{WRAPPER}} .elementor-cta__title',
 			]
 		);

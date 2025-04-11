@@ -53,7 +53,7 @@ class Preferences {
 		$value = Utils::get_user_option_with_default( $option_name, $user->ID, '1' );
 
 		?>
-		<h2><?php echo esc_html__( 'Elementor - Notes', 'elementor-pro' ); ?></h2>
+		<h2><?php echo esc_html__( 'Elementor Notes', 'elementor-pro' ); ?></h2>
 		<table class="form-table" role="presentation">
 			<tr>
 				<th>

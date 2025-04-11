@@ -43,6 +43,24 @@ class Nav_Menu extends Base_Widget {
 		return [ 'smartmenus' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * Retrieve the list of style dependencies the widget requires.
+	 *
+	 * @since 3.24.0
+	 * @access public
+	 *
+	 * @return array Widget style dependencies.
+	 */
+	public function get_style_depends(): array {
+		return [ 'widget-nav-menu' ];
+	}
+
 	protected function get_nav_menu_index() {
 		return $this->nav_menu_index++;
 	}
@@ -377,7 +395,7 @@ class Nav_Menu extends Base_Widget {
 		$this->add_control(
 			'text_align',
 			[
-				'label' => esc_html__( 'Text  Align', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Align', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'aside',
 				'options' => [
@@ -1002,7 +1020,7 @@ class Nav_Menu extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-nav-menu--dropdown a, {{WRAPPER}} .elementor-menu-toggle' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-nav-menu--dropdown a, {{WRAPPER}} .elementor-menu-toggle' => 'color: {{VALUE}}; fill: {{VALUE}};',
 				],
 			]
 		);
@@ -1568,7 +1586,7 @@ class Nav_Menu extends Base_Widget {
 			'class' => 'elementor-menu-toggle',
 			'role' => 'button',
 			'tabindex' => '0',
-			'aria-label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
+			'aria-label' => esc_attr__( 'Menu Toggle', 'elementor-pro' ),
 			'aria-expanded' => 'false',
 		] );
 
@@ -1640,7 +1658,6 @@ class Nav_Menu extends Base_Widget {
 				echo '</span>';
 			}
 			?>
-			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'elementor-pro' ); ?></span>
 		</div>
 		<?php
 	}

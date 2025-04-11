@@ -2,13 +2,15 @@
 namespace ElementorPro\Modules\Forms;
 
 use Elementor\Controls_Manager;
+use Elementor\Settings;
+use Elementor\Core\Admin\Admin_Notices;
+use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use ElementorPro\Core\Upgrade\Manager as Upgrade_Manager;
+
+use Elementor\User;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\Forms\Data\Controller;
-use Elementor\Core\Experiments\Manager;
-use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Base\Module_Base;
-use ElementorPro\Modules\Forms\Actions;
-use ElementorPro\Modules\Forms\Classes;
 use ElementorPro\Modules\Forms\Controls\Fields_Map;
 use ElementorPro\Modules\Forms\Registrars\Form_Actions_Registrar;
 use ElementorPro\Modules\Forms\Registrars\Form_Fields_Registrar;
@@ -51,12 +53,40 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * @deprecated 3.1.0
+	 * Get the base URL for assets.
+	 *
+	 * @return string
 	 */
-	public function localize_settings() {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function( __METHOD__, '3.1.0' );
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
 
-		return [];
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/forms/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-forms.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		$widget_styles = $this->get_widgets_style_list();
+
+		foreach ( $widget_styles as $widget_style_name ) {
+			wp_register_style(
+				$widget_style_name,
+				$this->get_css_assets_url( $widget_style_name, null, true, true ),
+				[ 'elementor-frontend' ],
+				ELEMENTOR_PRO_VERSION
+			);
+		}
+	}
+
+	private function get_widgets_style_list(): array {
+		return [
+			'widget-form',
+			'widget-login',
+		];
 	}
 
 	public static function find_element_recursive( $elements, $form_id ) {
@@ -152,22 +182,37 @@ class Module extends Module_Base {
 	 * Register submissions
 	 */
 	private function register_submissions_component() {
-		$experiments_manager = Plugin::elementor()->experiments;
 		$name = Form_Submissions_Component::NAME;
 
-		$experiments_manager->add_feature( [
-			'name' => $name,
-			'title' => esc_html__( 'Form Submissions', 'elementor-pro' ),
-			'description' => esc_html__( 'Never lose another submission! Using “Actions After Submit” you can now choose to save all submissions to an internal database.', 'elementor-pro' ),
-			'release_status' => Manager::RELEASE_STATUS_STABLE,
-			'default' => Manager::STATE_ACTIVE,
-		] );
+		if ( is_admin() ) {
+			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_submissions_admin_fields' ] );
+		}
 
-		if ( ! $experiments_manager->is_feature_active( $name ) ) {
+		if ( '1' === get_option( 'elementor_' . $name ) ) {
 			return;
 		}
 
 		$this->add_component( $name, new Form_Submissions_Component() );
+	}
+
+	public function register_submissions_admin_fields( Settings $settings ) {
+		$settings->add_field(
+			Settings::TAB_ADVANCED,
+			Settings::TAB_ADVANCED,
+			Form_Submissions_Component::NAME,
+			[
+				'label' => esc_html__( 'Form Submissions', 'elementor-pro' ),
+				'field_args' => [
+					'type' => 'select',
+					'std' => '',
+					'options' => [
+						'' => esc_html__( 'Enable', 'elementor-pro' ),
+						'1' => esc_html__( 'Disable', 'elementor-pro' ),
+					],
+					'desc' => esc_html__( 'Never lose another submission! Using “Actions After Submit” you can now choose to save all submissions to an internal database.', 'elementor-pro' ),
+				],
+			],
+		);
 	}
 
 	/**
@@ -176,6 +221,7 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 

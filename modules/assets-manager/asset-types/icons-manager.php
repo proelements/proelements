@@ -19,10 +19,6 @@ class Icons_Manager {
 
 	const CPT = 'elementor_icons';
 
-	const FONTS_OPTION_NAME = 'elementor_fonts_manager_fonts';
-
-	const FONTS_NAME_TYPE_OPTION_NAME = 'elementor_fonts_manager_font_types';
-
 	const MENU_SLUG = 'edit.php?post_type=' . self::CPT;
 
 	const PROMOTION_MENU_SLUG = 'e-custom-icons';

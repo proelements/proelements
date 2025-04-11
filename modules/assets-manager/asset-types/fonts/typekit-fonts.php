@@ -163,7 +163,7 @@ class Typekit_Fonts extends Font_Base {
 		$settings->add_section( Settings::TAB_INTEGRATIONS, 'typekit', [
 			'callback' => function() {
 				echo '<hr><h2>' . esc_html__( 'Adobe Fonts (TypeKit)', 'elementor-pro' ) . '</h2>';
-				esc_html_e( 'TypeKit partners with the world’s leading type foundries to bring thousands of beautiful fonts to designers every day.', 'elementor-pro' );
+				echo esc_html__( 'TypeKit partners with the world’s leading type foundries to bring thousands of beautiful fonts to designers every day.', 'elementor-pro' );
 			},
 			'fields' => [
 				self::TYPEKIT_KIT_ID_OPTION_NAME => [

@@ -53,7 +53,7 @@ class Delete_User {
 
 		?>
 		<h4>
-			<?php echo esc_html__( 'Elementor - Notes', 'elementor-pro' ); ?>
+			<?php echo esc_html__( 'Elementor Notes', 'elementor-pro' ); ?>
 		</h4>
 		<p>
 			<?php

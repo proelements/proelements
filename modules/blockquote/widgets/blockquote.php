@@ -17,14 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Blockquote extends Base_Widget {
 
-	public function get_style_depends() {
-		if ( Icons_Manager::is_migration_allowed() ) {
-			return [ 'elementor-icons-fa-brands' ];
-		}
-
-		return [];
-	}
-
 	public function get_name() {
 		return 'blockquote';
 	}
@@ -43,6 +35,20 @@ class Blockquote extends Base_Widget {
 
 	public function get_keywords() {
 		return [ 'blockquote', 'quote', 'paragraph', 'testimonial', 'text', 'twitter', 'tweet' ];
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
+	public function get_style_depends(): array {
+		$style_depends = [ 'widget-blockquote' ];
+
+		if ( Icons_Manager::is_migration_allowed() ) {
+			$style_depends[] = 'elementor-icons-fa-brands';
+		}
+
+		return $style_depends;
 	}
 
 	protected function register_controls() {
@@ -949,7 +955,7 @@ class Blockquote extends Base_Widget {
 									<i class="fa fa-twitter" aria-hidden="true"></i>
 								<?php endif; ?>
 								<?php if ( 'icon-text' !== $tweet_button_view ) : ?>
-									<span class="elementor-screen-only"><?php esc_html_e( 'Tweet', 'elementor-pro' ); ?></span>
+									<span class="elementor-screen-only"><?php echo esc_html__( 'Tweet', 'elementor-pro' ); ?></span>
 								<?php endif; ?>
 							<?php endif; ?>
 							<?php if ( 'icon-text' === $tweet_button_view || 'text' === $tweet_button_view ) : ?>
@@ -1001,7 +1007,7 @@ class Blockquote extends Base_Widget {
 										<i class="fa fa-twitter" aria-hidden="true"></i>
 									<# } #>
 									<# if ( 'icon-text' !== tweetButtonView ) { #>
-										<span class="elementor-screen-only"><?php esc_html_e( 'Tweet', 'elementor-pro' ); ?></span>
+										<span class="elementor-screen-only"><?php echo esc_html__( 'Tweet', 'elementor-pro' ); ?></span>
 									<# } #>
 								<# } #>
 								<# if ( 'icon-text' === tweetButtonView || 'text' === tweetButtonView ) { #>

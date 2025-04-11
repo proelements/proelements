@@ -3,6 +3,7 @@
 
 namespace ElementorPro\Modules\Tiers\AdminMenuItems;
 
+use Elementor\Core\Utils\Promotions\Filtered_Promotions_Manager;
 use Elementor\Modules\Promotions\AdminMenuItems\Interfaces\Promotion_Menu_Item;
 use Elementor\Settings;
 
@@ -48,6 +49,9 @@ abstract class Base_Promotion_Item implements Promotion_Menu_Item {
 			'upgrade_text' => $this->get_cta_text(),
 			'upgrade_url' => $this->get_cta_url(),
 		];
+
+		$config = Filtered_Promotions_Manager::get_filtered_promotion_data( $config, 'elementor-pro/advanced-' . $this->get_name() . '-pro-widget/promotion', 'upgrade_url' );
+
 		?>
 		<div class="wrap">
 			<div class="elementor-blank_state">

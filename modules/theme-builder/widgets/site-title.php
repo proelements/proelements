@@ -35,15 +35,6 @@ class Site_Title extends Widget_Heading {
 		return [ 'site', 'title', 'name' ];
 	}
 
-	public function get_inline_css_depends() {
-		return [
-			[
-				'name' => 'heading',
-				'is_core_dependency' => true,
-			],
-		];
-	}
-
 	protected function register_controls() {
 		parent::register_controls();
 		$this->update_control(
@@ -94,5 +85,9 @@ class Site_Title extends Widget_Heading {
 
 	protected function get_html_wrapper_class() {
 		return parent::get_html_wrapper_class() . ' elementor-widget-' . parent::get_name();
+	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 }

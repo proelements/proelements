@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\ThemeBuilder\Documents;
 
 use Elementor\DB;
+use ElementorPro\Modules\FloatingButtons\Documents\Floating_Buttons;
 use ElementorPro\Modules\ThemeBuilder\Module;
 use ElementorPro\Plugin;
 
@@ -78,6 +79,12 @@ abstract class Single_Base extends Archive_Single_Base {
 		$requested_post_id = get_the_ID();
 		if ( $requested_post_id !== $this->post->ID ) {
 			$requested_document = Module::instance()->get_document( $requested_post_id );
+
+			if ( $requested_document instanceof Floating_Buttons ) {
+				$requested_document->print_content();
+				parent::print_content();
+				return;
+			}
 
 			/**
 			 * if current requested document is theme-document & it's not a content type ( like header/footer/sidebar )

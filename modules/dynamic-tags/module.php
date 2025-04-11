@@ -30,9 +30,6 @@ class Module extends TagsModule {
 
 	const WOOCOMMERCE_GROUP = 'woocommerce';
 
-	// TODO: Remove when Core 3.10.0 is released.
-	const DATETIME_CATEGORY = 'datetime';
-
 	const LICENSE_FEATURE_ACF_NAME = 'dynamic-tags-acf';
 	const LICENSE_FEATURE_PODS_NAME = 'dynamic-tags-pods';
 	const LICENSE_FEATURE_TOOLSET_NAME = 'dynamic-tags-toolset';
@@ -123,6 +120,7 @@ class Module extends TagsModule {
 			'Site_URL',
 			'Internal_URL',
 			'Current_Date_Time',
+			'Reload_Page',
 			'Request_Parameter',
 			'Lightbox',
 			'Featured_Image_Data',

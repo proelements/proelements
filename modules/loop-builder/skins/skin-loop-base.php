@@ -14,6 +14,7 @@ use ElementorPro\Modules\LoopBuilder\Traits\Alternate_Templates_Trait;
 use Elementor\Utils;
 use Elementor\Core\Files\CSS\Post as Post_CSS;
 use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Css_Trait;
+use ElementorPro\Modules\Posts\Traits\Query_Note_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -30,6 +31,7 @@ class Skin_Loop_Base extends Skin_Base {
 
 	use Alternate_Templates_Trait;
 	use Loop_Css_Trait;
+	use Query_Note_Trait;
 
 	public function get_id() {
 		return MODULE::LOOP_BASE_SKIN_ID;
@@ -59,6 +61,10 @@ class Skin_Loop_Base extends Skin_Base {
 				],
 			]
 		);
+
+		if ( 'loop-grid' === $widget->get_name() && $this->is_editing_archive_template() ) {
+			$this->inject_archive_query_note( 'post_query_query_id', 'post_query_post_type', $widget );
+		}
 	}
 
 	protected function maybe_add_load_more_wrapper_class() {
@@ -133,6 +139,24 @@ class Skin_Loop_Base extends Skin_Base {
 		if ( $current_document ) {
 			Plugin::elementor()->documents->switch_to_document( $current_document );
 		}
+	}
+
+	protected function add_render_hooks() {
+		global $wp_query;
+		$wp_query->is_loop_widget = true;
+
+		add_filter( 'elementor-pro/off-canvas/id', [ $this, 'filter_off_canvas_id' ] );
+	}
+
+	protected function remove_render_hooks() {
+		global $wp_query;
+		unset( $wp_query->is_loop_widget );
+
+		remove_filter( 'elementor-pro/off-canvas/id', [ $this, 'filter_off_canvas_id' ] );
+	}
+
+	public function filter_off_canvas_id( $off_canvas_id ) {
+		return $this->parent->get_id() . '-' . get_the_ID() . '-' . $off_canvas_id;
 	}
 
 	protected function handle_no_posts_found() {

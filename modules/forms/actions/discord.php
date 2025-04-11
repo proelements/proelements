@@ -210,7 +210,7 @@ class Discord extends Action_Base {
 
 		$webhook_data = apply_filters( 'elementor_pro/forms/discord/webhook_args', $webhook_data );
 
-		$response = wp_remote_post( $settings['discord_webhook'], [
+		$response = wp_safe_remote_post( $settings['discord_webhook'], [
 			'body' => wp_json_encode( $webhook_data ),
 			'headers' => [ 'Content-Type' => 'application/json; charset=utf-8' ],
 		]);

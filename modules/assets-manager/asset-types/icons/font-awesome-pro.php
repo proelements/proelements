@@ -101,7 +101,7 @@ class Font_Awesome_Pro extends  Assets_Base {
 		$settings->add_section( Settings::TAB_INTEGRATIONS, 'font_awesome_pro', [
 			'callback' => function() {
 				echo '<hr><h2>' . esc_html__( 'Font Awesome Pro', 'elementor-pro' ) . '</h2>';
-				esc_html_e( 'Font Awesome, the web\'s most popular icon set and toolkit, Pro Integration', 'elementor-pro' );
+				echo esc_html__( 'Font Awesome, the web\'s most popular icon set and toolkit, Pro Integration', 'elementor-pro' );
 			},
 			'fields' => [
 				self::FA_KIT_ID_OPTION_NAME => [

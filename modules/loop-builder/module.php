@@ -51,8 +51,53 @@ class Module extends Module_Base {
 		return [ 'Loop_Grid', 'Loop_Carousel' ];
 	}
 
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/loop-builder/assets/scss/widgets/*.scss`
+	 * to `/assets/css/widget-*.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'widget-loop-common',
+			$this->get_css_assets_url( 'widget-loop-common', null, true, true ),
+			[ 'elementor-frontend' ],
+			ELEMENTOR_PRO_VERSION
+		);
+
+		wp_register_style(
+			'widget-loop-carousel',
+			$this->get_css_assets_url( 'widget-loop-carousel', null, true, true ),
+			[ 'elementor-frontend', 'e-swiper', 'widget-loop-common' ],
+			ELEMENTOR_PRO_VERSION
+		);
+
+		$direction_suffix = is_rtl() ? '-rtl' : '';
+		$has_custom_breakpoints = Plugin::elementor()->breakpoints->has_custom_breakpoints();
+
+		wp_register_style(
+			'widget-loop-grid',
+			Plugin::get_frontend_file_url( "widget-loop-grid{$direction_suffix}.min.css", $has_custom_breakpoints ),
+			[ 'elementor-frontend', 'widget-loop-common' ],
+			$has_custom_breakpoints ? null : ELEMENTOR_PRO_VERSION
+		);
+	}
+
 	public function __construct() {
 		parent::__construct();
+
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 
 		add_action( 'elementor/documents/register', function ( $documents_manager ) {
 			$this->register_documents( $documents_manager );

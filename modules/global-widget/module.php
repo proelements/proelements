@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\GlobalWidget;
 
 use Elementor\Core\Documents_Manager;
+use Elementor\Core\Utils\Promotions\Filtered_Promotions_Manager;
 use Elementor\Element_Base;
 use Elementor\TemplateLibrary\Source_Local;
 use ElementorPro\Base\Module_Base;
@@ -204,13 +205,16 @@ class Module extends Module_Base {
 
 	public function on_elementor_editor_init() {
 		if ( ! API::is_licence_has_feature( static::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			$promotion = Tiers::get_promotion_template( [
+			$promotion_data = [
 				'title' => esc_html__( 'Meet Our Global Widget', 'elementor-pro' ),
 				'messages' => [
 					esc_html__( 'Create Global Widgets. Modify the content, style and setting of any widget and reuse it across your website to accelerate your workflow and stay consistent.', 'elementor-pro' ),
 				],
 				'link' => 'https://go.elementor.com/go-pro-advanced-global-widget/',
-			], true );
+			];
+
+			$promotion_data = Filtered_Promotions_Manager::get_filtered_promotion_data( $promotion_data, 'elementor-pro/advanced-global-widget-pro-widget/promotion', 'link' );
+			$promotion = Tiers::get_promotion_template( $promotion_data, true );
 
 			Plugin::elementor()->common->add_template( $promotion, 'text' );
 

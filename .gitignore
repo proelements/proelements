@@ -34,8 +34,6 @@ build/prod/*
 ##########
 servers.yml
 
-# Vendor
-vendor/*
 
 # Project files #
 #################

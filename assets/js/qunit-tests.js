@@ -1,4 +1,4 @@
-/*! pro-elements - v3.23.0 - 05-08-2024 */
+/*! pro-elements - v3.28.0 - 23-03-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -72,7 +72,6 @@
 /******/ 	}
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /*!******************************!*\

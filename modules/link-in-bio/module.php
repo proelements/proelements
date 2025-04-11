@@ -13,10 +13,6 @@ class Module extends BaseModule {
 
 	const EXPERIMENT_NAME = 'link-in-bio';
 
-	public static function is_active(): bool {
-		return Plugin::$instance->experiments->is_feature_active( static::EXPERIMENT_NAME );
-	}
-
 	public function get_name(): string {
 		return static::EXPERIMENT_NAME;
 	}

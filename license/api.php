@@ -196,6 +196,7 @@ class API {
 
 	public static function get_license_data( $force_request = false ) {
 		$license_data['success'] = true;
+		$license_data['expires'] = 'lifetime';
 		$license_data['features'] = [  
 		                             'custom-attributes',
 		                             'custom_code',
@@ -257,6 +258,13 @@ class API {
 				'locales' => wp_json_encode( $locales ),
 				'beta' => 'yes' === get_option( 'elementor_beta', 'no' ),
 			];
+
+			if ( method_exists( '\\Elementor\\Api', 'get_site_key' ) ) {
+				$site_key = \Elementor\Api::get_site_key();
+				if ( ! empty( $site_key ) ) {
+					$body_args['site_key'] = $site_key;
+				}
+			}
 
 			$info_data = self::remote_post( 'pro/info', $body_args );
 

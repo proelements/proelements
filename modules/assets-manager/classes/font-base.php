@@ -17,7 +17,7 @@ class Font_Base extends Assets_Base {
 	public function __construct() {
 		parent::__construct();
 
-		$this->font_preview_phrase = esc_html__( 'Elementor Is Making the Web Beautiful!!!', 'elementor-pro' );
+		$this->font_preview_phrase = esc_html__( 'Elementor Is Making the Web Beautiful', 'elementor-pro' );
 	}
 
 	public function get_name() {
@@ -41,6 +41,8 @@ class Font_Base extends Assets_Base {
 	public function get_font_data( $post_id, $post_title ) {}
 
 	public function render_preview_column( $post_id ) {}
+
+	public function render_type_column( $post_id ) {}
 
 	public function get_font_variations_count( $post_id ) {}
 

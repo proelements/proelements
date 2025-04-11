@@ -77,7 +77,7 @@ class Utils {
 	}
 
 	public static function get_current_post_id() {
-		if ( isset( Plugin::elementor()->documents ) ) {
+		if ( isset( Plugin::elementor()->documents ) && Plugin::elementor()->documents->get_current() ) {
 			return Plugin::elementor()->documents->get_current()->get_main_id();
 		}
 
@@ -420,5 +420,31 @@ class Utils {
 
 	public static function format_control_condition( $name, $operator, $value ) {
 		return compact( 'name', 'operator', 'value' );
+	}
+
+	public static function create_widget_instance_from_db( $post_id, $widget_id ) {
+		$document = Plugin::elementor()->documents->get( $post_id );
+		$widget_data = \Elementor\Utils::find_element_recursive( $document->get_elements_data(), $widget_id );
+
+		return Plugin::elementor()->elements_manager->create_element_instance( $widget_data );
+	}
+
+	public static function has_invalid_post_permissions( $post ): bool {
+		$is_image_attachment = 'attachment' === $post->post_type && strpos( $post->post_mime_type, 'image/' ) === 0;
+
+		if ( $is_image_attachment ) {
+			return false;
+		}
+
+		$is_private = 'private' === $post->post_status
+			&& ! current_user_can( 'read_private_posts', $post->ID );
+
+		$not_allowed = 'publish' !== $post->post_status
+			&& ! current_user_can( 'edit_post', $post->ID );
+
+		$password_required = post_password_required( $post->ID )
+			&& ! current_user_can( 'edit_post', $post->ID );
+
+		return $is_private || $not_allowed || $password_required;
 	}
 }

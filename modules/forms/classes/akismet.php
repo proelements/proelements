@@ -34,6 +34,17 @@ class Akismet {
 		);
 
 		$form->add_control(
+			'akismet_enabled',
+			[
+				'label' => esc_html__( 'Akismet Spam Protection', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_off' => esc_html__( 'Off', 'elementor-pro' ),
+				'label_on' => esc_html__( 'On', 'elementor-pro' ),
+				'default' => 'yes',
+			]
+		);
+
+		$form->add_control(
 			'akismet_info',
 			[
 				'type' => Controls_Manager::ALERT,
@@ -44,6 +55,9 @@ class Akismet {
 					'<a href="http://go.elementor.com/widget-form-akismet/" target="_blank">',
 					'</a>'
 				),
+				'condition' => [
+					'akismet_enabled' => 'yes',
+				],
 			]
 		);
 
@@ -58,6 +72,9 @@ class Akismet {
 				],
 				'label_block' => true,
 				'render_type' => 'none',
+				'condition' => [
+					'akismet_enabled' => 'yes',
+				],
 			]
 		);
 
@@ -72,6 +89,9 @@ class Akismet {
 				],
 				'label_block' => true,
 				'render_type' => 'none',
+				'condition' => [
+					'akismet_enabled' => 'yes',
+				],
 			]
 		);
 
@@ -86,6 +106,9 @@ class Akismet {
 				],
 				'label_block' => true,
 				'render_type' => 'none',
+				'condition' => [
+					'akismet_enabled' => 'yes',
+				],
 			]
 		);
 
@@ -100,6 +123,9 @@ class Akismet {
 				],
 				'label_block' => true,
 				'render_type' => 'none',
+				'condition' => [
+					'akismet_enabled' => 'yes',
+				],
 			]
 		);
 
@@ -135,6 +161,10 @@ class Akismet {
 	private function is_spammed( Form_Record $record ) : bool {
 		$settings = $record->get( 'form_settings' );
 
+		if ( empty( $settings['akismet_enabled'] ) ) {
+			return false;
+		}
+
 		$params = [];
 
 		$params['comment_author'] = $this->get_parsed_content( $record, $settings['akismet_author'] );
@@ -156,7 +186,7 @@ class Akismet {
 		// http://blog.akismet.com/2012/06/19/pro-tip-tell-us-your-comment_type/
 		$params['comment_type'] = 'contact-form';
 
-		$ignore = array( 'HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW' );
+		$ignore = [ 'HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW' ];
 		foreach ( $_SERVER as $key => $value ) {
 			if ( ! in_array( $key, $ignore ) && is_string( $value ) ) {
 				$params[ $key ] = $value;
