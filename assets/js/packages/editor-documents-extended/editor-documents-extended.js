@@ -109,6 +109,23 @@ module.exports = window["wp"]["i18n"];
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -128,6 +145,9 @@ var __webpack_exports__ = {};
   !*** ./node_modules/@elementor/editor-documents-extended/dist/index.mjs ***!
   \**************************************************************************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   init: function() { return /* binding */ init4; }
+/* harmony export */ });
 /* harmony import */ var _elementor_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/store */ "@elementor/store");
 /* harmony import */ var _elementor_editor_app_bar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-app-bar */ "@elementor/editor-app-bar");
 /* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
@@ -351,10 +371,9 @@ function initStore() {
   syncStore();
 }
 
-// src/index.ts
-init4();
 //# sourceMappingURL=index.mjs.map
 }();
 (window.elementorV2 = window.elementorV2 || {}).editorDocumentsExtended = __webpack_exports__;
 /******/ })()
 ;
+window.elementorV2.editorDocumentsExtended?.init?.();

@@ -335,11 +335,11 @@ class Price_List extends Base_Widget {
 				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
+					'none' => esc_html__( 'None', 'elementor-pro' ),
 					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
 					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
 					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
 					'double' => esc_html__( 'Double', 'elementor-pro' ),
-					'none' => esc_html__( 'None', 'elementor-pro' ),
 				],
 				'default' => 'dotted',
 				'render_type' => 'template',

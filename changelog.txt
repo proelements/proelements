@@ -1,4 +1,24 @@
 # PRO Elements - by PROElements.org
+#### 3.29.0 - 2025-05-19
+
+* New: Introduced Cloud Templates - save, manage, and reuse your templates across all your sites from a single cloud library
+* Tweak: Improved accessibility with `role` attributes in Share Buttons widget
+* Tweak: Improved accessibility by grouping content with `role=region` in the Video Playlist widget
+* Fix: Focus color is not applied correctly for accessibility in WordPress Menu widget ([#24239](https://github.com/elementor/elementor/issues/24239))
+* Fix: Common scripts loaded late when using the Theme Builder
+
+#### 3.28.4 - 2025-05-05
+
+* Fix: Empty results appeared on the frontend when using the Taxonomy Filter with the 'Avoid Duplicates' option in Loop Grid widget
+* Fix: Errors occur when Debug mode is enabled and the Optimized Markup experiment is active
+
+#### 3.28.3 - 2025-04-16
+* Tweak: Improved sidebar navigation flow on the Elementor Home screen
+
+#### 3.28.2 - 2025-03-30
+
+* Fix: Default Elementor animation shown for logged-out users when using an "External URL" source in Lottie widget
+
 #### 3.28.1 - 2025-03-23
 
 * Security Fix: Improved code security enforcement in Animated Headline and Form widgets

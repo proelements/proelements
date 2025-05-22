@@ -100,7 +100,7 @@ trait Taxonomy_Filter_Trait {
 
 		add_filter( 'elementor/query/query_args', [ $this, 'modify_elementor_query_args' ], 15, 2 );
 
-		$query = QueryControl::instance()->get_query( $loop_widget, $loop_widget->get_query_name(), $query_args );
+		$query = QueryControl::instance()->get_query_ignoring_avoid_list( $loop_widget, $loop_widget->get_query_name(), $query_args );
 
 		remove_filter( 'elementor/query/query_args', [ $this, 'modify_elementor_query_args' ] );
 

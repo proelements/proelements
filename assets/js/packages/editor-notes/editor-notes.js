@@ -69,6 +69,23 @@ module.exports = window["wp"]["i18n"];
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -88,6 +105,9 @@ var __webpack_exports__ = {};
   !*** ./node_modules/@elementor/editor-notes/dist/index.mjs ***!
   \*************************************************************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   init: function() { return /* binding */ init; }
+/* harmony export */ });
 /* harmony import */ var _elementor_editor_app_bar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-app-bar */ "@elementor/editor-app-bar");
 /* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
 /* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
@@ -101,7 +121,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function useNotesActionProps() {
   const { isActive, isBlocked } = (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.__privateUseRouteStatus)("notes", {
-    blockOnPreviewMode: false
+    allowedEditModes: ["edit", "preview"]
   });
   return {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Notes", "elementor-pro"),
@@ -133,10 +153,9 @@ function init() {
   });
 }
 
-// src/index.ts
-init();
 //# sourceMappingURL=index.mjs.map
 }();
 (window.elementorV2 = window.elementorV2 || {}).editorNotes = __webpack_exports__;
 /******/ })()
 ;
+window.elementorV2.editorNotes?.init?.();

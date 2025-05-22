@@ -259,6 +259,7 @@ class Admin extends App {
 
 	public function register_ajax_actions( $ajax_manager ) {
 		$ajax_manager->register_ajax_action( 'elementor_site_mailer_campaign', [ $this, 'handle_hints_cta' ] );
+		$ajax_manager->register_ajax_action( 'elementor_send_app_campaign', [ $this, 'handle_send_app_campaign' ] );
 	}
 
 	public function handle_hints_cta( $request ) {
@@ -277,6 +278,24 @@ class Admin extends App {
 		];
 
 		set_transient( 'elementor_site_mailer_campaign', $campaign_data, 30 * DAY_IN_SECONDS );
+	}
+
+	public function handle_send_app_campaign( $request ) {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			wp_send_json_error();
+		}
+
+		if ( empty( $request['source'] ) ) {
+			return;
+		}
+
+		$campaign_data = [
+			'source' => sanitize_key( $request['source'] ),
+			'campaign' => 'snd-plg',
+			'medium' => 'wp-dash',
+		];
+
+		set_transient( 'elementor_send_app_campaign', $campaign_data, 30 * DAY_IN_SECONDS );
 	}
 
 	/**

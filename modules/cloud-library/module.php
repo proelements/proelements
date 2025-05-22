@@ -48,10 +48,11 @@ class Module extends Module_Base {
 				'utm_medium' => 'wp-dash',
 				'utm_campaign' => 'connect-and-activate-license',
 				'utm_content' => 'cloud-library',
+				'source' => 'cloud-library',
 			] ) ),
-			'library_connect_title' => esc_html__( 'Connect & Activate', 'elementor-pro' ),
-			'library_connect_sub_title' => esc_html__( 'Sub Title', 'elementor-pro' ),
-			'library_connect_button_text' => esc_html__( 'Connect & Activate', 'elementor-pro' ),
+			'library_connect_title_copy' => esc_html__( 'Connect to your Elementor account', 'elementor-pro' ),
+			'library_connect_sub_title_copy' => esc_html__( 'This includes activating your Elementor Pro license on a specific site.', 'elementor-pro' ) . '<br>' . esc_html__( 'Then you can find all your templates in one convenient library.', 'elementor-pro' ),
+			'library_connect_button_copy' => esc_html__( 'Connect & Activate', 'elementor-pro' ),
 		] );
 	}
 }

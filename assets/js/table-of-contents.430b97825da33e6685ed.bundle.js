@@ -1,4 +1,4 @@
-/*! pro-elements - v3.28.0 - 23-03-2025 */
+/*! pro-elements - v3.29.0 - 19-05-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["table-of-contents"],{
 
@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _dompurify = _interopRequireDefault(__webpack_require__(/*! dompurify */ "../node_modules/dompurify/dist/purify.js"));
+var _dompurify = _interopRequireDefault(__webpack_require__(/*! dompurify */ "../node_modules/dompurify/dist/purify.cjs.js"));
 class TOCHandler extends elementorModules.frontend.handlers.Base {
   getDefaultSettings() {
     const elementSettings = this.getElementSettings(),
@@ -408,4 +408,4 @@ exports["default"] = TOCHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=table-of-contents.8d46d3a531c49309b7eb.bundle.js.map
+//# sourceMappingURL=table-of-contents.430b97825da33e6685ed.bundle.js.map

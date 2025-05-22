@@ -114,7 +114,7 @@ class Slides extends Base_Widget {
 		$repeater->add_control(
 			'background_image',
 			[
-				'label' => _x( 'Image', 'Background Control', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .swiper-slide-bg' => 'background-image: url({{URL}})',
@@ -125,13 +125,13 @@ class Slides extends Base_Widget {
 		$repeater->add_control(
 			'background_size',
 			[
-				'label' => _x( 'Size', 'Background Control', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'cover',
 				'options' => [
-					'cover' => _x( 'Cover', 'Background Control', 'elementor-pro' ),
-					'contain' => _x( 'Contain', 'Background Control', 'elementor-pro' ),
-					'auto' => _x( 'Auto', 'Background Control', 'elementor-pro' ),
+					'cover' => esc_html__( 'Cover', 'elementor-pro' ),
+					'contain' => esc_html__( 'Contain', 'elementor-pro' ),
+					'auto' => esc_html__( 'Auto', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .swiper-slide-bg' => 'background-size: {{VALUE}}',

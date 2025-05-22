@@ -467,8 +467,8 @@ class Purchase_Summary extends Base_Widget {
 				'label' => esc_html__( 'Preview order with', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => 'Latest Order',
-					'custom-order' => 'Order ID',
+					'' => esc_html__( 'Latest Order', 'elementor-pro' ),
+					'custom-order' => esc_html__( 'Order ID', 'elementor-pro' ),
 				],
 			]
 		);

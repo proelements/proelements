@@ -1,4 +1,4 @@
-/*! pro-elements - v3.28.0 - 23-03-2025 */
+/*! pro-elements - v3.29.0 - 19-05-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["menu-title-keyboard-handler"],{
 

@@ -263,6 +263,5 @@ class Module extends Module_Base {
 		add_action( 'elementor/element/section/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/container/section_effects/after_section_start', [ $this, 'register_controls' ] );
 		add_action( 'elementor/element/common/section_effects/after_section_start', [ $this, 'register_controls' ] );
-		add_action( 'elementor/element/common-optimized/section_effects/after_section_start', [ $this, 'register_controls' ] );
 	}
 }

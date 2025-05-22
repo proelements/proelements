@@ -1,4 +1,4 @@
-/*! pro-elements - v3.28.0 - 23-03-2025 */
+/*! pro-elements - v3.29.0 - 19-05-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -21,7 +21,7 @@
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -84,8 +84,8 @@
 /******/ 			if (chunkId === "code-highlight") return "" + chunkId + ".d4867c919d0858f748df.bundle.js";
 /******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".9e1bbc4fcb37864c89d6.bundle.js";
 /******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".55ffb013a3fe565f55a5.bundle.js";
-/******/ 			if (chunkId === "vendors-node_modules_dompurify_dist_purify_js") return "cafdcd40a3ed0f7a7a4a.bundle.js";
-/******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".cf3f67d6b95e0138bb6b.bundle.js";
+/******/ 			if (chunkId === "vendors-node_modules_dompurify_dist_purify_cjs_js") return "5a6ed6f39be4c51afdc9.bundle.js";
+/******/ 			if (chunkId === "stripe-button") return "" + chunkId + ".cb4b1cf19f1c46430f76.bundle.js";
 /******/ 			if (chunkId === "progress-tracker") return "" + chunkId + ".fd1d31a26340ed74e10a.bundle.js";
 /******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".375998d4790797e91f21.bundle.js";
 /******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".04412cb9b4479aa37408.bundle.js";
@@ -103,7 +103,7 @@
 /******/ 			if (chunkId === "share-buttons") return "" + chunkId + ".fda49c1691f4a352c7ef.bundle.js";
 /******/ 			if (chunkId === "slides") return "" + chunkId + ".bcd16bbde90338846bd7.bundle.js";
 /******/ 			if (chunkId === "social") return "" + chunkId + ".ac16c075939dcb93f70c.bundle.js";
-/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".8d46d3a531c49309b7eb.bundle.js";
+/******/ 			if (chunkId === "table-of-contents") return "" + chunkId + ".430b97825da33e6685ed.bundle.js";
 /******/ 			if (chunkId === "archive-posts") return "" + chunkId + ".6e398ddd4a81a78bcea3.bundle.js";
 /******/ 			if (chunkId === "search-form") return "" + chunkId + ".8941aba5c12cdb05fb7c.bundle.js";
 /******/ 			if (chunkId === "woocommerce-menu-cart") return "" + chunkId + ".81f5bafc26b94cc86238.bundle.js";

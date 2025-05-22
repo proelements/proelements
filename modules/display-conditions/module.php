@@ -83,7 +83,6 @@ class Module extends Module_Base {
 			'elementor/element/section/section_advanced/after_section_end' => 'css_classes', // Sections
 			'elementor/element/column/section_advanced/after_section_end' => 'css_classes', // Columns
 			'elementor/element/common/_section_style/after_section_end' => '_css_classes', // Widgets
-			'elementor/element/common-optimized/_section_style/after_section_end' => '_css_classes', // Optimized Widgets
 			'elementor/element/container/section_layout/after_section_end' => 'css_classes', // Containers
 		];
 

@@ -764,6 +764,9 @@ class Admin {
 		add_filter( 'plugin_action_links_' . ELEMENTOR_PRO_PLUGIN_BASE, [ $this, 'plugin_action_links' ], 50 );
 		add_filter( 'plugin_auto_update_setting_html', [ $this, 'plugin_auto_update_setting_html' ], 10, 2 );
 		add_filter( 'elementor/admin/homescreen_promotion_tier', function ( $tier ) {
+			if ( API::is_license_expired() ) {
+				return API::STATUS_EXPIRED;
+			}
 			return API::get_access_tier();
 		} );
 

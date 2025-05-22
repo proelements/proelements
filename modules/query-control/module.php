@@ -44,6 +44,8 @@ class Module extends Module_Base {
 
 	public static $displayed_ids = [];
 
+	private static bool $ignore_avoid_list = false;
+
 	private static $supported_objects_for_query = [
 		self::QUERY_OBJECT_POST,
 		self::QUERY_OBJECT_TAX,
@@ -60,11 +62,24 @@ class Module extends Module_Base {
 	}
 
 	public static function add_to_avoid_list( $ids ) {
-		self::$displayed_ids = array_unique( array_merge( self::$displayed_ids, $ids ) );
+		if ( ! self::$ignore_avoid_list ) {
+			self::$displayed_ids = array_unique( array_merge( self::$displayed_ids, $ids ) );
+		}
 	}
 
 	public static function get_avoid_list_ids() {
 		return self::$displayed_ids;
+	}
+
+	public function get_query_ignoring_avoid_list( $loop_widget, $query_name, $query_args ) {
+		$original_ignore = self::$ignore_avoid_list;
+		self::$ignore_avoid_list = true;
+
+		try {
+			return $this->get_query( $loop_widget, $query_name, $query_args );
+		} finally {
+			self::$ignore_avoid_list = $original_ignore;
+		}
 	}
 
 	/**

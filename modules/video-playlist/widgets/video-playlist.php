@@ -1013,7 +1013,7 @@ class Video_Playlist extends Base_Widget {
 				'name' => 'normal_icon_top_text_shadow',
 				'fields_options' => [
 					'text_shadow_type' => [
-						'label' => _x( 'Shadow', 'Text Shadow Control', 'elementor-pro' ),
+						'label' => esc_html__( 'Shadow', 'elementor-pro' ),
 					],
 					'text_shadow' => [
 						'selectors' => [
@@ -1068,11 +1068,11 @@ class Video_Playlist extends Base_Widget {
 				'default' => '',
 				'options' => [
 					'' => esc_html__( 'None', 'elementor-pro' ),
-					'solid' => _x( 'Solid', 'Border Control', 'elementor-pro' ),
-					'double' => _x( 'Double', 'Border Control', 'elementor-pro' ),
-					'dotted' => _x( 'Dotted', 'Border Control', 'elementor-pro' ),
-					'dashed' => _x( 'Dashed', 'Border Control', 'elementor-pro' ),
-					'groove' => _x( 'Groove', 'Border Control', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'groove' => esc_html__( 'Groove', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title' => 'border-style: {{VALUE}};',
@@ -1233,7 +1233,7 @@ class Video_Playlist extends Base_Widget {
 				'name' => 'active_icon_top_text_shadow',
 				'fields_options' => [
 					'text_shadow_type' => [
-						'label' => _x( 'Shadow', 'Text Shadow Control', 'elementor-pro' ),
+						'label' => esc_html__( 'Shadow', 'elementor-pro' ),
 					],
 				],
 				'selector' => '{{WRAPPER}} .e-tab-title:where( .e-active, :hover ) i, {{WRAPPER}} .e-tab-title:where( .e-active, :hover ) svg',
@@ -1284,11 +1284,11 @@ class Video_Playlist extends Base_Widget {
 				'default' => '',
 				'options' => [
 					'' => esc_html__( 'None', 'elementor-pro' ),
-					'solid' => _x( 'Solid', 'Border Control', 'elementor-pro' ),
-					'double' => _x( 'Double', 'Border Control', 'elementor-pro' ),
-					'dotted' => _x( 'Dotted', 'Border Control', 'elementor-pro' ),
-					'dashed' => _x( 'Dashed', 'Border Control', 'elementor-pro' ),
-					'groove' => _x( 'Groove', 'Border Control', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'groove' => esc_html__( 'Groove', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title.e-active' => 'border-style: {{VALUE}};',
@@ -1400,11 +1400,11 @@ class Video_Playlist extends Base_Widget {
 				'default' => 'solid',
 				'options' => [
 					'' => esc_html__( 'None', 'elementor-pro' ),
-					'solid' => _x( 'Solid', 'Border Control', 'elementor-pro' ),
-					'double' => _x( 'Double', 'Border Control', 'elementor-pro' ),
-					'dotted' => _x( 'Dotted', 'Border Control', 'elementor-pro' ),
-					'dashed' => _x( 'Dashed', 'Border Control', 'elementor-pro' ),
-					'groove' => _x( 'Groove', 'Border Control', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'groove' => esc_html__( 'Groove', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .e-tabs-items-wrapper .e-section-title' => 'border-style: {{VALUE}};',
@@ -1863,11 +1863,11 @@ class Video_Playlist extends Base_Widget {
 		$playlist_object = $this->prepare_video_playlist_data_object();
 		?>
 
-		<div class="e-tabs">
+		<div class="e-tabs" role="region" aria-labelledby="e-playlist-<?php echo esc_attr( $this->get_id() ); ?>">
 			<div class="e-tabs-main-area">
 				<div class="e-tabs-wrapper">
 					<div class="e-tabs-header">
-						<<?php Utils::print_validated_html_tag( $playlist_object->playlist_title_tag ); ?> class="e-tabs-title"><?php
+						<<?php Utils::print_validated_html_tag( $playlist_object->playlist_title_tag ); ?> class="e-tabs-title" id="e-playlist-<?php echo esc_attr( $this->get_id() ); ?>"><?php
 							// PHPCS - the main text of a widget should not be escaped.
 							echo $playlist_object->playlist_name; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?></<?php Utils::print_validated_html_tag( $playlist_object->playlist_title_tag ); ?>>
@@ -2207,11 +2207,11 @@ class Video_Playlist extends Base_Widget {
 		var playIconHTML = elementor.helpers.renderIcon( view, playlistObject.playIcon, { 'aria-hidden': true }, 'i' , 'object' );
 		var overlayImagePlayIconHTML = elementor.helpers.renderIcon( view, playlistObject.imageOverlayIcon, { 'aria-hidden': true }, 'i' , 'object' );
 		#>
-		<div class="e-tabs" role="tablist" aria-orientation="vertical">
+		<div class="e-tabs" role="region" aria-labelledby="e-playlist-<?php echo esc_attr( $this->get_id() ); ?>">
 			<div class="e-tabs-main-area">
 				<div class="e-tabs-wrapper">
 					<div class="e-tabs-header">
-						<{{ playlistObject.playlistNameHTMLTag }} class="e-tabs-title">
+						<{{ playlistObject.playlistNameHTMLTag }} class="e-tabs-title" id="e-playlist-<?php echo esc_attr( $this->get_id() ); ?>">
 							{{{ playlistObject.playlistName }}}
 						</{{ playlistObject.playlistNameHTMLTag }}>
 						<div class="e-tabs-header-right-side">
@@ -2261,7 +2261,7 @@ class Video_Playlist extends Base_Widget {
 					</div>
 				</div>
 
-				<div class="e-tabs-content-wrapper">
+				<div class="e-tabs-content-wrapper" role="tablist" aria-orientation="vertical">
 					<# _.each( playlistObject.playlistItems, function( item, index ) { #>
 					<div class="e-tab-title e-tab-mobile-title" role="tab">{{{ item.title }}}</div>
 					<#

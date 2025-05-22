@@ -88,23 +88,21 @@ class Lottie extends Base_Widget {
 			]
 		);
 
-		if ( $this->current_user_can_use_external_source() ) {
-			$this->add_control(
-				'source_external_url',
-				[
-					'label' => esc_html__( 'External URL', 'elementor-pro' ),
-					'type' => Controls_Manager::URL,
-					'condition' => [
-						'source' => 'external_url',
-					],
-					'dynamic' => [
-						'active' => true,
-					],
-					'placeholder' => esc_html__( 'Enter your URL', 'elementor-pro' ),
-					'frontend_available' => true,
-				]
-			);
-		}
+		$this->add_control(
+			'source_external_url',
+			[
+				'label' => esc_html__( 'External URL', 'elementor-pro' ),
+				'type' => $this->current_user_can_use_external_source() ? Controls_Manager::URL : Controls_Manager::HIDDEN,
+				'condition' => [
+					'source' => 'external_url',
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Enter your URL', 'elementor-pro' ),
+				'frontend_available' => true,
+			]
+		);
 
 		$this->add_control(
 			'source_json',

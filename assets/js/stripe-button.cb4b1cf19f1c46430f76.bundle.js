@@ -1,4 +1,4 @@
-/*! pro-elements - v3.28.0 - 23-03-2025 */
+/*! pro-elements - v3.29.0 - 19-05-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["stripe-button"],{
 
@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _dompurify = _interopRequireDefault(__webpack_require__(/*! dompurify */ "../node_modules/dompurify/dist/purify.js"));
+var _dompurify = _interopRequireDefault(__webpack_require__(/*! dompurify */ "../node_modules/dompurify/dist/purify.cjs.js"));
 class StripeHandler extends elementorModules.frontend.handlers.Base {
   getDefaultSettings() {
     return {
@@ -118,4 +118,4 @@ exports["default"] = StripeHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=stripe-button.cf3f67d6b95e0138bb6b.bundle.js.map
+//# sourceMappingURL=stripe-button.cb4b1cf19f1c46430f76.bundle.js.map

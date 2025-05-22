@@ -38,12 +38,12 @@ class Skin_Classic extends Skin_Base {
 				'label' => esc_html__( 'Columns', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'1' => '1',
-					'2' => '2',
-					'3' => '3',
-					'4' => '4',
-					'5' => '5',
-					'6' => '6',
+					'1' => esc_html__( '1', 'elementor-pro' ),
+					'2' => esc_html__( '2', 'elementor-pro' ),
+					'3' => esc_html__( '3', 'elementor-pro' ),
+					'4' => esc_html__( '4', 'elementor-pro' ),
+					'5' => esc_html__( '5', 'elementor-pro' ),
+					'6' => esc_html__( '6', 'elementor-pro' ),
 				],
 				'default' => '4',
 			]
