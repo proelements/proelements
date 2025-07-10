@@ -479,7 +479,7 @@ class Locations_Manager {
 				$location_settings = $this->get_location( $document_location );
 				// If is a `content` document or the theme is not support the document location (header/footer and etc.).
 				if ( $location_settings && ! $location_settings['edit_in_content'] ) {
-					$content = '<div class="elementor-theme-builder-content-area">' . esc_html__( 'Content Area', 'elementor-pro' ) . '</div>';
+					$content = '<div class="elementor-theme-builder-content-area">' . esc_html__( 'Content area', 'elementor-pro' ) . '</div>';
 				}
 			}
 		}

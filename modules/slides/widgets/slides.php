@@ -119,6 +119,9 @@ class Slides extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .swiper-slide-bg' => 'background-image: url({{URL}})',
 				],
+				'default' => [
+					'url' => '',
+				],
 			]
 		);
 
@@ -520,18 +523,27 @@ class Slides extends Base_Widget {
 						'description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'button_text' => esc_html__( 'Click Here', 'elementor-pro' ),
 						'background_color' => '#833ca3',
+						'background_image' => [
+							'url' => '',
+						],
 					],
 					[
 						'heading' => esc_html__( 'Slide 2 Heading', 'elementor-pro' ),
 						'description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'button_text' => esc_html__( 'Click Here', 'elementor-pro' ),
 						'background_color' => '#4054b2',
+						'background_image' => [
+							'url' => '',
+						],
 					],
 					[
 						'heading' => esc_html__( 'Slide 3 Heading', 'elementor-pro' ),
 						'description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'button_text' => esc_html__( 'Click Here', 'elementor-pro' ),
 						'background_color' => '#1abc9c',
+						'background_image' => [
+							'url' => '',
+						],
 					],
 				],
 				'title_field' => '{{{ heading }}}',

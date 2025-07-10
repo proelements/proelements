@@ -36,7 +36,7 @@ class Archive extends Archive_Single_Base {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => esc_html__( 'What is an Archive Template?', 'elementor-pro' ),
+			'title' => esc_html__( 'What is an archive template?', 'elementor-pro' ),
 			'content' => esc_html__( 'An archive template allows you to easily design the layout and style of archive pages - those pages that show a list of posts (e.g. a blog’s list of recent posts), which may be filtered by terms such as authors, categories, tags, search results, etc.', 'elementor-pro' ),
 			'tip' => esc_html__( 'If you’d like a different style for a specific category, it’s easy to create a separate archive template whose condition is to only display when users are viewing that category’s list of posts.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-archive',
@@ -70,7 +70,7 @@ class Archive extends Archive_Single_Base {
 
 			if ( $post_type_object->has_archive ) {
 				/* translators: %s: Post type label. */
-				$post_type_archives[ 'post_type_archive/' . $post_type ] = sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $post_type_object->label );
+				$post_type_archives[ 'post_type_archive/' . $post_type ] = sprintf( esc_html__( '%s archive', 'elementor-pro' ), $post_type_object->label );
 			}
 
 			$post_type_taxonomies = get_object_taxonomies( $post_type, 'objects' );
@@ -82,15 +82,15 @@ class Archive extends Archive_Single_Base {
 
 			foreach ( $post_type_taxonomies as $slug => $object ) {
 				/* translators: %s: Taxonomy label. */
-				$taxonomies[ 'taxonomy/' . $slug ] = sprintf( esc_html__( '%s Archive', 'elementor-pro' ), $object->label );
+				$taxonomies[ 'taxonomy/' . $slug ] = sprintf( esc_html__( '%s archive', 'elementor-pro' ), $object->label );
 			}
 		}
 
 		$options = [
-			'archive/recent_posts' => esc_html__( 'Recent Posts', 'elementor-pro' ),
-			'archive/date' => esc_html__( 'Date Archive', 'elementor-pro' ),
-			'archive/author' => esc_html__( 'Author Archive', 'elementor-pro' ),
-			'search' => esc_html__( 'Search Results', 'elementor-pro' ),
+			'archive/recent_posts' => esc_html__( 'Recent posts', 'elementor-pro' ),
+			'archive/date' => esc_html__( 'Date archive', 'elementor-pro' ),
+			'archive/author' => esc_html__( 'Author archive', 'elementor-pro' ),
+			'search' => esc_html__( 'Search results', 'elementor-pro' ),
 		];
 
 		$options += $taxonomies + $post_type_archives;

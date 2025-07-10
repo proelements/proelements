@@ -1,4 +1,40 @@
 # PRO Elements - by PROElements.org
+#### 3.30.0 - 2025-07-01
+
+* New: Introduced Full Website Templates in the Cloud - export, manage, and reuse full site kits across all your websites from one place
+* Tweak: Activated "Optimized Markup" feature on new sites
+* Tweak: Activated "Menu" feature on new sites
+* Tweak: Improved error handling for Theme Builder display conditions
+* Tweak: Added styling controls to Post Excerpt widget
+* Tweak: Improved accessibility with `role` and `aria-label` attributes Post Navigation widget
+* Tweak: Added `aria-label` in Form widget
+* Tweak: Added `aria-label` in Login widget
+* Tweak: Arranged content as lists in Portfolio and Posts widgets
+* Tweak: Added Box Shadow and Text Shadow controls in Countdown widget
+* Tweak: Moved image resolution control to content tab in Price List widget
+* Tweak: Renamed and reorganized style sections in Price List widget
+* Tweak: Added conditional logic to controls in Price Table widget
+* Tweak: Grouped layout controls under list section in Price List widget
+* Tweak: Updated minimum required WordPress version to 6.6
+* Fix: Inline font icons support doesn't work in Post Navigation widget ([#24367](https://github.com/elementor/elementor/issues/24367), [#18343](https://github.com/elementor/elementor/issues/18343))
+* Fix: Page Title condition doesn't work on child pages in Widget Display Conditions
+* Fix: Editor users with "Access to edit content only" are able to delete elements
+* Fix: Links are not crawlable in Video Playlist widget
+* Fix: Uses hardcoded admin fonts in Video Playlist widget
+* Fix: Editor freezes when the Form widget is used with a high PHP upload size limit
+* Fix: Errors occur when Debug mode is enabled in Slides widget
+* Fix: Plugin dependency not enforced in Elementor Pro
+* Fix: Console shows deprecation warning in Global Widgets
+
+#### 3.29.2 - 2025-06-04
+
+* Tweak: Added selectors to Menu widget for compatibility with Optimized Markup experiment
+
+#### 3.29.1 - 2025-05-28
+
+* Security Fix: Improved code security enforcement in Animated Headline widget
+* Security Fix: Improved code security enforcement in Price Table widget
+
 #### 3.29.0 - 2025-05-19
 
 * New: Introduced Cloud Templates - save, manage, and reuse your templates across all your sites from a single cloud library

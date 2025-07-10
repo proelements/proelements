@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div class="elementor-template-library-blank-title">
 		{{ sprintf(
-			'<?php echo esc_html__( 'Where Do You Want to Display Your %s?', 'elementor-pro' ); ?>',
+			'<?php echo esc_html__( 'Where do you want to display your %s?', 'elementor-pro' ); ?>',
 			elementor.config.document.post_type_title
 		) }}
 	</div>

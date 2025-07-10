@@ -76,7 +76,12 @@ class Hints extends Core_Hints {
 				self::DEFINED => 'SEND_VERSION',
 			],
 			'send_app_forms_submissions_notice' => [
-				self::DISMISSED => [ 'send_app_forms_submissions_notice' ],
+				self::DISMISSED => [ 'send_app_forms_submissions_notice', 'send_app_forms_actions_notice' ],
+				self::CAPABILITY => 'install_plugins',
+				self::DEFINED => 'SEND_VERSION',
+			],
+			'send_app_forms_actions_notice' => [
+				self::DISMISSED => [ 'send_app_forms_actions_notice' ],
 				self::CAPABILITY => 'install_plugins',
 				self::DEFINED => 'SEND_VERSION',
 			],

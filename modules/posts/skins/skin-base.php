@@ -1063,7 +1063,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 	protected function render_post_header() {
 		?>
-		<article <?php post_class( [ 'elementor-post elementor-grid-item' ] ); ?>>
+		<article <?php post_class( [ 'elementor-post elementor-grid-item' ] ); ?> role="listitem">
 		<?php
 	}
 
@@ -1108,6 +1108,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$render_attributes = apply_filters( 'elementor/skin/loop_header_attributes', [
 			'class' => $classes,
+			'role' => 'list',
 		] );
 
 		$this->parent->add_render_attribute( 'container', $render_attributes );

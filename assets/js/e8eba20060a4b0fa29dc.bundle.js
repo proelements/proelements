@@ -1,4 +1,4 @@
-/*! pro-elements - v3.29.0 - 19-05-2025 */
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["modules_floating-buttons_assets_js_frontend_classes_floatin-bar-dom_js-modules_floating-butto-2c1e90"],{
 

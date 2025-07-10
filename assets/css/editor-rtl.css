@@ -1,4 +1,4 @@
-/*! pro-elements - v3.29.0 - 19-05-2025 */
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
 .elementor-panel .elementor-control .e-control-error {
   color: #F59E0B;
 }
@@ -348,13 +348,15 @@
 
 .elementor-conditions-conflict-message {
   margin-block-start: 10px;
-  font-size: 11px;
-  color: var(--e-a-color-warning);
-  text-align: start;
-  padding-inline-start: 90px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--e-a-color-danger);
+  text-align: center;
 }
-.elementor-conditions-conflict-message a {
-  color: var(--e-a-color-warning);
+.elementor-conditions-conflict-message a,
+.elementor-conditions-conflict-message a:hover {
+  color: var(--e-a-color-danger);
 }
 
 .elementor-panel-footer-theme-builder-buttons-wrapper .elementor-panel-footer-sub-menu {

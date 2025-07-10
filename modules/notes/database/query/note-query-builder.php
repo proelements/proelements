@@ -282,13 +282,15 @@ class Note_Query_Builder extends Model_Query_Builder {
 			->filter( function ( $post_type ) use ( $user_id ) {
 				return $post_type && user_can( $user_id, $post_type->cap->edit_posts );
 			} )
-			->keys();
+			->keys()
+			->all();
 
 		$can_read_private_post_types = $post_types
 			->filter( function ( $post_type ) use ( $user_id ) {
 				return $post_type && user_can( $user_id, $post_type->cap->read_private_posts );
 			} )
-			->keys();
+			->keys()
+			->all();
 
 		foreach ( [ 'route_post_id', 'post_id' ] as $column ) {
 			$table_alias = "posts_{$column}_visible";

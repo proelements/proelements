@@ -1,5 +1,5 @@
 /*!
- * CSSJanus. https://www.mediawiki.org/wiki/CSSJanus
+ * CSSJanus. https://github.com/cssjanus/cssjanus
  *
  * Copyright 2014 Trevor Parscal
  * Copyright 2010 Roan Kattouw

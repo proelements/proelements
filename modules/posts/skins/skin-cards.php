@@ -570,7 +570,7 @@ class Skin_Cards extends Skin_Base {
 
 	protected function render_post_header() {
 		?>
-		<article <?php post_class( [ 'elementor-post elementor-grid-item' ] ); ?>>
+		<article <?php post_class( [ 'elementor-post elementor-grid-item' ] ); ?> role="listitem">
 			<div class="elementor-post__card">
 		<?php
 	}

@@ -928,7 +928,7 @@ class Login extends Base_Widget {
 
 		$this->form_fields_render_attributes();
 		?>
-		<form class="elementor-login elementor-form" method="post" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>">
+		<form class="elementor-login elementor-form" method="post" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" aria-label="<?php echo esc_attr__( 'Login form', 'elementor-pro' ); ?>">
 			<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_url ); ?>">
 			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'field-group' ); ?>>
@@ -996,7 +996,7 @@ class Login extends Base_Widget {
 	 */
 	protected function content_template() {
 		?>
-		<div class="elementor-login elementor-form">
+		<div class="elementor-login elementor-form" aria-label="<?php echo esc_attr__( 'Login form', 'elementor-pro' ); ?>">
 			<div class="elementor-form-fields-wrapper">
 				<#
 				view.addRenderAttribute( 'field-group', 'class', 'elementor-field-group elementor-column elementor-col-100 elementor-field-type-text' );

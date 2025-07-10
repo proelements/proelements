@@ -252,7 +252,7 @@ class Usage {
 		 * @type \WP_User[] $users
 		 */
 		$users = get_users( [
-			'include' => $results->keys(),
+			'include' => $results->keys()->all(),
 		] );
 
 		$counts = [];

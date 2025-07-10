@@ -1,4 +1,4 @@
-/*! pro-elements - v3.29.0 - 19-05-2025 */
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -791,6 +791,7 @@ var _default = exports["default"] = ConditionButtonPortal;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
+/* provided dependency */ var sprintf = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["sprintf"];
 /* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
 
@@ -817,7 +818,8 @@ function ConditionConflicts(props) {
   return /*#__PURE__*/_react.default.createElement(_appUi.Text, {
     className: "e-site-editor-conditions__conflict",
     variant: "sm"
-  }, __('Elementor recognized that you have set this location for other templates: ', 'elementor-pro'), " ", conflictLinks);
+  }, sprintf(/* Translators: %s: a list of conflicted templates */
+  __('We noticed that you already applied %s with the same condition.', 'elementor-pro'), conflictLinks), /*#__PURE__*/_react.default.createElement("br", null), __("To continue, set different conditions for each so they don't conflict.", 'elementor-pro'));
 }
 ConditionConflicts.propTypes = {
   conflicts: PropTypes.array.isRequired

@@ -255,7 +255,7 @@ class Loop_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Edit Handle Selector', 'elementor-pro' ),
 				'type' => Controls_Manager::HIDDEN,
-				'default' => '.elementor-widget-container',
+				'default' => '.elementor-loop-container',
 				'render_type' => 'none',
 				'frontend_available' => true,
 			]

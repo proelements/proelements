@@ -1,4 +1,4 @@
-/*! pro-elements - v3.29.0 - 19-05-2025 */
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["mega-menu"],{
 
@@ -223,14 +223,14 @@ class MegaMenu extends elementorModules.frontend.handlers.Base {
         menuItem: '.e-n-menu-item',
         tabTitle: '.e-n-menu-title',
         tabTitleText: '.e-n-menu-title-text',
-        directTabTitle: ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title',
+        directTabTitle: ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title, :scope > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title',
         tabClickableTitle: '.e-n-menu-title.e-click',
         tabDropdown: '.e-n-menu-dropdown-icon',
         menuContent: '.e-n-menu-content',
         tabContent: '.e-n-menu-content > .e-con, .e-n-menu-heading > .e-con',
-        directTabContent: ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content > .e-con, :scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con',
-        tabContentBeforeInterlacing: '> .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con',
-        newContainerAfterRepeaterAction: '> .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con, > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content > .e-con:nth-child(2)',
+        directTabContent: ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content > .e-con, :scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con, :scope > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content > .e-con, :scope > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con',
+        tabContentBeforeInterlacing: '> .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con, > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con',
+        newContainerAfterRepeaterAction: '> .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con, > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content > .e-con:nth-child(2), > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-con, > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-content > .e-con:nth-child(2)',
         anchorLink: '.e-anchor a'
       },
       classes: {
@@ -1181,4 +1181,4 @@ function isMenuInDropdownMode(elementSettings) {
 /***/ })
 
 }]);
-//# sourceMappingURL=mega-menu.4a05edbefebc8de41e36.bundle.js.map
+//# sourceMappingURL=mega-menu.1344912ff0c40681bb13.bundle.js.map

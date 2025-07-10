@@ -56,6 +56,10 @@ class Module extends Module_Base {
 			'hidden' => false,
 			'release_status' => Manager::RELEASE_STATUS_BETA,
 			'default' => Manager::STATE_INACTIVE,
+			'new_site' => [
+				'default_active' => true,
+				'minimum_installation_version' => '3.30.0',
+			],
 			'dependencies' => [
 				'container',
 				'nested-elements',

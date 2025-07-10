@@ -572,7 +572,7 @@ class Animated_Headline extends Base_Widget {
 		?>
 		<<?php Utils::print_validated_html_tag( $tag ); ?> <?php $this->print_render_attribute_string( 'headline' ); ?>>
 		<?php if ( ! empty( $settings['before_text'] ) ) : ?>
-			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php $this->print_unescaped_setting( 'before_text' ); ?></span>
+			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo wp_kses_post( $this->get_settings_for_display( 'before_text' ) ); ?></span>
 		<?php endif; ?>
 		<span class="elementor-headline-dynamic-wrapper elementor-headline-text-wrapper">
 		<?php if ( 'rotate' === $settings['headline_style'] && $settings['rotating_text'] ) :
@@ -583,11 +583,11 @@ class Animated_Headline extends Base_Widget {
 			</span>
 		<?php endforeach; ?>
 		<?php elseif ( 'highlight' === $settings['headline_style'] && ! empty( $settings['highlighted_text'] ) ) : ?>
-			<span class="elementor-headline-dynamic-text elementor-headline-text-active"><?php $this->print_unescaped_setting( 'highlighted_text' ); ?></span>
+			<span class="elementor-headline-dynamic-text elementor-headline-text-active"><?php echo wp_kses_post( $this->get_settings_for_display( 'highlighted_text' ) ); ?></span>
 		<?php endif ?>
 		</span>
 		<?php if ( ! empty( $settings['after_text'] ) ) : ?>
-			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php $this->print_unescaped_setting( 'after_text' ); ?></span>
+			<span class="elementor-headline-plain-text elementor-headline-text-wrapper"><?php echo wp_kses_post( $this->get_settings_for_display( 'after_text' ) ); ?></span>
 			<?php endif; ?>
 		</<?php Utils::print_validated_html_tag( $tag ); ?>>
 		<?php
@@ -627,7 +627,7 @@ class Animated_Headline extends Base_Widget {
 		<# } #>
 				<{{{ tag }}} class="{{{ headlineClasses }}}">
 					<# if ( settings.before_text ) { #>
-						<span class="elementor-headline-plain-text elementor-headline-text-wrapper">{{{ settings.before_text }}}</span>
+						<span class="elementor-headline-plain-text elementor-headline-text-wrapper">{{{ elementor.helpers.sanitize( settings.before_text, { ALLOW_DATA_ATTR: false } ) }}}</span>
 					<# } #>
 
 					<# if ( settings.rotating_text ) { #>
@@ -643,13 +643,13 @@ class Animated_Headline extends Base_Widget {
 						}
 
 						else if ( 'highlight' === settings.headline_style && settings.highlighted_text ) { #>
-							<span class="elementor-headline-dynamic-text elementor-headline-text-active">{{{ settings.highlighted_text }}}</span>
+							<span class="elementor-headline-dynamic-text elementor-headline-text-active">{{{ elementor.helpers.sanitize( settings.highlighted_text, { ALLOW_DATA_ATTR: false } ) }}}</span>
 						<# } #>
 						</span>
 					<# } #>
 
 					<# if ( settings.after_text ) { #>
-						<span class="elementor-headline-plain-text elementor-headline-text-wrapper">{{{ settings.after_text }}}</span>
+						<span class="elementor-headline-plain-text elementor-headline-text-wrapper">{{{ elementor.helpers.sanitize( settings.after_text, { ALLOW_DATA_ATTR: false } ) }}}</span>
 					<# } #>
 				</{{{ tag }}}>
 		<# if ( settings.link.url ) { #>

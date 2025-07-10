@@ -936,7 +936,7 @@ class Video_Playlist extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text button' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -948,7 +948,7 @@ class Video_Playlist extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'normal_typography',
-				'selector' => '{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text',
+				'selector' => '{{WRAPPER}} .e-tabs-items .e-tab-title .e-tab-title-text button',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1156,7 +1156,7 @@ class Video_Playlist extends Base_Widget {
 				'default' => '#556068',
 				'selectors' => [
 					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) .e-tab-title-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) .e-tab-title-text a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) .e-tab-title-text button' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1168,7 +1168,7 @@ class Video_Playlist extends Base_Widget {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'active_typography',
-				'selector' => '{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) .e-tab-title-text',
+				'selector' => '{{WRAPPER}} .e-tabs-items-wrapper .e-tab-title:where( .e-active, :hover ) .e-tab-title-text button',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1916,10 +1916,10 @@ class Video_Playlist extends Base_Widget {
 											<span class="icon-watched"><?php Icons_Manager::render_icon( $playlist_object->watched_icon, [ 'aria-hidden' => 'true' ] ); ?></span>
 										<?php endif; ?>
 										<<?php Utils::print_validated_html_tag( $item->video_html_tag ); ?> class="e-tab-title-text">
-											<a tabindex="0"><?php
+											<button type="button"><?php
 												// PHPCS - the main text of a widget should not be escaped.
 												echo $item->video_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-											?></a>
+											?></button>
 										</<?php Utils::print_validated_html_tag( $item->video_html_tag ); ?>>
 										<?php if ( $item->video_duration ) : ?>
 											<span class="e-tab-duration"><?php echo esc_html( $item->video_duration ); ?></span>
@@ -2247,7 +2247,7 @@ class Video_Playlist extends Base_Widget {
 										<span class="icon-watched">{{{ watchedIconHTML.value }}}</span>
 										<# } #>
 										<{{ item.videoHtmlTag }} class="e-tab-title-text">
-											<a tabindex="0">{{{ item.videoTitle }}}</a>
+											<button type="button">{{{ item.videoTitle }}}</button>
 										</{{ item.videoHtmlTag }}>
 										<# if ( item.videoDuration ) { #>
 										<span class="e-tab-duration">{{{ item.videoDuration }}}</span>

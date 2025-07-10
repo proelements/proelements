@@ -1217,4 +1217,47 @@ class Upgrades {
 			],
 		];
 	}
+
+	public static function _v_3_30_0_post_navigation_inline_icons( $updater ) {
+		$changes = [
+			[
+				'callback' => [ 'ElementorPro\Core\Upgrade\Upgrades', '_migration_select_to_icon_value' ],
+				'control_ids' => [],
+			],
+		];
+
+		return self::_update_widget_settings( 'post-navigation', $updater, $changes );
+	}
+
+	public static function _migration_select_to_icon_value( $element, $args ) {
+		$is_need_upgrade = ! empty( $element['settings']['arrow'] ) && empty( $element['settings']['arrow_next_icon'] && empty( $element['settings']['arrow_previous_icon'] ) );
+
+		if ( ! $is_need_upgrade ) {
+			return $element;
+		}
+
+		$args['do_update'] = true;
+
+		if ( is_rtl() ) {
+			$previous_direction = 'right';
+			$next_direction = 'left';
+		} else {
+			$previous_direction = 'left';
+			$next_direction = 'right';
+		}
+
+		$new_value = str_replace( 'fa ', 'fas ', $element['settings']['arrow'] );
+
+		$element['settings']['arrow_next_icon'] = [
+			'value' => str_replace( '-left', '-' . $next_direction, $new_value ),
+			'library' => 'fa-solid',
+		];
+
+		$element['settings']['arrow_previous_icon'] = [
+			'value' => str_replace( '-left', '-' . $previous_direction, $new_value ),
+			'library' => 'fa-solid',
+		];
+
+		return $element;
+	}
 }

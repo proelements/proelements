@@ -40,30 +40,7 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 	}
 
 	public function render() {
-		if ( $this->should_show_hint() ) {
-			/**
-			 * @var Admin_Notices $admin_notices
-			 */
-			$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
-
-			$notice_options = [
-				'description' => esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Site Mailer.', 'elementor-pro' ),
-				'id' => 'site_mailer_forms_submissions_notice',
-				'type' => 'cta',
-				'button_secondary' => [
-					'text' => Hints::is_plugin_installed( 'site-mailer' ) ? esc_html__( 'Activate Plugin', 'elementor-pro' ) : esc_html__( 'Install Plugin', 'elementor-pro' ),
-					'url' => Hints::get_plugin_action_url( 'site-mailer' ),
-					'type' => 'cta',
-				],
-			];
-
-			if ( 2 === Abtest::get_variation( 'plg_site_mailer_submission' ) ) {
-				$notice_options['title'] = esc_html__( 'Get Your Emails Delivered With Site Mailer', 'elementor-pro' );
-				$notice_options['description'] = esc_html__( 'Make sure emails reach the inbox every time with improved deliverability, detailed email logs, and an easy setup with no need for an SMTP plugin.', 'elementor-pro' );
-			}
-
-			$admin_notices->print_admin_notice( $notice_options );
-		}
+		$this->maybe_render_hints();
 		?>
 		<div class="wrap">
 			<h1 class="wp-heading-inline"><?php echo esc_html__( 'Submissions', 'elementor-pro' ); ?></h1>
@@ -71,6 +48,68 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 			<div id="e-form-submissions"></div>
 		</div>
 		<?php
+	}
+
+	private function maybe_render_hints() {
+		if ( ! $this->has_submissions() ) {
+			return;
+		}
+
+		if ( $this->should_show_send_app_hint() ) {
+			$this->render_send_app_notice();
+			return;
+		}
+
+		if ( $this->should_show_site_mailer_hint() ) {
+			$this->render_site_mailer_notice();
+		}
+	}
+
+	private function render_site_mailer_notice() {
+		/**
+		 * @var Admin_Notices $admin_notices
+		 */
+		$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
+
+		$notice_options = [
+			'description' => esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Site Mailer.', 'elementor-pro' ),
+			'id' => 'site_mailer_forms_submissions_notice',
+			'type' => 'cta',
+			'button_secondary' => [
+				'text' => Hints::is_plugin_installed( 'site-mailer' ) ? esc_html__( 'Activate Plugin', 'elementor-pro' ) : esc_html__( 'Install Plugin', 'elementor-pro' ),
+				'url' => Hints::get_plugin_action_url( 'site-mailer' ),
+				'type' => 'cta',
+			],
+		];
+
+		if ( 2 === Abtest::get_variation( 'plg_site_mailer_submission' ) ) {
+			$notice_options['title'] = esc_html__( 'Get Your Emails Delivered With Site Mailer', 'elementor-pro' );
+			$notice_options['description'] = esc_html__( 'Make sure emails reach the inbox every time with improved deliverability, detailed email logs, and an easy setup with no need for an SMTP plugin.', 'elementor-pro' );
+		}
+
+		$admin_notices->print_admin_notice( $notice_options );
+	}
+
+	private function render_send_app_notice() {
+		/**
+		 * @var Admin_Notices $admin_notices
+		 */
+		$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
+
+		$send_app_notice_options = [
+			'title' => esc_html__( 'Forms are just the beginning', 'elementor-pro' ),
+			'description' => esc_html__( 'Turn submissions into leads with automated replies, welcome series, and smart tagging — all inside WordPress.
+With Send, you build relationships from the first interaction.', 'elementor-pro' ),
+			'id' => 'send_app_forms_submissions_notice',
+			'type' => 'cta',
+			'button_secondary' => [
+				'text' => Hints::is_plugin_installed( 'send-app' ) ? esc_html__( 'Activate Send Now', 'elementor-pro' ) : esc_html__( 'Install Send Now', 'elementor-pro' ),
+				'url' => Hints::get_plugin_action_url( 'send-app' ),
+				'type' => 'cta',
+			],
+		];
+
+		$admin_notices->print_admin_notice( $send_app_notice_options );
 	}
 
 	public function has_submissions( $min_count = 1 ): bool {
@@ -83,10 +122,19 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 		return $min_count <= $submissions_count;
 	}
 
-	public function should_show_hint(): bool {
+	public function should_show_site_mailer_hint(): bool {
 		return ( Hints::should_show_hint( 'site_mailer_forms_submissions_notice' )
-				 && $this->has_submissions()
-				 && ! User::is_user_notice_viewed( 'site_mailer_forms_submissions_notice' )
+				&& ! User::is_user_notice_viewed( 'site_mailer_forms_submissions_notice' )
 		);
+	}
+
+	public function should_show_send_app_hint(): bool {
+		if ( Hints::is_plugin_active( 'woocommerce' ) || ! $this->should_show_site_mailer_hint() ) {
+			if ( ! User::is_user_notice_viewed( 'send_app_forms_submissions_notice' ) ) {
+				return Hints::should_show_hint( 'send_app_forms_submissions_notice' );
+			}
+		}
+
+		return false;
 	}
 }

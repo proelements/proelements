@@ -673,7 +673,7 @@ class Portfolio extends Base_Widget {
 
 		// PHPCS - `get_permalink` is safe.
 		?>
-		<article <?php post_class( $classes ); ?>>
+		<article <?php post_class( $classes ); ?> role="listitem">
 			<a class="elementor-post__thumbnail__link" href="<?php echo get_permalink(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 		<?php
 	}
@@ -702,7 +702,7 @@ class Portfolio extends Base_Widget {
 			$this->render_filter_menu();
 		}
 		?>
-		<div class="elementor-portfolio elementor-grid elementor-posts-container">
+		<div class="elementor-portfolio elementor-grid elementor-posts-container" role="list">
 		<?php
 	}
 

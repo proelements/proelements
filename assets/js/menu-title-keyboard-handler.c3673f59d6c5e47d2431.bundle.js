@@ -1,4 +1,4 @@
-/*! pro-elements - v3.29.0 - 19-05-2025 */
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["menu-title-keyboard-handler"],{
 
@@ -31,7 +31,7 @@ class MenuTitleKeyboardHandler extends elementorModules.frontend.handlers.Base {
         focusableMenuElement: '.e-focus',
         itemContainer: '.e-n-menu-content > .e-con, .e-n-menu-heading > .e-con',
         menuToggle: '.e-n-menu-toggle',
-        directTabTitle: ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title',
+        directTabTitle: ':scope > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title,:scope > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > .e-n-menu-item > .e-n-menu-title',
         tabDropdown: '.e-n-menu-dropdown-icon'
       },
       ariaAttributes: {
@@ -318,4 +318,4 @@ exports["default"] = MenuTitleKeyboardHandler;
 /***/ })
 
 }]);
-//# sourceMappingURL=menu-title-keyboard-handler.ad6efd6a78bf25450d5a.bundle.js.map
+//# sourceMappingURL=menu-title-keyboard-handler.c3673f59d6c5e47d2431.bundle.js.map

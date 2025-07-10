@@ -313,7 +313,8 @@ class Controller extends Controller_Base {
 	private function update( array $ids, \WP_REST_Request $request ) {
 		$allowed_args = ( new Collection( $request->get_attributes()['args'] ) )
 			->except( [ 'id', 'ids', 'values' ] )
-			->keys();
+			->keys()
+			->all();
 
 		$data = ( new Collection( $request->get_body_params() ) )
 			->only( $allowed_args )

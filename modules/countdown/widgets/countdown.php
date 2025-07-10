@@ -5,7 +5,9 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
@@ -416,6 +418,14 @@ class Countdown extends Base_Widget {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow',
+				'selector' => '{{WRAPPER}} .elementor-countdown-item',
+			]
+		);
+
 		$this->add_responsive_control(
 			'box_spacing',
 			[
@@ -436,6 +446,7 @@ class Countdown extends Base_Widget {
 						'max' => 10,
 					],
 				],
+				'separator' => 'before',
 				'selectors' => [
 					'body:not(.rtl) {{WRAPPER}} .elementor-countdown-item:not(:first-of-type)' => 'margin-left: calc( {{SIZE}}{{UNIT}}/2 );',
 					'body:not(.rtl) {{WRAPPER}} .elementor-countdown-item:not(:last-of-type)' => 'margin-right: calc( {{SIZE}}{{UNIT}}/2 );',
@@ -497,6 +508,14 @@ class Countdown extends Base_Widget {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'digits_text_shadow',
+				'selector' => '{{WRAPPER}} .elementor-countdown-digits',
+			]
+		);
+
 		$this->add_control(
 			'heading_label',
 			[
@@ -531,6 +550,17 @@ class Countdown extends Base_Widget {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
+				'condition' => [
+					'show_labels!' => '',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'label_text_shadow',
+				'selector' => '{{WRAPPER}} .elementor-countdown-label',
 				'condition' => [
 					'show_labels!' => '',
 				],
@@ -608,6 +638,14 @@ class Countdown extends Base_Widget {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
+				'selector' => '{{WRAPPER}} .elementor-countdown-expire--message',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'message_text_shadow',
 				'selector' => '{{WRAPPER}} .elementor-countdown-expire--message',
 			]
 		);
