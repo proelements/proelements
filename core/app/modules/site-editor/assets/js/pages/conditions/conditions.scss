@@ -111,9 +111,9 @@
 			font-size: $e-site-editor-input-wrapper-select-arrow-font-size;
 			pointer-events: none;
 			position: absolute;
-			top: 50%;
+			inset-block-start: 50%;
+			inset-inline-end: $e-site-editor-input-wrapper-select-arrow-margin-end;
 			transform: translateY(-50%);
-			@include end($e-site-editor-input-wrapper-select-arrow-margin-end);
 		}
 
 		.select2-container--default .select2-selection--single {
@@ -143,9 +143,9 @@
 		&:before {
 			font-family: eicons;
 			position: absolute;
-			top: 50%;
 			transform: translateY(-50%);
-			@include start($e-site-editor-input-wrapper-condition-type-icon-start-spacing);
+			inset-block-start: 50%;
+			inset-inline-start: $e-site-editor-input-wrapper-condition-type-icon-start-spacing;
 			font-size: $e-site-editor-input-wrapper-condition-type-icon-font-size;
 			//color: $e-site-editor-input-wrapper-condition-type-icon-color;
 			pointer-events: none;

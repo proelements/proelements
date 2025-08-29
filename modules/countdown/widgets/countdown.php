@@ -128,20 +128,6 @@ class Countdown extends Base_Widget {
 		);
 
 		$this->add_control(
-			'label_display',
-			[
-				'label' => esc_html__( 'View', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'block' => esc_html__( 'Block', 'elementor-pro' ),
-					'inline' => esc_html__( 'Inline', 'elementor-pro' ),
-				],
-				'default' => 'block',
-				'prefix_class' => 'elementor-countdown--label-',
-			]
-		);
-
-		$this->add_control(
 			'show_days',
 			[
 				'label' => esc_html__( 'Days', 'elementor-pro' ),
@@ -343,10 +329,38 @@ class Countdown extends Base_Widget {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-			'section_box_style',
+			'section_countdown_style',
 			[
-				'label' => esc_html__( 'Boxes', 'elementor-pro' ),
+				'label' => esc_html__( 'Countdown', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'heading_container',
+			[
+				'label' => esc_html__( 'Container', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'label_display',
+			[
+				'label' => esc_html__( 'Layout', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'block' => [
+						'title' => esc_html__( 'Block', 'elementor-pro' ),
+						'icon' => 'eicon-grow',
+					],
+					'inline' => [
+						'title' => esc_html__( 'Inline', 'elementor-pro' ),
+						'icon' => 'eicon-shrink',
+					],
+				],
+				'default' => 'block',
+				'prefix_class' => 'elementor-countdown--label-',
 			]
 		);
 
@@ -380,49 +394,37 @@ class Countdown extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-wrapper' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
+				'condition' => [
+					'label_display' => 'block',
+				],
 			]
 		);
 
 		$this->add_control(
-			'box_background_color',
+			'boxes_alignment',
 			[
-				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-right',
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-countdown-item' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-countdown-wrapper' => 'text-align: {{VALUE}};',
 				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			[
-				'name' => 'box_border',
-				'selector' => '{{WRAPPER}} .elementor-countdown-item',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'box_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-countdown-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'condition' => [
+					'label_display' => 'inline',
 				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow',
-				'selector' => '{{WRAPPER}} .elementor-countdown-item',
 			]
 		);
 
@@ -446,13 +448,21 @@ class Countdown extends Base_Widget {
 						'max' => 10,
 					],
 				],
-				'separator' => 'before',
 				'selectors' => [
 					'body:not(.rtl) {{WRAPPER}} .elementor-countdown-item:not(:first-of-type)' => 'margin-left: calc( {{SIZE}}{{UNIT}}/2 );',
 					'body:not(.rtl) {{WRAPPER}} .elementor-countdown-item:not(:last-of-type)' => 'margin-right: calc( {{SIZE}}{{UNIT}}/2 );',
 					'body.rtl {{WRAPPER}} .elementor-countdown-item:not(:first-of-type)' => 'margin-right: calc( {{SIZE}}{{UNIT}}/2 );',
 					'body.rtl {{WRAPPER}} .elementor-countdown-item:not(:last-of-type)' => 'margin-left: calc( {{SIZE}}{{UNIT}}/2 );',
 				],
+			]
+		);
+
+		$this->add_control(
+			'heading_boxes',
+			[
+				'label' => esc_html__( 'Boxes', 'elementor-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -465,6 +475,48 @@ class Countdown extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-countdown-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_control(
+			'box_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-countdown-item' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name' => 'box_border',
+				'selector' => '{{WRAPPER}} .elementor-countdown-item',
+			]
+		);
+
+		$this->add_control(
+			'box_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-countdown-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow',
+				'selector' => '{{WRAPPER}} .elementor-countdown-item',
 			]
 		);
 

@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.30.0 - 01-07-2025 */
+/*! pro-elements - v3.31.0 - 10-08-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -9975,7 +9975,7 @@ $({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".a0c405b93f24b0011f86.bundle.js";
+/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".e043cd3d7fd180995eb9.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".0df35e0e1a284d4bd18b.bundle.js";
 /******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".46a4c013b80a381a50c9.bundle.js";
 /******/ 			if (chunkId === "off-canvas-editor") return "" + chunkId + ".d20b8e528d36b21a024c.bundle.js";

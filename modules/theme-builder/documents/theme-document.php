@@ -107,6 +107,10 @@ abstract class Theme_Document extends Library_Document {
 		return static::get_type();
 	}
 
+	protected function get_default_wrapping_html_tag() {
+		return 'div';
+	}
+
 	public static function get_lock_behavior_v2() {
 		return new Feature_Lock( [
 			'type' => static::get_type(),
@@ -377,7 +381,7 @@ abstract class Theme_Document extends Library_Document {
 			[
 				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'div',
+				'default' => $this->get_default_wrapping_html_tag(),
 				'options' => array_combine( $wrapper_tags, $wrapper_tags ),
 			]
 		);

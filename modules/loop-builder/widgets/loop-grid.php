@@ -12,7 +12,6 @@ use ElementorPro\Modules\Woocommerce\Module as WoocommerceModule;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Text_Stroke;
-use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -50,7 +49,7 @@ class Loop_Grid extends Base {
 	}
 
 	public function has_widget_inner_wrapper(): bool {
-		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+		return true;
 	}
 
 	protected function register_layout_section() {

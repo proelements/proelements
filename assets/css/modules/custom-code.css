@@ -258,7 +258,7 @@ input[type=search].select2-search__field {
 }
 .e-form-submissions-search__spinner {
   position: absolute;
-  right: 12px;
+  inset-inline-end: 12px;
   font-size: 11px;
   height: 100%;
   display: flex;
@@ -266,7 +266,7 @@ input[type=search].select2-search__field {
   color: var(--wp-admin-theme-color-darker-20, #005a87);
 }
 .e-form-submissions-search:focus-within .e-form-submissions-search__spinner, .e-form-submissions-search:hover .e-form-submissions-search__spinner {
-  right: 30px;
+  inset-inline-end: 30px;
 }
 
 .e-form-submissions-action-log--success .e-form-submissions-action-log__message {
@@ -1646,9 +1646,9 @@ span.font-variations-count {
   font-size: 0.75rem;
   pointer-events: none;
   position: absolute;
-  top: 50%;
+  inset-block-start: 50%;
+  inset-inline-end: 0.625rem;
   transform: translateY(-50%);
-  right: 0.625rem;
 }
 .e-site-editor-conditions__input-wrapper .select2-container--default .select2-selection--single {
   border: none;
@@ -1672,9 +1672,9 @@ span.font-variations-count {
 .e-site-editor-conditions__input-wrapper--condition-type:before {
   font-family: eicons;
   position: absolute;
-  top: 50%;
   transform: translateY(-50%);
-  left: 0.75rem;
+  inset-block-start: 50%;
+  inset-inline-start: 0.75rem;
   font-size: 0.9375rem;
   pointer-events: none;
   z-index: 1000;
@@ -1893,6 +1893,15 @@ span.font-variations-count {
   position: relative;
   top: -5px;
 }
+#elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .e-ai-button {
+  all: unset;
+  color: #D004D4;
+  cursor: pointer;
+  transition: var(--e-a-transition-hover);
+}
+#elementor-custom-code .inside .elementor-custom-code-meta-box .elementor-custom-code-panel .e-ai-button:hover {
+  color: #E73CF6;
+}
 #elementor-custom-code .inside .elementor-custom-code-codemirror-holder {
   border: 1px solid #F1F2F3;
   background: #F9FAFA;
@@ -1956,15 +1965,6 @@ span.font-variations-count {
   .post-conditions .eps-modal .eps-modal__body .e-site-editor-conditions__footer {
     background: #f1f3f5;
   }
-}
-.elementor-custom-code-panel .e-ai-button {
-  all: unset;
-  color: #D004D4;
-  cursor: pointer;
-  transition: var(--e-a-transition-hover);
-}
-.elementor-custom-code-panel .e-ai-button:hover {
-  color: #E73CF6;
 }
 
 /*# sourceMappingURL=custom-code.css.map */

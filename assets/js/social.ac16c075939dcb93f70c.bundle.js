@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.30.0 - 01-07-2025 */
+/*! pro-elements - v3.31.0 - 10-08-2025 */
 "use strict";
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["social"],{
 

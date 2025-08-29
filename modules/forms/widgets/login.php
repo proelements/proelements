@@ -932,11 +932,11 @@ class Login extends Base_Widget {
 			<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_url ); ?>">
 			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'field-group' ); ?>>
-					<label <?php $this->print_render_attribute_string( 'user_label' ); ?>><?php $this->print_unescaped_setting( 'user_label' ); ?></label>
+					<label <?php $this->print_render_attribute_string( 'user_label' ); ?>><?php echo wp_kses_post( $settings['user_label'] ); ?></label>
 					<input <?php $this->print_render_attribute_string( 'user_input' ); ?>>
 				</div>
 				<div <?php $this->print_render_attribute_string( 'field-group' ); ?>>
-					<label <?php $this->print_render_attribute_string( 'password_label' ); ?>><?php $this->print_unescaped_setting( 'password_label' ); ?></label>
+					<label <?php $this->print_render_attribute_string( 'password_label' ); ?>><?php echo wp_kses_post( $settings['password_label'] ); ?></label>
 					<input <?php $this->print_render_attribute_string( 'password_input' ); ?>>
 				</div>
 
@@ -952,7 +952,7 @@ class Login extends Base_Widget {
 				<div <?php $this->print_render_attribute_string( 'submit-group' ); ?>>
 					<button type="submit" <?php $this->print_render_attribute_string( 'button' ); ?>>
 							<?php if ( ! empty( $settings['button_text'] ) ) : ?>
-								<span class="elementor-button-text"><?php $this->print_unescaped_setting( 'button_text' ); ?></span>
+								<span class="elementor-button-text"><?php echo wp_kses_post( $settings['button_text'] ); ?></span>
 							<?php endif; ?>
 					</button>
 				</div>
@@ -1055,11 +1055,11 @@ class Login extends Base_Widget {
 				}
 				#>
 				<div {{{ view.getRenderAttributeString( 'field-group' ) }}}>
-					<label {{{ view.getRenderAttributeString( 'user-label' ) }}}>{{{ settings.user_label }}}</label>
+					<label {{{ view.getRenderAttributeString( 'user-label' ) }}}>{{ settings.user_label }}</label>
 					<input {{{ view.getRenderAttributeString( 'user-input' ) }}}>
 				</div>
 				<div {{{ view.getRenderAttributeString( 'field-group' ) }}}>
-					<label {{{ view.getRenderAttributeString( 'password-label' ) }}}>{{{ settings.password_label }}}</label>
+					<label {{{ view.getRenderAttributeString( 'password-label' ) }}}>{{ settings.password_label }}</label>
 					<input {{{ view.getRenderAttributeString( 'password-input' ) }}}>
 				</div>
 

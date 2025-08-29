@@ -1659,13 +1659,13 @@ class Flip_Box extends Base_Widget {
 
 						<?php if ( ! empty( $settings['title_text_a'] ) ) : ?>
 							<<?php Utils::print_validated_html_tag( $title_tag ); ?> class="elementor-flip-box__layer__title">
-								<?php $this->print_unescaped_setting( 'title_text_a' ); ?>
+								<?php echo wp_kses_post( $settings['title_text_a'] ); ?>
 							</<?php Utils::print_validated_html_tag( $title_tag ); ?>>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $settings['description_text_a'] ) ) : ?>
 							<<?php Utils::print_validated_html_tag( $description_tag ); ?> class="elementor-flip-box__layer__description">
-								<?php $this->print_unescaped_setting( 'description_text_a' ); ?>
+								<?php echo wp_kses_post( $settings['description_text_a'] ); ?>
 							</<?php Utils::print_validated_html_tag( $description_tag ); ?>>
 						<?php endif; ?>
 					</div>
@@ -1676,19 +1676,19 @@ class Flip_Box extends Base_Widget {
 				<div class="elementor-flip-box__layer__inner">
 					<?php if ( ! empty( $settings['title_text_b'] ) ) : ?>
 						<<?php Utils::print_validated_html_tag( $title_tag ); ?> class="elementor-flip-box__layer__title">
-							<?php $this->print_unescaped_setting( 'title_text_b' ); ?>
+							<?php echo wp_kses_post( $settings['title_text_b'] ); ?>
 						</<?php Utils::print_validated_html_tag( $title_tag ); ?>>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $settings['description_text_b'] ) ) : ?>
 						<<?php Utils::print_validated_html_tag( $description_tag ); ?> class="elementor-flip-box__layer__description">
-							<?php $this->print_unescaped_setting( 'description_text_b' ); ?>
+							<?php echo wp_kses_post( $settings['description_text_b'] ); ?>
 						</<?php Utils::print_validated_html_tag( $description_tag ); ?>>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $settings['button_text'] ) ) : ?>
 						<<?php Utils::print_validated_html_tag( $button_tag ); ?> <?php $this->print_render_attribute_string( 'button' ); ?>>
-							<?php $this->print_unescaped_setting( 'button_text' ); ?>
+							<?php echo wp_kses_post( $settings['button_text'] ); ?>
 						</<?php Utils::print_validated_html_tag( $button_tag ); ?>>
 					<?php endif; ?>
 			</div>
@@ -1766,11 +1766,11 @@ class Flip_Box extends Base_Widget {
 						<# } #>
 
 						<# if ( settings.title_text_a ) { #>
-						<{{ titleTag }} class="elementor-flip-box__layer__title">{{{ settings.title_text_a }}}</{{ titleTag }}>
+						<{{ titleTag }} class="elementor-flip-box__layer__title">{{ settings.title_text_a }}</{{ titleTag }}>
 						<# } #>
 
 						<# if ( settings.description_text_a ) { #>
-						<{{ descriptionTag }} class="elementor-flip-box__layer__description">{{{ settings.description_text_a }}}</{{ descriptionTag }}>
+						<{{ descriptionTag }} class="elementor-flip-box__layer__description">{{ settings.description_text_a }}</{{ descriptionTag }}>
 						<# } #>
 					</div>
 				</div>
@@ -1779,15 +1779,15 @@ class Flip_Box extends Base_Widget {
 				<div class="elementor-flip-box__layer__overlay">
 					<div class="elementor-flip-box__layer__inner">
 						<# if ( settings.title_text_b ) { #>
-						<{{ titleTag }} class="elementor-flip-box__layer__title">{{{ settings.title_text_b }}}</{{ titleTag }}>
+						<{{ titleTag }} class="elementor-flip-box__layer__title">{{ settings.title_text_b }}</{{ titleTag }}>
 						<# } #>
 
 						<# if ( settings.description_text_b ) { #>
-						<{{ descriptionTag }} class="elementor-flip-box__layer__description">{{{ settings.description_text_b }}}</{{ descriptionTag }}>
+						<{{ descriptionTag }} class="elementor-flip-box__layer__description">{{ settings.description_text_b }}</{{ descriptionTag }}>
 						<# } #>
 
 						<# if ( settings.button_text ) { #>
-						<{{ buttonTag }} href="#" class="{{ btnClasses }}">{{{ settings.button_text }}}</{{ buttonTag }}>
+						<{{ buttonTag }} href="#" class="{{ btnClasses }}">{{ settings.button_text }}</{{ buttonTag }}>
 						<# } #>
 					</div>
 				</div>

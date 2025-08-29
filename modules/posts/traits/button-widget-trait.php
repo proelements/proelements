@@ -571,7 +571,7 @@ trait Button_Widget_Trait {
 			</span>
 			<?php endif; ?>
 			<?php if ( ! empty( $settings['text'] ) ) : ?>
-			<span <?php $instance->print_render_attribute_string( 'text' ); ?>><?php $instance->print_unescaped_setting( 'text' ); ?></span>
+			<span <?php $instance->print_render_attribute_string( 'text' ); ?>><?php echo wp_kses_post( $settings['text'] ); ?></span>
 			<?php endif; ?>
 		</span>
 		<?php

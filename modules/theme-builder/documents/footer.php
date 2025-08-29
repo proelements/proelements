@@ -31,6 +31,10 @@ class Footer extends Header_Footer_Base {
 		return 'eicon-footer';
 	}
 
+	protected function get_default_wrapping_html_tag() {
+		return 'footer';
+	}
+
 	protected static function get_site_editor_tooltip_data() {
 		return [
 			'title' => esc_html__( 'What is a footer template?', 'elementor-pro' ),

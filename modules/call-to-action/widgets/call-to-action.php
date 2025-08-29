@@ -349,6 +349,22 @@ class Call_To_Action extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'assets' => [
+					'styles' => [
+						[
+							'name' => 'e-ribbon',
+							'conditions' => [
+								'terms' => [
+									[
+										'name' => 'ribbon_title',
+										'operator' => '!==',
+										'value' => '',
+									],
+								],
+							],
+						],
+					],
+				],
 			]
 		);
 
@@ -1824,20 +1840,20 @@ class Call_To_Action extends Base_Widget {
 
 				<?php if ( ! empty( $settings['title'] ) ) : ?>
 					<<?php Utils::print_validated_html_tag( $title_tag ); ?> <?php $this->print_render_attribute_string( 'title' ); ?>>
-						<?php $this->print_unescaped_setting( 'title' ); ?>
+						<?php echo wp_kses_post( $settings['title'] ); ?>
 					</<?php Utils::print_validated_html_tag( $title_tag ); ?>>
 				<?php endif; ?>
 
 				<?php if ( ! empty( $settings['description'] ) ) : ?>
 					<<?php Utils::print_validated_html_tag( $description_tag ); ?> <?php $this->print_render_attribute_string( 'description' ); ?>>
-						<?php $this->print_unescaped_setting( 'description' ); ?>
+						<?php echo wp_kses_post( $settings['description'] ); ?>
 					</<?php Utils::print_validated_html_tag( $description_tag ); ?>>
 				<?php endif; ?>
 
 				<?php if ( ! empty( $settings['button'] ) ) : ?>
 					<div class="elementor-cta__button-wrapper elementor-cta__content-item elementor-content-item <?php echo esc_attr( $animation_class ); ?>">
 					<<?php Utils::print_validated_html_tag( $button_tag ); ?> <?php $this->print_render_attribute_string( 'button' ); ?>>
-						<?php $this->print_unescaped_setting( 'button' ); ?>
+						<?php echo wp_kses_post( $settings['button'] ); ?>
 					</<?php Utils::print_unescaped_internal_string( $button_tag ); ?>>
 					</div>
 				<?php endif; ?>
@@ -1847,12 +1863,17 @@ class Call_To_Action extends Base_Widget {
 		if ( ! empty( $settings['ribbon_title'] ) ) :
 			$this->add_render_attribute( 'ribbon-wrapper', 'class', 'elementor-ribbon' );
 
-			if ( ! empty( $settings['ribbon_horizontal_position'] ) ) {
+			if ( ! empty( $settings['ribbon_horizontal_position'] ) ) :
 				$this->add_render_attribute( 'ribbon-wrapper', 'class', 'elementor-ribbon-' . $settings['ribbon_horizontal_position'] );
-			}
+			endif;
+
+			$this->add_render_attribute( 'ribbon_title', 'class', 'elementor-ribbon-inner' );
+			$this->add_inline_editing_attributes( 'ribbon_title' );
 			?>
 			<div <?php $this->print_render_attribute_string( 'ribbon-wrapper' ); ?>>
-				<div class="elementor-ribbon-inner"><?php $this->print_unescaped_setting( 'ribbon_title' ); ?></div>
+				<div <?php $this->print_render_attribute_string( 'ribbon_title' ); ?>>
+					<?php echo wp_kses_post( $settings['ribbon_title'] ); ?>
+				</div>
 			</div>
 		<?php endif; ?>
 		</<?php Utils::print_validated_html_tag( $wrapper_tag ); ?>>
@@ -1986,28 +2007,32 @@ class Call_To_Action extends Base_Widget {
 					</div>
 				<# } #>
 				<# if ( settings.title ) { #>
-					<{{ titleTag }} {{{ view.getRenderAttributeString( 'title' ) }}}>{{{ settings.title }}}</{{ titleTag }}>
+					<{{ titleTag }} {{{ view.getRenderAttributeString( 'title' ) }}}>{{ settings.title }}</{{ titleTag }}>
 				<# } #>
 
 				<# if ( settings.description ) { #>
-					<{{ descriptionTag }} {{{ view.getRenderAttributeString( 'description' ) }}}>{{{ settings.description }}}</{{ descriptionTag }}>
+					<{{ descriptionTag }} {{{ view.getRenderAttributeString( 'description' ) }}}>{{ settings.description }}</{{ descriptionTag }}>
 				<# } #>
 
 				<# if ( settings.button ) { #>
 					<div class="elementor-cta__button-wrapper elementor-cta__content-item elementor-content-item {{ animationClass }}">
-						<{{ buttonTag }} href="#" {{{ view.getRenderAttributeString( 'button' ) }}}>{{{ settings.button }}}</{{ buttonTag }}>
+						<{{ buttonTag }} href="#" {{{ view.getRenderAttributeString( 'button' ) }}}>{{ settings.button }}</{{ buttonTag }}>
 					</div>
 				<# } #>
 			</div>
 		<# } #>
 		<# if ( settings.ribbon_title ) {
-			var ribbonClasses = 'elementor-ribbon';
+			view.addRenderAttribute( 'ribbon', 'class', 'elementor-ribbon' );
 
 			if ( settings.ribbon_horizontal_position ) {
-				ribbonClasses += ' elementor-ribbon-' + settings.ribbon_horizontal_position;
-			} #>
-			<div class="{{ ribbonClasses }}">
-				<div class="elementor-ribbon-inner">{{{ settings.ribbon_title }}}</div>
+				view.addRenderAttribute( 'ribbon', 'class', 'elementor-ribbon-' + settings.ribbon_horizontal_position );
+			}
+
+			view.addRenderAttribute( 'ribbon_title', 'class', 'elementor-ribbon-inner' );
+			view.addInlineEditingAttributes( 'ribbon_title' );
+			#>
+			<div {{{ view.getRenderAttributeString( 'ribbon' ) }}}>
+				<div {{{ view.getRenderAttributeString( 'ribbon_title' ) }}}>{{ settings.ribbon_title }}</div>
 			</div>
 		<# } #>
 		</{{ wrapperTag }}>

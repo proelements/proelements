@@ -67,12 +67,12 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'headline_style',
 			[
-				'label' => esc_html__( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'highlight',
 				'options' => [
-					'highlight' => esc_html__( 'Highlighted', 'elementor-pro' ),
-					'rotate' => esc_html__( 'Rotating', 'elementor-pro' ),
+					'highlight' => esc_html__( 'Highlighted Text', 'elementor-pro' ),
+					'rotate' => esc_html__( 'Rotating Text', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-headline--style-',
 				'render_type' => 'template',
@@ -83,7 +83,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'animation_type',
 			[
-				'label' => esc_html__( 'Animation', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation Type', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'typing' => 'Typing',
@@ -107,7 +107,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'marker',
 			[
-				'label' => esc_html__( 'Shape', 'elementor-pro' ),
+				'label' => esc_html__( 'Animation Shape', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'circle',
 				'options' => [
@@ -276,6 +276,36 @@ class Animated_Headline extends Base_Widget {
 			]
 		);
 
+		$this->add_control(
+			'tag',
+			[
+				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'h3',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_style_text',
+			[
+				'label' => esc_html__( 'Headline', 'elementor-pro' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
 		$this->add_responsive_control(
 			'alignment',
 			[
@@ -303,106 +333,11 @@ class Animated_Headline extends Base_Widget {
 		);
 
 		$this->add_control(
-			'tag',
+			'heading_style',
 			[
-				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
-					'p' => 'p',
-				],
-				'default' => 'h3',
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_style_marker',
-			[
-				'label' => esc_html__( 'Shape', 'elementor-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'headline_style' => 'highlight',
-				],
-			]
-		);
-
-		$this->add_control(
-			'marker_color',
-			[
-				'label' => esc_html__( 'Color', 'elementor-pro' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'stroke_width',
-			[
-				'label' => esc_html__( 'Width', 'elementor-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 20,
-					],
-					'em' => [
-						'max' => 2,
-					],
-					'rem' => [
-						'max' => 2,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke-width: {{SIZE}}{{UNIT}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'above_content',
-			[
-				'label' => esc_html__( 'Bring to Front', 'elementor-pro' ),
-				'type' => Controls_Manager::SWITCHER,
-				'selectors' => [
-					'{{WRAPPER}} .elementor-headline-dynamic-wrapper svg' => 'z-index: 2',
-					'{{WRAPPER}} .elementor-headline-dynamic-text' => 'z-index: auto',
-				],
-			]
-		);
-
-		$this->add_control(
-			'rounded_edges',
-			[
-				'label' => esc_html__( 'Rounded Edges', 'elementor-pro' ),
-				'type' => Controls_Manager::SWITCHER,
-				'selectors' => [
-					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke-linecap: round; stroke-linejoin: round',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_style_text',
-			[
-				'label' => esc_html__( 'Headline', 'elementor-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Text', 'elementor-pro' ),
+				'separator' => 'before',
 			]
 		);
 
@@ -514,7 +449,7 @@ class Animated_Headline extends Base_Widget {
 		$this->add_control(
 			'highlighted_text_background_color',
 			[
-				'label' => esc_html__( 'Selection Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}' => '--typing-selected-bg-color: {{VALUE}}',
@@ -537,6 +472,91 @@ class Animated_Headline extends Base_Widget {
 				'condition' => [
 					'headline_style' => 'rotate',
 					'animation_type' => 'typing',
+				],
+			]
+		);
+
+		$this->add_control(
+			'highlight_animation_shape_colors',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Highlighted Shape', 'elementor-pro' ),
+				'separator' => 'before',
+				'condition' => [
+					'headline_style' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_control(
+			'marker_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke: {{VALUE}}',
+				],
+				'condition' => [
+					'headline_style' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_control(
+			'stroke_width',
+			[
+				'label' => esc_html__( 'Width', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 20,
+					],
+					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
+						'max' => 2,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke-width: {{SIZE}}{{UNIT}}',
+				],
+				'condition' => [
+					'headline_style' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_control(
+			'above_content',
+			[
+				'label' => esc_html__( 'Bring to Front', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'selectors' => [
+					'{{WRAPPER}} .elementor-headline-dynamic-wrapper svg' => 'z-index: 2',
+					'{{WRAPPER}} .elementor-headline-dynamic-text' => 'z-index: auto',
+				],
+				'condition' => [
+					'headline_style' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rounded_edges',
+			[
+				'label' => esc_html__( 'Rounded Edges', 'elementor-pro' ),
+				'type' => Controls_Manager::SWITCHER,
+				'selectors' => [
+					'{{WRAPPER}} .elementor-headline-dynamic-wrapper path' => 'stroke-linecap: round; stroke-linejoin: round',
+				],
+				'condition' => [
+					'headline_style' => 'highlight',
 				],
 			]
 		);

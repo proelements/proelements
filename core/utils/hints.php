@@ -85,6 +85,11 @@ class Hints extends Core_Hints {
 				self::CAPABILITY => 'install_plugins',
 				self::DEFINED => 'SEND_VERSION',
 			],
+			'send_app_forms_triggers_notice' => [
+				self::DISMISSED => [ 'send_app_forms_triggers_notice' ],
+				self::CAPABILITY => 'install_plugins',
+				self::DEFINED => 'SEND_VERSION',
+			],
 		];
 		if ( ! $hint_key ) {
 			return $hints;

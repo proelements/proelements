@@ -32,6 +32,10 @@ class Header extends Header_Footer_Base {
 		return 'eicon-header';
 	}
 
+	protected function get_default_wrapping_html_tag() {
+		return 'header';
+	}
+
 	protected static function get_site_editor_tooltip_data() {
 		return [
 			'title' => esc_html__( 'What is a header template?', 'elementor-pro' ),

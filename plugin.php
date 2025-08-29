@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro;
 
+use ElementorPro\Core\Maintenance;
 use ElementorPro\Core\PHP_Api;
 use ElementorPro\Core\Admin\Admin;
 use ElementorPro\Core\App\App;
@@ -517,6 +518,8 @@ class Plugin {
 				);
 				new Updater( $config );
 		}
+
+		Maintenance::init();
 		}
 	}
 

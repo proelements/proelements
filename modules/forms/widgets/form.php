@@ -2486,7 +2486,7 @@ class Form extends Form_Base {
 								</span>
 							<?php endif; ?>
 							<?php if ( ! empty( $instance['button_text'] ) ) : ?>
-								<span <?php $this->print_render_attribute_string( 'button-text' ); ?>><?php $this->print_unescaped_setting( 'button_text' ); ?></span>
+								<span <?php $this->print_render_attribute_string( 'button-text' ); ?>><?php echo wp_kses_post( $instance['button_text'] ); ?></span>
 							<?php endif; ?>
 						</span>
 					</button>
@@ -2747,7 +2747,7 @@ class Form extends Form_Base {
 								<# } #>
 
 								<# if ( settings.button_text ) { #>
-									<span {{{ view.getRenderAttributeString( 'button-text' ) }}}>{{{ settings.button_text }}}</span>
+									<span {{{ view.getRenderAttributeString( 'button-text' ) }}}>{{ settings.button_text }}</span>
 								<# } #>
 							</span>
 						</button>

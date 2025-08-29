@@ -485,12 +485,10 @@ class Custom_Fonts extends Classes\Font_Base {
 			return $fonts;
 		}
 
-		add_filter( 'posts_fields', [ $this, 'posts_fields' ] );
 		$fonts = new \WP_Query( [
 			'post_type' => Fonts_Manager::CPT,
 			'posts_per_page' => -1,
 		] );
-		remove_filter( 'posts_fields', [ $this, 'posts_fields' ] );
 
 		$new_fonts = [];
 		foreach ( $fonts->posts as $font ) {

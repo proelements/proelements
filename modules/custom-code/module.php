@@ -11,6 +11,7 @@ use ElementorPro\Base\Module_Base;
 use ElementorPro\License\API;
 use ElementorPro\Modules\CustomCode\AdminMenuItems\Custom_Code_Menu_Item;
 use ElementorPro\Modules\CustomCode\AdminMenuItems\Custom_Code_Promotion_Menu_Item;
+use ElementorPro\Modules\CustomCode\ImportExport\Import_Export as Custom_Code_Import_Export;
 use ElementorPro\Modules\ThemeBuilder\Classes\Conditions_Manager;
 use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 use ElementorPro\Plugin;
@@ -46,6 +47,8 @@ class Module extends Module_Base {
 			$this->register_custom_post_type();
 			$this->register_metabox();
 		}
+
+		$this->register_import_export();
 	}
 
 	public function get_name() {
@@ -284,10 +287,9 @@ class Module extends Module_Base {
 				true
 			);
 
-			$direction_suffix = is_rtl() ? '-rtl' : '';
 			wp_enqueue_style(
 				'custom-code',
-				ELEMENTOR_PRO_ASSETS_URL . 'css/modules/custom-code' . $direction_suffix . $min_suffix . '.css',
+				ELEMENTOR_PRO_ASSETS_URL . 'css/modules/custom-code' . $min_suffix . '.css',
 				[
 					'elementor-app-base',
 				],
@@ -445,5 +447,9 @@ class Module extends Module_Base {
 		}
 
 		elementor_theme_do_location( $location );
+	}
+
+	private function register_import_export() {
+		( new Custom_Code_Import_Export() )->register_hooks();
 	}
 }

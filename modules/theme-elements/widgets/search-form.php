@@ -845,7 +845,7 @@ class Search_Form extends Base {
 							<?php if ( 'icon' === $settings['button_type'] ) : ?>
 								<?php $this->render_search_icon( $icon, $this->get_render_attributes( 'icon' ) ); ?>
 							<?php elseif ( ! empty( $settings['button_text'] ) ) : ?>
-								<?php $this->print_unescaped_setting( 'button_text' ); ?>
+								<?php echo wp_kses_post( $settings['button_text'] ); ?>
 							<?php endif; ?>
 						</button>
 					<?php endif; ?>
@@ -947,7 +947,7 @@ class Search_Form extends Base {
 								<i class="{{ iconClass }}" aria-hidden="true"></i>
 								<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'elementor-pro' ); ?></span>
 							<# } else if ( settings.button_text ) { #>
-								{{{ settings.button_text }}}
+								{{ settings.button_text }}
 							<# } #>
 						</button>
 					<# } #>

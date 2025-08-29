@@ -104,9 +104,6 @@ class Portfolio extends Base_Widget {
 				],
 				'prefix_class' => 'elementor-grid%s-',
 				'frontend_available' => true,
-				'selectors' => [
-					'.elementor-msie {{WRAPPER}} .elementor-portfolio-item' => 'width: calc( 100% / {{SIZE}} )',
-				],
 			]
 		);
 

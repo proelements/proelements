@@ -2,6 +2,59 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./packages/packages/pro/editor-site-navigation-extended/src/icons-map.ts":
+/*!********************************************************************************!*\
+  !*** ./packages/packages/pro/editor-site-navigation-extended/src/icons-map.ts ***!
+  \********************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   extendDocumentsIcons: function() { return /* binding */ extendDocumentsIcons; }
+/* harmony export */ });
+/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-site-navigation */ "@elementor/editor-site-navigation");
+/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
+/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_icons__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function extendDocumentsIcons() {
+  if (_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap) {
+    (0,_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap)({
+      header: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.HeaderTemplateIcon,
+      footer: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.FooterTemplateIcon,
+      'single-post': _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PostTypeIcon,
+      'single-page': _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PageTypeIcon,
+      popup: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PopupTemplateIcon,
+      archive: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.ArchiveTemplateIcon,
+      'search-results': _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.SearchResultsTemplateIcon,
+      'loop-item': _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LoopItemTemplateIcon,
+      'error-404': _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.Error404TemplateIcon,
+      'landing-page': _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LandingPageTemplateIcon
+    });
+  }
+}
+
+/***/ }),
+
+/***/ "./packages/packages/pro/editor-site-navigation-extended/src/init.ts":
+/*!***************************************************************************!*\
+  !*** ./packages/packages/pro/editor-site-navigation-extended/src/init.ts ***!
+  \***************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   init: function() { return /* binding */ init; }
+/* harmony export */ });
+/* harmony import */ var _icons_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./icons-map */ "./packages/packages/pro/editor-site-navigation-extended/src/icons-map.ts");
+
+function init() {
+  (0,_icons_map__WEBPACK_IMPORTED_MODULE_0__.extendDocumentsIcons)();
+}
+
+/***/ }),
+
 /***/ "@elementor/editor-site-navigation":
 /*!*******************************************************!*\
   !*** external ["elementorV2","editorSiteNavigation"] ***!
@@ -49,6 +102,18 @@ module.exports = window["elementorV2"]["icons"];
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	!function() {
 /******/ 		// define getter functions for harmony exports
@@ -81,40 +146,14 @@ module.exports = window["elementorV2"]["icons"];
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 !function() {
-/*!********************************************************************************!*\
-  !*** ./node_modules/@elementor/editor-site-navigation-extended/dist/index.mjs ***!
-  \********************************************************************************/
+/*!****************************************************************************!*\
+  !*** ./packages/packages/pro/editor-site-navigation-extended/src/index.ts ***!
+  \****************************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   init: function() { return /* binding */ init; }
+/* harmony export */   init: function() { return /* reexport safe */ _init__WEBPACK_IMPORTED_MODULE_0__.init; }
 /* harmony export */ });
-/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-site-navigation */ "@elementor/editor-site-navigation");
-/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
-// src/icons-map.ts
-
-
-function extendDocumentsIcons() {
-  if (_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap) {
-    (0,_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap)({
-      header: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.HeaderTemplateIcon,
-      footer: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.FooterTemplateIcon,
-      "single-post": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PostTypeIcon,
-      "single-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PageTypeIcon,
-      popup: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PopupTemplateIcon,
-      archive: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.ArchiveTemplateIcon,
-      "search-results": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.SearchResultsTemplateIcon,
-      "loop-item": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LoopItemTemplateIcon,
-      "error-404": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.Error404TemplateIcon,
-      "landing-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LandingPageTemplateIcon
-    });
-  }
-}
-
-// src/init.ts
-function init() {
-  extendDocumentsIcons();
-}
-
+/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./init */ "./packages/packages/pro/editor-site-navigation-extended/src/init.ts");
 
 }();
 (window.elementorV2 = window.elementorV2 || {}).editorSiteNavigationExtended = __webpack_exports__;
