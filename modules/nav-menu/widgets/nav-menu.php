@@ -1441,7 +1441,7 @@ class Nav_Menu extends Base_Widget {
 
 			$icon_content = Icons_Manager::render_font_icon( $frontend_settings['submenu_icon'], $icon_classes );
 		} else {
-			$icon_content = sprintf( '<i class="%s"></i>', $frontend_settings['submenu_icon']['value'] );
+			$icon_content = sprintf( '<i class="%s"></i>', esc_attr( $frontend_settings['submenu_icon']['value'] ) );
 		}
 
 		// Passing the entire icon markup to the frontend settings because it can be either <i> or <svg> tag.

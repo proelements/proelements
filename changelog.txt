@@ -1,5 +1,9 @@
 # PRO Elements - by PROElements.org
-#### 3.31.2 - 2025-08-07
+#### 3.31.3 - 2025-09-08
+
+* Security Fix: Improved code security enforcement in WordPress Menu widget
+
+#### 3.31.2 - 2025-08-10
 
 * Tweak: Improved release version functionality
 
