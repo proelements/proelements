@@ -1585,9 +1585,13 @@ class Module extends Module_Base {
 		$settings = array_merge( $settings, $query_settings );
 
 		if ( isset( $settings['posts_per_page'] ) && isset( $settings['columns'] ) ) {
-			$settings['rows'] = ceil( $settings['posts_per_page'] / $settings['columns'] );
+			$posts_per_page = (int) $settings['posts_per_page'];
+			$columns = (int) $settings['columns'];
+			if($columns > 0)
+				$settings['rows'] = ceil( $posts_per_page / $columns );
+			else
+				$settings['rows'] = 1;
 		}
-
 		$settings['paginate'] = 'yes';
 		$settings['allow_order'] = 'no';
 		$settings['show_result_count'] = 'no';
