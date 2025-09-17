@@ -508,7 +508,7 @@ class Media_Carousel extends Base {
 				'selector' => '{{WRAPPER}} .elementor-custom-embed-play i',
 				'fields_options' => [
 					'text_shadow_type' => [
-						'label' => _x( 'Shadow', 'Text Shadow Control', 'elementor-pro' ),
+						'label' => esc_html__( 'Shadow', 'elementor-pro' ),
 					],
 				],
 			]

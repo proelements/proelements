@@ -1,4 +1,4 @@
-/*! pro-elements - v3.27.0 - 16-02-2025 */
+/*! pro-elements - v3.31.0 - 08-09-2025 */
 .elementor-panel .elementor-control .e-control-error {
   color: #F59E0B;
 }
@@ -207,8 +207,8 @@
 .elementor-publish__tab.elementor-active:after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   height: 100%;
   width: 3px;
   background-color: var(--e-a-border-color-accent);
@@ -251,7 +251,7 @@
   width: 100px;
 }
 #elementor-theme-builder-conditions .elementor-control-type-select .elementor-control-input-wrapper:after {
-  right: 10px;
+  inset-inline-end: 10px;
 }
 #elementor-theme-builder-conditions .elementor-control-type {
   width: 120px;
@@ -268,9 +268,9 @@
 #elementor-theme-builder-conditions .elementor-control-type .elementor-control-input-wrapper:before {
   font-family: eicons;
   position: absolute;
-  top: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 13px;
   transform: translateY(-50%);
-  left: 13px;
   font-size: 15px;
 }
 #elementor-theme-builder-conditions .elementor-theme-builder-conditions-repeater-row-controls {
@@ -348,13 +348,15 @@
 
 .elementor-conditions-conflict-message {
   margin-block-start: 10px;
-  font-size: 11px;
-  color: var(--e-a-color-warning);
-  text-align: start;
-  padding-inline-start: 90px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--e-a-color-danger);
+  text-align: center;
 }
-.elementor-conditions-conflict-message a {
-  color: var(--e-a-color-warning);
+.elementor-conditions-conflict-message a,
+.elementor-conditions-conflict-message a:hover {
+  color: var(--e-a-color-danger);
 }
 
 .elementor-panel-footer-theme-builder-buttons-wrapper .elementor-panel-footer-sub-menu {
@@ -407,6 +409,9 @@
 #elementor-publish .elementor-popup__display-settings .elementor-control-input-wrapper {
   width: 80px;
   max-width: 100%;
+}
+#elementor-publish .elementor-popup__display-settings .elementor-control-send_app_promo, #elementor-publish .elementor-popup__display-settings .elementor-control-type-raw_html {
+  padding: 0 0 10px;
 }
 
 .elementor-popup__display-settings {
@@ -544,6 +549,8 @@
   background-size: contain;
   display: inline-block;
   vertical-align: top;
+  --direction-multiplier: 1;
+  scale: calc(1 * var(--direction-multiplier, 1)) 1;
 }
 
 .elementor-template-query-control-actions {

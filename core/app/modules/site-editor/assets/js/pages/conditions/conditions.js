@@ -24,7 +24,7 @@ export default function Conditions( props ) {
 					alt={ __( 'Import template', 'elementor-pro' ) }
 				/>
 				<Heading variant="h1" tag="h1">
-					{ __( 'Where Do You Want to Display Your Template?', 'elementor-pro' ) }
+					{ __( 'Where do you want to display your template?', 'elementor-pro' ) }
 				</Heading>
 				<Text variant="p">
 					{ __( 'Set the conditions that determine where your template is used throughout your site.', 'elementor-pro' ) }

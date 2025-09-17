@@ -22,7 +22,7 @@ class Child_Of extends Condition_Base {
 	}
 
 	public function get_label() {
-		return esc_html__( 'Direct Child Of', 'elementor-pro' );
+		return esc_html__( 'Direct child of', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

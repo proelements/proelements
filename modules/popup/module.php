@@ -31,6 +31,9 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_styles' ] );
+
 		if ( $this->can_use_popups() ) {
 			add_action( 'elementor/documents/register', [ $this, 'register_documents' ] );
 			add_action( 'elementor/theme/register_locations', [ $this, 'register_location' ] );
@@ -67,6 +70,21 @@ class Module extends Module_Base {
 
 		add_filter( 'elementor/finder/categories', [ $this, 'add_finder_items' ] );
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localize_settings' ] );
+	}
+
+	public function register_frontend_styles() {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_style(
+			'e-popup',
+			ELEMENTOR_PRO_URL . 'assets/css/conditionals/popup' . $suffix . '.css',
+			[],
+			ELEMENTOR_PRO_VERSION
+		);
+	}
+
+	public function enqueue_preview_styles() {
+		wp_enqueue_style( 'e-popup' );
 	}
 
 	public function disable_editing() {

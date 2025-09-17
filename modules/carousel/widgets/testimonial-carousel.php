@@ -6,6 +6,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Stroke;
+use Elementor\Group_Control_Text_Shadow;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Plugin;
@@ -316,6 +317,14 @@ class Testimonial_Carousel extends Base {
 			Group_Control_Text_Stroke::get_type(),
 			[
 				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .elementor-testimonial__text',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'content_text_shadow',
 				'selector' => '{{WRAPPER}} .elementor-testimonial__text',
 			]
 		);

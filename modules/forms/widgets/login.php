@@ -928,15 +928,15 @@ class Login extends Base_Widget {
 
 		$this->form_fields_render_attributes();
 		?>
-		<form class="elementor-login elementor-form" method="post" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>">
+		<form class="elementor-login elementor-form" method="post" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" aria-label="<?php echo esc_attr__( 'Login form', 'elementor-pro' ); ?>">
 			<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_url ); ?>">
 			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'field-group' ); ?>>
-					<label <?php $this->print_render_attribute_string( 'user_label' ); ?>><?php $this->print_unescaped_setting( 'user_label' ); ?></label>
+					<label <?php $this->print_render_attribute_string( 'user_label' ); ?>><?php echo wp_kses_post( $settings['user_label'] ); ?></label>
 					<input <?php $this->print_render_attribute_string( 'user_input' ); ?>>
 				</div>
 				<div <?php $this->print_render_attribute_string( 'field-group' ); ?>>
-					<label <?php $this->print_render_attribute_string( 'password_label' ); ?>><?php $this->print_unescaped_setting( 'password_label' ); ?></label>
+					<label <?php $this->print_render_attribute_string( 'password_label' ); ?>><?php echo wp_kses_post( $settings['password_label'] ); ?></label>
 					<input <?php $this->print_render_attribute_string( 'password_input' ); ?>>
 				</div>
 
@@ -952,7 +952,7 @@ class Login extends Base_Widget {
 				<div <?php $this->print_render_attribute_string( 'submit-group' ); ?>>
 					<button type="submit" <?php $this->print_render_attribute_string( 'button' ); ?>>
 							<?php if ( ! empty( $settings['button_text'] ) ) : ?>
-								<span class="elementor-button-text"><?php $this->print_unescaped_setting( 'button_text' ); ?></span>
+								<span class="elementor-button-text"><?php echo wp_kses_post( $settings['button_text'] ); ?></span>
 							<?php endif; ?>
 					</button>
 				</div>
@@ -996,7 +996,7 @@ class Login extends Base_Widget {
 	 */
 	protected function content_template() {
 		?>
-		<div class="elementor-login elementor-form">
+		<div class="elementor-login elementor-form" aria-label="<?php echo esc_attr__( 'Login form', 'elementor-pro' ); ?>">
 			<div class="elementor-form-fields-wrapper">
 				<#
 				view.addRenderAttribute( 'field-group', 'class', 'elementor-field-group elementor-column elementor-col-100 elementor-field-type-text' );
@@ -1055,11 +1055,11 @@ class Login extends Base_Widget {
 				}
 				#>
 				<div {{{ view.getRenderAttributeString( 'field-group' ) }}}>
-					<label {{{ view.getRenderAttributeString( 'user-label' ) }}}>{{{ settings.user_label }}}</label>
+					<label {{{ view.getRenderAttributeString( 'user-label' ) }}}>{{ settings.user_label }}</label>
 					<input {{{ view.getRenderAttributeString( 'user-input' ) }}}>
 				</div>
 				<div {{{ view.getRenderAttributeString( 'field-group' ) }}}>
-					<label {{{ view.getRenderAttributeString( 'password-label' ) }}}>{{{ settings.password_label }}}</label>
+					<label {{{ view.getRenderAttributeString( 'password-label' ) }}}>{{ settings.password_label }}</label>
 					<input {{{ view.getRenderAttributeString( 'password-input' ) }}}>
 				</div>
 

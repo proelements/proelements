@@ -1485,7 +1485,7 @@ class Gallery extends Base_Widget {
 			<div <?php $this->print_render_attribute_string( 'titles-container' ); ?>>
 				<?php if ( $settings['show_all_galleries'] ) { ?>
 					<a class="elementor-item elementor-gallery-title" role="button" tabindex="0" data-gallery-index="all">
-						<?php $this->print_unescaped_setting( 'show_all_galleries_label' ); ?>
+						<?php echo wp_kses_post( $settings['show_all_galleries_label'] ); ?>
 					</a>
 				<?php } ?>
 

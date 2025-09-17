@@ -192,10 +192,6 @@ class Module extends Module_Base {
 			return;
 		}
 
-		if ( current_user_can( 'manage_options' ) ) {
-			add_action( 'admin_notices', [ $this, 'register_submissions_admin_notice' ] );
-		}
-
 		$this->add_component( $name, new Form_Submissions_Component() );
 	}
 
@@ -217,44 +213,6 @@ class Module extends Module_Base {
 				],
 			],
 		);
-	}
-
-	public function register_submissions_admin_notice() {
-		$notice_id = 'elementor-pro-forms-submissions';
-		if ( User::is_user_notice_viewed( $notice_id ) ) {
-			return;
-		}
-
-		$is_new_site = Upgrade_Manager::install_compare( '3.25.0', '>=' );
-		if ( $is_new_site ) {
-			return;
-		}
-
-		/**
-		 * @var Admin_Notices $admin_notices
-		 */
-		$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
-
-		$dismiss_url = add_query_arg( [
-			'action' => 'elementor_set_admin_notice_viewed',
-			'notice_id' => esc_attr( $notice_id ),
-		], admin_url( 'admin-post.php' ) );
-
-		$admin_notices->print_admin_notice( [
-			'id' => $notice_id,
-			'title' => esc_html__( 'Form Submissions now activated by default on all websites', 'elementor-pro' ),
-			'description' => sprintf(
-				esc_html__( 'The Form Submissions feature, previously located under the Features tab in Elementor, is now enabled by default on all websites. If you prefer to disable this feature, you can do so by navigating to %1$sSettings → Advanced%2$s.', 'elementor-pro' ),
-				'<a href="' . esc_url( admin_url( 'admin.php?page=elementor-settings#tab-' . Settings::TAB_ADVANCED ) ) . '"><strong>',
-				'</strong></a>'
-			),
-			'button' => [
-				'text' => esc_html__( 'Got it! Keep it enabled', 'elementor-pro' ),
-				'classes' => [ 'e-notice-dismiss' ],
-				'url' => esc_url_raw( $dismiss_url ),
-				'type' => 'cta',
-			],
-		] );
 	}
 
 	/**

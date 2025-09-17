@@ -9,13 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Date extends Field_Base {
-	public $depended_scripts = [
-		'flatpickr',
-	];
-
-	public $depended_styles = [
-		'flatpickr',
-	];
 
 	public function get_type() {
 		return 'date';
@@ -23,6 +16,14 @@ class Date extends Field_Base {
 
 	public function get_name() {
 		return esc_html__( 'Date', 'elementor-pro' );
+	}
+
+	public function get_script_depends(): array {
+		return [ 'flatpickr' ];
+	}
+
+	public function get_style_depends(): array {
+		return [ 'flatpickr' ];
 	}
 
 	public function render( $item, $item_index, $form ) {

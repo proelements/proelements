@@ -324,11 +324,11 @@ class ProgressTracker extends Base_Widget {
 				'default' => 'none',
 				'options' => [
 					'none' => esc_html__( 'None', 'elementor-pro' ),
-					'solid' => _x( 'Solid', 'Border Control', 'elementor-pro' ),
-					'double' => _x( 'Double', 'Border Control', 'elementor-pro' ),
-					'dotted' => _x( 'Dotted', 'Border Control', 'elementor-pro' ),
-					'dashed' => _x( 'Dashed', 'Border Control', 'elementor-pro' ),
-					'groove' => _x( 'Groove', 'Border Control', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'groove' => esc_html__( 'Groove', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--horizontal-progress-border: {{VALUE}};',
@@ -486,11 +486,11 @@ class ProgressTracker extends Base_Widget {
 				'default' => 'none',
 				'options' => [
 					'none' => esc_html__( 'None', 'elementor-pro' ),
-					'solid' => _x( 'Solid', 'Border Control', 'elementor-pro' ),
-					'double' => _x( 'Double', 'Border Control', 'elementor-pro' ),
-					'dotted' => _x( 'Dotted', 'Border Control', 'elementor-pro' ),
-					'dashed' => _x( 'Dashed', 'Border Control', 'elementor-pro' ),
-					'groove' => _x( 'Groove', 'Border Control', 'elementor-pro' ),
+					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
+					'double' => esc_html__( 'Double', 'elementor-pro' ),
+					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
+					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'groove' => esc_html__( 'Groove', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--horizontal-border-style: {{VALUE}};',

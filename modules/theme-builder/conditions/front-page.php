@@ -20,7 +20,7 @@ class Front_Page extends Condition_Base {
 	}
 
 	public function get_label() {
-		return esc_html__( 'Front Page', 'elementor-pro' );
+		return esc_html__( 'Front page', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

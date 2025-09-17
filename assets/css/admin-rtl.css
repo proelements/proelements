@@ -1,4 +1,4 @@
-/*! pro-elements - v3.27.0 - 16-02-2025 */
+/*! pro-elements - v3.31.0 - 08-09-2025 */
 .wrap.elementor-admin-page-license .elementor-license-box {
   max-width: 600px;
   background: white;
@@ -251,7 +251,7 @@ input[type=search].select2-search__field {
 }
 .e-form-submissions-search__spinner {
   position: absolute;
-  left: 12px;
+  inset-inline-end: 12px;
   font-size: 11px;
   height: 100%;
   display: flex;
@@ -259,7 +259,7 @@ input[type=search].select2-search__field {
   color: var(--wp-admin-theme-color-darker-20, #005a87);
 }
 .e-form-submissions-search:focus-within .e-form-submissions-search__spinner, .e-form-submissions-search:hover .e-form-submissions-search__spinner {
-  left: 30px;
+  inset-inline-end: 30px;
 }
 
 .e-form-submissions-action-log--success .e-form-submissions-action-log__message {

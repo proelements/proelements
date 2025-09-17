@@ -70,6 +70,26 @@ class Hints extends Core_Hints {
 				self::CAPABILITY => 'install_plugins',
 				self::DEFINED => 'SITE_MAILER_VERSION',
 			],
+			'send_app_wc_widgets_notice' => [
+				self::DISMISSED => [ 'send_app_wc_widgets_notice' ],
+				self::CAPABILITY => 'install_plugins',
+				self::DEFINED => 'SEND_VERSION',
+			],
+			'send_app_forms_submissions_notice' => [
+				self::DISMISSED => [ 'send_app_forms_submissions_notice', 'send_app_forms_actions_notice' ],
+				self::CAPABILITY => 'install_plugins',
+				self::DEFINED => 'SEND_VERSION',
+			],
+			'send_app_forms_actions_notice' => [
+				self::DISMISSED => [ 'send_app_forms_actions_notice' ],
+				self::CAPABILITY => 'install_plugins',
+				self::DEFINED => 'SEND_VERSION',
+			],
+			'send_app_forms_triggers_notice' => [
+				self::DISMISSED => [ 'send_app_forms_triggers_notice' ],
+				self::CAPABILITY => 'install_plugins',
+				self::DEFINED => 'SEND_VERSION',
+			],
 		];
 		if ( ! $hint_key ) {
 			return $hints;

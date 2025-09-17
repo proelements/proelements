@@ -134,7 +134,8 @@ class Elementor_Library extends \WP_Widget {
 				class="elementor-edit-template"<?php echo $style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				href="<?php echo esc_url( add_query_arg( 'elementor', '', get_permalink( $instance['template_id'] ) ) ); ?>"
 			>
-				<i class="eicon-pencil"></i> <?php echo esc_html__( 'Edit Template', 'elementor-pro' ); ?>
+				<i class="eicon-pencil" aria-hidden="true"></i>
+				<?php echo esc_html__( 'Edit Template', 'elementor-pro' ); ?>
 			</a>
 		</p>
 		<?php

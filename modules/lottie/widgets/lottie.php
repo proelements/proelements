@@ -56,6 +56,22 @@ class Lottie extends Base_Widget {
 		return [ 'widget-lottie', 'e-lottie' ];
 	}
 
+	protected function current_user_can_use_external_source() {
+		return current_user_can( 'publish_pages' );
+	}
+
+	protected function get_source_options() {
+		$options = [
+			'media_file' => esc_html__( 'Media File', 'elementor-pro' ),
+		];
+
+		if ( $this->current_user_can_use_external_source() ) {
+			$options['external_url'] = esc_html__( 'External URL', 'elementor-pro' );
+		}
+
+		return $options;
+	}
+
 	protected function register_controls() {
 		$this->start_controls_section( 'lottie', [
 			'label' => esc_html__( 'Lottie', 'elementor-pro' ),
@@ -67,10 +83,7 @@ class Lottie extends Base_Widget {
 				'label' => esc_html__( 'Source', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'media_file',
-				'options' => [
-					'media_file' => esc_html__( 'Media File', 'elementor-pro' ),
-					'external_url' => esc_html__( 'External URL', 'elementor-pro' ),
-				],
+				'options' => $this->get_source_options(),
 				'frontend_available' => true,
 			]
 		);
@@ -79,7 +92,7 @@ class Lottie extends Base_Widget {
 			'source_external_url',
 			[
 				'label' => esc_html__( 'External URL', 'elementor-pro' ),
-				'type' => Controls_Manager::URL,
+				'type' => $this->current_user_can_use_external_source() ? Controls_Manager::URL : Controls_Manager::HIDDEN,
 				'condition' => [
 					'source' => 'external_url',
 				],

@@ -72,32 +72,6 @@ class Blockquote extends Base_Widget {
 				],
 				'default' => 'border',
 				'prefix_class' => 'elementor-blockquote--skin-',
-			]
-		);
-
-		$this->add_control(
-			'alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'elementor-pro' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'elementor-pro' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'elementor-pro' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'prefix_class' => 'elementor-blockquote--align-',
-				'condition' => [
-					'blockquote_skin!' => 'border',
-				],
 				'separator' => 'after',
 			]
 		);
@@ -253,6 +227,7 @@ class Blockquote extends Base_Widget {
 				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'label_block' => true,
 				'condition' => [
+					'tweet_button' => 'yes',
 					'url_type' => 'custom',
 				],
 			]
@@ -265,6 +240,39 @@ class Blockquote extends Base_Widget {
 			[
 				'label' => esc_html__( 'Content', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'elementor-pro' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'prefix_class' => 'elementor-blockquote--align-',
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'heading_content_style',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Content', 'elementor-pro' ),
+				'separator' => 'before',
 			]
 		);
 
@@ -380,7 +388,7 @@ class Blockquote extends Base_Widget {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'button_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor-pro' ),
@@ -405,29 +413,12 @@ class Blockquote extends Base_Widget {
 			]
 		);
 
-		$this->add_control(
-			'button_color_source',
-			[
-				'label' => esc_html__( 'Color', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'official' => esc_html__( 'Official', 'elementor-pro' ),
-					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
-				],
-				'default' => 'official',
-				'prefix_class' => 'elementor-blockquote--button-color-',
-			]
-		);
-
 		$this->start_controls_tabs( 'tabs_button_style' );
 
 		$this->start_controls_tab(
 			'tab_button_normal',
 			[
 				'label' => esc_html__( 'Normal', 'elementor-pro' ),
-				'condition' => [
-					'button_color_source' => 'custom',
-				],
 			]
 		);
 
@@ -442,7 +433,6 @@ class Blockquote extends Base_Widget {
 					'body.rtl {{WRAPPER}} .elementor-blockquote__tweet-button:before, body {{WRAPPER}}.elementor-blockquote--align-right .elementor-blockquote__tweet-button:before' => 'border-left-color: {{VALUE}}; border-right-color: transparent',
 				],
 				'condition' => [
-					'button_color_source' => 'custom',
 					'tweet_button_skin!' => 'link',
 				],
 			]
@@ -466,9 +456,6 @@ class Blockquote extends Base_Widget {
 			'tab_button_hover',
 			[
 				'label' => esc_html__( 'Hover', 'elementor-pro' ),
-				'condition' => [
-					'button_color_source' => 'custom',
-				],
 			]
 		);
 
@@ -479,13 +466,10 @@ class Blockquote extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-blockquote__tweet-button:hover' => 'background-color: {{VALUE}}',
-
 					'body:not(.rtl) {{WRAPPER}} .elementor-blockquote__tweet-button:hover:before, body {{WRAPPER}}.elementor-blockquote--align-left .elementor-blockquote__tweet-button:hover:before' => 'border-right-color: {{VALUE}}; border-left-color: transparent',
-
 					'body.rtl {{WRAPPER}} .elementor-blockquote__tweet-button:before, body {{WRAPPER}}.elementor-blockquote--align-right .elementor-blockquote__tweet-button:hover:before' => 'border-left-color: {{VALUE}}; border-right-color: transparent',
 				],
 				'condition' => [
-					'button_color_source' => 'custom',
 					'tweet_button_skin!' => 'link',
 				],
 			]
@@ -692,7 +676,7 @@ class Blockquote extends Base_Widget {
 				'label' => esc_html__( 'Box', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'blockquote_skin' => 'boxed',
+					'blockquote_skin!' => 'border',
 				],
 			]
 		);
@@ -934,13 +918,13 @@ class Blockquote extends Base_Widget {
 		?>
 		<blockquote class="elementor-blockquote">
 			<p <?php $this->print_render_attribute_string( 'blockquote_content' ); ?>>
-				<?php $this->print_unescaped_setting( 'blockquote_content' ); ?>
+				<?php echo wp_kses_post( $settings['blockquote_content'] ); ?>
 			</p>
 			<?php if ( ! empty( $settings['author_name'] ) || 'yes' === $settings['tweet_button'] ) : ?>
 				<div class="e-q-footer">
 					<?php if ( ! empty( $settings['author_name'] ) ) : ?>
 						<cite <?php $this->print_render_attribute_string( 'author_name' ); ?>><?php
-							$this->print_unescaped_setting( 'author_name' );
+							echo wp_kses_post( $settings['author_name'] );
 						?></cite>
 					<?php endif ?>
 					<?php if ( 'yes' === $settings['tweet_button'] ) : ?>
@@ -960,7 +944,7 @@ class Blockquote extends Base_Widget {
 							<?php endif; ?>
 							<?php if ( 'icon-text' === $tweet_button_view || 'text' === $tweet_button_view ) : ?>
 								<span <?php $this->print_render_attribute_string( 'tweet_button_label' ); ?>><?php
-									$this->print_unescaped_setting( 'tweet_button_label' );
+									echo wp_kses_post( $settings['tweet_button_label'] );
 								?></span>
 							<?php endif; ?>
 						</a>
@@ -990,12 +974,12 @@ class Blockquote extends Base_Widget {
 		#>
 			<blockquote class="elementor-blockquote">
 				<p class="elementor-blockquote__content elementor-inline-editing" data-elementor-setting-key="blockquote_content">
-					{{{ settings.blockquote_content }}}
+					{{ settings.blockquote_content }}
 				</p>
 				<# if ( 'yes' === settings.tweet_button || settings.author_name ) { #>
 					<div class="e-q-footer">
 						<# if ( settings.author_name ) { #>
-							<cite class="elementor-blockquote__author elementor-inline-editing" data-elementor-setting-key="author_name" data-elementor-inline-editing-toolbar="none">{{{ settings.author_name }}}</cite>
+							<cite class="elementor-blockquote__author elementor-inline-editing" data-elementor-setting-key="author_name" data-elementor-inline-editing-toolbar="none">{{ settings.author_name }}</cite>
 						<# } #>
 						<# if ( 'yes' === settings.tweet_button ) { #>
 							<a href="#" class="elementor-blockquote__tweet-button">
@@ -1011,7 +995,7 @@ class Blockquote extends Base_Widget {
 									<# } #>
 								<# } #>
 								<# if ( 'icon-text' === tweetButtonView || 'text' === tweetButtonView ) { #>
-									<span class="elementor-inline-editing elementor-blockquote__tweet-label" data-elementor-setting-key="tweet_button_label" data-elementor-inline-editing-toolbar="none">{{{ settings.tweet_button_label }}}</span>
+									<span class="elementor-inline-editing elementor-blockquote__tweet-label" data-elementor-setting-key="tweet_button_label" data-elementor-inline-editing-toolbar="none">{{ settings.tweet_button_label }}</span>
 								<# } #>
 							</a>
 						<# } #>

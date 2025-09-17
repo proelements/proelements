@@ -194,12 +194,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'tablet_default' => '2',
 				'mobile_default' => '1',
 				'options' => [
-					'1' => '1',
-					'2' => '2',
-					'3' => '3',
-					'4' => '4',
-					'5' => '5',
-					'6' => '6',
+					'1' => esc_html__( '1', 'elementor-pro' ),
+					'2' => esc_html__( '2', 'elementor-pro' ),
+					'3' => esc_html__( '3', 'elementor-pro' ),
+					'4' => esc_html__( '4', 'elementor-pro' ),
+					'5' => esc_html__( '5', 'elementor-pro' ),
+					'6' => esc_html__( '6', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-grid%s-',
 				'frontend_available' => true,
@@ -1063,7 +1063,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 	protected function render_post_header() {
 		?>
-		<article <?php post_class( [ 'elementor-post elementor-grid-item' ] ); ?>>
+		<article <?php post_class( [ 'elementor-post elementor-grid-item' ] ); ?> role="listitem">
 		<?php
 	}
 
@@ -1108,6 +1108,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$render_attributes = apply_filters( 'elementor/skin/loop_header_attributes', [
 			'class' => $classes,
+			'role' => 'list',
 		] );
 
 		$this->parent->add_render_attribute( 'container', $render_attributes );

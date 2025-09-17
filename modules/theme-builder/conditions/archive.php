@@ -32,7 +32,7 @@ class Archive extends Condition_Base {
 	}
 
 	public function get_all_label() {
-		return esc_html__( 'All Archives', 'elementor-pro' );
+		return esc_html__( 'All archives', 'elementor-pro' );
 	}
 
 	public function register_sub_conditions() {

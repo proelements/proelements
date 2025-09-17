@@ -6,6 +6,7 @@ use Elementor\Controls_Stack;
 use Elementor\Core\DynamicTags\Dynamic_CSS;
 use Elementor\Core\Files\CSS\Post;
 use Elementor\Core\Kits\Documents\Kit;
+use Elementor\Core\Utils\Promotions\Filtered_Promotions_Manager;
 use Elementor\Element_Base;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Modules\CustomCss\AdminMenuItems\Settings_Custom_CSS_Pro;
@@ -45,14 +46,16 @@ class Module extends Module_Base {
 		$old_section = Plugin::elementor()->controls_manager->get_control_from_stack( $element->get_unique_name(), 'section_custom_css_pro' );
 
 		if ( ! API::is_licence_has_feature( static::LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			$template = Tiers::get_promotion_template( [
+			$promotion_data = [
 				'title' => esc_html__( 'Meet Our Custom CSS', 'elementor-pro' ),
 				'messages' => [
 					esc_html__( 'Apply CSS to any widget and elevate any element with Custom CSS.', 'elementor-pro' ),
 				],
 				'link' => 'https://go.elementor.com/go-pro-advanced-custom-css/',
-			] );
+			];
 
+			$promotion_data = Filtered_Promotions_Manager::get_filtered_promotion_data( $promotion_data, 'elementor-pro/advanced-custom-css-promotion-pro-widget/promotion', 'link' );
+			$template = Tiers::get_promotion_template( $promotion_data );
 			$this->replace_controls_with_upgrade_promotion( $element, $old_section['tab'], $template );
 			return;
 		}

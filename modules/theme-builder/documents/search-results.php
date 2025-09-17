@@ -33,7 +33,7 @@ class Search_Results extends Archive {
 
 	protected static function get_site_editor_tooltip_data() {
 		return [
-			'title' => esc_html__( 'What is a Search Results Template?', 'elementor-pro' ),
+			'title' => esc_html__( 'What is a search results template?', 'elementor-pro' ),
 			'content' => esc_html__( 'You can easily control the layout and design of the Search Results page with the Search Results template, which is simply a special archive template just for displaying search results.', 'elementor-pro' ),
 			'tip' => esc_html__( 'You can customize the message if there are no results for the search term.', 'elementor-pro' ),
 			'docs' => 'https://go.elementor.com/app-theme-builder-search-results',
@@ -47,7 +47,7 @@ class Search_Results extends Archive {
 
 	public static function get_preview_as_options() {
 		$options = [
-			'search' => esc_html__( 'Search Results', 'elementor-pro' ),
+			'search' => esc_html__( 'Search results', 'elementor-pro' ),
 		];
 
 		return [

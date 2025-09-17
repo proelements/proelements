@@ -114,10 +114,13 @@ class Slides extends Base_Widget {
 		$repeater->add_control(
 			'background_image',
 			[
-				'label' => _x( 'Image', 'Background Control', 'elementor-pro' ),
+				'label' => esc_html__( 'Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .swiper-slide-bg' => 'background-image: url({{URL}})',
+				],
+				'default' => [
+					'url' => '',
 				],
 			]
 		);
@@ -125,13 +128,13 @@ class Slides extends Base_Widget {
 		$repeater->add_control(
 			'background_size',
 			[
-				'label' => _x( 'Size', 'Background Control', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'cover',
 				'options' => [
-					'cover' => _x( 'Cover', 'Background Control', 'elementor-pro' ),
-					'contain' => _x( 'Contain', 'Background Control', 'elementor-pro' ),
-					'auto' => _x( 'Auto', 'Background Control', 'elementor-pro' ),
+					'cover' => esc_html__( 'Cover', 'elementor-pro' ),
+					'contain' => esc_html__( 'Contain', 'elementor-pro' ),
+					'auto' => esc_html__( 'Auto', 'elementor-pro' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .swiper-slide-bg' => 'background-size: {{VALUE}}',
@@ -520,18 +523,27 @@ class Slides extends Base_Widget {
 						'description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'button_text' => esc_html__( 'Click Here', 'elementor-pro' ),
 						'background_color' => '#833ca3',
+						'background_image' => [
+							'url' => '',
+						],
 					],
 					[
 						'heading' => esc_html__( 'Slide 2 Heading', 'elementor-pro' ),
 						'description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'button_text' => esc_html__( 'Click Here', 'elementor-pro' ),
 						'background_color' => '#4054b2',
+						'background_image' => [
+							'url' => '',
+						],
 					],
 					[
 						'heading' => esc_html__( 'Slide 3 Heading', 'elementor-pro' ),
 						'description' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 						'button_text' => esc_html__( 'Click Here', 'elementor-pro' ),
 						'background_color' => '#1abc9c',
+						'background_image' => [
+							'url' => '',
+						],
 					],
 				],
 				'title_field' => '{{{ heading }}}',
@@ -1306,9 +1318,6 @@ class Slides extends Base_Widget {
 			]
 		);
 
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
-
 		$this->add_responsive_control(
 			'dots_size',
 			[
@@ -1328,7 +1337,7 @@ class Slides extends Base_Widget {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .swiper-pagination-bullet' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .' . $swiper_class . '-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .swiper-horizontal .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .swiper-pagination-fraction' => 'font-size: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
@@ -1376,15 +1385,12 @@ class Slides extends Base_Widget {
 			return;
 		}
 
-		// TODO: Remove conditional logic in v3.28 [ED-15983].
-		$swiper_class = $this->is_swiper_upgrade_experiment_state_inactive() ? 'swiper-container' : 'swiper';
-
 		$optimized_markup = Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 		$direction = is_rtl() ? 'rtl' : 'ltr';
 
 		$this->add_render_attribute( [
 			'wrapper' => [
-				'class' => [ 'elementor-slides-wrapper', 'elementor-main-swiper', $swiper_class ],
+				'class' => [ 'elementor-slides-wrapper', 'elementor-main-swiper', 'swiper' ],
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
 				'aria-label' => $settings['slides_name'],

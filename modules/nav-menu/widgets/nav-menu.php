@@ -1020,7 +1020,7 @@ class Nav_Menu extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-nav-menu--dropdown a, {{WRAPPER}} .elementor-menu-toggle' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-nav-menu--dropdown a, {{WRAPPER}} .elementor-menu-toggle' => 'color: {{VALUE}}; fill: {{VALUE}};',
 				],
 			]
 		);
@@ -1054,9 +1054,11 @@ class Nav_Menu extends Base_Widget {
 				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .elementor-nav-menu--dropdown a:hover,
+					{{WRAPPER}} .elementor-nav-menu--dropdown a:focus,
 					{{WRAPPER}} .elementor-nav-menu--dropdown a.elementor-item-active,
 					{{WRAPPER}} .elementor-nav-menu--dropdown a.highlighted,
-					{{WRAPPER}} .elementor-menu-toggle:hover' => 'color: {{VALUE}}',
+					{{WRAPPER}} .elementor-menu-toggle:hover,
+					{{WRAPPER}} .elementor-menu-toggle:focus' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1069,6 +1071,7 @@ class Nav_Menu extends Base_Widget {
 				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .elementor-nav-menu--dropdown a:hover,
+					{{WRAPPER}} .elementor-nav-menu--dropdown a:focus,
 					{{WRAPPER}} .elementor-nav-menu--dropdown a.elementor-item-active,
 					{{WRAPPER}} .elementor-nav-menu--dropdown a.highlighted' => 'background-color: {{VALUE}}',
 				],
@@ -1337,8 +1340,8 @@ class Nav_Menu extends Base_Widget {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} div.elementor-menu-toggle:hover' => 'color: {{VALUE}}', // Harder selector to override text color control
-					'{{WRAPPER}} div.elementor-menu-toggle:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} div.elementor-menu-toggle:hover, {{WRAPPER}} div.elementor-menu-toggle:focus' => 'color: {{VALUE}}', // Harder selector to override text color control
+					'{{WRAPPER}} div.elementor-menu-toggle:hover svg, {{WRAPPER}} div.elementor-menu-toggle:focus svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -1349,7 +1352,7 @@ class Nav_Menu extends Base_Widget {
 				'label' => esc_html__( 'Background Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-menu-toggle:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-menu-toggle:hover, {{WRAPPER}} .elementor-menu-toggle:focus' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1438,7 +1441,7 @@ class Nav_Menu extends Base_Widget {
 
 			$icon_content = Icons_Manager::render_font_icon( $frontend_settings['submenu_icon'], $icon_classes );
 		} else {
-			$icon_content = sprintf( '<i class="%s"></i>', $frontend_settings['submenu_icon']['value'] );
+			$icon_content = sprintf( '<i class="%s"></i>', esc_attr( $frontend_settings['submenu_icon']['value'] ) );
 		}
 
 		// Passing the entire icon markup to the frontend settings because it can be either <i> or <svg> tag.

@@ -447,4 +447,8 @@ class Utils {
 
 		return $is_private || $not_allowed || $password_required;
 	}
+
+	public static function is_sale_time(): bool {
+		return \Elementor\Utils::is_sale_time();
+	}
 }

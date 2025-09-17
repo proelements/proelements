@@ -30,7 +30,7 @@ class Singular extends Condition_Base {
 	}
 
 	public function get_all_label() {
-		return esc_html__( 'All Singular', 'elementor-pro' );
+		return esc_html__( 'All singular', 'elementor-pro' );
 	}
 
 	public function register_sub_conditions() {

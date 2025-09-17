@@ -146,7 +146,11 @@ class Editor extends App {
 
 	public function localize_settings( array $settings ) {
 
-		if (!defined('IS_PRO_ELEMENTS')) {
+		if (defined('IS_PRO_ELEMENTS')) {
+			$settings['elementPromotionURL'] = '';
+			$settings['dynamicPromotionURL'] = '';
+			$settings['promotionWidgets'] = [];
+		} else {
 			$settings['elementPromotionURL'] = Plugin::instance()->license_admin->get_connect_url( [
 				'utm_source'   => '%s', // Will be replaced in the frontend to the widget name
 				'utm_medium'   => 'wp-dash',

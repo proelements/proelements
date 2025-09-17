@@ -1,6 +1,7 @@
 <?php
 namespace ElementorPro\Modules\Woocommerce\Widgets;
 
+use ElementorPro\Modules\Woocommerce\Traits\Send_App_Plg_Trait;
 use ElementorPro\Plugin;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Box_Shadow;
@@ -10,14 +11,13 @@ use Elementor\Group_Control_Border;
 use Elementor\Repeater;
 use Elementor\Group_Control_Background;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Checkout extends Base_Widget {
-
+	use Send_App_Plg_Trait;
 	private $reformatted_form_fields;
 
 	public function get_name() {
@@ -63,6 +63,8 @@ class Checkout extends Base_Widget {
 				'label' => esc_html__( 'General', 'elementor-pro' ),
 			]
 		);
+
+		$this->maybe_add_send_app_promotion_control( $this );
 
 		$this->add_control(
 			'checkout_layout',

@@ -1,4 +1,4 @@
-/*! pro-elements - v3.27.0 - 16-02-2025 */
+/*! pro-elements - v3.31.0 - 08-09-2025 */
 :root {
   --color-box-shadow-color: rgba(0, 0, 0, 0.05);
 }
@@ -238,9 +238,9 @@
   font-size: 0.75rem;
   pointer-events: none;
   position: absolute;
-  top: 50%;
+  inset-block-start: 50%;
+  inset-inline-end: 0.625rem;
   transform: translateY(-50%);
-  right: 0.625rem;
 }
 .e-site-editor-conditions__input-wrapper .select2-container--default .select2-selection--single {
   border: none;
@@ -264,9 +264,9 @@
 .e-site-editor-conditions__input-wrapper--condition-type:before {
   font-family: eicons;
   position: absolute;
-  top: 50%;
   transform: translateY(-50%);
-  left: 0.75rem;
+  inset-block-start: 50%;
+  inset-inline-start: 0.75rem;
   font-size: 0.9375rem;
   pointer-events: none;
   z-index: 1000;
@@ -296,7 +296,7 @@
   margin-block-end: 1.5rem;
 }
 .eps-back-button .eps-icon {
-  transform: rotate(0deg);
+  scale: calc(1 * var(--direction-multiplier, 1)) 1;
 }
 
 :root {

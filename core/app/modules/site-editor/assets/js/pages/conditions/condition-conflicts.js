@@ -18,7 +18,15 @@ export default function ConditionConflicts( props ) {
 
 	return (
 		<Text className="e-site-editor-conditions__conflict" variant="sm">
-			{ __( 'Elementor recognized that you have set this location for other templates: ', 'elementor-pro' ) } { conflictLinks }
+			{
+				sprintf(
+					/* Translators: %s: a list of conflicted templates */
+					__( 'We noticed that you already applied %s with the same condition.', 'elementor-pro' ),
+					conflictLinks,
+				)
+			}
+			<br />
+			{ __( "To continue, set different conditions for each so they don't conflict.", 'elementor-pro' ) }
 		</Text>
 	);
 }

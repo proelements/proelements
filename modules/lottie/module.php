@@ -2,6 +2,7 @@
 
 namespace ElementorPro\Modules\Lottie;
 
+use Elementor\Utils;
 use ElementorPro\Base\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -81,7 +82,7 @@ class Module extends Module_Base {
 	}
 
 	public function register_frontend_scripts() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = Utils::is_script_debug() ? '' : '.min';
 
 		wp_register_script(
 			'lottie',

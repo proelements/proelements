@@ -25,7 +25,7 @@ class General extends Condition_Base {
 	}
 
 	public function get_all_label() {
-		return esc_html__( 'Entire Site', 'elementor-pro' );
+		return esc_html__( 'Entire site', 'elementor-pro' );
 	}
 
 	public function check( $args ) {

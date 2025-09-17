@@ -178,7 +178,7 @@ class Module extends Module_Base {
 		?>
 		<div id="elementor-new-template__form__location__wrapper" class="elementor-form-field">
 			<label for="elementor-new-template__form__location" class="elementor-form-field__label">
-				<?php echo esc_html__( 'Select a Location', 'elementor-pro' ); ?>
+				<?php echo esc_html__( 'Select a location', 'elementor-pro' ); ?>
 			</label>
 			<div class="elementor-form-field__select__wrapper">
 				<select id="elementor-new-template__form__location" class="elementor-form-field__select" name="meta_location">
@@ -208,7 +208,7 @@ class Module extends Module_Base {
 		?>
 		<div id="elementor-new-template__form__post-type__wrapper" class="elementor-form-field">
 			<label for="elementor-new-template__form__post-type" class="elementor-form-field__label">
-				<?php echo esc_html__( 'Select Post Type', 'elementor-pro' ); ?>
+				<?php echo esc_html__( 'Select post type', 'elementor-pro' ); ?>
 			</label>
 			<div class="elementor-form-field__select__wrapper">
 				<select
@@ -295,7 +295,7 @@ class Module extends Module_Base {
 
 	public function add_finder_items( array $categories ) {
 		$categories['create']['items']['theme-template'] = [
-			'title' => esc_html__( 'Add New Theme Template', 'elementor-pro' ),
+			'title' => esc_html__( 'Add new theme template', 'elementor-pro' ),
 			'icon' => 'plus-circle-o',
 			'url' => $this->get_admin_templates_url() . '#add_new',
 			'keywords' => [ 'template', 'theme', 'new', 'create' ],
@@ -343,10 +343,10 @@ class Module extends Module_Base {
 			$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
 
 			$admin_notices->print_admin_notice( [
-				'title' => esc_html__( 'Meet the New Theme Builder: More Intuitive and Visual Than Ever', 'elementor-pro' ),
+				'title' => esc_html__( 'Meet the new Theme Builder: more intuitive and visual than ever', 'elementor-pro' ),
 				'description' => esc_html__( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor-pro' ),
 				'button' => [
-					'text' => esc_html__( 'Try it Now', 'elementor-pro' ),
+					'text' => esc_html__( 'Try it now', 'elementor-pro' ),
 					'class' => 'elementor-button e-accent',
 					'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
 				],

@@ -5,6 +5,7 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
+use ElementorPro\Modules\Woocommerce\Traits\Send_App_Plg_Trait;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Product_Add_To_Cart extends Base_Widget {
+	use Send_App_Plg_Trait;
 
 	public function get_name() {
 		return 'woocommerce-product-add-to-cart';
@@ -191,6 +193,8 @@ class Product_Add_To_Cart extends Base_Widget {
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
+
+		$this->maybe_add_send_app_promotion_control( $this );
 
 		$this->add_control(
 			'layout',

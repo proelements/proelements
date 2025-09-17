@@ -1,4 +1,122 @@
 # PRO Elements - by PROElements.org
+#### 3.31.3 - 2025-09-08
+
+* Security Fix: Improved code security enforcement in WordPress Menu widget
+
+#### 3.31.2 - 2025-08-10
+
+* Tweak: Improved release version functionality
+
+#### 3.31.1 - 2025-08-06
+
+* Tweak: Updated `form-data` package version
+
+#### 3.31.0 - 2025-08-05
+
+* New: Introducing Attributes - add custom HTML attributes to elements for advanced control - Editor V4
+* Tweak: Optimized Custom Code styles by removing redundant RTL file
+* Tweak: Improved performance by loading ribbon styles only when used in Call to Action and Price Table widgets
+* Tweak: Improved semantic markup structure for header and footer documents
+* Tweak: Reorganized design controls in Animated Headline widget
+* Tweak: Reorganized design controls in Blockquote widget
+* Tweak: Reorganized design controls in Countdown widget
+* Tweak: Replaced SASS mixins and functions with native CSS logical properties
+* Fix: Empty headers are rendered in Table of Contents widget ([#28167](https://github.com/elementor/elementor/issues/28167))
+* Fix: `TypeError` bug in Menu widget
+
+#### 3.30.1 - 2025-07-22
+
+* Security Fix: Improved content sanitization in multiple widgets
+* Fix: UI issue in Hotspot widget when Optimized Markup experiment is enabled
+* Fix: Taxonomy filter not working in the Editor when Optimized Markup experiment is enabled
+
+#### 3.30.0 - 2025-07-01
+
+* New: Introduced Full Website Templates in the Cloud - export, manage, and reuse full site kits across all your websites from one place
+* Tweak: Activated "Optimized Markup" feature on new sites
+* Tweak: Activated "Menu" feature on new sites
+* Tweak: Improved error handling for Theme Builder display conditions
+* Tweak: Added styling controls to Post Excerpt widget
+* Tweak: Improved accessibility with `role` and `aria-label` attributes Post Navigation widget
+* Tweak: Added `aria-label` in Form widget
+* Tweak: Added `aria-label` in Login widget
+* Tweak: Arranged content as lists in Portfolio and Posts widgets
+* Tweak: Added Box Shadow and Text Shadow controls in Countdown widget
+* Tweak: Moved image resolution control to content tab in Price List widget
+* Tweak: Renamed and reorganized style sections in Price List widget
+* Tweak: Added conditional logic to controls in Price Table widget
+* Tweak: Grouped layout controls under list section in Price List widget
+* Tweak: Updated minimum required WordPress version to 6.6
+* Fix: Inline font icons support doesn't work in Post Navigation widget ([#24367](https://github.com/elementor/elementor/issues/24367), [#18343](https://github.com/elementor/elementor/issues/18343))
+* Fix: Page Title condition doesn't work on child pages in Widget Display Conditions
+* Fix: Editor users with "Access to edit content only" are able to delete elements
+* Fix: Links are not crawlable in Video Playlist widget
+* Fix: Uses hardcoded admin fonts in Video Playlist widget
+* Fix: Editor freezes when the Form widget is used with a high PHP upload size limit
+* Fix: Errors occur when Debug mode is enabled in Slides widget
+* Fix: Plugin dependency not enforced in Elementor Pro
+* Fix: Console shows deprecation warning in Global Widgets
+
+#### 3.29.2 - 2025-06-04
+
+* Tweak: Added selectors to Menu widget for compatibility with Optimized Markup experiment
+
+#### 3.29.1 - 2025-05-28
+
+* Security Fix: Improved code security enforcement in Animated Headline widget
+* Security Fix: Improved code security enforcement in Price Table widget
+
+#### 3.29.0 - 2025-05-19
+
+* New: Introduced Cloud Templates - save, manage, and reuse your templates across all your sites from a single cloud library
+* Tweak: Improved accessibility with `role` attributes in Share Buttons widget
+* Tweak: Improved accessibility by grouping content with `role=region` in the Video Playlist widget
+* Fix: Focus color is not applied correctly for accessibility in WordPress Menu widget ([#24239](https://github.com/elementor/elementor/issues/24239))
+* Fix: Common scripts loaded late when using the Theme Builder
+
+#### 3.28.4 - 2025-05-05
+
+* Fix: Empty results appeared on the frontend when using the Taxonomy Filter with the 'Avoid Duplicates' option in Loop Grid widget
+* Fix: Errors occur when Debug mode is enabled and the Optimized Markup experiment is active
+
+#### 3.28.3 - 2025-04-16
+* Tweak: Improved sidebar navigation flow on the Elementor Home screen
+
+#### 3.28.2 - 2025-03-30
+
+* Fix: Default Elementor animation shown for logged-out users when using an "External URL" source in Lottie widget
+
+#### 3.28.1 - 2025-03-23
+
+* Security Fix: Improved code security enforcement in Animated Headline and Form widgets
+
+#### 3.28.0 - 2025-03-17
+
+* Tweak: Ensured File Upload field styles are overridden by global styles in Form widget ([#11651](https://github.com/elementor/elementor/issues/11651), [#17223](https://github.com/elementor/elementor/issues/17223))
+* Tweak: Updated Scroll Snap description to clarify incompatibility with animations and motion effects
+* Tweak: Prevented special characters from being encoded in the email subject field in Form widget
+* Tweak: Loaded module styles within the module instead of registering them in `plugin.php`
+* Tweak: Updated minimum required WordPress version to 6.5
+* Tweak: Improved keyboard accessibility for menus in Editor Top Bar
+* Tweak: Made the edit button accessible in the Template widget
+* Tweak: Optimized Form widget performance by caching field assets `using get_style_depends()` and `get_script_depends()` methods
+* Tweak: Added Text Shadow control in Testimonial Carousel, Call to Action and Animated Headline widgets
+* Fix: Button icon alignment breaks when Inline Font Icons feature is activated ([#16077](https://github.com/elementor/elementor/issues/16077), [#16511](https://github.com/elementor/elementor/issues/16511), [#17692](https://github.com/elementor/elementor/issues/17692), [#17922](https://github.com/elementor/elementor/issues/17922), [#19253](https://github.com/elementor/elementor/issues/19253), [#19370](https://github.com/elementor/elementor/issues/19370), [#21236](https://github.com/elementor/elementor/issues/21236), [#21844](https://github.com/elementor/elementor/issues/21844), [#28080](https://github.com/elementor/elementor/issues/28080))
+* Fix: Dropdown caret color did not follow menu item color when Inline Font Icons feature is activated ([#17500](https://github.com/elementor/elementor/issues/17500), [#18466](https://github.com/elementor/elementor/issues/18466), [#21664](https://github.com/elementor/elementor/issues/21664), [#24929](https://github.com/elementor/elementor/issues/24929), [#28064](https://github.com/elementor/elementor/issues/28064))
+* Fix: Page doesn't scroll up when a coupon error notice appears in Checkout widget
+
+#### 3.27.7 - 2025-03-13
+
+* Security Fix: Improved code security enforcement in Lottie widget
+
+#### 3.27.6 - 2025-03-10
+
+* Security Fix: Improved code security enforcement in Template Condition
+
+#### 3.27.5 - 2025-03-03
+
+* Fix: The `wp_trigger_error` function causes the site to crash instead of triggering a warning when used with ACF text
+
 #### 3.27.4 - 2025-02-16
 
 * Security Fix: Improved code security enforcement in Screenshots module

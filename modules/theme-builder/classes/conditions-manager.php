@@ -76,8 +76,7 @@ class Conditions_Manager {
 		$instances = $this->get_document_instances( $post_id );
 
 		if ( ! empty( $instances ) ) {
-			// PHPCS - the method get_document_instances is safe.
-			echo implode( '<br />', $instances ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( implode( '<br />', $instances ) );
 		} else {
 			echo esc_html__( 'None', 'elementor-pro' );
 		}
@@ -115,9 +114,11 @@ class Conditions_Manager {
 			return '';
 		}
 
-		return esc_html__( 'Elementor recognized that you have set this location for other templates: ', 'elementor-pro' ) .
-			' ' .
-			implode( ', ', $conflicted );
+		return sprintf(
+			/* translators: %s: a list of conflicted templates */
+			esc_html__( 'We noticed that you already applied %s with the same condition.', 'elementor-pro' ),
+			implode( ', ', $conflicted )
+		) . '<br />' . esc_html__( "To continue, set different conditions for each so they don't conflict.", 'elementor-pro' );
 	}
 
 	public function get_conditions_conflicts_by_location( $condition, $location, $ignore_post_id = null ) {

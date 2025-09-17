@@ -1,4 +1,4 @@
-/*! pro-elements - v3.27.0 - 16-02-2025 */
+/*! pro-elements - v3.31.0 - 08-09-2025 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1202,6 +1202,104 @@ module.exports = elementorModules.editor.utils.Module.extend({
 
 /***/ }),
 
+/***/ "../modules/forms/assets/js/editor/hints/submission-analysis.js":
+/*!**********************************************************************!*\
+  !*** ../modules/forms/assets/js/editor/hints/submission-analysis.js ***!
+  \**********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
+__webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
+module.exports = elementorModules.editor.utils.Module.extend({
+  eventName: 'send_app_forms_actions_notice',
+  suffix: '',
+  control: null,
+  onSectionActive(sectionName) {
+    if (!this.isCurrentSection(sectionName)) {
+      return;
+    }
+    this.control = null;
+    if (!this.hasPromoControl()) {
+      return;
+    }
+    if (this.isNoticeDismissed('send_app_forms_actions_notice')) {
+      this.getPromoControl().remove();
+      return;
+    }
+    this.registerEvents();
+  },
+  isCurrentSection(sectionName) {
+    return ['section_integration'].includes(sectionName);
+  },
+  isNoticeDismissed(noticeName) {
+    return elementor.config.user.dismissed_editor_notices.includes(noticeName);
+  },
+  registerEvents() {
+    const dismissBtn = this.getPromoControl().$el.find('.elementor-control-notice-dismiss');
+    const onDismissBtnClick = event => {
+      dismissBtn.off('click', onDismissBtnClick);
+      event.preventDefault();
+      this.dismiss();
+      this.getPromoControl().remove();
+    };
+    dismissBtn.on('click', onDismissBtnClick);
+    const actionBtn = this.getPromoControl().$el.find('.e-btn-1');
+    const onActionBtn = event => {
+      actionBtn.off('click', onActionBtn);
+      event.preventDefault();
+      this.onAction(event);
+      this.getPromoControl().remove();
+    };
+    actionBtn.on('click', onActionBtn);
+  },
+  getPromoControl() {
+    if (this.control) {
+      return this.control;
+    }
+    if (!!this.getEditorControlModel('send_app_promo' + this.suffix)) {
+      this.control = this.getEditorControlView('send_app_promo' + this.suffix);
+    }
+    return this.control;
+  },
+  hasPromoControl() {
+    return !!this.getPromoControl();
+  },
+  ajaxRequest(name, data) {
+    elementorCommon.ajax.addRequest(name, {
+      data
+    });
+  },
+  dismiss() {
+    this.ajaxRequest('dismissed_editor_notices', {
+      dismissId: this.eventName
+    });
+    this.ensureNoPromoControlInSession();
+  },
+  ensureNoPromoControlInSession() {
+    elementor.config.user.dismissed_editor_notices.push(this.eventName);
+  },
+  onAction(event) {
+    const {
+      action_url: actionURL = null
+    } = JSON.parse(event.currentTarget.dataset.settings);
+    if (actionURL) {
+      window.open(actionURL, '_blank');
+    }
+    this.ajaxRequest('elementor_send_app_campaign', {
+      source: 'snd-form-install'
+    });
+    this.ensureNoPromoControlInSession();
+  },
+  onInit() {
+    elementor.channels.editor.on('section:activated', sectionName => this.onSectionActive(sectionName));
+  }
+});
+
+/***/ }),
+
 /***/ "../modules/forms/assets/js/editor/hooks/data/form-fields-sanitize-custom-id.js":
 /*!**************************************************************************************!*\
   !*** ../modules/forms/assets/js/editor/hooks/data/form-fields-sanitize-custom-id.js ***!
@@ -2256,7 +2354,8 @@ class FormsModule extends elementorModules.editor.utils.Module {
       ActiveCampaign = __webpack_require__(/*! ./integrations/activecampaign */ "../modules/forms/assets/js/editor/integrations/activecampaign.js"),
       GetResponse = __webpack_require__(/*! ./integrations/getresponse */ "../modules/forms/assets/js/editor/integrations/getresponse.js"),
       ConvertKit = __webpack_require__(/*! ./integrations/convertkit */ "../modules/forms/assets/js/editor/integrations/convertkit.js"),
-      EmailDeliverability = __webpack_require__(/*! ./hints/email-deliverability */ "../modules/forms/assets/js/editor/hints/email-deliverability.js");
+      EmailDeliverability = __webpack_require__(/*! ./hints/email-deliverability */ "../modules/forms/assets/js/editor/hints/email-deliverability.js"),
+      SubmissionAnalysis = __webpack_require__(/*! ./hints/submission-analysis */ "../modules/forms/assets/js/editor/hints/submission-analysis.js");
     this.replyToField = new ReplyToField();
     this.mailchimp = new Mailchimp('form');
     this.recaptcha = new Recaptcha('form');
@@ -2282,7 +2381,8 @@ class FormsModule extends elementorModules.editor.utils.Module {
     elementor.addControlView('Fields_map', __webpack_require__(/*! ./fields-map-control */ "../modules/forms/assets/js/editor/fields-map-control.js"));
     elementor.addControlView('form-fields-repeater', __webpack_require__(/*! ./fields-repeater-control */ "../modules/forms/assets/js/editor/fields-repeater-control.js"));
     this.hints = {
-      emailDeliverability: new EmailDeliverability()
+      emailDeliverability: new EmailDeliverability(),
+      submissionAnalysis: new SubmissionAnalysis()
     };
   }
   onElementorInitComponents() {
@@ -3165,7 +3265,7 @@ class GlobalWidgetLoadTemplates extends $e.modules.hookData.After {
     });
   }
   addTemplateToCache(id) {
-    const container = elementor.getPreviewContainer().findChildrenRecursive(i => parseInt(i.model.get('templateID')) === parseInt(id));
+    const container = elementor.getPreviewContainer().children.findRecursive(i => parseInt(i.model.get('templateID')) === parseInt(id));
     if (!container) {
       return this.component.notLoadedTemplatesIds.push(id);
     }
@@ -3822,7 +3922,7 @@ module.exports = function () {
         target: '_blank',
         class: 'elementor-button elementor-edit-template',
         href: editUrl,
-        html: '<i class="eicon-pencil" /> ' + __('Edit Template', 'elementor-pro')
+        html: '<i class="eicon-pencil" aria-hidden="true"></i>' + __('Edit Template', 'elementor-pro')
       });
       self.templateIdView.$el.find('.elementor-control-input-wrapper').after($editButton);
     }
@@ -6001,7 +6101,7 @@ module.exports = elementor.modules.controls.Repeater.extend({
     }
   },
   onRender() {
-    this.ui.btnAddRow.text(__('Add Condition', 'elementor-pro'));
+    this.ui.btnAddRow.text(__('Add condition', 'elementor-pro'));
   }
 });
 
@@ -7159,6 +7259,112 @@ exports["default"] = Component;
 
 /***/ }),
 
+/***/ "../modules/woocommerce/assets/js/editor/hints/store-tracking.js":
+/*!***********************************************************************!*\
+  !*** ../modules/woocommerce/assets/js/editor/hints/store-tracking.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
+__webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
+module.exports = elementorModules.editor.utils.Module.extend({
+  eventName: 'send_app_wc_widgets_notice',
+  suffix: '',
+  control: null,
+  onSectionActive(sectionName, editor) {
+    const editedElement = editor.getOption('editedElementView');
+    const widgetType = editedElement.model.get('widgetType');
+    const sectionWidgetMap = {
+      section_product: ['wc-add-to-cart'],
+      section_content: ['woocommerce-cart', 'woocommerce-checkout-page'],
+      section_layout: ['woocommerce-product-add-to-cart']
+    };
+    if (!sectionWidgetMap[sectionName]?.includes(widgetType)) {
+      return;
+    }
+    this.control = null;
+
+    // Check if control exists
+    if (!this.hasPromoControl()) {
+      return;
+    }
+
+    // Check if the user has dismissed the hint
+    if (elementor.config.user.dismissed_editor_notices.includes('send_app_wc_widgets_notice')) {
+      this.getPromoControl().remove();
+      return;
+    }
+    this.registerEvents();
+  },
+  registerEvents() {
+    // Handle dismiss and action buttons
+    const dismissBtn = this.getPromoControl().$el.find('.elementor-control-notice-dismiss');
+    const onDismissBtnClick = event => {
+      dismissBtn.off('click', onDismissBtnClick); // Remove the event listener
+      event.preventDefault();
+      this.dismiss();
+      this.getPromoControl().remove();
+    };
+    dismissBtn.on('click', onDismissBtnClick);
+
+    // Handle action button
+    const actionBtn = this.getPromoControl().$el.find('.e-btn-1');
+    const onActionBtn = event => {
+      actionBtn.off('click', onActionBtn); // Remove the event listener
+      event.preventDefault();
+      this.onAction(event);
+      this.getPromoControl().remove();
+    };
+    actionBtn.on('click', onActionBtn);
+  },
+  getPromoControl() {
+    if (!this.control && !!this.getEditorControlModel('send_app_promo' + this.suffix)) {
+      this.control = this.getEditorControlView('send_app_promo' + this.suffix);
+    }
+    return this.control;
+  },
+  hasPromoControl() {
+    return !!this.getPromoControl();
+  },
+  ajaxRequest(name, data) {
+    elementorCommon.ajax.addRequest(name, {
+      data
+    });
+  },
+  dismiss() {
+    this.ajaxRequest('dismissed_editor_notices', {
+      dismissId: this.eventName
+    });
+
+    // Prevent opening the same hint again in current editor session.
+    this.ensureNoPromoControlInSession();
+  },
+  ensureNoPromoControlInSession() {
+    // Prevent opening the same hint again in current editor session.
+    elementor.config.user.dismissed_editor_notices.push(this.eventName);
+  },
+  onAction(event) {
+    const {
+      action_url: actionURL = null
+    } = JSON.parse(event.target.closest('button').dataset.settings);
+    if (actionURL) {
+      window.open(actionURL, '_blank');
+    }
+    this.ajaxRequest('elementor_send_app_campaign', {
+      source: 'snd-wc-install'
+    });
+    this.ensureNoPromoControlInSession();
+  },
+  onElementorInit() {
+    elementor.channels.editor.on('section:activated', (sectionName, editor) => this.onSectionActive(sectionName, editor));
+  }
+});
+
+/***/ }),
+
 /***/ "../modules/woocommerce/assets/js/editor/hooks/data/create-widget-activate-settings-modal.js":
 /*!***************************************************************************************************!*\
   !*** ../modules/woocommerce/assets/js/editor/hooks/data/create-widget-activate-settings-modal.js ***!
@@ -7374,6 +7580,7 @@ Object.keys(_data).forEach(function (key) {
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 __webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
 var _component = _interopRequireDefault(__webpack_require__(/*! ./component */ "../modules/woocommerce/assets/js/editor/component.js"));
+var _storeTracking = _interopRequireDefault(__webpack_require__(/*! ./hints/store-tracking */ "../modules/woocommerce/assets/js/editor/hints/store-tracking.js"));
 class WoocommerceModule extends elementorModules.editor.utils.Module {
   constructor() {
     super(...arguments);
@@ -7416,6 +7623,9 @@ class WoocommerceModule extends elementorModules.editor.utils.Module {
       }
     };
     this.createdPageSettingsWidgets = [];
+    this.hints = {
+      storeTracking: new _storeTracking.default()
+    };
   }
   addWooCommerceClassToLoopWrapper(LoopGridHandler) {
     LoopGridHandler.$element.addClass('woocommerce');
@@ -9765,7 +9975,7 @@ $({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".a0c405b93f24b0011f86.bundle.js";
+/******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".e043cd3d7fd180995eb9.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".0df35e0e1a284d4bd18b.bundle.js";
 /******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".46a4c013b80a381a50c9.bundle.js";
 /******/ 			if (chunkId === "off-canvas-editor") return "" + chunkId + ".d20b8e528d36b21a024c.bundle.js";

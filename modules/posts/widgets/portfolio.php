@@ -95,18 +95,15 @@ class Portfolio extends Base_Widget {
 				'tablet_default' => '2',
 				'mobile_default' => '1',
 				'options' => [
-					'1' => '1',
-					'2' => '2',
-					'3' => '3',
-					'4' => '4',
-					'5' => '5',
-					'6' => '6',
+					'1' => esc_html__( '1', 'elementor-pro' ),
+					'2' => esc_html__( '2', 'elementor-pro' ),
+					'3' => esc_html__( '3', 'elementor-pro' ),
+					'4' => esc_html__( '4', 'elementor-pro' ),
+					'5' => esc_html__( '5', 'elementor-pro' ),
+					'6' => esc_html__( '6', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-grid%s-',
 				'frontend_available' => true,
-				'selectors' => [
-					'.elementor-msie {{WRAPPER}} .elementor-portfolio-item' => 'width: calc( 100% / {{SIZE}} )',
-				],
 			]
 		);
 
@@ -673,7 +670,7 @@ class Portfolio extends Base_Widget {
 
 		// PHPCS - `get_permalink` is safe.
 		?>
-		<article <?php post_class( $classes ); ?>>
+		<article <?php post_class( $classes ); ?> role="listitem">
 			<a class="elementor-post__thumbnail__link" href="<?php echo get_permalink(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 		<?php
 	}
@@ -702,7 +699,7 @@ class Portfolio extends Base_Widget {
 			$this->render_filter_menu();
 		}
 		?>
-		<div class="elementor-portfolio elementor-grid elementor-posts-container">
+		<div class="elementor-portfolio elementor-grid elementor-posts-container" role="list">
 		<?php
 	}
 

@@ -72,7 +72,7 @@ abstract class Theme_Document extends Library_Document {
 		$document_config = static::get_properties();
 
 		if ( true === $document_config['support_site_editor'] ) {
-			$panel_config['messages']['publish_notification'] = esc_html__( 'Congrats! Your Site Part is Live', 'elementor-pro' );
+			$panel_config['messages']['publish_notification'] = esc_html__( 'Congrats! Your site part is live', 'elementor-pro' );
 		}
 
 		return $panel_config;
@@ -105,6 +105,10 @@ abstract class Theme_Document extends Library_Document {
 
 	public function get_name() {
 		return static::get_type();
+	}
+
+	protected function get_default_wrapping_html_tag() {
+		return 'div';
 	}
 
 	public static function get_lock_behavior_v2() {
@@ -377,7 +381,7 @@ abstract class Theme_Document extends Library_Document {
 			[
 				'label' => esc_html__( 'HTML Tag', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'div',
+				'default' => $this->get_default_wrapping_html_tag(),
 				'options' => array_combine( $wrapper_tags, $wrapper_tags ),
 			]
 		);

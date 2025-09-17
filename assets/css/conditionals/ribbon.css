@@ -1,0 +1,41 @@
+.elementor-ribbon {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  width: 150px;
+  height: 150px;
+  z-index: 1;
+  overflow: hidden;
+  transform: rotate(90deg);
+}
+[dir=rtl] .elementor-ribbon {
+  transform: rotate(0);
+}
+.elementor-ribbon-inner {
+  left: 0;
+  transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+  width: 200%;
+  margin-block-start: 35px;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 2;
+  text-align: center;
+  text-transform: uppercase;
+  background: #000;
+}
+[dir=rtl] .elementor-ribbon-inner {
+  transform: translateY(-50%) translateX(0) translateX(35px) rotate(-45deg);
+}
+.elementor-ribbon.elementor-ribbon-left {
+  transform: rotate(0);
+  left: 0;
+  right: auto;
+}
+.elementor-ribbon.elementor-ribbon-right {
+  transform: rotate(90deg);
+  left: auto;
+  right: 0;
+}
+
+/*# sourceMappingURL=ribbon.css.map */

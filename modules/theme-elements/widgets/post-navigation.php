@@ -5,6 +5,7 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
+use Elementor\Icons_Manager;
 use ElementorPro\Core\Utils;
 use ElementorPro\Plugin;
 
@@ -54,6 +55,27 @@ class Post_Navigation extends Base {
 	 */
 	public function get_style_depends(): array {
 		return [ 'widget-post-navigation' ];
+	}
+
+	private function get_recommended_icons( $direction ): array {
+		return [
+			'fa-regular' => [
+				"arrow-alt-circle-$direction",
+				"caret-square-$direction",
+			],
+			'fa-solid' => [
+				"angle-double-$direction",
+				"angle-$direction",
+				"arrow-alt-circle-$direction",
+				"arrow-circle-$direction",
+				"arrow-$direction",
+				"caret-$direction",
+				"caret-square-$direction",
+				"chevron-circle-$direction",
+				"chevron-$direction",
+				"long-arrow-alt-$direction",
+			],
+		];
 	}
 
 	protected function register_controls() {
@@ -119,26 +141,48 @@ class Post_Navigation extends Base {
 				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
 				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		if ( is_rtl() ) {
+			$previous_direction = 'right';
+			$next_direction = 'left';
+		} else {
+			$previous_direction = 'left';
+			$next_direction = 'right';
+		}
+
+		$this->add_control(
+			'arrow_previous_icon',
+			[
+				'label' => esc_html__( 'Previous Icon', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => "fas fa-angle-$previous_direction",
+					'library' => 'fa-solid',
+				],
+				'recommended' => $this->get_recommended_icons( $previous_direction ),
+				'condition' => [
+					'show_arrow' => 'yes',
+				],
 			]
 		);
 
 		$this->add_control(
-			'arrow',
+			'arrow_next_icon',
 			[
-				'label' => esc_html__( 'Arrows Type', 'elementor-pro' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'fa fa-angle-left' => esc_html__( 'Angle', 'elementor-pro' ),
-					'fa fa-angle-double-left' => esc_html__( 'Double Angle', 'elementor-pro' ),
-					'fa fa-chevron-left' => esc_html__( 'Chevron', 'elementor-pro' ),
-					'fa fa-chevron-circle-left' => esc_html__( 'Chevron Circle', 'elementor-pro' ),
-					'fa fa-caret-left' => esc_html__( 'Caret', 'elementor-pro' ),
-					'fa fa-arrow-left' => esc_html__( 'Arrow', 'elementor-pro' ),
-					'fa fa-long-arrow-left' => esc_html__( 'Long Arrow', 'elementor-pro' ),
-					'fa fa-arrow-circle-left' => esc_html__( 'Arrow Circle', 'elementor-pro' ),
-					'fa fa-arrow-circle-o-left' => esc_html__( 'Arrow Circle Negative', 'elementor-pro' ),
+				'label' => esc_html__( 'Next Icon', 'elementor-pro' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => "fas fa-angle-$next_direction",
+					'library' => 'fa-solid',
 				],
-				'default' => 'fa fa-angle-left',
+				'recommended' => $this->get_recommended_icons( $next_direction ),
 				'condition' => [
 					'show_arrow' => 'yes',
 				],
@@ -153,6 +197,7 @@ class Post_Navigation extends Base {
 				'label_on' => esc_html__( 'Show', 'elementor-pro' ),
 				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
+				'separator' => 'before',
 			]
 		);
 
@@ -165,6 +210,7 @@ class Post_Navigation extends Base {
 				'label_off' => esc_html__( 'Hide', 'elementor-pro' ),
 				'default' => 'yes',
 				'prefix_class' => 'elementor-post-navigation-borders-',
+				'separator' => 'before',
 			]
 		);
 
@@ -194,6 +240,7 @@ class Post_Navigation extends Base {
 				'multiple' => true,
 				'label_block' => true,
 				'description' => esc_html__( 'Indicates whether next post must be within the same taxonomy term as the current post, this lets you set a taxonomy per each post type', 'elementor-pro' ),
+				'separator' => 'before',
 			]
 		);
 
@@ -307,7 +354,7 @@ class Post_Navigation extends Base {
 		$this->start_controls_section(
 			'title_style',
 			[
-				'label' => esc_html__( 'Title', 'elementor-pro' ),
+				'label' => esc_html__( 'Post Title', 'elementor-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_title' => 'yes',
@@ -418,7 +465,7 @@ class Post_Navigation extends Base {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .post-navigation__arrow-wrapper' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .post-navigation__arrow-wrapper' => 'color: {{VALUE}}; fill: {{VALUE}};',
 				],
 			]
 		);
@@ -438,7 +485,7 @@ class Post_Navigation extends Base {
 				'label' => esc_html__( 'Color', 'elementor-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .post-navigation__arrow-wrapper:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .post-navigation__arrow-wrapper:hover' => 'color: {{VALUE}}; fill: {{VALUE}};',
 				],
 			]
 		);
@@ -483,6 +530,7 @@ class Post_Navigation extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .post-navigation__arrow-wrapper' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
+				'separator' => 'before',
 			]
 		);
 
@@ -504,10 +552,7 @@ class Post_Navigation extends Base {
 					],
 				],
 				'selectors' => [
-					'body:not(.rtl) {{WRAPPER}} .post-navigation__arrow-prev' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'body:not(.rtl) {{WRAPPER}} .post-navigation__arrow-next' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'body.rtl {{WRAPPER}} .post-navigation__arrow-prev' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'body.rtl {{WRAPPER}} .post-navigation__arrow-next' => 'padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-post-navigation__link a ' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -558,7 +603,7 @@ class Post_Navigation extends Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-post-navigation__separator' => 'width: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .elementor-post-navigation' => 'border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-post-navigation' => 'border-block-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .elementor-post-navigation__next.elementor-post-navigation__link' => 'width: calc(50% - ({{SIZE}}{{UNIT}} / 2))',
 					'{{WRAPPER}} .elementor-post-navigation__prev.elementor-post-navigation__link' => 'width: calc(50% - ({{SIZE}}{{UNIT}} / 2))',
 				],
@@ -605,16 +650,28 @@ class Post_Navigation extends Base {
 		}
 
 		if ( 'yes' === $settings['show_arrow'] ) {
-			if ( is_rtl() ) {
-				$prev_icon_class = str_replace( 'left', 'right', $settings['arrow'] );
-				$next_icon_class = $settings['arrow'];
+			$is_new = Icons_Manager::is_migration_allowed();
+			$migrated_prev_icon = isset( $settings['__fa4_migrated']['arrow_previous_icon'] );
+			$migrated_next_icon = isset( $settings['__fa4_migrated']['arrow_next_icon'] );
+
+			if ( $is_new || $migrated_prev_icon ) {
+				ob_start();
+				Icons_Manager::render_icon( $settings['arrow_previous_icon'], [ 'aria-hidden' => 'true' ] );
+				$prev_icon = ob_get_clean();
 			} else {
-				$prev_icon_class = $settings['arrow'];
-				$next_icon_class = str_replace( 'left', 'right', $settings['arrow'] );
+				$prev_icon = "<i { $this->get_render_attribute_string('arrow_previous_icon') } aria-hidden='true'></i>";
 			}
 
-			$prev_arrow = '<span class="post-navigation__arrow-wrapper post-navigation__arrow-prev"><i class="' . esc_attr( $prev_icon_class ) . '" aria-hidden="true"></i><span class="elementor-screen-only">' . esc_html__( 'Prev', 'elementor-pro' ) . '</span></span>';
-			$next_arrow = '<span class="post-navigation__arrow-wrapper post-navigation__arrow-next"><i class="' . esc_attr( $next_icon_class ) . '" aria-hidden="true"></i><span class="elementor-screen-only">' . esc_html__( 'Next', 'elementor-pro' ) . '</span></span>';
+			if ( $is_new || $migrated_next_icon ) {
+				ob_start();
+				Icons_Manager::render_icon( $settings['arrow_next_icon'], [ 'aria-hidden' => 'true' ] );
+				$next_icon = ob_get_clean();
+			} else {
+				$next_icon = "<i { $this->get_render_attribute_string('arrow_next_icon') } aria-hidden='true'></i>";
+			}
+
+			$prev_arrow = '<span class="post-navigation__arrow-wrapper post-navigation__arrow-prev">' . $prev_icon . '<span class="elementor-screen-only">' . esc_html__( 'Prev', 'elementor-pro' ) . '</span></span>';
+			$next_arrow = '<span class="post-navigation__arrow-wrapper post-navigation__arrow-next">' . $next_icon . '<span class="elementor-screen-only">' . esc_html__( 'Next', 'elementor-pro' ) . '</span></span>';
 		}
 
 		$prev_title = '';
@@ -636,9 +693,17 @@ class Post_Navigation extends Base {
 			}
 		}
 		?>
-		<div class="elementor-post-navigation">
+		<div class="elementor-post-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Post Navigation', 'elementor-pro' ); ?>">
 			<div class="elementor-post-navigation__prev elementor-post-navigation__link">
-				<?php previous_post_link( '%link', $prev_arrow . '<span class="elementor-post-navigation__link__prev">' . $prev_label . $prev_title . '</span>', $in_same_term, '', $taxonomy ); ?>
+				<?php
+				previous_post_link(
+					'%link',
+					$prev_arrow . '<span class="elementor-post-navigation__link__prev">' . $prev_label . $prev_title . '</span>',
+					$in_same_term,
+					'',
+					$taxonomy
+				);
+				?>
 			</div>
 			<?php if ( 'yes' === $settings['show_borders'] ) : ?>
 				<div class="elementor-post-navigation__separator-wrapper">
@@ -646,7 +711,15 @@ class Post_Navigation extends Base {
 				</div>
 			<?php endif; ?>
 			<div class="elementor-post-navigation__next elementor-post-navigation__link">
-				<?php next_post_link( '%link', '<span class="elementor-post-navigation__link__next">' . $next_label . $next_title . '</span>' . $next_arrow, $in_same_term, '', $taxonomy ); ?>
+				<?php
+				next_post_link(
+					'%link',
+					'<span class="elementor-post-navigation__link__next">' . $next_label . $next_title . '</span>' . $next_arrow,
+					$in_same_term,
+					'',
+					$taxonomy
+				);
+				?>
 			</div>
 		</div>
 		<?php

@@ -8,7 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 abstract class Field_Base {
+
+	/**
+	 * @deprecated 3.28.0 Use `get_script_depends()` instead.
+	 */
 	public $depended_scripts = [];
+
+	/**
+	 * @deprecated 3.28.0 Use `get_style_depends()` instead.
+	 */
 	public $depended_styles = [];
 
 	abstract public function get_type();
@@ -35,21 +43,29 @@ abstract class Field_Base {
 	public function process_field( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {}
 
 	public function add_assets_depends( $form ) {
-		foreach ( $this->depended_scripts as $script ) {
+		foreach ( $this->get_script_depends() as $script ) {
 			wp_enqueue_script( $script );
 		}
 
-		foreach ( $this->depended_styles as $style ) {
+		foreach ( $this->get_style_depends() as $style ) {
 			wp_enqueue_style( $style );
 		}
 	}
 
+	public function get_script_depends(): array {
+		return (array) $this->depended_scripts;
+	}
+
+	public function get_style_depends(): array {
+		return (array) $this->depended_styles;
+	}
+
 	public function add_preview_depends() {
-		foreach ( $this->depended_scripts as $script ) {
+		foreach ( $this->get_script_depends() as $script ) {
 			wp_enqueue_script( $script );
 		}
 
-		foreach ( $this->depended_styles as $style ) {
+		foreach ( $this->get_style_depends() as $style ) {
 			wp_enqueue_style( $style );
 		}
 	}

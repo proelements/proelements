@@ -20,7 +20,7 @@ class Search extends Condition_Base {
 	}
 
 	public function get_label() {
-		return esc_html__( 'Search Results', 'elementor-pro' );
+		return esc_html__( 'Search results', 'elementor-pro' );
 	}
 
 	public function check( $args ) {
