@@ -103,21 +103,25 @@ class Updater {
 			$this->config['description'] = $this->get_description();
 
 		$plugin_data = $this->get_plugin_data();
-		if ( ! isset( $this->config['plugin_name'] ) )
-			$this->config['plugin_name'] = $plugin_data['Name'];
 
-		if ( ! isset( $this->config['version'] ) )
-			$this->config['version'] = $plugin_data['Version'];
+        if (!empty($plugin_data)) {
 
-		if ( ! isset( $this->config['author'] ) )
-			$this->config['author'] = $plugin_data['Author'];
+            if ( ! isset( $this->config['plugin_name'] ) )
+                $this->config['plugin_name'] = $plugin_data['Name'];
 
-		if ( ! isset( $this->config['homepage'] ) )
-			$this->config['homepage'] = $plugin_data['PluginURI'];
+            if ( ! isset( $this->config['version'] ) )
+                $this->config['version'] = $plugin_data['Version'];
 
-		if ( ! isset( $this->config['readme'] ) )
-			$this->config['readme'] = 'README.md';
+            if ( ! isset( $this->config['author'] ) )
+                $this->config['author'] = $plugin_data['Author'];
 
+            if ( ! isset( $this->config['homepage'] ) )
+                $this->config['homepage'] = $plugin_data['PluginURI'];
+
+            if ( ! isset( $this->config['readme'] ) )
+                $this->config['readme'] = 'README.md';
+
+	    }
 	}
 
 
