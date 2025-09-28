@@ -1,4 +1,4 @@
-Copyright (C) 2016-2024 Elementor Ltd. <https://elementor.com>.
+Copyright (C) 2016-2025 Elementor Ltd. <https://elementor.com>.
 Modifications Copyright (C) 2020 PROElements.org <https://proelements.org>.
 
 The code in this folder is a derivative work of the code from the Elementor Pro by Elementor Ltd., which is licensed under GPLv3. This code, therefore, is also licensed under the terms of the GNU Public License, version 3.
