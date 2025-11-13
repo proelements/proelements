@@ -1,0 +1,32 @@
+/*! pro-elements - v3.33.0 - 11-11-2025 */
+"use strict";
+(self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["code-highlight"],{
+
+/***/ "../modules/code-highlight/assets/js/frontend/handler.js":
+/*!***************************************************************!*\
+  !*** ../modules/code-highlight/assets/js/frontend/handler.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+class codeHighlightHandler extends elementorModules.frontend.handlers.Base {
+  onInit(...args) {
+    super.onInit(...args);
+    Prism.highlightAllUnder(this.$element[0], false);
+  }
+  onElementChange() {
+    // Handle the changes for "Word Wrap" feature
+    Prism.highlightAllUnder(this.$element[0], false);
+  }
+}
+exports["default"] = codeHighlightHandler;
+
+/***/ })
+
+}]);
+//# sourceMappingURL=code-highlight.7121ad6fca6bf899bbb5.bundle.js.map

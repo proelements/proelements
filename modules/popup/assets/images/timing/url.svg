@@ -1,0 +1,14 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.52621 8.99998C8.52621 9.43577 8.17253 9.78946 7.73674 9.78946C7.30095 9.78946 6.94727 9.43577 6.94727 8.99998C6.94727 8.56419 7.30095 8.21051 7.73674 8.21051C8.17253 8.21051 8.52621 8.56419 8.52621 8.99998" fill="#9DA5AE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.6844 8.99998C11.6844 9.43577 11.3307 9.78946 10.8949 9.78946C10.4592 9.78946 10.1055 9.43577 10.1055 8.99998C10.1055 8.56419 10.4592 8.21051 10.8949 8.21051C11.3307 8.21051 11.6844 8.56419 11.6844 8.99998" fill="#9DA5AE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.8426 8.99998C14.8426 9.43577 14.4889 9.78946 14.0531 9.78946C13.6174 9.78946 13.2637 9.43577 13.2637 8.99998C13.2637 8.56419 13.6174 8.21051 14.0531 8.21051C14.4889 8.21051 14.8426 8.56419 14.8426 8.99998" fill="#9DA5AE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20.3676 32.6842H37.736C39.4808 32.6842 40.8939 31.271 40.8939 29.5263V9C40.8939 7.25526 39.4808 5.8421 37.736 5.8421H7.73602C5.99128 5.8421 4.57812 7.25526 4.57812 9V29.5263C4.57812 31.271 5.99128 32.6842 7.73602 32.6842H10.8939H20.3676V32.6842Z" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.57812 12.1579H40.8939" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M43.4199 42.1579H30.7883V39H43.4199V42.1579Z" stroke="#E879F9" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M35.5254 35.8421L22.8938 23.2105" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M29.2109 23.2105H22.8951V29.5263" stroke="#9DA5AE" stroke-width="1.64211" stroke-linecap="round" stroke-linejoin="round"/>
+<mask id="path-9-inside-1_1909_232748" fill="white">
+<rect x="3.78906" y="11.3684" width="16.4211" height="10.1053" rx="1.54386"/>
+</mask>
+<rect x="3.78906" y="11.3684" width="16.4211" height="10.1053" rx="1.54386" stroke="#9DA5AE" stroke-width="3.28421" mask="url(#path-9-inside-1_1909_232748)"/>
+</svg>

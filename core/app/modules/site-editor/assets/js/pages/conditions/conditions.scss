@@ -1,0 +1,183 @@
+@import "conditions-api";
+
+.e-site-editor-conditions {
+	&__header {
+		text-align: center;
+	}
+
+	&__header-image {
+		display: block;
+		margin: 0 auto $e-site-editor-conditions-header-image-button-spacing;
+		width: $e-site-editor-conditions-header-image-width;
+	}
+
+	&__rows {
+		margin: $e-site-editor-conditions-rows-y-spacing auto;
+		max-width: $e-site-editor-conditions-rows-max-width;
+	}
+
+	&__row {
+		display: flex;
+		flex-grow: 1;
+		margin-block-start: $e-site-editor-conditions-row-block-start-spacing;
+	}
+
+	&__remove-condition {
+		color: $e-site-editor-conditions-remove-condition-color;
+		font-size: $e-site-editor-conditions-remove-condition-font-size;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__row-controls {
+		overflow: hidden;
+		margin-inline-end: $e-site-editor-conditions-row-controls-spacing-end;
+		background-color: var(--e-site-editor-conditions-row-controls-background);
+		display: flex;
+		width: 100%;
+		border: var(--e-site-editor-conditions-row-controls-border);
+		border-radius: $e-site-editor-conditions-row-controls-radius;
+
+		&--error {
+			border: $e-site-editor-conditions-row-controls-error-border;
+		}
+	}
+
+	&__conflict {
+		text-align: center;
+		margin-block-start: $e-site-editor-conditions-conflict-block-start-spacing;
+		color: $e-site-editor-conditions-conflict-color;
+	}
+
+	&__row-controls-inner {
+		width: 100%;
+		display: flex;
+
+		div {
+			flex: 1;
+		}
+	}
+
+	&__add-button-container {
+		text-align: center;
+	}
+
+	&__add-button {
+		margin-block-start: $e-site-editor-add-button-margin-block-start;
+		background-color: var(--e-site-editor-add-button-background-color);
+		color: $e-site-editor-add-button-color;
+		text-transform: uppercase;
+
+		&:hover {
+			background-color: var(--e-site-editor-add-button-color-hover-background-color);
+			color: $e-site-editor-add-button-color-hover-color;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		padding: $e-site-editor-save-button-container-spacing;
+		margin-top: $e-site-editor-save-button-container-margin-top;
+	}
+
+	&__input-wrapper {
+		position: relative;
+		padding-inline-start: $e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style;
+		border-color: var(--e-site-editor-input-wrapper-border-color);
+
+		&:first-child {
+			border: none;
+		}
+
+		select {
+			appearance: none;
+			-webkit-appearance: none;
+			font-size: $e-site-editor-input-wrapper-select-font-size;
+			height: $e-site-editor-input-wrapper-select-height;
+			border-width: 0;
+			padding: 0 $e-site-editor-input-wrapper-select-y-padding;
+			width: 100%;
+			position: relative;
+			color: var(--e-site-editor-input-wrapper-select-color);
+			outline: none;
+			background: transparent;
+		}
+
+		&::after {
+			font-family: eicons;
+			content: '\e8ad';
+			font-size: $e-site-editor-input-wrapper-select-arrow-font-size;
+			pointer-events: none;
+			position: absolute;
+			inset-block-start: 50%;
+			inset-inline-end: $e-site-editor-input-wrapper-select-arrow-margin-end;
+			transform: translateY(-50%);
+		}
+
+		.select2-container--default .select2-selection--single {
+			border: none;
+			line-height: $e-site-editor-input-wrapper-select-height;
+		}
+
+		.select2-container--default .select2-selection--single .select2-selection__rendered {
+			line-height:  $e-site-editor-input-wrapper-select-height;
+			font-size: $e-site-editor-input-wrapper-select-font-size;
+		}
+
+		.select2-selection {
+			outline: none;
+			background: transparent;
+			height: $e-site-editor-input-wrapper-select-height;
+		}
+
+		.select2-selection__arrow {
+			display: none;
+		}
+	}
+
+	&__input-wrapper--condition-type {
+		position: relative;
+
+		&::before {
+			font-family: eicons;
+			position: absolute;
+			transform: translateY(-50%);
+			inset-block-start: 50%;
+			inset-inline-start: $e-site-editor-input-wrapper-condition-type-icon-start-spacing;
+			font-size: $e-site-editor-input-wrapper-condition-type-icon-font-size;
+			//color: $e-site-editor-input-wrapper-condition-type-icon-color;
+			pointer-events: none;
+			z-index: $e-site-editor-input-wrapper-condition-type-icon-z-index;
+		}
+
+		select {
+			text-transform: uppercase;
+			padding-inline-start: $e-site-editor-input-wrapper-condition-type-start-padding;
+			width: $e-site-editor-input-wrapper-condition-type-width;
+			font-size: $e-site-editor-input-wrapper-condition-type-font-size;
+			border-inline-end: $e-site-editor-input-wrapper-border-width $e-site-editor-input-wrapper-border-style;
+			border-color: var(--e-site-editor-input-wrapper-border-color);
+		}
+
+		&[data-elementor-condition-type="include"] {
+			&::before {
+				content: '\e8cc';
+			}
+		}
+
+		&[data-elementor-condition-type="exclude"] {
+			&::before {
+				content: '\e8cd';
+			}
+		}
+	}
+}
+
+// This is a temporary fix that handles dark mode in select2.
+// TODO: Remove it if already handled by the Select2 component.
+.select2-search__field {
+	background-color: transparent;
+	color: var(--e-site-editor-input-select2-search-field-color);
+}

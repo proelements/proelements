@@ -1,0 +1,93 @@
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+
+export function usePages( { skipLoading = false } = {} ) {
+	const [ pages, setPages ] = useState( [] );
+	const [ isLoading, setIsLoading ] = useState( false );
+	const [ error, setError ] = useState( null );
+	const [ hasMorePages, setHasMorePages ] = useState( true );
+	const isLoaded = useRef( null );
+
+	const fetchAllPages = useCallback( async () => {
+		if ( isLoaded.current ) {
+			return;
+		}
+
+		try {
+			setIsLoading( true );
+			setError( null );
+			setPages( [] );
+			setHasMorePages( true );
+
+			let currentPage = 1;
+			let allPages = [];
+
+			while ( hasMorePages || 1 === currentPage ) {
+				const baseUrl = new URL( elementorCommon.config.urls.rest, window.location.origin );
+
+				const isPlainPermalink = 'index.php' === baseUrl.pathname.replace( /\//g, '' );
+
+				baseUrl.pathname = isPlainPermalink ? baseUrl.pathname : `${ baseUrl.pathname }wp/v2/pages`;
+				if ( isPlainPermalink ) {
+					baseUrl.searchParams.set( 'rest_route', '/wp/v2/pages' );
+				}
+				baseUrl.searchParams.append( 'page', 1 );
+				baseUrl.searchParams.append( 'per_page', 100 );
+				baseUrl.searchParams.append( '_embed', '' );
+
+				const response = await fetch( baseUrl.toString(), {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-WP-Nonce': window.wpApiSettings?.nonce || '',
+					},
+				} );
+
+				if ( ! response.ok ) {
+					throw new Error( `HTTP error! status: ${ response.status }` );
+				}
+
+				const data = await response.json();
+				const totalPages = parseInt( response.headers.get( 'X-WP-TotalPages' ) || '1' );
+
+				allPages = [ ...allPages, ...data ];
+
+				if ( totalPages <= currentPage ) {
+					setHasMorePages( false );
+					break;
+				}
+
+				currentPage++;
+			}
+
+			setPages( allPages );
+			isLoaded.current = true;
+		} catch ( err ) {
+			setError( err.message );
+		} finally {
+			setIsLoading( false );
+		}
+	}, [ hasMorePages ] );
+
+	const refreshPages = useCallback( () => {
+		fetchAllPages();
+	}, [ fetchAllPages ] );
+
+	const pageOptions = useMemo( () => {
+		return pages.map( ( page ) => ( { value: page.id, label: page.title.rendered } ) );
+	}, [ pages ] );
+
+	useEffect( () => {
+		if ( ! skipLoading ) {
+			fetchAllPages();
+		}
+	}, [ skipLoading ] );
+
+	return {
+		pages,
+		isLoading,
+		error,
+		refreshPages,
+		pageOptions,
+		isLoaded: isLoaded.current,
+	};
+}
