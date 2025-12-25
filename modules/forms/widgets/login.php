@@ -911,13 +911,12 @@ class Login extends Base_Widget {
 			if ( 'yes' === $settings['show_logged_in_message'] ) {
 				$current_user = wp_get_current_user();
 
-				// PHPCS - `sprintf` is safe.
 				echo '<div class="elementor-login elementor-login__logged-in-message">' .
 					sprintf(
 						/* translators: 1: User display name, 2: Link opening tag, 3: Link closing tag. */
 						esc_html__( 'You are Logged in as %1$s (%2$sLogout%3$s)', 'elementor-pro' ),
 						wp_kses_post( $current_user->display_name ),
-						sprintf( '<a href="%s" target="_blank">', esc_url( wp_logout_url( $logout_redirect ) ) ),
+						sprintf( '<a href="%s" target="_blank" rel="noopener noreferrer">', esc_url( wp_logout_url( $logout_redirect ) ) ),
 						'</a>'
 					) .
 					'</div>';
@@ -964,8 +963,7 @@ class Login extends Base_Widget {
 				if ( $show_lost_password || $show_register ) : ?>
 					<div class="elementor-field-group elementor-column elementor-col-100">
 						<?php if ( $show_lost_password ) : ?>
-							<?php // PHPCS - `wp_lostpassword_url` is safe. ?>
-							<a class="elementor-lost-password" href="<?php echo wp_lostpassword_url( $redirect_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+							<a class="elementor-lost-password" href="<?php echo esc_url( wp_lostpassword_url( $redirect_url ) ); ?>">
 								<?php echo esc_html__( 'Lost your password?', 'elementor-pro' ); ?>
 							</a>
 						<?php endif; ?>
@@ -974,8 +972,7 @@ class Login extends Base_Widget {
 							<?php if ( $show_lost_password ) : ?>
 								<span class="elementor-login-separator"> | </span>
 							<?php endif; ?>
-							<?php // PHPCS - `wp_registration_url` is safe. ?>
-							<a class="elementor-register" href="<?php echo wp_registration_url(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+							<a class="elementor-register" href="<?php echo esc_url( wp_registration_url() ); ?>">
 								<?php echo esc_html__( 'Register', 'elementor-pro' ); ?>
 							</a>
 						<?php endif; ?>
@@ -1004,7 +1001,7 @@ class Login extends Base_Widget {
 				view.addRenderAttribute(
 					'user-label',
 					{
-						for: 'user-<?php echo $this->get_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+						for: 'user-<?php echo esc_attr( $this->get_id() ); ?>',
 						class: 'elementor-field-label'
 					}
 				);
@@ -1012,7 +1009,7 @@ class Login extends Base_Widget {
 				view.addRenderAttribute(
 					'password-label',
 					{
-						for: 'password-<?php echo $this->get_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+						for: 'password-<?php echo esc_attr( $this->get_id() ); ?>',
 						class: 'elementor-field-label'
 					}
 				);
@@ -1023,7 +1020,7 @@ class Login extends Base_Widget {
 						size: '1',
 						type: 'text',
 						name: 'log',
-						id: 'user-<?php echo $this->get_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+						id: 'user-<?php echo esc_attr( $this->get_id() ); ?>',
 						placeholder: settings.user_placeholder,
 						class: [
 							'elementor-field',
@@ -1039,7 +1036,7 @@ class Login extends Base_Widget {
 						size: '1',
 						type: 'password',
 						name: 'pwd',
-						id: 'password-<?php echo $this->get_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+						id: 'password-<?php echo esc_attr( $this->get_id() ); ?>',
 						placeholder: settings.password_placeholder,
 						class: [
 							'elementor-field',
@@ -1067,8 +1064,7 @@ class Login extends Base_Widget {
 					<div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-col-100 elementor-remember-me">
 						<label for="elementor-login-remember-me">
 							<input type="checkbox" id="elementor-login-remember-me" name="rememberme" value="forever">
-							<?php // PHPCS - `esc_html__` is safe. ?>
-							<?php echo esc_html__( 'Remember Me', 'elementor-pro' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php echo esc_html__( 'Remember Me', 'elementor-pro' ); ?>
 						</label>
 					</div>
 				<# } #>
@@ -1084,8 +1080,7 @@ class Login extends Base_Widget {
 				<# if ( settings.show_lost_password || settings.show_register ) { #>
 					<div class="elementor-field-group elementor-column elementor-col-100">
 						<# if ( settings.show_lost_password ) { #>
-						<?php // PHPCS - `wp_lostpassword_url` is safe. ?>
-						<a class="elementor-lost-password" href="<?php echo wp_lostpassword_url(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+						<a class="elementor-lost-password" href="<?php echo esc_url( wp_lostpassword_url() ); ?>">
 								<?php echo esc_html__( 'Lost your password?', 'elementor-pro' ); ?>
 							</a>
 						<# } #>
@@ -1095,8 +1090,7 @@ class Login extends Base_Widget {
 								<# if ( settings.show_lost_password ) { #>
 									<span class="elementor-login-separator"> | </span>
 								<# } #>
-							<?php // PHPCS - `wp_registration_url` is safe. ?>
-							<a class="elementor-register" href="<?php echo wp_registration_url(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+							<a class="elementor-register" href="<?php echo esc_url( wp_registration_url() ); ?>">
 									<?php echo esc_html__( 'Register', 'elementor-pro' ); ?>
 								</a>
 							<# } #>
