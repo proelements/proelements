@@ -34,9 +34,9 @@ class Module extends BaseModule {
 	}
 
 	private function add_actions() {
-		if ( ! Utils::is_high_tier() ) {
-			return;
-		}
+		// if ( ! Utils::is_high_tier() ) {
+		// 	return;
+		// }
 
 		add_filter( 'elementor/import-export-customization/export/templates/customization', [ $this, 'export_templates_customization' ], 10, 4 );
 		add_filter( 'elementor/import-export-customization/import/templates/customization', [ $this, 'import_templates_customization' ], 10, 5 );
