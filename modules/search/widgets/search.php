@@ -1988,7 +1988,7 @@ class Search extends Base_Widget {
 		}
 
 		$this->print_dynamic_css( $post_id, $template_id );
-		$document->print_content();
+		echo $document->get_content();
 	}
 
 	protected function render_loader( $settings ) {
