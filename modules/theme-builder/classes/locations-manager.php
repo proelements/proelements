@@ -449,7 +449,7 @@ class Locations_Manager {
 			] );
 
 			$this->current_location = $location;
-			$document->print_content();
+			echo $document->get_content();
 			$this->did_locations[] = $this->current_location;
 			$this->current_location = null;
 
