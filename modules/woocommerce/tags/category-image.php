@@ -31,7 +31,9 @@ class Category_Image extends Base_Data_Tag {
 	public function get_value( array $options = [] ) {
 		$category_id = 0;
 
-		if ( is_product_category() ) {
+		if ( Taxonomy_Loop_Provider::is_loop_taxonomy_strict() ) {
+			$category_id = $this->get_data_id_from_taxonomy_loop_query();
+		} elseif ( is_product_category() ) {
 			$category_id = get_queried_object_id();
 		} elseif ( is_product() ) {
 			$product = wc_get_product();
@@ -41,8 +43,6 @@ class Category_Image extends Base_Data_Tag {
 					$category_id = $category_ids[0];
 				}
 			}
-		} elseif ( Taxonomy_Loop_Provider::is_loop_taxonomy() ) {
-			$category_id = $this->get_data_id_from_taxonomy_loop_query();
 		}
 
 		if ( $category_id ) {

@@ -233,10 +233,15 @@ class Module extends Module_Base {
 
 			if ( $current_screen && self::CPT === $current_screen->post_type ) {
 				$messages[ self::CPT ] = [
+					/* translators: %s: Number of custom code items. */
 					'updated' => _n( '%s custom code updated.', '%s custom codes updated.', $counters['updated'], 'elementor-pro' ),
+					/* translators: %s: Number of custom code items. */
 					'locked' => _n( '%s custom code cannot be not updated, someone else is editing it.', '%s custom codes cannot be not updated, someone else is editing them.', $counters['locked'], 'elementor-pro' ),
+					/* translators: %s: Number of custom code items. */
 					'deleted' => _n( '%s custom code permanently deleted.', '%s custom codes permanently deleted.', $counters['deleted'], 'elementor-pro' ),
+					/* translators: %s: Number of custom code items. */
 					'trashed' => _n( '%s custom code moved to trash.', '%s custom codes moved to trash.', $counters['trashed'], 'elementor-pro' ),
+					/* translators: %s: Number of custom code items. */
 					'untrashed' => _n( '%s custom code restored.', '%s custom code restored.', $counters['untrashed'], 'elementor-pro' ),
 				];
 			}

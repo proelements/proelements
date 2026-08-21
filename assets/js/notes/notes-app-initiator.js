@@ -332,7 +332,7 @@ __webpack_require__.r(__webpack_exports__);
     document.body.appendChild(rootElement);
     const {
       default: App
-    } = await Promise.all(/*! import() | notes-app */[__webpack_require__.e("vendors-node_modules_radix-ui_react-alert-dialog_dist_index_module_js-node_modules_radix-ui_r-e4587e"), __webpack_require__.e("notes-app")]).then(__webpack_require__.bind(__webpack_require__, /*! ./app/app */ "../assets/js/app/app.js"));
+    } = await Promise.all(/*! import() | notes-app */[__webpack_require__.e("vendors-node_modules_radix-ui_react-alert-dialog_dist_index_module_js-node_modules_radix-ui_r-597e40"), __webpack_require__.e("notes-app")]).then(__webpack_require__.bind(__webpack_require__, /*! ./app/app */ "../assets/js/app/app.js"));
     ReactDOM.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(App, null), rootElement); // eslint-disable-line react/no-deprecated
   }
 

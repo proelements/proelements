@@ -16,6 +16,7 @@ trait Tag_Product_Id {
 					'object' => QueryControlModule::QUERY_OBJECT_POST,
 					'query' => [
 						'post_type' => [ 'product' ],
+						'post_status' => [ 'publish' ],
 					],
 				],
 				// Since we're using the `wc_get_product` method to retrieve products, when no product selected manually

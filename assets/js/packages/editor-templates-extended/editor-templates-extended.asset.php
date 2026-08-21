@@ -11,10 +11,12 @@ return [
 		'elementor-v2-core-adapter-utils',
 		'elementor-v2-editor',
 		'elementor-v2-editor-documents',
+		'elementor-v2-editor-embedded-documents-manager',
 		'elementor-v2-editor-global-classes',
 		'elementor-v2-editor-styles-repository',
 		'elementor-v2-editor-v1-adapters',
 		'elementor-v2-store',
+		'elementor-v2-utils',
 		'react',
 	],
 ];

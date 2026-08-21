@@ -5,8 +5,10 @@
 {% set required_attribute = settings.required ? 'required' : '' %}
 {% set readonly_attribute = settings.readonly ? 'readonly' : '' %}
 {% set rows_attribute = settings.rows is not empty ? 'rows=' ~ settings.rows | e('html_attr') : '' %}
-{% set minlength_attribute = settings.minlength is not empty ? 'minlength=' ~ settings.minlength | e('html_attr') : '' %}
-{% set maxlength_attribute = settings.maxlength is not empty ? 'maxlength=' ~ settings.maxlength | e('html_attr') : '' %}
+{% set min_value = settings.length.min is defined and settings.length.min is not empty ? settings.length.min : settings.minlength %}
+{% set max_value = settings.length.max is defined and settings.length.max is not empty ? settings.length.max : settings.maxlength %}
+{% set minlength_attribute = min_value is not empty ? 'minlength=' ~ min_value | e('html_attr') : '' %}
+{% set maxlength_attribute = max_value is not empty ? 'maxlength=' ~ max_value | e('html_attr') : '' %}
 {% set resizable_attribute = settings.resizable ? 'data-resizable' : '' %}
 {% set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
 {% set name_attribute = 'name=' ~ name | e('html_attr') %}

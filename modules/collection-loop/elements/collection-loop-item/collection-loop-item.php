@@ -7,7 +7,7 @@ use Elementor\Modules\AtomicWidgets\Elements\Base\Atomic_Element_Base;
 use Elementor\Modules\AtomicWidgets\Elements\Base\Has_Element_Template;
 use Elementor\Modules\AtomicWidgets\PropTypes\Attributes_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Classes_Prop_Type;
-use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
+use ElementorPro\Modules\CollectionLoop\Utils\Non_Overridable_Props;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -18,7 +18,7 @@ class Collection_Loop_Item extends Atomic_Element_Base {
 
 	const ELEMENT_TYPE = 'e-collection-loop-item';
 
-	public static $widget_description = 'Repeating item template for a Collection Loop. Renders once per item in the collection.';
+	public static $widget_description = 'Repeating item template for a Loop. Renders once per item in the collection.';
 
 	public function __construct( $data = [], $args = null ) {
 		parent::__construct( $data, $args );
@@ -35,11 +35,11 @@ class Collection_Loop_Item extends Atomic_Element_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Collection Item', 'elementor-pro' );
+		return esc_html__( 'Loop Item', 'elementor-pro' );
 	}
 
 	public function get_icon() {
-		return 'eicon-post-content';
+		return 'eicon-loop-item';
 	}
 
 	public function should_show_in_panel() {
@@ -47,10 +47,10 @@ class Collection_Loop_Item extends Atomic_Element_Base {
 	}
 
 	protected static function define_props_schema(): array {
-		return [
+		return Non_Overridable_Props::apply_to_schema( [
 			'classes' => Classes_Prop_Type::make()->default( [] ),
-			'attributes' => Attributes_Prop_Type::make()->meta( Overridable_Prop_Type::ignore() ),
-		];
+			'attributes' => Attributes_Prop_Type::make(),
+		] );
 	}
 
 	protected function define_atomic_controls(): array {

@@ -1,4 +1,4 @@
-/*! pro-elements - v4.1.0 - 26-05-2026 */
+/*! pro-elements - v4.2.0 - 19-08-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -4364,19 +4364,23 @@ var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 const generalError = () => __('Something went wrong, please try again later.', 'elementor-pro');
 var _default = exports["default"] = {
   trashed: {
-    success: (count = 1) => (0, _i18n.sprintf)((0, _i18n._n)('%d submission moved to Trash.', '%d submissions moved to Trash.', count, 'elementor-pro'), count),
+    success: (count = 1) => (0, _i18n.sprintf)(/* translators: %d: Number of submissions. */
+    (0, _i18n._n)('%d submission moved to Trash.', '%d submissions moved to Trash.', count, 'elementor-pro'), count),
     error: generalError
   },
   deleted: {
-    success: (count = 1) => (0, _i18n.sprintf)((0, _i18n._n)('%d submission permanently deleted.', '%d submissions permanently deleted.', count, 'elementor-pro'), count),
+    success: (count = 1) => (0, _i18n.sprintf)(/* translators: %d: Number of submissions. */
+    (0, _i18n._n)('%d submission permanently deleted.', '%d submissions permanently deleted.', count, 'elementor-pro'), count),
     error: generalError
   },
   updated: {
-    success: (count = 1) => (0, _i18n.sprintf)((0, _i18n._n)('Submission has been successfully updated.', '%d submissions have been successfully updated.', count, 'elementor-pro'), count),
+    success: (count = 1) => (0, _i18n.sprintf)(/* translators: %d: Number of submissions. */
+    (0, _i18n._n)('%d submission has been successfully updated.', '%d submissions have been successfully updated.', count, 'elementor-pro'), count),
     error: generalError
   },
   restored: {
-    success: (count = 1) => (0, _i18n.sprintf)((0, _i18n._n)('%d submission restored from Trash.', '%d submissions restored from Trash.', count, 'elementor-pro'), count),
+    success: (count = 1) => (0, _i18n.sprintf)(/* translators: %d: Number of submissions. */
+    (0, _i18n._n)('%d submission restored from Trash.', '%d submissions restored from Trash.', count, 'elementor-pro'), count),
     error: generalError
   },
   markedAsRead: {

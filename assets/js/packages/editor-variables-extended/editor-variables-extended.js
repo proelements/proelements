@@ -814,8 +814,18 @@ const getDefaultUnit = propType => {
   return extractSettings(propType)?.default_unit ?? DEFAULT_UNIT;
 };
 const extractSettings = propType => {
-  if (propType?.kind === 'union') {
-    return propType.prop_types[_elementor_editor_props__WEBPACK_IMPORTED_MODULE_1__.sizePropTypeUtil.key].settings;
+  if (propType?.kind !== 'union') {
+    return {};
+  }
+  const sizeBranch = propType.prop_types[_elementor_editor_props__WEBPACK_IMPORTED_MODULE_1__.sizePropTypeUtil.key];
+  if (sizeBranch) {
+    return sizeBranch.settings;
+  }
+  for (const branch of Object.values(propType.prop_types)) {
+    const settings = branch?.settings;
+    if (settings && Array.isArray(settings.available_units)) {
+      return settings;
+    }
   }
   return {};
 };

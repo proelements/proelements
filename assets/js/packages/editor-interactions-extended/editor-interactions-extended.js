@@ -3873,12 +3873,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   tabbable: function() { return /* binding */ tabbable; }
 /* harmony export */ });
 /*!
-* tabbable 6.4.0
+* tabbable 6.5.0
 * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
 */
 // NOTE: separate `:not()` selectors has broader browser support than the newer
 //  `:not([inert], [inert] *)` (Feb 2023)
-var candidateSelectors = ['input:not([inert]):not([inert] *)', 'select:not([inert]):not([inert] *)', 'textarea:not([inert]):not([inert] *)', 'a[href]:not([inert]):not([inert] *)', 'button:not([inert]):not([inert] *)', '[tabindex]:not(slot):not([inert]):not([inert] *)', 'audio[controls]:not([inert]):not([inert] *)', 'video[controls]:not([inert]):not([inert] *)', '[contenteditable]:not([contenteditable="false"]):not([inert]):not([inert] *)', 'details>summary:first-of-type:not([inert]):not([inert] *)', 'details:not([inert]):not([inert] *)'];
+var candidateSelectors = ['input:not([inert]):not([inert] *)', 'select:not([inert]):not([inert] *)', 'textarea:not([inert]):not([inert] *)', 'a[href]:not([inert]):not([inert] *)', 'area[href]:not([inert]):not([inert] *)', 'button:not([inert]):not([inert] *)', '[tabindex]:not(slot):not([inert]):not([inert] *)', 'audio[controls]:not([inert]):not([inert] *)', 'video[controls]:not([inert]):not([inert] *)', '[contenteditable]:not([contenteditable="false"]):not([inert]):not([inert] *)', 'details>summary:first-of-type:not([inert]):not([inert] *)', 'details:not([inert]):not([inert] *)'];
 var candidateSelector = /* #__PURE__ */candidateSelectors.join(',');
 var NoElement = typeof Element === 'undefined';
 var matches = NoElement ? function () {} : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
@@ -4236,7 +4236,9 @@ var isHidden = function isHidden(node, _ref) {
   //  (this is legacy behavior from a very long way back)
   // NOTE: we check this regardless of `displayCheck="none"` because this is a
   //  _visibility_ check, not a _display_ check
-  if (getComputedStyle(node).visibility === 'hidden') {
+  var _getComputedStyle = getComputedStyle(node),
+    visibility = _getComputedStyle.visibility;
+  if (visibility === 'hidden' || visibility === 'collapse') {
     return true;
   }
   var isDirectSummary = matches.call(node, 'details>summary:first-of-type');

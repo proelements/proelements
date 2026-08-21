@@ -1,6 +1,8 @@
 <?php
 namespace ElementorPro\Modules\ThemeBuilder\Conditions;
 
+use ElementorPro\Modules\ThemeBuilder\Module;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -24,6 +26,6 @@ class Not_Found404 extends Condition_Base {
 	}
 
 	public function check( $args ) {
-		return is_404();
+		return is_404() || Module::is_missing_term_or_author_archive();
 	}
 }

@@ -1,6 +1,12 @@
 {% import 'elementor/macros' as m %}
+{%- set pagination_on = settings.pagination | default(false) -%}
+{%- set e_settings = {
+    'pagination': pagination_on,
+    'pagination_load_type': settings.pagination_load_type | default('page_reload'),
+} -%}
 <div class="{{ m.render_base_classes(id, base_styles, settings) }} {{ editor_classes | default('') }}"
     {{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+    data-e-settings="{{ e_settings | json_encode | e('html_attr') }}"
     {{- m.render_custom_attributes(settings, editor_attributes) }}>
     <!-- elementor-children-placeholder -->
 </div>

@@ -1,13 +1,17 @@
 <?php
 namespace ElementorPro\Modules\AtomicForm;
 
+use Elementor\Element_Base;
 use Elementor\Modules\AtomicWidgets\DynamicTags\Dynamic_Prop_Type;
+use Elementor\Modules\AtomicWidgets\Elements\Base\Atomic_Widget_Base;
 use Elementor\Utils as ElementorUtils;
 use ElementorPro\Modules\AtomicForm\Actions\Action_Runner;
 use ElementorPro\Modules\AtomicForm\File_Upload\File_Upload_Handler;
+use ElementorPro\Modules\AtomicForm\Module as Atomic_Form_Module;
 use ElementorPro\Modules\AtomicWidgets\Settings_Resolver;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Plugin;
+use Elementor\Plugin as Core_Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -15,17 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Atomic_Form_Controller {
 	const NONCE_ACTION = 'elementor_pro_atomic_forms_send_form';
-
-	private const FORM_FIELD_WIDGET_TYPES = [
-		'e-form-input',
-		'e-form-textarea',
-		'e-form-checkbox',
-		'e-form-radio-button',
-		'e-form-select',
-		'e-form-date-picker',
-		'e-form-time-picker',
-		'e-form-file-upload',
-	];
 
 	public static function is_form_submitted(): bool {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce is validated in ajax_send_form.
@@ -234,8 +227,19 @@ class Atomic_Form_Controller {
 		return $form_element;
 	}
 
+	private function resolve_element_settings( array $element, int $post_id, ?Element_Base $widget_instance ): array {
+		$resolved = $this->resolve_raw_settings( $element, $post_id );
+
+		if ( $widget_instance && method_exists( $widget_instance, 'get_atomic_settings' ) ) {
+			$resolved = array_merge( $widget_instance->get_atomic_settings(), $resolved );
+		}
+
+		return $resolved;
+	}
+
 	private function resolve_widget_settings( array $form_element, int $post_id ): array {
-		$resolved = $this->resolve_raw_settings( $form_element, $post_id );
+		$widget_instance = Core_Plugin::$instance->elements_manager->create_element_instance( $form_element );
+		$resolved = $this->resolve_element_settings( $form_element, $post_id, $widget_instance );
 
 		if ( ! isset( $resolved['actions-after-submit'] ) && isset( $resolved['email'] ) ) {
 			$resolved['actions-after-submit'] = [ 'email' ];
@@ -310,7 +314,8 @@ class Atomic_Form_Controller {
 			}
 
 			$element_id = $element['id'] ?? '';
-			$cssid = $this->get_field_cssid( $element, $post_id );
+			$widget_instance = Core_Plugin::$instance->elements_manager->create_element_instance( $element );
+			$cssid = $this->get_field_cssid( $element, $post_id, $widget_instance );
 
 			if ( $element_id && '' !== $cssid && ! isset( $map[ $cssid ] ) ) {
 				$map[ $cssid ] = $element_id;
@@ -325,10 +330,18 @@ class Atomic_Form_Controller {
 
 		$widget_type = $element['widgetType'] ?? '';
 
-		return in_array( $widget_type, self::FORM_FIELD_WIDGET_TYPES, true );
+		return in_array( $widget_type, Atomic_Form_Module::get_form_field_widget_types(), true );
 	}
 
-	private function get_field_cssid( array $element, int $post_id ): string {
+	private function get_field_cssid( array $element, int $post_id, ?Element_Base $widget_instance ): string {
+		if ( $widget_instance instanceof Atomic_Widget_Base ) {
+			$cssid = $widget_instance->get_atomic_setting( '_cssid' );
+
+			if ( is_string( $cssid ) && '' !== $cssid ) {
+				return $cssid;
+			}
+		}
+
 		$resolved = $this->resolve_raw_settings( $element, $post_id );
 		$cssid = $resolved['_cssid'] ?? '';
 

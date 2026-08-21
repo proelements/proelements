@@ -598,7 +598,9 @@ const ComponentPanelHeader = () => {
     openPropertiesPanel();
     (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.trackComponentEvent)({
       action: 'propertiesPanelOpened',
+      // TODO: remove `source` in version 4.4.0
       source: 'user',
+      executedBy: 'user',
       component_uid: componentUid,
       properties_count: overridablePropsCount
     });
@@ -832,7 +834,7 @@ function ComponentPropertiesPanelContent({
       componentId: currentComponentId,
       groupId: newGroupId,
       label: newLabel,
-      source: 'user'
+      executedBy: 'user'
     });
     (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_2__.setDocumentModifiedStatus)(true);
     setIsAddingGroup(false);
@@ -842,7 +844,7 @@ function ComponentPropertiesPanelContent({
     (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_9__.deleteComponentOverridableProp)({
       componentId: currentComponentId,
       propKey,
-      source: 'user'
+      executedBy: 'user'
     });
     (0,_elementor_editor_documents__WEBPACK_IMPORTED_MODULE_2__.setDocumentModifiedStatus)(true);
   };
@@ -3120,7 +3122,9 @@ function CreateComponentForm() {
       eventData.current = (0,_utils_get_component_event_data__WEBPACK_IMPORTED_MODULE_12__.getComponentEventData)(event.detail.element, event.detail.options);
       (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.trackComponentEvent)({
         action: 'createClicked',
+        // TODO: remove `source` in version 4.4.0
         source: 'user',
+        executedBy: 'user',
         ...eventData.current
       });
     };
@@ -3141,7 +3145,7 @@ function CreateComponentForm() {
         name: values.componentName,
         element: element.element,
         eventData: eventData.current,
-        source: 'user'
+        executedBy: 'user'
       });
       const publishedComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.componentsSelectors.getComponentByUid(uid)?.id;
       if (publishedComponentId) {
@@ -3173,7 +3177,9 @@ function CreateComponentForm() {
     resetAndClosePopup();
     (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.trackComponentEvent)({
       action: 'createCancelled',
+      // TODO: remove `source` in version 4.4.0
       source: 'user',
+      executedBy: 'user',
       ...eventData.current
     });
   };
@@ -3466,6 +3472,219 @@ function countNestedElements(container) {
 
 /***/ }),
 
+/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/spotlight-backdrop.tsx":
+/*!*******************************************************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/spotlight-backdrop.tsx ***!
+  \*******************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SpotlightBackdropFallback: function() { return /* binding */ SpotlightBackdropFallback; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _use_element_rect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./use-element-rect */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-element-rect.ts");
+
+
+function SpotlightBackdropFallback({
+  canvas,
+  element,
+  onExit,
+  ariaLabel
+}) {
+  const rect = (0,_use_element_rect__WEBPACK_IMPORTED_MODULE_1__.useElementRectFallback)(element);
+  const clipPath = element ? getRectClipPath(rect, canvas.defaultView) : undefined;
+  const backdropStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 999,
+    pointerEvents: 'painted',
+    cursor: 'pointer',
+    clipPath
+  };
+  const handleKeyDown = event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onExit();
+    }
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: backdropStyle,
+    onClick: onExit,
+    onKeyDown: handleKeyDown,
+    role: "button",
+    tabIndex: 0,
+    "aria-label": ariaLabel
+  });
+}
+function getRectClipPath(rect, viewport) {
+  const {
+    x,
+    y,
+    width,
+    height
+  } = rect;
+  const {
+    innerWidth: vw,
+    innerHeight: vh
+  } = viewport;
+  return `path(evenodd, 'M 0 0 L ${vw} 0 L ${vw} ${vh} L 0 ${vh} Z M ${x} ${y} L ${x + width} ${y} L ${x + width} ${y + height} L ${x} ${y + height} L ${x} ${y} Z')`;
+}
+
+/***/ }),
+
+/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-canvas-document.ts":
+/*!*******************************************************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-canvas-document.ts ***!
+  \*******************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useCanvasDocumentFallback: function() { return /* binding */ useCanvasDocumentFallback; }
+/* harmony export */ });
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__);
+
+function useCanvasDocumentFallback() {
+  return (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.__privateUseListenTo)((0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.commandEndEvent)('editor/documents/attach-preview'), () => (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.getCanvasIframeDocument)());
+}
+
+/***/ }),
+
+/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-element-rect.ts":
+/*!****************************************************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-element-rect.ts ***!
+  \****************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useElementRectFallback: function() { return /* binding */ useElementRectFallback; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/utils */ "@elementor/utils");
+/* harmony import */ var _elementor_utils__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_utils__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function useElementRectFallback(element) {
+  const [rect, setRect] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(new DOMRect(0, 0, 0, 0));
+  const onChange = (0,_elementor_utils__WEBPACK_IMPORTED_MODULE_1__.throttle)(() => {
+    setRect(element?.getBoundingClientRect() ?? new DOMRect(0, 0, 0, 0));
+  }, 20, true);
+  useScrollListener({
+    element,
+    onChange
+  });
+  useResizeListener({
+    element,
+    onChange
+  });
+  useMutationsListener({
+    element,
+    onChange
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => () => {
+    onChange.cancel();
+  }, [onChange]);
+  return rect;
+}
+function useScrollListener({
+  element,
+  onChange
+}) {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!element) {
+      return;
+    }
+    const win = element.ownerDocument?.defaultView;
+    win?.addEventListener('scroll', onChange, {
+      passive: true
+    });
+    return () => {
+      win?.removeEventListener('scroll', onChange);
+    };
+  }, [element, onChange]);
+}
+function useResizeListener({
+  element,
+  onChange
+}) {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!element) {
+      return;
+    }
+    const resizeObserver = new ResizeObserver(onChange);
+    resizeObserver.observe(element);
+    const win = element.ownerDocument?.defaultView;
+    win?.addEventListener('resize', onChange, {
+      passive: true
+    });
+    return () => {
+      resizeObserver.disconnect();
+      win?.removeEventListener('resize', onChange);
+    };
+  }, [element, onChange]);
+}
+function useMutationsListener({
+  element,
+  onChange
+}) {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!element) {
+      return;
+    }
+    const mutationObserver = new MutationObserver(onChange);
+    mutationObserver.observe(element, {
+      childList: true,
+      subtree: true
+    });
+    return () => {
+      mutationObserver.disconnect();
+    };
+  }, [element, onChange]);
+}
+
+/***/ }),
+
+/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-escape-on-canvas.ts":
+/*!********************************************************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-escape-on-canvas.ts ***!
+  \********************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useEscapeOnCanvasFallback: function() { return /* binding */ useEscapeOnCanvasFallback; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function useEscapeOnCanvasFallback(canvasDocument, onEscape) {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!canvasDocument) {
+      return;
+    }
+    const handleEsc = event => {
+      if (event.key === 'Escape') {
+        onEscape();
+      }
+    };
+    canvasDocument.body.addEventListener('keydown', handleEsc);
+    return () => {
+      canvasDocument.body.removeEventListener('keydown', handleEsc);
+    };
+  }, [canvasDocument, onEscape]);
+}
+
+/***/ }),
+
 /***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/component-modal.tsx":
 /*!************************************************************************************************************!*\
   !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/component-modal.tsx ***!
@@ -3482,10 +3701,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _use_canvas_document__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./use-canvas-document */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/use-canvas-document.ts");
-/* harmony import */ var _use_element_rect__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./use-element-rect */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/use-element-rect.ts");
-
-
+/* harmony import */ var _edit_mode_infra__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit-mode-infra */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/edit-mode-infra.tsx");
 
 
 
@@ -3494,85 +3710,17 @@ function ComponentModal({
   topLevelElementDom,
   onClose
 }) {
-  const canvasDocument = (0,_use_canvas_document__WEBPACK_IMPORTED_MODULE_3__.useCanvasDocument)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const handleEsc = event => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-    canvasDocument?.body.addEventListener('keydown', handleEsc);
-    return () => {
-      canvasDocument?.body.removeEventListener('keydown', handleEsc);
-    };
-  }, [canvasDocument, onClose]);
+  const canvasDocument = (0,_edit_mode_infra__WEBPACK_IMPORTED_MODULE_3__.useCanvasDocument)();
+  (0,_edit_mode_infra__WEBPACK_IMPORTED_MODULE_3__.useEscapeOnCanvas)(canvasDocument, onClose);
   if (!canvasDocument?.body) {
     return null;
   }
-  return /*#__PURE__*/(0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlockEditPage, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Backdrop, {
+  return /*#__PURE__*/(0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlockEditPage, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_edit_mode_infra__WEBPACK_IMPORTED_MODULE_3__.SpotlightBackdrop, {
     canvas: canvasDocument,
     element: topLevelElementDom,
-    onClose: onClose
+    onExit: onClose,
+    ariaLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Exit component editing mode', 'elementor-pro')
   })), canvasDocument.body);
-}
-function Backdrop({
-  canvas,
-  element,
-  onClose
-}) {
-  const rect = (0,_use_element_rect__WEBPACK_IMPORTED_MODULE_4__.useElementRect)(element);
-  const clipPath = element ? getRectPath(rect, canvas.defaultView) : undefined;
-  const backdropStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 999,
-    pointerEvents: 'painted',
-    cursor: 'pointer',
-    clipPath
-  };
-  const handleKeyDown = event => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      onClose();
-    }
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: backdropStyle,
-    onClick: onClose,
-    onKeyDown: handleKeyDown,
-    role: "button",
-    tabIndex: 0,
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Exit component editing mode', 'elementor-pro')
-  });
-}
-function getRectPath(rect, viewport) {
-  const {
-    x,
-    y,
-    width,
-    height
-  } = rect;
-  const {
-    innerWidth: vw,
-    innerHeight: vh
-  } = viewport;
-  const path = `path(evenodd, 'M 0 0 
-		L ${vw} 0
-		L ${vw} ${vh}
-		L 0 ${vh}
-		Z
-		M ${x} ${y}
-		L ${x + width} ${y}
-		L ${x + width} ${y + height}
-		L ${x} ${y + height}
-		L ${x} ${y}
-    	Z'
-	)`;
-  return path.replace(/\s{2,}/g, ' ');
 }
 
 /**
@@ -3764,118 +3912,35 @@ function getComponentDOMElements(id) {
 
 /***/ }),
 
-/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/use-canvas-document.ts":
-/*!***************************************************************************************************************!*\
-  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/use-canvas-document.ts ***!
-  \***************************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useCanvasDocument: function() { return /* binding */ useCanvasDocument; }
-/* harmony export */ });
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__);
-
-function useCanvasDocument() {
-  return (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.__privateUseListenTo)((0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.commandEndEvent)('editor/documents/attach-preview'), () => (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.getCanvasIframeDocument)());
-}
-
-/***/ }),
-
-/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/use-element-rect.ts":
+/***/ "./packages/packages/pro/editor-components-extended/src/components/edit-component/edit-mode-infra.tsx":
 /*!************************************************************************************************************!*\
-  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/use-element-rect.ts ***!
+  !*** ./packages/packages/pro/editor-components-extended/src/components/edit-component/edit-mode-infra.tsx ***!
   \************************************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useElementRect: function() { return /* binding */ useElementRect; }
+/* harmony export */   SpotlightBackdrop: function() { return /* binding */ SpotlightBackdrop; },
+/* harmony export */   useCanvasDocument: function() { return /* binding */ useCanvasDocument; },
+/* harmony export */   useEscapeOnCanvas: function() { return /* binding */ useEscapeOnCanvas; }
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _elementor_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/utils */ "@elementor/utils");
-/* harmony import */ var _elementor_utils__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_utils__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/core-adapter-utils */ "@elementor/core-adapter-utils");
+/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-canvas */ "@elementor/editor-canvas");
+/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _backward_compat_spotlight_backdrop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backward-compat/spotlight-backdrop */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/spotlight-backdrop.tsx");
+/* harmony import */ var _backward_compat_use_canvas_document__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./backward-compat/use-canvas-document */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-canvas-document.ts");
+/* harmony import */ var _backward_compat_use_escape_on_canvas__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./backward-compat/use-escape-on-canvas */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/backward-compat/use-escape-on-canvas.ts");
 
 
-function useElementRect(element) {
-  const [rect, setRect] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(new DOMRect(0, 0, 0, 0));
-  const onChange = (0,_elementor_utils__WEBPACK_IMPORTED_MODULE_1__.throttle)(() => {
-    setRect(element?.getBoundingClientRect() ?? new DOMRect(0, 0, 0, 0));
-  }, 20, true);
-  useScrollListener({
-    element,
-    onChange
-  });
-  useResizeListener({
-    element,
-    onChange
-  });
-  useMutationsListener({
-    element,
-    onChange
-  });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => () => {
-    onChange.cancel();
-  }, [onChange]);
-  return rect;
-}
-function useScrollListener({
-  element,
-  onChange
-}) {
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (!element) {
-      return;
-    }
-    const win = element.ownerDocument?.defaultView;
-    win?.addEventListener('scroll', onChange, {
-      passive: true
-    });
-    return () => {
-      win?.removeEventListener('scroll', onChange);
-    };
-  }, [element, onChange]);
-}
-function useResizeListener({
-  element,
-  onChange
-}) {
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (!element) {
-      return;
-    }
-    const resizeObserver = new ResizeObserver(onChange);
-    resizeObserver.observe(element);
-    const win = element.ownerDocument?.defaultView;
-    win?.addEventListener('resize', onChange, {
-      passive: true
-    });
-    return () => {
-      resizeObserver.disconnect();
-      win?.removeEventListener('resize', onChange);
-    };
-  }, [element, onChange]);
-}
-function useMutationsListener({
-  element,
-  onChange
-}) {
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (!element) {
-      return;
-    }
-    const mutationObserver = new MutationObserver(onChange);
-    mutationObserver.observe(element, {
-      childList: true,
-      subtree: true
-    });
-    return () => {
-      mutationObserver.disconnect();
-    };
-  }, [element, onChange]);
-}
+
+
+
+const MINIMUM_CORE_WITH_SHARED_INFRA = '4.2.0';
+const hasSharedEditModeInfra = (0,_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__.isCoreAtLeast)(MINIMUM_CORE_WITH_SHARED_INFRA);
+const useCanvasDocument = hasSharedEditModeInfra ? _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__.useCanvasDocument : _backward_compat_use_canvas_document__WEBPACK_IMPORTED_MODULE_3__.useCanvasDocumentFallback;
+const useEscapeOnCanvas = hasSharedEditModeInfra ? _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__.useEscapeOnCanvas : _backward_compat_use_escape_on_canvas__WEBPACK_IMPORTED_MODULE_4__.useEscapeOnCanvasFallback;
+const SpotlightBackdrop = hasSharedEditModeInfra ? _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__.SpotlightBackdrop : _backward_compat_spotlight_backdrop__WEBPACK_IMPORTED_MODULE_2__.SpotlightBackdropFallback;
 
 /***/ }),
 
@@ -3922,7 +3987,7 @@ function ExtendedInstanceEditingPanel() {
     componentInstanceId
   } = data;
 
-  /* translators: %s: component name. */
+  /* translators: %s: Item title. */
   const panelTitle = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Edit %s', 'elementor-pro').replace('%s', component.name);
   const handleEditComponent = () => (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.switchToComponent)(componentId, componentInstanceId);
   const actions = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__.Stack, {
@@ -4519,7 +4584,7 @@ function Content({
         elType: elType ?? 'widget',
         widgetType: componentInstanceElement?.elementType.key ?? elementType.key,
         originValue: elementOriginValue,
-        source: 'user'
+        executedBy: 'user'
       };
       makePropOverridable({
         componentOverridablePropConfig,
@@ -4606,7 +4671,7 @@ function useUndoableMakePropOverridable({
         (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_10__.deleteComponentOverridableProp)({
           componentId: componentOverridablePropConfig.componentId,
           propKey: createdOverridableProp.overrideKey,
-          source: 'system',
+          executedBy: 'system',
           revertElementOverridable: false
         });
         setElementOriginValue(elementOriginValue, undefined, {
@@ -4735,7 +4800,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_edit_component_edit_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/edit-component/edit-component */ "./packages/packages/pro/editor-components-extended/src/components/edit-component/edit-component.tsx");
 /* harmony import */ var _components_load_template_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/load-template-components */ "./packages/packages/pro/editor-components-extended/src/components/load-template-components.tsx");
 /* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./consts */ "./packages/packages/pro/editor-components-extended/src/consts.ts");
-/* harmony import */ var _sync_sanitize_overridable_props__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./sync/sanitize-overridable-props */ "./packages/packages/pro/editor-components-extended/src/sync/sanitize-overridable-props.ts");
+/* harmony import */ var _sync_cleanup_overridable_props_on_delete_and_detach__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./sync/cleanup-overridable-props-on-delete-and-detach */ "./packages/packages/pro/editor-components-extended/src/sync/cleanup-overridable-props-on-delete-and-detach.ts");
+/* harmony import */ var _sync_sanitize_overridable_props__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./sync/sanitize-overridable-props */ "./packages/packages/pro/editor-components-extended/src/sync/sanitize-overridable-props.ts");
+
 
 
 
@@ -4751,7 +4818,7 @@ function FeatureGuardedTopInjections() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(FeatureGuard, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_create_component_form_create_component_form__WEBPACK_IMPORTED_MODULE_3__.CreateComponentForm, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_edit_component_edit_component__WEBPACK_IMPORTED_MODULE_4__.EditComponent, null));
 }
 function FeatureGuardedLogicInjections() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(FeatureGuard, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_sync_sanitize_overridable_props__WEBPACK_IMPORTED_MODULE_7__.SanitizeOverridableProps, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_load_template_components__WEBPACK_IMPORTED_MODULE_5__.LoadTemplateComponents, null));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(FeatureGuard, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_sync_sanitize_overridable_props__WEBPACK_IMPORTED_MODULE_8__.SanitizeOverridableProps, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_load_template_components__WEBPACK_IMPORTED_MODULE_5__.LoadTemplateComponents, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_sync_cleanup_overridable_props_on_delete_and_detach__WEBPACK_IMPORTED_MODULE_7__.CleanupOverridablePropsOnDeleteAndDetach, null));
 }
 function FeatureGuard({
   children
@@ -4760,7 +4827,7 @@ function FeatureGuard({
     data: isFeatureEnabled,
     isFetched: isFeatureFetched
   } = (0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__.useHasFeature)(_consts__WEBPACK_IMPORTED_MODULE_6__.COMPONENTS_FEATURE_NAME);
-  if (isFeatureFetched && !isFeatureEnabled) {
+  if (!isFeatureFetched || !isFeatureEnabled) {
     return null;
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, children);
@@ -4818,26 +4885,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   init: function() { return /* binding */ init; }
 /* harmony export */ });
-/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/core-adapter-utils */ "@elementor/core-adapter-utils");
-/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/license-api */ "@elementor/license-api");
-/* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./consts */ "./packages/packages/pro/editor-components-extended/src/consts.ts");
-/* harmony import */ var _initialize_editor_components_extended__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./initialize-editor-components-extended */ "./packages/packages/pro/editor-components-extended/src/initialize-editor-components-extended.ts");
-
+/* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/license-api */ "@elementor/license-api");
+/* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_license_api__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./consts */ "./packages/packages/pro/editor-components-extended/src/consts.ts");
+/* harmony import */ var _initialize_editor_components_extended__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./initialize-editor-components-extended */ "./packages/packages/pro/editor-components-extended/src/initialize-editor-components-extended.ts");
 
 
 
 async function init() {
-  // TODO: remove version check after 4.2.0 version
-  if (!(0,_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__.isCoreAtLeast)('4.0.0')) {
-    return;
-  }
-
   // Temporary workaround: register locations-based injections before async work,
   // since locations snapshots injections on first render.
   // Move this back into the regular init flow once locations updates become reactive.
-  (0,_initialize_editor_components_extended__WEBPACK_IMPORTED_MODULE_3__.initComponentLocations)();
+  (0,_initialize_editor_components_extended__WEBPACK_IMPORTED_MODULE_2__.initComponentLocations)();
   const {
     isFeatureEnabled,
     isLicenseExpired
@@ -4845,16 +4904,16 @@ async function init() {
   if (!isFeatureEnabled) {
     return;
   }
-  (0,_initialize_editor_components_extended__WEBPACK_IMPORTED_MODULE_3__.initEditorComponentsExtended)({
+  (0,_initialize_editor_components_extended__WEBPACK_IMPORTED_MODULE_2__.initEditorComponentsExtended)({
     isLicenseExpired
   });
 }
 async function getTierFeaturesAndLicenseStatus() {
-  const [featuresPromise, licenseStatusPromise] = await Promise.allSettled([(0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__.fetchTierFeatures)(), (0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__.fetchLicenseStatus)()]);
+  const [featuresPromise, licenseStatusPromise] = await Promise.allSettled([(0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_0__.fetchTierFeatures)(), (0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_0__.fetchLicenseStatus)()]);
   const features = featuresPromise.status === 'fulfilled' ? featuresPromise.value : [];
   const licenseStatus = licenseStatusPromise.status === 'fulfilled' ? licenseStatusPromise.value : false;
   return {
-    isFeatureEnabled: features.includes(_consts__WEBPACK_IMPORTED_MODULE_2__.COMPONENTS_FEATURE_NAME),
+    isFeatureEnabled: features.includes(_consts__WEBPACK_IMPORTED_MODULE_1__.COMPONENTS_FEATURE_NAME),
     isLicenseExpired: licenseStatus
   };
 }
@@ -4903,10 +4962,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mcp__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./mcp */ "./packages/packages/pro/editor-components-extended/src/mcp/index.ts");
 /* harmony import */ var _shortcuts_create_component_shortcut__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./shortcuts/create-component-shortcut */ "./packages/packages/pro/editor-components-extended/src/shortcuts/create-component-shortcut.ts");
 /* harmony import */ var _sync_before_save__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./sync/before-save */ "./packages/packages/pro/editor-components-extended/src/sync/before-save.ts");
-/* harmony import */ var _sync_cleanup_overridable_props_on_delete__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./sync/cleanup-overridable-props-on-delete */ "./packages/packages/pro/editor-components-extended/src/sync/cleanup-overridable-props-on-delete.ts");
-/* harmony import */ var _sync_handle_component_edit_mode_container__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./sync/handle-component-edit-mode-container */ "./packages/packages/pro/editor-components-extended/src/sync/handle-component-edit-mode-container.ts");
-/* harmony import */ var _sync_prevent_non_atomic_nesting__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./sync/prevent-non-atomic-nesting */ "./packages/packages/pro/editor-components-extended/src/sync/prevent-non-atomic-nesting.ts");
-/* harmony import */ var _sync_revert_overridables_on_copy_or_duplicate__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./sync/revert-overridables-on-copy-or-duplicate */ "./packages/packages/pro/editor-components-extended/src/sync/revert-overridables-on-copy-or-duplicate.ts");
+/* harmony import */ var _sync_handle_component_edit_mode_container__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./sync/handle-component-edit-mode-container */ "./packages/packages/pro/editor-components-extended/src/sync/handle-component-edit-mode-container.ts");
+/* harmony import */ var _sync_prevent_non_atomic_nesting__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./sync/prevent-non-atomic-nesting */ "./packages/packages/pro/editor-components-extended/src/sync/prevent-non-atomic-nesting.ts");
+/* harmony import */ var _sync_revert_overridables_on_copy_or_duplicate__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./sync/revert-overridables-on-copy-or-duplicate */ "./packages/packages/pro/editor-components-extended/src/sync/revert-overridables-on-copy-or-duplicate.ts");
+/* harmony import */ var _utils_track_instance_added__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./utils/track-instance-added */ "./packages/packages/pro/editor-components-extended/src/utils/track-instance-added.ts");
 
 
 
@@ -4955,7 +5014,6 @@ function initEditorComponentsExtended({
     }
     return true;
   });
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_8__.registerDataHook)('after', 'preview/drop', _elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.onElementDrop);
   window.elementorCommon.__beforeSave = _sync_before_save__WEBPACK_IMPORTED_MODULE_20__.beforeSave;
   (0,_elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_4__.injectIntoPanelHeaderTop)({
     id: 'component-panel-header',
@@ -4977,10 +5035,9 @@ function initEditorComponentsExtended({
       value
     }) => _elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.componentOverridablePropTypeUtil.isValid(value)
   });
-  (0,_sync_cleanup_overridable_props_on_delete__WEBPACK_IMPORTED_MODULE_21__.initCleanupOverridablePropsOnDelete)();
-  (0,_sync_prevent_non_atomic_nesting__WEBPACK_IMPORTED_MODULE_23__.initNonAtomicNestingPrevention)();
-  (0,_sync_handle_component_edit_mode_container__WEBPACK_IMPORTED_MODULE_22__.initHandleComponentEditModeContainer)();
-  (0,_sync_revert_overridables_on_copy_or_duplicate__WEBPACK_IMPORTED_MODULE_24__.initRevertOverridablesOnCopyOrDuplicate)();
+  (0,_sync_prevent_non_atomic_nesting__WEBPACK_IMPORTED_MODULE_22__.initNonAtomicNestingPrevention)();
+  (0,_sync_handle_component_edit_mode_container__WEBPACK_IMPORTED_MODULE_21__.initHandleComponentEditModeContainer)();
+  (0,_sync_revert_overridables_on_copy_or_duplicate__WEBPACK_IMPORTED_MODULE_23__.initRevertOverridablesOnCopyOrDuplicate)();
   if (!isLicenseExpired) {
     (0,_shortcuts_create_component_shortcut__WEBPACK_IMPORTED_MODULE_19__.initCreateComponentShortcut)();
   }
@@ -5006,6 +5063,10 @@ function initComponentLocations() {
     options: {
       overwrite: true
     }
+  });
+  (0,_elementor_editor__WEBPACK_IMPORTED_MODULE_0__.injectIntoLogic)({
+    id: 'components-track-instance-added',
+    component: _utils_track_instance_added__WEBPACK_IMPORTED_MODULE_24__.TrackInstanceAdded
   });
 }
 
@@ -5272,8 +5333,23 @@ async function handleSave(params) {
     eventData: null,
     uid,
     overridableProps,
-    source: 'mcp_tool'
+    executedBy: 'mcp_tool'
   });
+  if (overridableProps) {
+    Object.values(overridableProps.props).forEach(prop => {
+      (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_1__.trackComponentEvent)({
+        action: 'propertyExposed',
+        // TODO: remove this in version 4.4.0
+        source: 'mcp_tool',
+        executedBy: 'mcp_tool',
+        component_uid: uid,
+        property_id: prop.overrideKey,
+        property_path: prop.propKey,
+        property_name: prop.label,
+        element_type: prop.widgetType ?? prop.elType
+      });
+    });
+  }
   return {
     status: 'ok',
     message: `Component "${componentName}" created successfully.`,
@@ -5653,7 +5729,7 @@ function addOverridableGroup({
   componentId,
   groupId,
   label,
-  source
+  executedBy
 }) {
   const currentComponent = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.componentsSelectors.getCurrentComponent();
   const overridableProps = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.componentsSelectors.getOverridableProps(componentId);
@@ -5678,7 +5754,9 @@ function addOverridableGroup({
   });
   (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.trackComponentEvent)({
     action: 'propertiesGroupCreated',
-    source,
+    // TODO: remove `source` in version 4.4.0
+    source: executedBy,
+    executedBy,
     component_uid: currentComponent?.uid,
     group_name: label
   });
@@ -5752,7 +5830,7 @@ function createComponentOverridableProp({
   widgetType,
   originValue,
   originPropFields,
-  source
+  executedBy
 }) {
   const overridableProps = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.componentsSelectors.getOverridableProps(componentId);
   if (!overridableProps) {
@@ -5791,7 +5869,9 @@ function createComponentOverridableProp({
   const currentComponent = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.componentsSelectors.getCurrentComponent();
   (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.trackComponentEvent)({
     action: 'propertyExposed',
-    source,
+    // TODO: remove `source` in version 4.4.0
+    source: executedBy,
+    executedBy,
     component_uid: currentComponent?.uid,
     property_id: overridableProp.overrideKey,
     property_path: propKey,
@@ -5840,7 +5920,7 @@ async function createUnpublishedComponent({
   eventData,
   uid,
   overridableProps,
-  source
+  executedBy
 }) {
   const generatedUid = uid ?? (0,_elementor_utils__WEBPACK_IMPORTED_MODULE_3__.generateUniqueId)('component');
   const componentBase = {
@@ -5868,7 +5948,9 @@ async function createUnpublishedComponent({
   const componentInstance = (0,_utils_replace_element_with_component__WEBPACK_IMPORTED_MODULE_6__.replaceElementWithComponent)(element, componentBase);
   (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.trackComponentEvent)({
     action: 'created',
-    source,
+    // TODO: remove `source` in version 4.4.0
+    source: executedBy,
+    executedBy,
     component_uid: generatedUid,
     component_name: name,
     ...eventData
@@ -5938,7 +6020,7 @@ __webpack_require__.r(__webpack_exports__);
 function deleteComponentOverridableProp({
   componentId,
   propKey,
-  source,
+  executedBy,
   revertElementOverridable = true
 }) {
   const overridableProps = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.componentsSelectors.getOverridableProps(componentId);
@@ -5971,7 +6053,9 @@ function deleteComponentOverridableProp({
   for (const prop of deletedProps) {
     (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_0__.trackComponentEvent)({
       action: 'propertyRemoved',
-      source,
+      // TODO: remove `source` in version 4.4.0
+      source: executedBy,
+      executedBy,
       component_uid: currentComponent?.uid,
       property_id: prop.overrideKey,
       property_path: prop.propKey,
@@ -6521,28 +6605,31 @@ const updateExistingComponentsBeforeSave = async ({
 
 /***/ }),
 
-/***/ "./packages/packages/pro/editor-components-extended/src/sync/cleanup-overridable-props-on-delete.ts":
-/*!**********************************************************************************************************!*\
-  !*** ./packages/packages/pro/editor-components-extended/src/sync/cleanup-overridable-props-on-delete.ts ***!
-  \**********************************************************************************************************/
+/***/ "./packages/packages/pro/editor-components-extended/src/sync/cleanup-overridable-props-on-delete-and-detach.ts":
+/*!*********************************************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-components-extended/src/sync/cleanup-overridable-props-on-delete-and-detach.ts ***!
+  \*********************************************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initCleanupOverridablePropsOnDelete: function() { return /* binding */ initCleanupOverridablePropsOnDelete; }
+/* harmony export */   CleanupOverridablePropsOnDeleteAndDetach: function() { return /* binding */ CleanupOverridablePropsOnDeleteAndDetach; }
 /* harmony export */ });
-/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/core-adapter-utils */ "@elementor/core-adapter-utils");
-/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-canvas */ "@elementor/editor-canvas");
-/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-components */ "@elementor/editor-components");
-/* harmony import */ var _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @elementor/editor-elements */ "@elementor/editor-elements");
-/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _store_actions_create_component_overridable_prop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/actions/create-component-overridable-prop */ "./packages/packages/pro/editor-components-extended/src/store/actions/create-component-overridable-prop.ts");
-/* harmony import */ var _store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/actions/delete-component-overridable-prop */ "./packages/packages/pro/editor-components-extended/src/store/actions/delete-component-overridable-prop.ts");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/core-adapter-utils */ "@elementor/core-adapter-utils");
+/* harmony import */ var _elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-canvas */ "@elementor/editor-canvas");
+/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _elementor_editor_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @elementor/editor-components */ "@elementor/editor-components");
+/* harmony import */ var _elementor_editor_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @elementor/editor-elements */ "@elementor/editor-elements");
+/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _store_actions_create_component_overridable_prop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/actions/create-component-overridable-prop */ "./packages/packages/pro/editor-components-extended/src/store/actions/create-component-overridable-prop.ts");
+/* harmony import */ var _store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../store/actions/delete-component-overridable-prop */ "./packages/packages/pro/editor-components-extended/src/store/actions/delete-component-overridable-prop.ts");
+
 
 
 
@@ -6551,26 +6638,101 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const deleteActionEntries = new Map();
-function initCleanupOverridablePropsOnDelete() {
-  registerCleanupOverridablePropsOnDelete();
-  registerRestoreOverridablePropsOnUndo();
-  registerCleanupOverridablePropsOnRedo();
-  registerClearDeleteEntriesOnDocumentSwitch();
+
+// Inside component edit mode, when an inner element is deleted, we should cleanup the overridable props related to it.
+// Then, we should restore them on delete undo, and re-delete them on delete redo.
+// Same logic applies to detach of inner component instance -
+// cleanup exposed further props on the inner instance, restore them on detach undo, and re-delete them on detach redo.
+function CleanupOverridablePropsOnDeleteAndDetach() {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // Cleanup overridable props on delete, restore on undo, re-delete on redo.
+    registerCleanupOverridablePropsOnDelete();
+    registerRestoreOverridablePropsOnUndo();
+    registerCleanupOverridablePropsOnRedo();
+
+    // Cleanup overridable props on detach of inner instance, restore on undo, re-delete on redo.
+    const removeDetachEventHandlers = registerDetachEventHandlers();
+
+    // Clear delete action entries on document switch - undo/redo are supported only while we're editing the same component.
+    registerClearDeleteEntriesOnDocumentSwitch();
+    return () => {
+      removeDetachEventHandlers();
+    };
+  }, []);
+  return null;
+}
+function cleanupOverridableProps(deletedElementIds, actionId) {
+  const currentComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_3__.componentsSelectors.getCurrentComponentId();
+  if (!currentComponentId) {
+    return;
+  }
+  const overridableProps = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_3__.componentsSelectors.getOverridableProps(currentComponentId);
+  if (!overridableProps || Object.keys(overridableProps.props).length === 0) {
+    return;
+  }
+  const propsToDelete = Object.values(overridableProps.props).filter(prop => deletedElementIds.includes(prop.elementId));
+  if (propsToDelete.length === 0) {
+    return;
+  }
+  if (actionId !== undefined) {
+    deleteActionEntries.set(actionId, {
+      props: propsToDelete,
+      elementIds: deletedElementIds
+    });
+  }
+  const propKeysToDelete = propsToDelete.map(prop => prop.overrideKey);
+  (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_7__.deleteComponentOverridableProp)({
+    componentId: currentComponentId,
+    propKey: propKeysToDelete,
+    executedBy: 'system',
+    revertElementOverridable: false
+  });
+}
+function undoCleanupOverridableProps(actionId) {
+  const currentComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_3__.componentsSelectors.getCurrentComponentId();
+  if (!currentComponentId) {
+    return;
+  }
+  const entry = deleteActionEntries.get(actionId);
+  if (!entry) {
+    return;
+  }
+  const restoreProps = () => {
+    for (const prop of entry.props) {
+      (0,_store_actions_create_component_overridable_prop__WEBPACK_IMPORTED_MODULE_6__.createComponentOverridableProp)({
+        componentId: currentComponentId,
+        ...prop,
+        executedBy: 'system'
+      });
+    }
+  };
+  if ((0,_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_1__.isCoreAtLeast)('4.1.0')) {
+    (0,_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_2__.doAfterRender)(entry.elementIds, restoreProps);
+  }
+}
+function redoCleanupOverridableProps(actionId) {
+  const currentComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_3__.componentsSelectors.getCurrentComponentId();
+  if (!currentComponentId) {
+    return;
+  }
+  const entry = deleteActionEntries.get(actionId);
+  if (!entry) {
+    return;
+  }
+  const propKeysToDelete = entry.props.map(prop => prop.overrideKey);
+  (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_7__.deleteComponentOverridableProp)({
+    componentId: currentComponentId,
+    propKey: propKeysToDelete,
+    executedBy: 'system',
+    revertElementOverridable: false
+  });
 }
 function registerCleanupOverridablePropsOnDelete() {
   // This hook is not a real dependency - it doesn't block the execution of the command in any case, only perform side effect.
   // We use `dependency` and not `after` hook because the `after` hook doesn't include the children of a deleted container
   // in the callback parameters (as they already were deleted).
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4__.registerDataHook)('dependency', 'document/elements/delete', (args, options) => {
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5__.registerDataHook)('dependency', 'document/elements/delete', (args, options) => {
     if (isPartOfMoveCommand(options)) {
-      return true;
-    }
-    const currentComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.componentsSelectors.getCurrentComponentId();
-    if (!currentComponentId) {
-      return true;
-    }
-    const overridableProps = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.componentsSelectors.getOverridableProps(currentComponentId);
-    if (!overridableProps || Object.keys(overridableProps.props).length === 0) {
       return true;
     }
     const containers = args.containers ?? (args.container ? [args.container] : []);
@@ -6581,82 +6743,65 @@ function registerCleanupOverridablePropsOnDelete() {
     if (deletedElementIds.length === 0) {
       return true;
     }
-    const propsToDelete = Object.values(overridableProps.props).filter(prop => deletedElementIds.includes(prop.elementId));
-    if (propsToDelete.length === 0) {
-      return true;
-    }
-    if (options?.currentHistoryItemId !== undefined) {
-      deleteActionEntries.set(options.currentHistoryItemId, {
-        props: propsToDelete,
-        elementIds: deletedElementIds
-      });
-    }
-    const propKeysToDelete = propsToDelete.map(prop => prop.overrideKey);
-    (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_6__.deleteComponentOverridableProp)({
-      componentId: currentComponentId,
-      propKey: propKeysToDelete,
-      source: 'system',
-      revertElementOverridable: false
-    });
+    cleanupOverridableProps(deletedElementIds, options?.currentHistoryItemId);
     return true;
   });
 }
 function registerClearDeleteEntriesOnDocumentSwitch() {
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4__.registerDataHook)('after', 'editor/documents/attach-preview', () => {
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5__.registerDataHook)('after', 'editor/documents/attach-preview', () => {
     deleteActionEntries.clear();
   });
 }
 function registerRestoreOverridablePropsOnUndo() {
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4__.registerDataHook)('after', 'document/history/undo', async (_, results) => {
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5__.registerDataHook)('after', 'document/history/undo', async (_, results) => {
     if (!results?.originHistoryItemId) {
       return;
     }
-    const currentComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.componentsSelectors.getCurrentComponentId();
-    if (!currentComponentId) {
-      return;
-    }
-    const entry = deleteActionEntries.get(results.originHistoryItemId);
-    if (!entry) {
-      return;
-    }
-    const restoreProps = () => {
-      for (const prop of entry.props) {
-        (0,_store_actions_create_component_overridable_prop__WEBPACK_IMPORTED_MODULE_5__.createComponentOverridableProp)({
-          componentId: currentComponentId,
-          ...prop,
-          source: 'system'
-        });
-      }
-    };
-    if ((0,_elementor_core_adapter_utils__WEBPACK_IMPORTED_MODULE_0__.isCoreAtLeast)('4.1.0')) {
-      (0,_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__.doAfterRender)(entry.elementIds, restoreProps);
-    }
+    undoCleanupOverridableProps(results.originHistoryItemId);
   });
 }
 function registerCleanupOverridablePropsOnRedo() {
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_4__.registerDataHook)('after', 'document/history/redo', (_, results) => {
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_5__.registerDataHook)('after', 'document/history/redo', (_, results) => {
     if (!results?.originHistoryItemId) {
       return;
     }
-    const currentComponentId = _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.componentsSelectors.getCurrentComponentId();
-    if (!currentComponentId) {
-      return;
-    }
-    const entry = deleteActionEntries.get(results.originHistoryItemId);
-    if (!entry) {
-      return;
-    }
-    const propKeysToDelete = entry.props.map(prop => prop.overrideKey);
-    (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_6__.deleteComponentOverridableProp)({
-      componentId: currentComponentId,
-      propKey: propKeysToDelete,
-      source: 'system',
-      revertElementOverridable: false
-    });
+    redoCleanupOverridableProps(results.originHistoryItemId);
   });
 }
+const DETACH_EVENT = 'elementor/components/detach-instance';
+const DETACH_UNDO_EVENT = 'elementor/components/undo-detach-instance';
+const DETACH_REDO_EVENT = 'elementor/components/redo-detach-instance';
+function registerDetachEventHandlers() {
+  const onDetach = event => {
+    const {
+      detachedInstanceId,
+      detachActionId
+    } = event.detail;
+    cleanupOverridableProps([detachedInstanceId], detachActionId);
+  };
+  const onDetachUndo = event => {
+    const {
+      detachActionId
+    } = event.detail;
+    undoCleanupOverridableProps(detachActionId);
+  };
+  const onDetachRedo = event => {
+    const {
+      detachActionId
+    } = event.detail;
+    redoCleanupOverridableProps(detachActionId);
+  };
+  window.addEventListener(DETACH_EVENT, onDetach);
+  window.addEventListener(DETACH_UNDO_EVENT, onDetachUndo);
+  window.addEventListener(DETACH_REDO_EVENT, onDetachRedo);
+  return () => {
+    window.removeEventListener(DETACH_EVENT, onDetach);
+    window.removeEventListener(DETACH_UNDO_EVENT, onDetachUndo);
+    window.removeEventListener(DETACH_REDO_EVENT, onDetachRedo);
+  };
+}
 function collectDeletedElementIds(containers) {
-  const elementIds = containers.filter(Boolean).flatMap(container => [container, ...(0,_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_3__.getAllDescendants)(container)]).map(element => element.model?.get?.('id') ?? element.id).filter(id => Boolean(id));
+  const elementIds = containers.filter(Boolean).flatMap(container => [container, ...(0,_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_4__.getAllDescendants)(container)]).map(element => element.model?.get?.('id') ?? element.id).filter(id => Boolean(id));
   return elementIds;
 }
 function isPartOfMoveCommand(options) {
@@ -6786,12 +6931,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   initHandleComponentEditModeContainer: function() { return /* binding */ initHandleComponentEditModeContainer; }
 /* harmony export */ });
-/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-elements */ "@elementor/editor-elements");
-/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../consts */ "./packages/packages/pro/editor-components-extended/src/consts.ts");
-/* harmony import */ var _utils_is_editing_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/is-editing-component */ "./packages/packages/pro/editor-components-extended/src/utils/is-editing-component.ts");
+/* harmony import */ var _elementor_editor_canvas_extended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-canvas-extended */ "@elementor/editor-canvas-extended");
+/* harmony import */ var _elementor_editor_canvas_extended__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_canvas_extended__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-elements */ "@elementor/editor-elements");
+/* harmony import */ var _elementor_editor_elements__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../consts */ "./packages/packages/pro/editor-components-extended/src/consts.ts");
+/* harmony import */ var _utils_is_editing_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/is-editing-component */ "./packages/packages/pro/editor-components-extended/src/utils/is-editing-component.ts");
+
 
 
 
@@ -6802,8 +6950,8 @@ function initHandleComponentEditModeContainer() {
   initHandleTopLevelElementDelete();
 }
 function initHandleTopLevelElementDelete() {
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.registerDataHook)('after', 'document/elements/delete', args => {
-    if (!(0,_utils_is_editing_component__WEBPACK_IMPORTED_MODULE_3__.isEditingComponent)()) {
+  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_2__.registerDataHook)('after', 'document/elements/delete', args => {
+    if (!(0,_utils_is_editing_component__WEBPACK_IMPORTED_MODULE_4__.isEditingComponent)()) {
       return;
     }
     const containers = args.containers ?? (args.container ? [args.container] : []);
@@ -6820,40 +6968,27 @@ function initHandleTopLevelElementDelete() {
   });
 }
 function initRedirectDropIntoComponent() {
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_1__.registerDataHook)('dependency', 'preview/drop', args => {
-    if (!(0,_utils_is_editing_component__WEBPACK_IMPORTED_MODULE_3__.isEditingComponent)()) {
-      return true;
-    }
-    const containers = args.containers ?? (args.container ? [args.container] : []);
-    for (const container of containers) {
+  (0,_elementor_editor_canvas_extended__WEBPACK_IMPORTED_MODULE_0__.registerDropContainerRedirect)({
+    shouldHandle: _utils_is_editing_component__WEBPACK_IMPORTED_MODULE_4__.isEditingComponent,
+    resolveRedirect: container => {
       if (!isComponent(container)) {
-        continue;
+        return {
+          shouldRedirect: false,
+          container
+        };
       }
-      const {
-        shouldRedirect,
-        container: redirectedContainer
-      } = getComponentContainer(container);
-      if (!shouldRedirect) {
-        continue;
-      }
-      if (args.containers) {
-        const index = args.containers.indexOf(container);
-        args.containers[index] = redirectedContainer;
-      } else {
-        args.container = redirectedContainer;
-      }
+      return getComponentContainer(container);
     }
-    return true;
   });
 }
 function createEmptyTopLevelContainer(container) {
-  const newContainer = (0,_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_0__.createElement)({
+  const newContainer = (0,_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_1__.createElement)({
     container,
     model: {
       elType: V4_DEFAULT_CONTAINER_TYPE
     }
   });
-  (0,_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_0__.selectElement)(newContainer.id);
+  (0,_elementor_editor_elements__WEBPACK_IMPORTED_MODULE_1__.selectElement)(newContainer.id);
 }
 function getComponentContainer(container) {
   const topLevelElement = container.children?.[0];
@@ -6873,7 +7008,7 @@ function isComponent(container) {
   if (!isDocument) {
     return false;
   }
-  return container.document?.config.type === _consts__WEBPACK_IMPORTED_MODULE_2__.COMPONENT_DOCUMENT_TYPE;
+  return container.document?.config.type === _consts__WEBPACK_IMPORTED_MODULE_3__.COMPONENT_DOCUMENT_TYPE;
 }
 
 /***/ }),
@@ -7120,7 +7255,7 @@ function SanitizeOverridableProps() {
         (0,_store_actions_delete_component_overridable_prop__WEBPACK_IMPORTED_MODULE_2__.deleteComponentOverridableProp)({
           componentId: currentComponentId,
           propKey: key,
-          source: 'system'
+          executedBy: 'system'
         });
       });
     }
@@ -7674,6 +7809,96 @@ function revertElementSettings(element) {
 
 /***/ }),
 
+/***/ "./packages/packages/pro/editor-components-extended/src/utils/track-instance-added.ts":
+/*!********************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-components-extended/src/utils/track-instance-added.ts ***!
+  \********************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TrackInstanceAdded: function() { return /* binding */ TrackInstanceAdded; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-canvas */ "@elementor/editor-canvas");
+/* harmony import */ var _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-components */ "@elementor/editor-components");
+/* harmony import */ var _elementor_editor_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
+/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _elementor_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @elementor/store */ "@elementor/store");
+/* harmony import */ var _elementor_store__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_elementor_store__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+function TrackInstanceAdded() {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    window.addEventListener(_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__.ELEMENT_ADDED_EVENT, onElementAddedEvent);
+    (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_3__.registerDataHook)('after', 'preview/drop', (_args, element) => {
+      if (!(element?.model?.get('widgetType') === 'e-component')) {
+        return;
+      }
+      const elementData = element.model.toJSON();
+      onElementAdded(elementData, 'user');
+    });
+    return () => {
+      window.removeEventListener(_elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_1__.ELEMENT_ADDED_EVENT, onElementAddedEvent);
+    };
+  }, []);
+  return null;
+}
+function onElementAddedEvent(event) {
+  const {
+    element,
+    executedBy
+  } = event.detail;
+  onElementAdded(element, executedBy);
+}
+function onElementAdded(element, executedBy) {
+  if (!(element?.widgetType === 'e-component')) {
+    return;
+  }
+  const editorSettings = element.editor_settings;
+  const componentUID = editorSettings?.component_uid;
+  const componentName = (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.selectComponentByUid)?.((0,_elementor_store__WEBPACK_IMPORTED_MODULE_4__.__getState)(), componentUID ?? '')?.name;
+  const instanceId = element.id;
+  const createdThisSession = (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.selectCreatedThisSession)((0,_elementor_store__WEBPACK_IMPORTED_MODULE_4__.__getState)());
+  const isSameSessionReuse = componentUID && createdThisSession.includes(componentUID);
+  const eventsManagerConfig = window.elementorCommon.eventsManager.config;
+  const {
+    locations,
+    secondaryLocations
+  } = eventsManagerConfig;
+  const componentPanelLocation = {
+    location: locations.widgetPanel,
+    secondary_location: secondaryLocations.componentsTab
+  };
+  let eventData = {
+    // TODO: remove `source` in version 4.4.0
+    source: executedBy,
+    executedBy,
+    instance_id: instanceId,
+    component_uid: componentUID,
+    component_name: componentName,
+    is_same_session_reuse: isSameSessionReuse
+  };
+  if (executedBy !== 'mcp_tool') {
+    eventData = {
+      ...eventData,
+      ...componentPanelLocation
+    };
+  }
+  (0,_elementor_editor_components__WEBPACK_IMPORTED_MODULE_2__.trackComponentEvent)({
+    action: 'instanceAdded',
+    ...eventData
+  });
+}
+
+/***/ }),
+
 /***/ "react":
 /*!**************************!*\
   !*** external ["React"] ***!
@@ -7721,6 +7946,16 @@ module.exports = window["elementorV2"]["editor"];
 /***/ (function(module) {
 
 module.exports = window["elementorV2"]["editorCanvas"];
+
+/***/ }),
+
+/***/ "@elementor/editor-canvas-extended":
+/*!*******************************************************!*\
+  !*** external ["elementorV2","editorCanvasExtended"] ***!
+  \*******************************************************/
+/***/ (function(module) {
+
+module.exports = window["elementorV2"]["editorCanvasExtended"];
 
 /***/ }),
 

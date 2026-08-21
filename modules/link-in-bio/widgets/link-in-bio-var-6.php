@@ -50,6 +50,6 @@ class Link_In_Bio_Var_6 extends Widget_Link_In_Bio_Base_Pro {
 	}
 
 	public function get_title(): string {
-		return esc_html__( 'Portfolio', 'elementor-pro' );
+		return esc_html__( 'Portfolio Bio', 'elementor-pro' );
 	}
 }

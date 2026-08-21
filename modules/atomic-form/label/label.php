@@ -67,6 +67,7 @@ class Label extends Atomic_Widget_Base {
 		return [
 			Section::make()
 				->set_label( __( 'Content', 'elementor-pro' ) )
+				->set_id( 'content' )
 				->set_items( [
 					Inline_Editing_Control::bind_to( 'text' )
 						->set_label( __( 'Label text', 'elementor-pro' ) ),

@@ -3,11 +3,13 @@ namespace ElementorPro\Modules\AtomicForm;
 
 use Elementor\Core\Experiments\Manager as ExperimentsManager;
 use Elementor\Modules\AtomicWidgets\Module as AtomicWidgetsModule;
+use Elementor\Utils as Elementor_Utils;
 use Elementor\Widgets_Manager;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\License\API;
 use ElementorPro\Modules\AtomicForm\Actions\Action_Runner;
 use ElementorPro\Modules\AtomicForm\Classes\Akismet;
+use ElementorPro\Modules\AtomicForm\Classes\Atomic_Form_Panel_Promotion;
 use ElementorPro\Modules\AtomicForm\Input\Input;
 use ElementorPro\Modules\AtomicForm\Label\Label;
 use ElementorPro\Modules\AtomicForm\Textarea\Textarea;
@@ -28,9 +30,42 @@ class Module extends Module_Base {
 	const MODULE_NAME = 'e-atomic-form';
 	const EXPERIMENT_NAME = 'e_pro_atomic_form';
 	const AKISMET_LICENSE_FEATURE_NAME = 'akismet';
+	const EMAIL_ACTION_COUNT = 2;
+	const FORM_ELEMENT_TYPE = 'e-form';
 
 	public function get_name() {
 		return self::MODULE_NAME;
+	}
+
+	public static function get_form_widget_types(): array {
+		$widget_types = [
+			self::FORM_ELEMENT_TYPE,
+			Input::get_element_type(),
+			Label::get_element_type(),
+			Textarea::get_element_type(),
+			Submit_Button::get_element_type(),
+			Checkbox::get_element_type(),
+			Radio_Button::get_element_type(),
+		];
+
+		if ( version_compare( ELEMENTOR_VERSION, '4.1', '>=' ) ) {
+			$widget_types = array_merge( $widget_types, [
+				Date_Picker::get_element_type(),
+				Time_Picker::get_element_type(),
+				Select::get_element_type(),
+				File_Upload::get_element_type(),
+			] );
+		}
+
+		return $widget_types;
+	}
+
+	public static function get_form_field_widget_types(): array {
+		return array_values( array_diff( self::get_form_widget_types(), [
+			self::FORM_ELEMENT_TYPE,
+			Label::get_element_type(),
+			Submit_Button::get_element_type(),
+		] ) );
 	}
 
 	public static function get_experimental_data(): array {
@@ -55,12 +90,18 @@ class Module extends Module_Base {
 			$this->add_component( 'akismet', new Akismet() );
 		}
 
+		( new Atomic_Form_Panel_Promotion() )->register();
+
 		add_filter(
 			'elementor/widgets/register',
 			fn( $widgets_manager ) => $this->register_widgets( $widgets_manager )
 		);
 
+		add_filter( 'elementor/atomic/form/email_action_count', fn() => self::EMAIL_ACTION_COUNT );
+
 		add_action( 'elementor/frontend/after_enqueue_styles', fn () => $this->add_inline_styles() );
+
+		add_action( 'elementor/editor/before_enqueue_scripts', fn() => $this->enqueue_editor_scripts() );
 
 		add_action( 'init', fn() => Action_Runner::init() );
 		if ( Atomic_Form_Controller::is_form_submitted() ) {
@@ -90,6 +131,18 @@ class Module extends Module_Base {
 			$widgets_manager->register( new Select() );
 			$widgets_manager->register( new File_Upload() );
 		}
+	}
+
+	private function enqueue_editor_scripts() {
+		$min_suffix = Elementor_Utils::is_script_debug() ? '' : '.min';
+
+		wp_enqueue_script(
+			'elementor-pro-atomic-form-editor',
+			ELEMENTOR_PRO_URL . 'assets/js/atomic-form-editor' . $min_suffix . '.js',
+			[ 'elementor-editor' ],
+			ELEMENTOR_PRO_VERSION,
+			true
+		);
 	}
 
 	private function add_inline_styles() {

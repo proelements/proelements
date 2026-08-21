@@ -24,6 +24,10 @@ trait Product_Id_Trait {
 			$product_data = wc_get_product();
 		}
 
+		if ( $product_id && $product_data && 'publish' !== $product_data->get_status() ) {
+			return false;
+		}
+
 		return $product_data;
 	}
 

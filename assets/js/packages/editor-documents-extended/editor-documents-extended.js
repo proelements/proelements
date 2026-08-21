@@ -226,15 +226,16 @@ function init() {
 
 /***/ }),
 
-/***/ "./packages/packages/pro/editor-documents-extended/src/form-license-block.ts":
+/***/ "./packages/packages/pro/editor-documents-extended/src/form-feature-block.ts":
 /*!***********************************************************************************!*\
-  !*** ./packages/packages/pro/editor-documents-extended/src/form-license-block.ts ***!
+  !*** ./packages/packages/pro/editor-documents-extended/src/form-feature-block.ts ***!
   \***********************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initFormLicenseBlock: function() { return /* binding */ initFormLicenseBlock; }
+/* harmony export */   BLOCKED_ELEMENT_TYPES: function() { return /* binding */ BLOCKED_ELEMENT_TYPES; },
+/* harmony export */   initFormFeatureBlock: function() { return /* binding */ initFormFeatureBlock; }
 /* harmony export */ });
 /* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
 /* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__);
@@ -242,14 +243,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__);
 
 
-const FORM_ELEMENT_TYPE = 'e-form';
+const FORM_FEATURE_NAME = 'form';
 const MOVE_COMMAND = 'document/elements/move';
+const BLOCKED_ELEMENT_TYPES = new Set(['e-form', 'e-form-input', 'e-form-label', 'e-form-textarea', 'e-form-submit-button', 'e-form-checkbox', 'e-form-radio-button', 'e-form-date-picker', 'e-form-time-picker', 'e-form-select', 'e-form-file-upload']);
 function getArgsElementType(args) {
   return args.model?.widgetType || args.model?.elType;
 }
-async function initFormLicenseBlock() {
-  const isExpired = await (0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__.fetchLicenseStatus)().catch(() => false);
-  if (!isExpired) {
+async function initFormFeatureBlock() {
+  const features = await (0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_1__.fetchTierFeatures)().catch(() => null);
+  if (!features || features.includes(FORM_FEATURE_NAME)) {
     return;
   }
   (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.registerDataHook)('dependency', 'document/elements/create', (args, options) => {
@@ -258,7 +260,7 @@ async function initFormLicenseBlock() {
       return true;
     }
     const elementType = getArgsElementType(args);
-    return elementType !== FORM_ELEMENT_TYPE;
+    return !elementType || !BLOCKED_ELEMENT_TYPES.has(elementType);
   });
 }
 
@@ -353,7 +355,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _elementor_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/store */ "@elementor/store");
 /* harmony import */ var _elementor_store__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_store__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _extensions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./extensions */ "./packages/packages/pro/editor-documents-extended/src/extensions/index.ts");
-/* harmony import */ var _form_license_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-license-block */ "./packages/packages/pro/editor-documents-extended/src/form-license-block.ts");
+/* harmony import */ var _form_feature_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-feature-block */ "./packages/packages/pro/editor-documents-extended/src/form-feature-block.ts");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./packages/packages/pro/editor-documents-extended/src/store/index.ts");
 /* harmony import */ var _sync__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sync */ "./packages/packages/pro/editor-documents-extended/src/sync/index.ts");
 
@@ -363,7 +365,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function init() {
   (0,_extensions__WEBPACK_IMPORTED_MODULE_1__.init)();
-  (0,_form_license_block__WEBPACK_IMPORTED_MODULE_2__.initFormLicenseBlock)();
+  (0,_form_feature_block__WEBPACK_IMPORTED_MODULE_2__.initFormFeatureBlock)();
   initStore();
 }
 function initStore() {

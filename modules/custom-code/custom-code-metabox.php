@@ -418,7 +418,7 @@ class Custom_Code_Metabox extends Assets_Base {
 			<div class="misc-pub-section misc-pub-post-conditions">
 				<i class="dashicons dashicons-networking" aria-hidden="true"></i>
 				<?php echo esc_html__( 'Conditions:', 'elementor-pro' ); ?>
-				<span class="post-conditions"></span>
+				<div class="post-conditions"></div>
 			</div>
 			<?php
 		}

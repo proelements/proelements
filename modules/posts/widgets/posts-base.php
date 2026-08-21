@@ -740,7 +740,11 @@ abstract class Posts_Base extends Base_Widget {
 	}
 
 	public function is_allow_to_use_custom_page_option() {
-		return 'ajax' === $this->get_settings_for_display( 'pagination_load_type' ) || 'yes' === $this->get_settings_for_display( 'pagination_individual_handle' );
+		if ( 'ajax' === $this->get_settings_for_display( 'pagination_load_type' ) || 'yes' === $this->get_settings_for_display( 'pagination_individual_handle' ) ) {
+			return true;
+		}
+
+		return $this->has_multiple_posts_widgets_on_page();
 	}
 
 	protected function get_base_url_for_rest_request( $post_id, $url ) {

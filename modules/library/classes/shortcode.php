@@ -53,6 +53,8 @@ class Shortcode {
 			return '';
 		}
 
+		do_action( Template_Shortcode_Utils::RENDER_ACTION, self::SHORTCODE, $attributes );
+
 		$include_css = false;
 
 		if ( isset( $attributes['css'] ) && 'false' !== $attributes['css'] ) {

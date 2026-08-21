@@ -14,14 +14,16 @@ trait Has_Loop_Iteration {
 		render_children_to_html as protected render_default_children_to_html;
 	}
 
-	protected function get_loop_context_key(): string {
-		return Collection_Loop::class;
-	}
+	abstract protected function get_loop_context_key(): string;
 
 	protected function render_children_to_html(): string {
-		$loop_html = $this->render_children_for_loop();
+		$loop_context = Render_Context::get( $this->get_loop_context_key() );
 
-		return '' !== $loop_html ? $loop_html : $this->render_default_children_to_html();
+		if ( empty( $loop_context ) ) {
+			return $this->render_default_children_to_html();
+		}
+
+		return $this->render_children_for_loop();
 	}
 
 	protected function render_children_for_loop(): string {
@@ -46,9 +48,11 @@ trait Has_Loop_Iteration {
 		while ( $query->have_posts() ) {
 			$query->the_post();
 
+			$template->reset_descendant_render_state();
+
 			ob_start();
 			$template->print_element();
-			$html .= ob_get_clean();
+			$html .= (string) ob_get_clean();
 		}
 
 		wp_reset_postdata();

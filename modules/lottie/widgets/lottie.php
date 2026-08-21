@@ -98,6 +98,13 @@ class Lottie extends Base_Widget {
 				],
 				'dynamic' => [
 					'active' => true,
+					'property' => 'url',
+				],
+				'default' => [
+					'url' => '',
+					'is_external' => '',
+					'nofollow' => '',
+					'custom_attributes' => '',
 				],
 				'placeholder' => esc_html__( 'Enter your URL', 'elementor-pro' ),
 				'frontend_available' => true,

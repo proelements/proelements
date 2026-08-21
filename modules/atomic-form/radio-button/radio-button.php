@@ -73,6 +73,7 @@ class Radio_Button extends Atomic_Widget_Base {
 		return [
 			Section::make()
 				->set_label( __( 'Content', 'elementor-pro' ) )
+				->set_id( 'content' )
 				->set_items( [
 					Text_Control::bind_to( 'name' )
 						->set_label( __( 'Group name', 'elementor-pro' ) )

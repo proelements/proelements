@@ -8,6 +8,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 return [
 	'handle' => 'elementor-v2-editor-collection-loop',
 	'deps' => [
-		
+		'elementor-v2-core-adapter-utils',
+		'elementor-v2-editor',
+		'elementor-v2-editor-canvas',
+		'elementor-v2-editor-canvas-extended',
+		'elementor-v2-editor-controls',
+		'elementor-v2-editor-documents',
+		'elementor-v2-editor-editing-panel',
+		'elementor-v2-editor-elements',
+		'elementor-v2-editor-panels',
+		'elementor-v2-editor-props',
+		'elementor-v2-editor-v1-adapters',
+		'elementor-v2-events',
+		'elementor-v2-http-client',
+		'elementor-v2-icons',
+		'elementor-v2-license-api',
+		'elementor-v2-schema',
+		'elementor-v2-session',
+		'elementor-v2-ui',
+		'react',
+		'react-dom',
+		'wp-i18n',
 	],
 ];

@@ -20,6 +20,31 @@ class Preview_Manager {
 		add_action( 'elementor/template-library/after_get_source_data', [ $this, 'restore_current_query' ] );
 		add_action( 'elementor/dynamic_tags/before_render', [ $this, 'switch_to_preview_query' ] );
 		add_action( 'elementor/dynamic_tags/after_render', [ $this, 'restore_current_query' ] );
+
+		add_action( 'elementor/atomic_widgets/before_render', [ $this, 'on_atomic_before_render' ] );
+		add_action( 'elementor/atomic_widgets/after_render', [ $this, 'on_atomic_after_render' ] );
+	}
+
+	public function on_atomic_before_render( $document = null ) {
+		if ( ! $document instanceof Theme_Document ) {
+			return;
+		}
+
+		$document = $this->resolve_preview_document( $document );
+
+		$new_query_vars = $document->get_preview_as_query_args();
+
+		Plugin::elementor()->db->switch_to_query( $new_query_vars, true );
+
+		$document->after_preview_switch_to_query();
+	}
+
+	public function on_atomic_after_render( $document = null ) {
+		if ( ! $document instanceof Theme_Document ) {
+			return;
+		}
+
+		Plugin::elementor()->db->restore_current_query();
 	}
 
 	public function filter_post_terms_taxonomy_arg( $taxonomy_args ) {
@@ -74,5 +99,15 @@ class Preview_Manager {
 	 */
 	public function restore_current_query() {
 		Plugin::elementor()->db->restore_current_query();
+	}
+
+	private function resolve_preview_document( Theme_Document $document ): Theme_Document {
+		$autosave = $document->get_autosave( 0 );
+
+		if ( $autosave instanceof Theme_Document ) {
+			return $autosave;
+		}
+
+		return $document;
 	}
 }

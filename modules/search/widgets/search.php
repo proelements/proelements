@@ -38,6 +38,8 @@ class Search extends Base_Widget {
 	protected $search_term = '';
 	protected $page_number = 1;
 
+	private $breakpoint = null;
+
 	private $element_attribute_ids = [
 		'search_wrapper' => 'search_wrapper',
 		'form' => 'form',
@@ -59,6 +61,16 @@ class Search extends Base_Widget {
 
 	public function set_page_number( int $page_number ) {
 		$this->page_number = $page_number;
+	}
+
+	public function set_breakpoint( ?string $breakpoint ) {
+		if ( empty( $breakpoint ) ) {
+			$this->breakpoint = null;
+
+			return;
+		}
+
+		$this->breakpoint = sanitize_key( $breakpoint );
 	}
 
 	public function get_name() {
@@ -112,7 +124,7 @@ class Search extends Base_Widget {
 		$elementor_query = Module_Query::instance();
 		$settings = $this->get_settings_for_display();
 		$query_args = [
-			'posts_per_page' => $settings['number_of_items'] ?? -1,
+			'posts_per_page' => $this->get_posts_per_page_for_breakpoint( $settings ),
 			'paged' => $this->page_number,
 		];
 
@@ -2210,5 +2222,36 @@ class Search extends Base_Widget {
 
 	private function get_property_key_prefix() {
 		return $this->get_query_name() . '_query';
+	}
+
+	private function get_posts_per_page_for_breakpoint( array $settings ): int {
+		$control_key = 'number_of_items';
+		$desktop_value = isset( $settings[ $control_key ] ) ? (int) $settings[ $control_key ] : -1;
+
+		if ( empty( $this->breakpoint ) ) {
+			return $desktop_value;
+		}
+
+		$active_devices = Plugin::elementor()->breakpoints->get_active_devices_list( [
+			'add_desktop' => true,
+			'desktop_first' => false,
+			'reverse' => false,
+		] );
+
+		$device_index = array_search( $this->breakpoint, $active_devices, true );
+
+		if ( false === $device_index ) {
+			return $desktop_value;
+		}
+
+		foreach ( array_slice( $active_devices, $device_index ) as $device ) {
+			$setting_key = 'desktop' === $device ? $control_key : $control_key . '_' . $device;
+
+			if ( isset( $settings[ $setting_key ] ) && is_numeric( $settings[ $setting_key ] ) ) {
+				return (int) $settings[ $setting_key ];
+			}
+		}
+
+		return $desktop_value;
 	}
 }

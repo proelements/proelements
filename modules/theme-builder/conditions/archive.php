@@ -59,6 +59,10 @@ class Archive extends Condition_Base {
 			$is_archive = false;
 		}
 
+		if ( $is_archive && ( is_404() || Module::is_missing_term_or_author_archive() ) ) {
+			$is_archive = false;
+		}
+
 		return $is_archive;
 	}
 }

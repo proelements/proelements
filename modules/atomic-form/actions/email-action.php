@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\AtomicForm\Actions;
 
 use ElementorPro\Modules\AtomicForm\Actions\Email_Settings;
 use ElementorPro\Modules\AtomicForm\Classes\Composite_Shortcode_Resolver as Shortcode_Resolver;
+use ElementorPro\Modules\AtomicForm\Classes\Metadata_Resolver;
 use ElementorPro\Modules\AtomicForm\File_Upload\File_Upload_Handler;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,22 +17,12 @@ class Email_Action extends Action_Base {
 	}
 
 	public function execute( array $form_data, array $widget_settings, array $context ): array {
-		$validation = $this->validate_settings( $widget_settings );
+		$settings_key = $context['action_type'] ?? Action_Type::EMAIL;
+		$email_settings = new Email_Settings( $widget_settings, $settings_key );
 
-		if ( is_wp_error( $validation ) ) {
-			return $this->failure( $validation->get_error_message() );
-		}
-
-		$email_settings = new Email_Settings( $widget_settings );
-
-		$to = $email_settings->to();
 		$from = $email_settings->from();
 		$from_name = $email_settings->from_name();
-		$message  = $email_settings->message();
 		$subject = $email_settings->subject();
-		$reply_to = $email_settings->reply_to();
-		$cc = $email_settings->cc();
-		$bcc = $email_settings->bcc();
 		$content_type = $email_settings->content_type();
 
 		$field_metadata = $context['field_metadata'] ?? [];
@@ -39,8 +30,20 @@ class Email_Action extends Action_Base {
 		$is_html = 'html' === $content_type;
 
 		$shortcode_resolver = new Shortcode_Resolver( $form_data, $is_html, $field_metadata, $cssid_map );
-		$message = $shortcode_resolver->resolve( $message );
-		$reply_to = $shortcode_resolver->resolve( $reply_to );
+
+		$to = $this->resolve_recipients( $shortcode_resolver, $email_settings->to() );
+		$cc = $this->resolve_recipients( $shortcode_resolver, $email_settings->cc() );
+		$bcc = $this->resolve_recipients( $shortcode_resolver, $email_settings->bcc() );
+		$reply_to = $shortcode_resolver->resolve( $email_settings->reply_to() );
+
+		$validation = $this->validate_recipient( $to );
+
+		if ( is_wp_error( $validation ) ) {
+			return $this->failure( $validation->get_error_message() );
+		}
+
+		$message = $shortcode_resolver->resolve( $email_settings->message() );
+		$message = ( new Metadata_Resolver( $email_settings->meta_data(), $context, $is_html ) )->resolve( $message );
 
 		$headers = [];
 		$headers[] = sprintf( 'From: %s <%s>', $from_name, $from );
@@ -108,23 +111,43 @@ class Email_Action extends Action_Base {
 		return $attachments;
 	}
 
-	protected function validate_settings( array $widget_settings ) {
-		$email_settings = new Email_Settings( $widget_settings );
-		$email_to = $email_settings->to();
+	private function resolve_recipients( Shortcode_Resolver $shortcode_resolver, string $recipients ): string {
+		$resolved = $shortcode_resolver->resolve( $recipients );
 
-		if ( ! empty( $email_to ) && ! is_email( $email_to ) ) {
-			$emails = array_map( 'trim', explode( ',', $email_to ) );
-			foreach ( $emails as $email ) {
-				if ( ! is_email( $email ) ) {
-					return new \WP_Error(
-						'invalid_email',
-						sprintf(
-							/* translators: %s: Invalid email address. */
-							__( 'Invalid email address: %s', 'elementor-pro' ),
-							$email
-						)
-					);
-				}
+		$addresses = array_filter(
+			array_map( 'trim', explode( ',', $resolved ) ),
+			function ( $address ) {
+				return '' !== $address;
+			}
+		);
+
+		return implode( ', ', $addresses );
+	}
+
+	private function validate_recipient( string $to ) {
+		if ( empty( $to ) ) {
+			return new \WP_Error(
+				'missing_recipient',
+				__( 'No valid recipient email address.', 'elementor-pro' )
+			);
+		}
+
+		if ( is_email( $to ) ) {
+			return true;
+		}
+
+		$emails = array_map( 'trim', explode( ',', $to ) );
+
+		foreach ( $emails as $email ) {
+			if ( ! is_email( $email ) ) {
+				return new \WP_Error(
+					'invalid_email',
+					sprintf(
+						/* translators: %s: Invalid email address. */
+						__( 'Invalid email address: %s', 'elementor-pro' ),
+						$email
+					)
+				);
 			}
 		}
 

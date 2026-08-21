@@ -26,6 +26,7 @@ class Editor extends App {
 		'editor-components-extended',
 		'core-adapter-utils',
 		'editor-templates-extended',
+		'editor-canvas-extended',
 	];
 
 	/**
@@ -132,10 +133,12 @@ class Editor extends App {
 		}
 
 		foreach ( $assets_config->all() as $package => $config ) {
+			$deps = $this->filter_version_gated_dependencies( $config['deps'] );
+
 			wp_enqueue_script(
 				$config['handle'],
 				$this->get_js_assets_url( "packages/{$package}/{$package}" ),
-				$config['deps'],
+				$deps,
 				ELEMENTOR_PRO_VERSION,
 				true
 			);
@@ -199,5 +202,52 @@ class Editor extends App {
 
 	protected function get_assets_base_url() {
 		return ELEMENTOR_PRO_URL;
+	}
+
+	/**
+	 * Map of `@elementor/*` package names to the minimum Elementor Core version
+	 * in which the corresponding script handle is registered.
+	 *
+	 * Keys use the original npm package name (`@elementor/<name>`) so it stays
+	 * grep-able against actual `import` statements in the Pro packages. They are
+	 * converted to script handles (`elementor-v2-<name>`) at filter time
+	 *
+	 * NOTE: When adding an entry here, make sure every usage of the package in Pro
+	 * source code is guarded by a runtime version check (see e.g.
+	 * `isCoreWithEmbeddedDocumentsManager()` in `editor-templates-extended`).
+	 */
+	const VERSION_GATED_CORE_PACKAGES = [
+		'@elementor/editor-embedded-documents-manager' => '4.2.0',
+	];
+
+	/**
+	 * Filter out gated dependencies that are not available in the current Elementor version.
+	 *
+	 * @return array The filtered dependencies array.
+	 */
+	private function filter_version_gated_dependencies( array $deps ): array {
+		$gated_handles = [];
+
+		foreach ( self::VERSION_GATED_CORE_PACKAGES as $package => $min_version ) {
+			$gated_handles[ self::package_name_to_script_handle( $package ) ] = $min_version;
+		}
+
+		return array_filter( $deps, function ( $dep ) use ( $gated_handles ) {
+			if ( ! isset( $gated_handles[ $dep ] ) ) {
+				return true;
+			}
+
+			return version_compare( ELEMENTOR_VERSION, $gated_handles[ $dep ], '>=' );
+		} );
+	}
+
+	private static function package_name_to_script_handle( string $package_name ): string {
+		$prefix = '@elementor/';
+
+		if ( 0 !== strpos( $package_name, $prefix ) ) {
+			return $package_name;
+		}
+
+		return 'elementor-v2-' . substr( $package_name, strlen( $prefix ) );
 	}
 }

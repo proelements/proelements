@@ -1,0 +1,13 @@
+{% import 'elementor/macros' as m %}
+{%- set loop_context = loop_context | default({}) -%}
+
+<nav class="{{ m.render_base_classes(id, base_styles, settings) }} {{ editor_classes | default('') }}"
+    aria-label="{{ a11y.nav_label }}"
+    {%- if not loop_context.pagination_enabled | default(false) %} style="display: none;"{% endif %}
+    {{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+    {{- m.render_custom_attributes(settings, editor_attributes) }}>
+    {%- if a11y.status_label is defined %}
+    <span class="elementor-screen-only" role="status" aria-live="polite" data-e-pagination-status>{{ a11y.status_label }}</span>
+    {%- endif %}
+    <!-- elementor-children-placeholder -->
+</nav>

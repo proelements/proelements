@@ -616,7 +616,11 @@ class Share_Buttons extends Base_Widget {
 						'class' => [ 'elementor-share-btn', 'elementor-share-btn_' . $network_name ],
 						'role' => 'button',
 						'tabindex' => '0',
-						'aria-label' => sprintf( esc_attr__( 'Share on %s', 'elementor-pro' ), esc_attr( $network_name ) ),
+						'aria-label' => sprintf(
+							/* translators: %s: Social network name. */
+							esc_attr__( 'Share on %s', 'elementor-pro' ),
+							esc_attr( $network_name )
+						),
 					]
 				);
 				?>

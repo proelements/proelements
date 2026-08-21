@@ -26,6 +26,9 @@ class Locations_Manager {
 	protected $locations_printed = [];
 	protected $locations_skipped = [];
 
+	/** @var array<int,array<string,int[]>> Per-request cache: queried post id => ( location slug => document ids ). */
+	private $location_doc_ids_cache = [];
+
 	public function __construct() {
 		$this->set_core_locations();
 
@@ -41,6 +44,15 @@ class Locations_Manager {
 
 		add_filter( 'pre_handle_404', [ $this, 'should_allow_pagination_on_single_templates' ], 10, 2 );
 		add_filter( 'pre_handle_404', [ $this, 'should_allow_pagination_on_archive_templates' ], 11, 2 );
+
+		if ( version_compare( ELEMENTOR_VERSION, '4.2', '>=' ) ) {
+			add_filter(
+				'elementor/document/related_posts',
+				[ $this, 'get_location_doc_ids_for_post' ],
+				10,
+				2
+			);
+		}
 	}
 
 	/**
@@ -243,9 +255,11 @@ class Locations_Manager {
 			$location = $document->get_location();
 		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
 			$location = 'archive';
+		} elseif ( is_404() || Module::is_missing_term_or_author_archive() ) {
+			$location = 'single';
 		} elseif ( is_archive() || is_tax() || is_home() || is_search() ) {
 			$location = 'archive';
-		} elseif ( is_singular() || is_404() ) {
+		} elseif ( is_singular() ) {
 			$location = 'single';
 		}
 
@@ -580,6 +594,47 @@ class Locations_Manager {
 		}
 
 		return $meta;
+	}
+
+	public function get_location_doc_ids_for_post( array $related, $post_id ): array {
+		$queried_post_id = (int) get_the_ID();
+
+		if ( ! $queried_post_id || (int) $post_id !== $queried_post_id ) {
+			return $related;
+		}
+
+		if ( ! isset( $this->location_doc_ids_cache[ $queried_post_id ] ) ) {
+			$this->location_doc_ids_cache[ $queried_post_id ] = [];
+
+			$locations = $this->get_locations();
+
+			if ( ! empty( $this->current_page_template ) ) {
+				$locations = $this->filter_page_template_locations( $locations );
+			}
+
+			foreach ( array_keys( $locations ) as $location ) {
+				$documents = Module::instance()->get_conditions_manager()->get_documents_for_location( $location );
+
+				foreach ( $documents as $document ) {
+					$doc_post_id = (int) $document->get_post()->ID;
+
+					// Skip the currently queried post — it is already the parent.
+					if ( $doc_post_id === $queried_post_id ) {
+						continue;
+					}
+
+					$this->location_doc_ids_cache[ $queried_post_id ][ $location ][] = $doc_post_id;
+				}
+			}
+		}
+
+		if ( empty( $this->location_doc_ids_cache[ $queried_post_id ] ) ) {
+			return $related;
+		}
+
+		$doc_ids = array_merge( ...array_values( $this->location_doc_ids_cache[ $queried_post_id ] ) );
+
+		return array_values( array_unique( array_merge( $related, $doc_ids ) ) );
 	}
 
 	private function set_core_locations() {

@@ -6,6 +6,9 @@
 {%- set readonly_attribute = settings.readonly ? 'readonly' : '' %}
 {%- set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
 {%- set name_attribute = 'name=' ~ name | e('html_attr') %}
+{%- set ac_on_off_types = [ 'text', 'number', 'password' ] %}
+{%- set ac_value = settings.autocomplete ? ( settings.type in ac_on_off_types ? 'on' : settings.type ) : 'off' %}
+{%- set autocomplete_attribute = 'autocomplete=' ~ ac_value | e('html_attr') %}
 <input 
 	{{ id_attribute }}
 	{{ name_attribute }}
@@ -17,4 +20,5 @@
 	{{ placeholder_attribute | raw }}
 	{{ required_attribute }}
 	{{ readonly_attribute }}
+	{{ autocomplete_attribute }}
 />

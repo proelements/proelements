@@ -96,6 +96,7 @@ class Select extends Atomic_Widget_Base {
 		return [
 			Section::make()
 				->set_label( __( 'Content', 'elementor-pro' ) )
+				->set_id( 'content' )
 				->set_items( [
 					$this->define_options_control(),
 					Switch_Control::bind_to( 'required' )

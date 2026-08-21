@@ -1,4 +1,4 @@
-/*! pro-elements - v4.1.0 - 26-05-2026 */
+/*! pro-elements - v4.2.0 - 19-08-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -278,7 +278,7 @@ function createHandleElement({
   title,
   onClick
 }, context, element = null) {
-  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : __('Edit %s', 'elementor-pro');
+  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : /* translators: %s: Item title. */__('Edit %s', 'elementor-pro');
   const innerElement = createElement({
     tag: 'div',
     classNames: [`${EDIT_HANDLE_CLASS_NAME}__inner`],
@@ -288,7 +288,7 @@ function createHandleElement({
     }), createElement({
       tag: 'div',
       classNames: [`${EDIT_CONTEXT === context ? EDIT_HANDLE_CLASS_NAME : SAVE_HANDLE_CLASS_NAME}__title`],
-      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
+      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : /* translators: %s: Document title. */__('Save %s', 'elementor-pro').replace('%s', title))]
     })]
   });
   const classNames = [EDIT_HANDLE_CLASS_NAME];
@@ -2516,7 +2516,8 @@ module.exports = function () {
     emailFields = _.map(emailModels, function (model) {
       return {
         id: model.get('custom_id'),
-        label: sprintf(__('%s Field', 'elementor-pro'), model.get('field_label'))
+        label: sprintf(/* translators: %s: Field label. */
+        __('%s Field', 'elementor-pro'), model.get('field_label'))
       };
     });
     replyToControl.set('options', {
@@ -11390,7 +11391,7 @@ __webpack_require__(/*! ../modules/es.iterator.some */ "../node_modules/core-js/
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "mega-menu-editor") return "" + chunkId + ".fdd326ed89e1267edbc1.bundle.js";
 /******/ 			if (chunkId === "nested-carousel-editor") return "" + chunkId + ".cd49a5ef125577b84e2a.bundle.js";
-/******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".c48a92ca45daba9995c5.bundle.js";
+/******/ 			if (chunkId === "loop-filter-editor") return "" + chunkId + ".55beef3d38bc920a7daf.bundle.js";
 /******/ 			if (chunkId === "off-canvas-editor") return "" + chunkId + ".51813db99f88e5ea0c4f.bundle.js";
 /******/ 			if (chunkId === "modules_query-control_assets_js_editor_template-query-control_js") return "a8863c3b34c28d6f5339.bundle.js";
 /******/ 			// return url for filenames based on template

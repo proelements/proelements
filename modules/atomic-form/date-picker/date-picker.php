@@ -65,6 +65,7 @@ class Date_Picker extends Atomic_Widget_Base {
 		return [
 			Section::make()
 				->set_label( __( 'Content', 'elementor-pro' ) )
+				->set_id( 'content' )
 				->set_items( [
 					Date_Range_Control::bind_to( 'min_max' )
 						->set_meta( [

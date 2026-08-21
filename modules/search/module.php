@@ -79,6 +79,8 @@ class Module extends Module_Base {
 		$formatted_query_vars = $this->get_query_based_on_widget_props( $e_search_props );
 
 		if ( ! $formatted_query_vars ) {
+			$query->set_404();
+			status_header( 404 );
 			return;
 		}
 

@@ -37,6 +37,14 @@ class Module extends Module_Base {
 		return Plugin::elementor()->preview->is_preview_mode() || is_preview();
 	}
 
+	public static function is_missing_term_or_author_archive() {
+		if ( is_author() && ! get_queried_object() ) {
+			return true;
+		}
+
+		return ( is_category() || is_tag() || is_tax() ) && ! get_queried_object();
+	}
+
 	public static function get_public_post_types( $args = [] ) {
 		$post_types = Utils::get_public_post_types( $args );
 

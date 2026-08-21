@@ -52,6 +52,8 @@ class Module extends Module_Base {
 			add_action( 'elementor_pro/init', [ $this, 'add_form_action' ] );
 
 			add_action( 'elementor/frontend/before_register_styles', [ $this, 'register_styles' ] );
+
+			( new Popup_Trigger_Styles() )->register_hooks();
 		} else {
 			add_action( 'load-post.php', [ $this, 'disable_editing' ] );
 			add_action( 'admin_init', [ $this, 'maybe_redirect_to_promotion_page' ] );

@@ -1558,7 +1558,7 @@ class Author_Box extends Base {
 					'src' => esc_url( $author['avatar'] ),
 					'alt' => ( ! empty( $author['display_name'] ) )
 						? sprintf(
-							/* translators: %s: Author display name. */
+							/* translators: %s: Person name. */
 							esc_attr__( 'Picture of %s', 'elementor-pro' ),
 							$author['display_name']
 						)

@@ -42,8 +42,71 @@ class Form_Record {
 	 * @return bool
 	 */
 	public function validate( $ajax_handler ) {
+		/**
+		 * Skip all form validation.
+		 *
+		 * Filters whether to bypass the entire validation routine — including
+		 * per-field-type validators (reCAPTCHA v2), general validators hooked
+		 * to `elementor_pro/forms/validation` (reCAPTCHA v3, Akismet), and
+		 * required-field checks. Returning true causes validate() to return
+		 * true immediately without running any hooks.
+		 *
+		 * Intended for trusted contexts such as automated form testing.
+		 *
+		 * @since 4.0.3
+		 *
+		 * @param bool         $skip         Whether to skip all validation.
+		 * @param Form_Record  $record       The form record instance.
+		 * @param Ajax_Handler $ajax_handler The ajax handler instance.
+		 */
+		if ( apply_filters( 'elementor_pro/forms/validation/skip_all', false, $this, $ajax_handler ) ) {
+			/**
+			 * Field types to strip from the record when skip_all bypasses validation.
+			 *
+			 * These field values (reCAPTCHA tokens, honeypot markers, etc.) should not
+			 * be re-processed by per-field-type process actions or included in emails
+			 * or database entries when validation has been intentionally bypassed.
+			 *
+			 * @since 4.0.3
+			 *
+			 * @param string[] $strip_types Field type slugs to remove from the record.
+			 */
+			$strip_types = apply_filters(
+				'elementor_pro/forms/validation/skip_all_strip_types',
+				[ 'recaptcha', 'recaptcha_v3', 'honeypot', 'hcaptcha', 'turnstile' ]
+			);
+
+			foreach ( $this->fields as $id => $field ) {
+				if ( in_array( $field['type'], $strip_types, true ) ) {
+					unset( $this->fields[ $id ] );
+				}
+			}
+
+			return true;
+		}
+
+		/**
+		 * Validation skip types.
+		 *
+		 * Filters the list of field types whose validation should be skipped
+		 * entirely. Fields matching a skipped type are also removed from the
+		 * record so they do not appear in emails or database entries.
+		 *
+		 * @since 4.0.3
+		 *
+		 * @param string[] $skip_types Array of field type slugs to skip
+		 *                             (e.g. 'recaptcha', 'recaptcha_v3', 'honeypot').
+		 */
+		$skip_types = apply_filters( 'elementor_pro/forms/validation/skip_types', [] );
+
 		foreach ( $this->fields as $id => $field ) {
 			$field_type = $field['type'];
+
+			if ( in_array( $field_type, $skip_types, true ) ) {
+				unset( $this->fields[ $id ] );
+				continue;
+			}
+
 			if ( ! empty( $field['required'] ) && '' === $field['value'] && 'upload' !== $field_type ) {
 				$ajax_handler->add_error( $id, Ajax_Handler::get_default_message( Ajax_Handler::FIELD_REQUIRED, $this->form_settings ) );
 			}

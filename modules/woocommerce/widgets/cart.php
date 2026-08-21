@@ -2404,14 +2404,17 @@ class Cart extends Base_Widget {
 	 * @return boolean
 	 */
 	private function should_render_coupon() {
-		$settings = $this->get_settings_for_display();
-		$coupon_display_control = true;
-
-		if ( '' === $settings['section_coupon_display'] ) {
-			$coupon_display_control = false;
+		if ( ! wc_coupons_enabled() ) {
+			return false;
 		}
 
-		return wc_coupons_enabled() && $coupon_display_control;
+		$settings = $this->get_settings_for_display();
+
+		if ( isset( $settings['section_coupon_display'] ) && '' === $settings['section_coupon_display'] ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

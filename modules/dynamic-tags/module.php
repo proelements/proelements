@@ -170,10 +170,4 @@ class Module extends TagsModule {
 		];
 	}
 
-	// TODO: Remove this in 3.37.0
-	public static function add_v4_svg_category( $categories ) {
-		return defined( 'Elementor\Modules\DynamicTags\Module::SVG_CATEGORY' )
-			? array_merge( $categories, [ \Elementor\Modules\DynamicTags\Module::SVG_CATEGORY ] )
-			: $categories;
-	}
 }

@@ -23,6 +23,14 @@ class Action_Type {
 		];
 	}
 
+	public static function normalize_email_actions( string $type ): string {
+		if ( preg_match( '/^' . preg_quote( self::EMAIL, '/' ) . '_\d+$/', $type ) ) {
+			return self::EMAIL;
+		}
+
+		return $type;
+	}
+
 	/**
 	 * Check if an action type is valid.
 	 *
@@ -30,6 +38,8 @@ class Action_Type {
 	 * @return bool
 	 */
 	public static function is_valid( string $type ): bool {
+		$type = self::normalize_email_actions( $type );
+
 		return in_array( $type, self::get_all_types(), true );
 	}
 }

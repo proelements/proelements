@@ -45,6 +45,40 @@ trait Pagination_Trait {
 		return $posts_widgets;
 	}
 
+	public function has_multiple_posts_widgets_on_page(): bool {
+		$queried_id = get_queried_object_id();
+
+		if ( $queried_id ) {
+			$post_id = $queried_id;
+		} else {
+			$post_id = get_the_ID();
+		}
+
+		if ( ! $post_id ) {
+			return false;
+		}
+
+		$document = Plugin::elementor()->documents->get( $post_id, false );
+
+		if ( ! $document ) {
+			return false;
+		}
+
+		$count = 0;
+		$posts_widgets = $this->get_widgets_that_support_pagination();
+
+		Plugin::elementor()->db->iterate_data(
+			$document->get_elements_data(),
+			function ( $element ) use ( &$count, $posts_widgets ) {
+				if ( $this->is_valid_post_widget( $element, $posts_widgets ) ) {
+					$count++;
+				}
+			}
+		);
+
+		return $count >= 2;
+	}
+
 	/**
 	 * @return void
 	 */

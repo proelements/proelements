@@ -177,6 +177,80 @@ const CustomCss = () => {
 
 /***/ }),
 
+/***/ "./packages/packages/pro/editor-editing-panel-extended/src/controls/number-range-control.tsx":
+/*!***************************************************************************************************!*\
+  !*** ./packages/packages/pro/editor-editing-panel-extended/src/controls/number-range-control.tsx ***!
+  \***************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NumberRangeControl: function() { return /* binding */ NumberRangeControl; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-controls */ "@elementor/editor-controls");
+/* harmony import */ var _elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _elementor_editor_props__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elementor/editor-props */ "@elementor/editor-props");
+/* harmony import */ var _elementor_editor_props__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_props__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _elementor_ui__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
+/* harmony import */ var _elementor_ui__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+
+
+
+
+const RangeField = ({
+  bind,
+  label
+}) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__.PropKeyProvider, {
+  bind: bind
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+  container: true,
+  alignItems: "center"
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+  item: true,
+  xs: 6
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__.ControlFormLabel, null, label)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+  item: true,
+  xs: 6
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__.NumberControl, {
+  min: 0,
+  step: 1
+}))));
+const NumberRangeControl = (0,_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__.createControl)(props => {
+  const minLabel = props.minLabel ?? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Min', 'elementor-pro');
+  const maxLabel = props.maxLabel ?? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Max', 'elementor-pro');
+  const errorMessage = props.errorMessage ?? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Minimum value cannot be greater than maximum value.', 'elementor-pro');
+  const {
+    value,
+    setValue,
+    ...propContext
+  } = (0,_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__.useBoundProp)(_elementor_editor_props__WEBPACK_IMPORTED_MODULE_2__.numberRangePropTypeUtil);
+  const min = _elementor_editor_props__WEBPACK_IMPORTED_MODULE_2__.numberPropTypeUtil.extract(value?.min);
+  const max = _elementor_editor_props__WEBPACK_IMPORTED_MODULE_2__.numberPropTypeUtil.extract(value?.max);
+  const showError = typeof min === 'number' && typeof max === 'number' && max < min;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_editor_controls__WEBPACK_IMPORTED_MODULE_1__.PropProvider, _extends({}, propContext, {
+    value: value,
+    setValue: setValue
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__.Stack, {
+    gap: 1
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RangeField, {
+    bind: "min",
+    label: minLabel
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RangeField, {
+    bind: "max",
+    label: maxLabel
+  }), showError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_elementor_ui__WEBPACK_IMPORTED_MODULE_3__.FormHelperText, {
+    error: true
+  }, errorMessage)));
+});
+
+/***/ }),
+
 /***/ "./packages/packages/pro/editor-editing-panel-extended/src/init.ts":
 /*!*************************************************************************!*\
   !*** ./packages/packages/pro/editor-editing-panel-extended/src/init.ts ***!
@@ -198,7 +272,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @elementor/license-api */ "@elementor/license-api");
 /* harmony import */ var _elementor_license_api__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_elementor_license_api__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_custom_css_section__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/custom-css-section */ "./packages/packages/pro/editor-editing-panel-extended/src/components/custom-css-section.tsx");
-/* harmony import */ var _transformers_settings_attributes_transformer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./transformers/settings/attributes-transformer */ "./packages/packages/pro/editor-editing-panel-extended/src/transformers/settings/attributes-transformer.ts");
+/* harmony import */ var _controls_number_range_control__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./controls/number-range-control */ "./packages/packages/pro/editor-editing-panel-extended/src/controls/number-range-control.tsx");
+/* harmony import */ var _transformers_settings_attributes_transformer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./transformers/settings/attributes-transformer */ "./packages/packages/pro/editor-editing-panel-extended/src/transformers/settings/attributes-transformer.ts");
+
 
 
 
@@ -207,9 +283,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 async function init() {
-  _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_0__.settingsTransformersRegistry.register('attributes', _transformers_settings_attributes_transformer__WEBPACK_IMPORTED_MODULE_6__.proAttributesTransformer);
+  _elementor_editor_canvas__WEBPACK_IMPORTED_MODULE_0__.settingsTransformersRegistry.register('attributes', _transformers_settings_attributes_transformer__WEBPACK_IMPORTED_MODULE_7__.proAttributesTransformer);
   _elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_2__.controlsRegistry.register('attributes', _elementor_editor_controls_extended__WEBPACK_IMPORTED_MODULE_1__.AttributesControl, 'full', _elementor_editor_props__WEBPACK_IMPORTED_MODULE_3__.keyValuePropTypeUtil);
   _elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_2__.controlsRegistry.register('options', _elementor_editor_controls_extended__WEBPACK_IMPORTED_MODULE_1__.OptionsControl, 'full', _elementor_editor_props__WEBPACK_IMPORTED_MODULE_3__.keyValuePropTypeUtil);
+  _elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_2__.controlsRegistry.register('number-range', _controls_number_range_control__WEBPACK_IMPORTED_MODULE_6__.NumberRangeControl, 'custom', _elementor_editor_props__WEBPACK_IMPORTED_MODULE_3__.numberRangePropTypeUtil);
   const features = await (0,_elementor_license_api__WEBPACK_IMPORTED_MODULE_4__.fetchTierFeatures)().catch(() => []);
   if (features.includes('atomic-custom-css')) {
     (0,_elementor_editor_editing_panel__WEBPACK_IMPORTED_MODULE_2__.injectIntoStyleTab)({

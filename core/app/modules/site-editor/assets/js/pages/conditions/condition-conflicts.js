@@ -20,7 +20,7 @@ export default function ConditionConflicts( props ) {
 		<Text className="e-site-editor-conditions__conflict" variant="sm">
 			{
 				sprintf(
-					/* Translators: %s: a list of conflicted templates */
+					/* translators: %s: a list of conflicted templates */
 					__( 'We noticed that you already applied %s with the same condition.', 'elementor-pro' ),
 					conflictLinks,
 				)

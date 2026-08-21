@@ -19,7 +19,7 @@ class Max_Count_Validator implements Validator {
 		}
 
 		return sprintf(
-			/* translators: %d: maximum number of files. */
+			/* translators: %d: Maximum number of allowed files. */
 			_n( 'You can upload only %d file.', 'You can upload only %d files.', $this->max, 'elementor-pro' ),
 			$this->max
 		);

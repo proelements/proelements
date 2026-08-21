@@ -66,6 +66,7 @@ class Facebook_Page extends Base_Widget {
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
 				'content' => sprintf(
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'Facebook page embedding is exclusively available for the web, mobile devices are not supported. %1$sLearn more%2$s', 'elementor-pro' ),
 					sprintf( '<a href="%s" target="_blank">', Facebook_SDK_Manager::FACEBOOK_PLUGINS_FAQ_URL ),
 					'</a>'

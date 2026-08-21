@@ -100,6 +100,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 	}
 
 	protected function get_default_children_title() {
+		/* translators: %d: Slide number. */
 		return esc_html__( 'Slide #%d', 'elementor-pro' );
 	}
 

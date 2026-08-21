@@ -91,6 +91,7 @@ class File_Upload extends Atomic_Widget_Base {
 		return [
 			Section::make()
 				->set_label( __( 'Content', 'elementor-pro' ) )
+				->set_id( 'content' )
 				->set_items( [
 					Attachment_Type_Control::bind_to( 'attachment-type' )
 						->set_label( __( 'Send file', 'elementor-pro' ) )

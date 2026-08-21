@@ -4133,14 +4133,18 @@ class Checkout extends Base_Widget {
 	 * @return boolean
 	 */
 	private function should_render_coupon() {
+		if ( ! wc_coupons_enabled() ) {
+			return false;
+		}
+
 		$settings = $this->get_settings_for_display();
 		$coupon_display_control = true;
 
-		if ( '' === $settings['coupon_section_display'] ) {
+		if ( isset( $settings['coupon_section_display'] ) && '' === $settings['coupon_section_display'] ) {
 			$coupon_display_control = false;
 		}
 
-		return ( WC()->cart->needs_payment() || Plugin::elementor()->editor->is_edit_mode() ) && wc_coupons_enabled() && $coupon_display_control;
+		return ( WC()->cart->needs_payment() || Plugin::elementor()->editor->is_edit_mode() ) && $coupon_display_control;
 	}
 
 	/**

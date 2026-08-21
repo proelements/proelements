@@ -61,6 +61,37 @@ class Nav_Menu extends Base_Widget {
 		return [ 'widget-nav-menu' ];
 	}
 
+	/**
+	 * @param array<string, mixed> $submenu_icon
+	 */
+	private function enqueue_submenu_icon_library( array $submenu_icon ): void {
+		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			return;
+		}
+
+		$library = $submenu_icon['library'] ?? '';
+
+		if ( '' === $library ) {
+			return;
+		}
+
+		$handle = $this->get_icon_library_style_handle( $library );
+
+		if ( '' !== $handle && wp_style_is( $handle, 'registered' ) ) {
+			wp_enqueue_style( $handle );
+		}
+	}
+
+	private function get_icon_library_style_handle( string $library ): string {
+		$tabs = Icons_Manager::get_icon_manager_tabs();
+
+		if ( ! isset( $tabs[ $library ]['name'] ) ) {
+			return '';
+		}
+
+		return 'elementor-icons-' . $tabs[ $library ]['name'];
+	}
+
 	protected function get_nav_menu_index() {
 		return $this->nav_menu_index++;
 	}
@@ -353,7 +384,7 @@ class Nav_Menu extends Base_Widget {
 			}
 
 			$dropdown_options[ $breakpoint_key ] = sprintf(
-				/* translators: 1: Breakpoint label, 2: `>` character, 3: Breakpoint value. */
+				/* translators: 1: Breakpoint label, 2: Comparison operator, 3: Breakpoint value in pixels. */
 				esc_html__( '%1$s (%2$s %3$dpx)', 'elementor-pro' ),
 				$breakpoint_instance->get_label(),
 				'>',
@@ -1426,25 +1457,16 @@ class Nav_Menu extends Base_Widget {
 	public function get_frontend_settings() {
 		$frontend_settings = parent::get_frontend_settings();
 
-		// If the saved value is FA4, but the user has upgraded to FA5, the value needs to be converted to FA5.
-		if ( 'fa ' === substr( $frontend_settings['submenu_icon']['value'], 0, 3 ) && Icons_Manager::is_migration_allowed() ) {
-			$frontend_settings['submenu_icon']['value'] = str_replace( 'fa ', 'fas ', $frontend_settings['submenu_icon']['value'] );
+		$submenu_icon = $frontend_settings['submenu_icon'] ?? [];
+
+		if ( ! is_array( $submenu_icon ) ) {
+			$submenu_icon = [];
 		}
 
-		// Determine the submenu icon markup.
-		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
-			$icon_classes = [ 'aria-hidden' => 'true' ];
-
-			if ( false !== strpos( $frontend_settings['submenu_icon']['value'], 'chevron-down' ) ) {
-				$icon_classes['class'] = 'fa-svg-chevron-down';
-			}
-
-			$icon_content = Icons_Manager::render_font_icon( $frontend_settings['submenu_icon'], $icon_classes );
-		} else {
-			$icon_content = sprintf( '<i class="%s" aria-hidden="true"></i>', esc_attr( $frontend_settings['submenu_icon']['value'] ) );
-		}
+		$icon_content = $this->build_submenu_indicator_markup( $submenu_icon );
 
 		// Passing the entire icon markup to the frontend settings because it can be either <i> or <svg> tag.
+		$frontend_settings['submenu_icon'] = $submenu_icon;
 		$frontend_settings['submenu_icon']['value'] = $icon_content;
 
 		return $frontend_settings;
@@ -1478,6 +1500,29 @@ class Nav_Menu extends Base_Widget {
 		add_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
 		add_filter( 'nav_menu_item_id', '__return_empty_string' );
 
+		$submenu_icon = $settings['submenu_icon'] ?? [];
+
+		if ( ! is_array( $submenu_icon ) ) {
+			$submenu_icon = [];
+		}
+
+		$this->enqueue_submenu_icon_library( $submenu_icon );
+
+		$submenu_indicator_markup = $this->build_submenu_indicator_markup( $submenu_icon );
+		$append_submenu_indicator = null;
+
+		if ( '' !== $submenu_indicator_markup ) {
+			$append_submenu_indicator = static function ( $title, $item ) use ( $submenu_indicator_markup ) {
+				if ( ! in_array( 'menu-item-has-children', $item->classes, true ) ) {
+					return $title;
+				}
+
+				return $title . '<span class="sub-arrow">' . $submenu_indicator_markup . '</span>';
+			};
+
+			add_filter( 'nav_menu_item_title', $append_submenu_indicator, 10, 2 );
+		}
+
 		// General Menu.
 		$menu_html = wp_nav_menu( $args );
 
@@ -1491,6 +1536,10 @@ class Nav_Menu extends Base_Widget {
 		remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_tabindex' ] );
 		remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
 		remove_filter( 'nav_menu_item_id', '__return_empty_string' );
+
+		if ( $append_submenu_indicator ) {
+			remove_filter( 'nav_menu_item_title', $append_submenu_indicator, 10 );
+		}
 
 		if ( empty( $menu_html ) ) {
 			return;
@@ -1697,6 +1746,34 @@ class Nav_Menu extends Base_Widget {
 	 *
 	 * @return array
 	 */
+	/**
+	 * @param array<string, mixed> $submenu_icon
+	 */
+	private function build_submenu_indicator_markup( array $submenu_icon ): string {
+		$value = $submenu_icon['value'] ?? '';
+
+		if ( '' === $value ) {
+			return '';
+		}
+
+		if ( 'fa ' === substr( $value, 0, 3 ) && Icons_Manager::is_migration_allowed() ) {
+			$value = str_replace( 'fa ', 'fas ', $value );
+			$submenu_icon['value'] = $value;
+		}
+
+		if ( Plugin::elementor()->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			$icon_classes = [ 'aria-hidden' => 'true' ];
+
+			if ( false !== strpos( $value, 'chevron-down' ) ) {
+				$icon_classes['class'] = 'fa-svg-chevron-down';
+			}
+
+			return Icons_Manager::render_font_icon( $submenu_icon, $icon_classes );
+		}
+
+		return sprintf( '<i class="%s" aria-hidden="true"></i>', esc_attr( $value ) );
+	}
+
 	public static function on_import_update_dynamic_content( array $element_config, array $data, $controls = null ) : array {
 		$old_menu_id = $element_config['settings']['menu_id'] ?? 0;
 

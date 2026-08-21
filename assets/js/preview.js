@@ -1,4 +1,4 @@
-/*! pro-elements - v4.1.0 - 26-05-2026 */
+/*! pro-elements - v4.2.0 - 19-08-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -91,7 +91,7 @@ function createHandleElement({
   title,
   onClick
 }, context, element = null) {
-  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : __('Edit %s', 'elementor-pro');
+  const handleTitle = ['header', 'footer'].includes(element?.dataset.elementorType) ? '%s' : /* translators: %s: Item title. */__('Edit %s', 'elementor-pro');
   const innerElement = createElement({
     tag: 'div',
     classNames: [`${EDIT_HANDLE_CLASS_NAME}__inner`],
@@ -101,7 +101,7 @@ function createHandleElement({
     }), createElement({
       tag: 'div',
       classNames: [`${EDIT_CONTEXT === context ? EDIT_HANDLE_CLASS_NAME : SAVE_HANDLE_CLASS_NAME}__title`],
-      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : __('Save %s', 'elementor-pro').replace('%s', title))]
+      children: [document.createTextNode(EDIT_CONTEXT === context ? handleTitle.replace('%s', title) : /* translators: %s: Document title. */__('Save %s', 'elementor-pro').replace('%s', title))]
     })]
   });
   const classNames = [EDIT_HANDLE_CLASS_NAME];

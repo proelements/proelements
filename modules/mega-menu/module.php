@@ -49,6 +49,7 @@ class Module extends Module_Base {
 			'name' => static::EXPERIMENT_NAME,
 			'title' => esc_html__( 'Menu', 'elementor-pro' ),
 			'description' => sprintf(
+				/* translators: 1: Link opening tag, 2: Link closing tag. */
 				esc_html__( 'Create beautiful menus and mega menus with new nested capabilities. Mega menus are ideal for websites with complex navigation structures and unique designs. %1$sLearn More%2$s', 'elementor-pro' ),
 				'<a href="https://go.elementor.com/wp-dash-mega-menu/" target="_blank">',
 				'</a>'

@@ -1724,7 +1724,8 @@ span.font-variations-count {
   /* No variable was used since this color comes from wordpress */
   color: #0073aa;
 }
-.post-conditions .eps-modal {
+
+.e-custom-code-conditions-modal .eps-modal {
   position: relative;
   background: #f1f3f5;
   max-width: 1200px;
@@ -1733,31 +1734,31 @@ span.font-variations-count {
   height: 90vh;
   margin: auto;
 }
-.post-conditions .eps-modal .eps-modal__body {
+.e-custom-code-conditions-modal .eps-modal .eps-modal__body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
-.post-conditions .eps-modal .eps-h1 {
+.e-custom-code-conditions-modal .eps-modal .eps-h1 {
   font-size: 30px;
   font-weight: 300;
 }
-.post-conditions .eps-modal .eps-text {
+.e-custom-code-conditions-modal .eps-modal .eps-text {
   font-size: 18px;
   line-height: 150%;
   margin: 1em 0;
   color: #9DA5AE;
 }
-.post-conditions .eps-modal .eps-grid-container {
+.e-custom-code-conditions-modal .eps-modal .eps-grid-container {
   width: auto;
 }
-.post-conditions .eps-modal__header {
+.e-custom-code-conditions-modal .eps-modal__header {
   background: #ffffff;
   color: #1f2124;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   padding: 2px 15px;
 }
-.post-conditions .eps-modal__header .eps-app__logo {
+.e-custom-code-conditions-modal .eps-modal__header .eps-app__logo {
   width: 1.75rem;
   height: 1.75rem;
   line-height: 1.75rem;
@@ -1767,7 +1768,7 @@ span.font-variations-count {
   color: #ffffff;
   background-color: #93003F;
 }
-.post-conditions .eps-modal__header .eps-text {
+.e-custom-code-conditions-modal .eps-modal__header .eps-text {
   /* Didn't find better solution */
   position: relative;
   top: 2px;
@@ -1776,55 +1777,48 @@ span.font-variations-count {
   text-transform: uppercase;
   color: #6d7882;
 }
-.post-conditions .eps-modal__header .eps-button {
+.e-custom-code-conditions-modal .eps-modal__header .eps-button {
   font-size: 18px;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__header {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__header {
   padding-block-start: 5vh;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows {
   overflow-y: auto;
   max-height: 30vh;
   margin: 0 auto;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows:empty {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows:empty {
   margin-block-end: 30px;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows:not(:empty) {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows:not(:empty) {
   margin-block-end: 20px;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row {
   margin-block-start: 15px;
   padding: 0 14px;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls {
   border-radius: 0;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select {
   text-transform: none;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select:focus {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select:focus {
   box-shadow: none;
   border: none;
   color: inherit;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select:hover {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls select:hover {
   color: inherit;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls .e-site-editor-conditions__input-wrapper--condition-type select:hover, .post-conditions .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls .e-site-editor-conditions__input-wrapper--condition-type select:focus {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls .e-site-editor-conditions__input-wrapper--condition-type select:hover, .e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows .e-site-editor-conditions__row-controls .e-site-editor-conditions__input-wrapper--condition-type select:focus {
   color: #ffffff;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__add-button {
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__add-button {
   margin-block-start: 0;
 }
-.post-conditions .eps-modal .e-site-editor-conditions__footer {
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 1000;
+.e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__footer {
   border-block-start: 1px solid #d5dadf;
 }
 
@@ -1946,26 +1940,26 @@ span.font-variations-count {
 }
 
 @media (max-width: 850px), (max-height: 825px) {
-  .post-conditions .eps-modal {
+  .e-custom-code-conditions-modal .eps-modal {
     width: 100vw;
     height: 90vh;
   }
-  .post-conditions .eps-modal .e-site-editor-conditions__header {
+  .e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__header {
     padding-block-start: 0;
   }
-  .post-conditions .eps-modal .e-site-editor-conditions__rows {
+  .e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__rows {
     max-height: 30vh;
   }
-  .post-conditions .eps-modal .e-site-editor-conditions__header-image {
+  .e-custom-code-conditions-modal .eps-modal .e-site-editor-conditions__header-image {
     margin: 0 auto;
   }
 }
 @media (max-width: 590px), (max-height: 666px) {
-  .post-conditions .eps-modal .eps-modal__body {
+  .e-custom-code-conditions-modal .eps-modal .eps-modal__body {
     overflow: auto;
     height: calc(100vh - 200px);
   }
-  .post-conditions .eps-modal .eps-modal__body .e-site-editor-conditions__footer {
+  .e-custom-code-conditions-modal .eps-modal .eps-modal__body .e-site-editor-conditions__footer {
     background: #f1f3f5;
   }
 }

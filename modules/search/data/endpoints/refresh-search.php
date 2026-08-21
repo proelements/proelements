@@ -38,6 +38,8 @@ class Refresh_Search extends Refresh_Base {
 		/** @var Widget_Base $widget_instance */
 		$widget_instance->set_search_term( $data['search_term'] );
 		$widget_instance->set_page_number( $data['page_number'] ?? 1 );
+		$widget_instance->set_breakpoint( isset( $data['breakpoint'] ) ? $data['breakpoint'] : null );
+
 		$widget_instance->render_results();
 
 		$markup = ob_get_clean();
@@ -89,6 +91,12 @@ class Refresh_Search extends Refresh_Base {
 
 							return $this->is_widget_model_valid( $param );
 						},
+					],
+					'breakpoint' => [
+						'description' => 'Active Elementor responsive device key (e.g. mobile, tablet, desktop).',
+						'type' => 'string',
+						'required' => false,
+						'sanitize_callback' => 'sanitize_key',
 					],
 				],
 				'methods' => \WP_REST_Server::CREATABLE,

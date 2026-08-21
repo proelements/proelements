@@ -31,6 +31,7 @@ trait Query_Note_Trait {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => sprintf(
+					/* translators: %s: Settings link. */
 					esc_html__( 'The amount of items displayed in your Archive is set in your WordPress settings. %s', 'elementor-pro' ),
 					'<a target="_blank" href="' . esc_url( $archive_setting_url ) . '">' . esc_html__( 'Take me there', 'elementor-pro' ) . '</a>'
 				),

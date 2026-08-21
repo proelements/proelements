@@ -3,8 +3,7 @@ namespace ElementorPro\Modules\LoopBuilder\Documents;
 
 use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
-use ElementorPro\Modules\LoopBuilder\Files\Css\Loop as Loop_CSS;
-use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Preview;
+use ElementorPro\Modules\LoopBuilder\Files\Css\Loop_Css_Printer;
 use ElementorPro\Modules\QueryControl\Module as QueryModule;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Core\Utils;
@@ -258,13 +257,7 @@ class Loop extends Theme_Document {
 	}
 
 	private function enqueue_loop_css() {
-		if ( $this->is_autosave() ) {
-			$css_file = Loop_Preview::create( $this->post->ID );
-		} else {
-			$css_file = Loop_CSS::create( $this->post->ID );
-		}
-
-		$css_file->print_all_css( $this->post->ID );
+		Loop_Css_Printer::print_for_post( $this->post->ID, $this->is_autosave() );
 	}
 
 	/**

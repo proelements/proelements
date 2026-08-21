@@ -65,6 +65,7 @@ class Time_Picker extends Atomic_Widget_Base {
 		return [
 			Section::make()
 				->set_label( __( 'Content', 'elementor-pro' ) )
+				->set_id( 'content' )
 				->set_items( [
 					Time_Range_Control::bind_to( 'min_max' )
 						->set_meta( [

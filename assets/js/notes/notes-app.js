@@ -2243,7 +2243,7 @@ function PanelNoteItem(props) {
     muted: props.note.isResolved
   }, props.note.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(ContentCol, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Title, null, props.note.author.name, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Date, null, props.note.getFormattedCreatedAt())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(NoteContent, {
     disableInteractions: true
-  }, noteContent), props.note.repliesCount > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(RepliesCount, null, __('%s replies', 'elementor-pro').replace('%s', props.note.repliesCount))));
+  }, noteContent), props.note.repliesCount > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(RepliesCount, null, /* translators: %s: Number of replies. */__('%s replies', 'elementor-pro').replace('%s', props.note.repliesCount))));
 }
 PanelNoteItem.propTypes = {
   note: PropTypes.instanceOf(_models_note__WEBPACK_IMPORTED_MODULE_1__["default"]).isRequired,
@@ -4256,8 +4256,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-draggable */ "../../../node_modules/react-draggable/build/cjs/cjs.js");
-/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_draggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-draggable */ "../../../node_modules/react-draggable/build/cjs/cjs.mjs");
 /* harmony import */ var _hooks_use_debounced_callback__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../hooks/use-debounced-callback */ "../assets/js/app/hooks/use-debounced-callback.js");
 /* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./panel */ "../assets/js/app/components/ui/panel/panel.js");
 /* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../../../node_modules/prop-types/index.js");
@@ -4340,7 +4339,7 @@ function PanelDraggable(props) {
       window.removeEventListener('resize', calculateBounds);
     };
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react_draggable__WEBPACK_IMPORTED_MODULE_1___default()), {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_draggable__WEBPACK_IMPORTED_MODULE_1__["default"], {
     handle: props.handleClass,
     defaultPosition: props.defaultPosition,
     nodeRef: props.nodeRef,

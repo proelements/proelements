@@ -104,7 +104,11 @@ class Utils {
 			$url = get_post_type_archive_link( get_post_type() );
 		}
 
-		return $url;
+		if ( ! is_wp_error( $url ) ) {
+			return $url;
+		}
+
+		return '';
 	}
 
 	public static function get_page_title( $include_context = true ) {
@@ -424,7 +428,16 @@ class Utils {
 
 	public static function create_widget_instance_from_db( $post_id, $widget_id ) {
 		$document = Plugin::elementor()->documents->get( $post_id );
+
+		if ( ! $document ) {
+			return null;
+		}
+
 		$widget_data = \Elementor\Utils::find_element_recursive( $document->get_elements_data(), $widget_id );
+
+		if ( empty( $widget_data ) ) {
+			return null;
+		}
 
 		return Plugin::elementor()->elements_manager->create_element_instance( $widget_data );
 	}

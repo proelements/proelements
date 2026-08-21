@@ -1,8 +1,9 @@
 <?php
 namespace ElementorPro\Modules\DynamicTags\Tags;
 
-use ElementorPro\Modules\DynamicTags\Tags\Base\Pro_Tag;
 use ElementorPro\Modules\DynamicTags\Module;
+use ElementorPro\Modules\DynamicTags\Tags\Base\Pro_Tag;
+use ElementorPro\Modules\LoopBuilder\Providers\Taxonomy_Loop_Provider;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -39,7 +40,10 @@ class Archive_Meta extends Pro_Tag {
 
 		$value = '';
 
-		if ( is_category() || is_tax() ) {
+		if ( Taxonomy_Loop_Provider::is_loop_taxonomy_strict() ) {
+			global $wp_query;
+			$value = get_term_meta( $wp_query->loop_term->term_id, $key, true );
+		} elseif ( is_category() || is_tax() ) {
 			$value = get_term_meta( get_queried_object_id(), $key, true );
 		} elseif ( is_author() ) {
 			$value = get_user_meta( get_queried_object_id(), $key, true );

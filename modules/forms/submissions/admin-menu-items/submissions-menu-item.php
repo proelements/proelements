@@ -78,10 +78,10 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 		}
 
 		if ( $one_subscription ) {
-			$title = esc_html__( 'Get your emails delivered with Site Mailer', 'elementor-pro' );
+			$title = esc_html__( 'Get your emails delivered with Email Deliverability', 'elementor-pro' );
 
 			if ( ! $is_installed ) {
-				$description = esc_html__( 'Ensure form submission emails reach the inbox and track delivery with built-in logs. Site Mailer is included in your ONE subscription.', 'elementor-pro' );
+				$description = esc_html__( 'Ensure form submission emails reach the inbox and track delivery with built-in logs. Email Deliverability is included in your ONE subscription.', 'elementor-pro' );
 				$button_text = esc_html__( 'Install now', 'elementor-pro' );
 				$button_url = Hints::get_plugin_install_url( $plugin_slug );
 				$campaign_data = [
@@ -91,7 +91,7 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 					'medium' => 'wp-dash-one',
 				];
 			} elseif ( ! $is_active ) {
-				$description = esc_html__( 'Ensure form submission emails reach the inbox and track delivery with built-in logs. Site Mailer is included in your ONE subscription. Activate it to continue.', 'elementor-pro' );
+				$description = esc_html__( 'Ensure form submission emails reach the inbox and track delivery with built-in logs. Email Deliverability is included in your ONE subscription. Activate it to continue.', 'elementor-pro' );
 				$button_text = esc_html__( 'Activate now', 'elementor-pro' );
 				$button_url = Hints::get_plugin_action_url( $plugin_slug );
 				$campaign_data = [
@@ -102,7 +102,7 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 				];
 			}
 		} else {
-			$title = esc_html__( 'Get Your Emails Delivered With Site Mailer', 'elementor-pro' );
+			$title = esc_html__( 'Get Your Emails Delivered With Email Deliverability', 'elementor-pro' );
 			$description = esc_html__( 'Make sure emails reach the inbox every time with improved deliverability, detailed email logs, and an easy setup with no need for an SMTP plugin.', 'elementor-pro' );
 
 			if ( ! $is_installed ) {

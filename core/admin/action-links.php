@@ -16,7 +16,7 @@ class Action_Links {
 			$go_advanced_text = esc_html__( 'Get Advanced Features', 'elementor-pro' );
 
 			if ( Utils::is_sale_time() ) {
-				$go_advanced_text = esc_html__( 'Discounted Upgrades Now!', 'elementor-pro' );
+				$go_advanced_text = esc_html__( 'Sale! Upgrade Now', 'elementor-pro' );
 			}
 
 			$links['go_advanced'] = sprintf( '<a href="%1$s" target="_blank" class="elementor-plugins-gopro">%2$s</a>', 'https://go.elementor.com/go-pro-advanced-plugins-screen/', $go_advanced_text );

@@ -1,4 +1,4 @@
-/*! pro-elements - v4.1.0 - 26-05-2026 */
+/*! pro-elements - v4.2.0 - 19-08-2026 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["jszip.vendor"],{
 
 /***/ "../node_modules/jszip/dist/jszip.min.js"

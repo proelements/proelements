@@ -17,7 +17,9 @@ use Elementor\Core\Documents_Manager;
 use Elementor\Settings;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
+use ElementorPro\Modules\Woocommerce\CollectionLoop\Product_Template_Type;
 use ElementorPro\Modules\Woocommerce\Widgets\Products as Products_Widget;
+use ElementorPro\Modules\CollectionLoop\Query\TemplateTypes\Template_Type_Registry;
 use Elementor\Icons_Manager;
 use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
 use ElementorPro\License\API;
@@ -840,6 +842,14 @@ class Module extends Module_Base {
 		$this->add_products_to_options( $form, '_elementor_source' );
 	}
 
+	public function register_collection_loop_template_types( Template_Type_Registry $registry ): void {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
+		$registry->register( new Product_Template_Type() );
+	}
+
 	public function add_products_type_to_loop_settings_query( $form ) {
 		$this->add_products_to_options( $form, 'source' );
 	}
@@ -1383,6 +1393,8 @@ class Module extends Module_Base {
 
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'add_products_type_to_template_popup' ], 11 );
 		add_action( 'elementor-pro/modules/loop-builder/documents/loop/query_settings', [ $this, 'add_products_type_to_loop_settings_query' ], 11 );
+
+		add_action( Template_Type_Registry::REGISTER_ACTION, [ $this, 'register_collection_loop_template_types' ] );
 
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'add_products_taxonomy_type_to_template_popup' ], 13 );
 		add_action( 'elementor-pro/modules/loop-builder/documents/loop/query_settings', [ $this, 'add_products_taxonomy_type_to_loop_settings_query' ], 13 );

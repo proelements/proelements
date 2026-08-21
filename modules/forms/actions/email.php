@@ -245,7 +245,7 @@ class Email extends Action_Base {
 
 		if ( $one_subscription ) {
 			if ( ! $is_installed ) {
-				$notice_content = esc_html__( 'Make sure your site’s emails reach the inbox every time. Site Mailer is included in your ONE subscription.', 'elementor-pro' );
+				$notice_content = esc_html__( 'Make sure your site’s emails reach the inbox every time. Email Deliverability is included in your ONE subscription.', 'elementor-pro' );
 				$button_text = esc_html__( 'Install now', 'elementor-pro' );
 				$button_url = Hints::get_plugin_install_url( $plugin_slug );
 				$campaign_data = [
@@ -255,7 +255,7 @@ class Email extends Action_Base {
 					'medium' => 'wp-dash-one',
 				];
 			} elseif ( ! $is_active ) {
-				$notice_content = esc_html__( 'Ensure your site’s emails reach the inbox every time. Site Mailer is included in your ONE subscription. Activate it to continue.', 'elementor-pro' );
+				$notice_content = esc_html__( 'Ensure your site’s emails reach the inbox every time. Email Deliverability is included in your ONE subscription. Activate it to continue.', 'elementor-pro' );
 				$button_text = esc_html__( 'Activate now', 'elementor-pro' );
 				$button_url = Hints::get_plugin_activate_url( $plugin_slug );
 				$campaign_data = [
@@ -266,10 +266,10 @@ class Email extends Action_Base {
 				];
 			}
 		} else {
-			$notice_content = esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Site Mailer.', 'elementor-pro' );
+			$notice_content = esc_html__( 'Experiencing email deliverability issues? Get your emails delivered with Email Deliverability.', 'elementor-pro' );
 
 			if ( 2 === Utils\Abtest::get_variation( 'plg_site_mailer_submission' ) ) {
-				$notice_content = esc_html__( 'Make sure your emails reach the inbox every time with Site Mailer.', 'elementor-pro' );
+				$notice_content = esc_html__( 'Make sure your emails reach the inbox every time with Email Deliverability.', 'elementor-pro' );
 			}
 
 			if ( ! $is_installed ) {
@@ -379,6 +379,30 @@ class Email extends Action_Base {
 		if ( ! empty( $email_meta ) ) {
 			$fields['email_content'] .= $line_break . '---' . $line_break . $line_break . $email_meta;
 		}
+
+		/**
+		 * Email fields.
+		 *
+		 * Filters all email fields (to, cc, bcc, subject, content, from, etc.)
+		 * before they are used to build headers and send the email. This hook
+		 * allows developers to modify any email parameter in one place.
+		 *
+		 * @since 4.0.3
+		 *
+		 * @param array       $fields {
+		 *     Email field values.
+		 *
+		 *     @type string $email_to        Recipient address(es).
+		 *     @type string $email_subject   Email subject line.
+		 *     @type string $email_content   Email body content.
+		 *     @type string $email_from_name Sender name.
+		 *     @type string $email_from      Sender email address.
+		 *     @type string $email_to_cc     CC address(es).
+		 *     @type string $email_to_bcc    BCC address(es).
+		 * }
+		 * @param Form_Record $record An instance of the form record.
+		 */
+		$fields = apply_filters( 'elementor_pro/forms/wp_mail_fields', $fields, $record );
 
 		$headers = sprintf( 'From: %s <%s>' . "\r\n", $fields['email_from_name'], $fields['email_from'] );
 		$headers .= sprintf( 'Reply-To: %s' . "\r\n", $email_reply_to );

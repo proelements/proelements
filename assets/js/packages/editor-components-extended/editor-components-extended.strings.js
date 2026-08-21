@@ -32,7 +32,7 @@ __( 'Update', 'elementor-pro' );
 __( 'Enter value', 'elementor-pro' );
 __( 'Overridable property', 'elementor-pro' );
 __( 'Make prop overridable', 'elementor-pro' );
-/* translators: %s: component name. */
+/* translators: %s: Item title. */
 __( 'Edit %s', 'elementor-pro' );
 __( 'Exit component editing mode', 'elementor-pro' );
 __( 'Component created successfully.', 'elementor-pro' );

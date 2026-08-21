@@ -49,13 +49,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div class="elementor-template-library-blank-title">
 		{{ wp.i18n.sprintf(
-			'<?php echo esc_html__( 'Where do you want to display your %s?', 'elementor-pro' ); ?>',
+			'<?php /* translators: %s: Document type title. */ echo esc_html__( 'Where do you want to display your %s?', 'elementor-pro' ); ?>',
 			elementor.config.document.post_type_title
 		) }}
 	</div>
 	<div class="elementor-template-library-blank-message">
 		{{ wp.i18n.sprintf(
-			'<?php echo esc_html__( 'Set the conditions that determine where your %s is used throughout your site.', 'elementor-pro' ); ?>',
+			'<?php /* translators: %s: Document type title. */ echo esc_html__( 'Set the conditions that determine where your %s is used throughout your site.', 'elementor-pro' ); ?>',
 			elementor.config.document.post_type_title
 		) }}
 

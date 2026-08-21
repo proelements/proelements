@@ -152,6 +152,7 @@ class Module extends Module_Base {
 			'anchor_offset_description',
 			[
 				'raw' => sprintf(
+					/* translators: 1: Link opening tag, 2: Link closing tag. */
 					esc_html__( 'Using the Anchor offset may require you to adjust the offset of other sticky elements. %1$s Learn more %2$s', 'elementor-pro' ),
 					'<a href="https://elementor.com/help/sticky-headers/" target="_blank">',
 					'</a>'

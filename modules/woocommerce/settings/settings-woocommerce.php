@@ -844,6 +844,7 @@ class Settings_Woocommerce extends Tab_Base {
 	public function get_notices_promotion_data() {
 		return [
 			'title' => sprintf(
+				/* translators: %s: Line break HTML. */
 				esc_html__( 'Say hello to %s WooCommerce notices!', 'elementor-pro' ),
 				'<br />'
 			),
@@ -860,6 +861,7 @@ class Settings_Woocommerce extends Tab_Base {
 	private function get_pages_promotion_data(): array {
 		return [
 			'title' => sprintf(
+				/* translators: %s: Line break HTML. */
 				esc_html__( 'Say hello to %s WooCommerce pages!', 'elementor-pro' ),
 				'<br />'
 			),

@@ -129,8 +129,8 @@ class Post_Info extends Base {
 					'date_format' => 'custom',
 				],
 				'description' => sprintf(
-					/* translators: %s: Allowed data letters (see: http://php.net/manual/en/function.date.php). */
-					esc_html__( 'Use the letters: %s', 'elementor-pro' ),
+					/* translators: %s: Allowed date format letters (see: http://php.net/manual/en/function.date.php). */
+					esc_html_x( 'Use the letters: %s', 'date format', 'elementor-pro' ),
 					'l D d j S F m M n Y y'
 				),
 				'ai' => [
@@ -169,8 +169,8 @@ class Post_Info extends Base {
 					'time_format' => 'custom',
 				],
 				'description' => sprintf(
-					/* translators: %s: Allowed time letters (see: http://php.net/manual/en/function.time.php). */
-					esc_html__( 'Use the letters: %s', 'elementor-pro' ),
+					/* translators: %s: Allowed time format letters (see: http://php.net/manual/en/function.time.php). */
+					esc_html_x( 'Use the letters: %s', 'time format', 'elementor-pro' ),
 					'g G H i a A'
 				),
 				'ai' => [
@@ -279,7 +279,10 @@ class Post_Info extends Base {
 			[
 				'label' => esc_html__( 'Comments', 'elementor-pro' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( '%s Comments', 'elementor-pro' ),
+				'placeholder' => esc_html(
+					/* translators: %s: Number of comments. */
+					__( '%s Comments', 'elementor-pro' )
+				),
 				'condition' => [
 					'comments_custom_strings' => 'yes',
 					'type' => 'comments',
@@ -821,7 +824,10 @@ class Post_Info extends Base {
 					$default_strings = [
 						'string_no_comments' => esc_html__( 'No Comments', 'elementor-pro' ),
 						'string_one_comment' => esc_html__( 'One Comment', 'elementor-pro' ),
-						'string_comments' => esc_html__( '%s Comments', 'elementor-pro' ),
+						'string_comments' => esc_html(
+							/* translators: %s: Number of comments. */
+							__( '%s Comments', 'elementor-pro' )
+						),
 					];
 
 					if ( 'yes' === $repeater_item['comments_custom_strings'] ) {
@@ -988,7 +994,7 @@ class Post_Info extends Base {
 						'class' => 'elementor-avatar',
 						'src' => $item_data['image'],
 						'alt' => sprintf(
-							/* translators: %s: Author name. */
+							/* translators: %s: Person name. */
 							esc_attr__( 'Picture of %s', 'elementor-pro' ),
 							$item_data['text']
 						),

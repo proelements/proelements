@@ -1616,6 +1616,11 @@ class Flip_Box extends Base_Widget {
 			}
 
 			$this->add_link_attributes( $link_element, $settings['link'] );
+		} elseif ( 'a' === $button_tag ) {
+			$this->add_render_attribute( 'button', [
+				'role' => 'button',
+				'tabindex' => '0',
+			] );
 		}
 
 		if ( 'icon' === $settings['graphic_element'] ) {

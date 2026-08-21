@@ -11,6 +11,7 @@ return [
 		'elementor-v2-core-adapter-utils',
 		'elementor-v2-editor',
 		'elementor-v2-editor-canvas',
+		'elementor-v2-editor-canvas-extended',
 		'elementor-v2-editor-components',
 		'elementor-v2-editor-controls',
 		'elementor-v2-editor-current-user',

@@ -4,7 +4,7 @@
 {% set placeholder_attribute = settings.placeholder is not empty ? 'placeholder=' ~ settings.placeholder | e('html_attr') : '' %}
 {% set required_attribute = settings.required ? 'required' : '' %}
 {% set checked_attribute = settings.checked ? 'checked' : '' %}
-{% set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? 'checkbox_' ~ settings._cssid : 'checkbox_' ~ id %}
+{% set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
 {% set name_attribute = 'name=' ~ name | e('html_attr') %}
 {% set value_attribute = settings.value is not empty ? 'value=' ~ settings.value | e('html_attr') : '' %}
 <input 

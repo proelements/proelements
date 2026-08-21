@@ -1,4 +1,4 @@
-/*! pro-elements - v4.1.0 - 26-05-2026 */
+/*! pro-elements - v4.2.0 - 19-08-2026 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -826,7 +826,7 @@ function ConditionConflicts(props) {
   return /*#__PURE__*/_react.default.createElement(_appUi.Text, {
     className: "e-site-editor-conditions__conflict",
     variant: "sm"
-  }, sprintf(/* Translators: %s: a list of conflicted templates */
+  }, sprintf(/* translators: %s: a list of conflicted templates */
   __('We noticed that you already applied %s with the same condition.', 'elementor-pro'), conflictLinks), /*#__PURE__*/_react.default.createElement("br", null), __("To continue, set different conditions for each so they don't conflict.", 'elementor-pro'));
 }
 ConditionConflicts.propTypes = {
@@ -1204,6 +1204,7 @@ var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
 __webpack_require__(/*! core-js/modules/es.json.stringify.js */ "../node_modules/core-js/modules/es.json.stringify.js");
 __webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
 __webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
+var _reactDom = __webpack_require__(/*! react-dom */ "react-dom");
 var _appUi = __webpack_require__(/*! @elementor/app-ui */ "@elementor/app-ui");
 var _conditions = _interopRequireDefault(__webpack_require__(/*! ./conditions */ "../modules/custom-code/assets/js/admin/publish-metabox/conditions.js"));
 var _conditionsConfig = _interopRequireDefault(__webpack_require__(/*! elementor-pro-app-modules/site-editor/assets/js/context/services/conditions-config */ "../core/app/modules/site-editor/assets/js/context/services/conditions-config.js"));
@@ -1323,7 +1324,9 @@ function ConditionsModal() {
     onClick: () => setShowModal(true),
     text: __('Edit', 'elementor-pro'),
     variant: "underlined"
-  }), /*#__PURE__*/_react.default.createElement(_appUi.ModalProvider, {
+  }), (0, _reactDom.createPortal)(/*#__PURE__*/_react.default.createElement("div", {
+    className: "e-custom-code-conditions-modal"
+  }, /*#__PURE__*/_react.default.createElement(_appUi.ModalProvider, {
     show: showModal,
     setShow: setShowModal,
     title: __('Publish Settings', 'elementor-pro'),
@@ -1337,7 +1340,7 @@ function ConditionsModal() {
     conditions: data.conditions,
     onConditionsSaved: onConditionsSaved,
     onAfterSave: () => {}
-  })))));
+  }))))), document.body));
 }
 ConditionsModal.propTypes = {
   children: PropTypes.object // Disable parent requirement.
