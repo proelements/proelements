@@ -253,7 +253,6 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				],
 			]
 		);
-
 	}
 
 	protected function register_excerpt_controls() {
@@ -365,9 +364,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	protected function get_optional_link_attributes_html() {
 		$settings = $this->parent->get_settings();
 		$new_tab_setting_key = $this->get_control_id( 'open_new_tab' );
-		$optional_attributes_html = 'yes' === $settings[ $new_tab_setting_key ] ? 'target="_blank"' : '';
 
-		return $optional_attributes_html;
+		return ( 'yes' === $settings[ $new_tab_setting_key ] )
+			? 'target="_blank" rel="noopener noreferrer"'
+			: '';
 	}
 
 	protected function register_meta_data_controls() {
@@ -563,7 +563,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->start_controls_tabs( 'thumbnail_effects_tabs' );
 
-		$this->start_controls_tab( 'normal',
+		$this->start_controls_tab(
+			'normal',
 			[
 				'label' => esc_html__( 'Normal', 'elementor-pro' ),
 			]
@@ -579,7 +580,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'hover',
+		$this->start_controls_tab(
+			'hover',
 			[
 				'label' => esc_html__( 'Hover', 'elementor-pro' ),
 			]
@@ -974,7 +976,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$optional_attributes_html = $this->get_optional_link_attributes_html();
 
 		?>
-		<a class="elementor-post__thumbnail__link" href="<?php echo esc_attr( $this->current_permalink ); ?>" tabindex="-1" <?php echo esc_attr( $optional_attributes_html ); ?>>
+		<a class="elementor-post__thumbnail__link" href="<?php echo esc_url( $this->current_permalink ); ?>" tabindex="-1" <?php Utils::print_unescaped_internal_string( $optional_attributes_html ); ?>>
 			<div class="elementor-post__thumbnail"><?php echo wp_kses_post( $thumbnail_html ); ?></div>
 		</a>
 		<?php
@@ -986,21 +988,17 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		}
 
 		$optional_attributes_html = $this->get_optional_link_attributes_html();
-
 		$tag = $this->get_instance_value( 'title_tag' );
 		?>
 		<<?php Utils::print_validated_html_tag( $tag ); ?> class="elementor-post__title">
-			<a href="<?php echo esc_attr( $this->current_permalink ); ?>" <?php echo esc_attr( $optional_attributes_html ); ?>>
-				<?php the_title(); ?>
+			<a href="<?php echo esc_url( $this->current_permalink ); ?>" <?php Utils::print_unescaped_internal_string( $optional_attributes_html ); ?>>
+				<?php echo esc_html( get_the_title() ); ?>
 			</a>
 		</<?php Utils::print_validated_html_tag( $tag ); ?>>
 		<?php
 	}
 
 	protected function render_excerpt() {
-		add_filter( 'excerpt_more', [ $this, 'filter_excerpt_more' ], 20 );
-		add_filter( 'excerpt_length', [ $this, 'filter_excerpt_length' ], 20 );
-
 		if ( ! $this->get_instance_value( 'show_excerpt' ) ) {
 			return;
 		}
@@ -1139,7 +1137,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$using_ajax_pagination = in_array( $parent_settings['pagination_type'], [
 			Posts_Base::LOAD_MORE_ON_CLICK,
 			Posts_Base::LOAD_MORE_INFINITE_SCROLL,
-		], true);
+		], true );
 
 		if ( $using_ajax_pagination && ! empty( $parent_settings['load_more_spinner']['value'] ) ) : ?>
 			<span class="e-load-more-spinner">
@@ -1148,7 +1146,6 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		<?php endif; ?>
 
 		<?php
-
 		if ( '' === $parent_settings['pagination_type'] ) {
 			return;
 		}
@@ -1166,20 +1163,19 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->parent->add_render_attribute( 'pagination', 'class', 'elementor-pagination' );
 
-		$has_numbers = in_array( $parent_settings['pagination_type'], [ 'numbers', 'numbers_and_prev_next' ] );
-		$has_prev_next = in_array( $parent_settings['pagination_type'], [ 'prev_next', 'numbers_and_prev_next' ] );
+		$has_numbers = in_array( $parent_settings['pagination_type'], [ 'numbers', 'numbers_and_prev_next' ], true );
+		$has_prev_next = in_array( $parent_settings['pagination_type'], [ 'prev_next', 'numbers_and_prev_next' ], true );
 
 		$load_more_type = $parent_settings['pagination_type'];
 
 		$current_page = $this->parent->get_current_page();
-		$next_page = intval( $current_page ) + 1;
+		$next_page = (int) $current_page + 1;
 
 		$this->parent->add_render_attribute( 'load_more_anchor', [
 			'data-page' => $current_page,
 			'data-max-page' => $this->parent->get_query()->max_num_pages,
 			'data-next-page' => $this->parent->get_wp_link_page( $next_page ),
 		] );
-
 		?>
 		<div class="e-load-more-anchor" <?php $this->parent->print_render_attribute_string( 'load_more_anchor' ); ?>></div>
 		<?php
@@ -1312,22 +1308,23 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		?>
 		<div class="elementor-post__meta-data">
 			<?php
-			if ( in_array( 'author', $settings ) ) {
+			if ( in_array( 'author', $settings, true ) ) {
 				$this->render_author();
 			}
 
-			if ( in_array( 'date', $settings ) ) {
+			if ( in_array( 'date', $settings, true ) ) {
 				$this->render_date_by_type();
 			}
 
-			if ( in_array( 'time', $settings ) ) {
+			if ( in_array( 'time', $settings, true ) ) {
 				$this->render_time();
 			}
 
-			if ( in_array( 'comments', $settings ) ) {
+			if ( in_array( 'comments', $settings, true ) ) {
 				$this->render_comments();
 			}
-			if ( in_array( 'modified', $settings ) ) {
+
+			if ( in_array( 'modified', $settings, true ) ) {
 				$this->render_date_by_type( 'modified' );
 			}
 			?>
@@ -1338,7 +1335,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	protected function render_author() {
 		?>
 		<span class="elementor-post-author">
-			<?php the_author(); ?>
+			<?php echo esc_html( get_the_author() ); ?>
 		</span>
 		<?php
 	}
@@ -1354,6 +1351,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				default:
 					$date = get_the_date();
 			endswitch;
+
 			/** This filter is documented in wp-includes/general-template.php */
 			// PHPCS - The date is safe.
 			echo apply_filters( 'the_date', $date, get_option( 'date_format' ), '', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1365,7 +1363,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	protected function render_time() {
 		?>
 		<span class="elementor-post-time">
-			<?php the_time(); ?>
+			<?php echo esc_html( get_the_time() ); ?>
 		</span>
 		<?php
 	}
@@ -1390,14 +1388,14 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		}
 
 		return 'yes' === $settings[ $this->get_control_id( 'read_more_alignment' ) ] &&
-		'yes' === $settings[ $this->get_control_id( 'show_read_more' ) ] &&
-		'yes' !== $settings[ $this->get_control_id( 'masonry' ) ];
+			'yes' === $settings[ $this->get_control_id( 'show_read_more' ) ] &&
+			'yes' !== $settings[ $this->get_control_id( 'masonry' ) ];
 	}
 
 	protected function render_comments() {
 		?>
 		<span class="elementor-post-avatar">
-			<?php comments_number(); ?>
+			<?php echo esc_html( get_comments_number_text() ); ?>
 		</span>
 		<?php
 	}
