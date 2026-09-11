@@ -126,6 +126,7 @@ class API {
 	         'settings-woocommerce-notices',
 	         'dynamic-tags-wc',
 			'atomic-custom-attributes',
+			'atomic-components',
 			'theme-builder',
 			'form-submissions',
 			'akismet',
