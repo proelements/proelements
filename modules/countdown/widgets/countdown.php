@@ -11,6 +11,7 @@ use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -880,5 +881,74 @@ class Countdown extends Base_Widget {
 				<?php
 			}
 		}
+	}
+
+	private function is_countdown_expired( array $settings ): bool {
+		$countdown_type = $settings['countdown_type'] ?? 'due_date';
+
+		if ( 'evergreen' === $countdown_type ) {
+			return false;
+		}
+
+		$due_date = $settings['due_date'] ?? '';
+
+		if ( '' === $due_date ) {
+			return false;
+		}
+
+		$wp_timezone = new \DateTimeZone( wp_timezone_string() );
+		$date = new \DateTime( $due_date, $wp_timezone );
+
+		return time() >= $date->getTimestamp();
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$countdown_type = $settings['countdown_type'] ?? 'due_date';
+		$timezone = wp_timezone_string();
+		$lines = [];
+
+		$type_label = 'evergreen' === $countdown_type
+			? esc_html__( 'Evergreen Timer', 'elementor-pro' )
+			: esc_html__( 'Due Date', 'elementor-pro' );
+
+		$lines[] = '- **' . esc_html__( 'Type', 'elementor-pro' ) . ':** ' . $type_label;
+
+		if ( 'evergreen' === $countdown_type ) {
+			$hours = (int) ( $settings['evergreen_counter_hours'] ?? 0 );
+			$minutes = (int) ( $settings['evergreen_counter_minutes'] ?? 0 );
+
+			$lines[] = '- **' . esc_html__( 'Interval', 'elementor-pro' ) . ':** ' . sprintf(
+				/* translators: 1: hours, 2: minutes */
+				esc_html__( '%1$d hours, %2$d minutes', 'elementor-pro' ),
+				$hours,
+				$minutes
+			);
+		} else {
+			$due_date = $settings['due_date'] ?? '';
+
+			if ( '' !== $due_date ) {
+				$wp_timezone = new \DateTimeZone( $timezone );
+				$date = new \DateTime( $due_date, $wp_timezone );
+
+				$lines[] = '- **' . esc_html__( 'Target', 'elementor-pro' ) . ':** ' . $date->format( 'F j, Y g:i a' ) . ' (' . $timezone . ')';
+			}
+		}
+
+		$lines[] = '- **' . esc_html__( 'Current time', 'elementor-pro' ) . ':** ' . wp_date( 'F j, Y g:i a', null, wp_timezone() ) . ' (' . $timezone . ')';
+
+		if ( $this->is_countdown_expired( $settings ) ) {
+			$expire_actions = $settings['expire_actions'] ?? [];
+
+			if ( is_array( $expire_actions ) && in_array( 'message', $expire_actions, true ) ) {
+				$message = Markdown_Utils::plain_text( $settings['message_after_expire'] ?? '' );
+
+				if ( '' !== $message ) {
+					$lines[] = '- **' . esc_html__( 'Expire message', 'elementor-pro' ) . ':** ' . $message;
+				}
+			}
+		}
+
+		return Markdown_Utils::bullet_list( $lines );
 	}
 }

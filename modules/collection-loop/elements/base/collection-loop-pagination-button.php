@@ -27,6 +27,10 @@ abstract class Collection_Loop_Pagination_Button extends Atomic_Element_Base {
 	use Has_Element_Template;
 	use Has_Pagination_Context;
 
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'a';
+	}
+
 	const BASE_STYLE_KEY = 'base';
 
 	abstract protected static function get_default_label(): string;
@@ -126,15 +130,17 @@ abstract class Collection_Loop_Pagination_Button extends Atomic_Element_Base {
 	}
 
 	protected function define_default_children() {
+		$paragraph_value = class_exists( 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type' )
+			? 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type'::generate( static::get_default_label() )
+			: Html_V3_Prop_Type::generate( [
+				'content' => String_Prop_Type::generate( static::get_default_label() ),
+				'children' => [],
+			] );
+
 		return [
 			Atomic_Paragraph::generate()
 				->settings( [
-					'paragraph' => class_exists( 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type' )
-						? \Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type::generate( static::get_default_label() )
-						: Html_V3_Prop_Type::generate( [
-							'content' => String_Prop_Type::generate( static::get_default_label() ),
-							'children' => [],
-						] ),
+					'paragraph' => $paragraph_value,
 					'tag' => String_Prop_Type::generate( 'span' ),
 				] )
 				->build(),

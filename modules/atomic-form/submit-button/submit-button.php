@@ -18,13 +18,16 @@ use Elementor\Modules\AtomicWidgets\Styles\Style_Definition;
 use Elementor\Modules\AtomicWidgets\Styles\Style_Variant;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use Elementor\Modules\AtomicWidgets\Styles\Style_States;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Submit_Button extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'button';
+	}
 
 	private static $button_background_color = '#000';
 	private static $button_text_color = '#fff';
@@ -53,14 +56,23 @@ class Submit_Button extends Atomic_Widget_Base {
 	}
 
 	protected static function define_props_schema(): array {
+		$uses_escaped_html = class_exists( 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type' );
+		$text_prop_type = $uses_escaped_html
+			? 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type'::class
+			: Html_V3_Prop_Type::class;
+		$default_text = __( 'Submit', 'elementor-pro' );
+		$text_default = $uses_escaped_html
+			? $default_text
+			: [
+				'content' => String_Prop_Type::generate( $default_text ),
+				'children' => [],
+			];
+
 		return [
 			'classes' => Classes_Prop_Type::make()
 				->default( [] ),
-			'text' => class_exists( 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type' )
-				? \Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type::make()
-					->default( 'Submit' )
-				: Html_V3_Prop_Type::make()
-					->default( 'Submit' ),
+			'text' => $text_prop_type::make()
+				->default( $text_default ),
 			'tag' => String_Prop_Type::make()
 				->default( 'button' )
 				->description( 'The HTML tag for the button element.' ),

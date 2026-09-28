@@ -1,4 +1,4 @@
-/*! pro-elements - v4.2.0 - 31-08-2026 */
+/*! pro-elements - v4.3.0 - 22-09-2026 */
 .elementor-editor-preview .woocommerce-notices-wrapper {
   padding: 2em 2em 0.3em;
 }
@@ -299,4 +299,3 @@ div.wc-block-components-notice-banner.is-info .button:hover {
   color: var(--info-buttons-hover-text-color) !important;
   border-color: var(--info-buttons-hover-border-color);
 }
-/*# sourceMappingURL=woocommerce-notices.css.map */

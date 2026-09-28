@@ -1,246 +1,197 @@
-/******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/*! pro-elements - v4.3.0 - 22-09-2026 */
+this.elementorV2 = this.elementorV2 || {};
+(function(exports, _elementor_http_client, _elementor_query) {
+	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/asyncToGenerator.js
+	function asyncGeneratorStep(n, t, e, r, o, a, c) {
+		try {
+			var i = n[a](c);
+			var u = i.value;
+		} catch (n) {
+			e(n);
+			return;
+		}
+		i.done ? t(u) : Promise.resolve(u).then(r, o);
+	}
+	function _asyncToGenerator(n) {
+		return function() {
+			var t = this;
+			var e = arguments;
+			return new Promise(function(r, o) {
+				var a = n.apply(t, e);
+				function _next(n) {
+					asyncGeneratorStep(a, r, o, _next, _throw, "next", n);
+				}
+				function _throw(n) {
+					asyncGeneratorStep(a, r, o, _next, _throw, "throw", n);
+				}
+				_next(void 0);
+			});
+		};
+	}
+	//#endregion
+	//#region packages/packages/pro/license-api/src/api.ts
+	var TIER_FEATURES_URL = "elementor-pro/v1/license/tier-features";
+	var LICENSE_STATUS_URL = "elementor-pro/v1/license/get-license-status";
+	var CACHE_TTL_MS = 2e4;
+	var cache = /* @__PURE__ */ new Map();
+	function cachedGet(url) {
+		const now = Date.now();
+		const cached = cache.get(url);
+		if (cached && now < cached.expiry) return cached.promise;
+		const promise = (0, _elementor_http_client.httpService)().get(url).catch((error) => {
+			cache.delete(url);
+			throw error;
+		});
+		cache.set(url, {
+			promise,
+			expiry: now + CACHE_TTL_MS
+		});
+		return promise;
+	}
+	function fetchTierFeatures() {
+		return _fetchTierFeatures.apply(this, arguments);
+	}
+	function _fetchTierFeatures() {
+		_fetchTierFeatures = _asyncToGenerator(function* () {
+			var _response$data;
+			return ((_response$data = (yield cachedGet(TIER_FEATURES_URL)).data) === null || _response$data === void 0 ? void 0 : _response$data.features) || [];
+		});
+		return _fetchTierFeatures.apply(this, arguments);
+	}
+	function fetchLicenseStatus() {
+		return _fetchLicenseStatus.apply(this, arguments);
+	}
+	function _fetchLicenseStatus() {
+		_fetchLicenseStatus = _asyncToGenerator(function* () {
+			var _response$data2;
+			return !!((_response$data2 = (yield cachedGet(LICENSE_STATUS_URL)).data) === null || _response$data2 === void 0 ? void 0 : _response$data2.isExpired);
+		});
+		return _fetchLicenseStatus.apply(this, arguments);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectWithoutPropertiesLoose.js
+	function _objectWithoutPropertiesLoose(r, e) {
+		if (null == r) return {};
+		var t = {};
+		for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+			if (e.includes(n)) continue;
+			t[n] = r[n];
+		}
+		return t;
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectWithoutProperties.js
+	function _objectWithoutProperties(e, t) {
+		if (null == e) return {};
+		var o;
+		var r;
+		var i = _objectWithoutPropertiesLoose(e, t);
+		if (Object.getOwnPropertySymbols) {
+			var s = Object.getOwnPropertySymbols(e);
+			for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+		}
+		return i;
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
+	function _typeof(o) {
+		"@babel/helpers - typeof";
+		return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+			return typeof o;
+		} : function(o) {
+			return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+		}, _typeof(o);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
+	function toPrimitive(t, r) {
+		if ("object" != _typeof(t) || !t) return t;
+		var e = t[Symbol.toPrimitive];
+		if (void 0 !== e) {
+			var i = e.call(t, r || "default");
+			if ("object" != _typeof(i)) return i;
+			throw new TypeError("@@toPrimitive must return a primitive value.");
+		}
+		return ("string" === r ? String : Number)(t);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
+	function toPropertyKey(t) {
+		var i = toPrimitive(t, "string");
+		return "symbol" == _typeof(i) ? i : i + "";
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
+	function _defineProperty(e, r, t) {
+		return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+			value: t,
+			enumerable: !0,
+			configurable: !0,
+			writable: !0
+		}) : e[r] = t, e;
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+	function ownKeys(e, r) {
+		var t = Object.keys(e);
+		if (Object.getOwnPropertySymbols) {
+			var o = Object.getOwnPropertySymbols(e);
+			r && (o = o.filter(function(r2) {
+				return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+			})), t.push.apply(t, o);
+		}
+		return t;
+	}
+	function _objectSpread2(e) {
+		for (var r = 1; r < arguments.length; r++) {
+			var t = null != arguments[r] ? arguments[r] : {};
+			r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
+				_defineProperty(e, r2, t[r2]);
+			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
+				Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+			});
+		}
+		return e;
+	}
+	//#endregion
+	//#region packages/packages/pro/license-api/src/hooks/use-tier-features.ts
+	var _excluded$1 = ["data"];
+	var QUERY_KEY$1 = ["license", "tier-features"];
+	function useTierFeatures() {
+		return (0, _elementor_query.useQuery)({
+			queryKey: QUERY_KEY$1,
+			queryFn: fetchTierFeatures,
+			staleTime: Infinity
+		});
+	}
+	function useHasFeature(featureName) {
+		const _useTierFeatures = useTierFeatures(), { data: features = [] } = _useTierFeatures;
+		return _objectSpread2(_objectSpread2({}, _objectWithoutProperties(_useTierFeatures, _excluded$1)), {}, { data: features.includes(featureName) });
+	}
+	//#endregion
+	//#region packages/packages/pro/license-api/src/hooks/use-license-status.ts
+	var _excluded = ["data"];
+	var QUERY_KEY = ["license", "status"];
+	function useLicenseStatus() {
+		return (0, _elementor_query.useQuery)({
+			queryKey: QUERY_KEY,
+			queryFn: fetchLicenseStatus,
+			staleTime: Infinity
+		});
+	}
+	function useIsLicenseExpired() {
+		const _useLicenseStatus = useLicenseStatus(), { data: isExpired = false } = _useLicenseStatus;
+		return _objectSpread2(_objectSpread2({}, _objectWithoutProperties(_useLicenseStatus, _excluded)), {}, { data: isExpired });
+	}
+	//#endregion
+	exports.fetchLicenseStatus = fetchLicenseStatus;
+	exports.fetchTierFeatures = fetchTierFeatures;
+	exports.useHasFeature = useHasFeature;
+	exports.useIsLicenseExpired = useIsLicenseExpired;
+	exports.useLicenseStatus = useLicenseStatus;
+	exports.useTierFeatures = useTierFeatures;
+})(this.elementorV2.licenseApi = this.elementorV2.licenseApi || {}, elementorV2.httpClient, elementorV2.query);
 
-/***/ "./packages/packages/pro/license-api/src/api.ts":
-/*!******************************************************!*\
-  !*** ./packages/packages/pro/license-api/src/api.ts ***!
-  \******************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fetchLicenseStatus: function() { return /* binding */ fetchLicenseStatus; },
-/* harmony export */   fetchTierFeatures: function() { return /* binding */ fetchTierFeatures; }
-/* harmony export */ });
-/* harmony import */ var _elementor_http_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/http-client */ "@elementor/http-client");
-/* harmony import */ var _elementor_http_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_http_client__WEBPACK_IMPORTED_MODULE_0__);
-
-const TIER_FEATURES_URL = 'elementor-pro/v1/license/tier-features';
-const LICENSE_STATUS_URL = 'elementor-pro/v1/license/get-license-status';
-const CACHE_TTL_MS = 20_000;
-const cache = new Map();
-function cachedGet(url) {
-  const now = Date.now();
-  const cached = cache.get(url);
-  if (cached && now < cached.expiry) {
-    return cached.promise;
-  }
-  const promise = (0,_elementor_http_client__WEBPACK_IMPORTED_MODULE_0__.httpService)().get(url).catch(error => {
-    cache.delete(url);
-    throw error;
-  });
-  cache.set(url, {
-    promise,
-    expiry: now + CACHE_TTL_MS
-  });
-  return promise;
-}
-async function fetchTierFeatures() {
-  const response = await cachedGet(TIER_FEATURES_URL);
-  return response.data?.features || [];
-}
-async function fetchLicenseStatus() {
-  const response = await cachedGet(LICENSE_STATUS_URL);
-  return !!response.data?.isExpired;
-}
-
-/***/ }),
-
-/***/ "./packages/packages/pro/license-api/src/hooks/use-license-status.ts":
-/*!***************************************************************************!*\
-  !*** ./packages/packages/pro/license-api/src/hooks/use-license-status.ts ***!
-  \***************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useIsLicenseExpired: function() { return /* binding */ useIsLicenseExpired; },
-/* harmony export */   useLicenseStatus: function() { return /* binding */ useLicenseStatus; }
-/* harmony export */ });
-/* harmony import */ var _elementor_query__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/query */ "@elementor/query");
-/* harmony import */ var _elementor_query__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_query__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api */ "./packages/packages/pro/license-api/src/api.ts");
-
-
-const QUERY_KEY = ['license', 'status'];
-function useLicenseStatus() {
-  return (0,_elementor_query__WEBPACK_IMPORTED_MODULE_0__.useQuery)({
-    queryKey: QUERY_KEY,
-    queryFn: _api__WEBPACK_IMPORTED_MODULE_1__.fetchLicenseStatus,
-    staleTime: Infinity
-  });
-}
-function useIsLicenseExpired() {
-  const {
-    data: isExpired = false,
-    ...rest
-  } = useLicenseStatus();
-  return {
-    ...rest,
-    data: isExpired
-  };
-}
-
-/***/ }),
-
-/***/ "./packages/packages/pro/license-api/src/hooks/use-tier-features.ts":
-/*!**************************************************************************!*\
-  !*** ./packages/packages/pro/license-api/src/hooks/use-tier-features.ts ***!
-  \**************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useHasFeature: function() { return /* binding */ useHasFeature; },
-/* harmony export */   useTierFeatures: function() { return /* binding */ useTierFeatures; }
-/* harmony export */ });
-/* harmony import */ var _elementor_query__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/query */ "@elementor/query");
-/* harmony import */ var _elementor_query__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_query__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api */ "./packages/packages/pro/license-api/src/api.ts");
-
-
-const QUERY_KEY = ['license', 'tier-features'];
-function useTierFeatures() {
-  return (0,_elementor_query__WEBPACK_IMPORTED_MODULE_0__.useQuery)({
-    queryKey: QUERY_KEY,
-    queryFn: _api__WEBPACK_IMPORTED_MODULE_1__.fetchTierFeatures,
-    staleTime: Infinity
-  });
-}
-function useHasFeature(featureName) {
-  const {
-    data: features = [],
-    ...rest
-  } = useTierFeatures();
-  return {
-    ...rest,
-    data: features.includes(featureName)
-  };
-}
-
-/***/ }),
-
-/***/ "@elementor/http-client":
-/*!*********************************************!*\
-  !*** external ["elementorV2","httpClient"] ***!
-  \*********************************************/
-/***/ (function(module) {
-
-module.exports = window["elementorV2"]["httpClient"];
-
-/***/ }),
-
-/***/ "@elementor/query":
-/*!****************************************!*\
-  !*** external ["elementorV2","query"] ***!
-  \****************************************/
-/***/ (function(module) {
-
-module.exports = window["elementorV2"]["query"];
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		if (!(moduleId in __webpack_modules__)) {
-/******/ 			delete __webpack_module_cache__[moduleId];
-/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
-/******/ 			e.code = 'MODULE_NOT_FOUND';
-/******/ 			throw e;
-/******/ 		}
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
-!function() {
-/*!********************************************************!*\
-  !*** ./packages/packages/pro/license-api/src/index.ts ***!
-  \********************************************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fetchLicenseStatus: function() { return /* reexport safe */ _api__WEBPACK_IMPORTED_MODULE_0__.fetchLicenseStatus; },
-/* harmony export */   fetchTierFeatures: function() { return /* reexport safe */ _api__WEBPACK_IMPORTED_MODULE_0__.fetchTierFeatures; },
-/* harmony export */   useHasFeature: function() { return /* reexport safe */ _hooks_use_tier_features__WEBPACK_IMPORTED_MODULE_1__.useHasFeature; },
-/* harmony export */   useIsLicenseExpired: function() { return /* reexport safe */ _hooks_use_license_status__WEBPACK_IMPORTED_MODULE_2__.useIsLicenseExpired; },
-/* harmony export */   useLicenseStatus: function() { return /* reexport safe */ _hooks_use_license_status__WEBPACK_IMPORTED_MODULE_2__.useLicenseStatus; },
-/* harmony export */   useTierFeatures: function() { return /* reexport safe */ _hooks_use_tier_features__WEBPACK_IMPORTED_MODULE_1__.useTierFeatures; }
-/* harmony export */ });
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./packages/packages/pro/license-api/src/api.ts");
-/* harmony import */ var _hooks_use_tier_features__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hooks/use-tier-features */ "./packages/packages/pro/license-api/src/hooks/use-tier-features.ts");
-/* harmony import */ var _hooks_use_license_status__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hooks/use-license-status */ "./packages/packages/pro/license-api/src/hooks/use-license-status.ts");
-// Core API
-
-
-// Hooks
-
-
-}();
-(window.elementorV2 = window.elementorV2 || {}).licenseApi = __webpack_exports__;
-/******/ })()
-;
 window.elementorV2.licenseApi?.init?.();

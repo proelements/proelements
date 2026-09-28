@@ -1,5 +1,19 @@
 # PRO Elements - by PROElements.org
 
+#### 4.3.0 - 2026-09-22
+
+* New: Expanded Elementor MCP with Pro capabilities, including Theme Builder templates, Popups, and Components
+* Tweak: Added taxonomy filtering to Loop, allowing content to be filtered by categories, tags, and custom taxonomies
+* Tweak: Added alternating templates with configurable frequency and static positioning to Loop
+* Tweak: Added customizable empty states to Loop, allowing any element to be nested and displayed when no results are found
+* Tweak: Added disabled state styling for Previous and Next pagination buttons in Loop
+* Tweak: Added default value support for dependent settings in Atomic Forms
+* Tweak: Improved access to Loop Item editing across all panel views
+* Fix: Blog page title may not display correctly in Archive Title widget
+* Fix: Keyboard navigation cannot exit the Custom CSS control
+* Fix: Page-specific CSS may be missing on the first visit after automatic CSS cleanup
+* Fix: Empty Atomic Form success and error messages prevent adding new elements after their default content is removed
+
 #### 4.2.3 - 2026-08-31
 
 * Tweak: Updated WordPress compatibility to version 7.1

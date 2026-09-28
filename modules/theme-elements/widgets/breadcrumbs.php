@@ -211,4 +211,20 @@ class Breadcrumbs extends Base {
 	public function get_group_name() {
 		return 'theme-elements';
 	}
+
+	public function render_markdown(): string {
+		if ( ! class_exists( '\WPSEO_Breadcrumbs' ) ) {
+			return '';
+		}
+
+		ob_start();
+		\WPSEO_Breadcrumbs::breadcrumb( '<p>', '</p>' );
+		$html = (string) ob_get_clean();
+
+		if ( '' === $html ) {
+			return '';
+		}
+
+		return \Elementor\Modules\MarkdownRender\Html_To_Markdown::convert( $html );
+	}
 }

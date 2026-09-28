@@ -1,154 +1,79 @@
-/******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/*! pro-elements - v4.3.0 - 22-09-2026 */
+this.elementorV2 = this.elementorV2 || {};
+(function(exports, _elementor_editor_v1_adapters) {
+	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+	//#endregion
+	//#region packages/packages/pro/editor-canvas-extended/src/register-drop-container-redirect.ts
+	/**
+	* Hooks `preview/drop` so widgets land in the correct container during nested edit modes.
+	*
+	* Panel clicks with empty selection target the document root; drag-and-drop can also miss the
+	* subtree being edited. Register this when a scoped context (e.g. component document, loop, etc.)
+	* should absorb those drops instead of the page or an outer container.
+	*
+	* @param config - When to handle drops and how to resolve the redirected container.
+	*/
+	function registerDropContainerRedirect(config) {
+		(0, _elementor_editor_v1_adapters.registerDataHook)("dependency", "preview/drop", (args) => {
+			var _args$containers;
+			if (!config.shouldHandle()) return true;
+			const containers = (_args$containers = args.containers) !== null && _args$containers !== void 0 ? _args$containers : args.container ? [args.container] : [];
+			for (const container of containers) {
+				const { shouldRedirect, container: redirectedContainer } = config.resolveRedirect(container);
+				if (!shouldRedirect) continue;
+				if (args.containers) {
+					const index = args.containers.indexOf(container);
+					args.containers[index] = redirectedContainer;
+				} else args.container = redirectedContainer;
+			}
+			return true;
+		});
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-canvas-extended/src/subscribe-to-element-changes.ts
+	var ELEMENT_MUTATION_COMMANDS = [
+		"document/elements/settings",
+		"document/elements/set-settings",
+		"document/elements/create",
+		"document/elements/delete",
+		"document/elements/move"
+	];
+	/**
+	* Subscribes to every V1 element-mutation command (settings, create, delete, move) and calls
+	* `onChange` when any id on the affected element's ancestor chain satisfies `shouldNotify`.
+	*
+	* One composable primitive instead of N per-source listeners вЂ” the caller decides what
+	* "affected" means (e.g. `( id ) => id === subtreeRootId` for "notify on subtree change").
+	*
+	* Ancestors are read off the command's own `container.parent` rather than re-resolved by id,
+	* since deleted elements are already gone from the live tree by the time their event fires;
+	* the held `container` reference still has an intact `.parent` chain.
+	*
+	* @param shouldNotify - Return `true` for an ancestor id to trigger `onChange`.
+	* @param onChange     - Invoked once per event with a matching ancestor.
+	* @return Unsubscribe function.
+	*/
+	function subscribeToElementChanges(shouldNotify, onChange) {
+		return (0, _elementor_editor_v1_adapters.__privateListenTo)(ELEMENT_MUTATION_COMMANDS.map(_elementor_editor_v1_adapters.commandEndEvent), (event) => {
+			if (extractAffectedIds(event.args).some(shouldNotify)) onChange();
+		});
+	}
+	function extractAffectedIds(args) {
+		var _args$containers;
+		return ((args === null || args === void 0 ? void 0 : args.container) ? [args.container] : (_args$containers = args === null || args === void 0 ? void 0 : args.containers) !== null && _args$containers !== void 0 ? _args$containers : []).flatMap(collectAncestorChainIds);
+	}
+	function collectAncestorChainIds(element) {
+		const ids = [];
+		let current = element;
+		while (current) {
+			ids.push(current.id);
+			current = current.parent;
+		}
+		return ids;
+	}
+	//#endregion
+	exports.registerDropContainerRedirect = registerDropContainerRedirect;
+	exports.subscribeToElementChanges = subscribeToElementChanges;
+})(this.elementorV2.editorCanvasExtended = this.elementorV2.editorCanvasExtended || {}, elementorV2.editorV1Adapters);
 
-/***/ "./packages/packages/pro/editor-canvas-extended/src/register-drop-container-redirect.ts":
-/*!**********************************************************************************************!*\
-  !*** ./packages/packages/pro/editor-canvas-extended/src/register-drop-container-redirect.ts ***!
-  \**********************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   registerDropContainerRedirect: function() { return /* binding */ registerDropContainerRedirect; }
-/* harmony export */ });
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-v1-adapters */ "@elementor/editor-v1-adapters");
-/* harmony import */ var _elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__);
-
-/**
- * Hooks `preview/drop` so widgets land in the correct container during nested edit modes.
- *
- * Panel clicks with empty selection target the document root; drag-and-drop can also miss the
- * subtree being edited. Register this when a scoped context (e.g. component document, loop, etc.)
- * should absorb those drops instead of the page or an outer container.
- *
- * @param config - When to handle drops and how to resolve the redirected container.
- */
-function registerDropContainerRedirect(config) {
-  (0,_elementor_editor_v1_adapters__WEBPACK_IMPORTED_MODULE_0__.registerDataHook)('dependency', 'preview/drop', args => {
-    if (!config.shouldHandle()) {
-      return true;
-    }
-    const containers = args.containers ?? (args.container ? [args.container] : []);
-    for (const container of containers) {
-      const {
-        shouldRedirect,
-        container: redirectedContainer
-      } = config.resolveRedirect(container);
-      if (!shouldRedirect) {
-        continue;
-      }
-      if (args.containers) {
-        const index = args.containers.indexOf(container);
-        args.containers[index] = redirectedContainer;
-      } else {
-        args.container = redirectedContainer;
-      }
-    }
-    return true;
-  });
-}
-
-/***/ }),
-
-/***/ "@elementor/editor-v1-adapters":
-/*!***************************************************!*\
-  !*** external ["elementorV2","editorV1Adapters"] ***!
-  \***************************************************/
-/***/ (function(module) {
-
-module.exports = window["elementorV2"]["editorV1Adapters"];
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		if (!(moduleId in __webpack_modules__)) {
-/******/ 			delete __webpack_module_cache__[moduleId];
-/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
-/******/ 			e.code = 'MODULE_NOT_FOUND';
-/******/ 			throw e;
-/******/ 		}
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
-!function() {
-/*!*******************************************************************!*\
-  !*** ./packages/packages/pro/editor-canvas-extended/src/index.ts ***!
-  \*******************************************************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   registerDropContainerRedirect: function() { return /* reexport safe */ _register_drop_container_redirect__WEBPACK_IMPORTED_MODULE_0__.registerDropContainerRedirect; }
-/* harmony export */ });
-/* harmony import */ var _register_drop_container_redirect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./register-drop-container-redirect */ "./packages/packages/pro/editor-canvas-extended/src/register-drop-container-redirect.ts");
-
-}();
-(window.elementorV2 = window.elementorV2 || {}).editorCanvasExtended = __webpack_exports__;
-/******/ })()
-;
 window.elementorV2.editorCanvasExtended?.init?.();

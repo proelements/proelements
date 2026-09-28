@@ -2,6 +2,7 @@
 namespace ElementorPro\Modules\Library\Widgets;
 
 use Elementor\Core\Base\Document;
+use Elementor\Modules\MarkdownRender\Markdown_Renderer;
 use ElementorPro\Base\Base_Widget;
 use ElementorPro\Modules\QueryControl\Module as QueryControlModule;
 use ElementorPro\Plugin;
@@ -105,4 +106,21 @@ class Template extends Base_Widget {
 	}
 
 	public function render_plain_content() {}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$template_id = $settings['template_id'] ?? 0;
+
+		if ( empty( $template_id ) || 'publish' !== get_post_status( $template_id ) ) {
+			return '';
+		}
+
+		$document = Plugin::elementor()->documents->get( $template_id );
+
+		if ( ! $document ) {
+			return '';
+		}
+
+		return ( new Markdown_Renderer() )->render_elements_data( $document->get_elements_data() );
+	}
 }

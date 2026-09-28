@@ -1604,4 +1604,41 @@ class Author_Box extends Base {
 	public function get_group_name() {
 		return 'theme-elements';
 	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$custom_src = ( 'custom' === ( $settings['source'] ?? 'current' ) );
+
+		if ( $custom_src ) {
+			$name = trim( wp_strip_all_tags( (string) ( $settings['author_name'] ?? '' ) ) );
+			$bio = trim( wp_strip_all_tags( (string) ( $settings['author_bio'] ?? '' ) ) );
+			$posts_url = $settings['posts_url']['url'] ?? '';
+		} else {
+			$name = trim( wp_strip_all_tags( (string) get_the_author_meta( 'display_name' ) ) );
+			$bio = trim( wp_strip_all_tags( (string) get_the_author_meta( 'description' ) ) );
+			$posts_url = get_author_posts_url( (int) get_the_author_meta( 'ID' ) );
+		}
+
+		$link_text = trim( wp_strip_all_tags( (string) ( $settings['link_text'] ?? '' ) ) );
+
+		$lines = [];
+
+		if ( '' !== $name ) {
+			$lines[] = '**' . $name . '**';
+		}
+
+		if ( '' !== $bio ) {
+			$lines[] = $bio;
+		}
+
+		if ( '' !== $link_text && '' !== $posts_url ) {
+			$lines[] = '[' . $link_text . '](' . esc_url( $posts_url ) . ')';
+		}
+
+		if ( empty( $lines ) ) {
+			return '';
+		}
+
+		return implode( "\n\n", $lines );
+	}
 }

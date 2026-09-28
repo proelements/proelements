@@ -12,6 +12,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1848,6 +1849,63 @@ class Price_Table extends Base_Widget {
 			</div>
 			<?php
 		endif;
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+
+		$lines = [];
+
+		$heading = Utils::html_to_plain_text( $settings['heading'] ?? '' );
+		$sub_heading = Utils::html_to_plain_text( $settings['sub_heading'] ?? '' );
+		$price = Utils::html_to_plain_text( $settings['price'] ?? '' );
+		$period = Utils::html_to_plain_text( $settings['period'] ?? '' );
+		$footer = Utils::html_to_plain_text( $settings['footer_additional_info'] ?? '' );
+		$button = Utils::html_to_plain_text( $settings['button_text'] ?? '' );
+		$url = $settings['link']['url'] ?? '';
+
+		$symbol = '';
+		if ( ! empty( $settings['currency_symbol'] ) ) {
+			$symbol = 'custom' === $settings['currency_symbol']
+				? (string) ( $settings['currency_symbol_custom'] ?? '' )
+				: $this->get_currency_symbol( $settings['currency_symbol'] );
+			$symbol = html_entity_decode( $symbol, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		}
+
+		if ( '' !== $heading ) {
+			$lines[] = '## ' . $heading;
+		}
+
+		if ( '' !== $sub_heading ) {
+			$lines[] = '### ' . $sub_heading;
+		}
+
+		if ( '' !== $price || '' !== $symbol ) {
+			$price_line = '**' . $symbol . $price;
+			if ( '' !== $period ) {
+				$price_line .= ' ' . $period;
+			}
+			$price_line .= '**';
+			$lines[] = $price_line;
+		}
+
+		$features = $settings['features_list'] ?? [];
+		foreach ( $features as $feature ) {
+			$text = Utils::html_to_plain_text( $feature['item_text'] ?? '' );
+			if ( '' !== $text ) {
+				$lines[] = '- ' . $text;
+			}
+		}
+
+		if ( '' !== $footer ) {
+			$lines[] = $footer;
+		}
+
+		if ( '' !== $button ) {
+			$lines[] = Markdown_Utils::button( $button, $url );
+		}
+
+		return implode( "\n\n", $lines );
 	}
 
 	/**

@@ -19,13 +19,16 @@ use Elementor\Modules\AtomicWidgets\Styles\Style_States;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
 use Elementor\Modules\AtomicWidgets\PropTypes\Date_Range_Prop_Type;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Date_Picker extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'input';
+	}
 
 	public static $widget_description = 'Display a date picker input with required, min, max, and attributes.';
 
@@ -46,7 +49,7 @@ class Date_Picker extends Atomic_Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'atomic', 'form', 'date', 'picker' ];
+		return [ 'atomic', 'form', 'date', 'picker', 'calendar' ];
 	}
 
 	protected static function define_props_schema(): array {

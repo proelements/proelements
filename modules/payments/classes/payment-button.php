@@ -9,6 +9,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Widget_Button;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -608,5 +609,47 @@ abstract class Payment_Button extends Widget_Button {
 	// Check if it's sandbox mode.
 	protected function is_sandbox() {
 		return 'yes' === $this->get_settings_for_display( 'sandbox_mode' );
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$lines = [];
+
+		$product_name = Markdown_Utils::plain_text( $settings['product_name'] ?? '' );
+
+		if ( '' !== $product_name ) {
+			$lines[] = '- **' . esc_html__( 'Product', 'elementor-pro' ) . ':** ' . $product_name;
+		}
+
+		$price = $settings['product_price'] ?? '';
+		$currency = $settings['currency'] ?? '';
+
+		if ( '' !== $price || '' !== $currency ) {
+			$lines[] = '- **' . esc_html__( 'Price', 'elementor-pro' ) . ':** ' . trim( $price . ' ' . strtoupper( (string) $currency ) );
+		}
+
+		$type = $settings['type'] ?? '';
+
+		if ( '' !== $type ) {
+			$type_labels = [
+				self::PAYMENT_TYPE_CHECKOUT => esc_html__( 'Checkout', 'elementor-pro' ),
+				self::PAYMENT_TYPE_DONATION => esc_html__( 'Donation', 'elementor-pro' ),
+				self::PAYMENT_TYPE_SUBSCRIPTION => esc_html__( 'Subscription', 'elementor-pro' ),
+			];
+
+			$lines[] = '- **' . esc_html__( 'Type', 'elementor-pro' ) . ':** ' . ( $type_labels[ $type ] ?? $type );
+		}
+
+		$button_text = Markdown_Utils::plain_text( $settings['text'] ?? '' );
+
+		if ( '' !== $button_text ) {
+			$lines[] = '- **' . esc_html__( 'Button', 'elementor-pro' ) . ':** ' . Markdown_Utils::button( $button_text );
+		}
+
+		if ( $this->is_sandbox() ) {
+			$lines[] = '- **' . esc_html__( 'Mode', 'elementor-pro' ) . ':** ' . esc_html__( 'Sandbox', 'elementor-pro' );
+		}
+
+		return Markdown_Utils::bullet_list( $lines );
 	}
 }

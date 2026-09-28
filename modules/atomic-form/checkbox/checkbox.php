@@ -23,13 +23,17 @@ use Elementor\Modules\AtomicWidgets\PropTypes\Transform\Transform_Origin_Prop_Ty
 use Elementor\Modules\AtomicWidgets\PropTypes\Transform\Transform_Prop_Type;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
-
+use ElementorPro\Modules\AtomicForm\Default_Value_Provider;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Checkbox extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'input';
+	}
 
 	protected $animation_duration = 200;
 	public static $widget_description = 'Display a checkbox input with required, readonly, and attributes.';
@@ -51,7 +55,7 @@ class Checkbox extends Atomic_Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'atomic', 'form', 'checkbox' ];
+		return [ 'atomic', 'form', 'checkbox', 'check', 'tick' ];
 	}
 
 	protected static function define_props_schema(): array {
@@ -64,8 +68,10 @@ class Checkbox extends Atomic_Widget_Base {
 				->default( '' ),
 			'required' => Boolean_Prop_Type::make()
 				->default( false ),
+			Default_Value_Provider::TOGGLE_PROP => Default_Value_Provider::get_toggle_prop(),
 			'checked' => Boolean_Prop_Type::make()
-				->default( false ),
+				->default( false )
+				->set_dependencies( Default_Value_Provider::get_dependencies() ),
 			'attributes' => Attributes_Prop_Type::make()->meta( Overridable_Prop_Type::ignore() ),
 			'_cssid' => Default_Id_Provider::get_default_id_prop( self::get_element_type() ),
 		];
@@ -91,6 +97,7 @@ class Checkbox extends Atomic_Widget_Base {
 						] ),
 					Switch_Control::bind_to( 'required' )
 						->set_label( __( 'Required', 'elementor-pro' ) ),
+					Default_Value_Provider::get_toggle_control(),
 					Switch_Control::bind_to( 'checked' )
 						->set_label( __( 'Checked', 'elementor-pro' ) ),
 				] ),

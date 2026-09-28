@@ -728,4 +728,47 @@ class Post_Navigation extends Base {
 	public function get_group_name() {
 		return 'theme-elements';
 	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+
+		$prev_label = $this->sanitize_link_text( $settings['prev_label'] ?? '' );
+		$next_label = $this->sanitize_link_text( $settings['next_label'] ?? '' );
+
+		if ( '' === $prev_label ) {
+			$prev_label = esc_html__( 'Previous', 'elementor-pro' );
+		}
+		if ( '' === $next_label ) {
+			$next_label = esc_html__( 'Next', 'elementor-pro' );
+		}
+
+		$prev_post = get_previous_post();
+		$next_post = get_next_post();
+
+		$lines = [];
+
+		if ( $prev_post ) {
+			$title = $this->sanitize_link_text( get_the_title( $prev_post ) );
+			$lines[] = '[' . $prev_label . ': ' . $title . '](' . esc_url( get_permalink( $prev_post ) ) . ')';
+		}
+
+		if ( $next_post ) {
+			$title = $this->sanitize_link_text( get_the_title( $next_post ) );
+			$lines[] = '[' . $next_label . ': ' . $title . '](' . esc_url( get_permalink( $next_post ) ) . ')';
+		}
+
+		return implode( "\n", $lines );
+	}
+
+	private function sanitize_link_text( $value ): string {
+		$text = trim( wp_strip_all_tags( (string) $value ) );
+
+		if ( '' === $text ) {
+			return '';
+		}
+
+		$text = preg_replace( '/\s+/', ' ', $text );
+
+		return str_replace( [ '[', ']' ], [ '\\[', '\\]' ], $text );
+	}
 }

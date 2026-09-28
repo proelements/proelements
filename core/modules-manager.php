@@ -85,6 +85,7 @@ final class Modules_Manager {
 			'variables',
 			'editor-one',
 			'interactions',
+			'mcp',
 		];
 
 		foreach ( $modules as $module_name ) {

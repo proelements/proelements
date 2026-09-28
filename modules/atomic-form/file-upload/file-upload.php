@@ -21,13 +21,16 @@ use Elementor\Modules\AtomicWidgets\PropTypes\Color_Prop_Type;
 use Elementor\Modules\AtomicWidgets\Styles\Style_States;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class File_Upload extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'input';
+	}
 
 	public const DEFAULT_MAX_FILE_SIZE_MB = 5;
 	public const DEFAULT_FILE_TYPES = 'jpg, png, pdf, zip';
@@ -51,7 +54,7 @@ class File_Upload extends Atomic_Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'atomic', 'form', 'file', 'upload' ];
+		return [ 'atomic', 'form', 'file', 'upload', 'attachment', 'document' ];
 	}
 
 	protected static function define_props_schema(): array {

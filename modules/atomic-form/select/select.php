@@ -20,14 +20,19 @@ use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\Attributes\Controls\Repeatable_Attributes_Control;
 use Elementor\Modules\AtomicWidgets\PropTypes\Key_Value_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
+use ElementorPro\Modules\AtomicForm\Default_Value_Provider;
+use ElementorPro\Modules\AtomicForm\Select\Controls\Options_Select_Control;
 use Elementor\Modules\AtomicWidgets\PropTypes\Options_Prop_Type;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly or if Options_Prop_Type is not available
 }
 
 class Select extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'select';
+	}
 
 	public static $widget_description = 'Display a select with options';
 
@@ -48,11 +53,10 @@ class Select extends Atomic_Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'atomic', 'form', 'select', 'dropdown' ];
+		return [ 'atomic', 'form', 'select', 'dropdown', 'choose', 'option', 'picker' ];
 	}
 
 	protected static function define_props_schema(): array {
-
 		return [
 			'classes' => Classes_Prop_Type::make()
 				->default( [] ),
@@ -69,6 +73,10 @@ class Select extends Atomic_Widget_Base {
 				->default( false ),
 			'multiple' => Boolean_Prop_Type::make()
 				->default( false ),
+			Default_Value_Provider::TOGGLE_PROP => Default_Value_Provider::get_toggle_prop(),
+			'value' => String_Prop_Type::make()
+				->default( '' )
+				->set_dependencies( Default_Value_Provider::get_dependencies() ),
 			'attributes' => Attributes_Prop_Type::make()->meta( Overridable_Prop_Type::ignore() ),
 			'_cssid' => Default_Id_Provider::get_default_id_prop( self::get_element_type() ),
 		];
@@ -103,6 +111,9 @@ class Select extends Atomic_Widget_Base {
 						->set_label( __( 'Required', 'elementor-pro' ) ),
 					Switch_Control::bind_to( 'multiple' )
 						->set_label( __( 'Multiple selections', 'elementor-pro' ) ),
+					Default_Value_Provider::get_toggle_control(),
+					Options_Select_Control::bind_to( 'value' )
+						->set_label( __( 'Value', 'elementor-pro' ) ),
 				] ),
 			Section::make()
 				->set_label( __( 'Settings', 'elementor-pro' ) )

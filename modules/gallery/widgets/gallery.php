@@ -13,6 +13,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1665,5 +1666,39 @@ class Gallery extends Base_Widget {
 		$image_data['height'] = $settings['thumbnail_image_custom_dimension']['height'];
 
 		return $image_data;
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$lines = [];
+
+		if ( 'multiple' === ( $settings['gallery_type'] ?? 'single' ) && ! empty( $settings['galleries'] ) ) {
+			foreach ( $settings['galleries'] as $gallery_group ) {
+				$title = Markdown_Utils::plain_text( $gallery_group['gallery_title'] ?? '' );
+				$images = $gallery_group['multiple_gallery'] ?? [];
+
+				if ( '' !== $title ) {
+					$lines[] = '### ' . $title;
+				}
+
+				foreach ( $images as $image ) {
+					$image_md = Markdown_Utils::image_from_media_array( $image );
+
+					if ( '' !== $image_md ) {
+						$lines[] = $image_md;
+					}
+				}
+			}
+		} elseif ( ! empty( $settings['gallery'] ) ) {
+			foreach ( $settings['gallery'] as $image ) {
+				$image_md = Markdown_Utils::image_from_media_array( $image );
+
+				if ( '' !== $image_md ) {
+					$lines[] = $image_md;
+				}
+			}
+		}
+
+		return Markdown_Utils::join_blocks( $lines );
 	}
 }

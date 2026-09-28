@@ -10,6 +10,7 @@ use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\PageTemplates\Module as PageTemplatesModule;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -672,5 +673,37 @@ class ProgressTracker extends Base_Widget {
 		<?php endif; ?>
 		</div>
 		<?php
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$lines = [];
+
+		$relative_to = $settings['relative_to'] ?? 'entire_page';
+		$relative_labels = [
+			'entire_page' => esc_html__( 'Entire Page', 'elementor-pro' ),
+			'post_content' => esc_html__( 'Post Content', 'elementor-pro' ),
+			'selector' => esc_html__( 'Selector', 'elementor-pro' ),
+		];
+
+		$lines[] = '- **' . esc_html__( 'Progress relative to', 'elementor-pro' ) . ':** ' . ( $relative_labels[ $relative_to ] ?? $relative_to );
+
+		if ( 'selector' === $relative_to ) {
+			$selector = $settings['selector'] ?? '';
+
+			if ( '' !== $selector ) {
+				$lines[] = '- **' . esc_html__( 'Selector', 'elementor-pro' ) . ':** `' . $selector . '`';
+			}
+		}
+
+		$type = $settings['type'] ?? 'horizontal';
+		$type_labels = [
+			'horizontal' => esc_html__( 'Horizontal', 'elementor-pro' ),
+			'circular' => esc_html__( 'Circular', 'elementor-pro' ),
+		];
+
+		$lines[] = '- **' . esc_html__( 'Tracker Type', 'elementor-pro' ) . ':** ' . ( $type_labels[ $type ] ?? $type );
+
+		return Markdown_Utils::bullet_list( $lines );
 	}
 }

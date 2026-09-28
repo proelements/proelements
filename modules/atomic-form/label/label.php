@@ -16,13 +16,16 @@ use Elementor\Modules\AtomicWidgets\Styles\Style_Variant;
 use Elementor\Modules\AtomicWidgets\PropTypes\Size_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Color_Prop_Type;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Label extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'label';
+	}
 
 	public static $widget_description = 'Display a label with customizable text and for attribute.';
 
@@ -43,23 +46,29 @@ class Label extends Atomic_Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'atomic', 'form', 'label', 'text' ];
+		return [ 'atomic', 'form', 'label', 'text', 'caption' ];
 	}
 
 	protected static function define_props_schema(): array {
+		$uses_escaped_html = class_exists( 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type' );
+		$text_prop_type = $uses_escaped_html
+			? 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type'::class
+			: Html_V3_Prop_Type::class;
+		$default_text = __( 'Form label', 'elementor-pro' );
+		$text_default = $uses_escaped_html
+			? $default_text
+			: [
+				'content' => String_Prop_Type::generate( $default_text ),
+				'children' => [],
+			];
+
 		return [
 			'tag' => String_Prop_Type::make()
 				->default( 'label' ),
 			'classes' => Classes_Prop_Type::make()
 				->default( [] ),
-			'text' => class_exists( 'Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type' )
-				? \Elementor\Modules\AtomicWidgets\PropTypes\Escaped_Html_Prop_Type::make()
-					->default( 'Form label' )
-				: Html_V3_Prop_Type::make()
-					->default( [
-						'content'  => String_Prop_Type::generate( 'Form label' ),
-						'children' => [],
-					] ),
+			'text' => $text_prop_type::make()
+				->default( $text_default ),
 			'input-id' => String_Prop_Type::make()
 				->default( '' )->description( 'ID of connected input' ),
 			'attributes' => Attributes_Prop_Type::make()->meta( Overridable_Prop_Type::ignore() ),

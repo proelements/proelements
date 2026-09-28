@@ -17,6 +17,7 @@ use Elementor\Core\Documents_Manager;
 use Elementor\Settings;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
+use ElementorPro\Modules\Woocommerce\CollectionLoop\Product_Taxonomy_Template_Type;
 use ElementorPro\Modules\Woocommerce\CollectionLoop\Product_Template_Type;
 use ElementorPro\Modules\Woocommerce\Widgets\Products as Products_Widget;
 use ElementorPro\Modules\CollectionLoop\Query\TemplateTypes\Template_Type_Registry;
@@ -848,6 +849,7 @@ class Module extends Module_Base {
 		}
 
 		$registry->register( new Product_Template_Type() );
+		$registry->register( new Product_Taxonomy_Template_Type() );
 	}
 
 	public function add_products_type_to_loop_settings_query( $form ) {

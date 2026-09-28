@@ -6,6 +6,7 @@ use ElementorPro\Modules\QueryControl\Module as Module_Query;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Related;
 use ElementorPro\Modules\Posts\Skins;
 use ElementorPro\Modules\Posts\Traits\Query_Note_Trait;
+use ElementorPro\Modules\Posts\Traits\Render_Posts_Markdown_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -17,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Posts extends Posts_Base {
 
 	use Query_Note_Trait;
+	use Render_Posts_Markdown_Trait;
 
 	public function get_name() {
 		return 'posts';
@@ -130,5 +132,9 @@ class Posts extends Posts_Base {
 		}
 
 		$this->end_controls_section();
+	}
+
+	public function render_markdown(): string {
+		return $this->render_posts_query_as_markdown();
 	}
 }

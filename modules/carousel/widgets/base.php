@@ -6,6 +6,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -665,5 +666,69 @@ abstract class Base extends Base_Widget {
 			'library' => 'eicons',
 			'value' => $icon_value,
 		], [ 'aria-hidden' => 'true' ] );
+	}
+
+	protected function build_carousel_slide_markdown( array $slide, array $settings ): string {
+		$blocks = [];
+
+		foreach ( [ 'heading', 'title', 'name' ] as $key ) {
+			$text = Markdown_Utils::plain_text( $slide[ $key ] ?? '' );
+
+			if ( '' !== $text ) {
+				$blocks[] = $text;
+				break;
+			}
+		}
+
+		$content = Markdown_Utils::plain_text( $slide['content'] ?? '' );
+
+		if ( '' !== $content ) {
+			$blocks[] = $content;
+		}
+
+		$image_md = Markdown_Utils::image_from_media_array( $slide['image'] ?? [] );
+
+		if ( '' !== $image_md ) {
+			$blocks[] = $image_md;
+		}
+
+		$video_url = $slide['video']['url'] ?? '';
+
+		if ( '' !== $video_url ) {
+			$blocks[] = Markdown_Utils::link( esc_html__( 'Video', 'elementor-pro' ), $video_url );
+		}
+
+		$link_url = $slide['image_link_to']['url'] ?? $slide['link']['url'] ?? '';
+
+		if ( '' !== $link_url ) {
+			$blocks[] = Markdown_Utils::link( esc_html__( 'Link', 'elementor-pro' ), $link_url );
+		}
+
+		if ( isset( $slide['rating'] ) && '' !== $slide['rating'] ) {
+			$blocks[] = '- **' . esc_html__( 'Rating', 'elementor-pro' ) . ':** ' . $slide['rating'];
+		}
+
+		return Markdown_Utils::join_blocks( $blocks );
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$slides = $settings['slides'] ?? [];
+
+		if ( empty( $slides ) ) {
+			return '';
+		}
+
+		$blocks = [];
+
+		foreach ( $slides as $slide ) {
+			$slide_md = $this->build_carousel_slide_markdown( $slide, $settings );
+
+			if ( '' !== $slide_md ) {
+				$blocks[] = $slide_md;
+			}
+		}
+
+		return Markdown_Utils::widget_section( $this->get_title(), Markdown_Utils::join_blocks( $blocks ) );
 	}
 }

@@ -6,14 +6,17 @@ use Elementor\Modules\AtomicWidgets\Module as AtomicWidgetsModule;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Modules\CollectionLoop\Data\Controller as Collection_Loop_Data_Controller;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop\Collection_Loop;
+use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop_Empty_State\Collection_Loop_Empty_State;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop_Item\Collection_Loop_Item;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop_Layout\Collection_Loop_Layout;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop_Pagination\Collection_Loop_Pagination;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop_Pagination_Next\Collection_Loop_Pagination_Next;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop_Pagination_Prev\Collection_Loop_Pagination_Prev;
+use ElementorPro\Modules\CollectionLoop\Import\Loop_Query_Import_Remap;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Prop_Type;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Transformer;
 use ElementorPro\License\API;
+use ElementorPro\Modules\CollectionLoop\Query\TemplateTypes\Post_Taxonomy_Template_Type;
 use ElementorPro\Modules\CollectionLoop\Query\TemplateTypes\Template_Type_Registry;
 use ElementorPro\Plugin;
 
@@ -46,6 +49,8 @@ class Module extends Module_Base {
 
 	public function __construct() {
 		parent::__construct();
+
+		add_action( 'elementor/atomic-widgets/import/id-remap-handlers/register', [ Loop_Query_Import_Remap::class, 'register' ] );
 
 		if ( ! $this->is_experiment_active() || ! $this->is_license_feature_enabled() ) {
 			return;
@@ -87,6 +92,8 @@ class Module extends Module_Base {
 	}
 
 	private function init_template_type_registry(): void {
+		Template_Type_Registry::instance()->register( new Post_Taxonomy_Template_Type() );
+
 		do_action( Template_Type_Registry::REGISTER_ACTION, Template_Type_Registry::instance() );
 	}
 
@@ -97,5 +104,6 @@ class Module extends Module_Base {
 		$elements_manager->register_element_type( new Collection_Loop_Pagination() );
 		$elements_manager->register_element_type( new Collection_Loop_Pagination_Prev() );
 		$elements_manager->register_element_type( new Collection_Loop_Pagination_Next() );
+		$elements_manager->register_element_type( new Collection_Loop_Empty_State() );
 	}
 }

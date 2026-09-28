@@ -99,6 +99,12 @@ class Module extends Module_Base {
 
 		add_filter( 'elementor/atomic/form/email_action_count', fn() => self::EMAIL_ACTION_COUNT );
 
+		// @todo [ED-22528] Remove in 4.6.0 together with Legacy_Default_Value_Normalizer.
+		add_filter(
+			'elementor/document/load/data',
+			fn( $data ) => Legacy_Default_Value_Normalizer::normalize( $data )
+		);
+
 		add_action( 'elementor/frontend/after_enqueue_styles', fn () => $this->add_inline_styles() );
 
 		add_action( 'elementor/editor/before_enqueue_scripts', fn() => $this->enqueue_editor_scripts() );

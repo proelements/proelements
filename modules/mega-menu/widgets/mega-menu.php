@@ -2,12 +2,12 @@
 namespace ElementorPro\Modules\MegaMenu\Widgets;
 
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Widget_Nested_Base_Pro;
 use ElementorPro\Modules\MegaMenu\Controls\Control_Menu_Dropdown_Animation;
 use ElementorPro\Plugin;
 use Elementor\Controls_Manager;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Modules\NestedElements\Base\Widget_Nested_Base;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Modules\NestedElements\Controls\Control_Nested_Repeater;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Mega_Menu extends Widget_Nested_Base {
+class Mega_Menu extends Widget_Nested_Base_Pro {
 	use Base_Widget_Trait;
 	use Url_Helper_Trait;
 

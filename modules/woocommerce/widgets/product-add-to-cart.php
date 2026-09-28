@@ -5,6 +5,7 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
+use ElementorPro\Modules\CollectionLoop\Utils\Loop_Iteration_Context;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -125,7 +126,10 @@ class Product_Add_To_Cart extends Base_Widget {
 	}
 
 	private function is_loop_item() {
-		return 'loop-item' === Plugin::elementor()->documents->get_current()->get_type();
+		$document = Plugin::elementor()->documents->get_current();
+
+		return ( $document && 'loop-item' === $document->get_type() )
+			|| Loop_Iteration_Context::is_v4_collection_loop_active();
 	}
 
 	private function is_loop_item_template_edit() {

@@ -5,6 +5,7 @@ use Elementor\Modules\AtomicWidgets\Controls\Section;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Number_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Switch_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Text_Control;
+use Elementor\Modules\AtomicWidgets\Controls\Types\Textarea_Control;
 use Elementor\Modules\AtomicWidgets\Elements\Base\Atomic_Widget_Base;
 use Elementor\Modules\AtomicWidgets\Elements\Base\Has_Template;
 use Elementor\Modules\AtomicWidgets\PropTypes\Attributes_Prop_Type;
@@ -20,14 +21,18 @@ use Elementor\Modules\AtomicWidgets\PropTypes\Color_Prop_Type;
 use Elementor\Modules\AtomicWidgets\Styles\Style_States;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
+use ElementorPro\Modules\AtomicForm\Default_Value_Provider;
 use ElementorPro\Modules\AtomicForm\Textarea\Controls\Number_Range_Control;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Textarea extends Atomic_Widget_Base {
 	use Has_Template;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'textarea';
+	}
 
 	private const ELEMENTOR_VERSION_NUMBER_RANGE_LENGTH = '4.1';
 
@@ -50,7 +55,7 @@ class Textarea extends Atomic_Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'atomic', 'form', 'textarea', 'text', 'email' ];
+		return [ 'atomic', 'form', 'textarea', 'text', 'email', 'multiline', 'message', 'comments' ];
 	}
 
 	private static function supports_number_range_length(): bool {
@@ -65,6 +70,10 @@ class Textarea extends Atomic_Widget_Base {
 				->default( '' ),
 			'rows' => Number_Prop_Type::make()
 				->default( 4 ),
+			Default_Value_Provider::TOGGLE_PROP => Default_Value_Provider::get_toggle_prop(),
+			'value' => String_Prop_Type::make()
+				->default( '' )
+				->set_dependencies( Default_Value_Provider::get_dependencies() ),
 			'required' => Boolean_Prop_Type::make()
 				->default( false ),
 			'readonly' => Boolean_Prop_Type::make()
@@ -118,6 +127,11 @@ class Textarea extends Atomic_Widget_Base {
 				->set_min( 0 )
 				->set_step( 1 );
 		}
+
+		$content_items[] = Default_Value_Provider::get_toggle_control();
+		$content_items[] = Textarea_Control::bind_to( 'value' )
+			->set_label( __( 'Value', 'elementor-pro' ) )
+			->set_placeholder( __( 'Enter default value', 'elementor-pro' ) );
 
 		return [
 			Section::make()

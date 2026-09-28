@@ -33,51 +33,77 @@ class Global_Widget extends Base_Widget {
 
 	public function __construct( $data = [], $args = null ) {
 		if ( $data && ! empty( $data['templateID'] ) ) {
-			$template_data = Plugin::elementor()->templates_manager->get_template_data( [
-				'source' => 'local',
-				'template_id' => $data['templateID'],
-				'check_permissions' => false,
-			] );
-
-			if ( is_wp_error( $template_data ) ) {
-				throw new \Exception( $template_data->get_error_message() );
+			if ( ! $this->try_load_from_template( $data ) ) {
+				$this->resolve_original_widget_type_from_data( $data );
 			}
-
-			if ( empty( $template_data['content'] ) ) {
-				throw new \Exception( 'Template content not found.' );
-			}
-
-			$this->set_template_data( $template_data );
-
-			$template_widget_type = $this->get_template_widget_type();
-			$original_widget_type = Plugin::elementor()->widgets_manager->get_widget_types(
-				$template_widget_type
-			);
-
-			if ( ! $original_widget_type ) {
-				throw new \Exception( 'Original widget type not found.' );
-			}
-
-			// If it saved as draft it already have the recent settings.
-			if ( empty( $data['draft'] ) ) {
-				if ( empty( $data['originalWidgetType'] ) ) {
-					// If: `$data['originalWidgetType']` exists it means that the data was manipulated in saving process, from the backend.
-					// so `widgetType` is 'global' and have to be changed.
-					$data['widgetType'] = $template_widget_type;
-				}
-
-				if ( ! $this->is_draft_or_autosave_process() ) {
-					// If its not 'draft saving process' then settings should be according the template.
-					// Since draft saving process, already have the recent settings to save.
-					$data['settings'] = $this->get_template_settings();
-				}
-			}
-
-			$this->original_widget_type = $original_widget_type;
-			$this->data = $data;
+		} elseif ( $data ) {
+			$this->resolve_original_widget_type_from_data( $data );
 		}
 
 		parent::__construct( $data, $args );
+	}
+
+	private function try_load_from_template( array $data ): bool {
+		$template_data = Plugin::elementor()->templates_manager->get_template_data( [
+			'source' => 'local',
+			'template_id' => $data['templateID'],
+			'check_permissions' => false,
+		] );
+
+		if ( is_wp_error( $template_data ) || empty( $template_data['content'] ) ) {
+			return false;
+		}
+
+		$this->set_template_data( $template_data );
+
+		$template_widget_type = $this->get_template_widget_type();
+		$original_widget_type = Plugin::elementor()->widgets_manager->get_widget_types(
+			$template_widget_type
+		);
+
+		if ( ! $original_widget_type ) {
+			return false;
+		}
+
+		if ( empty( $data['draft'] ) ) {
+			if ( empty( $data['originalWidgetType'] ) ) {
+				$data['widgetType'] = $template_widget_type;
+			}
+
+			if ( ! $this->is_draft_or_autosave_process() ) {
+				$data['settings'] = $this->get_template_settings();
+			}
+		}
+
+		$this->original_widget_type = $original_widget_type;
+		$this->data = $data;
+
+		return true;
+	}
+
+	private function resolve_original_widget_type_from_data( array $data ): void {
+		$widget_type_name = $data['originalWidgetType'] ?? null;
+
+		if ( ! $widget_type_name && ! empty( $data['widgetType'] ) && 'global' !== $data['widgetType'] ) {
+			$widget_type_name = $data['widgetType'];
+		}
+
+		if ( ! $widget_type_name ) {
+			return;
+		}
+
+		$original_widget_type = Plugin::elementor()->widgets_manager->get_widget_types( $widget_type_name );
+
+		if ( ! $original_widget_type ) {
+			return;
+		}
+
+		$this->original_widget_type = $original_widget_type;
+		$this->data = $data;
+	}
+
+	private function can_resolve_original_element(): bool {
+		return ! $this->is_type_instance() && $this->original_widget_type;
 	}
 
 	public function show_in_panel() {
@@ -102,9 +128,9 @@ class Global_Widget extends Base_Widget {
 		}
 
 		if ( $this->is_saved_as_draft() ) {
-			// If: Item saved as draft
-			// Then: the the `$raw_data` hold recently saved draft template, with original widget type.
-			$raw_data['widgetType'] = $this->get_template_widget_type();
+			$raw_data['widgetType'] = $this->template_data
+				? $this->get_template_widget_type()
+				: ( $this->data['originalWidgetType'] ?? $this->get_name() );
 
 			return $raw_data;
 		}
@@ -119,7 +145,13 @@ class Global_Widget extends Base_Widget {
 	}
 
 	public function render_content() {
-		$this->get_original_element_instance()->render_content();
+		$original_element_instance = $this->get_original_element_instance();
+
+		if ( ! $original_element_instance ) {
+			return;
+		}
+
+		$original_element_instance->render_content();
 	}
 
 	public function get_unique_selector() {
@@ -135,7 +167,7 @@ class Global_Widget extends Base_Widget {
 	}
 
 	public function get_script_depends() {
-		if ( $this->is_type_instance() ) {
+		if ( ! $this->can_resolve_original_element() ) {
 			return [];
 		}
 
@@ -143,7 +175,7 @@ class Global_Widget extends Base_Widget {
 	}
 
 	public function get_style_depends() {
-		if ( $this->is_type_instance() ) {
+		if ( ! $this->can_resolve_original_element() ) {
 			return [];
 		}
 
@@ -151,7 +183,7 @@ class Global_Widget extends Base_Widget {
 	}
 
 	public function get_controls( $control_id = null ) {
-		if ( $this->is_type_instance() ) {
+		if ( ! $this->can_resolve_original_element() ) {
 			return [];
 		}
 
@@ -159,6 +191,10 @@ class Global_Widget extends Base_Widget {
 	}
 
 	public function get_original_element_instance() {
+		if ( ! $this->can_resolve_original_element() ) {
+			return null;
+		}
+
 		if ( ! $this->original_element_instance ) {
 			$this->init_original_element_instance();
 		}
@@ -167,20 +203,36 @@ class Global_Widget extends Base_Widget {
 	}
 
 	public function on_export() {
-		return $this->get_template_content();
+		if ( $this->template_data ) {
+			return $this->get_template_content();
+		}
+
+		return $this->data;
 	}
 
 	public function render_plain_content() {
-		$this->get_original_element_instance()->render_plain_content();
+		$original_element_instance = $this->get_original_element_instance();
+
+		if ( ! $original_element_instance ) {
+			return;
+		}
+
+		$original_element_instance->render_plain_content();
 	}
 
 	protected function add_render_attributes() {
 		// Never called from editor, this method is used only for frontend/preview.
 		parent::add_render_attributes();
 
+		$original_element_instance = $this->get_original_element_instance();
+
+		if ( ! $original_element_instance ) {
+			return;
+		}
+
 		$skin_type = $this->get_settings( '_skin' );
 
-		$original_widget_type = $this->get_original_element_instance()->get_data( 'widgetType' );
+		$original_widget_type = $original_element_instance->get_data( 'widgetType' );
 
 		$this->set_render_attribute( '_wrapper', 'data-widget_type', $original_widget_type . '.' . ( $skin_type ? $skin_type : 'default' ) );
 
@@ -193,6 +245,10 @@ class Global_Widget extends Base_Widget {
 	}
 
 	private function init_original_element_instance() {
+		if ( ! $this->original_widget_type ) {
+			return;
+		}
+
 		$widget_class = $this->original_widget_type->get_class_name();
 
 		$template_content = $this->get_template_or_draft_content();
@@ -245,11 +301,28 @@ class Global_Widget extends Base_Widget {
 	private function get_template_or_draft_content() {
 		if ( $this->is_saved_as_draft() ) {
 			$draft_data = $this->data;
-			$draft_data['widgetType'] = $this->get_template_widget_type();
+
+			if ( $this->template_data ) {
+				$draft_data['widgetType'] = $this->get_template_widget_type();
+			}
 
 			return $draft_data;
 		}
 
-		return $this->get_template_content();
+		if ( $this->template_data ) {
+			return $this->get_template_content();
+		}
+
+		return $this->data;
+	}
+
+	public function render_markdown(): string {
+		$original = $this->get_original_element_instance();
+
+		if ( ! $original ) {
+			return '';
+		}
+
+		return $original->render_markdown();
 	}
 }

@@ -54,18 +54,9 @@ class Module extends Module_Base {
 	private function inject_props_schema( $schema ) {
 		$display_conditions_prop_type = Display_Conditions_Prop_Type::make();
 
-		$components_module = 'Elementor\\Modules\\Components\\Module';
 		$overridable_prop_type = 'Elementor\\Modules\\Components\\PropTypes\\Overridable_Prop_Type';
 
-		$is_components_experiment_active = false;
-		if ( class_exists( $components_module ) ) {
-			$is_components_experiment_active = Plugin::elementor()->experiments->is_feature_active( $components_module::EXPERIMENT_NAME );
-		}
-
-		if (
-			$is_components_experiment_active &&
-			class_exists( $overridable_prop_type )
-		) {
+		if ( class_exists( $overridable_prop_type ) ) {
 			$display_conditions_prop_type->meta( $overridable_prop_type::ignore() );
 		}
 

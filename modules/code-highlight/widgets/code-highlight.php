@@ -297,6 +297,43 @@ class Code_Highlight extends Base_Widget {
 		<?php
 	}
 
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$code = (string) ( $settings['code'] ?? '' );
+
+		if ( '' === $code ) {
+			return '';
+		}
+
+		$language = $this->sanitize_markdown_language( (string) ( $settings['language'] ?? '' ) );
+		$fence = $this->get_markdown_code_fence( $code );
+
+		return $fence . $language . "\n" . $code . "\n" . $fence;
+	}
+
+	private function sanitize_markdown_language( string $language ): string {
+		if ( ! preg_match( '/^[A-Za-z0-9_+\-]+$/', $language ) ) {
+			return '';
+		}
+
+		return $language;
+	}
+
+	private function get_markdown_code_fence( string $code ): string {
+		preg_match_all( '/`+/', $code, $matches );
+
+		$longest = 0;
+
+		foreach ( $matches[0] as $run ) {
+			$length = strlen( $run );
+			if ( $length > $longest ) {
+				$longest = $length;
+			}
+		}
+
+		return str_repeat( '`', max( 3, $longest + 1 ) );
+	}
+
 	protected function content_template() {
 		?>
 		<#

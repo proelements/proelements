@@ -107,5 +107,3 @@
 .elementor-animated-content .elementor-animated-item--move-contained-right, .elementor-animated-content .elementor-animated-item--move-contained-left, .elementor-animated-content .elementor-animated-item--move-contained-top, .elementor-animated-content .elementor-animated-item--move-contained-bottom {
   transform: scale(1.2) translate(var(--translate));
 }
-
-/*# sourceMappingURL=transitions.css.map */

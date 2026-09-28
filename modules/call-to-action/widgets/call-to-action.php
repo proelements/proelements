@@ -15,6 +15,7 @@ use Elementor\Group_Control_Text_Stroke;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1883,6 +1884,51 @@ class Call_To_Action extends Base_Widget {
 		<?php endif; ?>
 		</<?php Utils::print_validated_html_tag( $wrapper_tag ); ?>>
 		<?php
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$blocks = [];
+
+		$bg_image_md = Markdown_Utils::image_from_media_array( $settings['bg_image'] ?? [] );
+
+		if ( '' !== $bg_image_md ) {
+			$blocks[] = $bg_image_md;
+		}
+
+		if ( 'image' === ( $settings['graphic_element'] ?? '' ) ) {
+			$graphic_image_md = Markdown_Utils::image_from_media_array( $settings['graphic_image'] ?? [] );
+
+			if ( '' !== $graphic_image_md ) {
+				$blocks[] = $graphic_image_md;
+			}
+		}
+
+		$title = Utils::html_to_plain_text( $settings['title'] ?? '' );
+		$description = Utils::html_to_plain_text( $settings['description'] ?? '' );
+		$button = Utils::html_to_plain_text( $settings['button'] ?? '' );
+		$url = $settings['link']['url'] ?? '';
+
+		if ( '' !== $title || '' !== $description || '' !== $button ) {
+			$content_blocks = [];
+
+			if ( '' !== $title ) {
+				$tag = $settings['title_tag'] ?? 'h2';
+				$content_blocks[] = Markdown_Utils::heading( $title, $tag );
+			}
+
+			if ( '' !== $description ) {
+				$content_blocks[] = $description;
+			}
+
+			if ( '' !== $button ) {
+				$content_blocks[] = Markdown_Utils::button( $button, $url );
+			}
+
+			$blocks[] = Markdown_Utils::join_blocks( $content_blocks );
+		}
+
+		return Markdown_Utils::join_blocks( $blocks );
 	}
 
 	/**

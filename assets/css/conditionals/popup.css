@@ -9,7 +9,9 @@
   display: flex;
   pointer-events: none;
   background-color: transparent;
-  user-select: auto;
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+          user-select: auto;
 }
 .elementor-popup-modal .dialog-header, .elementor-popup-modal .dialog-buttons-wrapper {
   display: none;
@@ -49,5 +51,3 @@
 .elementor-popup-modal .elementor {
   width: 100%;
 }
-
-/*# sourceMappingURL=popup.css.map */

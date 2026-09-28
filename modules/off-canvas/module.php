@@ -30,7 +30,7 @@ class Module extends Module_Base {
 	}
 
 	public static function is_active() {
-		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements' );
+		return Plugin::elementor()->experiments->is_feature_active( 'container' );
 	}
 
 	public function register_tag( DynamicTagsManager $dynamic_tags ) {

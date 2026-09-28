@@ -1,7573 +1,2327 @@
-/*! pro-elements - v4.2.0 - 31-08-2026 */
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "../core/app/assets/js/utils.js"
-/*!**************************************!*\
-  !*** ../core/app/assets/js/utils.js ***!
-  \**************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.replaceUtmPlaceholders = exports.htmlDecodeTextContent = exports.arrayToClassName = void 0;
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.filter.js */ "../node_modules/core-js/modules/esnext.iterator.filter.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.for-each.js */ "../node_modules/core-js/modules/esnext.iterator.for-each.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-// Copied from Core.
-const arrayToClassName = (array, action) => {
-  return array.filter(item => 'object' === typeof item ? Object.entries(item)[0][1] : item).map(item => {
-    const value = 'object' === typeof item ? Object.entries(item)[0][0] : item;
-    return action ? action(value) : value;
-  }).join(' ');
-};
-exports.arrayToClassName = arrayToClassName;
-const htmlDecodeTextContent = input => {
-  const doc = new DOMParser().parseFromString(input, 'text/html');
-  return doc.documentElement.textContent;
-};
-exports.htmlDecodeTextContent = htmlDecodeTextContent;
-const replaceUtmPlaceholders = (link = '', utms = {}) => {
-  if (!link || !utms) {
-    return link;
-  }
-  Object.keys(utms).forEach(key => {
-    const match = new RegExp(`%%${key}%%`, 'g');
-    link = link.replace(match, utms[key]);
-  });
-  return link;
-};
-exports.replaceUtmPlaceholders = replaceUtmPlaceholders;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/app.js"
-/*!*************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/app.js ***!
-  \*************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _content = _interopRequireDefault(__webpack_require__(/*! ./components/content */ "../modules/display-conditions/assets/js/editor/components/content.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const App = props => {
-  const [dialogOpen, setDialogOpen] = (0, _react.useState)(true),
-    fadeDuration = 500;
-  (0, _react.useEffect)(() => {
-    if (!dialogOpen) {
-      const timeoutId = setTimeout(() => {
-        props.onClose();
-      }, fadeDuration);
-      return () => clearTimeout(timeoutId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dialogOpen]);
-  const handleCloseDialog = () => {
-    setDialogOpen(false);
-  };
-  return /*#__PURE__*/_react.default.createElement(_ui.DirectionProvider, {
-    rtl: props.isRTL
-  }, /*#__PURE__*/_react.default.createElement(_ui.LocalizationProvider, null, /*#__PURE__*/_react.default.createElement(_ui.ThemeProvider, {
-    colorScheme: props.colorScheme
-  }, /*#__PURE__*/_react.default.createElement(_ui.Dialog, {
-    open: dialogOpen,
-    fullWidth: true,
-    maxWidth: "lg",
-    TransitionComponent: _ui.Fade,
-    transitionDuration: {
-      enter: fadeDuration,
-      exit: fadeDuration
-    },
-    sx: {
-      '& .MuiDialog-paper': {
-        height: 'calc(100vh - 4rem)',
-        maxHeight: 775
-      }
-    }
-  }, /*#__PURE__*/_react.default.createElement(_content.default, {
-    getControlValue: props.getControlValue,
-    setControlValue: props.setControlValue,
-    fetchData: props.fetchData,
-    onClose: handleCloseDialog,
-    conditionsConfig: props.conditionsConfig,
-    setCacheNoticeStatus: props.setCacheNoticeStatus
-  })))));
-};
-App.propTypes = {
-  colorScheme: PropTypes.oneOf(['auto', 'light', 'dark']),
-  isRTL: PropTypes.bool,
-  getControlValue: PropTypes.func.isRequired,
-  setControlValue: PropTypes.func.isRequired,
-  fetchData: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  conditionsConfig: PropTypes.object.isRequired,
-  setCacheNoticeStatus: PropTypes.func.isRequired
-};
-var _default = exports["default"] = App;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/behavior.js"
-/*!******************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/behavior.js ***!
-  \******************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-class DisplayConditionsBehavior extends Marionette.Behavior {
-  ui() {
-    const iconClass = '.eicon-flow.e-control-display-conditions';
-    return {
-      displayConditionsButton: iconClass,
-      displayConditionsPromoButton: `${iconClass}-promo`
-    };
-  }
-  events() {
-    return {
-      'click @ui.displayConditionsButton': 'onClickControlButtonDisplayConditions',
-      'mouseenter @ui.displayConditionsPromoButton': 'onHoverControlButtonDisplayConditions'
-    };
-  }
-  onClickControlButtonDisplayConditions(event) {
-    event.stopPropagation();
-    this.mount();
-  }
-  onHoverControlButtonDisplayConditions(event) {
-    event.stopPropagation();
-    elementor.promotion.showDialog({
-      title: __('Display Conditions', 'elementor-pro'),
-      content: __('Upgrade to Elementor Pro Advanced to get the Display Conditions feature as well as additional professional and ecommerce widgets', 'elementor-pro'),
-      targetElement: this.el,
-      actionButton: {
-        url: 'https://go.elementor.com/go-pro-advanced-display-conditions/',
-        text: __('Upgrade Now', 'elementor-pro'),
-        classes: ['elementor-button', 'go-pro']
-      }
-    });
-  }
-  getRootElement() {
-    let rootElement = window.parent.document.getElementById('elementor-conditions__modal');
-    if (!!rootElement) {
-      return rootElement;
-    }
-    rootElement = document.createElement('div');
-    rootElement.setAttribute('id', 'elementor-conditions__modal');
-    return rootElement;
-  }
-  mount() {
-    const rootElement = this.getRootElement();
-    window.parent.document.body.appendChild(rootElement);
-    window.dispatchEvent(new CustomEvent('elementor/display-conditions/open', {
-      detail: {
-        rootElement,
-        props: {
-          getControlValue: this.getOption('getControlValue'),
-          setControlValue: this.getOption('setControlValue'),
-          onClose: () => this.unmount(rootElement),
-          setCacheNoticeStatus: this.getOption('setCacheNoticeStatus')
-        }
-      }
-    }));
-  }
-  unmount(rootElement) {
-    window.dispatchEvent(new CustomEvent('elementor/display-conditions/close', {
-      detail: {
-        rootElement
-      }
-    }));
-  }
-}
-exports["default"] = DisplayConditionsBehavior;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/cache-notice.js"
-/*!*********************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/cache-notice.js ***!
-  \*********************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const CacheNotice = ({
-  setCacheNoticeStatus
-}) => {
-  const [open, setOpen] = (0, _react.useState)(true);
-  const handleClose = async () => {
-    const response = await setCacheNoticeStatus();
-    if (response) {
-      setOpen(false);
-    }
-  };
-  return /*#__PURE__*/_react.default.createElement(_ui.Box, null, /*#__PURE__*/_react.default.createElement(_ui.Collapse, {
-    in: open,
-    sx: {
-      px: 3
-    }
-  }, /*#__PURE__*/_react.default.createElement(_ui.Alert, {
-    color: "info",
-    severity: "error",
-    variant: "standard",
-    onClose: handleClose,
-    sx: {
-      mt: 3
-    }
-  }, (0, _i18n.__)('Keep in mind: Certain cache plugins can conflict with your display conditions. ', 'elementor-pro'), /*#__PURE__*/_react.default.createElement(_ui.Link, {
-    href: "https://go.elementor.com/app-display-conditions-cache-notice/",
-    underline: "hover",
-    color: "info.main",
-    target: "_blank",
-    sx: {
-      '&:hover': {
-        color: theme => theme.palette.info.main
-      }
-    }
-  }, (0, _i18n.__)('Learn more', 'elementor-pro')))));
-};
-CacheNotice.propTypes = {
-  setCacheNoticeStatus: PropTypes.func.isRequired
-};
-var _default = exports["default"] = CacheNotice;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/conditions-repeater-row.js"
-/*!********************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/conditions-repeater-row.js ***!
-  \********************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-conditions */ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _controlRenderer = _interopRequireDefault(__webpack_require__(/*! ./control-renderer */ "../modules/display-conditions/assets/js/editor/components/control-renderer.js"));
-var _conditionSelectControl = _interopRequireDefault(__webpack_require__(/*! ./controls/ui/condition-select-control */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-control.js"));
-var _conditionSelectOption = _interopRequireDefault(__webpack_require__(/*! ./controls/ui/condition-select-option */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js"));
-var _rowControls = _interopRequireDefault(__webpack_require__(/*! ./ui/row-controls */ "../modules/display-conditions/assets/js/editor/components/ui/row-controls.js"));
-var _utils = __webpack_require__(/*! ../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const ConditionsRepeaterRow = ({
-  andConditionIndex,
-  orConditionIndex
-}) => {
-  const {
-      selectedConditions,
-      conditionsConfig,
-      dispatch
-    } = (0, _useConditions.default)(),
-    {
-      conditions: availableConditions,
-      flattenedConditionOptions
-    } = conditionsConfig,
-    orCondition = selectedConditions[orConditionIndex];
-  const andCondition = orCondition[andConditionIndex],
-    selectedConditionKey = andCondition?.condition;
-  const conditionControls = availableConditions[selectedConditionKey]?.controls || {},
-    controlCount = Object.keys(conditionControls).length;
-  const handleChangeCondition = event => {
-    const conditionKey = event.target.value,
-      conditionToChange = {
-        condition: conditionKey,
-        ...(0, _utils.getConditionInitialState)(availableConditions, conditionKey)
-      };
-    dispatch({
-      type: _constants.ACTION_TYPES.CHANGE_CONDITION_TYPE,
-      orConditionIndex,
-      andConditionIndex,
-      conditionToChange
-    });
-  };
-  return /*#__PURE__*/React.createElement(_ui.Container, {
-    maxWidth: "md",
-    sx: {
-      display: 'flex',
-      gap: 0.5,
-      mb: 1,
-      position: 'relative'
-    },
-    className: `and-condition-repeater-row and-condition-${andConditionIndex}`
-  }, /*#__PURE__*/React.createElement(_conditionSelectControl.default, {
-    id: "condition-select",
-    value: andCondition.condition || '',
-    onChange: event => handleChangeCondition(event, andConditionIndex),
-    controlCount: controlCount
-  }, flattenedConditionOptions.map(({
-    key,
-    label,
-    isGroup
-  }) => isGroup ? /*#__PURE__*/React.createElement(_ui.ListSubheader, {
-    key: key
-  }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-    variant: "caption",
-    controlCount: controlCount
-  }, label)) : /*#__PURE__*/React.createElement(_ui.MenuItem, {
-    key: key,
-    value: key
-  }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-    controlCount: controlCount
-  }, label)))), Object.keys(conditionControls).map(controlKey => /*#__PURE__*/React.createElement(_controlRenderer.default, {
-    key: controlKey,
-    controlKey: controlKey,
-    andConditionIndex: andConditionIndex,
-    orConditionIndex: orConditionIndex,
-    controlCount: controlCount
-  })), /*#__PURE__*/React.createElement(_rowControls.default, {
-    orConditionIndex: orConditionIndex,
-    andConditionIndex: andConditionIndex
-  }));
-};
-ConditionsRepeaterRow.propTypes = {
-  andConditionIndex: PropTypes.number.isRequired,
-  orConditionIndex: PropTypes.number.isRequired
-};
-var _default = exports["default"] = ConditionsRepeaterRow;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/conditions-selectors.js"
-/*!*****************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/conditions-selectors.js ***!
-  \*****************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-conditions */ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _conditionsRepeaterRow = _interopRequireDefault(__webpack_require__(/*! ./conditions-repeater-row */ "../modules/display-conditions/assets/js/editor/components/conditions-repeater-row.js"));
-const ConditionsSelectors = ({
-  orConditionIndex
-}) => {
-  const {
-      selectedConditions
-    } = (0, _useConditions.default)(),
-    orCondition = selectedConditions[orConditionIndex];
-  return /*#__PURE__*/_react.default.createElement(_ui.Box, {
-    sx: {
-      my: 2,
-      gap: 1
-    },
-    className: `or-condition-repeater or-condition-${orConditionIndex}`
-  }, orCondition.map((andCondition, andConditionIndex) => /*#__PURE__*/_react.default.createElement(_conditionsRepeaterRow.default, {
-    key: 'or-condition-row-' + andConditionIndex,
-    andConditionIndex: andConditionIndex,
-    orConditionIndex: orConditionIndex
-  })));
-};
-ConditionsSelectors.propTypes = {
-  orConditionIndex: PropTypes.number.isRequired
-};
-var _default = exports["default"] = ConditionsSelectors;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/conditions.js"
-/*!*******************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/conditions.js ***!
-  \*******************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _hierarchyIcon = _interopRequireDefault(__webpack_require__(/*! ./icons/hierarchy-icon */ "../modules/display-conditions/assets/js/editor/components/icons/hierarchy-icon.js"));
-var _orRowGroup = _interopRequireDefault(__webpack_require__(/*! ./or-row-group */ "../modules/display-conditions/assets/js/editor/components/or-row-group.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const Conditions = props => {
-  return /*#__PURE__*/React.createElement(_ui.Box, {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    sx: {
-      flex: 1,
-      overflow: 'auto'
-    }
-  }, /*#__PURE__*/React.createElement(_ui.Stack, {
-    maxWidth: "md",
-    width: "100%",
-    justifyContent: "center",
-    textAlign: "center",
-    sx: {
-      pt: 5,
-      pb: 10,
-      px: 6
-    }
-  }, /*#__PURE__*/React.createElement(_hierarchyIcon.default, {
-    fontSize: "large",
-    sx: {
-      mb: 1,
-      mx: 'auto'
-    }
-  }), /*#__PURE__*/React.createElement(_ui.Typography, {
-    component: "h6",
-    variant: "h6",
-    color: "text.primary"
-  }, __('Set one or more conditions for this element', 'elementor-pro')), /*#__PURE__*/React.createElement(_ui.Typography, {
-    variant: "body2",
-    color: "text.tertiary",
-    sx: {
-      mb: 4
-    }
-  }, __('It will only appear on your website when all the conditions are met.', 'elementor-pro'), ' ', /*#__PURE__*/React.createElement(_ui.Link, {
-    href: "https://go.elementor.com/app-display-conditions/",
-    target: "_blank",
-    rel: "noreferrer",
-    color: "info.main",
-    underline: "hover",
-    sx: {
-      '&:hover': {
-        color: theme => theme.palette.info.main
-      }
-    }
-  }, __('Learn more', 'elementor-pro'))), /*#__PURE__*/React.createElement(_orRowGroup.default, props)));
-};
-var _default = exports["default"] = Conditions;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/content.js"
-/*!****************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/content.js ***!
-  \****************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-__webpack_require__(/*! core-js/modules/es.json.stringify.js */ "../node_modules/core-js/modules/es.json.stringify.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.filter.js */ "../node_modules/core-js/modules/esnext.iterator.filter.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.for-each.js */ "../node_modules/core-js/modules/esnext.iterator.for-each.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var _conditionsReducer = __webpack_require__(/*! ../reducers/conditions-reducer */ "../modules/display-conditions/assets/js/editor/reducers/conditions-reducer.js");
-var _conditionsContext = __webpack_require__(/*! ../contexts/conditions-context */ "../modules/display-conditions/assets/js/editor/contexts/conditions-context.js");
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _utils = __webpack_require__(/*! ../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-var _header = _interopRequireDefault(__webpack_require__(/*! ./header */ "../modules/display-conditions/assets/js/editor/components/header.js"));
-var _footer = _interopRequireDefault(__webpack_require__(/*! ./footer */ "../modules/display-conditions/assets/js/editor/components/footer.js"));
-var _conditions = _interopRequireDefault(__webpack_require__(/*! ./conditions */ "../modules/display-conditions/assets/js/editor/components/conditions.js"));
-var _cacheNotice = _interopRequireDefault(__webpack_require__(/*! ./cache-notice */ "../modules/display-conditions/assets/js/editor/components/cache-notice.js"));
-var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const Content = ({
-  getControlValue,
-  setControlValue,
-  conditionsConfig,
-  onClose,
-  fetchData,
-  setCacheNoticeStatus
-}) => {
-  const inputValue = getControlValue(),
-    controlValue = inputValue || [],
-    initialState = {
-      conditionsConfig,
-      selectedConditions: controlValue,
-      fetchData
-    };
-  const [showConditions, setShowConditions] = _react.default.useState(true),
-    [conditionsStore, dispatch] = (0, _react.useReducer)(_conditionsReducer.conditionsReducer, initialState),
-    [saveButtonDisplay, setSaveButtonDisplay] = (0, _react.useState)(false),
-    {
-      selectedConditions
-    } = conditionsStore;
-  (0, _react.useEffect)(() => {
-    if (!saveButtonDisplay) {
-      setSaveButtonDisplay(true);
-    }
-  }, [selectedConditions]);
-  (0, _react.useEffect)(() => {
-    setSaveButtonDisplay(false);
-  }, []);
-  const handleEmptyFieldsAndGetFirstInvalidIndex = () => {
-    let hasFoundInvalidCondition = false,
-      invalidOrConditionIndex = null,
-      invalidAndConditionIndex = null;
-    selectedConditions.forEach((orCondition, orConditionIndex) => {
-      const {
-        hasFoundInvalidConditionInConditionSet,
-        invalidAndConditionIndex: andConditionIndex
-      } = handleEmptyFieldsPerConditionSet(orCondition, orConditionIndex);
-      if (hasFoundInvalidConditionInConditionSet && !hasFoundInvalidCondition) {
-        hasFoundInvalidCondition = true;
-        invalidAndConditionIndex = andConditionIndex;
-        invalidOrConditionIndex = orConditionIndex;
-      }
-    });
-    return {
-      hasFoundInvalidCondition,
-      invalidOrConditionIndex,
-      invalidAndConditionIndex
-    };
-  };
-  const handleEmptyFieldsPerConditionSet = (orCondition, orConditionIndex) => {
-    let hasFoundInvalidConditionInConditionSet = false,
-      invalidAndConditionIndex = null;
-    orCondition.forEach((andCondition, andConditionIndex) => {
-      const {
-          condition: conditionKey
-        } = andCondition,
-        requiredKeys = getRequiredControlKeys(conditionKey);
-      const isCurrentConditionInvalid = handleInvalidRequiredKeysPerCondition({
-        requiredKeys,
-        andCondition,
-        orConditionIndex,
-        andConditionIndex
-      });
-      if (isCurrentConditionInvalid && !hasFoundInvalidConditionInConditionSet) {
-        invalidAndConditionIndex = andConditionIndex;
-        hasFoundInvalidConditionInConditionSet = true;
-      }
-    });
-    return {
-      hasFoundInvalidConditionInConditionSet,
-      invalidAndConditionIndex
-    };
-  };
-  const handleInvalidRequiredKeysPerCondition = ({
-    requiredKeys,
-    andCondition,
-    orConditionIndex,
-    andConditionIndex
-  }) => {
-    const {
-      condition: conditionKey
-    } = andCondition;
-    let hasFoundInvalidCondition = false;
-    requiredKeys.forEach(controlKey => {
-      const value = andCondition[controlKey],
-        {
-          type,
-          variant = null
-        } = conditionsConfig.conditions[conditionKey].controls[controlKey];
-      if (value?.length || (0, _utils.shouldEmptyValuePassValidation)(andCondition.condition, andCondition.comparator)) {
-        return;
-      }
-      if (!hasFoundInvalidCondition) {
-        hasFoundInvalidCondition = true;
-      }
-      dispatch({
-        type: _constants.ACTION_TYPES.SET_ERRORS,
-        andConditionIndex,
-        orConditionIndex,
-        errors: {
-          [controlKey]: (0, _utils.getInvalidInputFeedback)(type, variant, value, true)
-        }
-      });
-    });
-    return hasFoundInvalidCondition;
-  };
-  const handleSave = () => {
-    const {
-      hasFoundInvalidCondition,
-      invalidOrConditionIndex,
-      invalidAndConditionIndex
-    } = handleEmptyFieldsAndGetFirstInvalidIndex();
-    if (hasFoundInvalidCondition) {
-      const className = `.or-condition-repeater.or-condition-${invalidOrConditionIndex} .and-condition-repeater-row.and-condition-${invalidAndConditionIndex}`,
-        conditionRepeaterRows = document.querySelector(className);
-      setTimeout(() => conditionRepeaterRows?.scrollIntoView({
-        behavior: 'smooth'
-      }), 100);
-      return;
-    }
-    setControlValue([JSON.stringify(getSanitizedConditions())]);
-    onClose();
-  };
-  const getRequiredControlKeys = condition => {
-    const {
-      controls
-    } = conditionsConfig.conditions[condition];
-    return Object.keys(controls).filter(key => controls[key].required);
-  };
-  const getSanitizedConditions = () => {
-    return selectedConditions.map(orCondition => {
-      return orCondition.map(andCondition => {
-        const formattedCondition = {
-          ...andCondition
-        };
-        delete formattedCondition.errors;
-        return formattedCondition;
-      });
-    });
-  };
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_header.default, {
-    onClose: onClose
-  }), /*#__PURE__*/_react.default.createElement(_ui.Divider, {
-    orientation: "horizontal"
-  }), conditionsConfig.show_cache_notice && /*#__PURE__*/_react.default.createElement(_cacheNotice.default, {
-    setCacheNoticeStatus: setCacheNoticeStatus
-  }), /*#__PURE__*/_react.default.createElement(_conditionsContext.ConditionsContext.Provider, {
-    value: {
-      dispatch,
-      ...conditionsStore
-    }
-  }, /*#__PURE__*/_react.default.createElement(_conditions.default, {
-    showConditions: showConditions,
-    setShowConditions: setShowConditions
-  })), /*#__PURE__*/_react.default.createElement(_ui.Divider, {
-    orientation: "horizontal"
-  }), /*#__PURE__*/_react.default.createElement(_footer.default, {
-    onClickSaveButton: () => handleSave(),
-    showConditions: showConditions,
-    setShowConditions: setShowConditions,
-    isButtonDisabled: saveButtonDisplay
-  }));
-};
-Content.propTypes = {
-  getControlValue: PropTypes.func.isRequired,
-  setControlValue: PropTypes.func.isRequired,
-  fetchData: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  conditionsConfig: PropTypes.object.isRequired,
-  setCacheNoticeStatus: PropTypes.func.isRequired
-};
-var _default = exports["default"] = Content;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/control-renderer.js"
-/*!*************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/control-renderer.js ***!
-  \*************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-conditions */ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"));
-var _selectControl = _interopRequireDefault(__webpack_require__(/*! ./controls/select-control */ "../modules/display-conditions/assets/js/editor/components/controls/select-control.js"));
-var _autocompleteControl = _interopRequireDefault(__webpack_require__(/*! ./controls/autocomplete-control */ "../modules/display-conditions/assets/js/editor/components/controls/autocomplete-control.js"));
-var _queryControl = _interopRequireDefault(__webpack_require__(/*! ./controls/query-control */ "../modules/display-conditions/assets/js/editor/components/controls/query-control.js"));
-var _textFieldControl = _interopRequireDefault(__webpack_require__(/*! ./controls/text-field-control */ "../modules/display-conditions/assets/js/editor/components/controls/text-field-control.js"));
-var _datePickerControl = _interopRequireDefault(__webpack_require__(/*! ./controls/date-picker-control */ "../modules/display-conditions/assets/js/editor/components/controls/date-picker-control.js"));
-var _timePickerControl = _interopRequireDefault(__webpack_require__(/*! ./controls/time-picker-control */ "../modules/display-conditions/assets/js/editor/components/controls/time-picker-control.js"));
-var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-var _utils = __webpack_require__(/*! ../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const ControlRenderer = ({
-  controlKey,
-  andConditionIndex,
-  orConditionIndex,
-  controlCount
-}) => {
-  const {
-      conditionsConfig,
-      selectedConditions,
-      dispatch
-    } = (0, _useConditions.default)(),
-    {
-      conditions: availableConditions
-    } = conditionsConfig,
-    orCondition = selectedConditions[orConditionIndex],
-    andCondition = orCondition[andConditionIndex];
-  const selectedConditionKey = andCondition.condition,
-    {
-      controls = {}
-    } = availableConditions[selectedConditionKey],
-    control = {} = controls[controlKey],
-    {
-      options = {}
-    } = control;
-  if ('__settings' === controlKey) {
-    return null;
-  }
-  const extractControlPropsFromGlobals = defaultAltValue => {
-    const valueProps = getControlValueRelatedProps(defaultAltValue),
-      invalidInputProps = getControlInvalidInputRelatedProps(),
-      controlProps = {
-        controlKey,
-        control,
-        conditionIndex: andConditionIndex,
-        condition: andCondition,
-        conditions: availableConditions,
-        options,
-        onChangeOption: handleChangeOption,
-        controlCount
-      };
-    if ((0, _utils.shouldDisableControl)(controlKey, controlProps.condition.comparator)) {
-      controlProps.disabled = true;
-    }
-    return {
-      ...valueProps,
-      ...invalidInputProps,
-      ...controlProps
-    };
-  };
-  const getControlValueRelatedProps = defaultAltValue => {
-    defaultAltValue = (0, _utils.getControlValue)(defaultAltValue, _constants.DEFAULT_CONTROL_VALUES[control.type]);
-    const defaultValue = (0, _utils.getControlValue)(control?.default, Object.keys(options)[0] || defaultAltValue),
-      value = (0, _utils.getControlValue)(andCondition[controlKey], defaultValue);
-    const placeholder = control?.placeholder || '',
-      isMultiple = control?.multiple || false;
-    return {
-      defaultValue,
-      value,
-      placeholder,
-      isMultiple
-    };
-  };
-  const getControlInvalidInputRelatedProps = () => {
-    const conditionErrors = andCondition.errors || {},
-      controlErrors = conditionErrors[controlKey] || {},
-      errorMessage = controlErrors.shouldShow && controlErrors.message || '',
-      shouldShowError = Boolean(errorMessage);
-    return {
-      errorMessage,
-      shouldShowError
-    };
-  };
-  const handleChangeOption = value => {
-    const {
-        type,
-        variant
-      } = controls[controlKey],
-      error = (0, _utils.getInvalidInputFeedback)(type, variant, value);
-    dispatch({
-      type: _constants.ACTION_TYPES.CHANGE_CONTROL_VALUE,
-      orConditionIndex,
-      andConditionIndex,
-      controlKey,
-      value
-    });
-    dispatch({
-      type: _constants.ACTION_TYPES.SET_ERRORS,
-      andConditionIndex,
-      orConditionIndex,
-      errors: {
-        [controlKey]: error
-      }
-    });
-  };
-  const getDateAndTimeBasedControl = variant => {
-    switch (variant) {
-      case 'date':
-        return /*#__PURE__*/React.createElement(_datePickerControl.default, extractControlPropsFromGlobals());
-      case 'time':
-        return /*#__PURE__*/React.createElement(_timePickerControl.default, extractControlPropsFromGlobals());
-    }
-  };
-  switch (control.type) {
-    case _constants.CONTROL_TYPES.SELECT:
-      return /*#__PURE__*/React.createElement(_selectControl.default, extractControlPropsFromGlobals());
-    case _constants.CONTROL_TYPES.MULTIPLE_SELECT:
-      return /*#__PURE__*/React.createElement(_autocompleteControl.default, extractControlPropsFromGlobals());
-    case _constants.CONTROL_TYPES.DATE_TIME:
-      return getDateAndTimeBasedControl(control?.variant);
-    case _constants.CONTROL_TYPES.QUERY:
-      return /*#__PURE__*/React.createElement(_queryControl.default, extractControlPropsFromGlobals());
-  }
-  return /*#__PURE__*/React.createElement(_textFieldControl.default, extractControlPropsFromGlobals());
-};
-ControlRenderer.propTypes = {
-  controlKey: PropTypes.string.isRequired,
-  andConditionIndex: PropTypes.number.isRequired,
-  orConditionIndex: PropTypes.number.isRequired,
-  controlCount: PropTypes.number.isRequired
-};
-var _default = exports["default"] = ControlRenderer;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/autocomplete-control.js"
-/*!**************************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/autocomplete-control.js ***!
-  \**************************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var React = _react;
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _conditionSelectOption = _interopRequireDefault(__webpack_require__(/*! ./ui/condition-select-option */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const formatValue = valueToFormat => {
-  return Array.isArray(valueToFormat) ? valueToFormat : [valueToFormat];
-};
-const AutocompleteControl = ({
-  conditions,
-  condition,
-  controlKey,
-  onChangeOption,
-  options,
-  value,
-  shouldShowError,
-  errorMessage,
-  isMultiple,
-  controlCount
-}) => {
-  const [controlValue, setControlValue] = (0, _react.useState)(formatValue(value)),
-    label = controlValue?.length ? '' : conditions[condition.condition].label || '';
-  (0, _react.useEffect)(() => {
-    setControlValue(formatValue(value));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [condition]);
-  const handleChangeOption = newValue => {
-    onChangeOption(newValue);
-    setControlValue(newValue);
-  };
-  const renderOption = ({
-    key,
-    ...optionProps
-  }, option) => {
-    return /*#__PURE__*/React.createElement(_ui.Typography, (0, _extends2.default)({
-      component: "li"
-    }, optionProps, {
-      key: key
-    }), /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-      component: "span",
-      variant: "inherit",
-      noWrap: true,
-      controlCount: controlCount
-    }, options[option]));
-  };
-  const renderInput = params => {
-    return /*#__PURE__*/React.createElement(_ui.TextField, (0, _extends2.default)({
-      error: shouldShowError,
-      helperText: errorMessage
-    }, params, {
-      placeholder: label,
-      color: "secondary"
-    }));
-  };
-  return /*#__PURE__*/React.createElement(_ui.Autocomplete, {
-    multiple: isMultiple,
-    id: `select-${controlKey}`,
-    value: controlValue,
-    options: Object.keys(options),
-    getOptionLabel: optionKey => options[optionKey],
-    sx: {
-      flex: 1
-    },
-    ChipProps: {
-      sx: {
-        '&.MuiAutocomplete-tag': {
-          maxWidth: '100px'
-        }
-      }
-    },
-    renderInput: renderInput,
-    ListboxProps: {
-      sx: {
-        maxHeight: 280
-      }
-    },
-    size: "small",
-    onChange: (_event, newValues) => handleChangeOption(formatValue(newValues)),
-    renderOption: renderOption,
-    forcePopupIcon: !Object.keys(options).length <= 1
-  });
-};
-AutocompleteControl.propTypes = {
-  conditions: PropTypes.object.isRequired,
-  condition: PropTypes.object.isRequired,
-  controlKey: PropTypes.string.isRequired,
-  onChangeOption: PropTypes.func.isRequired,
-  value: PropTypes.array.isRequired,
-  options: PropTypes.object.isRequired,
-  errorMessage: PropTypes.string.isRequired,
-  shouldShowError: PropTypes.bool.isRequired,
-  isMultiple: PropTypes.bool.isRequired,
-  controlCount: PropTypes.number.isRequired
-};
-var _default = exports["default"] = AutocompleteControl;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/date-picker-control.js"
-/*!*************************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/date-picker-control.js ***!
-  \*************************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var React = _react;
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _dayjs = _interopRequireDefault(__webpack_require__(/*! dayjs */ "../node_modules/dayjs/dayjs.min.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const dateFormat = 'MM-DD-YYYY';
-const formattedValue = dateString => {
-  return (0, _dayjs.default)(dateString, dateFormat, true).isValid() ? (0, _dayjs.default)(dateString, dateFormat) : null;
-};
-const DatePickerControl = ({
-  condition,
-  onChangeOption,
-  controlKey,
-  value,
-  shouldShowError,
-  errorMessage
-}) => {
-  const [controlValue, setControlValue] = (0, _react.useState)(formattedValue(value));
-  (0, _react.useEffect)(() => {
-    setControlValue(formattedValue(value));
-  }, [condition]);
-  const handleChangeOption = newValue => {
-    if ((0, _dayjs.default)(newValue, dateFormat, true).isValid()) {
-      onChangeOption(newValue.format(dateFormat));
-      setControlValue(formattedValue(newValue));
-    } else {
-      onChangeOption('');
-    }
-  };
-  return /*#__PURE__*/React.createElement(_ui.DatePicker, {
-    value: controlValue,
-    sx: {
-      flex: 1
-    },
-    id: `select-${controlKey}`,
-    slotProps: {
-      openPickerButton: {
-        size: 'small'
-      },
-      textField: {
-        size: 'small',
-        color: 'secondary',
-        error: shouldShowError,
-        helperText: errorMessage
-      }
-    },
-    onChange: newValue => handleChangeOption(newValue)
-  });
-};
-DatePickerControl.propTypes = {
-  condition: PropTypes.object.isRequired,
-  controlKey: PropTypes.string.isRequired,
-  onChangeOption: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  errorMessage: PropTypes.string.isRequired,
-  shouldShowError: PropTypes.bool.isRequired
-};
-var _default = exports["default"] = DatePickerControl;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/query-control.js"
-/*!*******************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/query-control.js ***!
-  \*******************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.filter.js */ "../node_modules/core-js/modules/esnext.iterator.filter.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.some.js */ "../node_modules/core-js/modules/esnext.iterator.some.js");
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-var _conditionsContext = __webpack_require__(/*! ../../contexts/conditions-context */ "../modules/display-conditions/assets/js/editor/contexts/conditions-context.js");
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _utils = __webpack_require__(/*! elementor-pro-app/utils */ "../core/app/assets/js/utils.js");
-var _conditionSelectOption = _interopRequireDefault(__webpack_require__(/*! ./ui/condition-select-option */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const formatValue = valueToFormat => {
-  return Array.isArray(valueToFormat) ? valueToFormat : [valueToFormat];
-};
-const QueryControl = ({
-  conditions,
-  condition,
-  control,
-  controlKey,
-  onChangeOption,
-  value,
-  shouldShowError,
-  errorMessage,
-  isMultiple,
-  controlCount
-}) => {
-  const {
-      fetchData
-    } = (0, _react.useContext)(_conditionsContext.ConditionsContext),
-    [controlValue, setControlValue] = (0, _react.useState)(formatValue(value)),
-    [options, setOptions] = (0, _react.useState)([]),
-    [loading, setLoading] = (0, _react.useState)(false),
-    label = controlValue?.length ? '' : conditions[condition.condition].label || '';
-  (0, _react.useEffect)(() => {
-    setControlValue(formatValue(value));
-  }, [condition]);
-  const handleSearchInputChange = async (event, newInputValue, selectedValues) => {
-    if ('' === newInputValue) {
-      setOptions([]);
-      return;
-    }
-    setLoading(true);
-    const results = await fetchData(newInputValue, control);
-
-    // Filter out options that are already selected
-    const filteredResults = results.filter(option => {
-      option.text = (0, _utils.htmlDecodeTextContent)(option.text);
-      return !selectedValues.some(selectedOption => selectedOption?.id === option?.id);
-    });
-    setOptions(filteredResults);
-    setLoading(false);
-  };
-  const handleChangeOption = newValue => {
-    onChangeOption(newValue);
-    setControlValue(newValue);
-  };
-  return /*#__PURE__*/_react.default.createElement(_ui.Autocomplete, {
-    multiple: isMultiple,
-    id: `select-${controlKey}`,
-    value: controlValue,
-    options: options,
-    getOptionLabel: option => option ? option.text : '',
-    isOptionEqualToValue: (option, optionToCompare) => option.id === optionToCompare.id,
-    filterOptions: x => x,
-    noOptionsText: (0, _i18n.__)('No results', 'elementor-pro'),
-    loading: loading,
-    loadingText: (0, _i18n.__)('Searching...', 'elementor-pro'),
-    size: "small",
-    sx: {
-      flex: 1
-    },
-    ChipProps: {
-      sx: {
-        '&.MuiAutocomplete-tag': {
-          maxWidth: '100px'
-        }
-      }
-    },
-    renderInput: params => /*#__PURE__*/_react.default.createElement(_ui.TextField, (0, _extends2.default)({}, params, {
-      placeholder: label,
-      color: "secondary",
-      error: shouldShowError,
-      helperText: errorMessage,
-      InputProps: {
-        ...params.InputProps,
-        endAdornment: /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, loading ? /*#__PURE__*/_react.default.createElement(_ui.CircularProgress, {
-          color: "inherit",
-          size: 20
-        }) : null, params.InputProps.endAdornment)
-      }
-    })),
-    ListboxProps: {
-      sx: {
-        maxHeight: 280
-      }
-    },
-    onChange: (_event, newValues) => handleChangeOption(newValues),
-    onInputChange: (event, newInputValue) => handleSearchInputChange(event, newInputValue, controlValue),
-    renderOption: (optionProps, option) => /*#__PURE__*/_react.default.createElement(_ui.Typography, (0, _extends2.default)({
-      component: "li"
-    }, optionProps), /*#__PURE__*/_react.default.createElement(_conditionSelectOption.default, {
-      component: "span",
-      variant: "inherit",
-      noWrap: true,
-      controlCount: controlCount
-    }, option.text))
-  });
-};
-QueryControl.propTypes = {
-  conditions: PropTypes.object.isRequired,
-  condition: PropTypes.object.isRequired,
-  onChangeOption: PropTypes.func.isRequired,
-  controlKey: PropTypes.string.isRequired,
-  control: PropTypes.object.isRequired,
-  value: PropTypes.array.isRequired,
-  errorMessage: PropTypes.string.isRequired,
-  shouldShowError: PropTypes.bool.isRequired,
-  isMultiple: PropTypes.bool.isRequired,
-  controlCount: PropTypes.number.isRequired
-};
-var _default = exports["default"] = QueryControl;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/select-control.js"
-/*!********************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/select-control.js ***!
-  \********************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var React = _react;
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _conditionSelectControl = _interopRequireDefault(__webpack_require__(/*! ./ui/condition-select-control */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-control.js"));
-var _conditionSelectOption = _interopRequireDefault(__webpack_require__(/*! ./ui/condition-select-option */ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const SelectControl = ({
-  condition,
-  control,
-  controlKey,
-  onChangeOption,
-  options,
-  value,
-  controlCount
-}) => {
-  const [controlValue, setControlValue] = (0, _react.useState)(value);
-  (0, _react.useEffect)(() => {
-    setControlValue(value);
-  }, [condition]);
-  const handleChangeOption = newValue => {
-    onChangeOption(newValue);
-    setControlValue(newValue);
-  };
-  const getOptions = () => {
-    return Object.entries(options).map(([optionKey, optionValue]) => {
-      if (!optionValue) {
-        return null;
-      }
-      if ('group' === optionValue.type) {
-        return /*#__PURE__*/React.createElement(_ui.ListSubheader, {
-          key: optionKey
-        }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-          controlCount: controlCount
-        }, optionValue.label));
-      }
-      const isDisabled = control?.disabled_options?.includes(optionKey);
-      return /*#__PURE__*/React.createElement(_ui.MenuItem, {
-        key: optionKey,
-        value: optionKey,
-        disabled: isDisabled,
-        className: isDisabled && 'hidden' === control?.disabled_type ? 'elementor-hidden' : ''
-      }, /*#__PURE__*/React.createElement(_conditionSelectOption.default, {
-        controlCount: controlCount
-      }, optionValue));
-    });
-  };
-  return /*#__PURE__*/React.createElement(_conditionSelectControl.default, {
-    id: `select-${controlKey}`,
-    value: controlValue,
-    onChange: event => handleChangeOption(event.target.value),
-    disabled: Object.keys(options).length <= 1,
-    controlCount: controlCount
-  }, getOptions());
-};
-SelectControl.propTypes = {
-  condition: PropTypes.object.isRequired,
-  control: PropTypes.object.isRequired,
-  controlKey: PropTypes.string.isRequired,
-  onChangeOption: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired,
-  value: PropTypes.string.isRequired,
-  controlCount: PropTypes.number.isRequired
-};
-var _default = exports["default"] = SelectControl;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/text-field-control.js"
-/*!************************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/text-field-control.js ***!
-  \************************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var React = _react;
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _utils = __webpack_require__(/*! ../../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const TextFieldControl = ({
-  condition,
-  controlKey,
-  control,
-  onChangeOption,
-  value,
-  errorMessage,
-  shouldShowError,
-  placeholder,
-  disabled
-}) => {
-  const [controlValue, setControlValue] = (0, _react.useState)(value),
-    {
-      step = 1,
-      min = 0,
-      variant = null
-    } = control;
-  const numericProps = 'number' === variant ? {
-    type: 'number',
-    inputProps: {
-      step,
-      min
-    }
-  } : {};
-  (0, _react.useEffect)(() => {
-    setControlValue(value);
-  }, [condition]);
-  const handleChangeOption = (newValue, controlVariant) => {
-    let integerValue = null;
-    if ('number' === controlVariant && (0, _utils.hasDecimalSeparator)(newValue)) {
-      integerValue = Math.floor(parseFloat(newValue));
-    }
-    onChangeOption(integerValue ?? newValue.trim());
-    setControlValue(integerValue ?? newValue);
-  };
-  return /*#__PURE__*/React.createElement(_ui.TextField, (0, _extends2.default)({}, numericProps, {
-    sx: {
-      flex: 1
-    },
-    error: shouldShowError,
-    helperText: errorMessage,
-    value: controlValue,
-    id: `text-${controlKey}`,
-    variant: "outlined",
-    onChange: event => handleChangeOption(event.target.value, variant),
-    size: "small",
-    color: "secondary",
-    placeholder: placeholder,
-    disabled: disabled ?? false
-  }));
-};
-TextFieldControl.propTypes = {
-  condition: PropTypes.object.isRequired,
-  controlKey: PropTypes.string.isRequired,
-  control: PropTypes.object.isRequired,
-  onChangeOption: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  errorMessage: PropTypes.string.isRequired,
-  shouldShowError: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  disabled: PropTypes.bool
-};
-var _default = exports["default"] = TextFieldControl;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/time-picker-control.js"
-/*!*************************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/time-picker-control.js ***!
-  \*************************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var React = _react;
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _dayjs = _interopRequireDefault(__webpack_require__(/*! dayjs */ "../node_modules/dayjs/dayjs.min.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const timeFormat = 'HH:mm',
-  dateFormat = 'MM-DD-YYYY ' + timeFormat;
-const formattedValue = dateString => {
-  return (0, _dayjs.default)(dateString, timeFormat, true).isValid() ? (0, _dayjs.default)(dateString, timeFormat) : null;
-};
-const TimePickerControl = ({
-  condition,
-  controlKey,
-  onChangeOption,
-  value,
-  shouldShowError,
-  errorMessage
-}) => {
-  const lastInputValue = (0, _react.useRef)(formattedValue(value)),
-    [controlValue, setControlValue] = (0, _react.useState)(lastInputValue.current);
-  (0, _react.useEffect)(() => {
-    setControlValue(lastInputValue.current);
-  }, [condition]);
-  const handleChangeOption = newValue => {
-    const dateString = (0, _dayjs.default)(newValue, dateFormat, true).isValid() ? newValue.format(dateFormat) : '';
-    onChangeOption(dateString);
-    lastInputValue.current = newValue;
-    setControlValue(newValue);
-  };
-  return /*#__PURE__*/React.createElement(_ui.TimePicker, {
-    sx: {
-      flex: 1
-    },
-    id: `select-${controlKey}`,
-    value: controlValue,
-    slotProps: {
-      textField: {
-        size: 'small',
-        error: shouldShowError,
-        helperText: errorMessage
-      }
-    },
-    onChange: newValue => handleChangeOption(newValue)
-  });
-};
-TimePickerControl.propTypes = {
-  condition: PropTypes.object.isRequired,
-  control: PropTypes.object.isRequired,
-  controlKey: PropTypes.string.isRequired,
-  onChangeOption: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  errorMessage: PropTypes.string.isRequired,
-  shouldShowError: PropTypes.bool.isRequired
-};
-var _default = exports["default"] = TimePickerControl;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-control.js"
-/*!*********************************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-control.js ***!
-  \*********************************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _utils = __webpack_require__(/*! ../../../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const ConditionSelect = ({
-  controlCount,
-  ...props
-}) => /*#__PURE__*/_react.default.createElement(_ui.Select, (0, _extends2.default)({}, props, {
-  size: "small",
-  sx: {
-    flex: 1,
-    textAlign: 'start',
-    alignSelf: 'flex-start',
-    '.MuiSelect-select .MuiTypography-root': {
-      maxWidth: (0, _utils.getControlValueMaxWidth)(controlCount)
-    }
-  },
-  color: "secondary",
-  MenuProps: {
-    PaperProps: {
-      sx: {
-        maxHeight: 280,
-        '& .MuiListSubheader-root': {
-          position: 'initial'
-        }
-      }
-    },
-    classes: {
-      paper: 'e-conditions-select-menu'
-    }
-  }
-}));
-ConditionSelect.propTypes = {
-  controlCount: PropTypes.number.isRequired
-};
-var _default = exports["default"] = ConditionSelect;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js"
-/*!********************************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js ***!
-  \********************************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _utils = __webpack_require__(/*! ../../../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const ConditionSelectOption = ({
-  controlCount,
-  sx = {},
-  ...props
-}) => /*#__PURE__*/_react.default.createElement(_ui.Typography, (0, _extends2.default)({
-  noWrap: true
-}, props, {
-  variant: props.variant || 'inherit',
-  sx: {
-    maxWidth: (0, _utils.getSelectOptionMaxWidth)(controlCount),
-    ...sx
-  }
-}));
-ConditionSelectOption.propTypes = {
-  sx: PropTypes.object,
-  isDropdownItem: PropTypes.bool,
-  variant: PropTypes.string,
-  controlCount: PropTypes.number.isRequired
-};
-var _default = exports["default"] = ConditionSelectOption;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/footer.js"
-/*!***************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/footer.js ***!
-  \***************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const Footer = ({
-  onClickSaveButton,
-  isButtonDisabled
-}) => {
-  return /*#__PURE__*/React.createElement(_ui.Stack, {
-    direction: "row",
-    justifyContent: "flex-end",
-    sx: {
-      py: 1,
-      px: 3
-    }
-  }, /*#__PURE__*/React.createElement(_ui.Button, {
-    variant: "contained",
-    className: "save-and-close-button",
-    disabled: !isButtonDisabled,
-    onClick: onClickSaveButton
-  }, __('Save & Close', 'elementor-pro')));
-};
-Footer.propTypes = {
-  onClickSaveButton: PropTypes.func,
-  isButtonDisabled: PropTypes.bool.isRequired
-};
-var _default = exports["default"] = Footer;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/header.js"
-/*!***************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/header.js ***!
-  \***************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
-var PropTypes = _interopRequireWildcard(__webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js"));
-var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _elementorLogo = _interopRequireDefault(__webpack_require__(/*! ./icons/elementor-logo */ "../modules/display-conditions/assets/js/editor/components/icons/elementor-logo.js"));
-var _icons = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const Header = ({
-  onClose
-}) => {
-  return /*#__PURE__*/_react.default.createElement(_ui.AppBar, {
-    sx: {
-      fontWeight: 'normal'
-    },
-    color: "transparent",
-    position: "relative"
-  }, /*#__PURE__*/_react.default.createElement(_ui.Toolbar, {
-    variant: "dense"
-  }, /*#__PURE__*/_react.default.createElement(_elementorLogo.default, {
-    sx: {
-      mr: 1
-    }
-  }), /*#__PURE__*/_react.default.createElement(_ui.Typography, {
-    component: "span",
-    variant: "subtitle2",
-    sx: {
-      fontWeight: 'bold',
-      textTransform: 'uppercase'
-    }
-  }, (0, _i18n.__)('Display Conditions', 'elementor-pro')), /*#__PURE__*/_react.default.createElement(_ui.Stack, {
-    direction: "row",
-    spacing: 1,
-    alignItems: "center",
-    sx: {
-      ml: 'auto'
-    }
-  }, /*#__PURE__*/_react.default.createElement(_ui.IconButton, {
-    size: "small",
-    "aria-label": (0, _i18n.__)('Close', 'elementor-pro'),
-    onClick: onClose,
-    sx: {
-      '&.MuiButtonBase-root': {
-        mr: -1
-      }
-    }
-  }, /*#__PURE__*/_react.default.createElement(_icons.XIcon, null)))));
-};
-Header.propTypes = {
-  onClose: PropTypes.func.isRequired
-};
-var _default = exports["default"] = Header;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/icons/elementor-logo.js"
-/*!*****************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/icons/elementor-logo.js ***!
-  \*****************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const ElementorLogo = props => {
-  return /*#__PURE__*/React.createElement(_ui.SvgIcon, (0, _extends2.default)({
-    viewBox: "0 0 32 32"
-  }, props), /*#__PURE__*/React.createElement("path", {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M2.69648 24.8891C0.938383 22.2579 0 19.1645 0 16C0 11.7566 1.68571 7.68687 4.68629 4.68629C7.68687 1.68571 11.7566 0 16 0C19.1645 0 22.2579 0.938383 24.8891 2.69648C27.5203 4.45459 29.5711 6.95344 30.7821 9.87706C31.9931 12.8007 32.3099 16.0177 31.6926 19.1214C31.0752 22.2251 29.5514 25.0761 27.3137 27.3137C25.0761 29.5514 22.2251 31.0752 19.1214 31.6926C16.0177 32.3099 12.8007 31.9931 9.87706 30.7821C6.95344 29.5711 4.45459 27.5203 2.69648 24.8891ZM12.0006 9.33281H9.33437V22.6665H12.0006V9.33281ZM22.6657 9.33281H14.6669V11.9991H22.6657V9.33281ZM22.6657 14.6654H14.6669V17.3316H22.6657V14.6654ZM22.6657 20.0003H14.6669V22.6665H22.6657V20.0003Z"
-  }));
-};
-var _default = exports["default"] = ElementorLogo;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/icons/hierarchy-icon.js"
-/*!*****************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/icons/hierarchy-icon.js ***!
-  \*****************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "../node_modules/@babel/runtime/helpers/extends.js"));
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const UnstyledHierarchyIcon = React.forwardRef((props, ref) => {
-  return /*#__PURE__*/React.createElement(_ui.SvgIcon, (0, _extends2.default)({
-    viewBox: "0 0 24 24"
-  }, props, {
-    ref: ref
-  }), /*#__PURE__*/React.createElement("path", {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M11 3.75C10.3096 3.75 9.75 4.30964 9.75 5V7C9.75 7.69036 10.3096 8.25 11 8.25H13C13.6904 8.25 14.25 7.69036 14.25 7V5C14.25 4.30964 13.6904 3.75 13 3.75H11ZM12.75 9.75H13C14.5188 9.75 15.75 8.51878 15.75 7V5C15.75 3.48122 14.5188 2.25 13 2.25H11C9.48122 2.25 8.25 3.48122 8.25 5V7C8.25 8.51878 9.48122 9.75 11 9.75H11.25V11.25H8C7.27065 11.25 6.57118 11.5397 6.05546 12.0555C5.53973 12.5712 5.25 13.2707 5.25 14V14.25H5C3.48122 14.25 2.25 15.4812 2.25 17V19C2.25 20.5188 3.48122 21.75 5 21.75H7C8.51878 21.75 9.75 20.5188 9.75 19V17C9.75 15.4812 8.51878 14.25 7 14.25H6.75V14C6.75 13.6685 6.8817 13.3505 7.11612 13.1161C7.35054 12.8817 7.66848 12.75 8 12.75H16C16.3315 12.75 16.6495 12.8817 16.8839 13.1161C17.1183 13.3505 17.25 13.6685 17.25 14V14.25H17C15.4812 14.25 14.25 15.4812 14.25 17V19C14.25 20.5188 15.4812 21.75 17 21.75H19C20.5188 21.75 21.75 20.5188 21.75 19V17C21.75 15.4812 20.5188 14.25 19 14.25H18.75V14C18.75 13.2707 18.4603 12.5712 17.9445 12.0555C17.4288 11.5397 16.7293 11.25 16 11.25H12.75V9.75ZM17 15.75C16.3096 15.75 15.75 16.3096 15.75 17V19C15.75 19.6904 16.3096 20.25 17 20.25H19C19.6904 20.25 20.25 19.6904 20.25 19V17C20.25 16.3096 19.6904 15.75 19 15.75H17ZM5 15.75C4.30964 15.75 3.75 16.3096 3.75 17V19C3.75 19.6904 4.30964 20.25 5 20.25H7C7.69036 20.25 8.25 19.6904 8.25 19V17C8.25 16.3096 7.69036 15.75 7 15.75H5Z"
-  }));
-});
-const HierarchyIcon = (0, _ui.styled)(UnstyledHierarchyIcon)(({
-  theme
-}) => ({
-  '& path': {
-    fill: theme.palette.text.primary
-  }
-}));
-var _default = exports["default"] = HierarchyIcon;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/or-row-group.js"
-/*!*********************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/or-row-group.js ***!
-  \*********************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _icons = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
-var _conditionsSelectors = _interopRequireDefault(__webpack_require__(/*! ./conditions-selectors */ "../modules/display-conditions/assets/js/editor/components/conditions-selectors.js"));
-var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../hooks/use-conditions */ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"));
-var _utils = __webpack_require__(/*! ../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-var _conditionsOrDivider = _interopRequireDefault(__webpack_require__(/*! ./ui/conditions-or-divider */ "../modules/display-conditions/assets/js/editor/components/ui/conditions-or-divider.js"));
-var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const OrRowGroup = ({
-  showConditions,
-  setShowConditions
-}) => {
-  const {
-      selectedConditions,
-      conditionsConfig,
-      dispatch
-    } = (0, _useConditions.default)(),
-    {
-      conditions: availableConditions,
-      conditionsByGroup
-    } = conditionsConfig,
-    addButtonText = selectedConditions.length ? __('Add condition group', 'elementor-pro') : __('Add Condition', 'elementor-pro');
-  const addOrCondition = () => {
-    const conditionKey = (0, _utils.getDefaultActiveCondition)(conditionsByGroup),
-      defaultValues = (0, _utils.getConditionInitialState)(availableConditions, conditionKey),
-      andCondition = {
-        condition: conditionKey,
-        ...defaultValues
-      };
-    dispatch({
-      type: _constants.ACTION_TYPES.ADD_OR_CONDITION,
-      andCondition
-    });
-    setShowConditions(true);
-  };
-  return /*#__PURE__*/_react.default.createElement(_ui.Box, null, showConditions && selectedConditions.map((orCondition, orConditionIndex) => /*#__PURE__*/_react.default.createElement(_react.Fragment, {
-    key: orConditionIndex
-  }, orConditionIndex > 0 && /*#__PURE__*/_react.default.createElement(_conditionsOrDivider.default, null), /*#__PURE__*/_react.default.createElement(_conditionsSelectors.default, {
-    orConditionIndex: orConditionIndex
-  }))), /*#__PURE__*/_react.default.createElement(_ui.Button, {
-    variant: "contained",
-    className: "add-or-condition-button",
-    color: "secondary",
-    startIcon: /*#__PURE__*/_react.default.createElement(_icons.PlusIcon, null),
-    sx: {
-      mt: 1,
-      mb: 5
-    },
-    onClick: () => addOrCondition()
-  }, addButtonText));
-};
-OrRowGroup.propTypes = {
-  showConditions: PropTypes.bool.isRequired,
-  setShowConditions: PropTypes.func.isRequired
-};
-var _default = exports["default"] = OrRowGroup;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/ui/conditions-or-divider.js"
-/*!*********************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/ui/conditions-or-divider.js ***!
-  \*********************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-const OrDivider = () => {
-  return /*#__PURE__*/_react.default.createElement(_ui.Divider, {
-    sx: {
-      px: 3
-    }
-  }, __('OR', 'elementor-pro'));
-};
-var _default = exports["default"] = OrDivider;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/components/ui/row-controls.js"
-/*!************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/components/ui/row-controls.js ***!
-  \************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var PropTypes = __webpack_require__(/*! prop-types */ "../node_modules/prop-types/index.js");
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _ui = __webpack_require__(/*! @elementor/ui */ "@elementor/ui");
-var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-var _icons = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
-var React = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-var _utils = __webpack_require__(/*! ../../utils/utils */ "../modules/display-conditions/assets/js/editor/utils/utils.js");
-var _useConditions = _interopRequireDefault(__webpack_require__(/*! ../../hooks/use-conditions */ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"));
-var _constants = __webpack_require__(/*! ../../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const RowControls = ({
-  orConditionIndex,
-  andConditionIndex
-}) => {
-  const {
-      conditionsConfig,
-      dispatch
-    } = (0, _useConditions.default)(),
-    {
-      conditions: availableConditions,
-      conditionsByGroup
-    } = conditionsConfig;
-  const addRepeaterRow = () => {
-    const conditionKey = (0, _utils.getDefaultActiveCondition)(conditionsByGroup),
-      defaultValues = (0, _utils.getConditionInitialState)(availableConditions, conditionKey),
-      andCondition = {
-        condition: conditionKey,
-        ...defaultValues
-      };
-    dispatch({
-      type: _constants.ACTION_TYPES.ADD_AND_CONDITION,
-      andCondition,
-      andConditionIndex,
-      orConditionIndex
-    });
-  };
-  const removeRepeaterRow = () => {
-    dispatch({
-      type: _constants.ACTION_TYPES.REMOVE_AND_CONDITION,
-      andConditionIndex,
-      orConditionIndex
-    });
-  };
-  return /*#__PURE__*/React.createElement(_ui.Stack, {
-    direction: "row",
-    alignItems: "center",
-    sx: {
-      left: '100%',
-      gap: .5,
-      ml: -1,
-      mt: '2.5px',
-      position: 'absolute'
-    }
-  }, /*#__PURE__*/React.createElement(_ui.Button, {
-    color: "secondary",
-    variant: "outlined",
-    sx: {
-      px: 1,
-      minWidth: 'unset'
-    },
-    className: "add-single-condition-button",
-    onClick: addRepeaterRow
-  }, (0, _i18n.__)('AND', 'elementor-pro')), /*#__PURE__*/React.createElement(_ui.IconButton, {
-    color: "secondary",
-    "aria-label": (0, _i18n.__)('Delete', 'elementor-pro'),
-    className: "remove-single-condition-button",
-    onClick: removeRepeaterRow
-  }, /*#__PURE__*/React.createElement(_icons.XIcon, {
-    fontSize: "small"
-  })));
-};
-RowControls.propTypes = {
-  andConditionIndex: PropTypes.number.isRequired,
-  orConditionIndex: PropTypes.number.isRequired
-};
-var _default = exports["default"] = RowControls;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/contexts/conditions-context.js"
-/*!*************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/contexts/conditions-context.js ***!
-  \*************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var React = __webpack_require__(/*! react */ "react");
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ConditionsContext = void 0;
-const ConditionsContext = exports.ConditionsContext = React.createContext();
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/hooks/use-conditions.js"
-/*!******************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/hooks/use-conditions.js ***!
-  \******************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _react = __webpack_require__(/*! react */ "react");
-var _conditionsContext = __webpack_require__(/*! ../contexts/conditions-context */ "../modules/display-conditions/assets/js/editor/contexts/conditions-context.js");
-function useConditions() {
-  return (0, _react.useContext)(_conditionsContext.ConditionsContext);
-}
-var _default = exports["default"] = useConditions;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/modal.js"
-/*!***************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/modal.js ***!
-  \***************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.setupModal = setupModal;
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
-__webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.filter.js */ "../node_modules/core-js/modules/esnext.iterator.filter.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.reduce.js */ "../node_modules/core-js/modules/esnext.iterator.reduce.js");
-var _app = _interopRequireDefault(__webpack_require__(/*! ./app */ "../modules/display-conditions/assets/js/editor/app.js"));
-function getGroupedConditionKeys(conditionsConfig) {
-  return Object.keys(conditionsConfig?.groups || {}).reduce((group, groupName) => {
-    const conditions = getConditionKeyByGroup(conditionsConfig.conditions, groupName);
-    if (conditions.length) {
-      group[groupName] = conditions;
-    }
-    return group;
-  }, {});
-}
-function getConditionKeyByGroup(conditions, groupName) {
-  return Object.keys(conditions).filter(conditionKey => groupName === conditions[conditionKey].group);
-}
-function getFlattenedConditionOptions(conditionsByGroup) {
-  const {
-    conditions = {},
-    groups = {}
-  } = elementor.config.displayConditions || {};
-  return Object.entries(conditionsByGroup).reduce((optionList, [groupName, conditionKeys]) => {
-    const relevantConditions = conditionKeys.map(key => ({
-      key,
-      label: conditions[key].label,
-      isGroup: false
-    }));
-    optionList.push({
-      key: groupName,
-      label: groups[groupName].label,
-      isGroup: true
-    }, ...relevantConditions);
-    return optionList;
-  }, []);
-}
-function doAjaxRequest(action, data) {
-  try {
-    return new Promise((resolve, reject) => {
-      elementorCommon.ajax.addRequest(action, {
-        data,
-        error: () => reject(),
-        success: res => {
-          resolve(res);
-        }
-      });
-    });
-  } catch (error) {
-    return false;
-  }
-}
-async function defaultFetchData(value, control) {
-  const response = await doAjaxRequest('pro_panel_posts_control_filter_autocomplete', {
-    autocomplete: control.autocomplete,
-    q: value
-  });
-  return response?.results ?? [];
-}
-async function defaultSetCacheNoticeStatus() {
-  const response = await doAjaxRequest('display_conditions_set_cache_notice_status');
-  if (response) {
-    elementor.config.displayConditions.show_cache_notice = false;
-  }
-  return response;
-}
-function setupModal() {
-  let appRoot = null;
-  const getRootElement = () => {
-    let rootElement = window.parent.document.getElementById('elementor-conditions__modal');
-    if (!!rootElement) {
-      return rootElement;
-    }
-    rootElement = document.createElement('div');
-    rootElement.setAttribute('id', 'elementor-conditions__modal');
-    return rootElement;
-  };
-  const getConditionsConfig = () => {
-    const conditionsByGroup = getGroupedConditionKeys(elementor.config.displayConditions || {});
-    const flattenedConditionOptions = getFlattenedConditionOptions(conditionsByGroup);
-    return {
-      ...elementor.config.displayConditions,
-      conditionsByGroup,
-      flattenedConditionOptions
-    };
-  };
-  const renderAppModal = ({
-    colorScheme,
-    isRTL,
-    getControlValue,
-    setControlValue,
-    fetchData,
-    onClose,
-    conditionsConfig,
-    setCacheNoticeStatus
-  }, rootElement) => {
-    appRoot = ReactDOM.createRoot(rootElement);
-    appRoot.render(/*#__PURE__*/_react.default.createElement(_app.default, {
-      colorScheme: colorScheme ?? (elementor?.getPreferences?.('ui_theme') || 'auto'),
-      isRTL: isRTL ?? elementorCommon.config.isRTL,
-      getControlValue: getControlValue,
-      setControlValue: setControlValue,
-      fetchData: fetchData ?? defaultFetchData,
-      onClose: onClose,
-      conditionsConfig: conditionsConfig ?? getConditionsConfig(),
-      setCacheNoticeStatus: setCacheNoticeStatus ?? defaultSetCacheNoticeStatus
-    }));
-  };
-  window.addEventListener('elementor/display-conditions/open', event => {
-    renderAppModal(event.detail.props, event.detail.rootElement ?? getRootElement());
-  });
-  window.addEventListener('elementor/display-conditions/close', event => {
-    const {
-      rootElement
-    } = event.detail ?? {};
-    appRoot?.unmount?.();
-    rootElement?.remove?.();
-  });
-  window.addEventListener('elementor/display-conditions/set-cache-notice-status', async event => {
-    const {
-      resolve,
-      reject
-    } = event.detail ?? {};
-    if (!resolve || !reject) {
-      return;
-    }
-    try {
-      const response = await doAjaxRequest('display_conditions_set_cache_notice_status');
-      const success = !!response;
-      if (success) {
-        elementor.config.displayConditions.show_cache_notice = false;
-      }
-      resolve(success);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/module.js"
-/*!****************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/module.js ***!
-  \****************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
-__webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
-__webpack_require__(/*! core-js/modules/es.json.stringify.js */ "../node_modules/core-js/modules/es.json.stringify.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.filter.js */ "../node_modules/core-js/modules/esnext.iterator.filter.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var _behavior = _interopRequireDefault(__webpack_require__(/*! ./behavior */ "../modules/display-conditions/assets/js/editor/behavior.js"));
-class Module extends elementorModules.editor.utils.Module {
-  pasteAction = 'paste';
-  clearAction = 'clear';
-  atomicDisplayConditionsKey = 'display-conditions';
-  getDefaultSettings() {
-    return {
-      selectors: {
-        icon: '.eicon-flow.e-control-display-conditions'
-      },
-      controls: {
-        displayConditions: 'e_display_conditions',
-        trigger: 'e_display_conditions_trigger'
-      }
-    };
-  }
-  onElementorInit() {
-    elementor.hooks.addFilter('controls/base/behaviors', this.registerControlBehavior);
-    elementor.channels.editor.on('section:activated', this.highlightIconIfFilled);
-    elementor.on('navigator:init', this.onNavigatorInit.bind(this));
-    const atomicElements = this.getAtomicElementTypes();
-    const elTypes = ['widget', 'section', 'column', 'container', ...atomicElements];
-    elTypes.forEach(type => {
-      elementor.hooks.addFilter(`elements/${type}/contextMenuGroups`, this.registerContextMenuGroups.bind(this));
-    });
-  }
-  onElementorInitComponents() {
-    $e.commands.register('document/elements', 'paste-display-conditions', args => {
-      this.tryContextMenuActions(args, this.pasteAction);
-    });
-    $e.commands.register('document/elements', 'clear-display-conditions', args => {
-      this.tryContextMenuActions(args, this.clearAction);
-    });
-  }
-  registerContextMenuGroups(groups, currentElement) {
-    const clipboardGroup = groups.find(group => 'clipboard' === group.name);
-    if (!clipboardGroup) {
-      return groups;
-    }
-
-    // Add after pasteStyle
-    const pasteStyleIndex = clipboardGroup.actions.findIndex(action => 'pasteStyle' === action.name);
-    if (-1 !== pasteStyleIndex) {
-      clipboardGroup.actions.splice(pasteStyleIndex + 1, 0, {
-        name: 'pasteDisplayConditions',
-        isEnabled: () => this.isPasteDisplayConditionsEnabled(currentElement),
-        isVisible: () => this.isPasteDisplayConditionsEnabled(currentElement),
-        // Need both for Core/Pro dependancy.
-        title: __('Paste display conditions', 'elementor-pro'),
-        callback: () => $e.run('document/elements/paste-display-conditions', elementor.selection.getElements(currentElement.getContainer()))
-      });
-    }
-    clipboardGroup.actions.push({
-      name: 'clearDisplayConditions',
-      isEnabled: () => this.isClearDisplayConditionsEnabled(currentElement),
-      isVisible: () => this.isClearDisplayConditionsEnabled(currentElement),
-      // Need both for Core/Pro dependancy.
-      title: __('Clear display conditions', 'elementor-pro'),
-      callback: () => $e.run('document/elements/clear-display-conditions', elementor.selection.getElements(currentElement.getContainer()))
-    });
-    return groups;
-  }
-  isPasteDisplayConditionsEnabled(selectedElement) {
-    if (window.ElementorProDisplayConditions?.isLicenseExpired || false) {
-      return false;
-    }
-    const displayConditions = this.getSelectedElementDisplayCondition(selectedElement),
-      doesClipboardHaveConditions = !!this.getDisplayConditionsFromClipboard().length;
-    return !displayConditions.length && !elementor.selection.isMultiple() && doesClipboardHaveConditions;
-  }
-  isClearDisplayConditionsEnabled(selectedElement) {
-    const displayConditions = this.getSelectedElementDisplayCondition(selectedElement);
-    return displayConditions.length && !elementor.selection.isMultiple();
-  }
-  getSelectedElementDisplayCondition(selectedElement) {
-    const isAtomic = this.isAtomic(selectedElement?.model);
-    const settingsKey = this.getSettingsKey(isAtomic);
-    const displayConditions = selectedElement?.model?.getSetting(settingsKey);
-    return isAtomic ? this.transformV4ToV3Conditions(displayConditions) : JSON.parse(displayConditions || '[]');
-  }
-  getDisplayConditionsFromClipboard() {
-    const clipboard = elementorCommon.storage.get('clipboard'),
-      elements = clipboard?.elements || [];
-    if (1 !== elements.length) {
-      return [];
-    }
-    const element = elements[0];
-    const isAtomic = this.isAtomic(element);
-    return this.extractDisplayConditions(element?.settings, isAtomic);
-  }
-
-  /**
-   * Paste or clear display conditions to/of the selected element.
-   *
-   * @param {Array}             containers
-   * @param {'paste' | 'clear'} action
-   */
-  tryContextMenuActions(containers, action) {
-    const container = containers?.[0] || null,
-      displayConditions = this.pasteAction === action ? this.getDisplayConditionsFromClipboard() : null;
-    if (!container) {
-      return;
-    }
-    const isAtomic = this.isAtomic(container.model);
-    const settingsKey = this.getSettingsKey(isAtomic);
-    $e.run('document/elements/settings', {
-      container,
-      settings: {
-        [settingsKey]: this.createDisplayConditions(displayConditions, isAtomic)
-      }
-    });
-    container.panel.refresh();
-    try {
-      const controlView = container.panel.getControlView(this.getSettings('controls').displayConditions),
-        icon = this.getEditorControlView(this.getSettings('controls').trigger).$el.find(this.getSettings('selectors').icon);
-      this.highlightIcon(icon, controlView);
-    } catch (error) {
-      return false;
-    }
-  }
-  registerControlBehavior = (behaviors, view) => {
-    if (this.getSettings('controls').trigger !== view.options.model.get('name')) {
-      return behaviors;
-    }
-    if (!behaviors) {
-      behaviors = {};
-    }
-    behaviors.displayConditions = {
-      behaviorClass: _behavior.default,
-      getControlValue: () => {
-        const controlView = this.getEditorControlView(this.getSettings('controls').displayConditions);
-        if (!controlView) {
-          return [];
-        }
-        const value = controlView.getControlValue();
-        return this.getStructuredConditions(JSON.parse(value || '[]'));
-      },
-      setControlValue: value => {
-        const displayConditionsInput = this.getEditorControlView(this.getSettings('controls').displayConditions),
-          displayConditionsTemplate = this.getEditorControlView(this.getSettings('controls').trigger);
-        if (displayConditionsInput) {
-          value = !value?.length || '[]' === value[0] ? '' : value;
-          displayConditionsInput.setValue(value);
-          displayConditionsInput.applySavedValue();
-        }
-        if (displayConditionsTemplate.$el) {
-          const icon = displayConditionsTemplate.$el.find(this.getSettings('selectors').icon);
-          this.highlightIcon(icon, displayConditionsInput);
-        }
-      },
-      setCacheNoticeStatus: async () => {
-        const response = await this.doAjaxRequest('display_conditions_set_cache_notice_status');
-        if (response) {
-          elementor.config.displayConditions.show_cache_notice = false;
-        }
-        return response;
-      }
-    };
-    return behaviors;
-  };
-  highlightIconIfFilled = (sectionName, editor) => {
-    const advancedSections = ['section_advanced',
-    // Sections / Columns
-    '_section_style',
-    // Widgets
-    'section_layout' // Containers
-    ];
-    if (!advancedSections.includes(sectionName)) {
-      return;
-    }
-    const controlView = this.getEditorControlView(this.getSettings('controls').displayConditions);
-    if (!controlView) {
-      return;
-    }
-    const icon = editor.$childViewContainer.find(this.getSettings('selectors').icon);
-    this.highlightIcon(icon, controlView);
-  };
-  onNavigatorInit() {
-    elementor.navigator.indicators.displayConditions = {
-      icon: 'flow',
-      title: __('Display Conditions', 'elementor-pro'),
-      settingKeys: ['e_display_conditions', 'display-conditions'],
-      section: 'e_display_conditions_trigger'
-    };
-  }
-  highlightIcon = (icon, controlView) => {
-    if (!icon[0]) {
-      return;
-    }
-    const conditionValue = controlView.getControlValue() || '[]',
-      conditionArray = '[]' !== conditionValue ? this.getStructuredConditions(JSON.parse(conditionValue)) : [];
-    if (!conditionArray.length) {
-      icon[0]?.classList?.remove('filled');
-    } else {
-      icon[0]?.classList?.add('filled');
-    }
-  };
-  doAjaxRequest = (action, data) => {
-    try {
-      return new Promise((resolve, reject) => {
-        elementorCommon.ajax.addRequest(action, {
-          data,
-          error: () => reject(),
-          success: res => {
-            resolve(res);
-          }
-        });
-      });
-    } catch (error) {
-      return false;
-    }
-  };
-  getStructuredConditions = conditions => {
-    return this.shouldConvertConditionsStructure(conditions) ? [conditions] : conditions;
-  };
-  shouldConvertConditionsStructure = conditions => {
-    return conditions.length && !Array.isArray(conditions[0]);
-  };
-  isAtomic = model => {
-    return elementor.helpers.isAtomicWidget(model);
-  };
-  getSettingsKey = (isAtomic = false) => {
-    return isAtomic ? this.atomicDisplayConditionsKey : 'e_display_conditions';
-  };
-  getAtomicElementTypes = () => {
-    return Object.entries(elementor.config.elements).filter(([, element]) => !!element?.atomic_props_schema).map(([elType]) => elType);
-  };
-  createDisplayConditions = (displayConditions, isAtomic = false) => {
-    // Value must be falsy for navigator indication to work properly
-    if (!displayConditions?.length) {
-      return isAtomic ? null : '';
-    }
-    return isAtomic ? this.transformV3ToV4Conditions(displayConditions) : JSON.stringify(displayConditions);
-  };
-  extractDisplayConditions = (settings, isAtomic) => {
-    const settingsKey = this.getSettingsKey(isAtomic);
-    const displayConditions = settings?.[settingsKey];
-    return isAtomic ? this.transformV4ToV3Conditions(displayConditions, isAtomic) : JSON.parse(displayConditions || '[]');
-  };
-  transformV4ToV3Conditions = conditions => {
-    return conditions?.value?.length ? conditions.value.map(({
-      value: conditionGroup
-    }) => conditionGroup?.map(({
-      value
-    }) => JSON.parse(value)) ?? null).filter(conditionGroup => !!conditionGroup?.length) : [];
-  };
-  transformV3ToV4Conditions = displayConditions => {
-    return displayConditions?.length ? {
-      $$type: this.atomicDisplayConditionsKey,
-      value: displayConditions.map(conditions => ({
-        $$type: 'condition-group',
-        value: conditions.map(condition => ({
-          $$type: 'string',
-          value: JSON.stringify(condition)
-        }))
-      }))
-    } : null;
-  };
-}
-exports["default"] = Module;
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/reducers/conditions-reducer.js"
-/*!*************************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/reducers/conditions-reducer.js ***!
-  \*************************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.conditionsReducer = void 0;
-__webpack_require__(/*! core-js/modules/es.array.push.js */ "../node_modules/core-js/modules/es.array.push.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.filter.js */ "../node_modules/core-js/modules/esnext.iterator.filter.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.reduce.js */ "../node_modules/core-js/modules/esnext.iterator.reduce.js");
-var _constants = __webpack_require__(/*! ../utils/constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-const conditionsReducer = (state, action) => {
-  switch (action.type) {
-    case _constants.ACTION_TYPES.CHANGE_CONDITION_TYPE:
-      return {
-        ...state,
-        selectedConditions: _changeConditionType({
-          ...state,
-          ...action
-        })
-      };
-    case _constants.ACTION_TYPES.CHANGE_CONTROL_VALUE:
-      return {
-        ...state,
-        selectedConditions: _changeControlValue({
-          ...state,
-          ...action
-        })
-      };
-    case _constants.ACTION_TYPES.ADD_AND_CONDITION:
-      return {
-        ...state,
-        selectedConditions: _addAndCondition({
-          ...state,
-          ...action
-        })
-      };
-    case _constants.ACTION_TYPES.ADD_OR_CONDITION:
-      return {
-        ...state,
-        selectedConditions: [...state.selectedConditions, [action.andCondition]]
-      };
-    case _constants.ACTION_TYPES.REMOVE_AND_CONDITION:
-      return {
-        ...state,
-        selectedConditions: _removeAndCondition({
-          ...state,
-          ...action
-        })
-      };
-    case _constants.ACTION_TYPES.REMOVE_OR_CONDITION:
-      return {
-        ...state,
-        selectedConditions: state.selectedConditions.filter((_, index) => index !== action.orConditionIndex)
-      };
-    case _constants.ACTION_TYPES.SET_ERRORS:
-      return {
-        ...state,
-        selectedConditions: _setErrors({
-          ...state,
-          ...action
-        })
-      };
-    default:
-      return state;
-  }
-};
-exports.conditionsReducer = conditionsReducer;
-const _changeConditionType = ({
-  selectedConditions,
-  conditionToChange,
-  orConditionIndex,
-  andConditionIndex
-}) => {
-  const newOrCondition = selectedConditions[orConditionIndex].map((andCondition, index) => index === andConditionIndex ? conditionToChange : {
-    ...andCondition
-  });
-  return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
-};
-const _changeControlValue = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex,
-  controlKey,
-  value
-}) => {
-  const existingOrCondition = [...selectedConditions[orConditionIndex]],
-    existingAndCondition = {
-      ...existingOrCondition[andConditionIndex]
-    };
-  const newAndCondition = {
-      ...existingAndCondition,
-      [controlKey]: value
-    },
-    newOrCondition = existingOrCondition.map((andCondition, index) => index === andConditionIndex ? newAndCondition : {
-      ...andCondition
-    });
-  return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
-};
-const _addAndCondition = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex,
-  andCondition
-}) => {
-  const existingOrCondition = selectedConditions[orConditionIndex],
-    newOrCondition = existingOrCondition.reduce((newAndConditions, condition, index) => {
-      newAndConditions.push({
-        ...condition
-      });
-      if (index === andConditionIndex || existingOrCondition.length === andConditionIndex && existingOrCondition.length - 1 === index) {
-        newAndConditions.push(andCondition);
-      }
-      return newAndConditions;
-    }, []);
-  return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
-};
-const _removeAndCondition = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex
-}) => {
-  const newOrCondition = selectedConditions[orConditionIndex].reduce((newAndConditions, condition, index) => {
-    if (index !== andConditionIndex) {
-      newAndConditions.push({
-        ...condition
-      });
-    }
-    return newAndConditions;
-  }, []);
-  return selectedConditions.reduce((newOrConditions, orCondition, index) => {
-    if (index === orConditionIndex && newOrCondition.length) {
-      newOrConditions.push(newOrCondition);
-    }
-    if (index !== orConditionIndex) {
-      newOrConditions.push([...orCondition]);
-    }
-    return newOrConditions;
-  }, []);
-};
-const _setErrors = ({
-  selectedConditions,
-  orConditionIndex,
-  andConditionIndex,
-  errors
-}) => {
-  const newOrCondition = [...selectedConditions[orConditionIndex]],
-    newAndCondition = {
-      ...newOrCondition[andConditionIndex]
-    };
-  newAndCondition.errors = {
-    ...newAndCondition.errors,
-    ...errors
-  };
-  newOrCondition[andConditionIndex] = newAndCondition;
-  return selectedConditions.map((orCondition, index) => index === orConditionIndex ? [...newOrCondition] : [...orCondition]);
-};
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/utils/constants.js"
-/*!*************************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/utils/constants.js ***!
-  \*************************************************************************/
-(__unused_webpack_module, exports) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.DISABLED_CONTROL_CONFIG = exports.DEFAULT_CONTROL_VALUES = exports.CONTROL_TYPES = exports.ACTION_TYPES = void 0;
-// These values will match the Controls_Manager
-const CONTROL_TYPES = exports.CONTROL_TYPES = {
-  MULTIPLE_SELECT: 'select2',
-  SELECT: 'select',
-  QUERY: 'query',
-  DATE_TIME: 'date_time',
-  TEXT_FIELD: 'text'
-};
-const DEFAULT_CONTROL_VALUES = exports.DEFAULT_CONTROL_VALUES = {
-  select2: [],
-  query: [],
-  select: '',
-  text: '',
-  date_time: null
-};
-const ACTION_TYPES = exports.ACTION_TYPES = {
-  CHANGE_CONTROL_VALUE: 'CHANGE_CONTROL_VALUE',
-  SET_ERRORS: 'SET_ERRORS',
-  ADD_OR_CONDITION: 'ADD_OR_CONDITION',
-  CHANGE_CONDITION_TYPE: 'CHANGE_CONDITION_TYPE',
-  ADD_AND_CONDITION: 'ADD_AND_CONDITION',
-  REMOVE_AND_CONDITION: 'REMOVE_AND_CONDITION',
-  REMOVE_OR_CONDITION: 'REMOVE_OR_CONDITION'
-};
-const DISABLED_CONTROL_CONFIG = exports.DISABLED_CONTROL_CONFIG = {
-  CONDITION_NAME: 'dynamic_tags',
-  CONTROL_NAME: 'dynamic_tag_value',
-  COMPARATORS: ['is_empty', 'is_not_empty']
-};
-
-/***/ },
-
-/***/ "../modules/display-conditions/assets/js/editor/utils/utils.js"
-/*!*********************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/utils/utils.js ***!
-  \*********************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.getControlDefaults = exports.getConditionInitialState = void 0;
-exports.getControlValue = getControlValue;
-exports.getControlValueMaxWidth = getControlValueMaxWidth;
-exports.getDefaultActiveCondition = getDefaultActiveCondition;
-exports.getInvalidInputFeedback = getInvalidInputFeedback;
-exports.getSelectOptionMaxWidth = getSelectOptionMaxWidth;
-exports.hasDecimalSeparator = hasDecimalSeparator;
-exports.shouldCastToArray = shouldCastToArray;
-exports.shouldDisableControl = shouldDisableControl;
-exports.shouldEmptyValuePassValidation = shouldEmptyValuePassValidation;
-__webpack_require__(/*! core-js/modules/es.array.includes.js */ "../node_modules/core-js/modules/es.array.includes.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.reduce.js */ "../node_modules/core-js/modules/esnext.iterator.reduce.js");
-var _constants = __webpack_require__(/*! ./constants */ "../modules/display-conditions/assets/js/editor/utils/constants.js");
-function shouldCastToArray(controlType) {
-  return _constants.CONTROL_TYPES.MULTIPLE_SELECT === controlType || _constants.CONTROL_TYPES.QUERY === controlType;
-}
-function getDefaultActiveCondition(conditionsByGroup) {
-  return Object.values(conditionsByGroup)[0][0];
-}
-function getInvalidInputFeedback(type, variant, value, shouldShow = false) {
-  return !value?.length ? {
-    message: _getErrorMessage(type, variant),
-    shouldShow
-  } : {};
-}
-const getControlDefaults = (controlKey, control) => {
-  const {
-      type,
-      variant = null,
-      options
-    } = control,
-    defaultValue = control?.default || (options && _constants.CONTROL_TYPES.MULTIPLE_SELECT !== type ? Object.keys(options)[0] : _constants.DEFAULT_CONTROL_VALUES[type]),
-    formattedDefaultValue = shouldCastToArray(type) && !Array.isArray(defaultValue) ? [defaultValue] : defaultValue,
-    error = getInvalidInputFeedback(type, variant, formattedDefaultValue);
-  return {
-    defaultValue: formattedDefaultValue,
-    error
-  };
-};
-exports.getControlDefaults = getControlDefaults;
-const getConditionInitialState = (conditions, conditionKey) => {
-  const {
-    controls = {}
-  } = conditions?.[conditionKey] || {};
-  return Object.keys(controls).reduce((defaults, controlKey) => {
-    if ('__settings' === controlKey) {
-      return defaults;
-    }
-    const {
-      defaultValue,
-      error
-    } = getControlDefaults(controlKey, controls[controlKey]);
-    defaults[controlKey] = defaultValue;
-    defaults.errors[controlKey] = error;
-    return defaults;
-  }, {
-    errors: {}
-  });
-};
-exports.getConditionInitialState = getConditionInitialState;
-function hasDecimalSeparator(newValue) {
-  if (isNaN(parseFloat(newValue))) {
-    return false;
-  }
-  if (newValue.toString().indexOf('.') !== -1) {
-    return true;
-  }
-  if (newValue.toString().indexOf(',') !== -1) {
-    return true;
-  }
-}
-function getSelectOptionMaxWidth(controlCount) {
-  return 3 === controlCount ? 200 : 150;
-}
-function getControlValueMaxWidth(controlCount) {
-  return 3 === controlCount ? 190 : 135;
-}
-function getControlValue(value, altValue) {
-  return 'undefined' !== typeof value ? value : altValue;
-}
-function _getErrorMessage(controlType, variant = null) {
-  if (shouldCastToArray(controlType)) {
-    return __('Select an option', 'elementor-pro');
-  }
-  if (_constants.CONTROL_TYPES.DATE_TIME === controlType) {
-    return 'time' === variant ? __('Select a time', 'elementor-pro') : __('Select a date', 'elementor-pro');
-  }
-  return __('Enter a value', 'elementor-pro');
-}
-function shouldDisableControl(control, comparator) {
-  return _constants.DISABLED_CONTROL_CONFIG.CONTROL_NAME === control && _constants.DISABLED_CONTROL_CONFIG.COMPARATORS.includes(comparator);
-}
-function shouldEmptyValuePassValidation(condition, comparator) {
-  return _constants.DISABLED_CONTROL_CONFIG.CONDITION_NAME === condition && _constants.DISABLED_CONTROL_CONFIG.COMPARATORS.includes(comparator);
-}
-
-/***/ },
-
-/***/ "../node_modules/dayjs/dayjs.min.js"
-/*!******************************************!*\
-  !*** ../node_modules/dayjs/dayjs.min.js ***!
-  \******************************************/
-(module) {
-
-!function(t,e){ true?module.exports=e():0}(this,(function(){"use strict";var t=1e3,e=6e4,n=36e5,r="millisecond",i="second",s="minute",u="hour",a="day",o="week",c="month",f="quarter",h="year",d="date",l="Invalid Date",$=/^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,y=/\[([^\]]+)]|YYYY|YY|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,M={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_"),ordinal:function(t){var e=["th","st","nd","rd"],n=t%100;return"["+t+(e[(n-20)%10]||e[n]||e[0])+"]"}},m=function(t,e,n){var r=String(t);return!r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},v={s:m,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return(e<=0?"+":"-")+m(r,2,"0")+":"+m(i,2,"0")},m:function t(e,n){if(e.date()<n.date())return-t(n,e);var r=12*(n.year()-e.year())+(n.month()-e.month()),i=e.clone().add(r,c),s=n-i<0,u=e.clone().add(r+(s?-1:1),c);return+(-(r+(n-i)/(s?i-u:u-i))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(t){return{M:c,y:h,w:o,d:a,D:d,h:u,m:s,s:i,ms:r,Q:f}[t]||String(t||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},g="en",D={};D[g]=M;var p="$isDayjsObject",S=function(t){return t instanceof _||!(!t||!t[p])},w=function t(e,n,r){var i;if(!e)return g;if("string"==typeof e){var s=e.toLowerCase();D[s]&&(i=s),n&&(D[s]=n,i=s);var u=e.split("-");if(!i&&u.length>1)return t(u[0])}else{var a=e.name;D[a]=e,i=a}return!r&&i&&(g=i),i||!r&&g},O=function(t,e){if(S(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new _(n)},b=v;b.l=w,b.i=S,b.w=function(t,e){return O(t,{locale:e.$L,utc:e.$u,x:e.$x,$offset:e.$offset})};var _=function(){function M(t){this.$L=w(t.locale,null,!0),this.parse(t),this.$x=this.$x||t.x||{},this[p]=!0}var m=M.prototype;return m.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(b.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match($);if(r){var i=r[2]-1||0,s=(r[7]||"0").substring(0,3);return n?new Date(Date.UTC(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)):new Date(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)}}return new Date(e)}(t),this.init()},m.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},m.$utils=function(){return b},m.isValid=function(){return!(this.$d.toString()===l)},m.isSame=function(t,e){var n=O(t);return this.startOf(e)<=n&&n<=this.endOf(e)},m.isAfter=function(t,e){return O(t)<this.startOf(e)},m.isBefore=function(t,e){return this.endOf(e)<O(t)},m.$g=function(t,e,n){return b.u(t)?this[e]:this.set(n,t)},m.unix=function(){return Math.floor(this.valueOf()/1e3)},m.valueOf=function(){return this.$d.getTime()},m.startOf=function(t,e){var n=this,r=!!b.u(e)||e,f=b.p(t),l=function(t,e){var i=b.w(n.$u?Date.UTC(n.$y,e,t):new Date(n.$y,e,t),n);return r?i:i.endOf(a)},$=function(t,e){return b.w(n.toDate()[t].apply(n.toDate("s"),(r?[0,0,0,0]:[23,59,59,999]).slice(e)),n)},y=this.$W,M=this.$M,m=this.$D,v="set"+(this.$u?"UTC":"");switch(f){case h:return r?l(1,0):l(31,11);case c:return r?l(1,M):l(0,M+1);case o:var g=this.$locale().weekStart||0,D=(y<g?y+7:y)-g;return l(r?m-D:m+(6-D),M);case a:case d:return $(v+"Hours",0);case u:return $(v+"Minutes",1);case s:return $(v+"Seconds",2);case i:return $(v+"Milliseconds",3);default:return this.clone()}},m.endOf=function(t){return this.startOf(t,!1)},m.$set=function(t,e){var n,o=b.p(t),f="set"+(this.$u?"UTC":""),l=(n={},n[a]=f+"Date",n[d]=f+"Date",n[c]=f+"Month",n[h]=f+"FullYear",n[u]=f+"Hours",n[s]=f+"Minutes",n[i]=f+"Seconds",n[r]=f+"Milliseconds",n)[o],$=o===a?this.$D+(e-this.$W):e;if(o===c||o===h){var y=this.clone().set(d,1);y.$d[l]($),y.init(),this.$d=y.set(d,Math.min(this.$D,y.daysInMonth())).$d}else l&&this.$d[l]($);return this.init(),this},m.set=function(t,e){return this.clone().$set(t,e)},m.get=function(t){return this[b.p(t)]()},m.add=function(r,f){var d,l=this;r=Number(r);var $=b.p(f),y=function(t){var e=O(l);return b.w(e.date(e.date()+Math.round(t*r)),l)};if($===c)return this.set(c,this.$M+r);if($===h)return this.set(h,this.$y+r);if($===a)return y(1);if($===o)return y(7);var M=(d={},d[s]=e,d[u]=n,d[i]=t,d)[$]||1,m=this.$d.getTime()+r*M;return b.w(m,this)},m.subtract=function(t,e){return this.add(-1*t,e)},m.format=function(t){var e=this,n=this.$locale();if(!this.isValid())return n.invalidDate||l;var r=t||"YYYY-MM-DDTHH:mm:ssZ",i=b.z(this),s=this.$H,u=this.$m,a=this.$M,o=n.weekdays,c=n.months,f=n.meridiem,h=function(t,n,i,s){return t&&(t[n]||t(e,r))||i[n].slice(0,s)},d=function(t){return b.s(s%12||12,t,"0")},$=f||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r};return r.replace(y,(function(t,r){return r||function(t){switch(t){case"YY":return String(e.$y).slice(-2);case"YYYY":return b.s(e.$y,4,"0");case"M":return a+1;case"MM":return b.s(a+1,2,"0");case"MMM":return h(n.monthsShort,a,c,3);case"MMMM":return h(c,a);case"D":return e.$D;case"DD":return b.s(e.$D,2,"0");case"d":return String(e.$W);case"dd":return h(n.weekdaysMin,e.$W,o,2);case"ddd":return h(n.weekdaysShort,e.$W,o,3);case"dddd":return o[e.$W];case"H":return String(s);case"HH":return b.s(s,2,"0");case"h":return d(1);case"hh":return d(2);case"a":return $(s,u,!0);case"A":return $(s,u,!1);case"m":return String(u);case"mm":return b.s(u,2,"0");case"s":return String(e.$s);case"ss":return b.s(e.$s,2,"0");case"SSS":return b.s(e.$ms,3,"0");case"Z":return i}return null}(t)||i.replace(":","")}))},m.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},m.diff=function(r,d,l){var $,y=this,M=b.p(d),m=O(r),v=(m.utcOffset()-this.utcOffset())*e,g=this-m,D=function(){return b.m(y,m)};switch(M){case h:$=D()/12;break;case c:$=D();break;case f:$=D()/3;break;case o:$=(g-v)/6048e5;break;case a:$=(g-v)/864e5;break;case u:$=g/n;break;case s:$=g/e;break;case i:$=g/t;break;default:$=g}return l?$:b.a($)},m.daysInMonth=function(){return this.endOf(c).$D},m.$locale=function(){return D[this.$L]},m.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=w(t,e,!0);return r&&(n.$L=r),n},m.clone=function(){return b.w(this.$d,this)},m.toDate=function(){return new Date(this.valueOf())},m.toJSON=function(){return this.isValid()?this.toISOString():null},m.toISOString=function(){return this.$d.toISOString()},m.toString=function(){return this.$d.toUTCString()},M}(),Y=_.prototype;return O.prototype=Y,[["$ms",r],["$s",i],["$m",s],["$H",u],["$W",a],["$M",c],["$y",h],["$D",d]].forEach((function(t){Y[t[1]]=function(e){return this.$g(e,t[0],t[1])}})),O.extend=function(t,e){return t.$i||(t(e,_,O),t.$i=!0),O},O.locale=w,O.isDayjs=S,O.unix=function(t){return O(1e3*t)},O.en=D[g],O.Ls=D,O.p={},O}));
-
-/***/ },
-
-/***/ "../node_modules/object-assign/index.js"
-/*!**********************************************!*\
-  !*** ../node_modules/object-assign/index.js ***!
-  \**********************************************/
-(module) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
+/*! pro-elements - v4.3.0 - 22-09-2026 */
+(function(_wordpress_i18n, react, _elementor_ui, _elementor_icons) {
+	//#region \0rolldown/runtime.js
+	var __create = Object.create;
+	var __defProp$14 = Object.defineProperty;
+	var __name = (target, value) => __defProp$14(target, "name", {
+		value,
+		configurable: true
+	});
+	var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+	var __getOwnPropNames = Object.getOwnPropertyNames;
+	var __getProtoOf = Object.getPrototypeOf;
+	var __hasOwnProp$14 = Object.prototype.hasOwnProperty;
+	var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
+	var __copyProps = (to, from, except, desc) => {
+		if (from && typeof from === "object" || typeof from === "function") for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
+			key = keys[i];
+			if (!__hasOwnProp$14.call(to, key) && key !== except) __defProp$14(to, key, {
+				get: ((k) => from[k]).bind(null, key),
+				enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
+			});
 		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
+		return to;
+	};
+	var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp$14(target, "default", {
+		value: mod,
+		enumerable: true
+	}) : target, mod));
+	//#endregion
+	react = __toESM(react);
+	//#region modules/display-conditions/assets/js/editor/behavior.js
+	var DisplayConditionsBehavior = class extends Marionette.Behavior {
+		ui() {
+			const iconClass = ".eicon-flow.e-control-display-conditions";
+			return {
+				displayConditionsButton: iconClass,
+				displayConditionsPromoButton: `${iconClass}-promo`
+			};
 		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
+		events() {
+			return {
+				"click @ui.displayConditionsButton": "onClickControlButtonDisplayConditions",
+				"mouseenter @ui.displayConditionsPromoButton": "onHoverControlButtonDisplayConditions"
+			};
 		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
+		onClickControlButtonDisplayConditions(event) {
+			event.stopPropagation();
+			this.mount();
 		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
+		onHoverControlButtonDisplayConditions(event) {
+			event.stopPropagation();
+			elementor.promotion.showDialog({
+				title: (0, _wordpress_i18n.__)("Display Conditions", "elementor-pro"),
+				content: (0, _wordpress_i18n.__)("Upgrade to Elementor Pro Advanced to get the Display Conditions feature as well as additional professional and ecommerce widgets", "elementor-pro"),
+				targetElement: this.el,
+				actionButton: {
+					url: "https://go.elementor.com/go-pro-advanced-display-conditions/",
+					text: (0, _wordpress_i18n.__)("Upgrade Now", "elementor-pro"),
+					classes: ["elementor-button", "go-pro"]
 				}
+			});
+		}
+		getRootElement() {
+			let rootElement = window.parent.document.getElementById("elementor-conditions__modal");
+			if (!!rootElement) return rootElement;
+			rootElement = document.createElement("div");
+			rootElement.setAttribute("id", "elementor-conditions__modal");
+			return rootElement;
+		}
+		mount() {
+			const rootElement = this.getRootElement();
+			window.parent.document.body.appendChild(rootElement);
+			window.dispatchEvent(new CustomEvent("elementor/display-conditions/open", { detail: {
+				rootElement,
+				props: {
+					getControlValue: this.getOption("getControlValue"),
+					setControlValue: this.getOption("setControlValue"),
+					onClose: () => this.unmount(rootElement),
+					setCacheNoticeStatus: this.getOption("setCacheNoticeStatus")
+				}
+			} }));
+		}
+		unmount(rootElement) {
+			window.dispatchEvent(new CustomEvent("elementor/display-conditions/close", { detail: { rootElement } }));
+		}
+	};
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
+	function _typeof(o) {
+		"@babel/helpers - typeof";
+		return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+			return typeof o;
+		} : function(o) {
+			return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+		}, _typeof(o);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
+	function toPrimitive(t, r) {
+		if ("object" != _typeof(t) || !t) return t;
+		var e = t[Symbol.toPrimitive];
+		if (void 0 !== e) {
+			var i = e.call(t, r || "default");
+			if ("object" != _typeof(i)) return i;
+			throw new TypeError("@@toPrimitive must return a primitive value.");
+		}
+		return ("string" === r ? String : Number)(t);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
+	function toPropertyKey(t) {
+		var i = toPrimitive(t, "string");
+		return "symbol" == _typeof(i) ? i : i + "";
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
+	function _defineProperty(e, r, t) {
+		return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+			value: t,
+			enumerable: !0,
+			configurable: !0,
+			writable: !0
+		}) : e[r] = t, e;
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/asyncToGenerator.js
+	function asyncGeneratorStep(n, t, e, r, o, a, c) {
+		try {
+			var i = n[a](c);
+			var u = i.value;
+		} catch (n) {
+			e(n);
+			return;
+		}
+		i.done ? t(u) : Promise.resolve(u).then(r, o);
+	}
+	function _asyncToGenerator(n) {
+		return function() {
+			var t = this;
+			var e = arguments;
+			return new Promise(function(r, o) {
+				var a = n.apply(t, e);
+				function _next(n) {
+					asyncGeneratorStep(a, r, o, _next, _throw, "next", n);
+				}
+				function _throw(n) {
+					asyncGeneratorStep(a, r, o, _next, _throw, "throw", n);
+				}
+				_next(void 0);
+			});
+		};
+	}
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/module.js
+	var Module = class extends elementorModules.editor.utils.Module {
+		constructor(..._args) {
+			var _this;
+			super(..._args);
+			_this = this;
+			_defineProperty(this, "pasteAction", "paste");
+			_defineProperty(this, "clearAction", "clear");
+			_defineProperty(this, "atomicDisplayConditionsKey", "display-conditions");
+			_defineProperty(this, "registerControlBehavior", (behaviors, view) => {
+				if (this.getSettings("controls").trigger !== view.options.model.get("name")) return behaviors;
+				if (!behaviors) behaviors = {};
+				behaviors.displayConditions = {
+					behaviorClass: DisplayConditionsBehavior,
+					getControlValue: () => {
+						const controlView = this.getEditorControlView(this.getSettings("controls").displayConditions);
+						if (!controlView) return [];
+						const value = controlView.getControlValue();
+						return this.getStructuredConditions(JSON.parse(value || "[]"));
+					},
+					setControlValue: (value) => {
+						const displayConditionsInput = this.getEditorControlView(this.getSettings("controls").displayConditions);
+						const displayConditionsTemplate = this.getEditorControlView(this.getSettings("controls").trigger);
+						if (displayConditionsInput) {
+							value = !(value === null || value === void 0 ? void 0 : value.length) || "[]" === value[0] ? "" : value;
+							displayConditionsInput.setValue(value);
+							displayConditionsInput.applySavedValue();
+						}
+						if (displayConditionsTemplate.$el) {
+							const icon = displayConditionsTemplate.$el.find(this.getSettings("selectors").icon);
+							this.highlightIcon(icon, displayConditionsInput);
+						}
+					},
+					setCacheNoticeStatus: function() {
+						var _ref = _asyncToGenerator(function* () {
+							const response = yield _this.doAjaxRequest("display_conditions_set_cache_notice_status");
+							if (response) elementor.config.displayConditions.show_cache_notice = false;
+							return response;
+						});
+						return function setCacheNoticeStatus() {
+							return _ref.apply(this, arguments);
+						};
+					}()
+				};
+				return behaviors;
+			});
+			_defineProperty(this, "highlightIconIfFilled", (sectionName, editor) => {
+				if (![
+					"section_advanced",
+					"_section_style",
+					"section_layout"
+				].includes(sectionName)) return;
+				const controlView = this.getEditorControlView(this.getSettings("controls").displayConditions);
+				if (!controlView) return;
+				const icon = editor.$childViewContainer.find(this.getSettings("selectors").icon);
+				this.highlightIcon(icon, controlView);
+			});
+			_defineProperty(this, "highlightIcon", (icon, controlView) => {
+				if (!icon[0]) return;
+				const conditionValue = controlView.getControlValue() || "[]";
+				if (!("[]" !== conditionValue ? this.getStructuredConditions(JSON.parse(conditionValue)) : []).length) {
+					var _icon$;
+					(_icon$ = icon[0]) === null || _icon$ === void 0 || (_icon$ = _icon$.classList) === null || _icon$ === void 0 || _icon$.remove("filled");
+				} else {
+					var _icon$2;
+					(_icon$2 = icon[0]) === null || _icon$2 === void 0 || (_icon$2 = _icon$2.classList) === null || _icon$2 === void 0 || _icon$2.add("filled");
+				}
+			});
+			_defineProperty(this, "doAjaxRequest", (action, data) => {
+				try {
+					return new Promise((resolve, reject) => {
+						elementorCommon.ajax.addRequest(action, {
+							data,
+							error: () => reject(),
+							success: (res) => {
+								resolve(res);
+							}
+						});
+					});
+				} catch (error) {
+					return false;
+				}
+			});
+			_defineProperty(this, "getStructuredConditions", (conditions) => {
+				return this.shouldConvertConditionsStructure(conditions) ? [conditions] : conditions;
+			});
+			_defineProperty(this, "shouldConvertConditionsStructure", (conditions) => {
+				return conditions.length && !Array.isArray(conditions[0]);
+			});
+			_defineProperty(this, "isAtomic", (model) => {
+				return elementor.helpers.isAtomicWidget(model);
+			});
+			_defineProperty(this, "getSettingsKey", (isAtomic = false) => {
+				return isAtomic ? this.atomicDisplayConditionsKey : "e_display_conditions";
+			});
+			_defineProperty(this, "getAtomicElementTypes", () => {
+				return Object.entries(elementor.config.elements).filter(([, element]) => !!(element === null || element === void 0 ? void 0 : element.atomic_props_schema)).map(([elType]) => elType);
+			});
+			_defineProperty(this, "createDisplayConditions", (displayConditions, isAtomic = false) => {
+				if (!(displayConditions === null || displayConditions === void 0 ? void 0 : displayConditions.length)) return isAtomic ? null : "";
+				return isAtomic ? this.transformV3ToV4Conditions(displayConditions) : JSON.stringify(displayConditions);
+			});
+			_defineProperty(this, "extractDisplayConditions", (settings, isAtomic) => {
+				const settingsKey = this.getSettingsKey(isAtomic);
+				const displayConditions = settings === null || settings === void 0 ? void 0 : settings[settingsKey];
+				return isAtomic ? this.transformV4ToV3Conditions(displayConditions, isAtomic) : JSON.parse(displayConditions || "[]");
+			});
+			_defineProperty(this, "transformV4ToV3Conditions", (conditions) => {
+				var _conditions$value;
+				return (conditions === null || conditions === void 0 || (_conditions$value = conditions.value) === null || _conditions$value === void 0 ? void 0 : _conditions$value.length) ? conditions.value.map(({ value: conditionGroup }) => {
+					var _conditionGroup$map;
+					return (_conditionGroup$map = conditionGroup === null || conditionGroup === void 0 ? void 0 : conditionGroup.map(({ value }) => JSON.parse(value))) !== null && _conditionGroup$map !== void 0 ? _conditionGroup$map : null;
+				}).filter((conditionGroup) => !!(conditionGroup === null || conditionGroup === void 0 ? void 0 : conditionGroup.length)) : [];
+			});
+			_defineProperty(this, "transformV3ToV4Conditions", (displayConditions) => {
+				return (displayConditions === null || displayConditions === void 0 ? void 0 : displayConditions.length) ? {
+					$$type: this.atomicDisplayConditionsKey,
+					value: displayConditions.map((conditions) => ({
+						$$type: "condition-group",
+						value: conditions.map((condition) => ({
+							$$type: "string",
+							value: JSON.stringify(condition)
+						}))
+					}))
+				} : null;
+			});
+		}
+		getDefaultSettings() {
+			return {
+				selectors: { icon: ".eicon-flow.e-control-display-conditions" },
+				controls: {
+					displayConditions: "e_display_conditions",
+					trigger: "e_display_conditions_trigger"
+				}
+			};
+		}
+		onElementorInit() {
+			elementor.hooks.addFilter("controls/base/behaviors", this.registerControlBehavior);
+			elementor.channels.editor.on("section:activated", this.highlightIconIfFilled);
+			elementor.on("navigator:init", this.onNavigatorInit.bind(this));
+			[
+				"widget",
+				"section",
+				"column",
+				"container",
+				...this.getAtomicElementTypes()
+			].forEach((type) => {
+				elementor.hooks.addFilter(`elements/${type}/contextMenuGroups`, this.registerContextMenuGroups.bind(this));
+			});
+		}
+		onElementorInitComponents() {
+			$e.commands.register("document/elements", "paste-display-conditions", (args) => {
+				this.tryContextMenuActions(args, this.pasteAction);
+			});
+			$e.commands.register("document/elements", "clear-display-conditions", (args) => {
+				this.tryContextMenuActions(args, this.clearAction);
+			});
+		}
+		registerContextMenuGroups(groups, currentElement) {
+			const clipboardGroup = groups.find((group) => "clipboard" === group.name);
+			if (!clipboardGroup) return groups;
+			const pasteStyleIndex = clipboardGroup.actions.findIndex((action) => "pasteStyle" === action.name);
+			if (-1 !== pasteStyleIndex) clipboardGroup.actions.splice(pasteStyleIndex + 1, 0, {
+				name: "pasteDisplayConditions",
+				isEnabled: () => this.isPasteDisplayConditionsEnabled(currentElement),
+				isVisible: () => this.isPasteDisplayConditionsEnabled(currentElement),
+				title: (0, _wordpress_i18n.__)("Paste display conditions", "elementor-pro"),
+				callback: () => $e.run("document/elements/paste-display-conditions", elementor.selection.getElements(currentElement.getContainer()))
+			});
+			clipboardGroup.actions.push({
+				name: "clearDisplayConditions",
+				isEnabled: () => this.isClearDisplayConditionsEnabled(currentElement),
+				isVisible: () => this.isClearDisplayConditionsEnabled(currentElement),
+				title: (0, _wordpress_i18n.__)("Clear display conditions", "elementor-pro"),
+				callback: () => $e.run("document/elements/clear-display-conditions", elementor.selection.getElements(currentElement.getContainer()))
+			});
+			return groups;
+		}
+		isPasteDisplayConditionsEnabled(selectedElement) {
+			var _window$ElementorProD;
+			if (((_window$ElementorProD = window.ElementorProDisplayConditions) === null || _window$ElementorProD === void 0 ? void 0 : _window$ElementorProD.isLicenseExpired) || false) return false;
+			const displayConditions = this.getSelectedElementDisplayCondition(selectedElement);
+			const doesClipboardHaveConditions = !!this.getDisplayConditionsFromClipboard().length;
+			return !displayConditions.length && !elementor.selection.isMultiple() && doesClipboardHaveConditions;
+		}
+		isClearDisplayConditionsEnabled(selectedElement) {
+			return this.getSelectedElementDisplayCondition(selectedElement).length && !elementor.selection.isMultiple();
+		}
+		getSelectedElementDisplayCondition(selectedElement) {
+			var _selectedElement$mode;
+			const isAtomic = this.isAtomic(selectedElement === null || selectedElement === void 0 ? void 0 : selectedElement.model);
+			const settingsKey = this.getSettingsKey(isAtomic);
+			const displayConditions = selectedElement === null || selectedElement === void 0 || (_selectedElement$mode = selectedElement.model) === null || _selectedElement$mode === void 0 ? void 0 : _selectedElement$mode.getSetting(settingsKey);
+			return isAtomic ? this.transformV4ToV3Conditions(displayConditions) : JSON.parse(displayConditions || "[]");
+		}
+		getDisplayConditionsFromClipboard() {
+			const clipboard = elementorCommon.storage.get("clipboard");
+			const elements = (clipboard === null || clipboard === void 0 ? void 0 : clipboard.elements) || [];
+			if (1 !== elements.length) return [];
+			const element = elements[0];
+			const isAtomic = this.isAtomic(element);
+			return this.extractDisplayConditions(element === null || element === void 0 ? void 0 : element.settings, isAtomic);
+		}
+		/**
+		* Paste or clear display conditions to/of the selected element.
+		*
+		* @param {Array}             containers
+		* @param {'paste' | 'clear'} action
+		*/
+		tryContextMenuActions(containers, action) {
+			const container = (containers === null || containers === void 0 ? void 0 : containers[0]) || null;
+			const displayConditions = this.pasteAction === action ? this.getDisplayConditionsFromClipboard() : null;
+			if (!container) return;
+			const isAtomic = this.isAtomic(container.model);
+			const settingsKey = this.getSettingsKey(isAtomic);
+			$e.run("document/elements/settings", {
+				container,
+				settings: { [settingsKey]: this.createDisplayConditions(displayConditions, isAtomic) }
+			});
+			container.panel.refresh();
+			try {
+				const controlView = container.panel.getControlView(this.getSettings("controls").displayConditions);
+				const icon = this.getEditorControlView(this.getSettings("controls").trigger).$el.find(this.getSettings("selectors").icon);
+				this.highlightIcon(icon, controlView);
+			} catch (error) {
+				return false;
 			}
 		}
+		onNavigatorInit() {
+			elementor.navigator.indicators.displayConditions = {
+				icon: "flow",
+				title: (0, _wordpress_i18n.__)("Display Conditions", "elementor-pro"),
+				settingKeys: ["e_display_conditions", "display-conditions"],
+				section: "e_display_conditions_trigger"
+			};
+		}
+	};
+	//#endregion
+	//#region node_modules/prop-types/lib/ReactPropTypesSecret.js
+	/**
+	* Copyright (c) 2013-present, Facebook, Inc.
+	*
+	* This source code is licensed under the MIT license found in the
+	* LICENSE file in the root directory of this source tree.
+	*/
+	var require_ReactPropTypesSecret = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+		module.exports = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
+	}));
+	//#endregion
+	//#region node_modules/prop-types/factoryWithThrowingShims.js
+	/**
+	* Copyright (c) 2013-present, Facebook, Inc.
+	*
+	* This source code is licensed under the MIT license found in the
+	* LICENSE file in the root directory of this source tree.
+	*/
+	var require_factoryWithThrowingShims = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+		var ReactPropTypesSecret = require_ReactPropTypesSecret();
+		function emptyFunction() {}
+		function emptyFunctionWithReset() {}
+		emptyFunctionWithReset.resetWarningCache = emptyFunction;
+		module.exports = function() {
+			function shim(props, propName, componentName, location, propFullName, secret) {
+				if (secret === ReactPropTypesSecret) return;
+				var err = /* @__PURE__ */ new Error("Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types");
+				err.name = "Invariant Violation";
+				throw err;
+			}
+			shim.isRequired = shim;
+			function getShim() {
+				return shim;
+			}
+			var ReactPropTypes = {
+				array: shim,
+				bigint: shim,
+				bool: shim,
+				func: shim,
+				number: shim,
+				object: shim,
+				string: shim,
+				symbol: shim,
+				any: shim,
+				arrayOf: getShim,
+				element: shim,
+				elementType: shim,
+				instanceOf: getShim,
+				node: shim,
+				objectOf: getShim,
+				oneOf: getShim,
+				oneOfType: getShim,
+				shape: getShim,
+				exact: getShim,
+				checkPropTypes: emptyFunctionWithReset,
+				resetWarningCache: emptyFunction
+			};
+			ReactPropTypes.PropTypes = ReactPropTypes;
+			return ReactPropTypes;
+		};
+	}));
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/utils/constants.js
+	var import_prop_types = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports, module) => {
+		module.exports = require_factoryWithThrowingShims()();
+	})))());
+	var CONTROL_TYPES = {
+		MULTIPLE_SELECT: "select2",
+		SELECT: "select",
+		QUERY: "query",
+		DATE_TIME: "date_time",
+		TEXT_FIELD: "text"
+	};
+	var DEFAULT_CONTROL_VALUES = {
+		select2: [],
+		query: [],
+		select: "",
+		text: "",
+		date_time: null
+	};
+	var ACTION_TYPES = {
+		CHANGE_CONTROL_VALUE: "CHANGE_CONTROL_VALUE",
+		SET_ERRORS: "SET_ERRORS",
+		ADD_OR_CONDITION: "ADD_OR_CONDITION",
+		CHANGE_CONDITION_TYPE: "CHANGE_CONDITION_TYPE",
+		ADD_AND_CONDITION: "ADD_AND_CONDITION",
+		REMOVE_AND_CONDITION: "REMOVE_AND_CONDITION",
+		REMOVE_OR_CONDITION: "REMOVE_OR_CONDITION"
+	};
+	var DISABLED_CONTROL_CONFIG = {
+		CONDITION_NAME: "dynamic_tags",
+		CONTROL_NAME: "dynamic_tag_value",
+		COMPARATORS: ["is_empty", "is_not_empty"]
+	};
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+	function ownKeys(e, r) {
+		var t = Object.keys(e);
+		if (Object.getOwnPropertySymbols) {
+			var o = Object.getOwnPropertySymbols(e);
+			r && (o = o.filter(function(r2) {
+				return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+			})), t.push.apply(t, o);
+		}
+		return t;
 	}
+	function _objectSpread2(e) {
+		for (var r = 1; r < arguments.length; r++) {
+			var t = null != arguments[r] ? arguments[r] : {};
+			r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
+				_defineProperty(e, r2, t[r2]);
+			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
+				Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+			});
+		}
+		return e;
+	}
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/reducers/conditions-reducer.js
+	var conditionsReducer = (state, action) => {
+		switch (action.type) {
+			case ACTION_TYPES.CHANGE_CONDITION_TYPE: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: _changeConditionType(_objectSpread2(_objectSpread2({}, state), action)) });
+			case ACTION_TYPES.CHANGE_CONTROL_VALUE: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: _changeControlValue(_objectSpread2(_objectSpread2({}, state), action)) });
+			case ACTION_TYPES.ADD_AND_CONDITION: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: _addAndCondition(_objectSpread2(_objectSpread2({}, state), action)) });
+			case ACTION_TYPES.ADD_OR_CONDITION: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: [...state.selectedConditions, [action.andCondition]] });
+			case ACTION_TYPES.REMOVE_AND_CONDITION: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: _removeAndCondition(_objectSpread2(_objectSpread2({}, state), action)) });
+			case ACTION_TYPES.REMOVE_OR_CONDITION: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: state.selectedConditions.filter((_, index) => index !== action.orConditionIndex) });
+			case ACTION_TYPES.SET_ERRORS: return _objectSpread2(_objectSpread2({}, state), {}, { selectedConditions: _setErrors(_objectSpread2(_objectSpread2({}, state), action)) });
+			default: return state;
+		}
+	};
+	var _changeConditionType = ({ selectedConditions, conditionToChange, orConditionIndex, andConditionIndex }) => {
+		const newOrCondition = selectedConditions[orConditionIndex].map((andCondition, index) => index === andConditionIndex ? conditionToChange : _objectSpread2({}, andCondition));
+		return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
+	};
+	var _changeControlValue = ({ selectedConditions, orConditionIndex, andConditionIndex, controlKey, value }) => {
+		const existingOrCondition = [...selectedConditions[orConditionIndex]];
+		const newAndCondition = _objectSpread2(_objectSpread2({}, _objectSpread2({}, existingOrCondition[andConditionIndex])), {}, { [controlKey]: value });
+		const newOrCondition = existingOrCondition.map((andCondition, index) => index === andConditionIndex ? newAndCondition : _objectSpread2({}, andCondition));
+		return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
+	};
+	var _addAndCondition = ({ selectedConditions, orConditionIndex, andConditionIndex, andCondition }) => {
+		const existingOrCondition = selectedConditions[orConditionIndex];
+		const newOrCondition = existingOrCondition.reduce((newAndConditions, condition, index) => {
+			newAndConditions.push(_objectSpread2({}, condition));
+			if (index === andConditionIndex || existingOrCondition.length === andConditionIndex && existingOrCondition.length - 1 === index) newAndConditions.push(andCondition);
+			return newAndConditions;
+		}, []);
+		return selectedConditions.map((orCondition, index) => index === orConditionIndex ? newOrCondition : [...orCondition]);
+	};
+	var _removeAndCondition = ({ selectedConditions, orConditionIndex, andConditionIndex }) => {
+		const newOrCondition = selectedConditions[orConditionIndex].reduce((newAndConditions, condition, index) => {
+			if (index !== andConditionIndex) newAndConditions.push(_objectSpread2({}, condition));
+			return newAndConditions;
+		}, []);
+		return selectedConditions.reduce((newOrConditions, orCondition, index) => {
+			if (index === orConditionIndex && newOrCondition.length) newOrConditions.push(newOrCondition);
+			if (index !== orConditionIndex) newOrConditions.push([...orCondition]);
+			return newOrConditions;
+		}, []);
+	};
+	var _setErrors = ({ selectedConditions, orConditionIndex, andConditionIndex, errors }) => {
+		const newOrCondition = [...selectedConditions[orConditionIndex]];
+		const newAndCondition = _objectSpread2({}, newOrCondition[andConditionIndex]);
+		newAndCondition.errors = _objectSpread2(_objectSpread2({}, newAndCondition.errors), errors);
+		newOrCondition[andConditionIndex] = newAndCondition;
+		return selectedConditions.map((orCondition, index) => index === orConditionIndex ? [...newOrCondition] : [...orCondition]);
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/contexts/conditions-context.js
+	var ConditionsContext = react.default.createContext();
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/utils/utils.js
+	function shouldCastToArray(controlType) {
+		return CONTROL_TYPES.MULTIPLE_SELECT === controlType || CONTROL_TYPES.QUERY === controlType;
+	}
+	function getDefaultActiveCondition(conditionsByGroup) {
+		return Object.values(conditionsByGroup)[0][0];
+	}
+	function getInvalidInputFeedback(type, variant, value, shouldShow = false) {
+		return !(value === null || value === void 0 ? void 0 : value.length) ? {
+			message: _getErrorMessage(type, variant),
+			shouldShow
+		} : {};
+	}
+	var getControlDefaults = (controlKey, control) => {
+		const { type, variant = null, options } = control, defaultValue = (control === null || control === void 0 ? void 0 : control.default) || (options && CONTROL_TYPES.MULTIPLE_SELECT !== type ? Object.keys(options)[0] : DEFAULT_CONTROL_VALUES[type]), formattedDefaultValue = shouldCastToArray(type) && !Array.isArray(defaultValue) ? [defaultValue] : defaultValue;
+		return {
+			defaultValue: formattedDefaultValue,
+			error: getInvalidInputFeedback(type, variant, formattedDefaultValue)
+		};
+	};
+	var getConditionInitialState = (conditions, conditionKey) => {
+		const { controls = {} } = (conditions === null || conditions === void 0 ? void 0 : conditions[conditionKey]) || {};
+		return Object.keys(controls).reduce((defaults, controlKey) => {
+			if ("__settings" === controlKey) return defaults;
+			const { defaultValue, error } = getControlDefaults(controlKey, controls[controlKey]);
+			defaults[controlKey] = defaultValue;
+			defaults.errors[controlKey] = error;
+			return defaults;
+		}, { errors: {} });
+	};
+	function hasDecimalSeparator(newValue) {
+		if (isNaN(parseFloat(newValue))) return false;
+		if (newValue.toString().indexOf(".") !== -1) return true;
+		if (newValue.toString().indexOf(",") !== -1) return true;
+	}
+	function getSelectOptionMaxWidth(controlCount) {
+		return 3 === controlCount ? 200 : 150;
+	}
+	function getControlValueMaxWidth(controlCount) {
+		return 3 === controlCount ? 190 : 135;
+	}
+	function getControlValue(value, altValue) {
+		return "undefined" !== typeof value ? value : altValue;
+	}
+	function _getErrorMessage(controlType, variant = null) {
+		if (shouldCastToArray(controlType)) return (0, _wordpress_i18n.__)("Select an option", "elementor-pro");
+		if (CONTROL_TYPES.DATE_TIME === controlType) return "time" === variant ? (0, _wordpress_i18n.__)("Select a time", "elementor-pro") : (0, _wordpress_i18n.__)("Select a date", "elementor-pro");
+		return (0, _wordpress_i18n.__)("Enter a value", "elementor-pro");
+	}
+	function shouldDisableControl(control, comparator) {
+		return DISABLED_CONTROL_CONFIG.CONTROL_NAME === control && DISABLED_CONTROL_CONFIG.COMPARATORS.includes(comparator);
+	}
+	function shouldEmptyValuePassValidation(condition, comparator) {
+		return DISABLED_CONTROL_CONFIG.CONDITION_NAME === condition && DISABLED_CONTROL_CONFIG.COMPARATORS.includes(comparator);
+	}
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/icons/elementor-logo.js
+	var __defProp$13 = Object.defineProperty;
+	var __getOwnPropSymbols$13 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$13 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$13 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$13 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$13(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$13 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$13.call(b, prop)) __defNormalProp$13(a, prop, b[prop]);
+		if (__getOwnPropSymbols$13) {
+			for (var prop of __getOwnPropSymbols$13(b)) if (__propIsEnum$13.call(b, prop)) __defNormalProp$13(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var ElementorLogo = (props) => {
+		return /* @__PURE__ */ react.createElement(_elementor_ui.SvgIcon, __spreadValues$13({ viewBox: "0 0 32 32" }, props), /* @__PURE__ */ react.createElement("path", {
+			fillRule: "evenodd",
+			clipRule: "evenodd",
+			d: "M2.69648 24.8891C0.938383 22.2579 0 19.1645 0 16C0 11.7566 1.68571 7.68687 4.68629 4.68629C7.68687 1.68571 11.7566 0 16 0C19.1645 0 22.2579 0.938383 24.8891 2.69648C27.5203 4.45459 29.5711 6.95344 30.7821 9.87706C31.9931 12.8007 32.3099 16.0177 31.6926 19.1214C31.0752 22.2251 29.5514 25.0761 27.3137 27.3137C25.0761 29.5514 22.2251 31.0752 19.1214 31.6926C16.0177 32.3099 12.8007 31.9931 9.87706 30.7821C6.95344 29.5711 4.45459 27.5203 2.69648 24.8891ZM12.0006 9.33281H9.33437V22.6665H12.0006V9.33281ZM22.6657 9.33281H14.6669V11.9991H22.6657V9.33281ZM22.6657 14.6654H14.6669V17.3316H22.6657V14.6654ZM22.6657 20.0003H14.6669V22.6665H22.6657V20.0003Z"
+		}));
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/header.js
+	var Header = ({ onClose }) => {
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.AppBar, {
+			sx: { fontWeight: "normal" },
+			color: "transparent",
+			position: "relative"
+		}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Toolbar, { variant: "dense" }, /* @__PURE__ */ react.default.createElement(ElementorLogo, { sx: { mr: 1 } }), /* @__PURE__ */ react.default.createElement(_elementor_ui.Typography, {
+			component: "span",
+			variant: "subtitle2",
+			sx: {
+				fontWeight: "bold",
+				textTransform: "uppercase"
+			}
+		}, (0, _wordpress_i18n.__)("Display Conditions", "elementor-pro")), /* @__PURE__ */ react.default.createElement(_elementor_ui.Stack, {
+			direction: "row",
+			spacing: 1,
+			alignItems: "center",
+			sx: { ml: "auto" }
+		}, /* @__PURE__ */ react.default.createElement(_elementor_ui.IconButton, {
+			size: "small",
+			"aria-label": (0, _wordpress_i18n.__)("Close", "elementor-pro"),
+			onClick: onClose,
+			sx: { "&.MuiButtonBase-root": { mr: -1 } }
+		}, /* @__PURE__ */ react.default.createElement(_elementor_icons.XIcon, null)))));
+	};
+	Header.propTypes = { onClose: import_prop_types.func.isRequired };
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/footer.js
+	var Footer = ({ onClickSaveButton, isButtonDisabled }) => {
+		return /* @__PURE__ */ react.createElement(_elementor_ui.Stack, {
+			direction: "row",
+			justifyContent: "flex-end",
+			sx: {
+				py: 1,
+				px: 3
+			}
+		}, /* @__PURE__ */ react.createElement(_elementor_ui.Button, {
+			variant: "contained",
+			className: "save-and-close-button",
+			disabled: !isButtonDisabled,
+			onClick: onClickSaveButton
+		}, (0, _wordpress_i18n.__)("Save & Close", "elementor-pro")));
+	};
+	Footer.propTypes = {
+		onClickSaveButton: import_prop_types.default.func,
+		isButtonDisabled: import_prop_types.default.bool.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/icons/hierarchy-icon.js
+	var __defProp$12 = Object.defineProperty;
+	var __defProps$6 = Object.defineProperties;
+	var __getOwnPropDescs$6 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$12 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$12 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$12 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$12 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$12(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$12 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$12.call(b, prop)) __defNormalProp$12(a, prop, b[prop]);
+		if (__getOwnPropSymbols$12) {
+			for (var prop of __getOwnPropSymbols$12(b)) if (__propIsEnum$12.call(b, prop)) __defNormalProp$12(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var __spreadProps$6 = /* @__PURE__ */ __name((a, b) => __defProps$6(a, __getOwnPropDescs$6(b)), "__spreadProps");
+	var HierarchyIcon = (0, _elementor_ui.styled)(react.forwardRef((props, ref) => {
+		return /* @__PURE__ */ react.createElement(_elementor_ui.SvgIcon, __spreadProps$6(__spreadValues$12({ viewBox: "0 0 24 24" }, props), { ref }), /* @__PURE__ */ react.createElement("path", {
+			fillRule: "evenodd",
+			clipRule: "evenodd",
+			d: "M11 3.75C10.3096 3.75 9.75 4.30964 9.75 5V7C9.75 7.69036 10.3096 8.25 11 8.25H13C13.6904 8.25 14.25 7.69036 14.25 7V5C14.25 4.30964 13.6904 3.75 13 3.75H11ZM12.75 9.75H13C14.5188 9.75 15.75 8.51878 15.75 7V5C15.75 3.48122 14.5188 2.25 13 2.25H11C9.48122 2.25 8.25 3.48122 8.25 5V7C8.25 8.51878 9.48122 9.75 11 9.75H11.25V11.25H8C7.27065 11.25 6.57118 11.5397 6.05546 12.0555C5.53973 12.5712 5.25 13.2707 5.25 14V14.25H5C3.48122 14.25 2.25 15.4812 2.25 17V19C2.25 20.5188 3.48122 21.75 5 21.75H7C8.51878 21.75 9.75 20.5188 9.75 19V17C9.75 15.4812 8.51878 14.25 7 14.25H6.75V14C6.75 13.6685 6.8817 13.3505 7.11612 13.1161C7.35054 12.8817 7.66848 12.75 8 12.75H16C16.3315 12.75 16.6495 12.8817 16.8839 13.1161C17.1183 13.3505 17.25 13.6685 17.25 14V14.25H17C15.4812 14.25 14.25 15.4812 14.25 17V19C14.25 20.5188 15.4812 21.75 17 21.75H19C20.5188 21.75 21.75 20.5188 21.75 19V17C21.75 15.4812 20.5188 14.25 19 14.25H18.75V14C18.75 13.2707 18.4603 12.5712 17.9445 12.0555C17.4288 11.5397 16.7293 11.25 16 11.25H12.75V9.75ZM17 15.75C16.3096 15.75 15.75 16.3096 15.75 17V19C15.75 19.6904 16.3096 20.25 17 20.25H19C19.6904 20.25 20.25 19.6904 20.25 19V17C20.25 16.3096 19.6904 15.75 19 15.75H17ZM5 15.75C4.30964 15.75 3.75 16.3096 3.75 17V19C3.75 19.6904 4.30964 20.25 5 20.25H7C7.69036 20.25 8.25 19.6904 8.25 19V17C8.25 16.3096 7.69036 15.75 7 15.75H5Z"
+		}));
+	}))(({ theme }) => ({ "& path": { fill: theme.palette.text.primary } }));
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/hooks/use-conditions.js
+	function useConditions() {
+		return (0, react.useContext)(ConditionsContext);
+	}
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-control.js
+	var __defProp$11 = Object.defineProperty;
+	var __defProps$5 = Object.defineProperties;
+	var __getOwnPropDescs$5 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$11 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$11 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$11 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$11 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$11(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$11 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$11.call(b, prop)) __defNormalProp$11(a, prop, b[prop]);
+		if (__getOwnPropSymbols$11) {
+			for (var prop of __getOwnPropSymbols$11(b)) if (__propIsEnum$11.call(b, prop)) __defNormalProp$11(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var __spreadProps$5 = /* @__PURE__ */ __name((a, b) => __defProps$5(a, __getOwnPropDescs$5(b)), "__spreadProps");
+	var __objRest$2 = /* @__PURE__ */ __name((source, exclude) => {
+		var target = {};
+		for (var prop in source) if (__hasOwnProp$11.call(source, prop) && exclude.indexOf(prop) < 0) target[prop] = source[prop];
+		if (source != null && __getOwnPropSymbols$11) {
+			for (var prop of __getOwnPropSymbols$11(source)) if (exclude.indexOf(prop) < 0 && __propIsEnum$11.call(source, prop)) target[prop] = source[prop];
+		}
+		return target;
+	}, "__objRest");
+	var ConditionSelect = (_a) => {
+		var _b = _a, { controlCount } = _b, props = __objRest$2(_b, ["controlCount"]);
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Select, __spreadProps$5(__spreadValues$11({}, props), {
+			size: "small",
+			sx: {
+				flex: 1,
+				textAlign: "start",
+				alignSelf: "flex-start",
+				".MuiSelect-select .MuiTypography-root": { maxWidth: getControlValueMaxWidth(controlCount) }
+			},
+			color: "secondary",
+			MenuProps: {
+				PaperProps: { sx: {
+					maxHeight: 280,
+					"& .MuiListSubheader-root": { position: "initial" }
+				} },
+				classes: { paper: "e-conditions-select-menu" }
+			}
+		}));
+	};
+	ConditionSelect.propTypes = { controlCount: import_prop_types.number.isRequired };
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/ui/condition-select-option.js
+	var __defProp$10 = Object.defineProperty;
+	var __defProps$4 = Object.defineProperties;
+	var __getOwnPropDescs$4 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$10 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$10 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$10 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$10 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$10(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$10 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$10.call(b, prop)) __defNormalProp$10(a, prop, b[prop]);
+		if (__getOwnPropSymbols$10) {
+			for (var prop of __getOwnPropSymbols$10(b)) if (__propIsEnum$10.call(b, prop)) __defNormalProp$10(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var __spreadProps$4 = /* @__PURE__ */ __name((a, b) => __defProps$4(a, __getOwnPropDescs$4(b)), "__spreadProps");
+	var __objRest$1 = /* @__PURE__ */ __name((source, exclude) => {
+		var target = {};
+		for (var prop in source) if (__hasOwnProp$10.call(source, prop) && exclude.indexOf(prop) < 0) target[prop] = source[prop];
+		if (source != null && __getOwnPropSymbols$10) {
+			for (var prop of __getOwnPropSymbols$10(source)) if (exclude.indexOf(prop) < 0 && __propIsEnum$10.call(source, prop)) target[prop] = source[prop];
+		}
+		return target;
+	}, "__objRest");
+	var ConditionSelectOption = (_a) => {
+		var _b = _a, { controlCount, sx = {} } = _b, props = __objRest$1(_b, ["controlCount", "sx"]);
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Typography, __spreadProps$4(__spreadValues$10({ noWrap: true }, props), {
+			variant: props.variant || "inherit",
+			sx: __spreadValues$10({ maxWidth: getSelectOptionMaxWidth(controlCount) }, sx)
+		}));
+	};
+	ConditionSelectOption.propTypes = {
+		sx: import_prop_types.object,
+		isDropdownItem: import_prop_types.bool,
+		variant: import_prop_types.string,
+		controlCount: import_prop_types.number.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/select-control.js
+	var SelectControl = ({ condition, control, controlKey, onChangeOption, options, value, controlCount }) => {
+		const [controlValue, setControlValue] = (0, react.useState)(value);
+		(0, react.useEffect)(() => {
+			setControlValue(value);
+		}, [condition]);
+		const handleChangeOption = (newValue) => {
+			onChangeOption(newValue);
+			setControlValue(newValue);
+		};
+		const getOptions = () => {
+			return Object.entries(options).map(([optionKey, optionValue]) => {
+				var _a;
+				if (!optionValue) return null;
+				if ("group" === optionValue.type) return /* @__PURE__ */ react.createElement(_elementor_ui.ListSubheader, { key: optionKey }, /* @__PURE__ */ react.createElement(ConditionSelectOption, { controlCount }, optionValue.label));
+				const isDisabled = (_a = control == null ? void 0 : control.disabled_options) == null ? void 0 : _a.includes(optionKey);
+				return /* @__PURE__ */ react.createElement(_elementor_ui.MenuItem, {
+					key: optionKey,
+					value: optionKey,
+					disabled: isDisabled,
+					className: isDisabled && "hidden" === (control == null ? void 0 : control.disabled_type) ? "elementor-hidden" : ""
+				}, /* @__PURE__ */ react.createElement(ConditionSelectOption, { controlCount }, optionValue));
+			});
+		};
+		return /* @__PURE__ */ react.createElement(ConditionSelect, {
+			id: `select-${controlKey}`,
+			value: controlValue,
+			onChange: (event) => handleChangeOption(event.target.value),
+			disabled: Object.keys(options).length <= 1,
+			controlCount
+		}, getOptions());
+	};
+	SelectControl.propTypes = {
+		condition: import_prop_types.object.isRequired,
+		control: import_prop_types.object.isRequired,
+		controlKey: import_prop_types.string.isRequired,
+		onChangeOption: import_prop_types.func.isRequired,
+		options: import_prop_types.object.isRequired,
+		value: import_prop_types.string.isRequired,
+		controlCount: import_prop_types.number.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/autocomplete-control.js
+	var __defProp$9 = Object.defineProperty;
+	var __defProps$3 = Object.defineProperties;
+	var __getOwnPropDescs$3 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$9 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$9 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$9 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$9(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$9 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$9.call(b, prop)) __defNormalProp$9(a, prop, b[prop]);
+		if (__getOwnPropSymbols$9) {
+			for (var prop of __getOwnPropSymbols$9(b)) if (__propIsEnum$9.call(b, prop)) __defNormalProp$9(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var __spreadProps$3 = /* @__PURE__ */ __name((a, b) => __defProps$3(a, __getOwnPropDescs$3(b)), "__spreadProps");
+	var __objRest = (source, exclude) => {
+		var target = {};
+		for (var prop in source) if (__hasOwnProp$9.call(source, prop) && exclude.indexOf(prop) < 0) target[prop] = source[prop];
+		if (source != null && __getOwnPropSymbols$9) {
+			for (var prop of __getOwnPropSymbols$9(source)) if (exclude.indexOf(prop) < 0 && __propIsEnum$9.call(source, prop)) target[prop] = source[prop];
+		}
+		return target;
+	};
+	var formatValue$1 = /* @__PURE__ */ __name((valueToFormat) => {
+		return Array.isArray(valueToFormat) ? valueToFormat : [valueToFormat];
+	}, "formatValue");
+	var AutocompleteControl = ({ conditions, condition, controlKey, onChangeOption, options, value, shouldShowError, errorMessage, isMultiple, controlCount }) => {
+		const [controlValue, setControlValue] = (0, react.useState)(formatValue$1(value)), label = (controlValue == null ? void 0 : controlValue.length) ? "" : conditions[condition.condition].label || "";
+		(0, react.useEffect)(() => {
+			setControlValue(formatValue$1(value));
+		}, [condition]);
+		const handleChangeOption = (newValue) => {
+			onChangeOption(newValue);
+			setControlValue(newValue);
+		};
+		const renderOption = (_a, option) => {
+			var _b = _a, { key } = _b, optionProps = __objRest(_b, ["key"]);
+			return /* @__PURE__ */ react.createElement(_elementor_ui.Typography, __spreadProps$3(__spreadValues$9({ component: "li" }, optionProps), { key }), /* @__PURE__ */ react.createElement(ConditionSelectOption, {
+				component: "span",
+				variant: "inherit",
+				noWrap: true,
+				controlCount
+			}, options[option]));
+		};
+		const renderInput = (params) => {
+			return /* @__PURE__ */ react.createElement(_elementor_ui.TextField, __spreadProps$3(__spreadValues$9({
+				error: shouldShowError,
+				helperText: errorMessage
+			}, params), {
+				placeholder: label,
+				color: "secondary"
+			}));
+		};
+		return /* @__PURE__ */ react.createElement(_elementor_ui.Autocomplete, {
+			multiple: isMultiple,
+			id: `select-${controlKey}`,
+			value: controlValue,
+			options: Object.keys(options),
+			getOptionLabel: (optionKey) => options[optionKey],
+			sx: { flex: 1 },
+			ChipProps: { sx: { "&.MuiAutocomplete-tag": { maxWidth: "100px" } } },
+			renderInput,
+			ListboxProps: { sx: { maxHeight: 280 } },
+			size: "small",
+			onChange: (_event, newValues) => handleChangeOption(formatValue$1(newValues)),
+			renderOption,
+			forcePopupIcon: !Object.keys(options).length <= 1
+		});
+	};
+	AutocompleteControl.propTypes = {
+		conditions: import_prop_types.object.isRequired,
+		condition: import_prop_types.object.isRequired,
+		controlKey: import_prop_types.string.isRequired,
+		onChangeOption: import_prop_types.func.isRequired,
+		value: import_prop_types.array.isRequired,
+		options: import_prop_types.object.isRequired,
+		errorMessage: import_prop_types.string.isRequired,
+		shouldShowError: import_prop_types.bool.isRequired,
+		isMultiple: import_prop_types.bool.isRequired,
+		controlCount: import_prop_types.number.isRequired
+	};
+	//#endregion
+	//#region core/app/assets/js/utils.js
+	var htmlDecodeTextContent = (input) => {
+		return new DOMParser().parseFromString(input, "text/html").documentElement.textContent;
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/query-control.js
+	var __defProp$8 = Object.defineProperty;
+	var __defProps$2 = Object.defineProperties;
+	var __getOwnPropDescs$2 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$8 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$8 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$8 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$8 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$8(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$8 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$8.call(b, prop)) __defNormalProp$8(a, prop, b[prop]);
+		if (__getOwnPropSymbols$8) {
+			for (var prop of __getOwnPropSymbols$8(b)) if (__propIsEnum$8.call(b, prop)) __defNormalProp$8(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var __spreadProps$2 = /* @__PURE__ */ __name((a, b) => __defProps$2(a, __getOwnPropDescs$2(b)), "__spreadProps");
+	var __async$2 = /* @__PURE__ */ __name((__this, __arguments, generator) => {
+		return new Promise((resolve, reject) => {
+			var fulfilled = (value) => {
+				try {
+					step(generator.next(value));
+				} catch (e) {
+					reject(e);
+				}
+			};
+			var rejected = (value) => {
+				try {
+					step(generator.throw(value));
+				} catch (e) {
+					reject(e);
+				}
+			};
+			var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+			step((generator = generator.apply(__this, __arguments)).next());
+		});
+	}, "__async");
+	var formatValue = (valueToFormat) => {
+		return Array.isArray(valueToFormat) ? valueToFormat : [valueToFormat];
+	};
+	var QueryControl = ({ conditions, condition, control, controlKey, onChangeOption, value, shouldShowError, errorMessage, isMultiple, controlCount }) => {
+		const { fetchData } = (0, react.useContext)(ConditionsContext), [controlValue, setControlValue] = (0, react.useState)(formatValue(value)), [options, setOptions] = (0, react.useState)([]), [loading, setLoading] = (0, react.useState)(false), label = (controlValue == null ? void 0 : controlValue.length) ? "" : conditions[condition.condition].label || "";
+		(0, react.useEffect)(() => {
+			setControlValue(formatValue(value));
+		}, [condition]);
+		const handleSearchInputChange = (event, newInputValue, selectedValues) => __async$2(null, null, function* () {
+			if ("" === newInputValue) {
+				setOptions([]);
+				return;
+			}
+			setLoading(true);
+			const filteredResults = (yield fetchData(newInputValue, control)).filter((option) => {
+				option.text = htmlDecodeTextContent(option.text);
+				return !selectedValues.some((selectedOption) => (selectedOption == null ? void 0 : selectedOption.id) === (option == null ? void 0 : option.id));
+			});
+			setOptions(filteredResults);
+			setLoading(false);
+		});
+		const handleChangeOption = (newValue) => {
+			onChangeOption(newValue);
+			setControlValue(newValue);
+		};
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Autocomplete, {
+			multiple: isMultiple,
+			id: `select-${controlKey}`,
+			value: controlValue,
+			options,
+			getOptionLabel: (option) => option ? option.text : "",
+			isOptionEqualToValue: (option, optionToCompare) => option.id === optionToCompare.id,
+			filterOptions: (x) => x,
+			noOptionsText: (0, _wordpress_i18n.__)("No results", "elementor-pro"),
+			loading,
+			loadingText: (0, _wordpress_i18n.__)("Searching...", "elementor-pro"),
+			size: "small",
+			sx: { flex: 1 },
+			ChipProps: { sx: { "&.MuiAutocomplete-tag": { maxWidth: "100px" } } },
+			renderInput: (params) => /* @__PURE__ */ react.default.createElement(_elementor_ui.TextField, __spreadProps$2(__spreadValues$8({}, params), {
+				placeholder: label,
+				color: "secondary",
+				error: shouldShowError,
+				helperText: errorMessage,
+				InputProps: __spreadProps$2(__spreadValues$8({}, params.InputProps), { endAdornment: /* @__PURE__ */ react.default.createElement(react.default.Fragment, null, loading ? /* @__PURE__ */ react.default.createElement(_elementor_ui.CircularProgress, {
+					color: "inherit",
+					size: 20
+				}) : null, params.InputProps.endAdornment) })
+			})),
+			ListboxProps: { sx: { maxHeight: 280 } },
+			onChange: (_event, newValues) => handleChangeOption(newValues),
+			onInputChange: (event, newInputValue) => handleSearchInputChange(event, newInputValue, controlValue),
+			renderOption: (optionProps, option) => /* @__PURE__ */ react.default.createElement(_elementor_ui.Typography, __spreadValues$8({ component: "li" }, optionProps), /* @__PURE__ */ react.default.createElement(ConditionSelectOption, {
+				component: "span",
+				variant: "inherit",
+				noWrap: true,
+				controlCount
+			}, option.text))
+		});
+	};
+	QueryControl.propTypes = {
+		conditions: import_prop_types.object.isRequired,
+		condition: import_prop_types.object.isRequired,
+		onChangeOption: import_prop_types.func.isRequired,
+		controlKey: import_prop_types.string.isRequired,
+		control: import_prop_types.object.isRequired,
+		value: import_prop_types.array.isRequired,
+		errorMessage: import_prop_types.string.isRequired,
+		shouldShowError: import_prop_types.bool.isRequired,
+		isMultiple: import_prop_types.bool.isRequired,
+		controlCount: import_prop_types.number.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/text-field-control.js
+	var __defProp$7 = Object.defineProperty;
+	var __defProps$1 = Object.defineProperties;
+	var __getOwnPropDescs$1 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$7 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$7 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$7 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$7 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$7(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$7 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$7.call(b, prop)) __defNormalProp$7(a, prop, b[prop]);
+		if (__getOwnPropSymbols$7) {
+			for (var prop of __getOwnPropSymbols$7(b)) if (__propIsEnum$7.call(b, prop)) __defNormalProp$7(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var __spreadProps$1 = /* @__PURE__ */ __name((a, b) => __defProps$1(a, __getOwnPropDescs$1(b)), "__spreadProps");
+	var TextFieldControl = ({ condition, controlKey, control, onChangeOption, value, errorMessage, shouldShowError, placeholder, disabled }) => {
+		const [controlValue, setControlValue] = (0, react.useState)(value), { step = 1, min = 0, variant = null } = control;
+		const numericProps = "number" === variant ? {
+			type: "number",
+			inputProps: {
+				step,
+				min
+			}
+		} : {};
+		(0, react.useEffect)(() => {
+			setControlValue(value);
+		}, [condition]);
+		const handleChangeOption = (newValue, controlVariant) => {
+			let integerValue = null;
+			if ("number" === controlVariant && hasDecimalSeparator(newValue)) integerValue = Math.floor(parseFloat(newValue));
+			onChangeOption(integerValue != null ? integerValue : newValue.trim());
+			setControlValue(integerValue != null ? integerValue : newValue);
+		};
+		return /* @__PURE__ */ react.createElement(_elementor_ui.TextField, __spreadProps$1(__spreadValues$7({}, numericProps), {
+			sx: { flex: 1 },
+			error: shouldShowError,
+			helperText: errorMessage,
+			value: controlValue,
+			id: `text-${controlKey}`,
+			variant: "outlined",
+			onChange: (event) => handleChangeOption(event.target.value, variant),
+			size: "small",
+			color: "secondary",
+			placeholder,
+			disabled: disabled != null ? disabled : false
+		}));
+	};
+	TextFieldControl.propTypes = {
+		condition: import_prop_types.object.isRequired,
+		controlKey: import_prop_types.string.isRequired,
+		control: import_prop_types.object.isRequired,
+		onChangeOption: import_prop_types.func.isRequired,
+		value: import_prop_types.oneOfType([import_prop_types.string, import_prop_types.number]).isRequired,
+		errorMessage: import_prop_types.string.isRequired,
+		shouldShowError: import_prop_types.bool.isRequired,
+		placeholder: import_prop_types.string.isRequired,
+		disabled: import_prop_types.bool
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/date-picker-control.js
+	var import_dayjs_min = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports, module) => {
+		(function(t, e) {
+			"object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).dayjs = e();
+		})(exports, (function() {
+			"use strict";
+			var t = 1e3;
+			var e = 6e4;
+			var n = 36e5;
+			var r = "millisecond";
+			var i = "second";
+			var s = "minute";
+			var u = "hour";
+			var a = "day";
+			var o = "week";
+			var c = "month";
+			var f = "quarter";
+			var h = "year";
+			var d = "date";
+			var l = "Invalid Date";
+			var $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
+			var y = /\[([^\]]+)]|YYYY|YY|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
+			var M = {
+				name: "en",
+				weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
+				months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
+				ordinal: function(t) {
+					var e = [
+						"th",
+						"st",
+						"nd",
+						"rd"
+					];
+					var n = t % 100;
+					return "[" + t + (e[(n - 20) % 10] || e[n] || e[0]) + "]";
+				}
+			};
+			var m = function(t, e, n) {
+				var r = String(t);
+				return !r || r.length >= e ? t : "" + Array(e + 1 - r.length).join(n) + t;
+			};
+			var v = {
+				s: m,
+				z: function(t) {
+					var e = -t.utcOffset();
+					var n = Math.abs(e);
+					var r = Math.floor(n / 60);
+					var i = n % 60;
+					return (e <= 0 ? "+" : "-") + m(r, 2, "0") + ":" + m(i, 2, "0");
+				},
+				m: function t(e, n) {
+					if (e.date() < n.date()) return -t(n, e);
+					var r = 12 * (n.year() - e.year()) + (n.month() - e.month());
+					var i = e.clone().add(r, c);
+					var s = n - i < 0;
+					var u = e.clone().add(r + (s ? -1 : 1), c);
+					return +(-(r + (n - i) / (s ? i - u : u - i)) || 0);
+				},
+				a: function(t) {
+					return t < 0 ? Math.ceil(t) || 0 : Math.floor(t);
+				},
+				p: function(t) {
+					return {
+						M: c,
+						y: h,
+						w: o,
+						d: a,
+						D: d,
+						h: u,
+						m: s,
+						s: i,
+						ms: r,
+						Q: f
+					}[t] || String(t || "").toLowerCase().replace(/s$/, "");
+				},
+				u: function(t) {
+					return void 0 === t;
+				}
+			};
+			var g = "en";
+			var D = {};
+			D[g] = M;
+			var p = "$isDayjsObject";
+			var S = function(t) {
+				return t instanceof _ || !(!t || !t[p]);
+			};
+			var w = function t(e, n, r) {
+				var i;
+				if (!e) return g;
+				if ("string" == typeof e) {
+					var s = e.toLowerCase();
+					D[s] && (i = s), n && (D[s] = n, i = s);
+					var u = e.split("-");
+					if (!i && u.length > 1) return t(u[0]);
+				} else {
+					var a = e.name;
+					D[a] = e, i = a;
+				}
+				return !r && i && (g = i), i || !r && g;
+			};
+			var O = function(t, e) {
+				if (S(t)) return t.clone();
+				var n = "object" == typeof e ? e : {};
+				return n.date = t, n.args = arguments, new _(n);
+			};
+			var b = v;
+			b.l = w, b.i = S, b.w = function(t, e) {
+				return O(t, {
+					locale: e.$L,
+					utc: e.$u,
+					x: e.$x,
+					$offset: e.$offset
+				});
+			};
+			var _ = function() {
+				function M(t) {
+					this.$L = w(t.locale, null, !0), this.parse(t), this.$x = this.$x || t.x || {}, this[p] = !0;
+				}
+				var m = M.prototype;
+				return m.parse = function(t) {
+					this.$d = function(t) {
+						var e = t.date;
+						var n = t.utc;
+						if (null === e) return /* @__PURE__ */ new Date(NaN);
+						if (b.u(e)) return /* @__PURE__ */ new Date();
+						if (e instanceof Date) return new Date(e);
+						if ("string" == typeof e && !/Z$/i.test(e)) {
+							var r = e.match($);
+							if (r) {
+								var i = r[2] - 1 || 0;
+								var s = (r[7] || "0").substring(0, 3);
+								return n ? new Date(Date.UTC(r[1], i, r[3] || 1, r[4] || 0, r[5] || 0, r[6] || 0, s)) : new Date(r[1], i, r[3] || 1, r[4] || 0, r[5] || 0, r[6] || 0, s);
+							}
+						}
+						return new Date(e);
+					}(t), this.init();
+				}, m.init = function() {
+					var t = this.$d;
+					this.$y = t.getFullYear(), this.$M = t.getMonth(), this.$D = t.getDate(), this.$W = t.getDay(), this.$H = t.getHours(), this.$m = t.getMinutes(), this.$s = t.getSeconds(), this.$ms = t.getMilliseconds();
+				}, m.$utils = function() {
+					return b;
+				}, m.isValid = function() {
+					return !(this.$d.toString() === l);
+				}, m.isSame = function(t, e) {
+					var n = O(t);
+					return this.startOf(e) <= n && n <= this.endOf(e);
+				}, m.isAfter = function(t, e) {
+					return O(t) < this.startOf(e);
+				}, m.isBefore = function(t, e) {
+					return this.endOf(e) < O(t);
+				}, m.$g = function(t, e, n) {
+					return b.u(t) ? this[e] : this.set(n, t);
+				}, m.unix = function() {
+					return Math.floor(this.valueOf() / 1e3);
+				}, m.valueOf = function() {
+					return this.$d.getTime();
+				}, m.startOf = function(t, e) {
+					var n = this;
+					var r = !!b.u(e) || e;
+					var f = b.p(t);
+					var l = function(t, e) {
+						var i = b.w(n.$u ? Date.UTC(n.$y, e, t) : new Date(n.$y, e, t), n);
+						return r ? i : i.endOf(a);
+					};
+					var $ = function(t, e) {
+						return b.w(n.toDate()[t].apply(n.toDate("s"), (r ? [
+							0,
+							0,
+							0,
+							0
+						] : [
+							23,
+							59,
+							59,
+							999
+						]).slice(e)), n);
+					};
+					var y = this.$W;
+					var M = this.$M;
+					var m = this.$D;
+					var v = "set" + (this.$u ? "UTC" : "");
+					switch (f) {
+						case h: return r ? l(1, 0) : l(31, 11);
+						case c: return r ? l(1, M) : l(0, M + 1);
+						case o:
+							var g = this.$locale().weekStart || 0;
+							var D = (y < g ? y + 7 : y) - g;
+							return l(r ? m - D : m + (6 - D), M);
+						case a:
+						case d: return $(v + "Hours", 0);
+						case u: return $(v + "Minutes", 1);
+						case s: return $(v + "Seconds", 2);
+						case i: return $(v + "Milliseconds", 3);
+						default: return this.clone();
+					}
+				}, m.endOf = function(t) {
+					return this.startOf(t, !1);
+				}, m.$set = function(t, e) {
+					var n;
+					var o = b.p(t);
+					var f = "set" + (this.$u ? "UTC" : "");
+					var l = (n = {}, n[a] = f + "Date", n[d] = f + "Date", n[c] = f + "Month", n[h] = f + "FullYear", n[u] = f + "Hours", n[s] = f + "Minutes", n[i] = f + "Seconds", n[r] = f + "Milliseconds", n)[o];
+					var $ = o === a ? this.$D + (e - this.$W) : e;
+					if (o === c || o === h) {
+						var y = this.clone().set(d, 1);
+						y.$d[l]($), y.init(), this.$d = y.set(d, Math.min(this.$D, y.daysInMonth())).$d;
+					} else l && this.$d[l]($);
+					return this.init(), this;
+				}, m.set = function(t, e) {
+					return this.clone().$set(t, e);
+				}, m.get = function(t) {
+					return this[b.p(t)]();
+				}, m.add = function(r, f) {
+					var d;
+					var l = this;
+					r = Number(r);
+					var $ = b.p(f);
+					var y = function(t) {
+						var e = O(l);
+						return b.w(e.date(e.date() + Math.round(t * r)), l);
+					};
+					if ($ === c) return this.set(c, this.$M + r);
+					if ($ === h) return this.set(h, this.$y + r);
+					if ($ === a) return y(1);
+					if ($ === o) return y(7);
+					var M = (d = {}, d[s] = e, d[u] = n, d[i] = t, d)[$] || 1;
+					var m = this.$d.getTime() + r * M;
+					return b.w(m, this);
+				}, m.subtract = function(t, e) {
+					return this.add(-1 * t, e);
+				}, m.format = function(t) {
+					var e = this;
+					var n = this.$locale();
+					if (!this.isValid()) return n.invalidDate || l;
+					var r = t || "YYYY-MM-DDTHH:mm:ssZ";
+					var i = b.z(this);
+					var s = this.$H;
+					var u = this.$m;
+					var a = this.$M;
+					var o = n.weekdays;
+					var c = n.months;
+					var f = n.meridiem;
+					var h = function(t, n, i, s) {
+						return t && (t[n] || t(e, r)) || i[n].slice(0, s);
+					};
+					var d = function(t) {
+						return b.s(s % 12 || 12, t, "0");
+					};
+					var $ = f || function(t, e, n) {
+						var r = t < 12 ? "AM" : "PM";
+						return n ? r.toLowerCase() : r;
+					};
+					return r.replace(y, (function(t, r) {
+						return r || function(t) {
+							switch (t) {
+								case "YY": return String(e.$y).slice(-2);
+								case "YYYY": return b.s(e.$y, 4, "0");
+								case "M": return a + 1;
+								case "MM": return b.s(a + 1, 2, "0");
+								case "MMM": return h(n.monthsShort, a, c, 3);
+								case "MMMM": return h(c, a);
+								case "D": return e.$D;
+								case "DD": return b.s(e.$D, 2, "0");
+								case "d": return String(e.$W);
+								case "dd": return h(n.weekdaysMin, e.$W, o, 2);
+								case "ddd": return h(n.weekdaysShort, e.$W, o, 3);
+								case "dddd": return o[e.$W];
+								case "H": return String(s);
+								case "HH": return b.s(s, 2, "0");
+								case "h": return d(1);
+								case "hh": return d(2);
+								case "a": return $(s, u, !0);
+								case "A": return $(s, u, !1);
+								case "m": return String(u);
+								case "mm": return b.s(u, 2, "0");
+								case "s": return String(e.$s);
+								case "ss": return b.s(e.$s, 2, "0");
+								case "SSS": return b.s(e.$ms, 3, "0");
+								case "Z": return i;
+							}
+							return null;
+						}(t) || i.replace(":", "");
+					}));
+				}, m.utcOffset = function() {
+					return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
+				}, m.diff = function(r, d, l) {
+					var $;
+					var y = this;
+					var M = b.p(d);
+					var m = O(r);
+					var v = (m.utcOffset() - this.utcOffset()) * e;
+					var g = this - m;
+					var D = function() {
+						return b.m(y, m);
+					};
+					switch (M) {
+						case h:
+							$ = D() / 12;
+							break;
+						case c:
+							$ = D();
+							break;
+						case f:
+							$ = D() / 3;
+							break;
+						case o:
+							$ = (g - v) / 6048e5;
+							break;
+						case a:
+							$ = (g - v) / 864e5;
+							break;
+						case u:
+							$ = g / n;
+							break;
+						case s:
+							$ = g / e;
+							break;
+						case i:
+							$ = g / t;
+							break;
+						default: $ = g;
+					}
+					return l ? $ : b.a($);
+				}, m.daysInMonth = function() {
+					return this.endOf(c).$D;
+				}, m.$locale = function() {
+					return D[this.$L];
+				}, m.locale = function(t, e) {
+					if (!t) return this.$L;
+					var n = this.clone();
+					var r = w(t, e, !0);
+					return r && (n.$L = r), n;
+				}, m.clone = function() {
+					return b.w(this.$d, this);
+				}, m.toDate = function() {
+					return new Date(this.valueOf());
+				}, m.toJSON = function() {
+					return this.isValid() ? this.toISOString() : null;
+				}, m.toISOString = function() {
+					return this.$d.toISOString();
+				}, m.toString = function() {
+					return this.$d.toUTCString();
+				}, M;
+			}();
+			var Y = _.prototype;
+			return O.prototype = Y, [
+				["$ms", r],
+				["$s", i],
+				["$m", s],
+				["$H", u],
+				["$W", a],
+				["$M", c],
+				["$y", h],
+				["$D", d]
+			].forEach((function(t) {
+				Y[t[1]] = function(e) {
+					return this.$g(e, t[0], t[1]);
+				};
+			})), O.extend = function(t, e) {
+				return t.$i || (t(e, _, O), t.$i = !0), O;
+			}, O.locale = w, O.isDayjs = S, O.unix = function(t) {
+				return O(1e3 * t);
+			}, O.en = D[g], O.Ls = D, O.p = {}, O;
+		}));
+	})))());
+	var dateFormat$1 = "MM-DD-YYYY";
+	var formattedValue$1 = /* @__PURE__ */ __name((dateString) => {
+		return (0, import_dayjs_min.default)(dateString, dateFormat$1, true).isValid() ? (0, import_dayjs_min.default)(dateString, dateFormat$1) : null;
+	}, "formattedValue");
+	var DatePickerControl = ({ condition, onChangeOption, controlKey, value, shouldShowError, errorMessage }) => {
+		const [controlValue, setControlValue] = (0, react.useState)(formattedValue$1(value));
+		(0, react.useEffect)(() => {
+			setControlValue(formattedValue$1(value));
+		}, [condition]);
+		const handleChangeOption = (newValue) => {
+			if ((0, import_dayjs_min.default)(newValue, dateFormat$1, true).isValid()) {
+				onChangeOption(newValue.format(dateFormat$1));
+				setControlValue(formattedValue$1(newValue));
+			} else onChangeOption("");
+		};
+		return /* @__PURE__ */ react.createElement(_elementor_ui.DatePicker, {
+			value: controlValue,
+			sx: { flex: 1 },
+			id: `select-${controlKey}`,
+			slotProps: {
+				openPickerButton: { size: "small" },
+				textField: {
+					size: "small",
+					color: "secondary",
+					error: shouldShowError,
+					helperText: errorMessage
+				}
+			},
+			onChange: (newValue) => handleChangeOption(newValue)
+		});
+	};
+	DatePickerControl.propTypes = {
+		condition: import_prop_types.object.isRequired,
+		controlKey: import_prop_types.string.isRequired,
+		onChangeOption: import_prop_types.func.isRequired,
+		value: import_prop_types.string,
+		errorMessage: import_prop_types.string.isRequired,
+		shouldShowError: import_prop_types.bool.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/controls/time-picker-control.js
+	var timeFormat = "HH:mm";
+	var dateFormat = "MM-DD-YYYY HH:mm";
+	var formattedValue = (dateString) => {
+		return (0, import_dayjs_min.default)(dateString, timeFormat, true).isValid() ? (0, import_dayjs_min.default)(dateString, timeFormat) : null;
+	};
+	var TimePickerControl = ({ condition, controlKey, onChangeOption, value, shouldShowError, errorMessage }) => {
+		const lastInputValue = (0, react.useRef)(formattedValue(value)), [controlValue, setControlValue] = (0, react.useState)(lastInputValue.current);
+		(0, react.useEffect)(() => {
+			setControlValue(lastInputValue.current);
+		}, [condition]);
+		const handleChangeOption = (newValue) => {
+			onChangeOption((0, import_dayjs_min.default)(newValue, dateFormat, true).isValid() ? newValue.format(dateFormat) : "");
+			lastInputValue.current = newValue;
+			setControlValue(newValue);
+		};
+		return /* @__PURE__ */ react.createElement(_elementor_ui.TimePicker, {
+			sx: { flex: 1 },
+			id: `select-${controlKey}`,
+			value: controlValue,
+			slotProps: { textField: {
+				size: "small",
+				error: shouldShowError,
+				helperText: errorMessage
+			} },
+			onChange: (newValue) => handleChangeOption(newValue)
+		});
+	};
+	TimePickerControl.propTypes = {
+		condition: import_prop_types.object.isRequired,
+		control: import_prop_types.object.isRequired,
+		controlKey: import_prop_types.string.isRequired,
+		onChangeOption: import_prop_types.func.isRequired,
+		value: import_prop_types.string,
+		errorMessage: import_prop_types.string.isRequired,
+		shouldShowError: import_prop_types.bool.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/control-renderer.js
+	var __defProp$6 = Object.defineProperty;
+	var __getOwnPropSymbols$6 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$6 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$6 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$6 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$6(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$6 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$6.call(b, prop)) __defNormalProp$6(a, prop, b[prop]);
+		if (__getOwnPropSymbols$6) {
+			for (var prop of __getOwnPropSymbols$6(b)) if (__propIsEnum$6.call(b, prop)) __defNormalProp$6(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var ControlRenderer = ({ controlKey, andConditionIndex, orConditionIndex, controlCount }) => {
+		const { conditionsConfig, selectedConditions, dispatch } = useConditions(), { conditions: availableConditions } = conditionsConfig, andCondition = selectedConditions[orConditionIndex][andConditionIndex];
+		const { controls = {} } = availableConditions[andCondition.condition], control = {} = controls[controlKey], { options = {} } = control;
+		if ("__settings" === controlKey) return null;
+		const extractControlPropsFromGlobals = (defaultAltValue) => {
+			const valueProps = getControlValueRelatedProps(defaultAltValue);
+			const invalidInputProps = getControlInvalidInputRelatedProps();
+			const controlProps = {
+				controlKey,
+				control,
+				conditionIndex: andConditionIndex,
+				condition: andCondition,
+				conditions: availableConditions,
+				options,
+				onChangeOption: handleChangeOption,
+				controlCount
+			};
+			if (shouldDisableControl(controlKey, controlProps.condition.comparator)) controlProps.disabled = true;
+			return __spreadValues$6(__spreadValues$6(__spreadValues$6({}, valueProps), invalidInputProps), controlProps);
+		};
+		const getControlValueRelatedProps = (defaultAltValue) => {
+			defaultAltValue = getControlValue(defaultAltValue, DEFAULT_CONTROL_VALUES[control.type]);
+			const defaultValue = getControlValue(control == null ? void 0 : control.default, Object.keys(options)[0] || defaultAltValue);
+			return {
+				defaultValue,
+				value: getControlValue(andCondition[controlKey], defaultValue),
+				placeholder: (control == null ? void 0 : control.placeholder) || "",
+				isMultiple: (control == null ? void 0 : control.multiple) || false
+			};
+		};
+		const getControlInvalidInputRelatedProps = () => {
+			const controlErrors = (andCondition.errors || {})[controlKey] || {};
+			const errorMessage = controlErrors.shouldShow && controlErrors.message || "";
+			return {
+				errorMessage,
+				shouldShowError: Boolean(errorMessage)
+			};
+		};
+		const handleChangeOption = (value) => {
+			const { type, variant } = controls[controlKey], error = getInvalidInputFeedback(type, variant, value);
+			dispatch({
+				type: ACTION_TYPES.CHANGE_CONTROL_VALUE,
+				orConditionIndex,
+				andConditionIndex,
+				controlKey,
+				value
+			});
+			dispatch({
+				type: ACTION_TYPES.SET_ERRORS,
+				andConditionIndex,
+				orConditionIndex,
+				errors: { [controlKey]: error }
+			});
+		};
+		const getDateAndTimeBasedControl = (variant) => {
+			switch (variant) {
+				case "date": return /* @__PURE__ */ react.createElement(DatePickerControl, __spreadValues$6({}, extractControlPropsFromGlobals()));
+				case "time": return /* @__PURE__ */ react.createElement(TimePickerControl, __spreadValues$6({}, extractControlPropsFromGlobals()));
+			}
+		};
+		switch (control.type) {
+			case CONTROL_TYPES.SELECT: return /* @__PURE__ */ react.createElement(SelectControl, __spreadValues$6({}, extractControlPropsFromGlobals()));
+			case CONTROL_TYPES.MULTIPLE_SELECT: return /* @__PURE__ */ react.createElement(AutocompleteControl, __spreadValues$6({}, extractControlPropsFromGlobals()));
+			case CONTROL_TYPES.DATE_TIME: return getDateAndTimeBasedControl(control == null ? void 0 : control.variant);
+			case CONTROL_TYPES.QUERY: return /* @__PURE__ */ react.createElement(QueryControl, __spreadValues$6({}, extractControlPropsFromGlobals()));
+		}
+		return /* @__PURE__ */ react.createElement(TextFieldControl, __spreadValues$6({}, extractControlPropsFromGlobals()));
+	};
+	ControlRenderer.propTypes = {
+		controlKey: import_prop_types.string.isRequired,
+		andConditionIndex: import_prop_types.number.isRequired,
+		orConditionIndex: import_prop_types.number.isRequired,
+		controlCount: import_prop_types.number.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/ui/row-controls.js
+	var __defProp$5 = Object.defineProperty;
+	var __getOwnPropSymbols$5 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$5 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$5 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$5 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$5(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$5 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$5.call(b, prop)) __defNormalProp$5(a, prop, b[prop]);
+		if (__getOwnPropSymbols$5) {
+			for (var prop of __getOwnPropSymbols$5(b)) if (__propIsEnum$5.call(b, prop)) __defNormalProp$5(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var RowControls = ({ orConditionIndex, andConditionIndex }) => {
+		const { conditionsConfig, dispatch } = useConditions(), { conditions: availableConditions, conditionsByGroup } = conditionsConfig;
+		const addRepeaterRow = () => {
+			const conditionKey = getDefaultActiveCondition(conditionsByGroup);
+			const defaultValues = getConditionInitialState(availableConditions, conditionKey);
+			const andCondition = __spreadValues$5({ condition: conditionKey }, defaultValues);
+			dispatch({
+				type: ACTION_TYPES.ADD_AND_CONDITION,
+				andCondition,
+				andConditionIndex,
+				orConditionIndex
+			});
+		};
+		const removeRepeaterRow = () => {
+			dispatch({
+				type: ACTION_TYPES.REMOVE_AND_CONDITION,
+				andConditionIndex,
+				orConditionIndex
+			});
+		};
+		return /* @__PURE__ */ react.createElement(_elementor_ui.Stack, {
+			direction: "row",
+			alignItems: "center",
+			sx: {
+				left: "100%",
+				gap: .5,
+				ml: -1,
+				mt: "2.5px",
+				position: "absolute"
+			}
+		}, /* @__PURE__ */ react.createElement(_elementor_ui.Button, {
+			color: "secondary",
+			variant: "outlined",
+			sx: {
+				px: 1,
+				minWidth: "unset"
+			},
+			className: "add-single-condition-button",
+			onClick: addRepeaterRow
+		}, (0, _wordpress_i18n.__)("AND", "elementor-pro")), /* @__PURE__ */ react.createElement(_elementor_ui.IconButton, {
+			color: "secondary",
+			"aria-label": (0, _wordpress_i18n.__)("Delete", "elementor-pro"),
+			className: "remove-single-condition-button",
+			onClick: removeRepeaterRow
+		}, /* @__PURE__ */ react.createElement(_elementor_icons.XIcon, { fontSize: "small" })));
+	};
+	RowControls.propTypes = {
+		andConditionIndex: import_prop_types.default.number.isRequired,
+		orConditionIndex: import_prop_types.default.number.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/conditions-repeater-row.js
+	var __defProp$4 = Object.defineProperty;
+	var __getOwnPropSymbols$4 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$4 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$4 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$4 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$4(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$4 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$4.call(b, prop)) __defNormalProp$4(a, prop, b[prop]);
+		if (__getOwnPropSymbols$4) {
+			for (var prop of __getOwnPropSymbols$4(b)) if (__propIsEnum$4.call(b, prop)) __defNormalProp$4(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var ConditionsRepeaterRow = ({ andConditionIndex, orConditionIndex }) => {
+		var _a;
+		const { selectedConditions, conditionsConfig, dispatch } = useConditions(), { conditions: availableConditions, flattenedConditionOptions } = conditionsConfig;
+		const andCondition = selectedConditions[orConditionIndex][andConditionIndex];
+		const conditionControls = ((_a = availableConditions[andCondition == null ? void 0 : andCondition.condition]) == null ? void 0 : _a.controls) || {};
+		const controlCount = Object.keys(conditionControls).length;
+		const handleChangeCondition = (event) => {
+			const conditionKey = event.target.value;
+			const conditionToChange = __spreadValues$4({ condition: conditionKey }, getConditionInitialState(availableConditions, conditionKey));
+			dispatch({
+				type: ACTION_TYPES.CHANGE_CONDITION_TYPE,
+				orConditionIndex,
+				andConditionIndex,
+				conditionToChange
+			});
+		};
+		return /* @__PURE__ */ react.createElement(_elementor_ui.Container, {
+			maxWidth: "md",
+			sx: {
+				display: "flex",
+				gap: .5,
+				mb: 1,
+				position: "relative"
+			},
+			className: `and-condition-repeater-row and-condition-${andConditionIndex}`
+		}, /* @__PURE__ */ react.createElement(ConditionSelect, {
+			id: "condition-select",
+			value: andCondition.condition || "",
+			onChange: (event) => handleChangeCondition(event, andConditionIndex),
+			controlCount
+		}, flattenedConditionOptions.map(({ key, label, isGroup }) => isGroup ? /* @__PURE__ */ react.createElement(_elementor_ui.ListSubheader, { key }, /* @__PURE__ */ react.createElement(ConditionSelectOption, {
+			variant: "caption",
+			controlCount
+		}, label)) : /* @__PURE__ */ react.createElement(_elementor_ui.MenuItem, {
+			key,
+			value: key
+		}, /* @__PURE__ */ react.createElement(ConditionSelectOption, { controlCount }, label)))), Object.keys(conditionControls).map((controlKey) => /* @__PURE__ */ react.createElement(ControlRenderer, {
+			key: controlKey,
+			controlKey,
+			andConditionIndex,
+			orConditionIndex,
+			controlCount
+		})), /* @__PURE__ */ react.createElement(RowControls, {
+			orConditionIndex,
+			andConditionIndex
+		}));
+	};
+	ConditionsRepeaterRow.propTypes = {
+		andConditionIndex: import_prop_types.number.isRequired,
+		orConditionIndex: import_prop_types.number.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/conditions-selectors.js
+	var ConditionsSelectors = ({ orConditionIndex }) => {
+		const { selectedConditions } = useConditions(), orCondition = selectedConditions[orConditionIndex];
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, {
+			sx: {
+				my: 2,
+				gap: 1
+			},
+			className: `or-condition-repeater or-condition-${orConditionIndex}`
+		}, orCondition.map((andCondition, andConditionIndex) => /* @__PURE__ */ react.default.createElement(ConditionsRepeaterRow, {
+			key: "or-condition-row-" + andConditionIndex,
+			andConditionIndex,
+			orConditionIndex
+		})));
+	};
+	ConditionsSelectors.propTypes = { orConditionIndex: import_prop_types.default.number.isRequired };
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/ui/conditions-or-divider.js
+	var OrDivider = () => {
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Divider, { sx: { px: 3 } }, (0, _wordpress_i18n.__)("OR", "elementor-pro"));
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/or-row-group.js
+	var __defProp$3 = Object.defineProperty;
+	var __getOwnPropSymbols$3 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$3 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$3 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$3 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$3(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$3 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$3.call(b, prop)) __defNormalProp$3(a, prop, b[prop]);
+		if (__getOwnPropSymbols$3) {
+			for (var prop of __getOwnPropSymbols$3(b)) if (__propIsEnum$3.call(b, prop)) __defNormalProp$3(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var OrRowGroup = ({ showConditions, setShowConditions }) => {
+		const { selectedConditions, conditionsConfig, dispatch } = useConditions(), { conditions: availableConditions, conditionsByGroup } = conditionsConfig, addButtonText = selectedConditions.length ? (0, _wordpress_i18n.__)("Add condition group", "elementor-pro") : (0, _wordpress_i18n.__)("Add Condition", "elementor-pro");
+		const addOrCondition = () => {
+			const conditionKey = getDefaultActiveCondition(conditionsByGroup);
+			const defaultValues = getConditionInitialState(availableConditions, conditionKey);
+			const andCondition = __spreadValues$3({ condition: conditionKey }, defaultValues);
+			dispatch({
+				type: ACTION_TYPES.ADD_OR_CONDITION,
+				andCondition
+			});
+			setShowConditions(true);
+		};
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, null, showConditions && selectedConditions.map((orCondition, orConditionIndex) => /* @__PURE__ */ react.default.createElement(react.Fragment, { key: orConditionIndex }, orConditionIndex > 0 && /* @__PURE__ */ react.default.createElement(OrDivider, null), /* @__PURE__ */ react.default.createElement(ConditionsSelectors, { orConditionIndex }))), /* @__PURE__ */ react.default.createElement(_elementor_ui.Button, {
+			variant: "contained",
+			className: "add-or-condition-button",
+			color: "secondary",
+			startIcon: /* @__PURE__ */ react.default.createElement(_elementor_icons.PlusIcon, null),
+			sx: {
+				mt: 1,
+				mb: 5
+			},
+			onClick: () => addOrCondition()
+		}, addButtonText));
+	};
+	OrRowGroup.propTypes = {
+		showConditions: import_prop_types.default.bool.isRequired,
+		setShowConditions: import_prop_types.default.func.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/conditions.js
+	var __defProp$2 = Object.defineProperty;
+	var __getOwnPropSymbols$2 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$2 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$2 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$2 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$2(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$2 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$2.call(b, prop)) __defNormalProp$2(a, prop, b[prop]);
+		if (__getOwnPropSymbols$2) {
+			for (var prop of __getOwnPropSymbols$2(b)) if (__propIsEnum$2.call(b, prop)) __defNormalProp$2(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var Conditions = (props) => {
+		return /* @__PURE__ */ react.createElement(_elementor_ui.Box, {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "flex-start",
+			sx: {
+				flex: 1,
+				overflow: "auto"
+			}
+		}, /* @__PURE__ */ react.createElement(_elementor_ui.Stack, {
+			maxWidth: "md",
+			width: "100%",
+			justifyContent: "center",
+			textAlign: "center",
+			sx: {
+				pt: 5,
+				pb: 10,
+				px: 6
+			}
+		}, /* @__PURE__ */ react.createElement(HierarchyIcon, {
+			fontSize: "large",
+			sx: {
+				mb: 1,
+				mx: "auto"
+			}
+		}), /* @__PURE__ */ react.createElement(_elementor_ui.Typography, {
+			component: "h6",
+			variant: "h6",
+			color: "text.primary"
+		}, (0, _wordpress_i18n.__)("Set one or more conditions for this element", "elementor-pro")), /* @__PURE__ */ react.createElement(_elementor_ui.Typography, {
+			variant: "body2",
+			color: "text.tertiary",
+			sx: { mb: 4 }
+		}, (0, _wordpress_i18n.__)("It will only appear on your website when all the conditions are met.", "elementor-pro"), " ", /* @__PURE__ */ react.createElement(_elementor_ui.Link, {
+			href: "https://go.elementor.com/app-display-conditions/",
+			target: "_blank",
+			rel: "noreferrer",
+			color: "info.main",
+			underline: "hover",
+			sx: { "&:hover": { color: (theme) => theme.palette.info.main } }
+		}, (0, _wordpress_i18n.__)("Learn more", "elementor-pro"))), /* @__PURE__ */ react.createElement(OrRowGroup, __spreadValues$2({}, props))));
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/cache-notice.js
+	var __async$1 = /* @__PURE__ */ __name((__this, __arguments, generator) => {
+		return new Promise((resolve, reject) => {
+			var fulfilled = (value) => {
+				try {
+					step(generator.next(value));
+				} catch (e) {
+					reject(e);
+				}
+			};
+			var rejected = (value) => {
+				try {
+					step(generator.throw(value));
+				} catch (e) {
+					reject(e);
+				}
+			};
+			var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+			step((generator = generator.apply(__this, __arguments)).next());
+		});
+	}, "__async");
+	var CacheNotice = ({ setCacheNoticeStatus }) => {
+		const [open, setOpen] = (0, react.useState)(true);
+		const handleClose = () => __async$1(null, null, function* () {
+			if (yield setCacheNoticeStatus()) setOpen(false);
+		});
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, null, /* @__PURE__ */ react.default.createElement(_elementor_ui.Collapse, {
+			in: open,
+			sx: { px: 3 }
+		}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Alert, {
+			color: "info",
+			severity: "error",
+			variant: "standard",
+			onClose: handleClose,
+			sx: { mt: 3 }
+		}, (0, _wordpress_i18n.__)("Keep in mind: Certain cache plugins can conflict with your display conditions.", "elementor-pro"), " ", /* @__PURE__ */ react.default.createElement(_elementor_ui.Link, {
+			href: "https://go.elementor.com/app-display-conditions-cache-notice/",
+			underline: "hover",
+			color: "info.main",
+			target: "_blank",
+			sx: { "&:hover": { color: (theme) => theme.palette.info.main } }
+		}, (0, _wordpress_i18n.__)("Learn more", "elementor-pro")))));
+	};
+	CacheNotice.propTypes = { setCacheNoticeStatus: import_prop_types.default.func.isRequired };
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/components/content.js
+	var __defProp$1 = Object.defineProperty;
+	var __getOwnPropSymbols$1 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$1 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$1 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$1(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$1 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$1.call(b, prop)) __defNormalProp$1(a, prop, b[prop]);
+		if (__getOwnPropSymbols$1) {
+			for (var prop of __getOwnPropSymbols$1(b)) if (__propIsEnum$1.call(b, prop)) __defNormalProp$1(a, prop, b[prop]);
+		}
+		return a;
+	}, "__spreadValues");
+	var Content = ({ getControlValue, setControlValue, conditionsConfig, onClose, fetchData, setCacheNoticeStatus }) => {
+		const initialState = {
+			conditionsConfig,
+			selectedConditions: getControlValue() || [],
+			fetchData
+		};
+		const [showConditions, setShowConditions] = react.default.useState(true), [conditionsStore, dispatch] = (0, react.useReducer)(conditionsReducer, initialState), [saveButtonDisplay, setSaveButtonDisplay] = (0, react.useState)(false), { selectedConditions } = conditionsStore;
+		(0, react.useEffect)(() => {
+			if (!saveButtonDisplay) setSaveButtonDisplay(true);
+		}, [selectedConditions]);
+		(0, react.useEffect)(() => {
+			setSaveButtonDisplay(false);
+		}, []);
+		const handleEmptyFieldsAndGetFirstInvalidIndex = () => {
+			let hasFoundInvalidCondition = false;
+			let invalidOrConditionIndex = null;
+			let invalidAndConditionIndex = null;
+			selectedConditions.forEach((orCondition, orConditionIndex) => {
+				const { hasFoundInvalidConditionInConditionSet, invalidAndConditionIndex: andConditionIndex } = handleEmptyFieldsPerConditionSet(orCondition, orConditionIndex);
+				if (hasFoundInvalidConditionInConditionSet && !hasFoundInvalidCondition) {
+					hasFoundInvalidCondition = true;
+					invalidAndConditionIndex = andConditionIndex;
+					invalidOrConditionIndex = orConditionIndex;
+				}
+			});
+			return {
+				hasFoundInvalidCondition,
+				invalidOrConditionIndex,
+				invalidAndConditionIndex
+			};
+		};
+		const handleEmptyFieldsPerConditionSet = (orCondition, orConditionIndex) => {
+			let hasFoundInvalidConditionInConditionSet = false;
+			let invalidAndConditionIndex = null;
+			orCondition.forEach((andCondition, andConditionIndex) => {
+				const { condition: conditionKey } = andCondition, requiredKeys = getRequiredControlKeys(conditionKey);
+				if (handleInvalidRequiredKeysPerCondition({
+					requiredKeys,
+					andCondition,
+					orConditionIndex,
+					andConditionIndex
+				}) && !hasFoundInvalidConditionInConditionSet) {
+					invalidAndConditionIndex = andConditionIndex;
+					hasFoundInvalidConditionInConditionSet = true;
+				}
+			});
+			return {
+				hasFoundInvalidConditionInConditionSet,
+				invalidAndConditionIndex
+			};
+		};
+		const handleInvalidRequiredKeysPerCondition = ({ requiredKeys, andCondition, orConditionIndex, andConditionIndex }) => {
+			const { condition: conditionKey } = andCondition;
+			let hasFoundInvalidCondition = false;
+			requiredKeys.forEach((controlKey) => {
+				const value = andCondition[controlKey], { type, variant = null } = conditionsConfig.conditions[conditionKey].controls[controlKey];
+				if ((value == null ? void 0 : value.length) || shouldEmptyValuePassValidation(andCondition.condition, andCondition.comparator)) return;
+				if (!hasFoundInvalidCondition) hasFoundInvalidCondition = true;
+				dispatch({
+					type: ACTION_TYPES.SET_ERRORS,
+					andConditionIndex,
+					orConditionIndex,
+					errors: { [controlKey]: getInvalidInputFeedback(type, variant, value, true) }
+				});
+			});
+			return hasFoundInvalidCondition;
+		};
+		const handleSave = () => {
+			const { hasFoundInvalidCondition, invalidOrConditionIndex, invalidAndConditionIndex } = handleEmptyFieldsAndGetFirstInvalidIndex();
+			if (hasFoundInvalidCondition) {
+				const className = `.or-condition-repeater.or-condition-${invalidOrConditionIndex} .and-condition-repeater-row.and-condition-${invalidAndConditionIndex}`;
+				const conditionRepeaterRows = document.querySelector(className);
+				setTimeout(() => conditionRepeaterRows == null ? void 0 : conditionRepeaterRows.scrollIntoView({ behavior: "smooth" }), 100);
+				return;
+			}
+			setControlValue([JSON.stringify(getSanitizedConditions())]);
+			onClose();
+		};
+		const getRequiredControlKeys = (condition) => {
+			const { controls } = conditionsConfig.conditions[condition];
+			return Object.keys(controls).filter((key) => controls[key].required);
+		};
+		const getSanitizedConditions = () => {
+			return selectedConditions.map((orCondition) => {
+				return orCondition.map((andCondition) => {
+					const formattedCondition = __spreadValues$1({}, andCondition);
+					delete formattedCondition.errors;
+					return formattedCondition;
+				});
+			});
+		};
+		return /* @__PURE__ */ react.default.createElement(react.default.Fragment, null, /* @__PURE__ */ react.default.createElement(Header, { onClose }), /* @__PURE__ */ react.default.createElement(_elementor_ui.Divider, { orientation: "horizontal" }), conditionsConfig.show_cache_notice && /* @__PURE__ */ react.default.createElement(CacheNotice, { setCacheNoticeStatus }), /* @__PURE__ */ react.default.createElement(ConditionsContext.Provider, { value: __spreadValues$1({ dispatch }, conditionsStore) }, /* @__PURE__ */ react.default.createElement(Conditions, {
+			showConditions,
+			setShowConditions
+		})), /* @__PURE__ */ react.default.createElement(_elementor_ui.Divider, { orientation: "horizontal" }), /* @__PURE__ */ react.default.createElement(Footer, {
+			onClickSaveButton: () => handleSave(),
+			showConditions,
+			setShowConditions,
+			isButtonDisabled: saveButtonDisplay
+		}));
+	};
+	Content.propTypes = {
+		getControlValue: import_prop_types.default.func.isRequired,
+		setControlValue: import_prop_types.default.func.isRequired,
+		fetchData: import_prop_types.default.func.isRequired,
+		onClose: import_prop_types.default.func.isRequired,
+		conditionsConfig: import_prop_types.default.object.isRequired,
+		setCacheNoticeStatus: import_prop_types.default.func.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/app.js
+	var App = (props) => {
+		const [dialogOpen, setDialogOpen] = (0, react.useState)(true), fadeDuration = 500;
+		(0, react.useEffect)(() => {
+			if (!dialogOpen) {
+				const timeoutId = setTimeout(() => {
+					props.onClose();
+				}, fadeDuration);
+				return () => clearTimeout(timeoutId);
+			}
+		}, [dialogOpen]);
+		const handleCloseDialog = () => {
+			setDialogOpen(false);
+		};
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.DirectionProvider, { rtl: props.isRTL }, /* @__PURE__ */ react.default.createElement(_elementor_ui.LocalizationProvider, null, /* @__PURE__ */ react.default.createElement(_elementor_ui.ThemeProvider, { colorScheme: props.colorScheme }, /* @__PURE__ */ react.default.createElement(_elementor_ui.Dialog, {
+			open: dialogOpen,
+			fullWidth: true,
+			maxWidth: "lg",
+			TransitionComponent: _elementor_ui.Fade,
+			transitionDuration: {
+				enter: fadeDuration,
+				exit: fadeDuration
+			},
+			sx: { "& .MuiDialog-paper": {
+				height: "calc(100vh - 4rem)",
+				maxHeight: 775
+			} }
+		}, /* @__PURE__ */ react.default.createElement(Content, {
+			getControlValue: props.getControlValue,
+			setControlValue: props.setControlValue,
+			fetchData: props.fetchData,
+			onClose: handleCloseDialog,
+			conditionsConfig: props.conditionsConfig,
+			setCacheNoticeStatus: props.setCacheNoticeStatus
+		})))));
+	};
+	App.propTypes = {
+		colorScheme: import_prop_types.default.oneOf([
+			"auto",
+			"light",
+			"dark"
+		]),
+		isRTL: import_prop_types.default.bool,
+		getControlValue: import_prop_types.default.func.isRequired,
+		setControlValue: import_prop_types.default.func.isRequired,
+		fetchData: import_prop_types.default.func.isRequired,
+		onClose: import_prop_types.default.func.isRequired,
+		conditionsConfig: import_prop_types.default.object.isRequired,
+		setCacheNoticeStatus: import_prop_types.default.func.isRequired
+	};
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/modal.js
+	var __defProp = Object.defineProperty;
+	var __defProps = Object.defineProperties;
+	var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+	var __hasOwnProp = Object.prototype.hasOwnProperty;
+	var __propIsEnum = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value;
+	var __spreadValues = (a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+		if (__getOwnPropSymbols) {
+			for (var prop of __getOwnPropSymbols(b)) if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+		}
+		return a;
+	};
+	var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+	var __async = (__this, __arguments, generator) => {
+		return new Promise((resolve, reject) => {
+			var fulfilled = (value) => {
+				try {
+					step(generator.next(value));
+				} catch (e) {
+					reject(e);
+				}
+			};
+			var rejected = (value) => {
+				try {
+					step(generator.throw(value));
+				} catch (e) {
+					reject(e);
+				}
+			};
+			var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+			step((generator = generator.apply(__this, __arguments)).next());
+		});
+	};
+	function getGroupedConditionKeys(conditionsConfig) {
+		return Object.keys((conditionsConfig == null ? void 0 : conditionsConfig.groups) || {}).reduce((group, groupName) => {
+			const conditions = getConditionKeyByGroup(conditionsConfig.conditions, groupName);
+			if (conditions.length) group[groupName] = conditions;
+			return group;
+		}, {});
+	}
+	function getConditionKeyByGroup(conditions, groupName) {
+		return Object.keys(conditions).filter((conditionKey) => groupName === conditions[conditionKey].group);
+	}
+	function getFlattenedConditionOptions(conditionsByGroup) {
+		const { conditions = {}, groups = {} } = elementor.config.displayConditions || {};
+		return Object.entries(conditionsByGroup).reduce((optionList, [groupName, conditionKeys]) => {
+			const relevantConditions = conditionKeys.map((key) => ({
+				key,
+				label: conditions[key].label,
+				isGroup: false
+			}));
+			optionList.push({
+				key: groupName,
+				label: groups[groupName].label,
+				isGroup: true
+			}, ...relevantConditions);
+			return optionList;
+		}, []);
+	}
+	function doAjaxRequest(action, data) {
+		try {
+			return new Promise((resolve, reject) => {
+				elementorCommon.ajax.addRequest(action, {
+					data,
+					error: () => reject(),
+					success: (res) => {
+						resolve(res);
+					}
+				});
+			});
+		} catch (error) {
+			return false;
+		}
+	}
+	function defaultFetchData(value, control) {
+		return __async(this, null, function* () {
+			var _a;
+			const response = yield doAjaxRequest("pro_panel_posts_control_filter_autocomplete", {
+				autocomplete: control.autocomplete,
+				q: value
+			});
+			return (_a = response == null ? void 0 : response.results) != null ? _a : [];
+		});
+	}
+	function defaultSetCacheNoticeStatus() {
+		return __async(this, null, function* () {
+			const response = yield doAjaxRequest("display_conditions_set_cache_notice_status");
+			if (response) elementor.config.displayConditions.show_cache_notice = false;
+			return response;
+		});
+	}
+	function setupModal() {
+		let appRoot = null;
+		const getRootElement = () => {
+			let rootElement = window.parent.document.getElementById("elementor-conditions__modal");
+			if (!!rootElement) return rootElement;
+			rootElement = document.createElement("div");
+			rootElement.setAttribute("id", "elementor-conditions__modal");
+			return rootElement;
+		};
+		const getConditionsConfig = () => {
+			const conditionsByGroup = getGroupedConditionKeys(elementor.config.displayConditions || {});
+			const flattenedConditionOptions = getFlattenedConditionOptions(conditionsByGroup);
+			return __spreadProps(__spreadValues({}, elementor.config.displayConditions), {
+				conditionsByGroup,
+				flattenedConditionOptions
+			});
+		};
+		const renderAppModal = ({ colorScheme, isRTL, getControlValue, setControlValue, fetchData, onClose, conditionsConfig, setCacheNoticeStatus }, rootElement) => {
+			var _a;
+			appRoot = ReactDOM.createRoot(rootElement);
+			appRoot.render(/* @__PURE__ */ react.default.createElement(App, {
+				colorScheme: colorScheme != null ? colorScheme : ((_a = elementor == null ? void 0 : elementor.getPreferences) == null ? void 0 : _a.call(elementor, "ui_theme")) || "auto",
+				isRTL: isRTL != null ? isRTL : elementorCommon.config.isRTL,
+				getControlValue,
+				setControlValue,
+				fetchData: fetchData != null ? fetchData : defaultFetchData,
+				onClose,
+				conditionsConfig: conditionsConfig != null ? conditionsConfig : getConditionsConfig(),
+				setCacheNoticeStatus: setCacheNoticeStatus != null ? setCacheNoticeStatus : defaultSetCacheNoticeStatus
+			}));
+		};
+		window.addEventListener("elementor/display-conditions/open", (event) => {
+			var _a;
+			renderAppModal(event.detail.props, (_a = event.detail.rootElement) != null ? _a : getRootElement());
+		});
+		window.addEventListener("elementor/display-conditions/close", (event) => {
+			var _a;
+			var _b;
+			var _c;
+			const { rootElement } = (_a = event.detail) != null ? _a : {};
+			(_b = appRoot == null ? void 0 : appRoot.unmount) == null || _b.call(appRoot);
+			(_c = rootElement == null ? void 0 : rootElement.remove) == null || _c.call(rootElement);
+		});
+		window.addEventListener("elementor/display-conditions/set-cache-notice-status", (event) => __async(null, null, function* () {
+			var _a;
+			const { resolve, reject } = (_a = event.detail) != null ? _a : {};
+			if (!resolve || !reject) return;
+			try {
+				const success = !!(yield doAjaxRequest("display_conditions_set_cache_notice_status"));
+				if (success) elementor.config.displayConditions.show_cache_notice = false;
+				resolve(success);
+			} catch (error) {
+				reject(error);
+			}
+		}));
+	}
+	//#endregion
+	//#region modules/display-conditions/assets/js/editor/index.js
+	new Module();
+	setupModal();
+	//#endregion
+})(wp.i18n, React, elementorV2.ui, elementorV2.icons);
 
-	return to;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/checkPropTypes.js"
-/*!****************************************************!*\
-  !*** ../node_modules/prop-types/checkPropTypes.js ***!
-  \****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var printWarning = function() {};
-
-if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "../node_modules/prop-types/lib/ReactPropTypesSecret.js");
-  var loggedTypeFailures = {};
-  var has = __webpack_require__(/*! ./lib/has */ "../node_modules/prop-types/lib/has.js");
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) { /**/ }
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (true) {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.' +
-              'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (true) {
-    loggedTypeFailures = {};
-  }
-}
-
-module.exports = checkPropTypes;
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/factoryWithTypeCheckers.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/prop-types/factoryWithTypeCheckers.js ***!
-  \*************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactIs = __webpack_require__(/*! react-is */ "../node_modules/prop-types/node_modules/react-is/index.js");
-var assign = __webpack_require__(/*! object-assign */ "../node_modules/object-assign/index.js");
-
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "../node_modules/prop-types/lib/ReactPropTypesSecret.js");
-var has = __webpack_require__(/*! ./lib/has */ "../node_modules/prop-types/lib/has.js");
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "../node_modules/prop-types/checkPropTypes.js");
-
-var printWarning = function() {};
-
-if (true) {
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-function emptyFunctionThatReturnsNull() {
-  return null;
-}
-
-module.exports = function(isValidElement, throwOnDirectAccess) {
-  /* global Symbol */
-  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-  /**
-   * Returns the iterator method function contained on the iterable object.
-   *
-   * Be sure to invoke the function with the iterable as context:
-   *
-   *     var iteratorFn = getIteratorFn(myIterable);
-   *     if (iteratorFn) {
-   *       var iterator = iteratorFn.call(myIterable);
-   *       ...
-   *     }
-   *
-   * @param {?object} maybeIterable
-   * @return {?function}
-   */
-  function getIteratorFn(maybeIterable) {
-    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-    if (typeof iteratorFn === 'function') {
-      return iteratorFn;
-    }
-  }
-
-  /**
-   * Collection of methods that allow declaration and validation of props that are
-   * supplied to React components. Example usage:
-   *
-   *   var Props = require('ReactPropTypes');
-   *   var MyArticle = React.createClass({
-   *     propTypes: {
-   *       // An optional string prop named "description".
-   *       description: Props.string,
-   *
-   *       // A required enum prop named "category".
-   *       category: Props.oneOf(['News','Photos']).isRequired,
-   *
-   *       // A prop named "dialog" that requires an instance of Dialog.
-   *       dialog: Props.instanceOf(Dialog).isRequired
-   *     },
-   *     render: function() { ... }
-   *   });
-   *
-   * A more formal specification of how these methods are used:
-   *
-   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-   *   decl := ReactPropTypes.{type}(.isRequired)?
-   *
-   * Each and every declaration produces a function with the same signature. This
-   * allows the creation of custom validation functions. For example:
-   *
-   *  var MyLink = React.createClass({
-   *    propTypes: {
-   *      // An optional string or URI prop named "href".
-   *      href: function(props, propName, componentName) {
-   *        var propValue = props[propName];
-   *        if (propValue != null && typeof propValue !== 'string' &&
-   *            !(propValue instanceof URI)) {
-   *          return new Error(
-   *            'Expected a string or an URI for ' + propName + ' in ' +
-   *            componentName
-   *          );
-   *        }
-   *      }
-   *    },
-   *    render: function() {...}
-   *  });
-   *
-   * @internal
-   */
-
-  var ANONYMOUS = '<<anonymous>>';
-
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-  var ReactPropTypes = {
-    array: createPrimitiveTypeChecker('array'),
-    bigint: createPrimitiveTypeChecker('bigint'),
-    bool: createPrimitiveTypeChecker('boolean'),
-    func: createPrimitiveTypeChecker('function'),
-    number: createPrimitiveTypeChecker('number'),
-    object: createPrimitiveTypeChecker('object'),
-    string: createPrimitiveTypeChecker('string'),
-    symbol: createPrimitiveTypeChecker('symbol'),
-
-    any: createAnyTypeChecker(),
-    arrayOf: createArrayOfTypeChecker,
-    element: createElementTypeChecker(),
-    elementType: createElementTypeTypeChecker(),
-    instanceOf: createInstanceTypeChecker,
-    node: createNodeChecker(),
-    objectOf: createObjectOfTypeChecker,
-    oneOf: createEnumTypeChecker,
-    oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker,
-  };
-
-  /**
-   * inlined Object.is polyfill to avoid requiring consumers ship their own
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-   */
-  /*eslint-disable no-self-compare*/
-  function is(x, y) {
-    // SameValue algorithm
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      return x !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-  /*eslint-enable no-self-compare*/
-
-  /**
-   * We use an Error-like object for backward compatibility as people may call
-   * PropTypes directly and inspect their output. However, we don't use real
-   * Errors anymore. We don't inspect their stack anyway, and creating them
-   * is prohibitively expensive if they are created too often, such as what
-   * happens in oneOfType() for any type before the one that matched.
-   */
-  function PropTypeError(message, data) {
-    this.message = message;
-    this.data = data && typeof data === 'object' ? data: {};
-    this.stack = '';
-  }
-  // Make `instanceof Error` still work for returned errors.
-  PropTypeError.prototype = Error.prototype;
-
-  function createChainableTypeChecker(validate) {
-    if (true) {
-      var manualPropTypeCallCache = {};
-      var manualPropTypeWarningCount = 0;
-    }
-    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-      componentName = componentName || ANONYMOUS;
-      propFullName = propFullName || propName;
-
-      if (secret !== ReactPropTypesSecret) {
-        if (throwOnDirectAccess) {
-          // New behavior only for users of `prop-types` package
-          var err = new Error(
-            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-            'Use `PropTypes.checkPropTypes()` to call them. ' +
-            'Read more at http://fb.me/use-check-prop-types'
-          );
-          err.name = 'Invariant Violation';
-          throw err;
-        } else if ( true && typeof console !== 'undefined') {
-          // Old behavior for people using React.PropTypes
-          var cacheKey = componentName + ':' + propName;
-          if (
-            !manualPropTypeCallCache[cacheKey] &&
-            // Avoid spamming the console because they are often not actionable except for lib authors
-            manualPropTypeWarningCount < 3
-          ) {
-            printWarning(
-              'You are manually calling a React.PropTypes validation ' +
-              'function for the `' + propFullName + '` prop on `' + componentName + '`. This is deprecated ' +
-              'and will throw in the standalone `prop-types` package. ' +
-              'You may be seeing this warning due to a third-party PropTypes ' +
-              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
-            );
-            manualPropTypeCallCache[cacheKey] = true;
-            manualPropTypeWarningCount++;
-          }
-        }
-      }
-      if (props[propName] == null) {
-        if (isRequired) {
-          if (props[propName] === null) {
-            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-          }
-          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-        }
-        return null;
-      } else {
-        return validate(props, propName, componentName, location, propFullName);
-      }
-    }
-
-    var chainedCheckType = checkType.bind(null, false);
-    chainedCheckType.isRequired = checkType.bind(null, true);
-
-    return chainedCheckType;
-  }
-
-  function createPrimitiveTypeChecker(expectedType) {
-    function validate(props, propName, componentName, location, propFullName, secret) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== expectedType) {
-        // `propValue` being instance of, say, date/regexp, pass the 'object'
-        // check, but we can offer a more precise error message here rather than
-        // 'of type `object`'.
-        var preciseType = getPreciseType(propValue);
-
-        return new PropTypeError(
-          'Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'),
-          {expectedType: expectedType}
-        );
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
-  }
-
-  function createArrayOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-      }
-      var propValue = props[propName];
-      if (!Array.isArray(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-      }
-      for (var i = 0; i < propValue.length; i++) {
-        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-        if (error instanceof Error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!isValidElement(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!ReactIs.isValidElementType(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createInstanceTypeChecker(expectedClass) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!(props[propName] instanceof expectedClass)) {
-        var expectedClassName = expectedClass.name || ANONYMOUS;
-        var actualClassName = getClassName(props[propName]);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createEnumTypeChecker(expectedValues) {
-    if (!Array.isArray(expectedValues)) {
-      if (true) {
-        if (arguments.length > 1) {
-          printWarning(
-            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
-            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
-          );
-        } else {
-          printWarning('Invalid argument supplied to oneOf, expected an array.');
-        }
-      }
-      return emptyFunctionThatReturnsNull;
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      for (var i = 0; i < expectedValues.length; i++) {
-        if (is(propValue, expectedValues[i])) {
-          return null;
-        }
-      }
-
-      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
-        var type = getPreciseType(value);
-        if (type === 'symbol') {
-          return String(value);
-        }
-        return value;
-      });
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createObjectOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-      }
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-      }
-      for (var key in propValue) {
-        if (has(propValue, key)) {
-          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-          if (error instanceof Error) {
-            return error;
-          }
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createUnionTypeChecker(arrayOfTypeCheckers) {
-    if (!Array.isArray(arrayOfTypeCheckers)) {
-       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : 0;
-      return emptyFunctionThatReturnsNull;
-    }
-
-    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-      var checker = arrayOfTypeCheckers[i];
-      if (typeof checker !== 'function') {
-        printWarning(
-          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
-          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
-        );
-        return emptyFunctionThatReturnsNull;
-      }
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var expectedTypes = [];
-      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-        var checker = arrayOfTypeCheckers[i];
-        var checkerResult = checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret);
-        if (checkerResult == null) {
-          return null;
-        }
-        if (checkerResult.data && has(checkerResult.data, 'expectedType')) {
-          expectedTypes.push(checkerResult.data.expectedType);
-        }
-      }
-      var expectedTypesMessage = (expectedTypes.length > 0) ? ', expected one of type [' + expectedTypes.join(', ') + ']': '';
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`' + expectedTypesMessage + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createNodeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!isNode(props[propName])) {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function invalidValidatorError(componentName, location, propFullName, key, type) {
-    return new PropTypeError(
-      (componentName || 'React class') + ': ' + location + ' type `' + propFullName + '.' + key + '` is invalid; ' +
-      'it must be a function, usually from the `prop-types` package, but received `' + type + '`.'
-    );
-  }
-
-  function createShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      for (var key in shapeTypes) {
-        var checker = shapeTypes[key];
-        if (typeof checker !== 'function') {
-          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createStrictShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      // We need to check all keys in case some are required but missing from props.
-      var allKeys = assign({}, props[propName], shapeTypes);
-      for (var key in allKeys) {
-        var checker = shapeTypes[key];
-        if (has(shapeTypes, key) && typeof checker !== 'function') {
-          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
-        }
-        if (!checker) {
-          return new PropTypeError(
-            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
-            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-            '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  ')
-          );
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function isNode(propValue) {
-    switch (typeof propValue) {
-      case 'number':
-      case 'string':
-      case 'undefined':
-        return true;
-      case 'boolean':
-        return !propValue;
-      case 'object':
-        if (Array.isArray(propValue)) {
-          return propValue.every(isNode);
-        }
-        if (propValue === null || isValidElement(propValue)) {
-          return true;
-        }
-
-        var iteratorFn = getIteratorFn(propValue);
-        if (iteratorFn) {
-          var iterator = iteratorFn.call(propValue);
-          var step;
-          if (iteratorFn !== propValue.entries) {
-            while (!(step = iterator.next()).done) {
-              if (!isNode(step.value)) {
-                return false;
-              }
-            }
-          } else {
-            // Iterator will provide entry [k,v] tuples rather than values.
-            while (!(step = iterator.next()).done) {
-              var entry = step.value;
-              if (entry) {
-                if (!isNode(entry[1])) {
-                  return false;
-                }
-              }
-            }
-          }
-        } else {
-          return false;
-        }
-
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  function isSymbol(propType, propValue) {
-    // Native Symbol.
-    if (propType === 'symbol') {
-      return true;
-    }
-
-    // falsy value can't be a Symbol
-    if (!propValue) {
-      return false;
-    }
-
-    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-    if (propValue['@@toStringTag'] === 'Symbol') {
-      return true;
-    }
-
-    // Fallback for non-spec compliant Symbols which are polyfilled.
-    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-      return true;
-    }
-
-    return false;
-  }
-
-  // Equivalent of `typeof` but with special handling for array and regexp.
-  function getPropType(propValue) {
-    var propType = typeof propValue;
-    if (Array.isArray(propValue)) {
-      return 'array';
-    }
-    if (propValue instanceof RegExp) {
-      // Old webkits (at least until Android 4.0) return 'function' rather than
-      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-      // passes PropTypes.object.
-      return 'object';
-    }
-    if (isSymbol(propType, propValue)) {
-      return 'symbol';
-    }
-    return propType;
-  }
-
-  // This handles more types than `getPropType`. Only used for error messages.
-  // See `createPrimitiveTypeChecker`.
-  function getPreciseType(propValue) {
-    if (typeof propValue === 'undefined' || propValue === null) {
-      return '' + propValue;
-    }
-    var propType = getPropType(propValue);
-    if (propType === 'object') {
-      if (propValue instanceof Date) {
-        return 'date';
-      } else if (propValue instanceof RegExp) {
-        return 'regexp';
-      }
-    }
-    return propType;
-  }
-
-  // Returns a string that is postfixed to a warning about an invalid type.
-  // For example, "undefined" or "of type array"
-  function getPostfixForTypeWarning(value) {
-    var type = getPreciseType(value);
-    switch (type) {
-      case 'array':
-      case 'object':
-        return 'an ' + type;
-      case 'boolean':
-      case 'date':
-      case 'regexp':
-        return 'a ' + type;
-      default:
-        return type;
-    }
-  }
-
-  // Returns class name of the object, if any.
-  function getClassName(propValue) {
-    if (!propValue.constructor || !propValue.constructor.name) {
-      return ANONYMOUS;
-    }
-    return propValue.constructor.name;
-  }
-
-  ReactPropTypes.checkPropTypes = checkPropTypes;
-  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/index.js"
-/*!*******************************************!*\
-  !*** ../node_modules/prop-types/index.js ***!
-  \*******************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var ReactIs = __webpack_require__(/*! react-is */ "../node_modules/prop-types/node_modules/react-is/index.js");
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "../node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
-} else // removed by dead control flow
-{}
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/lib/ReactPropTypesSecret.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \**************************************************************/
-(module) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/lib/has.js"
-/*!*********************************************!*\
-  !*** ../node_modules/prop-types/lib/has.js ***!
-  \*********************************************/
-(module) {
-
-module.exports = Function.call.bind(Object.prototype.hasOwnProperty);
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js"
-/*!************************************************************************************!*\
-  !*** ../node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js ***!
-  \************************************************************************************/
-(__unused_webpack_module, exports) {
-
-"use strict";
-/** @license React v16.13.1
- * react-is.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-
-
-if (true) {
-  (function() {
-'use strict';
-
-// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-// nor polyfill, then a plain number is used for performance.
-var hasSymbol = typeof Symbol === 'function' && Symbol.for;
-var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
-var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
-var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
-var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
-var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
-var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
-var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
-// (unstable) APIs that have been removed. Can we remove the symbols?
-
-var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
-var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
-var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
-var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
-var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
-var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
-var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
-var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 0xead9;
-var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
-var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
-var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 0xead7;
-
-function isValidElementType(type) {
-  return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
-}
-
-function typeOf(object) {
-  if (typeof object === 'object' && object !== null) {
-    var $$typeof = object.$$typeof;
-
-    switch ($$typeof) {
-      case REACT_ELEMENT_TYPE:
-        var type = object.type;
-
-        switch (type) {
-          case REACT_ASYNC_MODE_TYPE:
-          case REACT_CONCURRENT_MODE_TYPE:
-          case REACT_FRAGMENT_TYPE:
-          case REACT_PROFILER_TYPE:
-          case REACT_STRICT_MODE_TYPE:
-          case REACT_SUSPENSE_TYPE:
-            return type;
-
-          default:
-            var $$typeofType = type && type.$$typeof;
-
-            switch ($$typeofType) {
-              case REACT_CONTEXT_TYPE:
-              case REACT_FORWARD_REF_TYPE:
-              case REACT_LAZY_TYPE:
-              case REACT_MEMO_TYPE:
-              case REACT_PROVIDER_TYPE:
-                return $$typeofType;
-
-              default:
-                return $$typeof;
-            }
-
-        }
-
-      case REACT_PORTAL_TYPE:
-        return $$typeof;
-    }
-  }
-
-  return undefined;
-} // AsyncMode is deprecated along with isAsyncMode
-
-var AsyncMode = REACT_ASYNC_MODE_TYPE;
-var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-var ContextConsumer = REACT_CONTEXT_TYPE;
-var ContextProvider = REACT_PROVIDER_TYPE;
-var Element = REACT_ELEMENT_TYPE;
-var ForwardRef = REACT_FORWARD_REF_TYPE;
-var Fragment = REACT_FRAGMENT_TYPE;
-var Lazy = REACT_LAZY_TYPE;
-var Memo = REACT_MEMO_TYPE;
-var Portal = REACT_PORTAL_TYPE;
-var Profiler = REACT_PROFILER_TYPE;
-var StrictMode = REACT_STRICT_MODE_TYPE;
-var Suspense = REACT_SUSPENSE_TYPE;
-var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
-
-function isAsyncMode(object) {
-  {
-    if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-      hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
-
-      console['warn']('The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
-    }
-  }
-
-  return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-}
-function isConcurrentMode(object) {
-  return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-}
-function isContextConsumer(object) {
-  return typeOf(object) === REACT_CONTEXT_TYPE;
-}
-function isContextProvider(object) {
-  return typeOf(object) === REACT_PROVIDER_TYPE;
-}
-function isElement(object) {
-  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-}
-function isForwardRef(object) {
-  return typeOf(object) === REACT_FORWARD_REF_TYPE;
-}
-function isFragment(object) {
-  return typeOf(object) === REACT_FRAGMENT_TYPE;
-}
-function isLazy(object) {
-  return typeOf(object) === REACT_LAZY_TYPE;
-}
-function isMemo(object) {
-  return typeOf(object) === REACT_MEMO_TYPE;
-}
-function isPortal(object) {
-  return typeOf(object) === REACT_PORTAL_TYPE;
-}
-function isProfiler(object) {
-  return typeOf(object) === REACT_PROFILER_TYPE;
-}
-function isStrictMode(object) {
-  return typeOf(object) === REACT_STRICT_MODE_TYPE;
-}
-function isSuspense(object) {
-  return typeOf(object) === REACT_SUSPENSE_TYPE;
-}
-
-exports.AsyncMode = AsyncMode;
-exports.ConcurrentMode = ConcurrentMode;
-exports.ContextConsumer = ContextConsumer;
-exports.ContextProvider = ContextProvider;
-exports.Element = Element;
-exports.ForwardRef = ForwardRef;
-exports.Fragment = Fragment;
-exports.Lazy = Lazy;
-exports.Memo = Memo;
-exports.Portal = Portal;
-exports.Profiler = Profiler;
-exports.StrictMode = StrictMode;
-exports.Suspense = Suspense;
-exports.isAsyncMode = isAsyncMode;
-exports.isConcurrentMode = isConcurrentMode;
-exports.isContextConsumer = isContextConsumer;
-exports.isContextProvider = isContextProvider;
-exports.isElement = isElement;
-exports.isForwardRef = isForwardRef;
-exports.isFragment = isFragment;
-exports.isLazy = isLazy;
-exports.isMemo = isMemo;
-exports.isPortal = isPortal;
-exports.isProfiler = isProfiler;
-exports.isStrictMode = isStrictMode;
-exports.isSuspense = isSuspense;
-exports.isValidElementType = isValidElementType;
-exports.typeOf = typeOf;
-  })();
-}
-
-
-/***/ },
-
-/***/ "../node_modules/prop-types/node_modules/react-is/index.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/prop-types/node_modules/react-is/index.js ***!
-  \*****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-if (false) // removed by dead control flow
-{} else {
-  module.exports = __webpack_require__(/*! ./cjs/react-is.development.js */ "../node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js");
-}
-
-
-/***/ },
-
-/***/ "react"
-/*!************************!*\
-  !*** external "React" ***!
-  \************************/
-(module) {
-
-"use strict";
-module.exports = React;
-
-/***/ },
-
-/***/ "@elementor/icons"
-/*!************************************!*\
-  !*** external "elementorV2.icons" ***!
-  \************************************/
-(module) {
-
-"use strict";
-module.exports = elementorV2.icons;
-
-/***/ },
-
-/***/ "@elementor/ui"
-/*!*********************************!*\
-  !*** external "elementorV2.ui" ***!
-  \*********************************/
-(module) {
-
-"use strict";
-module.exports = elementorV2.ui;
-
-/***/ },
-
-/***/ "@wordpress/i18n"
-/*!**************************!*\
-  !*** external "wp.i18n" ***!
-  \**************************/
-(module) {
-
-"use strict";
-module.exports = wp.i18n;
-
-/***/ },
-
-/***/ "../node_modules/@babel/runtime/helpers/extends.js"
-/*!*********************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/extends.js ***!
-  \*********************************************************/
-(module) {
-
-function _extends() {
-  return module.exports = _extends = Object.assign ? Object.assign.bind() : function (n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
-    }
-    return n;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _extends.apply(null, arguments);
-}
-module.exports = _extends, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ },
-
-/***/ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js"
-/*!***********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
-  \***********************************************************************/
-(module) {
-
-function _interopRequireDefault(e) {
-  return e && e.__esModule ? e : {
-    "default": e
-  };
-}
-module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/a-callable.js"
-/*!*******************************************************!*\
-  !*** ../node_modules/core-js/internals/a-callable.js ***!
-  \*******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var tryToString = __webpack_require__(/*! ../internals/try-to-string */ "../node_modules/core-js/internals/try-to-string.js");
-
-var $TypeError = TypeError;
-
-// `Assert: IsCallable(argument) is true`
-module.exports = function (argument) {
-  if (isCallable(argument)) return argument;
-  throw new $TypeError(tryToString(argument) + ' is not a function');
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/add-to-unscopables.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/internals/add-to-unscopables.js ***!
-  \***************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
-var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js").f);
-
-var UNSCOPABLES = wellKnownSymbol('unscopables');
-var ArrayPrototype = Array.prototype;
-
-// Array.prototype[@@unscopables]
-// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
-if (ArrayPrototype[UNSCOPABLES] === undefined) {
-  defineProperty(ArrayPrototype, UNSCOPABLES, {
-    configurable: true,
-    value: create(null)
-  });
-}
-
-// add a key to Array.prototype[@@unscopables]
-module.exports = function (key) {
-  ArrayPrototype[UNSCOPABLES][key] = true;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/an-instance.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/an-instance.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ "../node_modules/core-js/internals/object-is-prototype-of.js");
-
-var $TypeError = TypeError;
-
-module.exports = function (it, Prototype) {
-  if (isPrototypeOf(Prototype, it)) return it;
-  throw new $TypeError('Incorrect invocation');
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/an-object.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/an-object.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-
-var $String = String;
-var $TypeError = TypeError;
-
-// `Assert: Type(argument) is Object`
-module.exports = function (argument) {
-  if (isObject(argument)) return argument;
-  throw new $TypeError($String(argument) + ' is not an object');
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/array-includes.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/array-includes.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
-var toAbsoluteIndex = __webpack_require__(/*! ../internals/to-absolute-index */ "../node_modules/core-js/internals/to-absolute-index.js");
-var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "../node_modules/core-js/internals/length-of-array-like.js");
-
-// `Array.prototype.{ indexOf, includes }` methods implementation
-var createMethod = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIndexedObject($this);
-    var length = lengthOfArrayLike(O);
-    if (length === 0) return !IS_INCLUDES && -1;
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare -- NaN check
-    if (IS_INCLUDES && el !== el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare -- NaN check
-      if (value !== value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) {
-      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-module.exports = {
-  // `Array.prototype.includes` method
-  // https://tc39.es/ecma262/#sec-array.prototype.includes
-  includes: createMethod(true),
-  // `Array.prototype.indexOf` method
-  // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  indexOf: createMethod(false)
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/array-set-length.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/core-js/internals/array-set-length.js ***!
-  \*************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var isArray = __webpack_require__(/*! ../internals/is-array */ "../node_modules/core-js/internals/is-array.js");
-
-var $TypeError = TypeError;
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// Safari < 13 does not throw an error in this case
-var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS && !function () {
-  // makes no sense without proper strict mode support
-  if (this !== undefined) return true;
-  try {
-    // eslint-disable-next-line es/no-object-defineproperty -- safe
-    Object.defineProperty([], 'length', { writable: false }).length = 1;
-  } catch (error) {
-    return error instanceof TypeError;
-  }
-}();
-
-module.exports = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-  if (isArray(O) && !getOwnPropertyDescriptor(O, 'length').writable) {
-    throw new $TypeError('Cannot set read only .length');
-  } return O.length = length;
-} : function (O, length) {
-  return O.length = length;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/array-slice.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/array-slice.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-
-module.exports = uncurryThis([].slice);
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/call-with-safe-iteration-closing.js"
-/*!*****************************************************************************!*\
-  !*** ../node_modules/core-js/internals/call-with-safe-iteration-closing.js ***!
-  \*****************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-
-// call something on iterator step with safe closing on error
-module.exports = function (iterator, fn, value, ENTRIES) {
-  try {
-    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  } catch (error) {
-    iteratorClose(iterator, 'throw', error);
-  }
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/classof-raw.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/classof-raw.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-
-var toString = uncurryThis({}.toString);
-var stringSlice = uncurryThis(''.slice);
-
-module.exports = function (it) {
-  return stringSlice(toString(it), 8, -1);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/classof.js"
-/*!****************************************************!*\
-  !*** ../node_modules/core-js/internals/classof.js ***!
-  \****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "../node_modules/core-js/internals/to-string-tag-support.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var classofRaw = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-var $Object = Object;
-
-// ES3 wrong here
-var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) === 'Arguments';
-
-// fallback for IE11 Script Access Denied error
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (error) { /* empty */ }
-};
-
-// getting tag from ES6+ `Object.prototype.toString`
-module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
-  var O, tag, result;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    // @@toStringTag case
-    : typeof (tag = tryGet(O = $Object(it), TO_STRING_TAG)) == 'string' ? tag
-    // builtinTag case
-    : CORRECT_ARGUMENTS ? classofRaw(O)
-    // ES3 arguments fallback
-    : (result = classofRaw(O)) === 'Object' && isCallable(O.callee) ? 'Arguments' : result;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/copy-constructor-properties.js"
-/*!************************************************************************!*\
-  !*** ../node_modules/core-js/internals/copy-constructor-properties.js ***!
-  \************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var ownKeys = __webpack_require__(/*! ../internals/own-keys */ "../node_modules/core-js/internals/own-keys.js");
-var getOwnPropertyDescriptorModule = __webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "../node_modules/core-js/internals/object-get-own-property-descriptor.js");
-var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
-
-module.exports = function (target, source, exceptions) {
-  var keys = ownKeys(source);
-  var defineProperty = definePropertyModule.f;
-  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    if (!hasOwn(target, key) && !(exceptions && hasOwn(exceptions, key))) {
-      defineProperty(target, key, getOwnPropertyDescriptor(source, key));
-    }
-  }
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/correct-prototype-getter.js"
-/*!*********************************************************************!*\
-  !*** ../node_modules/core-js/internals/correct-prototype-getter.js ***!
-  \*********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-module.exports = !fails(function () {
-  function F() { /* empty */ }
-  F.prototype.constructor = null;
-  // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
-  return Object.getPrototypeOf(new F()) !== F.prototype;
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/create-iter-result-object.js"
-/*!**********************************************************************!*\
-  !*** ../node_modules/core-js/internals/create-iter-result-object.js ***!
-  \**********************************************************************/
-(module) {
-
-"use strict";
-
-// `CreateIterResultObject` abstract operation
-// https://tc39.es/ecma262/#sec-createiterresultobject
-module.exports = function (value, done) {
-  return { value: value, done: done };
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/create-non-enumerable-property.js"
-/*!***************************************************************************!*\
-  !*** ../node_modules/core-js/internals/create-non-enumerable-property.js ***!
-  \***************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
-var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "../node_modules/core-js/internals/create-property-descriptor.js");
-
-module.exports = DESCRIPTORS ? function (object, key, value) {
-  return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/create-property-descriptor.js"
-/*!***********************************************************************!*\
-  !*** ../node_modules/core-js/internals/create-property-descriptor.js ***!
-  \***********************************************************************/
-(module) {
-
-"use strict";
-
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/create-property.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/internals/create-property.js ***!
-  \************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
-var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "../node_modules/core-js/internals/create-property-descriptor.js");
-
-module.exports = function (object, key, value) {
-  if (DESCRIPTORS) definePropertyModule.f(object, key, createPropertyDescriptor(0, value));
-  else object[key] = value;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/define-built-in-accessor.js"
-/*!*********************************************************************!*\
-  !*** ../node_modules/core-js/internals/define-built-in-accessor.js ***!
-  \*********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var makeBuiltIn = __webpack_require__(/*! ../internals/make-built-in */ "../node_modules/core-js/internals/make-built-in.js");
-var defineProperty = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
-
-module.exports = function (target, name, descriptor) {
-  if (descriptor.get) makeBuiltIn(descriptor.get, name, { getter: true });
-  if (descriptor.set) makeBuiltIn(descriptor.set, name, { setter: true });
-  return defineProperty.f(target, name, descriptor);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/define-built-in.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/internals/define-built-in.js ***!
-  \************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
-var makeBuiltIn = __webpack_require__(/*! ../internals/make-built-in */ "../node_modules/core-js/internals/make-built-in.js");
-var defineGlobalProperty = __webpack_require__(/*! ../internals/define-global-property */ "../node_modules/core-js/internals/define-global-property.js");
-
-module.exports = function (O, key, value, options) {
-  if (!options) options = {};
-  var simple = options.enumerable;
-  var name = options.name !== undefined ? options.name : key;
-  if (isCallable(value)) makeBuiltIn(value, name, options);
-  if (options.global) {
-    if (simple) O[key] = value;
-    else defineGlobalProperty(key, value);
-  } else {
-    try {
-      if (!options.unsafe) delete O[key];
-      else if (O[key]) simple = true;
-    } catch (error) { /* empty */ }
-    if (simple) O[key] = value;
-    else definePropertyModule.f(O, key, {
-      value: value,
-      enumerable: false,
-      configurable: !options.nonConfigurable,
-      writable: !options.nonWritable
-    });
-  } return O;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/define-built-ins.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/core-js/internals/define-built-ins.js ***!
-  \*************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineBuiltIn = __webpack_require__(/*! ../internals/define-built-in */ "../node_modules/core-js/internals/define-built-in.js");
-
-module.exports = function (target, src, options) {
-  for (var key in src) defineBuiltIn(target, key, src[key], options);
-  return target;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/define-global-property.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/internals/define-global-property.js ***!
-  \*******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-
-// eslint-disable-next-line es/no-object-defineproperty -- safe
-var defineProperty = Object.defineProperty;
-
-module.exports = function (key, value) {
-  try {
-    defineProperty(globalThis, key, { value: value, configurable: true, writable: true });
-  } catch (error) {
-    globalThis[key] = value;
-  } return value;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/descriptors.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/descriptors.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-// Detect IE8's incomplete defineProperty implementation
-module.exports = !fails(function () {
-  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
-  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] !== 7;
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/document-create-element.js"
-/*!********************************************************************!*\
-  !*** ../node_modules/core-js/internals/document-create-element.js ***!
-  \********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-
-var document = globalThis.document;
-// typeof document.createElement is 'object' in old IE
-var EXISTS = isObject(document) && isObject(document.createElement);
-
-module.exports = function (it) {
-  return EXISTS ? document.createElement(it) : {};
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/does-not-exceed-safe-integer.js"
-/*!*************************************************************************!*\
-  !*** ../node_modules/core-js/internals/does-not-exceed-safe-integer.js ***!
-  \*************************************************************************/
-(module) {
-
-"use strict";
-
-var $TypeError = TypeError;
-var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF; // 2 ** 53 - 1 == 9007199254740991
-
-module.exports = function (it) {
-  if (it > MAX_SAFE_INTEGER) throw new $TypeError('Maximum allowed index exceeded');
-  return it;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/enum-bug-keys.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/internals/enum-bug-keys.js ***!
-  \**********************************************************/
-(module) {
-
-"use strict";
-
-// IE8- don't enum bug keys
-module.exports = [
-  'constructor',
-  'hasOwnProperty',
-  'isPrototypeOf',
-  'propertyIsEnumerable',
-  'toLocaleString',
-  'toString',
-  'valueOf'
-];
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/environment-user-agent.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/internals/environment-user-agent.js ***!
-  \*******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-
-var navigator = globalThis.navigator;
-var userAgent = navigator && navigator.userAgent;
-
-module.exports = userAgent ? String(userAgent) : '';
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/environment-v8-version.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/internals/environment-v8-version.js ***!
-  \*******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var userAgent = __webpack_require__(/*! ../internals/environment-user-agent */ "../node_modules/core-js/internals/environment-user-agent.js");
-
-var process = globalThis.process;
-var Deno = globalThis.Deno;
-var versions = process && process.versions || Deno && Deno.version;
-var v8 = versions && versions.v8;
-var match, version;
-
-if (v8) {
-  match = v8.split('.');
-  // in old Chrome, versions of V8 isn't V8 = Chrome / 10
-  // but their correct versions are not interesting for us
-  version = match[0] > 0 && match[0] < 4 ? 1 : +(match[0] + match[1]);
-}
-
-// BrowserFS NodeJS `process` polyfill incorrectly set `.v8` to `0.0`
-// so check `userAgent` even if `.v8` exists, but 0
-if (!version && userAgent) {
-  match = userAgent.match(/Edge\/(\d+)/);
-  if (!match || match[1] >= 74) {
-    match = userAgent.match(/Chrome\/(\d+)/);
-    if (match) version = +match[1];
-  }
-}
-
-module.exports = version;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/export.js"
-/*!***************************************************!*\
-  !*** ../node_modules/core-js/internals/export.js ***!
-  \***************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var getOwnPropertyDescriptor = (__webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "../node_modules/core-js/internals/object-get-own-property-descriptor.js").f);
-var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "../node_modules/core-js/internals/create-non-enumerable-property.js");
-var defineBuiltIn = __webpack_require__(/*! ../internals/define-built-in */ "../node_modules/core-js/internals/define-built-in.js");
-var defineGlobalProperty = __webpack_require__(/*! ../internals/define-global-property */ "../node_modules/core-js/internals/define-global-property.js");
-var copyConstructorProperties = __webpack_require__(/*! ../internals/copy-constructor-properties */ "../node_modules/core-js/internals/copy-constructor-properties.js");
-var isForced = __webpack_require__(/*! ../internals/is-forced */ "../node_modules/core-js/internals/is-forced.js");
-
-/*
-  options.target         - name of the target object
-  options.global         - target is the global object
-  options.stat           - export as static methods of target
-  options.proto          - export as prototype methods of target
-  options.real           - real prototype method for the `pure` version
-  options.forced         - export even if the native feature is available
-  options.bind           - bind methods to the target, required for the `pure` version
-  options.wrap           - wrap constructors to preventing global pollution, required for the `pure` version
-  options.unsafe         - use the simple assignment of property instead of delete + defineProperty
-  options.sham           - add a flag to not completely full polyfills
-  options.enumerable     - export as enumerable property
-  options.dontCallGetSet - prevent calling a getter on target
-  options.name           - the .name of the function if it does not match the key
-*/
-module.exports = function (options, source) {
-  var TARGET = options.target;
-  var GLOBAL = options.global;
-  var STATIC = options.stat;
-  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
-  if (GLOBAL) {
-    target = globalThis;
-  } else if (STATIC) {
-    target = globalThis[TARGET] || defineGlobalProperty(TARGET, {});
-  } else {
-    target = globalThis[TARGET] && globalThis[TARGET].prototype;
-  }
-  if (target) for (key in source) {
-    sourceProperty = source[key];
-    if (options.dontCallGetSet) {
-      descriptor = getOwnPropertyDescriptor(target, key);
-      targetProperty = descriptor && descriptor.value;
-    } else targetProperty = target[key];
-    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
-    // contained in target
-    if (!FORCED && targetProperty !== undefined) {
-      if (typeof sourceProperty == typeof targetProperty) continue;
-      copyConstructorProperties(sourceProperty, targetProperty);
-    }
-    // add a flag to not completely full polyfills
-    if (options.sham || (targetProperty && targetProperty.sham)) {
-      createNonEnumerableProperty(sourceProperty, 'sham', true);
-    }
-    defineBuiltIn(target, key, sourceProperty, options);
-  }
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/fails.js"
-/*!**************************************************!*\
-  !*** ../node_modules/core-js/internals/fails.js ***!
-  \**************************************************/
-(module) {
-
-"use strict";
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (error) {
-    return true;
-  }
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-apply.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/function-apply.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var NATIVE_BIND = __webpack_require__(/*! ../internals/function-bind-native */ "../node_modules/core-js/internals/function-bind-native.js");
-
-var FunctionPrototype = Function.prototype;
-var apply = FunctionPrototype.apply;
-var call = FunctionPrototype.call;
-
-// eslint-disable-next-line es/no-function-prototype-bind, es/no-reflect -- safe
-module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call.bind(apply) : function () {
-  return call.apply(apply, arguments);
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-bind-context.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/internals/function-bind-context.js ***!
-  \******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this-clause */ "../node_modules/core-js/internals/function-uncurry-this-clause.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var NATIVE_BIND = __webpack_require__(/*! ../internals/function-bind-native */ "../node_modules/core-js/internals/function-bind-native.js");
-
-var bind = uncurryThis(uncurryThis.bind);
-
-// optional / simple context binding
-module.exports = function (fn, that) {
-  aCallable(fn);
-  return that === undefined ? fn : NATIVE_BIND ? bind(fn, that) : function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-bind-native.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/core-js/internals/function-bind-native.js ***!
-  \*****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-module.exports = !fails(function () {
-  // eslint-disable-next-line es/no-function-prototype-bind -- safe
-  var test = function () { /* empty */ }.bind();
-  // eslint-disable-next-line no-prototype-builtins -- safe
-  return typeof test != 'function' || test.hasOwnProperty('prototype');
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-call.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/internals/function-call.js ***!
-  \**********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var NATIVE_BIND = __webpack_require__(/*! ../internals/function-bind-native */ "../node_modules/core-js/internals/function-bind-native.js");
-
-var call = Function.prototype.call;
-// eslint-disable-next-line es/no-function-prototype-bind -- safe
-module.exports = NATIVE_BIND ? call.bind(call) : function () {
-  return call.apply(call, arguments);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-name.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/internals/function-name.js ***!
-  \**********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-
-var FunctionPrototype = Function.prototype;
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var getDescriptor = DESCRIPTORS && Object.getOwnPropertyDescriptor;
-
-var EXISTS = hasOwn(FunctionPrototype, 'name');
-// additional protection from minified / mangled / dropped function names
-var PROPER = EXISTS && function something() { /* empty */ }.name === 'something';
-var CONFIGURABLE = EXISTS && (!DESCRIPTORS || (DESCRIPTORS && getDescriptor(FunctionPrototype, 'name').configurable));
-
-module.exports = {
-  EXISTS: EXISTS,
-  PROPER: PROPER,
-  CONFIGURABLE: CONFIGURABLE
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-uncurry-this-clause.js"
-/*!*************************************************************************!*\
-  !*** ../node_modules/core-js/internals/function-uncurry-this-clause.js ***!
-  \*************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var classofRaw = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-
-module.exports = function (fn) {
-  // Nashorn bug:
-  //   https://github.com/zloirock/core-js/issues/1128
-  //   https://github.com/zloirock/core-js/issues/1130
-  if (classofRaw(fn) === 'Function') return uncurryThis(fn);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-uncurry-this.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/internals/function-uncurry-this.js ***!
-  \******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var NATIVE_BIND = __webpack_require__(/*! ../internals/function-bind-native */ "../node_modules/core-js/internals/function-bind-native.js");
-
-var FunctionPrototype = Function.prototype;
-var call = FunctionPrototype.call;
-// eslint-disable-next-line es/no-function-prototype-bind -- safe
-var uncurryThisWithBind = NATIVE_BIND && FunctionPrototype.bind.bind(call, call);
-
-module.exports = NATIVE_BIND ? uncurryThisWithBind : function (fn) {
-  return function () {
-    return call.apply(fn, arguments);
-  };
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/get-built-in.js"
-/*!*********************************************************!*\
-  !*** ../node_modules/core-js/internals/get-built-in.js ***!
-  \*********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-
-var aFunction = function (argument) {
-  return isCallable(argument) ? argument : undefined;
-};
-
-module.exports = function (namespace, method) {
-  return arguments.length < 2 ? aFunction(globalThis[namespace]) : globalThis[namespace] && globalThis[namespace][method];
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/get-iterator-direct.js"
-/*!****************************************************************!*\
-  !*** ../node_modules/core-js/internals/get-iterator-direct.js ***!
-  \****************************************************************/
-(module) {
-
-"use strict";
-
-// `GetIteratorDirect(obj)` abstract operation
-// https://tc39.es/ecma262/#sec-getiteratordirect
-module.exports = function (obj) {
-  return {
-    iterator: obj,
-    next: obj.next,
-    done: false
-  };
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/get-iterator-method.js"
-/*!****************************************************************!*\
-  !*** ../node_modules/core-js/internals/get-iterator-method.js ***!
-  \****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var classof = __webpack_require__(/*! ../internals/classof */ "../node_modules/core-js/internals/classof.js");
-var getMethod = __webpack_require__(/*! ../internals/get-method */ "../node_modules/core-js/internals/get-method.js");
-var isNullOrUndefined = __webpack_require__(/*! ../internals/is-null-or-undefined */ "../node_modules/core-js/internals/is-null-or-undefined.js");
-var Iterators = __webpack_require__(/*! ../internals/iterators */ "../node_modules/core-js/internals/iterators.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-
-var ITERATOR = wellKnownSymbol('iterator');
-
-module.exports = function (it) {
-  if (!isNullOrUndefined(it)) return getMethod(it, ITERATOR)
-    || getMethod(it, '@@iterator')
-    || Iterators[classof(it)];
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/get-iterator.js"
-/*!*********************************************************!*\
-  !*** ../node_modules/core-js/internals/get-iterator.js ***!
-  \*********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var tryToString = __webpack_require__(/*! ../internals/try-to-string */ "../node_modules/core-js/internals/try-to-string.js");
-var getIteratorMethod = __webpack_require__(/*! ../internals/get-iterator-method */ "../node_modules/core-js/internals/get-iterator-method.js");
-
-var $TypeError = TypeError;
-
-module.exports = function (argument, usingIterator) {
-  var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
-  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
-  throw new $TypeError(tryToString(argument) + ' is not iterable');
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/get-method.js"
-/*!*******************************************************!*\
-  !*** ../node_modules/core-js/internals/get-method.js ***!
-  \*******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var isNullOrUndefined = __webpack_require__(/*! ../internals/is-null-or-undefined */ "../node_modules/core-js/internals/is-null-or-undefined.js");
-
-// `GetMethod` abstract operation
-// https://tc39.es/ecma262/#sec-getmethod
-module.exports = function (V, P) {
-  var func = V[P];
-  return isNullOrUndefined(func) ? undefined : aCallable(func);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/global-this.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/global-this.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var check = function (it) {
-  return it && it.Math === Math && it;
-};
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-module.exports =
-  // eslint-disable-next-line es/no-global-this -- safe
-  check(typeof globalThis == 'object' && globalThis) ||
-  check(typeof window == 'object' && window) ||
-  // eslint-disable-next-line no-restricted-globals -- safe
-  check(typeof self == 'object' && self) ||
-  check(typeof __webpack_require__.g == 'object' && __webpack_require__.g) ||
-  check(typeof this == 'object' && this) ||
-  // eslint-disable-next-line no-new-func -- fallback
-  (function () { return this; })() || Function('return this')();
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/has-own-property.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/core-js/internals/has-own-property.js ***!
-  \*************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var toObject = __webpack_require__(/*! ../internals/to-object */ "../node_modules/core-js/internals/to-object.js");
-
-var hasOwnProperty = uncurryThis({}.hasOwnProperty);
-
-// `HasOwnProperty` abstract operation
-// https://tc39.es/ecma262/#sec-hasownproperty
-// eslint-disable-next-line es/no-object-hasown -- safe
-module.exports = Object.hasOwn || function hasOwn(it, key) {
-  return hasOwnProperty(toObject(it), key);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/hidden-keys.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/hidden-keys.js ***!
-  \********************************************************/
-(module) {
-
-"use strict";
-
-module.exports = {};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/html.js"
-/*!*************************************************!*\
-  !*** ../node_modules/core-js/internals/html.js ***!
-  \*************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
-
-module.exports = getBuiltIn('document', 'documentElement');
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/ie8-dom-define.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/ie8-dom-define.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var createElement = __webpack_require__(/*! ../internals/document-create-element */ "../node_modules/core-js/internals/document-create-element.js");
-
-// Thanks to IE8 for its funny defineProperty
-module.exports = !DESCRIPTORS && !fails(function () {
-  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
-  return Object.defineProperty(createElement('div'), 'a', {
-    get: function () { return 7; }
-  }).a !== 7;
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/indexed-object.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/indexed-object.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var classof = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-
-var $Object = Object;
-var split = uncurryThis(''.split);
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-module.exports = fails(function () {
-  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
-  // eslint-disable-next-line no-prototype-builtins -- safe
-  return !$Object('z').propertyIsEnumerable(0);
-}) ? function (it) {
-  return classof(it) === 'String' ? split(it, '') : $Object(it);
-} : $Object;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/inspect-source.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/inspect-source.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var store = __webpack_require__(/*! ../internals/shared-store */ "../node_modules/core-js/internals/shared-store.js");
-
-var functionToString = uncurryThis(Function.toString);
-
-// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
-if (!isCallable(store.inspectSource)) {
-  store.inspectSource = function (it) {
-    return functionToString(it);
-  };
-}
-
-module.exports = store.inspectSource;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/internal-state.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/internal-state.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var NATIVE_WEAK_MAP = __webpack_require__(/*! ../internals/weak-map-basic-detection */ "../node_modules/core-js/internals/weak-map-basic-detection.js");
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "../node_modules/core-js/internals/create-non-enumerable-property.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var shared = __webpack_require__(/*! ../internals/shared-store */ "../node_modules/core-js/internals/shared-store.js");
-var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "../node_modules/core-js/internals/shared-key.js");
-var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "../node_modules/core-js/internals/hidden-keys.js");
-
-var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
-var TypeError = globalThis.TypeError;
-var WeakMap = globalThis.WeakMap;
-var set, get, has;
-
-var enforce = function (it) {
-  return has(it) ? get(it) : set(it, {});
-};
-
-var getterFor = function (TYPE) {
-  return function (it) {
-    var state;
-    if (!isObject(it) || (state = get(it)).type !== TYPE) {
-      throw new TypeError('Incompatible receiver, ' + TYPE + ' required');
-    } return state;
-  };
-};
-
-if (NATIVE_WEAK_MAP || shared.state) {
-  var store = shared.state || (shared.state = new WeakMap());
-  /* eslint-disable no-self-assign -- prototype methods protection */
-  store.get = store.get;
-  store.has = store.has;
-  store.set = store.set;
-  /* eslint-enable no-self-assign -- prototype methods protection */
-  set = function (it, metadata) {
-    if (store.has(it)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
-    metadata.facade = it;
-    store.set(it, metadata);
-    return metadata;
-  };
-  get = function (it) {
-    return store.get(it) || {};
-  };
-  has = function (it) {
-    return store.has(it);
-  };
-} else {
-  var STATE = sharedKey('state');
-  hiddenKeys[STATE] = true;
-  set = function (it, metadata) {
-    if (hasOwn(it, STATE)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
-    metadata.facade = it;
-    createNonEnumerableProperty(it, STATE, metadata);
-    return metadata;
-  };
-  get = function (it) {
-    return hasOwn(it, STATE) ? it[STATE] : {};
-  };
-  has = function (it) {
-    return hasOwn(it, STATE);
-  };
-}
-
-module.exports = {
-  set: set,
-  get: get,
-  has: has,
-  enforce: enforce,
-  getterFor: getterFor
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-array-iterator-method.js"
-/*!*********************************************************************!*\
-  !*** ../node_modules/core-js/internals/is-array-iterator-method.js ***!
-  \*********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-var Iterators = __webpack_require__(/*! ../internals/iterators */ "../node_modules/core-js/internals/iterators.js");
-
-var ITERATOR = wellKnownSymbol('iterator');
-var ArrayPrototype = Array.prototype;
-
-// check on default Array iterator
-module.exports = function (it) {
-  return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-array.js"
-/*!*****************************************************!*\
-  !*** ../node_modules/core-js/internals/is-array.js ***!
-  \*****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var classof = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-
-// `IsArray` abstract operation
-// https://tc39.es/ecma262/#sec-isarray
-// eslint-disable-next-line es/no-array-isarray -- safe
-module.exports = Array.isArray || function isArray(argument) {
-  return classof(argument) === 'Array';
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-callable.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/is-callable.js ***!
-  \********************************************************/
-(module) {
-
-"use strict";
-
-// https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot
-var documentAll = typeof document == 'object' && document.all;
-
-// `IsCallable` abstract operation
-// https://tc39.es/ecma262/#sec-iscallable
-// eslint-disable-next-line unicorn/no-typeof-undefined -- required for testing
-module.exports = typeof documentAll == 'undefined' && documentAll !== undefined ? function (argument) {
-  return typeof argument == 'function' || argument === documentAll;
-} : function (argument) {
-  return typeof argument == 'function';
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-forced.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/is-forced.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-
-var replacement = /#|\.prototype\./;
-
-var isForced = function (feature, detection) {
-  var value = data[normalize(feature)];
-  return value === POLYFILL ? true
-    : value === NATIVE ? false
-    : isCallable(detection) ? fails(detection)
-    : !!detection;
-};
-
-var normalize = isForced.normalize = function (string) {
-  return String(string).replace(replacement, '.').toLowerCase();
-};
-
-var data = isForced.data = {};
-var NATIVE = isForced.NATIVE = 'N';
-var POLYFILL = isForced.POLYFILL = 'P';
-
-module.exports = isForced;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-null-or-undefined.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/core-js/internals/is-null-or-undefined.js ***!
-  \*****************************************************************/
-(module) {
-
-"use strict";
-
-// we can't use just `it == null` since of `document.all` special case
-// https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot-aec
-module.exports = function (it) {
-  return it === null || it === undefined;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-object.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/is-object.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-
-module.exports = function (it) {
-  return typeof it == 'object' ? it !== null : isCallable(it);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-pure.js"
-/*!****************************************************!*\
-  !*** ../node_modules/core-js/internals/is-pure.js ***!
-  \****************************************************/
-(module) {
-
-"use strict";
-
-module.exports = false;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-raw-json.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/is-raw-json.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-var getInternalState = (__webpack_require__(/*! ../internals/internal-state */ "../node_modules/core-js/internals/internal-state.js").get);
-
-module.exports = function isRawJSON(O) {
-  if (!isObject(O)) return false;
-  var state = getInternalState(O);
-  return !!state && state.type === 'RawJSON';
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-symbol.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/is-symbol.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ "../node_modules/core-js/internals/object-is-prototype-of.js");
-var USE_SYMBOL_AS_UID = __webpack_require__(/*! ../internals/use-symbol-as-uid */ "../node_modules/core-js/internals/use-symbol-as-uid.js");
-
-var $Object = Object;
-
-module.exports = USE_SYMBOL_AS_UID ? function (it) {
-  return typeof it == 'symbol';
-} : function (it) {
-  var $Symbol = getBuiltIn('Symbol');
-  return isCallable($Symbol) && isPrototypeOf($Symbol.prototype, $Object(it));
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterate.js"
-/*!****************************************************!*\
-  !*** ../node_modules/core-js/internals/iterate.js ***!
-  \****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var bind = __webpack_require__(/*! ../internals/function-bind-context */ "../node_modules/core-js/internals/function-bind-context.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var tryToString = __webpack_require__(/*! ../internals/try-to-string */ "../node_modules/core-js/internals/try-to-string.js");
-var isArrayIteratorMethod = __webpack_require__(/*! ../internals/is-array-iterator-method */ "../node_modules/core-js/internals/is-array-iterator-method.js");
-var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "../node_modules/core-js/internals/length-of-array-like.js");
-var isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ "../node_modules/core-js/internals/object-is-prototype-of.js");
-var getIterator = __webpack_require__(/*! ../internals/get-iterator */ "../node_modules/core-js/internals/get-iterator.js");
-var getIteratorMethod = __webpack_require__(/*! ../internals/get-iterator-method */ "../node_modules/core-js/internals/get-iterator-method.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-
-var $TypeError = TypeError;
-
-var Result = function (stopped, result) {
-  this.stopped = stopped;
-  this.result = result;
-};
-
-var ResultPrototype = Result.prototype;
-
-module.exports = function (iterable, unboundFunction, options) {
-  var that = options && options.that;
-  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
-  var IS_RECORD = !!(options && options.IS_RECORD);
-  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
-  var INTERRUPTED = !!(options && options.INTERRUPTED);
-  var fn = bind(unboundFunction, that);
-  var iterator, iterFn, index, length, result, next, step;
-
-  var stop = function (condition) {
-    var $iterator = iterator;
-    iterator = undefined;
-    if ($iterator) iteratorClose($iterator, 'normal');
-    return new Result(true, condition);
-  };
-
-  var callFn = function (value) {
-    if (AS_ENTRIES) {
-      anObject(value);
-      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
-    } return INTERRUPTED ? fn(value, stop) : fn(value);
-  };
-
-  if (IS_RECORD) {
-    iterator = iterable.iterator;
-  } else if (IS_ITERATOR) {
-    iterator = iterable;
-  } else {
-    iterFn = getIteratorMethod(iterable);
-    if (!iterFn) throw new $TypeError(tryToString(iterable) + ' is not iterable');
-    // optimisation for array iterators
-    if (isArrayIteratorMethod(iterFn)) {
-      for (index = 0, length = lengthOfArrayLike(iterable); length > index; index++) {
-        result = callFn(iterable[index]);
-        if (result && isPrototypeOf(ResultPrototype, result)) return result;
-      } return new Result(false);
-    }
-    iterator = getIterator(iterable, iterFn);
-  }
-
-  next = IS_RECORD ? iterable.next : iterator.next;
-  while (!(step = call(next, iterator)).done) {
-    // `IteratorValue` errors should propagate without closing the iterator
-    var value = step.value;
-    try {
-      result = callFn(value);
-    } catch (error) {
-      if (iterator) iteratorClose(iterator, 'throw', error);
-      else throw error;
-    }
-    if (typeof result == 'object' && result && isPrototypeOf(ResultPrototype, result)) return result;
-  } return new Result(false);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-close-all.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-close-all.js ***!
-  \***************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-
-module.exports = function (iters, kind, value) {
-  for (var i = iters.length - 1; i >= 0; i--) {
-    if (iters[i] === undefined) continue;
-    try {
-      value = iteratorClose(iters[i].iterator, kind, value);
-    } catch (error) {
-      kind = 'throw';
-      value = error;
-    }
-  }
-  if (kind === 'throw') throw value;
-  return value;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-close.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-close.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getMethod = __webpack_require__(/*! ../internals/get-method */ "../node_modules/core-js/internals/get-method.js");
-
-module.exports = function (iterator, kind, value) {
-  var innerResult, innerError;
-  anObject(iterator);
-  try {
-    innerResult = getMethod(iterator, 'return');
-    if (!innerResult) {
-      if (kind === 'throw') throw value;
-      return value;
-    }
-    innerResult = call(innerResult, iterator);
-  } catch (error) {
-    innerError = true;
-    innerResult = error;
-  }
-  if (kind === 'throw') throw value;
-  if (innerError) throw innerResult;
-  anObject(innerResult);
-  return value;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-create-proxy.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-create-proxy.js ***!
-  \******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
-var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "../node_modules/core-js/internals/create-non-enumerable-property.js");
-var defineBuiltIns = __webpack_require__(/*! ../internals/define-built-ins */ "../node_modules/core-js/internals/define-built-ins.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "../node_modules/core-js/internals/internal-state.js");
-var getMethod = __webpack_require__(/*! ../internals/get-method */ "../node_modules/core-js/internals/get-method.js");
-var IteratorPrototype = (__webpack_require__(/*! ../internals/iterators-core */ "../node_modules/core-js/internals/iterators-core.js").IteratorPrototype);
-var createIterResultObject = __webpack_require__(/*! ../internals/create-iter-result-object */ "../node_modules/core-js/internals/create-iter-result-object.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorCloseAll = __webpack_require__(/*! ../internals/iterator-close-all */ "../node_modules/core-js/internals/iterator-close-all.js");
-
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-var ITERATOR_HELPER = 'IteratorHelper';
-var WRAP_FOR_VALID_ITERATOR = 'WrapForValidIterator';
-var NORMAL = 'normal';
-var THROW = 'throw';
-var setInternalState = InternalStateModule.set;
-
-var createIteratorProxyPrototype = function (IS_ITERATOR) {
-  var getInternalState = InternalStateModule.getterFor(IS_ITERATOR ? WRAP_FOR_VALID_ITERATOR : ITERATOR_HELPER);
-
-  return defineBuiltIns(create(IteratorPrototype), {
-    next: function next() {
-      var state = getInternalState(this);
-      // for simplification:
-      //   for `%WrapForValidIteratorPrototype%.next` or with `state.returnHandlerResult` our `nextHandler` returns `IterResultObject`
-      //   for `%IteratorHelperPrototype%.next` - just a value
-      if (IS_ITERATOR) return state.nextHandler();
-      if (state.done) return createIterResultObject(undefined, true);
-      try {
-        var result = state.nextHandler();
-        return state.returnHandlerResult ? result : createIterResultObject(result, state.done);
-      } catch (error) {
-        state.done = true;
-        throw error;
-      }
-    },
-    'return': function () {
-      var state = getInternalState(this);
-      var iterator = state.iterator;
-      var done = state.done;
-      state.done = true;
-      if (IS_ITERATOR) {
-        var returnMethod = getMethod(iterator, 'return');
-        return returnMethod ? call(returnMethod, iterator) : createIterResultObject(undefined, true);
-      }
-      if (done) return createIterResultObject(undefined, true);
-      if (state.inner) try {
-        iteratorClose(state.inner.iterator, NORMAL);
-      } catch (error) {
-        return iteratorClose(iterator, THROW, error);
-      }
-      if (state.openIters) try {
-        iteratorCloseAll(state.openIters, NORMAL);
-      } catch (error) {
-        if (iterator) return iteratorClose(iterator, THROW, error);
-        throw error;
-      }
-      if (iterator) iteratorClose(iterator, NORMAL);
-      return createIterResultObject(undefined, true);
-    }
-  });
-};
-
-var WrapForValidIteratorPrototype = createIteratorProxyPrototype(true);
-var IteratorHelperPrototype = createIteratorProxyPrototype(false);
-
-createNonEnumerableProperty(IteratorHelperPrototype, TO_STRING_TAG, 'Iterator Helper');
-
-module.exports = function (nextHandler, IS_ITERATOR, RETURN_HANDLER_RESULT) {
-  var IteratorProxy = function Iterator(record, state) {
-    if (state) {
-      state.iterator = record.iterator;
-      state.next = record.next;
-    } else state = record;
-    state.type = IS_ITERATOR ? WRAP_FOR_VALID_ITERATOR : ITERATOR_HELPER;
-    state.returnHandlerResult = !!RETURN_HANDLER_RESULT;
-    state.nextHandler = nextHandler;
-    state.counter = 0;
-    state.done = false;
-    setInternalState(this, state);
-  };
-
-  IteratorProxy.prototype = IS_ITERATOR ? WrapForValidIteratorPrototype : IteratorHelperPrototype;
-
-  return IteratorProxy;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js"
-/*!***************************************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js ***!
-  \***************************************************************************************/
-(module) {
-
-"use strict";
-
-// Should throw an error on invalid iterator
-// https://issues.chromium.org/issues/336839115
-module.exports = function (methodName, argument) {
-  // eslint-disable-next-line es/no-iterator -- required for testing
-  var method = typeof Iterator == 'function' && Iterator.prototype[methodName];
-  if (method) try {
-    method.call({ next: null }, argument).next();
-  } catch (error) {
-    return true;
-  }
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js"
-/*!*******************************************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js ***!
-  \*******************************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-
-// https://github.com/tc39/ecma262/pull/3467
-module.exports = function (METHOD_NAME, ExpectedError) {
-  var Iterator = globalThis.Iterator;
-  var IteratorPrototype = Iterator && Iterator.prototype;
-  var method = IteratorPrototype && IteratorPrototype[METHOD_NAME];
-
-  var CLOSED = false;
-
-  if (method) try {
-    method.call({
-      next: function () { return { done: true }; },
-      'return': function () { CLOSED = true; }
-    }, -1);
-  } catch (error) {
-    // https://bugs.webkit.org/show_bug.cgi?id=291195
-    if (!(error instanceof ExpectedError)) CLOSED = false;
-  }
-
-  if (!CLOSED) return method;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterators-core.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/iterators-core.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
-var getPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "../node_modules/core-js/internals/object-get-prototype-of.js");
-var defineBuiltIn = __webpack_require__(/*! ../internals/define-built-in */ "../node_modules/core-js/internals/define-built-in.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
-
-var ITERATOR = wellKnownSymbol('iterator');
-var BUGGY_SAFARI_ITERATORS = false;
-
-// `%IteratorPrototype%` object
-// https://tc39.es/ecma262/#sec-%iteratorprototype%-object
-var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
-
-/* eslint-disable es/no-array-prototype-keys -- safe */
-if ([].keys) {
-  arrayIterator = [].keys();
-  // Safari 8 has buggy iterators w/o `next`
-  if (!('next' in arrayIterator)) BUGGY_SAFARI_ITERATORS = true;
-  else {
-    PrototypeOfArrayIteratorPrototype = getPrototypeOf(getPrototypeOf(arrayIterator));
-    if (PrototypeOfArrayIteratorPrototype !== Object.prototype) IteratorPrototype = PrototypeOfArrayIteratorPrototype;
-  }
-}
-
-var NEW_ITERATOR_PROTOTYPE = !isObject(IteratorPrototype) || fails(function () {
-  var test = {};
-  // FF44- legacy iterators case
-  return IteratorPrototype[ITERATOR].call(test) !== test;
-});
-
-if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
-else if (IS_PURE) IteratorPrototype = create(IteratorPrototype);
-
-// `%IteratorPrototype%[@@iterator]()` method
-// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
-if (!isCallable(IteratorPrototype[ITERATOR])) {
-  defineBuiltIn(IteratorPrototype, ITERATOR, function () {
-    return this;
-  });
-}
-
-module.exports = {
-  IteratorPrototype: IteratorPrototype,
-  BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterators.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/iterators.js ***!
-  \******************************************************/
-(module) {
-
-"use strict";
-
-module.exports = {};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/length-of-array-like.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/core-js/internals/length-of-array-like.js ***!
-  \*****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var toLength = __webpack_require__(/*! ../internals/to-length */ "../node_modules/core-js/internals/to-length.js");
-
-// `LengthOfArrayLike` abstract operation
-// https://tc39.es/ecma262/#sec-lengthofarraylike
-module.exports = function (obj) {
-  return toLength(obj.length);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/make-built-in.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/internals/make-built-in.js ***!
-  \**********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var CONFIGURABLE_FUNCTION_NAME = (__webpack_require__(/*! ../internals/function-name */ "../node_modules/core-js/internals/function-name.js").CONFIGURABLE);
-var inspectSource = __webpack_require__(/*! ../internals/inspect-source */ "../node_modules/core-js/internals/inspect-source.js");
-var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "../node_modules/core-js/internals/internal-state.js");
-
-var enforceInternalState = InternalStateModule.enforce;
-var getInternalState = InternalStateModule.get;
-var $String = String;
-// eslint-disable-next-line es/no-object-defineproperty -- safe
-var defineProperty = Object.defineProperty;
-var stringSlice = uncurryThis(''.slice);
-var replace = uncurryThis(''.replace);
-var join = uncurryThis([].join);
-
-var CONFIGURABLE_LENGTH = DESCRIPTORS && !fails(function () {
-  return defineProperty(function () { /* empty */ }, 'length', { value: 8 }).length !== 8;
-});
-
-var TEMPLATE = String(String).split('String');
-
-var makeBuiltIn = module.exports = function (value, name, options) {
-  if (stringSlice($String(name), 0, 7) === 'Symbol(') {
-    name = '[' + replace($String(name), /^Symbol\(([^)]*)\).*$/, '$1') + ']';
-  }
-  if (options && options.getter) name = 'get ' + name;
-  if (options && options.setter) name = 'set ' + name;
-  if (!hasOwn(value, 'name') || (CONFIGURABLE_FUNCTION_NAME && value.name !== name)) {
-    if (DESCRIPTORS) defineProperty(value, 'name', { value: name, configurable: true });
-    else value.name = name;
-  }
-  if (CONFIGURABLE_LENGTH && options && hasOwn(options, 'arity') && value.length !== options.arity) {
-    defineProperty(value, 'length', { value: options.arity });
-  }
-  try {
-    if (options && hasOwn(options, 'constructor') && options.constructor) {
-      if (DESCRIPTORS) defineProperty(value, 'prototype', { writable: false });
-    // in V8 ~ Chrome 53, prototypes of some methods, like `Array.prototype.values`, are non-writable
-    } else if (value.prototype) value.prototype = undefined;
-  } catch (error) { /* empty */ }
-  var state = enforceInternalState(value);
-  if (!hasOwn(state, 'source')) {
-    state.source = join(TEMPLATE, typeof name == 'string' ? name : '');
-  } return value;
-};
-
-// add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
-// eslint-disable-next-line no-extend-native -- required
-Function.prototype.toString = makeBuiltIn(function toString() {
-  return isCallable(this) && getInternalState(this).source || inspectSource(this);
-}, 'toString');
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/math-trunc.js"
-/*!*******************************************************!*\
-  !*** ../node_modules/core-js/internals/math-trunc.js ***!
-  \*******************************************************/
-(module) {
-
-"use strict";
-
-var ceil = Math.ceil;
-var floor = Math.floor;
-
-// `Math.trunc` method
-// https://tc39.es/ecma262/#sec-math.trunc
-// eslint-disable-next-line es/no-math-trunc -- safe
-module.exports = Math.trunc || function trunc(x) {
-  var n = +x;
-  return (n > 0 ? floor : ceil)(n);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/native-raw-json.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/internals/native-raw-json.js ***!
-  \************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-/* eslint-disable es/no-json -- safe */
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-module.exports = !fails(function () {
-  var unsafeInt = '9007199254740993';
-  // eslint-disable-next-line es/no-json-rawjson -- feature detection
-  var raw = JSON.rawJSON(unsafeInt);
-  // eslint-disable-next-line es/no-json-israwjson -- feature detection
-  return !JSON.isRawJSON(raw) || JSON.stringify(raw) !== unsafeInt;
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-create.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/internals/object-create.js ***!
-  \**********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-/* global ActiveXObject -- old IE, WSH */
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var definePropertiesModule = __webpack_require__(/*! ../internals/object-define-properties */ "../node_modules/core-js/internals/object-define-properties.js");
-var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
-var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "../node_modules/core-js/internals/hidden-keys.js");
-var html = __webpack_require__(/*! ../internals/html */ "../node_modules/core-js/internals/html.js");
-var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "../node_modules/core-js/internals/document-create-element.js");
-var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "../node_modules/core-js/internals/shared-key.js");
-
-var GT = '>';
-var LT = '<';
-var PROTOTYPE = 'prototype';
-var SCRIPT = 'script';
-var IE_PROTO = sharedKey('IE_PROTO');
-
-var EmptyConstructor = function () { /* empty */ };
-
-var scriptTag = function (content) {
-  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
-};
-
-// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
-var NullProtoObjectViaActiveX = function (activeXDocument) {
-  activeXDocument.write(scriptTag(''));
-  activeXDocument.close();
-  var temp = activeXDocument.parentWindow.Object;
-  // eslint-disable-next-line no-useless-assignment -- avoid memory leak
-  activeXDocument = null;
-  return temp;
-};
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var NullProtoObjectViaIFrame = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = documentCreateElement('iframe');
-  var JS = 'java' + SCRIPT + ':';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  html.appendChild(iframe);
-  // https://github.com/zloirock/core-js/issues/475
-  iframe.src = String(JS);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(scriptTag('document.F=Object'));
-  iframeDocument.close();
-  return iframeDocument.F;
-};
-
-// Check for document.domain and active x support
-// No need to use active x approach when document.domain is not set
-// see https://github.com/es-shims/es5-shim/issues/150
-// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
-// avoid IE GC bug
-var activeXDocument;
-var NullProtoObject = function () {
-  try {
-    activeXDocument = new ActiveXObject('htmlfile');
-  } catch (error) { /* ignore */ }
-  NullProtoObject = typeof document != 'undefined'
-    ? document.domain && activeXDocument
-      ? NullProtoObjectViaActiveX(activeXDocument) // old IE
-      : NullProtoObjectViaIFrame()
-    : NullProtoObjectViaActiveX(activeXDocument); // WSH
-  var length = enumBugKeys.length;
-  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
-  return NullProtoObject();
-};
-
-hiddenKeys[IE_PROTO] = true;
-
-// `Object.create` method
-// https://tc39.es/ecma262/#sec-object.create
-// eslint-disable-next-line es/no-object-create -- safe
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    EmptyConstructor[PROTOTYPE] = anObject(O);
-    result = new EmptyConstructor();
-    EmptyConstructor[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = NullProtoObject();
-  return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-define-properties.js"
-/*!*********************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-define-properties.js ***!
-  \*********************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(/*! ../internals/v8-prototype-define-bug */ "../node_modules/core-js/internals/v8-prototype-define-bug.js");
-var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "../node_modules/core-js/internals/object-define-property.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
-var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "../node_modules/core-js/internals/object-keys.js");
-
-// `Object.defineProperties` method
-// https://tc39.es/ecma262/#sec-object.defineproperties
-// eslint-disable-next-line es/no-object-defineproperties -- safe
-exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject(O);
-  var props = toIndexedObject(Properties);
-  var keys = objectKeys(Properties);
-  var length = keys.length;
-  var index = 0;
-  var key;
-  while (length > index) definePropertyModule.f(O, key = keys[index++], props[key]);
-  return O;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-define-property.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-define-property.js ***!
-  \*******************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var IE8_DOM_DEFINE = __webpack_require__(/*! ../internals/ie8-dom-define */ "../node_modules/core-js/internals/ie8-dom-define.js");
-var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(/*! ../internals/v8-prototype-define-bug */ "../node_modules/core-js/internals/v8-prototype-define-bug.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var toPropertyKey = __webpack_require__(/*! ../internals/to-property-key */ "../node_modules/core-js/internals/to-property-key.js");
-
-var $TypeError = TypeError;
-// eslint-disable-next-line es/no-object-defineproperty -- safe
-var $defineProperty = Object.defineProperty;
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var ENUMERABLE = 'enumerable';
-var CONFIGURABLE = 'configurable';
-var WRITABLE = 'writable';
-
-// `Object.defineProperty` method
-// https://tc39.es/ecma262/#sec-object.defineproperty
-exports.f = DESCRIPTORS ? V8_PROTOTYPE_DEFINE_BUG ? function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPropertyKey(P);
-  anObject(Attributes);
-  if (typeof O === 'function' && P === 'prototype' && 'value' in Attributes && WRITABLE in Attributes && !Attributes[WRITABLE]) {
-    var current = $getOwnPropertyDescriptor(O, P);
-    if (current && current[WRITABLE]) {
-      O[P] = Attributes.value;
-      Attributes = {
-        configurable: CONFIGURABLE in Attributes ? Attributes[CONFIGURABLE] : current[CONFIGURABLE],
-        enumerable: ENUMERABLE in Attributes ? Attributes[ENUMERABLE] : current[ENUMERABLE],
-        writable: false
-      };
-    }
-  } return $defineProperty(O, P, Attributes);
-} : $defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPropertyKey(P);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return $defineProperty(O, P, Attributes);
-  } catch (error) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw new $TypeError('Accessors not supported');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-get-own-property-descriptor.js"
-/*!*******************************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-get-own-property-descriptor.js ***!
-  \*******************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "../node_modules/core-js/internals/object-property-is-enumerable.js");
-var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "../node_modules/core-js/internals/create-property-descriptor.js");
-var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
-var toPropertyKey = __webpack_require__(/*! ../internals/to-property-key */ "../node_modules/core-js/internals/to-property-key.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var IE8_DOM_DEFINE = __webpack_require__(/*! ../internals/ie8-dom-define */ "../node_modules/core-js/internals/ie8-dom-define.js");
-
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// `Object.getOwnPropertyDescriptor` method
-// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
-  O = toIndexedObject(O);
-  P = toPropertyKey(P);
-  if (IE8_DOM_DEFINE) try {
-    return $getOwnPropertyDescriptor(O, P);
-  } catch (error) { /* empty */ }
-  if (hasOwn(O, P)) return createPropertyDescriptor(!call(propertyIsEnumerableModule.f, O, P), O[P]);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-get-own-property-names.js"
-/*!**************************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-get-own-property-names.js ***!
-  \**************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "../node_modules/core-js/internals/object-keys-internal.js");
-var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
-
-var hiddenKeys = enumBugKeys.concat('length', 'prototype');
-
-// `Object.getOwnPropertyNames` method
-// https://tc39.es/ecma262/#sec-object.getownpropertynames
-// eslint-disable-next-line es/no-object-getownpropertynames -- safe
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return internalObjectKeys(O, hiddenKeys);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-get-own-property-symbols.js"
-/*!****************************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-get-own-property-symbols.js ***!
-  \****************************************************************************/
-(__unused_webpack_module, exports) {
-
-"use strict";
-
-// eslint-disable-next-line es/no-object-getownpropertysymbols -- safe
-exports.f = Object.getOwnPropertySymbols;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-get-prototype-of.js"
-/*!********************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-get-prototype-of.js ***!
-  \********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var toObject = __webpack_require__(/*! ../internals/to-object */ "../node_modules/core-js/internals/to-object.js");
-var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "../node_modules/core-js/internals/shared-key.js");
-var CORRECT_PROTOTYPE_GETTER = __webpack_require__(/*! ../internals/correct-prototype-getter */ "../node_modules/core-js/internals/correct-prototype-getter.js");
-
-var IE_PROTO = sharedKey('IE_PROTO');
-var $Object = Object;
-var ObjectPrototype = $Object.prototype;
-
-// `Object.getPrototypeOf` method
-// https://tc39.es/ecma262/#sec-object.getprototypeof
-// eslint-disable-next-line es/no-object-getprototypeof -- safe
-module.exports = CORRECT_PROTOTYPE_GETTER ? $Object.getPrototypeOf : function (O) {
-  var object = toObject(O);
-  if (hasOwn(object, IE_PROTO)) return object[IE_PROTO];
-  var constructor = object.constructor;
-  if (isCallable(constructor) && object instanceof constructor) {
-    return constructor.prototype;
-  } return object instanceof $Object ? ObjectPrototype : null;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-is-prototype-of.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-is-prototype-of.js ***!
-  \*******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-
-module.exports = uncurryThis({}.isPrototypeOf);
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-keys-internal.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-keys-internal.js ***!
-  \*****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "../node_modules/core-js/internals/to-indexed-object.js");
-var indexOf = (__webpack_require__(/*! ../internals/array-includes */ "../node_modules/core-js/internals/array-includes.js").indexOf);
-var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "../node_modules/core-js/internals/hidden-keys.js");
-
-var push = uncurryThis([].push);
-
-module.exports = function (object, names) {
-  var O = toIndexedObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) !hasOwn(hiddenKeys, key) && hasOwn(O, key) && push(result, key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (hasOwn(O, key = names[i++])) {
-    ~indexOf(result, key) || push(result, key);
-  }
-  return result;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-keys.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/object-keys.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "../node_modules/core-js/internals/object-keys-internal.js");
-var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "../node_modules/core-js/internals/enum-bug-keys.js");
-
-// `Object.keys` method
-// https://tc39.es/ecma262/#sec-object.keys
-// eslint-disable-next-line es/no-object-keys -- safe
-module.exports = Object.keys || function keys(O) {
-  return internalObjectKeys(O, enumBugKeys);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/object-property-is-enumerable.js"
-/*!**************************************************************************!*\
-  !*** ../node_modules/core-js/internals/object-property-is-enumerable.js ***!
-  \**************************************************************************/
-(__unused_webpack_module, exports) {
-
-"use strict";
-
-var $propertyIsEnumerable = {}.propertyIsEnumerable;
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// Nashorn ~ JDK8 bug
-var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({ 1: 2 }, 1);
-
-// `Object.prototype.propertyIsEnumerable` method implementation
-// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
-exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
-  var descriptor = getOwnPropertyDescriptor(this, V);
-  return !!descriptor && descriptor.enumerable;
-} : $propertyIsEnumerable;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/ordinary-to-primitive.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/internals/ordinary-to-primitive.js ***!
-  \******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-
-var $TypeError = TypeError;
-
-// `OrdinaryToPrimitive` abstract operation
-// https://tc39.es/ecma262/#sec-ordinarytoprimitive
-module.exports = function (input, pref) {
-  var fn, val;
-  if (pref === 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input))) return val;
-  if (isCallable(fn = input.valueOf) && !isObject(val = call(fn, input))) return val;
-  if (pref !== 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input))) return val;
-  throw new $TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/own-keys.js"
-/*!*****************************************************!*\
-  !*** ../node_modules/core-js/internals/own-keys.js ***!
-  \*****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var getOwnPropertyNamesModule = __webpack_require__(/*! ../internals/object-get-own-property-names */ "../node_modules/core-js/internals/object-get-own-property-names.js");
-var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "../node_modules/core-js/internals/object-get-own-property-symbols.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-
-var concat = uncurryThis([].concat);
-
-// all object keys, includes non-enumerable and symbols
-module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
-  var keys = getOwnPropertyNamesModule.f(anObject(it));
-  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/parse-json-string.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/internals/parse-json-string.js ***!
-  \**************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-
-var $SyntaxError = SyntaxError;
-var $parseInt = parseInt;
-var fromCharCode = String.fromCharCode;
-var at = uncurryThis(''.charAt);
-var slice = uncurryThis(''.slice);
-var exec = uncurryThis(/./.exec);
-
-var codePoints = {
-  '\\"': '"',
-  '\\\\': '\\',
-  '\\/': '/',
-  '\\b': '\b',
-  '\\f': '\f',
-  '\\n': '\n',
-  '\\r': '\r',
-  '\\t': '\t'
-};
-
-var IS_4_HEX_DIGITS = /^[\da-f]{4}$/i;
-// eslint-disable-next-line regexp/no-control-character -- safe
-var IS_C0_CONTROL_CODE = /^[\u0000-\u001F]$/;
-
-module.exports = function (source, i) {
-  var unterminated = true;
-  var value = '';
-  while (i < source.length) {
-    var chr = at(source, i);
-    if (chr === '\\') {
-      var twoChars = slice(source, i, i + 2);
-      if (hasOwn(codePoints, twoChars)) {
-        value += codePoints[twoChars];
-        i += 2;
-      } else if (twoChars === '\\u') {
-        i += 2;
-        var fourHexDigits = slice(source, i, i + 4);
-        if (!exec(IS_4_HEX_DIGITS, fourHexDigits)) throw new $SyntaxError('Bad Unicode escape at: ' + i);
-        value += fromCharCode($parseInt(fourHexDigits, 16));
-        i += 4;
-      } else throw new $SyntaxError('Unknown escape sequence: "' + twoChars + '"');
-    } else if (chr === '"') {
-      unterminated = false;
-      i++;
-      break;
-    } else {
-      if (exec(IS_C0_CONTROL_CODE, chr)) throw new $SyntaxError('Bad control character in string literal at: ' + i);
-      value += chr;
-      i++;
-    }
-  }
-  if (unterminated) throw new $SyntaxError('Unterminated string at: ' + i);
-  return { value: value, end: i };
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/require-object-coercible.js"
-/*!*********************************************************************!*\
-  !*** ../node_modules/core-js/internals/require-object-coercible.js ***!
-  \*********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isNullOrUndefined = __webpack_require__(/*! ../internals/is-null-or-undefined */ "../node_modules/core-js/internals/is-null-or-undefined.js");
-
-var $TypeError = TypeError;
-
-// `RequireObjectCoercible` abstract operation
-// https://tc39.es/ecma262/#sec-requireobjectcoercible
-module.exports = function (it) {
-  if (isNullOrUndefined(it)) throw new $TypeError("Can't call method on " + it);
-  return it;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/shared-key.js"
-/*!*******************************************************!*\
-  !*** ../node_modules/core-js/internals/shared-key.js ***!
-  \*******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var shared = __webpack_require__(/*! ../internals/shared */ "../node_modules/core-js/internals/shared.js");
-var uid = __webpack_require__(/*! ../internals/uid */ "../node_modules/core-js/internals/uid.js");
-
-var keys = shared('keys');
-
-module.exports = function (key) {
-  return keys[key] || (keys[key] = uid(key));
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/shared-store.js"
-/*!*********************************************************!*\
-  !*** ../node_modules/core-js/internals/shared-store.js ***!
-  \*********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var defineGlobalProperty = __webpack_require__(/*! ../internals/define-global-property */ "../node_modules/core-js/internals/define-global-property.js");
-
-var SHARED = '__core-js_shared__';
-var store = module.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
-
-(store.versions || (store.versions = [])).push({
-  version: '3.49.0',
-  mode: IS_PURE ? 'pure' : 'global',
-  copyright: 'В© 2013вЂ“2025 Denis Pushkarev (zloirock.ru), 2025вЂ“2026 CoreJS Company (core-js.io). All rights reserved.',
-  license: 'https://github.com/zloirock/core-js/blob/v3.49.0/LICENSE',
-  source: 'https://github.com/zloirock/core-js'
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/shared.js"
-/*!***************************************************!*\
-  !*** ../node_modules/core-js/internals/shared.js ***!
-  \***************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var store = __webpack_require__(/*! ../internals/shared-store */ "../node_modules/core-js/internals/shared-store.js");
-
-module.exports = function (key, value) {
-  return store[key] || (store[key] = value || {});
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/symbol-constructor-detection.js"
-/*!*************************************************************************!*\
-  !*** ../node_modules/core-js/internals/symbol-constructor-detection.js ***!
-  \*************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-/* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(/*! ../internals/environment-v8-version */ "../node_modules/core-js/internals/environment-v8-version.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-
-var $String = globalThis.String;
-
-// eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
-module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
-  var symbol = Symbol('symbol detection');
-  // Chrome 38 Symbol has incorrect toString conversion
-  // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
-  // nb: Do not call `String` directly to avoid this being optimized out to `symbol+''` which will,
-  // of course, fail.
-  return !$String(symbol) || !(Object(symbol) instanceof Symbol) ||
-    // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
-    !Symbol.sham && V8_VERSION && V8_VERSION < 41;
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-absolute-index.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/internals/to-absolute-index.js ***!
-  \**************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var toIntegerOrInfinity = __webpack_require__(/*! ../internals/to-integer-or-infinity */ "../node_modules/core-js/internals/to-integer-or-infinity.js");
-
-var max = Math.max;
-var min = Math.min;
-
-// Helper for a popular repeating case of the spec:
-// Let integer be ? ToInteger(index).
-// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
-module.exports = function (index, length) {
-  var integer = toIntegerOrInfinity(index);
-  return integer < 0 ? max(integer + length, 0) : min(integer, length);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-indexed-object.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/internals/to-indexed-object.js ***!
-  \**************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// toObject with fallback for non-array-like ES3 strings
-var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "../node_modules/core-js/internals/indexed-object.js");
-var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "../node_modules/core-js/internals/require-object-coercible.js");
-
-module.exports = function (it) {
-  return IndexedObject(requireObjectCoercible(it));
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-integer-or-infinity.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/internals/to-integer-or-infinity.js ***!
-  \*******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var trunc = __webpack_require__(/*! ../internals/math-trunc */ "../node_modules/core-js/internals/math-trunc.js");
-
-// `ToIntegerOrInfinity` abstract operation
-// https://tc39.es/ecma262/#sec-tointegerorinfinity
-module.exports = function (argument) {
-  var number = +argument;
-  // eslint-disable-next-line no-self-compare -- NaN check
-  return number !== number || number === 0 ? 0 : trunc(number);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-length.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/to-length.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var toIntegerOrInfinity = __webpack_require__(/*! ../internals/to-integer-or-infinity */ "../node_modules/core-js/internals/to-integer-or-infinity.js");
-
-var min = Math.min;
-
-// `ToLength` abstract operation
-// https://tc39.es/ecma262/#sec-tolength
-module.exports = function (argument) {
-  var len = toIntegerOrInfinity(argument);
-  return len > 0 ? min(len, 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-object.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/to-object.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "../node_modules/core-js/internals/require-object-coercible.js");
-
-var $Object = Object;
-
-// `ToObject` abstract operation
-// https://tc39.es/ecma262/#sec-toobject
-module.exports = function (argument) {
-  return $Object(requireObjectCoercible(argument));
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-primitive.js"
-/*!*********************************************************!*\
-  !*** ../node_modules/core-js/internals/to-primitive.js ***!
-  \*********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-var isSymbol = __webpack_require__(/*! ../internals/is-symbol */ "../node_modules/core-js/internals/is-symbol.js");
-var getMethod = __webpack_require__(/*! ../internals/get-method */ "../node_modules/core-js/internals/get-method.js");
-var ordinaryToPrimitive = __webpack_require__(/*! ../internals/ordinary-to-primitive */ "../node_modules/core-js/internals/ordinary-to-primitive.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-
-var $TypeError = TypeError;
-var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
-
-// `ToPrimitive` abstract operation
-// https://tc39.es/ecma262/#sec-toprimitive
-module.exports = function (input, pref) {
-  if (!isObject(input) || isSymbol(input)) return input;
-  var exoticToPrim = getMethod(input, TO_PRIMITIVE);
-  var result;
-  if (exoticToPrim) {
-    if (pref === undefined) pref = 'default';
-    result = call(exoticToPrim, input, pref);
-    if (!isObject(result) || isSymbol(result)) return result;
-    throw new $TypeError("Can't convert object to primitive value");
-  }
-  if (pref === undefined) pref = 'number';
-  return ordinaryToPrimitive(input, pref);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-property-key.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/internals/to-property-key.js ***!
-  \************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var toPrimitive = __webpack_require__(/*! ../internals/to-primitive */ "../node_modules/core-js/internals/to-primitive.js");
-var isSymbol = __webpack_require__(/*! ../internals/is-symbol */ "../node_modules/core-js/internals/is-symbol.js");
-
-// `ToPropertyKey` abstract operation
-// https://tc39.es/ecma262/#sec-topropertykey
-module.exports = function (argument) {
-  var key = toPrimitive(argument, 'string');
-  return isSymbol(key) ? key : key + '';
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-string-tag-support.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/internals/to-string-tag-support.js ***!
-  \******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-var test = {};
-// eslint-disable-next-line unicorn/no-immediate-mutation -- ES3 syntax limitation
-test[TO_STRING_TAG] = 'z';
-
-module.exports = String(test) === '[object z]';
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/to-string.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/to-string.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var classof = __webpack_require__(/*! ../internals/classof */ "../node_modules/core-js/internals/classof.js");
-
-var $String = String;
-
-module.exports = function (argument) {
-  if (classof(argument) === 'Symbol') throw new TypeError('Cannot convert a Symbol value to a string');
-  return $String(argument);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/try-to-string.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/internals/try-to-string.js ***!
-  \**********************************************************/
-(module) {
-
-"use strict";
-
-var $String = String;
-
-module.exports = function (argument) {
-  try {
-    return $String(argument);
-  } catch (error) {
-    return 'Object';
-  }
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/uid.js"
-/*!************************************************!*\
-  !*** ../node_modules/core-js/internals/uid.js ***!
-  \************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-
-var id = 0;
-var postfix = Math.random();
-var toString = uncurryThis(1.1.toString);
-
-module.exports = function (key) {
-  return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/use-symbol-as-uid.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/internals/use-symbol-as-uid.js ***!
-  \**************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-/* eslint-disable es/no-symbol -- required for testing */
-var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/symbol-constructor-detection */ "../node_modules/core-js/internals/symbol-constructor-detection.js");
-
-module.exports = NATIVE_SYMBOL &&
-  !Symbol.sham &&
-  typeof Symbol.iterator == 'symbol';
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/v8-prototype-define-bug.js"
-/*!********************************************************************!*\
-  !*** ../node_modules/core-js/internals/v8-prototype-define-bug.js ***!
-  \********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-// V8 ~ Chrome 36-
-// https://bugs.chromium.org/p/v8/issues/detail?id=3334
-module.exports = DESCRIPTORS && fails(function () {
-  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
-  return Object.defineProperty(function () { /* empty */ }, 'prototype', {
-    value: 42,
-    writable: false
-  }).prototype !== 42;
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/weak-map-basic-detection.js"
-/*!*********************************************************************!*\
-  !*** ../node_modules/core-js/internals/weak-map-basic-detection.js ***!
-  \*********************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-
-var WeakMap = globalThis.WeakMap;
-
-module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/well-known-symbol.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/internals/well-known-symbol.js ***!
-  \**************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var shared = __webpack_require__(/*! ../internals/shared */ "../node_modules/core-js/internals/shared.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var uid = __webpack_require__(/*! ../internals/uid */ "../node_modules/core-js/internals/uid.js");
-var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/symbol-constructor-detection */ "../node_modules/core-js/internals/symbol-constructor-detection.js");
-var USE_SYMBOL_AS_UID = __webpack_require__(/*! ../internals/use-symbol-as-uid */ "../node_modules/core-js/internals/use-symbol-as-uid.js");
-
-var Symbol = globalThis.Symbol;
-var WellKnownSymbolsStore = shared('wks');
-var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol['for'] || Symbol : Symbol && Symbol.withoutSetter || uid;
-
-module.exports = function (name) {
-  if (!hasOwn(WellKnownSymbolsStore, name)) {
-    WellKnownSymbolsStore[name] = NATIVE_SYMBOL && hasOwn(Symbol, name)
-      ? Symbol[name]
-      : createWellKnownSymbol('Symbol.' + name);
-  } return WellKnownSymbolsStore[name];
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.array.includes.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.array.includes.js ***!
-  \************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var $includes = (__webpack_require__(/*! ../internals/array-includes */ "../node_modules/core-js/internals/array-includes.js").includes);
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var addToUnscopables = __webpack_require__(/*! ../internals/add-to-unscopables */ "../node_modules/core-js/internals/add-to-unscopables.js");
-
-// FF99+ bug
-var BROKEN_ON_SPARSE = fails(function () {
-  // eslint-disable-next-line es/no-array-prototype-includes -- detection
-  return !Array(1).includes();
-});
-
-// Safari 26.4- bug
-var BROKEN_ON_SPARSE_WITH_FROM_INDEX = fails(function () {
-  // eslint-disable-next-line no-sparse-arrays, es/no-array-prototype-includes -- detection
-  return [, 1].includes(undefined, 1);
-});
-
-// `Array.prototype.includes` method
-// https://tc39.es/ecma262/#sec-array.prototype.includes
-$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE || BROKEN_ON_SPARSE_WITH_FROM_INDEX }, {
-  includes: function includes(el /* , fromIndex = 0 */) {
-    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
-  }
-});
-
-// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
-addToUnscopables('includes');
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.array.push.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/modules/es.array.push.js ***!
-  \********************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var toObject = __webpack_require__(/*! ../internals/to-object */ "../node_modules/core-js/internals/to-object.js");
-var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "../node_modules/core-js/internals/length-of-array-like.js");
-var setArrayLength = __webpack_require__(/*! ../internals/array-set-length */ "../node_modules/core-js/internals/array-set-length.js");
-var doesNotExceedSafeInteger = __webpack_require__(/*! ../internals/does-not-exceed-safe-integer */ "../node_modules/core-js/internals/does-not-exceed-safe-integer.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-var INCORRECT_TO_LENGTH = fails(function () {
-  return [].push.call({ length: 0x100000000 }, 1) !== 4294967297;
-});
-
-// V8 <= 121 and Safari <= 15.4; FF < 23 throws InternalError
-// https://bugs.chromium.org/p/v8/issues/detail?id=12681
-var properErrorOnNonWritableLength = function () {
-  try {
-    // eslint-disable-next-line es/no-object-defineproperty -- safe
-    Object.defineProperty([], 'length', { writable: false }).push();
-  } catch (error) {
-    return error instanceof TypeError;
-  }
-};
-
-var FORCED = INCORRECT_TO_LENGTH || !properErrorOnNonWritableLength();
-
-// `Array.prototype.push` method
-// https://tc39.es/ecma262/#sec-array.prototype.push
-$({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
-  // eslint-disable-next-line no-unused-vars -- required for `.length`
-  push: function push(item) {
-    var O = toObject(this);
-    var len = lengthOfArrayLike(O);
-    var argCount = arguments.length;
-    doesNotExceedSafeInteger(len + argCount);
-    for (var i = 0; i < argCount; i++) {
-      O[len] = arguments[i];
-      len++;
-    }
-    setArrayLength(O, len);
-    return len;
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.constructor.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.constructor.js ***!
-  \******************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var globalThis = __webpack_require__(/*! ../internals/global-this */ "../node_modules/core-js/internals/global-this.js");
-var anInstance = __webpack_require__(/*! ../internals/an-instance */ "../node_modules/core-js/internals/an-instance.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var getPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "../node_modules/core-js/internals/object-get-prototype-of.js");
-var defineBuiltInAccessor = __webpack_require__(/*! ../internals/define-built-in-accessor */ "../node_modules/core-js/internals/define-built-in-accessor.js");
-var createProperty = __webpack_require__(/*! ../internals/create-property */ "../node_modules/core-js/internals/create-property.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-var IteratorPrototype = (__webpack_require__(/*! ../internals/iterators-core */ "../node_modules/core-js/internals/iterators-core.js").IteratorPrototype);
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "../node_modules/core-js/internals/descriptors.js");
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
-
-var CONSTRUCTOR = 'constructor';
-var ITERATOR = 'Iterator';
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-
-var $TypeError = TypeError;
-var NativeIterator = globalThis[ITERATOR];
-
-// FF56- have non-standard global helper `Iterator`
-var FORCED = IS_PURE
-  || !isCallable(NativeIterator)
-  || NativeIterator.prototype !== IteratorPrototype
-  // FF44- non-standard `Iterator` passes previous tests
-  || !fails(function () { NativeIterator({}); });
-
-var IteratorConstructor = function Iterator() {
-  anInstance(this, IteratorPrototype);
-  if (getPrototypeOf(this) === IteratorPrototype) throw new $TypeError('Abstract class Iterator not directly constructable');
-};
-
-var defineIteratorPrototypeAccessor = function (key, value) {
-  if (DESCRIPTORS) {
-    defineBuiltInAccessor(IteratorPrototype, key, {
-      configurable: true,
-      get: function () {
-        return value;
-      },
-      set: function (replacement) {
-        anObject(this);
-        if (this === IteratorPrototype) throw new $TypeError("You can't redefine this property");
-        if (hasOwn(this, key)) this[key] = replacement;
-        else createProperty(this, key, replacement);
-      }
-    });
-  } else IteratorPrototype[key] = value;
-};
-
-if (!hasOwn(IteratorPrototype, TO_STRING_TAG)) defineIteratorPrototypeAccessor(TO_STRING_TAG, ITERATOR);
-
-if (FORCED || !hasOwn(IteratorPrototype, CONSTRUCTOR) || IteratorPrototype[CONSTRUCTOR] === Object) {
-  defineIteratorPrototypeAccessor(CONSTRUCTOR, IteratorConstructor);
-}
-
-IteratorConstructor.prototype = IteratorPrototype;
-
-// `Iterator` constructor
-// https://tc39.es/ecma262/#sec-iterator
-$({ global: true, constructor: true, forced: FORCED }, {
-  Iterator: IteratorConstructor
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.filter.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.filter.js ***!
-  \*************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var createIteratorProxy = __webpack_require__(/*! ../internals/iterator-create-proxy */ "../node_modules/core-js/internals/iterator-create-proxy.js");
-var callWithSafeIterationClosing = __webpack_require__(/*! ../internals/call-with-safe-iteration-closing */ "../node_modules/core-js/internals/call-with-safe-iteration-closing.js");
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperThrowsOnInvalidIterator = __webpack_require__(/*! ../internals/iterator-helper-throws-on-invalid-iterator */ "../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-
-var FILTER_WITHOUT_THROWING_ON_INVALID_ITERATOR = !IS_PURE && !iteratorHelperThrowsOnInvalidIterator('filter', function () { /* empty */ });
-var filterWithoutClosingOnEarlyError = !IS_PURE && !FILTER_WITHOUT_THROWING_ON_INVALID_ITERATOR
-  && iteratorHelperWithoutClosingOnEarlyError('filter', TypeError);
-
-var FORCED = IS_PURE || FILTER_WITHOUT_THROWING_ON_INVALID_ITERATOR || filterWithoutClosingOnEarlyError;
-
-var IteratorProxy = createIteratorProxy(function () {
-  var iterator = this.iterator;
-  var predicate = this.predicate;
-  var next = this.next;
-  var result, done, value;
-  while (true) {
-    result = anObject(call(next, iterator));
-    done = this.done = !!result.done;
-    if (done) return;
-    value = result.value;
-    if (callWithSafeIterationClosing(iterator, predicate, [value, this.counter++], true)) return value;
-  }
-});
-
-// `Iterator.prototype.filter` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.filter
-$({ target: 'Iterator', proto: true, real: true, forced: FORCED }, {
-  filter: function filter(predicate) {
-    anObject(this);
-    try {
-      aCallable(predicate);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    if (filterWithoutClosingOnEarlyError) return call(filterWithoutClosingOnEarlyError, this, predicate);
-
-    return new IteratorProxy(getIteratorDirect(this), {
-      predicate: predicate
-    });
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.find.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.find.js ***!
-  \***********************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var iterate = __webpack_require__(/*! ../internals/iterate */ "../node_modules/core-js/internals/iterate.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-
-var findWithoutClosingOnEarlyError = iteratorHelperWithoutClosingOnEarlyError('find', TypeError);
-
-// `Iterator.prototype.find` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.find
-$({ target: 'Iterator', proto: true, real: true, forced: findWithoutClosingOnEarlyError }, {
-  find: function find(predicate) {
-    anObject(this);
-    try {
-      aCallable(predicate);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    if (findWithoutClosingOnEarlyError) return call(findWithoutClosingOnEarlyError, this, predicate);
-
-    var record = getIteratorDirect(this);
-    var counter = 0;
-    return iterate(record, function (value, stop) {
-      if (predicate(value, counter++)) return stop(value);
-    }, { IS_RECORD: true, INTERRUPTED: true }).result;
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.for-each.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.for-each.js ***!
-  \***************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var iterate = __webpack_require__(/*! ../internals/iterate */ "../node_modules/core-js/internals/iterate.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-
-var forEachWithoutClosingOnEarlyError = iteratorHelperWithoutClosingOnEarlyError('forEach', TypeError);
-
-// `Iterator.prototype.forEach` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.foreach
-$({ target: 'Iterator', proto: true, real: true, forced: forEachWithoutClosingOnEarlyError }, {
-  forEach: function forEach(fn) {
-    anObject(this);
-    try {
-      aCallable(fn);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    if (forEachWithoutClosingOnEarlyError) return call(forEachWithoutClosingOnEarlyError, this, fn);
-
-    var record = getIteratorDirect(this);
-    var counter = 0;
-    iterate(record, function (value) {
-      fn(value, counter++);
-    }, { IS_RECORD: true });
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.map.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.map.js ***!
-  \**********************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var createIteratorProxy = __webpack_require__(/*! ../internals/iterator-create-proxy */ "../node_modules/core-js/internals/iterator-create-proxy.js");
-var callWithSafeIterationClosing = __webpack_require__(/*! ../internals/call-with-safe-iteration-closing */ "../node_modules/core-js/internals/call-with-safe-iteration-closing.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperThrowsOnInvalidIterator = __webpack_require__(/*! ../internals/iterator-helper-throws-on-invalid-iterator */ "../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
-
-var MAP_WITHOUT_THROWING_ON_INVALID_ITERATOR = !IS_PURE && !iteratorHelperThrowsOnInvalidIterator('map', function () { /* empty */ });
-var mapWithoutClosingOnEarlyError = !IS_PURE && !MAP_WITHOUT_THROWING_ON_INVALID_ITERATOR
-  && iteratorHelperWithoutClosingOnEarlyError('map', TypeError);
-
-var FORCED = IS_PURE || MAP_WITHOUT_THROWING_ON_INVALID_ITERATOR || mapWithoutClosingOnEarlyError;
-
-var IteratorProxy = createIteratorProxy(function () {
-  var iterator = this.iterator;
-  var result = anObject(call(this.next, iterator));
-  var done = this.done = !!result.done;
-  if (!done) return callWithSafeIterationClosing(iterator, this.mapper, [result.value, this.counter++], true);
-});
-
-// `Iterator.prototype.map` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.map
-$({ target: 'Iterator', proto: true, real: true, forced: FORCED }, {
-  map: function map(mapper) {
-    anObject(this);
-    try {
-      aCallable(mapper);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    if (mapWithoutClosingOnEarlyError) return call(mapWithoutClosingOnEarlyError, this, mapper);
-
-    return new IteratorProxy(getIteratorDirect(this), {
-      mapper: mapper
-    });
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.reduce.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.reduce.js ***!
-  \*************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var iterate = __webpack_require__(/*! ../internals/iterate */ "../node_modules/core-js/internals/iterate.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-var apply = __webpack_require__(/*! ../internals/function-apply */ "../node_modules/core-js/internals/function-apply.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-var $TypeError = TypeError;
-
-// https://bugs.webkit.org/show_bug.cgi?id=291651
-var FAILS_ON_INITIAL_UNDEFINED = fails(function () {
-  // eslint-disable-next-line es/no-iterator-prototype-reduce, es/no-array-prototype-keys, array-callback-return -- required for testing
-  [].keys().reduce(function () { /* empty */ }, undefined);
-});
-
-var reduceWithoutClosingOnEarlyError = !FAILS_ON_INITIAL_UNDEFINED && iteratorHelperWithoutClosingOnEarlyError('reduce', $TypeError);
-
-// `Iterator.prototype.reduce` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.reduce
-$({ target: 'Iterator', proto: true, real: true, forced: FAILS_ON_INITIAL_UNDEFINED || reduceWithoutClosingOnEarlyError }, {
-  reduce: function reduce(reducer /* , initialValue */) {
-    anObject(this);
-    try {
-      aCallable(reducer);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    var noInitial = arguments.length < 2;
-    var accumulator = noInitial ? undefined : arguments[1];
-    if (reduceWithoutClosingOnEarlyError) {
-      return apply(reduceWithoutClosingOnEarlyError, this, noInitial ? [reducer] : [reducer, accumulator]);
-    }
-    var record = getIteratorDirect(this);
-    var counter = 0;
-    iterate(record, function (value) {
-      if (noInitial) {
-        noInitial = false;
-        accumulator = value;
-      } else {
-        accumulator = reducer(accumulator, value, counter);
-      }
-      counter++;
-    }, { IS_RECORD: true });
-    if (noInitial) throw new $TypeError('Reduce of empty iterator with no initial value');
-    return accumulator;
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.iterator.some.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.some.js ***!
-  \***********************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var iterate = __webpack_require__(/*! ../internals/iterate */ "../node_modules/core-js/internals/iterate.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-
-var someWithoutClosingOnEarlyError = iteratorHelperWithoutClosingOnEarlyError('some', TypeError);
-
-// `Iterator.prototype.some` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.some
-$({ target: 'Iterator', proto: true, real: true, forced: someWithoutClosingOnEarlyError }, {
-  some: function some(predicate) {
-    anObject(this);
-    try {
-      aCallable(predicate);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    if (someWithoutClosingOnEarlyError) return call(someWithoutClosingOnEarlyError, this, predicate);
-
-    var record = getIteratorDirect(this);
-    var counter = 0;
-    return iterate(record, function (value, stop) {
-      if (predicate(value, counter++)) return stop();
-    }, { IS_RECORD: true, INTERRUPTED: true }).stopped;
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.json.stringify.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.json.stringify.js ***!
-  \************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
-var apply = __webpack_require__(/*! ../internals/function-apply */ "../node_modules/core-js/internals/function-apply.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var isArray = __webpack_require__(/*! ../internals/is-array */ "../node_modules/core-js/internals/is-array.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var isRawJSON = __webpack_require__(/*! ../internals/is-raw-json */ "../node_modules/core-js/internals/is-raw-json.js");
-var isSymbol = __webpack_require__(/*! ../internals/is-symbol */ "../node_modules/core-js/internals/is-symbol.js");
-var classof = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-var toString = __webpack_require__(/*! ../internals/to-string */ "../node_modules/core-js/internals/to-string.js");
-var arraySlice = __webpack_require__(/*! ../internals/array-slice */ "../node_modules/core-js/internals/array-slice.js");
-var parseJSONString = __webpack_require__(/*! ../internals/parse-json-string */ "../node_modules/core-js/internals/parse-json-string.js");
-var uid = __webpack_require__(/*! ../internals/uid */ "../node_modules/core-js/internals/uid.js");
-var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/symbol-constructor-detection */ "../node_modules/core-js/internals/symbol-constructor-detection.js");
-var NATIVE_RAW_JSON = __webpack_require__(/*! ../internals/native-raw-json */ "../node_modules/core-js/internals/native-raw-json.js");
-
-var $String = String;
-var $stringify = getBuiltIn('JSON', 'stringify');
-var exec = uncurryThis(/./.exec);
-var charAt = uncurryThis(''.charAt);
-var charCodeAt = uncurryThis(''.charCodeAt);
-var replace = uncurryThis(''.replace);
-var slice = uncurryThis(''.slice);
-var push = uncurryThis([].push);
-var numberToString = uncurryThis(1.1.toString);
-
-var surrogates = /[\uD800-\uDFFF]/g;
-var leadingSurrogates = /^[\uD800-\uDBFF]$/;
-var trailingSurrogates = /^[\uDC00-\uDFFF]$/;
-
-var MARK = uid();
-var MARK_LENGTH = MARK.length;
-
-var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
-  var symbol = getBuiltIn('Symbol')('stringify detection');
-  // MS Edge converts symbol values to JSON as {}
-  return $stringify([symbol]) !== '[null]'
-    // WebKit converts symbol values to JSON as null
-    || $stringify({ a: symbol }) !== '{}'
-    // V8 throws on boxed symbols
-    || $stringify(Object(symbol)) !== '{}';
-});
-
-// https://github.com/tc39/proposal-well-formed-stringify
-var ILL_FORMED_UNICODE = fails(function () {
-  return $stringify('\uDF06\uD834') !== '"\\udf06\\ud834"'
-    || $stringify('\uDEAD') !== '"\\udead"';
-});
-
-var stringifyWithProperSymbolsConversion = WRONG_SYMBOLS_CONVERSION ? function (it, replacer) {
-  var args = arraySlice(arguments);
-  var $replacer = getReplacerFunction(replacer);
-  if (!isCallable($replacer) && (it === undefined || isSymbol(it))) return; // IE8 returns string on undefined
-  args[1] = function (key, value) {
-    // some old implementations (like WebKit) could pass numbers as keys
-    if (isCallable($replacer)) value = call($replacer, this, $String(key), value);
-    if (!isSymbol(value)) return value;
-  };
-  return apply($stringify, null, args);
-} : $stringify;
-
-var fixIllFormedJSON = function (match, offset, string) {
-  var prev = charAt(string, offset - 1);
-  var next = charAt(string, offset + 1);
-  if (
-    (exec(leadingSurrogates, match) && !exec(trailingSurrogates, next)) ||
-    (exec(trailingSurrogates, match) && !exec(leadingSurrogates, prev))
-  ) {
-    return '\\u' + numberToString(charCodeAt(match, 0), 16);
-  } return match;
-};
-
-var getReplacerFunction = function (replacer) {
-  if (isCallable(replacer)) return replacer;
-  if (!isArray(replacer)) return;
-  var rawLength = replacer.length;
-  var keys = [];
-  for (var i = 0; i < rawLength; i++) {
-    var element = replacer[i];
-    if (typeof element == 'string') push(keys, element);
-    else if (typeof element == 'number' || classof(element) === 'Number' || classof(element) === 'String') push(keys, toString(element));
-  }
-  var keysLength = keys.length;
-  var root = true;
-  return function (key, value) {
-    if (root) {
-      root = false;
-      return value;
-    }
-    if (isArray(this)) return value;
-    for (var j = 0; j < keysLength; j++) if (keys[j] === key) return value;
-  };
-};
-
-// `JSON.stringify` method
-// https://tc39.es/ecma262/#sec-json.stringify
-// https://github.com/tc39/proposal-json-parse-with-source
-if ($stringify) $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE || !NATIVE_RAW_JSON }, {
-  stringify: function stringify(text, replacer, space) {
-    var replacerFunction = getReplacerFunction(replacer);
-    var rawStrings = [];
-
-    var json = stringifyWithProperSymbolsConversion(text, function (key, value) {
-      // some old implementations (like WebKit) could pass numbers as keys
-      var v = isCallable(replacerFunction) ? call(replacerFunction, this, $String(key), value) : value;
-      return !NATIVE_RAW_JSON && isRawJSON(v) ? MARK + (push(rawStrings, v.rawJSON) - 1) : v;
-    }, space);
-
-    if (typeof json != 'string') return json;
-
-    if (ILL_FORMED_UNICODE) json = replace(json, surrogates, fixIllFormedJSON);
-
-    if (NATIVE_RAW_JSON) return json;
-
-    var result = '';
-    var length = json.length;
-
-    for (var i = 0; i < length; i++) {
-      var chr = charAt(json, i);
-      if (chr === '"') {
-        var end = parseJSONString(json, ++i).end - 1;
-        var string = slice(json, i, end);
-        result += slice(string, 0, MARK_LENGTH) === MARK
-          ? rawStrings[slice(string, MARK_LENGTH)]
-          : '"' + string + '"';
-        i = end;
-      } else result += chr;
-    }
-
-    return result;
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.constructor.js"
-/*!**********************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.constructor.js ***!
-  \**********************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.constructor */ "../node_modules/core-js/modules/es.iterator.constructor.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.filter.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.filter.js ***!
-  \*****************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.filter */ "../node_modules/core-js/modules/es.iterator.filter.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.find.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.find.js ***!
-  \***************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.find */ "../node_modules/core-js/modules/es.iterator.find.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.for-each.js"
-/*!*******************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.for-each.js ***!
-  \*******************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.for-each */ "../node_modules/core-js/modules/es.iterator.for-each.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.map.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.map.js ***!
-  \**************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.map */ "../node_modules/core-js/modules/es.iterator.map.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.reduce.js"
-/*!*****************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.reduce.js ***!
-  \*****************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.reduce */ "../node_modules/core-js/modules/es.iterator.reduce.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.some.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.some.js ***!
-  \***************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.some */ "../node_modules/core-js/modules/es.iterator.some.js");
-
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		if (!(moduleId in __webpack_modules__)) {
-/******/ 			delete __webpack_module_cache__[moduleId];
-/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
-/******/ 			e.code = 'MODULE_NOT_FOUND';
-/******/ 			throw e;
-/******/ 		}
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
-(() => {
-"use strict";
-/*!***************************************************************!*\
-  !*** ../modules/display-conditions/assets/js/editor/index.js ***!
-  \***************************************************************/
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-var _module = _interopRequireDefault(__webpack_require__(/*! ./module.js */ "../modules/display-conditions/assets/js/editor/module.js"));
-var _modal = __webpack_require__(/*! ./modal.js */ "../modules/display-conditions/assets/js/editor/modal.js");
-new _module.default();
-(0, _modal.setupModal)();
-})();
-
-/******/ })()
-;
 //# sourceMappingURL=display-conditions.js.map

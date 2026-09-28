@@ -234,4 +234,22 @@ class Post_Excerpt extends Base_Widget {
 	protected function render() {
 		$this->print_unescaped_setting( 'excerpt' );
 	}
+
+	public function render_markdown(): string {
+		$post_id = get_the_ID();
+
+		if ( ! $post_id ) {
+			return '';
+		}
+
+		$document = Plugin::elementor()->documents->get( $post_id );
+
+		if ( $document && $document->is_built_with_elementor() ) {
+			return '';
+		}
+
+		$excerpt = trim( wp_strip_all_tags( (string) get_the_excerpt() ) );
+
+		return $excerpt;
+	}
 }

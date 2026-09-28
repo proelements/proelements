@@ -13,6 +13,7 @@ use Elementor\Group_Control_Text_Stroke;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1709,6 +1710,41 @@ class Flip_Box extends Base_Widget {
 		</<?php Utils::print_validated_html_tag( $wrapper_tag ); ?>>
 		</div>
 		<?php
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+
+		$title_a = Utils::html_to_plain_text( $settings['title_text_a'] ?? '' );
+		$description_a = Utils::html_to_plain_text( $settings['description_text_a'] ?? '' );
+		$title_b = Utils::html_to_plain_text( $settings['title_text_b'] ?? '' );
+		$description_b = Utils::html_to_plain_text( $settings['description_text_b'] ?? '' );
+		$button = Utils::html_to_plain_text( $settings['button_text'] ?? '' );
+		$url = $settings['link']['url'] ?? '';
+
+		$lines = [];
+
+		if ( '' !== $title_a ) {
+			$lines[] = '### ' . $title_a;
+		}
+		if ( '' !== $description_a ) {
+			$lines[] = $description_a;
+		}
+		if ( '' !== $title_b ) {
+			$lines[] = '#### ' . $title_b;
+		}
+		if ( '' !== $description_b ) {
+			$lines[] = $description_b;
+		}
+		if ( '' !== $button ) {
+			$lines[] = Markdown_Utils::button( $button, $url );
+		}
+
+		if ( empty( $lines ) ) {
+			return '';
+		}
+
+		return implode( "\n\n", $lines );
 	}
 
 	/**

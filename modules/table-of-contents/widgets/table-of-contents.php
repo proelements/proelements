@@ -10,6 +10,8 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Heading_Collector;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -960,5 +962,34 @@ class Table_Of_Contents extends Base_Widget {
 			</div>
 		</div>
 		<?php
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$blocks = [];
+		$title = Utils::html_to_plain_text( $settings['title'] ?? '' );
+
+		if ( '' !== trim( $title ) ) {
+			$blocks[] = Markdown_Utils::heading( $title, $settings['html_tag'] ?? 'h2' );
+		}
+
+		$tags = $settings['headings_by_tags'] ?? [];
+
+		if ( ! empty( $tags ) ) {
+			$post_id = get_the_ID();
+			$headings = $post_id
+				? Markdown_Heading_Collector::collect_from_document( $post_id, $tags, $this->get_id() )
+				: [];
+
+			if ( ! empty( $headings ) ) {
+				$ordered = 'numbers' === ( $settings['marker_view'] ?? '' );
+				$blocks[] = Markdown_Utils::nested_heading_list( $headings, $ordered );
+			} else {
+				$tag_list = implode( ', ', array_map( 'strtoupper', $tags ) );
+				$blocks[] = 'Indexes page headings: ' . $tag_list;
+			}
+		}
+
+		return Markdown_Utils::join_blocks( $blocks );
 	}
 }

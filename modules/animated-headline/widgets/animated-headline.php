@@ -10,6 +10,7 @@ use Elementor\Group_Control_Text_Shadow;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -620,6 +621,55 @@ class Animated_Headline extends Base_Widget {
 		if ( ! empty( $settings['link']['url'] ) ) {
 			echo '</a>';
 		}
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$text_parts = [];
+
+		$before = Utils::html_to_plain_text( $settings['before_text'] ?? '' );
+
+		if ( '' !== $before ) {
+			$text_parts[] = $before;
+		}
+
+		if ( 'rotate' === ( $settings['headline_style'] ?? 'highlight' ) ) {
+			$rotating_raw = (string) ( $settings['rotating_text'] ?? '' );
+
+			$rotating_words = preg_split( "/\r\n|\n|\r/", $rotating_raw );
+
+			if ( ! is_array( $rotating_words ) ) {
+				$rotating_words = [];
+			}
+
+			foreach ( $rotating_words as $word ) {
+				$word = Utils::html_to_plain_text( $word );
+
+				if ( '' !== $word ) {
+					$text_parts[] = $word;
+				}
+			}
+		} else {
+			$highlighted = Utils::html_to_plain_text( $settings['highlighted_text'] ?? '' );
+
+			if ( '' !== $highlighted ) {
+				$text_parts[] = $highlighted;
+			}
+		}
+
+		$after = Utils::html_to_plain_text( $settings['after_text'] ?? '' );
+
+		if ( '' !== $after ) {
+			$text_parts[] = $after;
+		}
+
+		$text = trim( implode( ' ', $text_parts ) );
+
+		if ( '' === $text ) {
+			return '';
+		}
+
+		return Markdown_Utils::heading( $text, $settings['tag'] ?? 'h2' );
 	}
 
 	/**
