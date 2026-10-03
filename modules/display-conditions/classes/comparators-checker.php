@@ -73,17 +73,40 @@ class Comparators_Checker {
 		}
 	}
 
-	public static function check_string_contains_and_empty( string $comparator, string $expected_value, string $actual_value ): bool {
+	public static function check_string_contains_and_empty( string $comparator, string $expected_value, $actual_value ): bool {
+
+		// Handle non-scalar dynamic values (ACF gallery, repeater, etc.)
+		if ( is_array( $actual_value ) ) {
+
+			if ( $comparator === Comparator_Provider::COMPARATOR_IS_EMPTY ) {
+				return empty( $actual_value );
+			}
+
+			if ( $comparator === Comparator_Provider::COMPARATOR_IS_NOT_EMPTY ) {
+				return ! empty( $actual_value );
+			}
+
+			// normalize array to string for other string comparators
+			$actual_value = implode( ',', array_map(
+				static function ( $item ) {
+					return is_scalar( $item ) ? (string) $item : wp_json_encode( $item );
+				},
+				$actual_value
+			) );
+		}
+
+		$actual_value = (string) $actual_value;
+
 		if ( self::check_string_contains( $comparator, $expected_value, $actual_value ) ) {
 			return true;
 		}
 
 		switch ( $comparator ) {
 			case Comparator_Provider::COMPARATOR_IS_EMPTY:
-				return empty( $actual_value );
+				return $actual_value === '';
 
 			case Comparator_Provider::COMPARATOR_IS_NOT_EMPTY:
-				return ! empty( $actual_value );
+				return $actual_value !== '';
 
 			default:
 				return false;
