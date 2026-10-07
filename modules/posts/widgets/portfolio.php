@@ -630,7 +630,7 @@ class Portfolio extends Base_Widget {
 		$tag = $this->get_settings( 'title_tag' );
 		?>
 		<<?php Utils::print_validated_html_tag( $tag ); ?> class="elementor-portfolio-item__title">
-		<?php the_title(); ?>
+		<?php echo esc_html( get_the_title() ); ?>
 		</<?php Utils::print_validated_html_tag( $tag ); ?>>
 		<?php
 	}
@@ -674,7 +674,7 @@ class Portfolio extends Base_Widget {
 		// PHPCS - `get_permalink` is safe.
 		?>
 		<article <?php post_class( $classes ); ?> role="listitem">
-			<a class="elementor-post__thumbnail__link" href="<?php echo get_permalink(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+			<a class="elementor-post__thumbnail__link" href="<?php echo esc_url( get_permalink() ); ?>">
 		<?php
 	}
 
