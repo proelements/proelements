@@ -9,6 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Verify plugin version matches tag
+      shell: bash
+      run: |
+        TAG="${GITHUB_REF_NAME#v}"
+        HEADER_VERSION="$(grep -m1 -oP '^\s*\*\s*Version:\s*\K[0-9][0-9a-zA-Z.\-]*' pro-elements.php)"
+        CONSTANT_VERSION="$(grep -m1 -oP "define\(\s*'ELEMENTOR_PRO_VERSION',\s*'\K[^']+" pro-elements.php)"
+        echo "Tag: ${TAG} | Version header: ${HEADER_VERSION} | ELEMENTOR_PRO_VERSION: ${CONSTANT_VERSION}"
+        if [ "${HEADER_VERSION}" != "${TAG}" ] || [ "${CONSTANT_VERSION}" != "${TAG}" ]; then
+          echo "::error file=pro-elements.php::Tag ${TAG} does not match pro-elements.php (Version header: ${HEADER_VERSION}, ELEMENTOR_PRO_VERSION: ${CONSTANT_VERSION}). Publishing a mismatched zip leaves users with a permanent update nag."
+          exit 1
+        fi
     - name: Build
       shell: bash
       run: git archive --format=zip --prefix="pro-elements/" HEAD > pro-elements.zip
