@@ -217,7 +217,7 @@ class Skin_Loop_Base extends Skin_Base {
 		}
 
 		$this->print_dynamic_css( $post_id, $template_id );
-		$document->print_content();
+		echo $document->get_content();
 	}
 
 	protected function render_loop_header() {

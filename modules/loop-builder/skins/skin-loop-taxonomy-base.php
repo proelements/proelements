@@ -95,7 +95,7 @@ abstract class Skin_Loop_Taxonomy_Base extends Skin_Loop_Base {
 		}
 
 		$this->print_dynamic_css( $this->get_data_id_from_taxonomy_loop_query(), $template_id );
-		$document->print_content();
+		echo $document->get_content();
 	}
 
 	protected function render_loop_end() {
