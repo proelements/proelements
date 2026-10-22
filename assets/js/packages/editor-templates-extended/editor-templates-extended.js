@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 22-09-2026 */
+/*! pro-elements - v4.3.0 - 13-10-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_editor, _elementor_editor_embedded_documents_manager, _elementor_editor_styles_repository, _elementor_editor_v1_adapters, _elementor_store, _elementor_utils, _elementor_editor_documents, _elementor_editor_global_classes, _elementor_core_adapter_utils, react) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });

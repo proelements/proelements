@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 22-09-2026 */
+/*! pro-elements - v4.3.0 - 13-10-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(_elementor_editor_canvas, _elementor_editor_controls_extended, _elementor_editor_editing_panel, _elementor_editor_props, _elementor_license_api, react, _wordpress_i18n, _elementor_editor_controls, _elementor_ui) {
 	//#region \0rolldown/runtime.js
@@ -101,27 +101,18 @@ this.elementorV2 = this.elementorV2 || {};
 		const metaKey = `${meta.breakpoint || "desktop"}-${meta.state || "default"}-${id}`;
 		const [localStates, setLocalStates] = (0, react.useState)({});
 		(0, react.useEffect)(() => {
-			if (!localStates[metaKey]) setLocalStates((prev) => _objectSpread2(_objectSpread2({}, prev), {}, { [metaKey]: {
-				value: (customCss === null || customCss === void 0 ? void 0 : customCss.raw) || "",
-				isValid: true
-			} }));
+			if (!localStates[metaKey]) setLocalStates((prev) => _objectSpread2(_objectSpread2({}, prev), {}, { [metaKey]: { value: (customCss === null || customCss === void 0 ? void 0 : customCss.raw) || "" } }));
 		}, [metaKey]);
 		const currentLocalState = (0, react.useMemo)(() => {
-			return localStates[metaKey] || {
-				value: (customCss === null || customCss === void 0 ? void 0 : customCss.raw) || "",
-				isValid: true
-			};
+			return localStates[metaKey] || { value: (customCss === null || customCss === void 0 ? void 0 : customCss.raw) || "" };
 		}, [
 			localStates,
 			metaKey,
 			customCss === null || customCss === void 0 ? void 0 : customCss.raw
 		]);
-		const handleChange = (value, isValid) => {
-			setLocalStates((prev) => _objectSpread2(_objectSpread2({}, prev), {}, { [metaKey]: {
-				value,
-				isValid
-			} }));
-			if (isValid) setCustomCss(value, { history: { propDisplayName: "Custom CSS" } });
+		const handleChange = (value) => {
+			setLocalStates((prev) => _objectSpread2(_objectSpread2({}, prev), {}, { [metaKey]: { value } }));
+			setCustomCss(value, { history: { propDisplayName: "Custom CSS" } });
 		};
 		const syntaxRuleOptions = (0, react.useMemo)(() => {
 			if (!meta.breakpoint || meta.breakpoint === "desktop") return { rules: { mediaQuery: false } };
@@ -131,6 +122,7 @@ this.elementorV2 = this.elementorV2 || {};
 			alignItems: "center",
 			gap: 1
 		}, /* @__PURE__ */ react.createElement(_elementor_editor_controls.ControlFormLabel, null, (0, _wordpress_i18n.__)("CSS code", "elementor-pro")), /* @__PURE__ */ react.createElement(_elementor_editor_controls.ControlAdornments, null))), /* @__PURE__ */ react.createElement(_elementor_editor_controls_extended.CssEditor, {
+			syncKey: metaKey,
 			value: currentLocalState.value,
 			onChange: handleChange,
 			syntaxRuleOptions,

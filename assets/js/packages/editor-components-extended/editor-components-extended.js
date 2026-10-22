@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 22-09-2026 */
+/*! pro-elements - v4.3.0 - 13-10-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_license_api, _elementor_editor, _elementor_editor_components, _elementor_editor_controls, _elementor_editor_documents, _elementor_editor_editing_panel, _elementor_editor_elements_panel, _elementor_editor_mcp, _elementor_editor_panels, _elementor_editor_v1_adapters, _wordpress_i18n, react, _elementor_editor_current_user, _elementor_editor_ui, _elementor_icons, _elementor_store, _elementor_ui, _elementor_utils, _elementor_editor_elements, _elementor_core_adapter_utils, _elementor_editor_canvas, _elementor_editor_notifications, _elementor_schema, _elementor_events, react_dom, _elementor_editor_templates_extended, _elementor_http_client, _elementor_editor_canvas_extended) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });

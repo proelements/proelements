@@ -52,7 +52,7 @@ class Query_Filters {
 			return $args;
 		}
 
-		$grouped = self::group_term_taxonomy_ids_by_taxonomy( $ids );
+		$grouped = self::group_term_ids_by_taxonomy( $ids );
 
 		if ( empty( $grouped ) ) {
 			return $args;
@@ -62,7 +62,7 @@ class Query_Filters {
 		foreach ( $grouped as $taxonomy => $term_ids ) {
 			$item = [
 				'taxonomy' => $taxonomy,
-				'field'    => 'term_taxonomy_id',
+				'field'    => 'term_id',
 				'terms'    => $term_ids,
 			];
 
@@ -115,12 +115,12 @@ class Query_Filters {
 		return $args;
 	}
 
-	private static function group_term_taxonomy_ids_by_taxonomy( array $ids ): array {
+	private static function group_term_ids_by_taxonomy( array $ids ): array {
 		$ids = array_values( array_unique( array_map( 'intval', $ids ) ) );
 
 		$terms = get_terms( [
-			'term_taxonomy_id' => $ids,
-			'hide_empty'       => false,
+			'include'    => $ids,
+			'hide_empty' => false,
 		] );
 
 		if ( is_wp_error( $terms ) ) {
@@ -130,7 +130,7 @@ class Query_Filters {
 		$grouped = [];
 
 		foreach ( $terms as $term ) {
-			$grouped[ $term->taxonomy ][] = (int) $term->term_taxonomy_id;
+			$grouped[ $term->taxonomy ][] = (int) $term->term_id;
 		}
 
 		return $grouped;

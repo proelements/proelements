@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 22-09-2026 */
+/*! pro-elements - v4.3.0 - 13-10-2026 */
 (function(react, _wordpress_i18n, _elementor_app_ui, _elementor_site_editor, react_dom, _elementor_hooks, _elementor_router, _elementor_ui, _elementor_icons) {
 	var __vite_style__ = document.createElement("style");
 	__vite_style__.textContent = "/*$vite$:1*/";

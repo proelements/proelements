@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 22-09-2026 */
+/*! pro-elements - v4.3.0 - 13-10-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_license_api, _elementor_editor_controls, react, _wordpress_i18n, _elementor_icons, _elementor_ui, _elementor_editor_props, _elementor_schema, _elementor_editor_ui) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
@@ -1038,6 +1038,98 @@ this.elementorV2 = this.elementorV2 || {};
 	}
 	var de = (0, react$1.memo)(Ve);
 	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/css-editor-options.ts
+	var CSS_EDITOR_QUICK_SUGGESTIONS = {
+		other: true,
+		comments: false,
+		strings: true
+	};
+	function getCssEditorAutocompleteOptions() {
+		return {
+			acceptSuggestionOnCommitCharacter: false,
+			acceptSuggestionOnEnter: "off",
+			inlineSuggest: { enabled: false },
+			quickSuggestions: CSS_EDITOR_QUICK_SUGGESTIONS,
+			suggestOnTriggerCharacters: true,
+			tabCompletion: "off",
+			wordBasedSuggestions: "off"
+		};
+	}
+	function getCssEditorMonacoOptions(readOnly) {
+		return _objectSpread2(_objectSpread2({}, getCssEditorAutocompleteOptions()), {}, {
+			lineNumbers: "on",
+			lineNumbersMinChars: 3,
+			folding: true,
+			minimap: { enabled: false },
+			fontFamily: "Roboto, Arial, Helvetica, Verdana, sans-serif",
+			fontSize: 12,
+			renderLineHighlight: "none",
+			hideCursorInOverviewRuler: true,
+			overviewRulerBorder: false,
+			fixedOverflowWidgets: true,
+			suggestFontSize: 10,
+			suggestLineHeight: 14,
+			stickyScroll: { enabled: false },
+			lineDecorationsWidth: 2,
+			wordWrap: "on",
+			scrollBeyondLastLine: false,
+			readOnly,
+			editContext: false
+		});
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/css-validation.ts
+	var syntaxRules = {
+		pseudoState: {
+			pattern: "^\\s*[&]{0,1}\\s*(?::hover|:active|:focus)",
+			regex: true,
+			message: (0, _wordpress_i18n.__)("Consider switching to the desired pseudo state in the panel instead of using pseudo-classes here.", "elementor-pro")
+		},
+		mediaQuery: {
+			pattern: "@media\\s+[^{]*\\b(?:min-width|max-width|width)\\b",
+			regex: true,
+			message: (0, _wordpress_i18n.__)("Consider switching to the desired breakpoint in the panel instead of using @media width queries here.", "elementor-pro")
+		}
+	};
+	function setCustomSyntaxRules(editor, monaco, options) {
+		const model = editor.getModel();
+		if (!model) return;
+		const customMarkers = [];
+		Object.entries(syntaxRules).forEach(([id, rule]) => {
+			var _options$rules;
+			var _rule$regex;
+			if ((options === null || options === void 0 || (_options$rules = options.rules) === null || _options$rules === void 0 ? void 0 : _options$rules[id]) === false) return;
+			model.findMatches(rule.pattern, true, (_rule$regex = rule.regex) !== null && _rule$regex !== void 0 ? _rule$regex : false, true, null, true).forEach((match) => {
+				customMarkers.push({
+					severity: monaco.MarkerSeverity.Warning,
+					message: rule.message,
+					startLineNumber: match.range.startLineNumber,
+					startColumn: match.range.startColumn,
+					endLineNumber: match.range.endLineNumber,
+					endColumn: match.range.endColumn,
+					source: "custom-css-rules"
+				});
+			});
+		});
+		monaco.editor.setModelMarkers(model, "custom-css-rules", customMarkers);
+	}
+	function clearMarkersFromVisualContent(editor, monaco) {
+		const model = editor.getModel();
+		if (!model) return;
+		const allMarkers = monaco.editor.getModelMarkers({ resource: model.uri });
+		const nonCustomMarkers = allMarkers.filter((marker) => marker.startLineNumber !== 1).filter((m) => m.source !== "custom-css-rules");
+		if (nonCustomMarkers.length === allMarkers.length) return;
+		monaco.editor.setModelMarkers(model, "css", nonCustomMarkers);
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/configure-css-editor.ts
+	function configureCssEditorAutocomplete(editor) {
+		editor.updateOptions(getCssEditorAutocompleteOptions());
+	}
+	function applyCustomSyntaxRules(editor, monaco, syntaxRuleOptions) {
+		setCustomSyntaxRules(editor, monaco, syntaxRuleOptions);
+	}
+	//#endregion
 	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/css-editor.styles.ts
 	var EditorWrapper = (0, _elementor_ui.styled)(_elementor_ui.Box)`
 	/* @noflip */
@@ -1108,93 +1200,6 @@ this.elementorV2 = this.elementorV2 || {};
 	}
 `;
 	//#endregion
-	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/css-validation.ts
-	var syntaxRules = {
-		pseudoState: {
-			pattern: "^\\s*[&]{0,1}\\s*(?::hover|:active|:focus)",
-			regex: true,
-			message: (0, _wordpress_i18n.__)("The use of pseudo-states is not permitted. Instead, switch to the desired pseudo state and add your custom code there.", "elementor-pro")
-		},
-		mediaQuery: {
-			pattern: "@media\\s+[^{]*\\b(?:min-width|max-width|width)\\b",
-			regex: true,
-			message: (0, _wordpress_i18n.__)("The use of @media width queries is not permitted. Instead, switch to the desired breakpoint and add your custom code there.", "elementor-pro")
-		}
-	};
-	function setCustomSyntaxRules(editor, monaco, options) {
-		const model = editor.getModel();
-		if (!model) return true;
-		const customMarkers = [];
-		Object.entries(syntaxRules).forEach(([id, rule]) => {
-			var _options$rules;
-			var _rule$regex;
-			if ((options === null || options === void 0 || (_options$rules = options.rules) === null || _options$rules === void 0 ? void 0 : _options$rules[id]) === false) return;
-			model.findMatches(rule.pattern, true, (_rule$regex = rule.regex) !== null && _rule$regex !== void 0 ? _rule$regex : false, true, null, true).forEach((match) => {
-				customMarkers.push({
-					severity: monaco.MarkerSeverity.Error,
-					message: rule.message,
-					startLineNumber: match.range.startLineNumber,
-					startColumn: match.range.startColumn,
-					endLineNumber: match.range.endLineNumber,
-					endColumn: match.range.endColumn,
-					source: "custom-css-rules"
-				});
-			});
-		});
-		monaco.editor.setModelMarkers(model, "custom-css-rules", customMarkers);
-		return customMarkers.length === 0;
-	}
-	function validate(editor, monaco) {
-		const model = editor.getModel();
-		if (!model) return true;
-		return monaco.editor.getModelMarkers({ resource: model.uri }).filter((marker) => marker.severity === monaco.MarkerSeverity.Error).length === 0;
-	}
-	function clearMarkersFromVisualContent(editor, monaco) {
-		const model = editor.getModel();
-		if (!model) return;
-		const allMarkers = monaco.editor.getModelMarkers({ resource: model.uri });
-		const nonCustomMarkers = allMarkers.filter((marker) => marker.startLineNumber !== 1).filter((m) => m.source !== "custom-css-rules");
-		if (nonCustomMarkers.length === allMarkers.length) return;
-		monaco.editor.setModelMarkers(model, "css", nonCustomMarkers);
-	}
-	//#endregion
-	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/resize-handle.tsx
-	var ResizeHandleComponent = ({ onResize, containerRef, onHeightChange }) => {
-		const handleResizeMove = react.useCallback((e) => {
-			const container = containerRef.current;
-			if (!container) return;
-			const containerRect = container.getBoundingClientRect();
-			const newHeight = Math.max(100, e.clientY - containerRect.top);
-			onHeightChange === null || onHeightChange === void 0 || onHeightChange(newHeight);
-			onResize(newHeight);
-		}, [
-			containerRef,
-			onResize,
-			onHeightChange
-		]);
-		const handleResizeEnd = react.useCallback(() => {
-			document.removeEventListener("mousemove", handleResizeMove);
-			document.removeEventListener("mouseup", handleResizeEnd);
-		}, [handleResizeMove]);
-		const handleResizeStart = react.useCallback((e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			document.addEventListener("mousemove", handleResizeMove);
-			document.addEventListener("mouseup", handleResizeEnd);
-		}, [handleResizeMove, handleResizeEnd]);
-		react.useEffect(() => {
-			return () => {
-				document.removeEventListener("mousemove", handleResizeMove);
-				document.removeEventListener("mouseup", handleResizeEnd);
-			};
-		}, [handleResizeMove, handleResizeEnd]);
-		return /* @__PURE__ */ react.createElement(ResizeHandle, {
-			onMouseDown: handleResizeStart,
-			"aria-label": "Resize editor height",
-			title: "Drag to resize editor height"
-		});
-	};
-	//#endregion
 	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/visual-content-change-protection.ts
 	var preventChangeOnVisualContent = (editor) => {
 		const model = editor.getModel();
@@ -1204,7 +1209,37 @@ this.elementorV2 = this.elementorV2 || {};
 			applyVisualContentStyling(editor, model);
 		});
 		disableCursorOnVisualContent(editor);
+		moveCursorToEditableContentOnFocus(editor);
 		overridePushEditOperations(model);
+	};
+	var moveCursorToEditableContent = (editor) => {
+		const model = editor.getModel();
+		if (!model) return;
+		const position = editor.getPosition();
+		const totalLines = model.getLineCount();
+		if (!position) {
+			editor.setPosition({
+				lineNumber: 2,
+				column: 1
+			});
+			return;
+		}
+		if (position.lineNumber === 1) {
+			editor.setPosition({
+				lineNumber: 2,
+				column: 1
+			});
+			return;
+		}
+		if (position.lineNumber === totalLines) editor.setPosition({
+			lineNumber: totalLines - 1,
+			column: model.getLineContent(totalLines - 1).length + 1
+		});
+	};
+	var moveCursorToEditableContentOnFocus = (editor) => {
+		editor.onDidFocusEditorWidget(() => {
+			moveCursorToEditableContent(editor);
+		});
 	};
 	var applyVisualContentStyling = (editor, model) => {
 		const decorationsCollection = editor.createDecorationsCollection();
@@ -1257,7 +1292,10 @@ this.elementorV2 = this.elementorV2 || {};
 		model.pushEditOperations = (beforeCursorState, editOperations, cursorStateComputer) => {
 			const totalLines = model.getLineCount();
 			const modelRange = model.getFullModelRange();
-			const filteredOperations = editOperations.filter((operation) => {
+			const filteredOperations = editOperations.map((operation) => {
+				if (!isFullContentReplacement(operation.range, modelRange) || operation.text === null || hasVisualContent(operation.text) || !isPlainUserCssForFullReplace(operation.text)) return operation;
+				return _objectSpread2(_objectSpread2({}, operation), {}, { text: setVisualContent(operation.text.trim()) });
+			}).filter((operation) => {
 				const range = operation.range;
 				const affectsProtectedLine = range.startLineNumber === 1 || range.endLineNumber === 1 || range.startLineNumber === totalLines || range.endLineNumber === totalLines;
 				if (affectsProtectedLine && isFullContentReplacement(range, modelRange) && hasVisualContent(operation.text)) return true;
@@ -1273,6 +1311,12 @@ this.elementorV2 = this.elementorV2 || {};
 		if (!text) return false;
 		return text.startsWith("element.style {") && text.endsWith("}");
 	};
+	var isPlainUserCssForFullReplace = (text) => {
+		const trimmed = text.trim();
+		if (trimmed === "") return true;
+		if (trimmed.includes("element.style") || trimmed.includes("{") || trimmed.includes("}")) return false;
+		return trimmed.includes(":");
+	};
 	var setVisualContent = (value) => {
 		const trimmed = value.trim();
 		return `element.style {\n${trimmed ? "  " + trimmed.replace(/\n/g, "\n  ") + "\n" : "  \n"}}`;
@@ -1283,27 +1327,137 @@ this.elementorV2 = this.elementorV2 || {};
 		return lines.slice(1, -1).map((line) => line.replace(/^ {2}/, "")).join("\n");
 	};
 	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/css-editor-programmatic-sync.ts
+	var PROGRAMMATIC_MODEL_SYNC_SUPPRESS_RELEASE_MS = 10;
+	var setModelValueWithoutNotifyingParent = (model, suppressContentChangeRef, debounceTimerRef, userValue) => {
+		if (debounceTimerRef.current) {
+			clearTimeout(debounceTimerRef.current);
+			debounceTimerRef.current = null;
+		}
+		suppressContentChangeRef.current = true;
+		const contentChangeDisposable = model.onDidChangeContent(() => {
+			contentChangeDisposable.dispose();
+		});
+		model.setValue(setVisualContent(userValue));
+		setTimeout(() => {
+			contentChangeDisposable.dispose();
+			suppressContentChangeRef.current = false;
+		}, PROGRAMMATIC_MODEL_SYNC_SUPPRESS_RELEASE_MS);
+	};
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/monaco-panel-escape.ts
+	var CONTROL_ANCHOR_SELECTOR = ".elementor-control, [data-type=\"settings-field\"], [role=\"group\"]";
+	function getRenderedAnchor(anchor) {
+		var _candidate$ownerDocum;
+		let candidate = anchor;
+		while (candidate && "contents" === ((_candidate$ownerDocum = candidate.ownerDocument.defaultView) === null || _candidate$ownerDocum === void 0 ? void 0 : _candidate$ownerDocum.getComputedStyle(candidate).display)) candidate = candidate.firstElementChild;
+		return candidate;
+	}
+	function getEscapeAnchor(field) {
+		const monacoRoot = field.closest(".monaco-editor");
+		return getRenderedAnchor(field.closest(CONTROL_ANCHOR_SELECTOR) || (monacoRoot ? monacoRoot.parentElement : field.parentElement));
+	}
+	function parkFocusOnAnchor(anchor) {
+		const hadTabIndex = anchor.hasAttribute("tabindex");
+		if (!hadTabIndex) anchor.setAttribute("tabindex", "-1");
+		anchor.focus({ preventScroll: true });
+		if (anchor.ownerDocument.activeElement !== anchor) {
+			if (!hadTabIndex) anchor.removeAttribute("tabindex");
+			return;
+		}
+		const onFocusOut = (event) => {
+			if (event.relatedTarget && anchor.contains(event.relatedTarget)) return;
+			anchor.removeEventListener("focusout", onFocusOut);
+			if (!hadTabIndex) anchor.removeAttribute("tabindex");
+		};
+		anchor.addEventListener("focusout", onFocusOut);
+	}
+	function isMonacoSuggestWidgetVisible(editor) {
+		var _editor$getDomNode;
+		return !!((_editor$getDomNode = editor.getDomNode()) === null || _editor$getDomNode === void 0 ? void 0 : _editor$getDomNode.querySelector(".suggest-widget.visible"));
+	}
+	function blurMonacoField(editor) {
+		var _editor$getDomNode2;
+		const field = (_editor$getDomNode2 = editor.getDomNode()) === null || _editor$getDomNode2 === void 0 ? void 0 : _editor$getDomNode2.ownerDocument.activeElement;
+		if (!field || !(field instanceof HTMLElement)) return;
+		const anchor = getEscapeAnchor(field);
+		field.blur();
+		if (anchor) parkFocusOnAnchor(anchor);
+	}
+	function registerMonacoPanelEscape(editor, monaco) {
+		var _editor$getDomNode3;
+		const panelRoot = (_editor$getDomNode3 = editor.getDomNode()) === null || _editor$getDomNode3 === void 0 ? void 0 : _editor$getDomNode3.closest("#elementor-panel-inner");
+		if (!panelRoot || !(panelRoot instanceof HTMLElement)) return;
+		const disposable = editor.onKeyDown((keyboardEvent) => {
+			if (keyboardEvent.keyCode !== monaco.KeyCode.Escape) return;
+			if (isMonacoSuggestWidgetVisible(editor)) return;
+			keyboardEvent.browserEvent.stopPropagation();
+			keyboardEvent.browserEvent.preventDefault();
+			blurMonacoField(editor);
+		});
+		editor.onDidDispose(() => {
+			disposable.dispose();
+		});
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/resize-handle.tsx
+	var ResizeHandleComponent = ({ onResize, containerRef, onHeightChange }) => {
+		const handleResizeMove = react.useCallback((e) => {
+			const container = containerRef.current;
+			if (!container) return;
+			const containerRect = container.getBoundingClientRect();
+			const newHeight = Math.max(100, e.clientY - containerRect.top);
+			onHeightChange === null || onHeightChange === void 0 || onHeightChange(newHeight);
+			onResize(newHeight);
+		}, [
+			containerRef,
+			onResize,
+			onHeightChange
+		]);
+		const handleResizeEnd = react.useCallback(() => {
+			document.removeEventListener("mousemove", handleResizeMove);
+			document.removeEventListener("mouseup", handleResizeEnd);
+		}, [handleResizeMove]);
+		const handleResizeStart = react.useCallback((e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			document.addEventListener("mousemove", handleResizeMove);
+			document.addEventListener("mouseup", handleResizeEnd);
+		}, [handleResizeMove, handleResizeEnd]);
+		react.useEffect(() => {
+			return () => {
+				document.removeEventListener("mousemove", handleResizeMove);
+				document.removeEventListener("mouseup", handleResizeEnd);
+			};
+		}, [handleResizeMove, handleResizeEnd]);
+		return /* @__PURE__ */ react.createElement(ResizeHandle, {
+			onMouseDown: handleResizeStart,
+			"aria-label": "Resize editor height",
+			title: "Drag to resize editor height"
+		});
+	};
+	//#endregion
 	//#region packages/packages/pro/editor-controls-extended/src/components/css-code-editor/css-editor.tsx
-	var createEditorDidMountHandler = (editorRef, monacoRef, onUserContentChange, setIsValid, syntaxRuleOptions) => {
+	var createEditorDidMountHandler = (editorRef, monacoRef, latestValueRef, suppressContentChangeRef, debounceTimerRef, lastEmittedValueRef, onUserContentChange, syntaxRuleOptions) => {
 		return (editor, monaco) => {
 			var _editor$getModel$getV;
 			var _editor$getModel;
-			var _editor$getModel$getL;
-			var _editor$getModel2;
 			editorRef.current = editor;
 			monacoRef.current = monaco;
+			const model = editor.getModel();
+			if (model) {
+				setModelValueWithoutNotifyingParent(model, suppressContentChangeRef, debounceTimerRef, latestValueRef.current);
+				lastEmittedValueRef.current = latestValueRef.current;
+			}
 			preventChangeOnVisualContent(editor);
-			setCustomSyntaxRules(editor, monaco, syntaxRuleOptions);
+			configureCssEditorAutocomplete(editor);
+			applyCustomSyntaxRules(editor, monaco, syntaxRuleOptions);
 			onUserContentChange(getActual((_editor$getModel$getV = (_editor$getModel = editor.getModel()) === null || _editor$getModel === void 0 ? void 0 : _editor$getModel.getValue()) !== null && _editor$getModel$getV !== void 0 ? _editor$getModel$getV : ""));
 			monaco.editor.onDidChangeMarkers(() => {
 				clearMarkersFromVisualContent(editor, monaco);
-				setIsValid(validate(editor, monaco));
-			});
-			editor.setPosition({
-				lineNumber: 2,
-				column: ((_editor$getModel$getL = (_editor$getModel2 = editor.getModel()) === null || _editor$getModel2 === void 0 ? void 0 : _editor$getModel2.getLineContent(2).length) !== null && _editor$getModel$getL !== void 0 ? _editor$getModel$getL : 0) + 1
 			});
 			disableFoldingFirstRow(editor);
+			registerMonacoPanelEscape(editor, monaco);
 			editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyA, () => {
 				const editorModel = editor.getModel();
 				if (!editorModel) return;
@@ -1334,22 +1488,28 @@ this.elementorV2 = this.elementorV2 || {};
 			marginViewOverlays === null || marginViewOverlays === void 0 || marginViewOverlays.removeEventListener("mousedown", handler);
 		});
 	}
-	var CssEditor = ({ value, onChange, syntaxRuleOptions, readOnly = false }) => {
+	var CssEditor = ({ value, onChange, syncKey, syntaxRuleOptions, readOnly = false }) => {
 		const theme = (0, _elementor_ui.useTheme)();
 		const containerRef = (0, react.useRef)(null);
 		const editorRef = (0, react.useRef)(null);
 		const monacoRef = (0, react.useRef)(null);
 		const debounceTimer = (0, react.useRef)(null);
+		const suppressContentChangeRef = (0, react.useRef)(false);
+		const lastSyncKeyRef = (0, react.useRef)(syncKey);
+		const lastEmittedValueRef = (0, react.useRef)(value);
+		const latestValueRef = (0, react.useRef)(value);
+		const initialWrappedValueRef = (0, react.useRef)(setVisualContent(value));
+		latestValueRef.current = value;
 		const [hasContent, setHasContent] = (0, react.useState)(value.trim() !== "");
-		const [isValid, setIsValid] = (0, react.useState)(true);
 		const [contentVersion, setContentVersion] = (0, react.useState)(0);
 		useOnUpdate(() => {
 			var _editorRef$current$ge;
 			var _editorRef$current;
 			const userContent = getActual((_editorRef$current$ge = (_editorRef$current = editorRef.current) === null || _editorRef$current === void 0 || (_editorRef$current = _editorRef$current.getModel()) === null || _editorRef$current === void 0 ? void 0 : _editorRef$current.getValue()) !== null && _editorRef$current$ge !== void 0 ? _editorRef$current$ge : "");
-			setHasContent(!userContent.trim());
-			onChange(userContent, isValid);
-		}, [contentVersion, isValid]);
+			setHasContent(userContent.trim() !== "");
+			onChange(userContent);
+			lastEmittedValueRef.current = userContent;
+		}, [contentVersion]);
 		const handleUserContentChange = (0, react.useCallback)((newValue) => {
 			setHasContent(newValue.trim() !== "");
 		}, []);
@@ -1360,19 +1520,41 @@ this.elementorV2 = this.elementorV2 || {};
 		const handleHeightChange = (0, react.useCallback)((height) => {
 			if (containerRef.current) containerRef.current.style.height = `${height}px`;
 		}, []);
-		const handleEditorChange = () => {
-			if (!editorRef.current || !monacoRef.current) return;
-			setCustomSyntaxRules(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current, monacoRef.current, syntaxRuleOptions);
+		const handleEditorChange = (0, react.useCallback)(() => {
+			if (suppressContentChangeRef.current || !editorRef.current || !monacoRef.current) return;
+			applyCustomSyntaxRules(editorRef.current, monacoRef.current, syntaxRuleOptions);
 			if (debounceTimer.current) clearTimeout(debounceTimer.current);
 			debounceTimer.current = setTimeout(() => {
 				setContentVersion((prev) => prev + 1);
 			}, 500);
-		};
-		const handleEditorDidMount = createEditorDidMountHandler(editorRef, monacoRef, handleUserContentChange, setIsValid, syntaxRuleOptions);
+		}, [syntaxRuleOptions]);
+		const handleEditorDidMount = (0, react.useCallback)((editor, monaco) => {
+			createEditorDidMountHandler(editorRef, monacoRef, latestValueRef, suppressContentChangeRef, debounceTimer, lastEmittedValueRef, handleUserContentChange, syntaxRuleOptions)(editor, monaco);
+		}, [handleUserContentChange, syntaxRuleOptions]);
 		const handleReset = () => {
 			var _editorRef$current3;
 			return (_editorRef$current3 = editorRef.current) === null || _editorRef$current3 === void 0 || (_editorRef$current3 = _editorRef$current3.getModel()) === null || _editorRef$current3 === void 0 ? void 0 : _editorRef$current3.setValue(setVisualContent(""));
 		};
+		(0, react.useEffect)(() => {
+			var _editorRef$current4;
+			const model = (_editorRef$current4 = editorRef.current) === null || _editorRef$current4 === void 0 ? void 0 : _editorRef$current4.getModel();
+			if (!model) return;
+			const syncKeyChanged = lastSyncKeyRef.current !== syncKey;
+			if (syncKeyChanged) lastSyncKeyRef.current = syncKey;
+			const modelUserContent = getActual(model.getValue());
+			const shouldSyncForExternalValue = !syncKeyChanged && value !== lastEmittedValueRef.current && value !== modelUserContent;
+			if (!syncKeyChanged && !shouldSyncForExternalValue) return;
+			setModelValueWithoutNotifyingParent(model, suppressContentChangeRef, debounceTimer, value);
+			lastEmittedValueRef.current = value;
+		}, [syncKey, value]);
+		(0, react.useEffect)(() => {
+			if (!editorRef.current || !monacoRef.current) return;
+			applyCustomSyntaxRules(editorRef.current, monacoRef.current, syntaxRuleOptions);
+		}, [syntaxRuleOptions]);
+		(0, react.useEffect)(() => {
+			var _editorRef$current5;
+			(_editorRef$current5 = editorRef.current) === null || _editorRef$current5 === void 0 || _editorRef$current5.updateOptions(getCssEditorMonacoOptions(readOnly));
+		}, [readOnly]);
 		(0, react.useEffect)(() => {
 			const timerRef = debounceTimer;
 			return () => {
@@ -1380,6 +1562,7 @@ this.elementorV2 = this.elementorV2 || {};
 				if (timer) clearTimeout(timer);
 			};
 		}, []);
+		const monacoOptions = getCssEditorMonacoOptions(readOnly);
 		return /* @__PURE__ */ react.createElement(_elementor_editor_ui.FloatingActionsBar, { actions: hasContent ? [/* @__PURE__ */ react.createElement(_elementor_editor_controls.ClearIconButton, {
 			key: "clear",
 			tooltipText: (0, _wordpress_i18n.__)("Clear", "elementor-pro"),
@@ -1391,29 +1574,10 @@ this.elementorV2 = this.elementorV2 || {};
 			height: "100%",
 			language: "css",
 			theme: theme.palette.mode === "dark" ? "vs-dark" : "vs",
-			value: setVisualContent(value),
+			defaultValue: initialWrappedValueRef.current,
 			onMount: handleEditorDidMount,
 			onChange: handleEditorChange,
-			options: {
-				lineNumbers: "on",
-				lineNumbersMinChars: 3,
-				folding: true,
-				minimap: { enabled: false },
-				fontFamily: "Roboto, Arial, Helvetica, Verdana, sans-serif",
-				fontSize: 12,
-				renderLineHighlight: "none",
-				hideCursorInOverviewRuler: true,
-				overviewRulerBorder: false,
-				fixedOverflowWidgets: true,
-				suggestFontSize: 10,
-				suggestLineHeight: 14,
-				stickyScroll: { enabled: false },
-				lineDecorationsWidth: 2,
-				wordWrap: "on",
-				scrollBeyondLastLine: false,
-				readOnly,
-				editContext: false
-			}
+			options: monacoOptions
 		}), /* @__PURE__ */ react.createElement(ResizeHandleComponent, {
 			onResize: handleResize,
 			containerRef,

@@ -43,7 +43,7 @@ class Global_Widget extends Base_Widget {
 		parent::__construct( $data, $args );
 	}
 
-	private function try_load_from_template( array $data ): bool {
+	private function try_load_from_template( array &$data ): bool {
 		$template_data = Plugin::elementor()->templates_manager->get_template_data( [
 			'source' => 'local',
 			'template_id' => $data['templateID'],

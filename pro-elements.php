@@ -3,13 +3,13 @@
  * Plugin Name: PRO Elements
  * Description: Adds professional features for sites using the Elementor page builder.
  * Plugin URI: https://proelements.org/
- * Version: 4.3.0
+ * Version: 4.3.2
  * Author: PROElements.org
  * Author URI: https://proelements.org/
  * Requires PHP: 7.4
  * Requires at least: 6.8
  * Requires Plugins: elementor
- * Elementor tested up to: 4.3.0
+ * Elementor tested up to: 4.3.2-ga
  * Text Domain: pro-elements
  */
 
@@ -28,30 +28,34 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-	define( 'ELEMENTOR_PRO_VERSION', '4.3.0' );
+	define( 'ELEMENTOR_PRO_VERSION', '4.3.2' );
 
-/**
- * All versions should be `major.minor`, without patch, in order to compare them properly.
- * Therefore, we can't set a patch version as a requirement.
- * (e.g. Core 3.14.0-beta1 and Core 3.14.0-cloud2 should be fine when requiring 3.14, while
- * requiring 3.14.2 is not allowed)
- */
-define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '4.0' );
-define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '4.3' );
+	/**
+	 * All versions should be `major.minor`, without patch, in order to compare them properly.
+	 * Therefore, we can't set a patch version as a requirement.
+	 * (e.g. Core 3.14.0-beta1 and Core 3.14.0-cloud2 should be fine when requiring 3.14, while
+	 * requiring 3.14.2 is not allowed)
+	 */
+	define( 'ELEMENTOR_PRO_REQUIRED_CORE_VERSION', '4.0' );
+	define( 'ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION', '4.3' );
+	define( 'ELEMENTOR_PRO_REQUIRED_WP_VERSION', '7.1' );
 
-define( 'ELEMENTOR_PRO__FILE__', __FILE__ );
-define( 'ELEMENTOR_PRO_PLUGIN_BASE', plugin_basename( ELEMENTOR_PRO__FILE__ ) );
-define( 'ELEMENTOR_PRO_PATH', plugin_dir_path( ELEMENTOR_PRO__FILE__ ) );
-define( 'ELEMENTOR_PRO_ASSETS_PATH', ELEMENTOR_PRO_PATH . 'assets/' );
-define( 'ELEMENTOR_PRO_MODULES_PATH', ELEMENTOR_PRO_PATH . 'modules/' );
-define( 'ELEMENTOR_PRO_URL', plugins_url( '/', ELEMENTOR_PRO__FILE__ ) );
-define( 'ELEMENTOR_PRO_ASSETS_URL', ELEMENTOR_PRO_URL . 'assets/' );
-define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
+	define( 'ELEMENTOR_PRO__FILE__', __FILE__ );
+	define( 'ELEMENTOR_PRO_PLUGIN_BASE', plugin_basename( ELEMENTOR_PRO__FILE__ ) );
+	define( 'ELEMENTOR_PRO_PATH', plugin_dir_path( ELEMENTOR_PRO__FILE__ ) );
+	define( 'ELEMENTOR_PRO_ASSETS_PATH', ELEMENTOR_PRO_PATH . 'assets/' );
+	define( 'ELEMENTOR_PRO_MODULES_PATH', ELEMENTOR_PRO_PATH . 'modules/' );
+	define( 'ELEMENTOR_PRO_URL', plugins_url( '/', ELEMENTOR_PRO__FILE__ ) );
+	define( 'ELEMENTOR_PRO_ASSETS_URL', ELEMENTOR_PRO_URL . 'assets/' );
+	define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
+
+	require_once ELEMENTOR_PRO_MODULES_PATH . 'core-upgrade-recommendation/classes/upgrade-recommendation-dismissal.php';
+
+	\ElementorPro\Modules\CoreUpgradeRecommendation\Classes\Upgrade_Recommendation_Dismissal::register_dismiss_handlers();
+
 	define( 'IS_PRO_ELEMENTS', 'true' );
 	add_action( 'plugins_loaded', 'pro_elements_load_plugin_func' );
 }
-
-
 
 /**
  * Load gettext translate for our text domain.
@@ -61,9 +65,17 @@ define( 'ELEMENTOR_PRO_MODULES_URL', ELEMENTOR_PRO_URL . 'modules/' );
  * @return void
  */
 function pro_elements_load_plugin_func() {
+	$wp_version = function_exists( 'wp_get_wp_version' ) ? wp_get_wp_version() : $GLOBALS['wp_version'];
+	$wp_version_required = ELEMENTOR_PRO_REQUIRED_WP_VERSION;
 	$core_version = ELEMENTOR_VERSION;
 	$core_version_required = ELEMENTOR_PRO_REQUIRED_CORE_VERSION;
 	$core_version_recommended = ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION;
+
+	if ( ! pro_elements_compare_major_version( $wp_version, $wp_version_required, '>=' ) ) {
+		add_action( 'admin_notices', 'pro_elements_plugin_fail_load_wp_out_of_date' );
+
+		return;
+	}
 
 	if ( ! pro_elements_compare_major_version( $core_version, $core_version_required, '>=' ) ) {
 		add_action( 'admin_notices', 'pro_elements_plugin_fail_load_out_of_date' );
@@ -147,7 +159,7 @@ function pro_elements_plugin_fail_load_out_of_date() {
 	$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
 	$message = sprintf(
 	/* translators: 1: Title opening tag, 2: Title closing tag */
-		esc_html__( '%1$ssPRO Elements  requires newer version of the Elementor plugin%2$s Update the Elementor plugin to reactivate the Pro Elements plugin.', 'elementor-pro' ),
+		esc_html__( '%1$ssPRO Elements  requires newer version of the Elementor plugin%2$s Update the Elementor plugin to reactivate the PRO Elements plugin.', 'elementor-pro' ),
 		'<h3>',
 		'</h3>'
 	);
@@ -156,13 +168,45 @@ function pro_elements_plugin_fail_load_out_of_date() {
 	pro_elements_print_error($message);
 }
 
+function pro_elements_plugin_fail_load_wp_out_of_date() {
+	global $pagenow;
+
+	if ( ! current_user_can( 'update_core' ) ) {
+		return;
+	}
+
+	$upgrade_link = self_admin_url( 'update-core.php' );
+	$message = sprintf(
+	/* translators: 1: Title opening tag, 2: Title closing tag, 3: Minimum required WordPress version */
+		esc_html__( '%1$sPRO Elements requires a newer version of WordPress%2$s Update WordPress to version %3$s or higher to reactivate the PRO Elements plugin.', 'elementor-pro' ),
+		'<h3>',
+		'</h3>',
+		esc_html( ELEMENTOR_PRO_REQUIRED_WP_VERSION )
+	);
+
+	if ( 'update-core.php' !== $pagenow ) {
+		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $upgrade_link ), esc_html__( 'Update Now', 'elementor-pro' ) ) . '</p>';
+	}
+
+	pro_elements_print_error( $message );
+}
+
 function pro_elements_admin_notice_upgrade_recommendation() {
 	if ( ! current_user_can( 'update_plugins' ) ) {
 		return;
 	}
 
-	$file_path = 'elementor/elementor.php';
+	$recommended_version = ELEMENTOR_PRO_RECOMMENDED_CORE_VERSION;
+	$core_version = ELEMENTOR_VERSION;
 
+	if ( ! \ElementorPro\Modules\CoreUpgradeRecommendation\Classes\Upgrade_Recommendation_Dismissal::should_show_notice(
+		$recommended_version,
+		$core_version
+	) ) {
+		return;
+	}
+
+	$file_path = 'elementor/elementor.php';
 	$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
 	$message = sprintf(
 	/* translators: 1: Title opening tag, 2: Title closing tag */
