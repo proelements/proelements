@@ -250,7 +250,7 @@ class Product_Related extends Products_Base {
 		$args = array_map( 'sanitize_text_field', $args );
 
 		// Get visible related products then sort them at random.
-		$args['related_products'] = array_filter( array_map( 'wc_get_product', wc_get_related_products( $product->get_id(), $args['posts_per_page'], $product->get_upsell_ids() ) ), 'wc_products_array_filter_visible' );
+		$args['related_products'] = array_filter( array_map( 'wc_get_product', wc_get_related_products( $product->get_id(), absint( $args['posts_per_page'] ), $product->get_upsell_ids() ) ), 'wc_products_array_filter_visible' );
 
 		// Handle orderby.
 		$args['related_products'] = wc_products_array_orderby( $args['related_products'], $args['orderby'], $args['order'] );
