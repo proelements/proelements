@@ -7,6 +7,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Modules\Posts\Traits\Render_Posts_Markdown_Trait;
 use ElementorPro\Modules\QueryControl\Module as Module_Query;
 use ElementorPro\Modules\QueryControl\Controls\Group_Control_Related;
 use Elementor\Controls_Manager;
@@ -19,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Portfolio
  */
 class Portfolio extends Base_Widget {
+
+	use Render_Posts_Markdown_Trait;
 
 	/**
 	 * @var \WP_Query
@@ -723,5 +726,9 @@ class Portfolio extends Base_Widget {
 
 	public function get_group_name() {
 		return 'posts';
+	}
+
+	public function render_markdown(): string {
+		return $this->render_posts_query_as_markdown();
 	}
 }

@@ -7,11 +7,12 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
+use Elementor\Icons_Manager;
+use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
-use Elementor\Modules\DynamicTags\Module as TagsModule;
-use Elementor\Icons_Manager;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -2328,5 +2329,58 @@ class Video_Playlist extends Base_Widget {
 			</div>
 		</div>
 		<?php
+	}
+
+	private function get_playlist_item_url( array $item ): string {
+		$type = $item['type'] ?? '';
+
+		if ( 'section' === $type ) {
+			return '';
+		}
+
+		if ( 'youtube' === $type && ! empty( $item['youtube_url'] ) ) {
+			return $item['youtube_url'];
+		}
+
+		if ( 'vimeo' === $type && ! empty( $item['vimeo_url'] ) ) {
+			return $item['vimeo_url'];
+		}
+
+		if ( 'hosted' === $type ) {
+			if ( 'yes' === ( $item['is_external_url'] ?? '' ) && ! empty( $item['external_url']['url'] ) ) {
+				return $item['external_url']['url'];
+			}
+
+			if ( ! empty( $item['hosted_url']['url'] ) ) {
+				return $item['hosted_url']['url'];
+			}
+		}
+
+		return '';
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$tabs = $settings['tabs'] ?? [];
+		$lines = [];
+
+		foreach ( $tabs as $tab ) {
+			if ( 'section' === ( $tab['type'] ?? '' ) ) {
+				continue;
+			}
+
+			$url = $this->get_playlist_item_url( $tab );
+
+			if ( '' === $url ) {
+				continue;
+			}
+
+			$title = Markdown_Utils::plain_text( $tab['title'] ?? '' );
+			$display = '' !== $title ? $title : $url;
+
+			$lines[] = '- [' . $display . '](' . esc_url( $url ) . ')';
+		}
+
+		return Markdown_Utils::bullet_list( $lines );
 	}
 }

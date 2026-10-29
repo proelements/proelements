@@ -750,6 +750,10 @@ class Sitemap extends Base {
 	public function get_group_name() {
 		return 'theme-elements';
 	}
+
+	public function render_markdown(): string {
+		return '';
+	}
 }
 
 

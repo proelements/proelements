@@ -20,6 +20,8 @@ class Upload extends Field_Base {
 	const MODE_ATTACH = 'attach';
 	const MODE_BOTH = 'both';
 
+	const DEFAULT_FILE_TYPES = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv';
+
 	public function get_type() {
 		return 'upload';
 	}
@@ -214,7 +216,7 @@ class Upload extends Field_Base {
 	private function is_file_type_valid( $field, $file ) {
 		// File type validation
 		if ( empty( $field['file_types'] ) ) {
-			$field['file_types'] = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv';
+			$field['file_types'] = self::DEFAULT_FILE_TYPES;
 		}
 
 		$file_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
@@ -225,6 +227,118 @@ class Upload extends Field_Base {
 		$file_extension = strtolower( $file_extension );
 
 		return ( in_array( $file_extension, $file_types_meta ) && ! in_array( $file_extension, $this->get_blacklist_file_ext() ) );
+	}
+
+	/**
+	 * Validates uploaded file content against allowed types using WordPress core validation.
+	 *
+	 * Uses wp_check_filetype_and_ext() as the primary content validator, which performs
+	 * MIME sniffing internally. For images, enforces strict MIME validation and checks for
+	 * archive/phar polyglots (which WordPress does not detect). For non-image extensions,
+	 * preserves backward compatibility by allowing admin-configured extensions that WordPress
+	 * does not recognize in its MIME type list (e.g., CAD formats like stl, dwg).
+	 *
+	 * @param string $path          Path to uploaded file (tmp_name).
+	 * @param string $original_name Original filename.
+	 * @param array  $field         Field configuration.
+	 *
+	 * @return bool True if content is allowed, false otherwise.
+	 */
+	private function is_uploaded_content_allowed( $path, $original_name, $field ) {
+		$allowed_extensions = $this->get_allowed_file_extensions( $field );
+		$extension = strtolower( pathinfo( $original_name, PATHINFO_EXTENSION ) );
+
+		if ( ! in_array( $extension, $allowed_extensions, true ) ) {
+			return false;
+		}
+
+		$checked = wp_check_filetype_and_ext( $path, $original_name );
+		$image_extensions = [ 'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'tif', 'tiff' ];
+		$is_image_extension = in_array( $extension, $image_extensions, true );
+
+		if ( $is_image_extension ) {
+			if ( empty( $checked['ext'] ) || empty( $checked['type'] ) ) {
+				return false;
+			}
+
+			if ( $this->file_contains_archive( $path ) ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		// Allow non-image extensions for backward compatibility with admin-configured types
+		// that WordPress does not recognize (e.g., stl, dwg).
+		return true;
+	}
+
+	private function get_allowed_file_extensions( $field ) {
+		$file_types = $field['file_types'] ?? '';
+
+		if ( '' === $file_types ) {
+			$file_types = self::DEFAULT_FILE_TYPES;
+		}
+
+		$extensions = array_map( 'trim', explode( ',', strtolower( $file_types ) ) );
+
+		return array_values( array_diff( $extensions, $this->get_blacklist_file_ext() ) );
+	}
+
+	private function file_contains_archive( $path ) {
+		$handle = fopen( $path, 'rb' );
+
+		if ( ! $handle ) {
+			return true;
+		}
+
+		$phar_stub = '__HALT_COMPILER();';
+		$overlap = strlen( $phar_stub ) - 1;
+		$previous_tail = '';
+		$is_first_chunk = true;
+
+		while ( ! feof( $handle ) ) {
+			$chunk = fread( $handle, 1024 * 1024 );
+
+			if ( false === $chunk ) {
+				fclose( $handle );
+
+				return true;
+			}
+
+			if ( $is_first_chunk && 0 === strpos( $chunk, 'PK' ) ) {
+				fclose( $handle );
+
+				return true;
+			}
+
+			$is_first_chunk = false;
+
+			if ( false !== strpos( $previous_tail . $chunk, $phar_stub ) ) {
+				fclose( $handle );
+
+				return true;
+			}
+
+			$previous_tail = substr( $chunk, -$overlap );
+		}
+
+		fclose( $handle );
+
+		if ( ! class_exists( '\ZipArchive' ) ) {
+			return false;
+		}
+
+		$zip = new \ZipArchive();
+		$opened = $zip->open( $path );
+
+		if ( true === $opened ) {
+			$zip->close();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -491,6 +605,11 @@ class Upload extends Field_Base {
 
 			$file_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
 			if ( in_array( strtolower( $file_extension ), $this->get_blacklist_file_ext(), true ) ) {
+				continue;
+			}
+
+			if ( ! $this->is_uploaded_content_allowed( $file['tmp_name'], $file['name'], $field ) ) {
+				$ajax_handler->add_error( $id, esc_html__( 'This file type is not allowed.', 'elementor-pro' ) );
 				continue;
 			}
 

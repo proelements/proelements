@@ -8,6 +8,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1112,5 +1113,39 @@ class Login extends Base_Widget {
 
 	public function get_group_name() {
 		return 'forms';
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$parts = [ '## ' . esc_html__( 'Login Form', 'elementor-pro' ) ];
+		$fields = [];
+
+		$user_label = Markdown_Utils::plain_text( $settings['user_label'] ?? '' );
+
+		if ( '' !== $user_label ) {
+			$fields[] = '- **' . $user_label . '** (text)';
+		}
+
+		$password_label = Markdown_Utils::plain_text( $settings['password_label'] ?? '' );
+
+		if ( '' !== $password_label ) {
+			$fields[] = '- **' . $password_label . '** (password)';
+		}
+
+		if ( 'yes' === ( $settings['show_remember_me'] ?? '' ) ) {
+			$fields[] = '- **' . esc_html__( 'Remember Me', 'elementor-pro' ) . '** (checkbox)';
+		}
+
+		if ( ! empty( $fields ) ) {
+			$parts[] = implode( "\n", $fields );
+		}
+
+		$button = Markdown_Utils::plain_text( $settings['button_text'] ?? '' );
+
+		if ( '' !== $button ) {
+			$parts[] = Markdown_Utils::button( $button );
+		}
+
+		return Markdown_Utils::join_blocks( $parts );
 	}
 }

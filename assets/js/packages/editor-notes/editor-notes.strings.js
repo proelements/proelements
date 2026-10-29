@@ -1,1 +1,0 @@
-__( 'Notes', 'elementor-pro' );

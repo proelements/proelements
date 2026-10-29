@@ -59,6 +59,10 @@ class Product extends Single_Base {
 	}
 
 	public function enqueue_scripts() {
+		if ( ! $this->get_post() ) {
+			return;
+		}
+
 		// In preview mode it's not a real Product page - enqueue manually.
 		if ( Plugin::elementor()->preview->is_preview_mode( $this->get_main_id() ) ) {
 			global $product;
@@ -137,9 +141,11 @@ class Product extends Single_Base {
 	}
 
 	public function __construct( array $data = [] ) {
-		parent::__construct( $data );
+		if ( $data ) {
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 11 );
+		}
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 11 );
+		parent::__construct( $data );
 	}
 
 	protected static function get_editor_panel_categories() {

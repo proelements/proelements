@@ -677,6 +677,48 @@ class Price_List extends Base_Widget {
 		<?php
 	}
 
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$items = $settings['price_list'] ?? [];
+
+		if ( empty( $items ) ) {
+			return '';
+		}
+
+		$lines = [];
+
+		foreach ( $items as $item ) {
+			$title = Utils::html_to_plain_text( $item['title'] ?? '' );
+			$price = Utils::html_to_plain_text( $item['price'] ?? '' );
+			$description = Utils::html_to_plain_text( $item['item_description'] ?? '' );
+			$url = $item['link']['url'] ?? '';
+
+			if ( '' === $title && '' === $price && '' === $description ) {
+				continue;
+			}
+
+			$label = '**' . $title . '**';
+
+			if ( '' !== $url ) {
+				$label = '[' . $label . '](' . esc_url( $url ) . ')';
+			}
+
+			$line = '- ' . $label;
+
+			if ( '' !== $price ) {
+				$line .= ' — *' . $price . '*';
+			}
+
+			$lines[] = $line;
+
+			if ( '' !== $description ) {
+				$lines[] = '  ' . $description;
+			}
+		}
+
+		return implode( "\n", $lines );
+	}
+
 	/**
 	 * Render Price List widget output in the editor.
 	 *

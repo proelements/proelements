@@ -1,4 +1,4 @@
-{% set classes = settings.classes | merge( [ base_styles.base ] ) | join(' ') | trim %}
+{% set classes = settings.classes | merge( [ base_styles.base, 'e-default-input' ] ) | join(' ') | trim %}
 {% set id_attribute = settings._cssid is not empty ? 'id=' ~ settings._cssid | e('html_attr') : '' %}
 {% set interactions_attribute = interactions is not empty ? 'data-interactions=' ~ interactions | json_encode | e('html_attr') : '' %}
 {% set placeholder_attribute = settings.placeholder is not empty ? 'placeholder=' ~ settings.placeholder | e('html_attr') : '' %}

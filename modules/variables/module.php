@@ -6,8 +6,6 @@ use Elementor\Modules\Variables\PropTypes\Size_Variable_Prop_Type;
 use ElementorPro\Plugin;
 use ElementorPro\Base\Module_Base;
 use Elementor\Modules\AtomicWidgets\Module as AtomicWidgetsModule;
-use Elementor\Modules\Variables\Module as VariablesModule;
-use Elementor\Core\Experiments\Manager as ExperimentsManager;
 use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,21 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Module extends Module_Base {
 	const MODULE_NAME = 'e-variables';
-	const EXPERIMENT_NAME = 'e_pro_variables';
 
 	public function get_name() {
 		return self::MODULE_NAME;
-	}
-
-	public static function get_experimental_data(): array {
-		return [
-			'name' => self::EXPERIMENT_NAME,
-			'title' => esc_html__( 'Size Variables', 'elementor-pro' ),
-			'description' => esc_html__( 'Allows the use of size variables within supported controls. Note: This feature requires both the "Atomic Widgets" and "Variables" experiments to be enabled.', 'elementor-pro' ),
-			'hidden' => true,
-			'default' => ExperimentsManager::STATE_ACTIVE,
-			'release_status' => ExperimentsManager::RELEASE_STATUS_ALPHA,
-		];
 	}
 
 	private function hooks() {
@@ -55,9 +41,7 @@ class Module extends Module_Base {
 
 	private function is_experiment_active(): bool {
 		return class_exists( 'Elementor\\Modules\\Variables\\Module' )
-			&& Plugin::elementor()->experiments->is_feature_active( self::EXPERIMENT_NAME )
-			&& Plugin::elementor()->experiments->is_feature_active( AtomicWidgetsModule::EXPERIMENT_NAME )
-			&& Plugin::elementor()->experiments->is_feature_active( VariablesModule::EXPERIMENT_NAME );
+			&& Plugin::elementor()->experiments->is_feature_active( AtomicWidgetsModule::EXPERIMENT_NAME );
 	}
 
 	private function get_quota_config( $limit ): array {

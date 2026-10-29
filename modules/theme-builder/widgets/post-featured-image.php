@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\ThemeBuilder\Widgets;
 
 use Elementor\Widget_Image;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -56,5 +57,21 @@ class Post_Featured_Image extends Widget_Image {
 
 	protected function get_html_wrapper_class() {
 		return parent::get_html_wrapper_class() . ' elementor-widget-' . parent::get_name();
+	}
+
+	public function render_markdown(): string {
+		$markdown = parent::render_markdown();
+
+		if ( '' !== $markdown ) {
+			return $markdown;
+		}
+
+		$thumbnail_url = get_the_post_thumbnail_url();
+
+		if ( ! $thumbnail_url ) {
+			return '';
+		}
+
+		return Markdown_Utils::image( $thumbnail_url, get_the_title() );
 	}
 }

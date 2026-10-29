@@ -1,4 +1,4 @@
-{% set classes = settings.classes | merge( [ base_styles.base ] ) | join(' ') | trim %}
+{% set classes = settings.classes | merge( [ base_styles.base, 'e-default-button' ] ) | join(' ') | trim %}
 {% set id_attribute = settings._cssid is not empty ? 'id=' ~ settings._cssid | e('html_attr') : '' %}
 {% set interactions_attribute = interactions is not empty ? 'data-interactions=' ~ interactions | json_encode | e('html_attr') : '' %}
 {%- set allowed_tags = '<b><strong><sup><sub><s><em><i><u><del><span><br>' %}
@@ -9,4 +9,4 @@
 	data-interaction-id="{{ interaction_id | default(id) }}"
 	{{ settings.attributes | raw }}
 	{{ interactions_attribute }}
->{{ settings.text  | striptags(allowed_tags) | raw }}</button>
+>{{ settings.text | striptags(allowed_tags) | raw }}</button>

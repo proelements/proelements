@@ -451,9 +451,10 @@ class Module extends Module_Base {
 					'value' => $location,
 				],
 			],
-			// Order.
-			'order' => 'ASC',
-			'orderby' => 'meta_value_num',
+			'orderby' => [
+				'meta_value_num' => 'ASC',
+				'ID' => 'ASC',
+			],
 			'meta_key' => '_elementor_' . Custom_Code_Metabox::FIELD_PRIORITY,
 		] );
 	}

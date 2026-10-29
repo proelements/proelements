@@ -5,6 +5,7 @@ use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 use Elementor\Modules\AtomicWidgets\Controls\Section;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Text_Control;
 use Elementor\Modules\AtomicWidgets\Elements\Base\Atomic_Element_Base;
+use Elementor\Modules\AtomicWidgets\Elements\Base\Render_Context;
 use Elementor\Modules\AtomicWidgets\PropTypes\Attributes_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Classes_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Primitives\String_Prop_Type;
@@ -22,6 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Collection_Loop_Layout extends Atomic_Element_Base {
 	use Has_Loop_Iteration;
+
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'div';
+	}
 
 	const ELEMENT_TYPE = 'e-collection-loop-layout';
 	const BASE_STYLE_KEY = 'base';
@@ -104,5 +109,14 @@ class Collection_Loop_Layout extends Atomic_Element_Base {
 		return [
 			'elementor/elements/collection-loop-layout' => __DIR__ . '/collection-loop-layout.html.twig',
 		];
+	}
+
+	protected function build_template_context(): array {
+		return array_merge(
+			$this->build_base_template_context(),
+			[
+				'loop_context' => Render_Context::get( Collection_Loop::LOOP_CONTEXT_KEY ),
+			]
+		);
 	}
 }

@@ -2,16 +2,16 @@
 
 namespace ElementorPro\Modules\OffCanvas\Widgets;
 
+use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Controls_Manager;
-use Elementor\Modules\NestedElements\Base\Widget_Nested_Base;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Widget_Nested_Base_Pro;
 use ElementorPro\Plugin;
 
-class Off_Canvas extends Widget_Nested_Base {
+class Off_Canvas extends Widget_Nested_Base_Pro {
 
 	use Base_Widget_Trait;
 
@@ -38,7 +38,7 @@ class Off_Canvas extends Widget_Nested_Base {
 	}
 
 	public function show_in_panel() {
-		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements', true );
+		return Plugin::elementor()->experiments->is_feature_active( 'container' );
 	}
 
 	public function has_widget_inner_wrapper(): bool {

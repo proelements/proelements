@@ -86,6 +86,22 @@ class Product_Title extends Widget_Heading {
 
 	public function render_plain_content() {}
 
+	public function render_markdown(): string {
+		$markdown = parent::render_markdown();
+
+		if ( '' !== $markdown ) {
+			return $markdown;
+		}
+
+		$product = wc_get_product( get_the_ID() );
+
+		if ( ! $product ) {
+			return '';
+		}
+
+		return \ElementorPro\Base\Markdown_Utils::heading( $product->get_name(), $this->get_settings_for_display()['header_size'] ?? 'h1' );
+	}
+
 	public function get_group_name() {
 		return 'woocommerce';
 	}

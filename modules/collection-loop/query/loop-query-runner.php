@@ -18,10 +18,6 @@ final class Loop_Query_Runner {
 		$this->query_id = $query_id;
 	}
 
-	public function args(): array {
-		return $this->args;
-	}
-
 	public function run( ?Element_Base $element = null ): \WP_Query {
 		if ( '' === $this->query_id ) {
 			return new \WP_Query( $this->args );

@@ -6,7 +6,6 @@ use Elementor\Plugin;
 use ElementorPro\Core\Data\Endpoints\Base;
 use ElementorPro\Core\Data\Interfaces\Endpoint;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Args_Builder;
-use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Runner;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -28,12 +27,12 @@ class Loop_Preview extends Base implements Endpoint {
 			$query_settings = [];
 		}
 
-		$query_id = $query_settings['query_id'] ?? '';
-		$args = [];
+		$query_id = Loop_Query_Args_Builder::extract_query_id( $query_settings );
 		$items = [];
 
 		$document_id = (int) $request->get_param( 'document_id' );
 		$element_id = (string) $request->get_param( 'element_id' );
+		$force_empty = rest_sanitize_boolean( $request->get_param( 'force_empty' ) );
 		$document = $document_id > 0 ? Plugin::$instance->documents->get_doc_or_auto_save( $document_id ) : null;
 		$element = $this->resolve_element_from_document( $document, $element_id );
 
@@ -49,20 +48,9 @@ class Loop_Preview extends Base implements Endpoint {
 				do_action( 'elementor/atomic_widgets/before_render', $document );
 			}
 
-			$args = Loop_Query_Args_Builder::from_resolved( $query_settings );
+			$item_provider = Loop_Query_Args_Builder::item_provider_from_resolved( $query_settings, $element );
 
-			$query = ( new Loop_Query_Runner( $args, $query_id ) )->run( $element );
-
-			while ( $query->have_posts() ) {
-				$query->the_post();
-
-				$items[] = [
-					'id' => get_the_ID(),
-					'title' => get_the_title(),
-				];
-			}
-
-			wp_reset_postdata();
+			$items = $force_empty ? [] : $item_provider->items();
 		} finally {
 			if ( $document ) {
 				do_action( 'elementor/atomic_widgets/after_render', $document );
@@ -75,7 +63,6 @@ class Loop_Preview extends Base implements Endpoint {
 
 		return [
 			'data' => [
-				'args' => $args,
 				'query_id' => $query_id,
 				'has_items' => ! empty( $items ),
 				'items' => $items,
@@ -123,6 +110,12 @@ class Loop_Preview extends Base implements Endpoint {
 						'description' => 'ID of the collection-loop element. Required to pass the element instance to element-scoped query hooks.',
 						'type' => 'string',
 						'required' => false,
+					],
+					'force_empty' => [
+						'description' => 'When true, return an empty preview payload so the editor can design the empty state.',
+						'type' => 'boolean',
+						'required' => false,
+						'default' => false,
 					],
 				],
 				'methods' => \WP_REST_Server::CREATABLE,

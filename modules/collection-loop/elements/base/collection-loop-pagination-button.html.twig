@@ -1,6 +1,6 @@
 {% import 'elementor/macros' as m %}
 {%- set pagination = pagination | default({}) -%}
-{%- set classes = settings.classes | merge( [ base_styles.base ] ) | join(' ') -%}
+{%- set classes = settings.classes | merge( [ base_styles.base, 'e-default-a' ] ) | join(' ') -%}
 {%- set direction = pagination.direction | default('next') -%}
 {%- set disabled_class = pagination.is_disabled ? ' e--disabled' : '' -%}
 {%- set is_link = pagination.has_context and not pagination.is_disabled -%}

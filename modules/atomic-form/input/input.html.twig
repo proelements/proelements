@@ -1,7 +1,8 @@
-{%- set classes = settings.classes | merge( [ base_styles.base ] ) | join(' ') | trim %}
+{%- set classes = settings.classes | merge( [ base_styles.base, 'e-default-input' ] ) | join(' ') | trim %}
 {%- set id_attribute = settings._cssid is not empty ? 'id=' ~ settings._cssid | e('html_attr') : '' %}
 {%- set interactions_attribute = interactions is not empty ? 'data-interactions=' ~ interactions | json_encode | e('html_attr') : '' %}
 {%- set placeholder_attribute = settings.placeholder is not empty ? 'placeholder=' ~ settings.placeholder | e('html_attr') : '' %}
+{%- set value_attribute = settings.value is not empty ? 'value=' ~ settings.value | e('html_attr') : '' %}
 {%- set required_attribute = settings.required ? 'required' : '' %}
 {%- set readonly_attribute = settings.readonly ? 'readonly' : '' %}
 {%- set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
@@ -18,6 +19,7 @@
 	{{ settings.attributes | raw }} 
 	{{ interactions_attribute }}
 	{{ placeholder_attribute | raw }}
+	{{ value_attribute | raw }}
 	{{ required_attribute }}
 	{{ readonly_attribute }}
 	{{ autocomplete_attribute }}

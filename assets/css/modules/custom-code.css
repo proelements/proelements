@@ -1631,7 +1631,8 @@ span.font-variations-count {
   border: none;
 }
 .e-site-editor-conditions__input-wrapper select {
-  appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   -webkit-appearance: none;
   font-size: type(size, "12");
   height: 2.5rem;
@@ -1963,5 +1964,3 @@ span.font-variations-count {
     background: #f1f3f5;
   }
 }
-
-/*# sourceMappingURL=custom-code.css.map */

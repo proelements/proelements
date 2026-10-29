@@ -109,6 +109,7 @@ class Conditions_Cache {
 		$query_args = [
 			'posts_per_page' => -1,
 			'post_type' => $post_types,
+			'post_status' => [ 'publish', 'draft' ],
 			'fields' => 'ids',
 			'meta_key' => '_elementor_conditions',
 		];

@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1106,5 +1107,34 @@ class Post_Info extends Base {
 
 	public function get_group_name() {
 		return 'theme-elements';
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$items = $settings['icon_list'] ?? [];
+		$lines = [];
+
+		foreach ( $items as $repeater_item ) {
+			$item_data = $this->get_meta_data( $repeater_item );
+			$text = Markdown_Utils::plain_text( $item_data['text'] ?? '' );
+			$url = $item_data['url']['url'] ?? '';
+
+			if ( ! empty( $item_data['terms_list'] ) ) {
+				$term_texts = array_map( static function ( $term ) {
+					return $term['text'] ?? '';
+				}, $item_data['terms_list'] );
+				$text = implode( ', ', array_filter( $term_texts ) );
+			}
+
+			if ( '' === $text ) {
+				continue;
+			}
+
+			$lines[] = '' !== $url
+				? '- [' . $text . '](' . esc_url( $url ) . ')'
+				: '- ' . $text;
+		}
+
+		return Markdown_Utils::bullet_list( $lines );
 	}
 }

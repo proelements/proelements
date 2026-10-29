@@ -60,6 +60,16 @@ class Template_Type_Registry {
 		return array_keys( $this->template_types );
 	}
 
+	/**
+	 * @return string[] Ids of registered template types whose data source doesn't paginate.
+	 */
+	public function get_ids_without_pagination(): array {
+		return array_keys( array_filter(
+			$this->template_types,
+			static fn( Template_Type_Base $type ) => ! $type->supports_pagination()
+		) );
+	}
+
 	public function get_default_id(): string {
 		return $this->default_id;
 	}

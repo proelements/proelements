@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\ThemeBuilder\Widgets;
 
 use Elementor\Widget_Image;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -59,5 +60,33 @@ class Category_Image extends Widget_Image {
 
 	public function get_group_name() {
 		return 'woocommerce';
+	}
+
+	public function render_markdown(): string {
+		$markdown = parent::render_markdown();
+
+		if ( '' !== $markdown ) {
+			return $markdown;
+		}
+
+		$term = get_queried_object();
+
+		if ( ! $term || ! isset( $term->term_id ) ) {
+			return '';
+		}
+
+		$thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
+
+		if ( ! $thumbnail_id ) {
+			return '';
+		}
+
+		$url = wp_get_attachment_image_url( $thumbnail_id, 'full' );
+
+		if ( ! $url ) {
+			return '';
+		}
+
+		return Markdown_Utils::image( $url, Markdown_Utils::get_attachment_alt( (int) $thumbnail_id ) );
 	}
 }

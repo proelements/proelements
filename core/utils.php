@@ -210,7 +210,9 @@ class Utils {
 			$title = esc_html__( 'Archives', 'elementor-pro' );
 		} elseif ( is_404() ) {
 			$title = esc_html__( 'Page Not Found', 'elementor-pro' );
-		} // End if().
+		} elseif ( is_home() ) {
+			$title = wp_get_document_title();
+		}
 
 		/**
 		 * Page title.

@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\LoopBuilder\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
 use ElementorPro\Modules\LoopBuilder\Module;
 use ElementorPro\Modules\LoopBuilder\Skins\Skin_Loop_Post;
@@ -367,4 +368,13 @@ class Base extends Posts {
 	public function before_skin_render() {}
 
 	public function after_skin_render() {}
+
+	public function render_markdown(): string {
+		ob_start();
+		$this->render_content();
+
+		$content = \Elementor\Modules\MarkdownRender\Html_To_Markdown::convert( (string) ob_get_clean() );
+
+		return Markdown_Utils::widget_section( $this->get_title(), $content );
+	}
 }

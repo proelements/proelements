@@ -270,14 +270,6 @@ class Plugin {
 		$suffix = $this->get_assets_suffix();
 
 		wp_register_script(
-			'elementor-pro-webpack-runtime',
-			ELEMENTOR_PRO_URL . 'assets/js/webpack-pro.runtime' . $suffix . '.js',
-			[],
-			ELEMENTOR_PRO_VERSION,
-			true
-		);
-
-		wp_register_script(
 			'pro-elements-handlers',
 			ELEMENTOR_PRO_URL . 'assets/js/elements-handlers' . $suffix . '.js',
 			[
@@ -369,7 +361,6 @@ class Plugin {
 
 	private function get_frontend_depends() {
 		$frontend_depends = [
-			'elementor-pro-webpack-runtime',
 			'elementor-frontend-modules',
 		];
 
@@ -478,33 +469,31 @@ class Plugin {
 
 		if ( is_user_logged_in() ) {
 			$this->integrations = new Integrations_Manager(); // TODO: This one is safe to move out of the condition.
-
 			$this->notifications = new Notifications_Manager();
-
-
-
 			if ( is_admin() ) {
 			$this->admin = new Admin();
-
-				require_once __DIR__ . '/updater/updater.php';
-				$config = array(
-					'slug'               => 'pro-elements.php',
-					'plugin_basename'    => ELEMENTOR_PRO_PLUGIN_BASE,
-					'proper_folder_name' => 'pro-elements',
-					'api_url'            => 'https://api.github.com/repos/proelements/proelements',
-					'raw_url'            => 'https://raw.githubusercontent.com/proelements/proelements/master',
-					'github_url'         => 'https://github.com/proelements/proelements',
-					'zip_url'            => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
-					'sslverify'          => true,
-					'requires'           => '5.0',
-					'tested'             => '5.4.2',
-					'readme'             => 'README.md',
-					'access_token'       => '',
-				);
-				new Updater( $config );
 		}
 
 		Maintenance::init();
+		}
+
+		if ( is_admin() || wp_doing_cron() ) {
+			require_once __DIR__ . '/updater/updater.php';
+			$config = array(
+				'slug'               => 'pro-elements.php',
+				'plugin_basename'    => ELEMENTOR_PRO_PLUGIN_BASE,
+				'proper_folder_name' => 'pro-elements',
+				'api_url'            => 'https://api.github.com/repos/proelements/proelements',
+				'raw_url'            => 'https://raw.githubusercontent.com/proelements/proelements/master',
+				'github_url'         => 'https://github.com/proelements/proelements',
+				'zip_url'            => 'https://github.com/proelements/proelements/archive/v{release_version}.zip',
+				'sslverify'          => true,
+				'requires'           => '5.0',
+				'tested'             => '5.4.2',
+				'readme'             => 'README.md',
+				'access_token'       => '',
+			);
+			new Updater( $config );
 		}
 	}
 

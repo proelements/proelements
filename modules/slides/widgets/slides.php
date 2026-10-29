@@ -11,6 +11,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Slides\Controls\Control_Slides_Animation;
 
@@ -1620,5 +1621,50 @@ class Slides extends Base_Widget {
 			'library' => 'eicons',
 			'value' => $icon_value,
 		], [ 'aria-hidden' => 'true' ] );
+	}
+
+	public function render_markdown(): string {
+		$slides = $this->get_settings( 'slides' ) ?? [];
+
+		if ( empty( $slides ) ) {
+			return '';
+		}
+
+		$blocks = [];
+
+		foreach ( $slides as $slide ) {
+			$slide_blocks = [];
+
+			$heading = Markdown_Utils::plain_text( $slide['heading'] ?? '' );
+
+			if ( '' !== $heading ) {
+				$slide_blocks[] = '### ' . $heading;
+			}
+
+			$description = Markdown_Utils::plain_text( $slide['description'] ?? '' );
+
+			if ( '' !== $description ) {
+				$slide_blocks[] = $description;
+			}
+
+			$button_text = Markdown_Utils::plain_text( $slide['button_text'] ?? '' );
+			$button_url = $slide['link']['url'] ?? '';
+
+			if ( '' !== $button_text ) {
+				$slide_blocks[] = Markdown_Utils::button( $button_text, $button_url );
+			}
+
+			$image_md = Markdown_Utils::image_from_media_array( $slide['background_image'] ?? [] );
+
+			if ( '' !== $image_md ) {
+				$slide_blocks[] = $image_md;
+			}
+
+			if ( ! empty( $slide_blocks ) ) {
+				$blocks[] = Markdown_Utils::join_blocks( $slide_blocks );
+			}
+		}
+
+		return Markdown_Utils::widget_section( $this->get_title(), Markdown_Utils::join_blocks( $blocks ) );
 	}
 }

@@ -13,6 +13,7 @@ use Elementor\Icons_Manager;
 use Elementor\Utils;
 use Elementor\Widget_Image;
 use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Markdown_Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -1293,5 +1294,52 @@ class Hotspot extends Widget_Image {
 			</{{{ hotspotElementTag }}}>
 		<# }); #>
 		<?php
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$blocks = [];
+
+		if ( ! empty( $settings['image']['url'] ) ) {
+			$image_md = Markdown_Utils::image_from_media_array( $settings['image'] );
+
+			if ( '' !== $image_md ) {
+				$blocks[] = $image_md;
+			}
+		}
+
+		$hotspots = $settings['hotspot'] ?? [];
+
+		if ( ! empty( $hotspots ) ) {
+			$lines = [];
+
+			foreach ( $hotspots as $hotspot ) {
+				$label = Utils::html_to_plain_text( $hotspot['hotspot_label'] ?? '' );
+				$tooltip = \Elementor\Modules\MarkdownRender\Html_To_Markdown::convert( $hotspot['hotspot_tooltip_content'] ?? '' );
+				$url = $hotspot['hotspot_link']['url'] ?? '';
+
+				$text = '' !== $label ? $label : $tooltip;
+
+				if ( '' === $text ) {
+					continue;
+				}
+
+				$line = '' !== $url
+					? '- [' . $text . '](' . esc_url( $url ) . ')'
+					: '- ' . $text;
+
+				if ( '' !== $label && '' !== $tooltip && $label !== $tooltip ) {
+					$line .= ': ' . $tooltip;
+				}
+
+				$lines[] = $line;
+			}
+
+			if ( ! empty( $lines ) ) {
+				$blocks[] = implode( "\n", $lines );
+			}
+		}
+
+		return Markdown_Utils::join_blocks( $blocks );
 	}
 }

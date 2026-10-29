@@ -3,12 +3,12 @@ namespace ElementorPro\Modules\NestedCarousel\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
-use Elementor\Modules\NestedElements\Base\Widget_Nested_Base;
 use Elementor\Modules\NestedElements\Controls\Control_Nested_Repeater;
 use Elementor\Repeater;
-use ElementorPro\Plugin;
-use ElementorPro\Base\Base_Widget_Trait;
 use ElementorPro\Base\Base_Carousel_Trait;
+use ElementorPro\Base\Base_Widget_Trait;
+use ElementorPro\Base\Widget_Nested_Base_Pro;
+use ElementorPro\Plugin;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Nested_Carousel extends Widget_Nested_Base {
+class Nested_Carousel extends Widget_Nested_Base_Pro {
 	use Base_Widget_Trait;
 	use Base_Carousel_Trait;
 
@@ -37,7 +37,7 @@ class Nested_Carousel extends Widget_Nested_Base {
 	}
 
 	public function show_in_panel() {
-		return Plugin::elementor()->experiments->is_feature_active( 'nested-elements', true );
+		return Plugin::elementor()->experiments->is_feature_active( 'container' );
 	}
 
 	public function has_widget_inner_wrapper(): bool {

@@ -26,6 +26,10 @@ class Collection_Loop_Pagination extends Atomic_Element_Base {
 	use Has_Element_Template;
 	use Has_Pagination_Context;
 
+	public static function get_computed_html_tag( array $settings ): string {
+		return 'nav';
+	}
+
 	const ELEMENT_TYPE = 'e-pagination';
 	const BASE_STYLE_KEY = 'base';
 

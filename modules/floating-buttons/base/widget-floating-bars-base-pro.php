@@ -10,4 +10,8 @@ abstract class Widget_Floating_Bars_Base_Pro extends Widget_Floating_Bars_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
 	}
+
+	public function render_markdown(): string {
+		return parent::render_markdown();
+	}
 }

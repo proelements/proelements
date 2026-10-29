@@ -8,6 +8,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
+use Elementor\Utils;
 use ElementorPro\Plugin;
 use ElementorPro\Base\Base_Widget;
 
@@ -953,6 +954,33 @@ class Blockquote extends Base_Widget {
 			<?php endif ?>
 		</blockquote>
 		<?php
+	}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$content = Utils::html_to_plain_text( $settings['blockquote_content'] ?? '' );
+		$author = Utils::html_to_plain_text( $settings['author_name'] ?? '' );
+
+		if ( '' === $content && '' === $author ) {
+			return '';
+		}
+
+		$lines = [];
+
+		if ( '' !== $content ) {
+			foreach ( preg_split( "/\r\n|\n|\r/", $content ) as $line ) {
+				$lines[] = '> ' . $line;
+			}
+		}
+
+		if ( '' !== $author ) {
+			if ( ! empty( $lines ) ) {
+				$lines[] = '>';
+			}
+			$lines[] = '> — ' . $author;
+		}
+
+		return implode( "\n", $lines );
 	}
 
 	/**

@@ -174,12 +174,15 @@ class Ajax_Handler {
 				$action->run( $record, $this );
 
 				$this->handle_bc_errors( $errors );
-			} catch ( \Exception $e ) {
-				$exception = $e;
+			} catch ( \Throwable $e ) {
+				$admin_message = "{$action->get_label()} {$e->getMessage()}";
+				$exception = $e instanceof \Exception
+					? $e
+					: new \Exception( $this->get_default_message( self::ERROR, $this->current_form['settings'] ), 0, $e );
 
 				// Add an admin error.
-				if ( ! in_array( $exception->getMessage(), $this->messages['admin_error'], true ) ) {
-					$this->add_admin_error_message( "{$action->get_label()} {$exception->getMessage()}" );
+				if ( ! in_array( $admin_message, $this->messages['admin_error'], true ) ) {
+					$this->add_admin_error_message( $admin_message );
 				}
 
 				// Add a user error.

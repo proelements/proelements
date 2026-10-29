@@ -1,10 +1,12 @@
 <?php
 namespace ElementorPro\Modules\Forms\Classes;
 
+use Elementor\Modules\MarkdownRender\Html_To_Markdown;
+use Elementor\Icons_Manager;
 use Elementor\Utils;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Base\Markdown_Utils;
 use ElementorPro\Modules\Forms\Module;
-use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -257,6 +259,169 @@ abstract class Form_Base extends Base_Widget {
 	}
 
 	public function render_plain_content() {}
+
+	public function render_markdown(): string {
+		$settings = $this->get_settings_for_display();
+		$body_lines = $this->build_form_field_lines( $settings['form_fields'] ?? [] );
+		$button = Utils::html_to_plain_text( $settings['button_text'] ?? '' );
+
+		if ( empty( $body_lines ) && '' === $button ) {
+			return '';
+		}
+
+		$parts = [];
+
+		$form_name = Utils::html_to_plain_text( $settings['form_name'] ?? '' );
+
+		if ( '' === $form_name ) {
+			$form_name = Utils::html_to_plain_text( $this->get_title() );
+		}
+
+		if ( '' !== $form_name ) {
+			$parts[] = '## ' . $form_name;
+		}
+
+		if ( ! empty( $body_lines ) ) {
+			$parts[] = implode( "\n\n", $body_lines );
+		}
+
+		if ( '' !== $button ) {
+			$parts[] = Markdown_Utils::button( $button );
+		}
+
+		return implode( "\n\n", $parts );
+	}
+
+	protected function build_form_field_lines( array $fields ): array {
+		$lines = [];
+		$bullet_buffer = [];
+
+		foreach ( $fields as $field ) {
+			$line = $this->get_form_field_markdown_line( $field );
+
+			if ( '' === $line ) {
+				continue;
+			}
+
+			if ( 0 === strpos( $line, '### ' ) ) {
+				if ( ! empty( $bullet_buffer ) ) {
+					$lines[] = implode( "\n", $bullet_buffer );
+					$bullet_buffer = [];
+				}
+
+				$lines[] = $line;
+				continue;
+			}
+
+			if ( 0 === strpos( $line, '- ' ) ) {
+				$bullet_buffer[] = $line;
+				continue;
+			}
+
+			if ( ! empty( $bullet_buffer ) ) {
+				$lines[] = implode( "\n", $bullet_buffer );
+				$bullet_buffer = [];
+			}
+
+			$lines[] = $line;
+		}
+
+		if ( ! empty( $bullet_buffer ) ) {
+			$lines[] = implode( "\n", $bullet_buffer );
+		}
+
+		return $lines;
+	}
+
+	protected function get_form_field_markdown_line( array $field ): string {
+		$type = $field['field_type'] ?? '';
+
+		if ( in_array( $type, $this->get_form_markdown_skip_field_types(), true ) ) {
+			return '';
+		}
+
+		if ( 'step' === $type ) {
+			$label = $this->get_form_field_label( $field );
+
+			return '' !== $label ? '### ' . $label : '';
+		}
+
+		if ( 'html' === $type ) {
+			return trim( Html_To_Markdown::convert( $field['field_html'] ?? '' ) );
+		}
+
+		$label = $this->get_form_field_label( $field );
+
+		if ( '' === $label ) {
+			return '';
+		}
+
+		$meta_parts = [ $type ];
+
+		if ( ! empty( $field['required'] ) ) {
+			$meta_parts[] = 'required';
+		}
+
+		$options = $this->get_form_field_options_summary( $field );
+
+		$meta = implode( ', ', $meta_parts );
+
+		if ( '' !== $options ) {
+			$meta .= ': ' . $options;
+		}
+
+		return '- **' . $label . '** (' . $meta . ')';
+	}
+
+	protected function get_form_field_label( array $field ): string {
+		$label = Utils::html_to_plain_text( $field['field_label'] ?? '' );
+
+		if ( '' === $label ) {
+			$label = Utils::html_to_plain_text( $field['placeholder'] ?? '' );
+		}
+
+		if ( '' === $label ) {
+			$label = (string) ( $field['field_type'] ?? '' );
+		}
+
+		return $label;
+	}
+
+	protected function get_form_field_options_summary( array $field ): string {
+		$type = $field['field_type'] ?? '';
+
+		if ( ! in_array( $type, [ 'select', 'radio', 'checkbox' ], true ) ) {
+			return '';
+		}
+
+		$options = preg_split( "/\r\n|\n|\r/", (string) ( $field['field_options'] ?? '' ) );
+
+		if ( empty( $options ) ) {
+			return '';
+		}
+
+		$labels = [];
+
+		foreach ( $options as $option ) {
+			$option_label = $option;
+
+			if ( false !== strpos( $option, '|' ) ) {
+				$option_label = explode( '|', $option )[0];
+			}
+
+			$option_label = Utils::html_to_plain_text( $option_label );
+
+			if ( '' !== $option_label ) {
+				$labels[] = $option_label;
+			}
+		}
+
+		return implode( ', ', $labels );
+	}
+
+	protected function get_form_markdown_skip_field_types(): array {
+		return [ 'recaptcha', 'recaptcha_v3', 'hidden', 'honeypot' ];
+	}
 
 	public function get_attribute_name( $item ) {
 		return "form_fields[{$item['custom_id']}]";

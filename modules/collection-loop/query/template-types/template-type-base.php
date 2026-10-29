@@ -2,8 +2,13 @@
 
 namespace ElementorPro\Modules\CollectionLoop\Query\TemplateTypes;
 
+use Elementor\Element_Base;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Toggle_Control;
+use ElementorPro\Modules\CollectionLoop\Query\ItemProviders\Loop_Item_Provider;
+use ElementorPro\Modules\CollectionLoop\Query\ItemProviders\Post_Loop_Item_Provider;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query;
+use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Args_Builder;
+use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Runner;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -37,6 +42,43 @@ abstract class Template_Type_Base {
 	abstract public function get_query_section_items(): array;
 
 	abstract public function build_query_args( array $query_settings ): array;
+
+	/**
+	 * Whether this template type supports pagination.
+	 *
+	 * Term-based sources return `false` because `get_terms()` needs an extra count
+	 * query for `max_num_pages`, and {@see Term_Loop_Item_Provider::max_num_pages()}
+	 * is hardcoded to `1`. Post- and product-like sources override nothing.
+	 */
+	public function supports_pagination(): bool {
+		return true;
+	}
+
+	/**
+	 * Build a Loop_Item_Provider from resolved query settings.
+	 *
+	 * Default implementation is post-based: delegates to Loop_Query_Runner and
+	 * wraps the resulting WP_Query in a Post_Loop_Item_Provider. Term-based
+	 * types override this directly.
+	 */
+	public function build_item_provider( array $query_settings, ?Element_Base $element = null ): Loop_Item_Provider {
+		$args     = $this->build_query_args( $query_settings );
+		$query_id = Loop_Query_Args_Builder::extract_query_id( $query_settings );
+		$page     = Loop_Query_Args_Builder::extract_page( $query_settings );
+		$offset   = Loop_Query_Args_Builder::extract_offset( $query_settings );
+
+		// The offset is the slot-aware form of pagination, so it wins over `paged`
+		// (WP_Query ignores `paged` once `offset` is set anyway).
+		if ( $offset > 0 ) {
+			$args['offset'] = $offset;
+		} elseif ( $page > 1 ) {
+			$args['paged'] = $page;
+		}
+
+		$query = ( new Loop_Query_Runner( $args, $query_id ) )->run( $element );
+
+		return new Post_Loop_Item_Provider( $query );
+	}
 
 	protected function setting( array $query_settings, string $key ) {
 		return $query_settings[ $key ] ?? null;
