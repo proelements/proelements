@@ -129,6 +129,7 @@ class API {
 			'atomic-loop',
 			'atomic-custom-css',
 			'atomic-components',
+			'form',
 			'theme-builder',
 			'form-submissions',
 			'akismet',
