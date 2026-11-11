@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 #wpcontent .wrap.elementor-admin-page-license.elementor-admin-page-license-editor-one {
   display: block;
 }
@@ -304,6 +304,13 @@ input[type=search].select2-search__field {
 .e-form-submissions-value-label:not(:last-child) {
   display: block;
   margin-block-end: 10px;
+}
+
+.elementor-pro-recaptcha-score-validation-message.success {
+  color: #00a32a;
+}
+.elementor-pro-recaptcha-score-validation-message.error {
+  color: #d63638;
 }
 
 span.font-variations-count {

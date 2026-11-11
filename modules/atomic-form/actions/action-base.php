@@ -24,7 +24,7 @@ abstract class Action_Base {
 	 * @param array $context Additional context (post_id, form_id, form_name).
 	 *                       Example: ['post_id' => 123, 'form_id' => 'contact', 'form_name' => 'Contact Form']
 	 * @return array Result array with 'status' and optional data.
-	 *               Success: ['status' => 'success', 'message' => '...', ...]
+	 *               Success: ['status' => 'success', 'message' => '...', 'log' => '...' (optional, stored in the submission action log), ...]
 	 *               Failure: ['status' => 'failed', 'error' => '...', ...]
 	 */
 	abstract public function execute( array $form_data, array $widget_settings, array $context ): array;

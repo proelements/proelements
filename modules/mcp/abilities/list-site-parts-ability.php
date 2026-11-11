@@ -3,6 +3,8 @@ namespace ElementorPro\Modules\Mcp\Abilities;
 
 use Elementor\Plugin as CorePlugin;
 use Elementor\TemplateLibrary\Source_Local;
+use ElementorPro\Modules\Popup\Document as Popup_Document;
+use ElementorPro\Modules\ThemeBuilder\AdminMenuItems\Theme_Builder_Menu_Item;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
 
@@ -20,7 +22,7 @@ class List_Site_Parts_Ability extends Abstract_Ability {
 		return new Ability_Definition(
 			__( 'List Site Parts', 'elementor-pro' ),
 			__(
-				'Lists Theme Builder site parts like header, footer, 404 page and more. Each row includes type, title, assignment, publish state, and whether it is rendered. is_active means the site part is published and matches a Theme Builder location on the front end. has_conditions means display conditions are saved on the document regardless of publish state. post_status is the raw WordPress status (draft, publish, private). A draft row with has_conditions true and is_active false means assignment succeeded but the site part will not render until published. Pass active: true to return only site parts that are currently rendered.',
+				'Lists Theme Builder site parts like header, footer, 404 page and more. Each row includes type, title, assignment, publish state, and whether it is rendered. is_active means the site part is published and matches a Theme Builder location on the front end. has_conditions means display conditions are saved on the document regardless of publish state. post_status is the raw WordPress status (draft, publish, private). A draft row with has_conditions true and is_active false means assignment succeeded but the site part will not render until published. Pass active: true to return only site parts that are currently rendered. Popup rows also include display_settings (triggers and Advanced Rules "timing"), writable via manage-site-parts.',
 				'elementor-pro'
 			),
 			'elementor',
@@ -31,8 +33,9 @@ class List_Site_Parts_Ability extends Abstract_Ability {
 					'idempotent' => true,
 					'destructive' => false,
 				],
+				'mutates_page' => false,
 			],
-			fn () => current_user_can( 'edit_posts' ),
+			fn () => current_user_can( Theme_Builder_Menu_Item::get_user_capability() ),
 			[
 				'type' => 'object',
 				'properties' => [
@@ -46,6 +49,14 @@ class List_Site_Parts_Ability extends Abstract_Ability {
 	}
 
 	public function execute( $input = [] ) {
+		if ( ! $this->check_permission() ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you are not allowed to perform this action.', 'elementor-pro' ),
+				[ 'status' => \WP_Http::FORBIDDEN ]
+			);
+		}
+
 		$input = is_array( $input ) ? $input : [];
 		$filter_active = ! empty( $input['active'] );
 		$active_ids = $this->collect_active_ids();
@@ -80,7 +91,7 @@ class List_Site_Parts_Ability extends Abstract_Ability {
 				continue;
 			}
 
-			$rows[] = [
+			$row = [
 				'id' => (int) $post_id,
 				'type' => Source_Local::get_template_type( $post_id ),
 				'title' => get_the_title( $post_id ),
@@ -90,9 +101,25 @@ class List_Site_Parts_Ability extends Abstract_Ability {
 				'is_active' => $is_active,
 				'conditions' => $conditions,
 			];
+
+			if ( $document instanceof Popup_Document ) {
+				$row['display_settings'] = $this->get_popup_display_settings( $document );
+			}
+
+			$rows[] = $row;
 		}
 
 		return $rows;
+	}
+
+	private function get_popup_display_settings( Popup_Document $document ): array {
+		$stored = $document->get_display_settings_data();
+		$stored = is_array( $stored ) ? $stored : [];
+
+		return [
+			'triggers' => $stored['triggers'] ?? [],
+			'timing' => $stored['timing'] ?? [],
+		];
 	}
 
 	private function collect_active_ids(): array {

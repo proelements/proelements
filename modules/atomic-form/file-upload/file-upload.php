@@ -21,12 +21,16 @@ use Elementor\Modules\AtomicWidgets\PropTypes\Color_Prop_Type;
 use Elementor\Modules\AtomicWidgets\Styles\Style_States;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
+use ElementorPro\Modules\AtomicForm\Has_Default_Field_Id;
+use ElementorPro\Modules\AtomicForm\Webmcp_Field_Props;
+use ElementorPro\Modules\AtomicWidgets\Traits\Has_Webmcp_Field_Exposure;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class File_Upload extends Atomic_Widget_Base {
 	use Has_Template;
+	use Has_Default_Field_Id;
 
 	public static function get_computed_html_tag( array $settings ): string {
 		return 'input';
@@ -67,7 +71,7 @@ class File_Upload extends Atomic_Widget_Base {
 			] )
 			->get();
 
-		return [
+		return array_merge( [
 			'classes' => Classes_Prop_Type::make()
 				->default( [] ),
 			'attachment-type' => String_Prop_Type::make()
@@ -86,8 +90,8 @@ class File_Upload extends Atomic_Widget_Base {
 			'required' => Boolean_Prop_Type::make()
 				->default( false ),
 			'attributes' => Attributes_Prop_Type::make()->meta( Overridable_Prop_Type::ignore() ),
-			'_cssid' => Default_Id_Provider::get_default_id_prop( self::get_element_type() ),
-		];
+			'_cssid' => Default_Id_Provider::get_default_id_prop( self::get_element_type() )->meta( 'llm_configurable', true )->description( 'ID of the file upload field, should be unique and describe the file requested (e.g. resume-file).' ),
+		], Webmcp_Field_Props::get_props() );
 	}
 
 	protected function define_atomic_controls(): array {
@@ -131,6 +135,7 @@ class File_Upload extends Atomic_Widget_Base {
 				->set_label( __( 'Settings', 'elementor-pro' ) )
 				->set_id( 'settings' )
 				->set_items( $this->get_settings_controls() ),
+			...Webmcp_Field_Props::get_controls(),
 		];
 	}
 

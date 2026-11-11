@@ -115,19 +115,24 @@ class Action_Runner {
 
 				$action_results[] = array_merge(
 					[ 'type' => $action_type ],
-					$result
+					array_diff_key( $result, [ 'log' => true ] )
 				);
 
-				if ( Action_Type::COLLECT_SUBMISSIONS === $action_type && 'success' === $result['status'] ) {
+				$success = 'success' === ( $result['status'] ?? 'failed' );
+
+				if ( Action_Type::COLLECT_SUBMISSIONS === $action_type && $success ) {
 					$submission_id = $result['submissionId'] ?? null;
 					if ( $submission_id ) {
 						$context['submission_id'] = $submission_id;
 					}
 				}
 
-				$success = 'success' === $result['status'];
-				$error_message = $success ? null : $result['error'];
-				self::persist_action_log( $context, $action_type, $success, $error_message, $actions_succeeded_count );
+				$log_message = self::get_result_log_message( $result, $success );
+
+				if ( ! $success ) {
+					$failed_actions[] = $action_type;
+				}
+				self::persist_action_log( $context, $action_type, $success, $log_message, $actions_succeeded_count );
 			} catch ( \Exception $e ) {
 				$action_results[] = [
 					'type' => $action_type,
@@ -187,12 +192,30 @@ class Action_Runner {
 	}
 
 	/**
+	 * Actions may attach an optional `log` message that is only written to the action log, never sent to the visitor.
+	 * Failed actions without one log their `error`.
+	 */
+	private static function get_result_log_message( array $result, bool $success ): ?string {
+		$log = $result['log'] ?? null;
+
+		if ( is_string( $log ) && '' !== $log ) {
+			return $log;
+		}
+
+		if ( ! $success ) {
+			return is_string( $result['error'] ?? null ) ? $result['error'] : null;
+		}
+
+		return null;
+	}
+
+	/**
 	 * Log outcomes for actions other than collect; updates `actions_succeeded_count` on success.
 	 *
 	 * @param array $context
 	 * @param int   $actions_succeeded_count
 	 */
-	private static function persist_action_log( array $context, string $action_type, bool $success, ?string $error_message, int &$actions_succeeded_count ): void {
+	private static function persist_action_log( array $context, string $action_type, bool $success, ?string $log_message, int &$actions_succeeded_count ): void {
 		if ( Action_Type::COLLECT_SUBMISSIONS === $action_type ) {
 			return;
 		}
@@ -212,9 +235,9 @@ class Action_Runner {
 				$submission_id,
 				[ 'actions_succeeded_count' => $actions_succeeded_count ]
 			);
-			$query->add_action_log( $submission_id, $presenter, Query::ACTIONS_LOG_STATUS_SUCCESS, null );
+			$query->add_action_log( $submission_id, $presenter, Query::ACTIONS_LOG_STATUS_SUCCESS, $log_message );
 		} else {
-			$query->add_action_log( $submission_id, $presenter, Query::ACTIONS_LOG_STATUS_FAILED, $error_message );
+			$query->add_action_log( $submission_id, $presenter, Query::ACTIONS_LOG_STATUS_FAILED, $log_message );
 		}
 	}
 
@@ -222,6 +245,9 @@ class Action_Runner {
 		$labels = [
 			Action_Type::EMAIL => esc_html__( 'Email', 'elementor-pro' ),
 			Action_Type::WEBHOOK => esc_html__( 'Webhook', 'elementor-pro' ),
+			Action_Type::REDIRECT => esc_html__( 'Redirect', 'elementor-pro' ),
+			Action_Type::POPUP => esc_html__( 'Popup', 'elementor-pro' ),
+			Action_Type::MAILCHIMP => esc_html__( 'Mailchimp', 'elementor-pro' ),
 		];
 
 		if ( isset( $labels[ $action_type ] ) ) {
@@ -250,6 +276,7 @@ class Action_Runner {
 		self::register_action( new Email_Action() );
 		self::register_action( new Collect_Submissions_Action() );
 		self::register_action( new Webhook_Action() );
+		self::register_action( new Redirect_Action() );
 
 		/**
 		 * Allow registering custom actions.

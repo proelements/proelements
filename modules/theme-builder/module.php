@@ -2,7 +2,6 @@
 namespace ElementorPro\Modules\ThemeBuilder;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Admin\Admin_Notices;
 use Elementor\Core\Admin\Menu\Admin_Menu_Manager;
 use Elementor\Core\Admin\Menu\Main as MainMenu;
 use Elementor\Core\App\App;
@@ -345,32 +344,6 @@ class Module extends Module_Base {
 		$admin_menu->register( $this->get_admin_templates_url( true ), new Theme_Builder_Menu_Item() );
 	}
 
-	public function print_new_theme_builder_promotion( $views ) {
-		/** @var Source_Local $source */
-		$source = Plugin::elementor()->templates_manager->get_source( 'local' );
-
-		$current_tab_group = $source->get_current_tab_group();
-
-		if ( self::ADMIN_LIBRARY_TAB_GROUP === $current_tab_group ) {
-			/**
-			 * @var Admin_Notices $admin_notices
-			 */
-			$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
-
-			$admin_notices->print_admin_notice( [
-				'title' => esc_html__( 'Meet the new Theme Builder: more intuitive and visual than ever', 'elementor-pro' ),
-				'description' => esc_html__( 'With the new Theme Builder you can visually manage every part of your site intuitively, making the task of designing a complete website that much easier', 'elementor-pro' ),
-				'button' => [
-					'text' => esc_html__( 'Try it now', 'elementor-pro' ),
-					'class' => 'elementor-button e-accent',
-					'url' => Plugin::elementor()->app->get_settings( 'menu_url' ),
-				],
-			] );
-		}
-
-		return $views;
-	}
-
 	private function get_admin_templates_url( $relative = false ) {
 		$base_url = Source_Local::ADMIN_MENU_SLUG;
 
@@ -508,7 +481,6 @@ class Module extends Module_Base {
 		}
 
 		add_filter( 'elementor/template-library/create_new_dialog_types', [ $this, 'create_new_dialog_types' ] );
-		add_filter( 'views_edit-' . Source_Local::CPT, [ $this, 'print_new_theme_builder_promotion' ], 9 );
 
 		// Moved into the IE module \ElementorPro\Core\App\Modules\ImportExport\Module::add_actions
 		// TODO: remove in 3.10.0

@@ -181,7 +181,11 @@ class Conditions_Manager {
 	 * @throws \Exception
 	 */
 	public function ajax_save_theme_template_conditions( $request ) {
-		$document = Utils::_unstable_get_document_for_edit( $request['editor_post_id'] );
+		$template_id = ! empty( $request['conditions_template_id'] )
+			? absint( $request['conditions_template_id'] )
+			: absint( $request['editor_post_id'] );
+
+		$document = Utils::_unstable_get_document_for_edit( $template_id );
 
 		if ( ! isset( $request['conditions'] ) ) {
 			$request['conditions'] = [];
@@ -421,7 +425,15 @@ class Conditions_Manager {
 
 		// In case the user want to preview any page with a theme_template_id,
 		// like http://domain.com/any-post/?preview=1&theme_template_id=6453
-		$force_template_id = Utils::_unstable_get_super_global_value( $_GET, 'theme_template_id' );
+		/**
+		 * Filters the theme template forced into its location for the current request.
+		 * When null, the `theme_template_id` URL param is used.
+		 *
+		 * @param int|null $force_template_id Template ID, or null for none.
+		 * @param string   $location          Theme location.
+		 */
+		$force_template_id = apply_filters( 'elementor_pro/theme_builder/force_template_id', null, $location )
+			?? Utils::_unstable_get_super_global_value( $_GET, 'theme_template_id' );
 		if ( $force_template_id ) {
 			$document = $theme_builder_module->get_document( $force_template_id );
 			// e.g. header / header

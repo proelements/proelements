@@ -1,0 +1,25 @@
+{%- set classes = settings.classes | join(' ') | trim %}
+{%- set id_attribute = settings._cssid is not empty ? 'id=' ~ settings._cssid | e('html_attr') : '' %}
+{%- set name = settings._cssid is not empty ? settings._cssid : id %}
+{%- set name_attribute = 'name=' ~ name | e('html_attr') %}
+{%- set label = settings.label is not empty ? settings.label : 'Hidden' %}
+{%- set request_param = settings.request_param %}
+<input type="hidden"
+	{{ id_attribute }}
+	{{ name_attribute }}
+	class="{{ classes }}"
+	data-interaction-id="{{ interaction_id | default(id) }}"
+	{% if request_param is not empty %}
+	data-id="{{ id }}"
+	data-e-type="{{ type }}"
+	data-request-param="{{ request_param.name | e('html_attr') }}"
+	{% if request_param.before is not empty %}data-request-before="{{ request_param.before | e('html_attr') }}"{% endif %}
+	{% if request_param.after is not empty %}data-request-after="{{ request_param.after | e('html_attr') }}"{% endif %}
+	{% if request_param.fallback is not empty %}data-request-fallback="{{ request_param.fallback | e('html_attr') }}"{% endif %}
+	{% endif %}
+	{# Core form-handlers.js reads the field label from aria-label #}
+	aria-label="{{ label | e('html_attr') }}"
+	{# A URL-parameter value is filled in the browser, so a cached page never carries another visitor's value #}
+	value="{{ request_param is not empty ? '' : settings.value | e('html_attr') }}"
+	{{ settings.attributes | raw }}
+/>

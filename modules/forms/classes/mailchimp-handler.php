@@ -19,18 +19,20 @@ class Mailchimp_Handler {
 	 * @throws \Exception
 	 */
 	public function __construct( $api_key ) {
-		if ( empty( $api_key ) ) {
+		$api_key = is_string( $api_key ) ? trim( $api_key ) : '';
+
+		if ( '' === $api_key ) {
 			throw new \Exception( 'Invalid API key.' );
 		}
 
 		// The API key is in format XXXXXXXXXXXXXXXXXXXX-us2 where us2 is the server sub domain for this account
-		$key_parts = explode( '-', $api_key );
-		if ( empty( $key_parts[1] ) || 0 !== strpos( $key_parts[1], 'us' ) ) {
+		$datacenter = substr( strrchr( $api_key, '-' ), 1 );
+		if ( ! preg_match( '/^[a-z]+\d+$/', $datacenter ) ) {
 			throw new \Exception( 'Invalid API key.' );
 		}
 
 		$this->api_key = $api_key;
-		$this->api_base_url = 'https://' . $key_parts[1] . '.api.mailchimp.com/3.0/';
+		$this->api_base_url = 'https://' . $datacenter . '.api.mailchimp.com/3.0/';
 		$this->api_request_args = [
 			'headers' => [
 				'Authorization' => 'Basic ' . base64_encode( 'user:' . $this->api_key ),
@@ -41,11 +43,19 @@ class Mailchimp_Handler {
 	public function query( $end_point ) {
 		$response = wp_safe_remote_get( $this->api_base_url . $end_point, $this->api_request_args );
 
-		if ( is_wp_error( $response ) || 200 != (int) wp_remote_retrieve_response_code( $response ) ) {
+		if ( is_wp_error( $response ) ) {
 			throw new \Exception( 'Mailchimp error.' );
 		}
 
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		$code = (int) wp_remote_retrieve_response_code( $response );
+
+		if ( 200 !== $code ) {
+			$detail = is_array( $body ) && is_string( $body['detail'] ?? null ) ? $body['detail'] : '';
+
+			throw new \Exception( '' !== $detail ? 'Mailchimp error: ' . $detail : 'Mailchimp error.', $code );
+		}
 
 		if ( ! is_array( $body ) ) {
 			throw new \Exception( 'Mailchimp error.' );

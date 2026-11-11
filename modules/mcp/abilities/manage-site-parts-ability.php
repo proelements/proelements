@@ -5,7 +5,10 @@ use Elementor\Modules\Mcp\Abilities\Utils\Tool_Performance_Metrics;
 use Elementor\Modules\Mcp\Events\Mcp_Event_Dispatcher;
 use Elementor\Plugin as CorePlugin;
 use ElementorPro\Modules\Mcp\Abilities\Utils\Bulk_Operations_Result;
+use ElementorPro\Modules\Mcp\Abilities\Utils\Popup_Display_Settings_Schema;
+use ElementorPro\Modules\Mcp\Abilities\Utils\Popup_Display_Settings_Writer;
 use ElementorPro\Modules\Mcp\Abilities\Utils\Template_Conditions_Writer;
+use ElementorPro\Modules\ThemeBuilder\AdminMenuItems\Theme_Builder_Menu_Item;
 use ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document;
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilderModule;
 
@@ -24,8 +27,18 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 
 	private Template_Conditions_Writer $conditions_writer;
 
-	public function __construct( ?Template_Conditions_Writer $conditions_writer = null ) {
+	private Popup_Display_Settings_Schema $display_settings_schema;
+
+	private Popup_Display_Settings_Writer $display_settings_writer;
+
+	public function __construct(
+		?Template_Conditions_Writer $conditions_writer = null,
+		?Popup_Display_Settings_Writer $display_settings_writer = null,
+		?Popup_Display_Settings_Schema $display_settings_schema = null
+	) {
 		$this->conditions_writer = $conditions_writer ?? new Template_Conditions_Writer();
+		$this->display_settings_schema = $display_settings_schema ?? new Popup_Display_Settings_Schema();
+		$this->display_settings_writer = $display_settings_writer ?? new Popup_Display_Settings_Writer( $this->display_settings_schema );
 	}
 
 	protected function get_ability_id(): string {
@@ -40,7 +53,7 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 			sprintf(
 				/* translators: %s: comma-separated list of supported theme document type slugs. */
 				__(
-					'Manage Elementor site parts (Theme Builder documents: %s). Bulk operations (1-50) with three actions: "create" makes a new site part as a draft (optionally assigning display conditions in the same call), "update" mutates an existing site part (currently the only mutable field is "conditions"; body/settings edits go via manage-elements / build-composition / update-page-settings), and "delete" removes a site part. Conditions are slash-separated strings like "include/general" (site-wide), "include/singular/post", "exclude/singular/post/42". Site parts are NOT published by this tool — they stay drafts and must be published separately (matches the editor UX). For repeating-layout patterns (one single template driven by dynamic data instead of N duplicated pages, include-all + exclude-exceptions condition scoping, Post Content placement), read the elementor://wordpress/best-practices resource before creating singles.',
+					'Manage Elementor site parts (Theme Builder documents: %s). Bulk operations (1-50) with three actions: "create" makes a new site part as a draft (optionally assigning display conditions in the same call), "update" mutates an existing site part (mutable fields are "conditions" and, for popups only, "display_settings"; body/settings edits go via manage-elements / build-composition / update-page-settings), and "delete" removes a site part. Conditions are slash-separated strings like "include/general" (site-wide), "include/singular/post", "exclude/singular/post/42". Popup "display_settings" holds the Triggers (what opens the popup) and Advanced Rules ("timing": who/when it may show) from the editor Publish Settings dialog; triggers only fire on the front end when the popup has display conditions AND is published. Site parts are NOT published by this tool — they stay drafts and must be published separately (matches the editor UX). For repeating-layout patterns (one single template driven by dynamic data instead of N duplicated pages, include-all + exclude-exceptions condition scoping, Post Content placement), read the elementor://wordpress/best-practices resource before creating singles.',
 					'elementor-pro'
 				),
 				implode( ', ', $supported_types )
@@ -60,15 +73,16 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 					'idempotent' => false,
 					'destructive' => true,
 				],
+				'mutates_page' => true,
 			],
-			fn () => current_user_can( 'edit_posts' ),
+			fn () => current_user_can( Theme_Builder_Menu_Item::get_user_capability() ),
 			[
 				'type' => 'object',
 				'required' => [ 'operations' ],
 				'properties' => [
 					'operations' => [
 						'type' => 'array',
-						'description' => 'Bulk operations (1-50). Each item requires action; create needs type (optional title, optional conditions); update needs post_id plus at least one mutable field (currently only conditions); delete needs post_id.',
+						'description' => 'Bulk operations (1-50). Each item requires action; create needs type (optional title, optional conditions, optional display_settings for popups); update needs post_id plus at least one mutable field (conditions, display_settings); delete needs post_id.',
 						'items' => [
 							'type' => 'object',
 							'required' => [ 'action' ],
@@ -89,6 +103,12 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 									'items' => [ 'type' => 'string' ],
 									'description' => 'Slash-separated condition strings. On create: defaults to [ "include/general" ] (site-wide) when the key is present with an empty array; omit the key entirely to leave the new site part unassigned. On update: only replaces conditions when the key is present; omit the key to leave existing conditions untouched.',
 								],
+								'display_settings' => [
+									'type' => 'object',
+									'description' => 'Popup only. Flat field maps per type, as stored by the editor. Each group is enabled by setting its toggle field to "yes" (or true), and its options are prefixed with the group name. A present type key REPLACES that type entirely (send every group you want kept; {} clears it); an omitted type key is left untouched. Read current values via list-site-parts.',
+									'additionalProperties' => false,
+									'properties' => $this->get_display_settings_properties_schema(),
+								],
 							],
 						],
 					],
@@ -100,6 +120,17 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 	public function execute( $input = [] ) {
 		$started_at = hrtime( true );
 		$input      = is_array( $input ) ? $input : [];
+
+		if ( ! $this->check_permission() ) {
+			$error = new \WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you are not allowed to perform this action.', 'elementor-pro' ),
+				[ 'status' => \WP_Http::FORBIDDEN ]
+			);
+			$this->emit_mcp_manage_site_parts_executed( $started_at, [], $error );
+			return $error;
+		}
+
 		$operations = $input['operations'] ?? null;
 
 		if ( ! is_array( $operations ) ) {
@@ -183,24 +214,13 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 
 	private function handle_create( int $index, array $operation, Bulk_Operations_Result $results ): void {
 		$type = isset( $operation['type'] ) ? sanitize_key( $operation['type'] ) : '';
+		$has_conditions = array_key_exists( 'conditions', $operation );
+		$raw_conditions = $operation['conditions'] ?? null;
 
-		if ( '' === $type || ! in_array( $type, $this->get_supported_types(), true ) ) {
-			$results->add_error(
-				$index,
-				self::ACTION_CREATE,
-				'invalid_theme_template_type',
-				sprintf(
-					/* translators: %s: submitted type. */
-					__( '"%s" is not a Theme Builder document type.', 'elementor-pro' ),
-					$type
-				)
-			);
-			return;
-		}
+		$error = $this->find_error_before_creating_draft( $type, $has_conditions, $raw_conditions );
 
-		$permission_error = $this->check_create_permission();
-		if ( $permission_error ) {
-			$results->add_error( $index, self::ACTION_CREATE, $permission_error->get_error_code(), $permission_error->get_error_message() );
+		if ( $error ) {
+			$results->add_error( $index, self::ACTION_CREATE, $error->get_error_code(), $error->get_error_message() );
 			return;
 		}
 
@@ -242,8 +262,8 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 			'type' => $type,
 		];
 
-		if ( array_key_exists( 'conditions', $operation ) ) {
-			$assign = $this->conditions_writer->write( $document, $post_id, $operation['conditions'] ?? null );
+		if ( $has_conditions ) {
+			$assign = $this->conditions_writer->write( $document, $post_id, $raw_conditions );
 
 			if ( is_wp_error( $assign ) ) {
 				$results->add_error( $index, self::ACTION_CREATE, $assign->get_error_code(), $assign->get_error_message() );
@@ -254,7 +274,40 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 			$extra['conflicts'] = $assign['conflicts'];
 		}
 
+		if ( array_key_exists( 'display_settings', $operation ) ) {
+			$display_settings = $this->display_settings_writer->write( $document, $operation['display_settings'] );
+
+			if ( is_wp_error( $display_settings ) ) {
+				$results->add_error( $index, self::ACTION_CREATE, $display_settings->get_error_code(), $display_settings->get_error_message(), [ 'id' => $post_id ] );
+				return;
+			}
+
+			$extra['display_settings'] = $display_settings;
+		}
+
 		$results->add_success( $index, self::ACTION_CREATE, $extra );
+	}
+
+	private function find_error_before_creating_draft( string $type, bool $has_conditions, $raw_conditions ): ?\WP_Error {
+		if ( '' === $type || ! in_array( $type, $this->get_supported_types(), true ) ) {
+			return new \WP_Error(
+				'invalid_theme_template_type',
+				sprintf(
+					/* translators: %s: submitted type. */
+					__( '"%s" is not a Theme Builder document type.', 'elementor-pro' ),
+					$type
+				),
+				[ 'status' => \WP_Http::BAD_REQUEST ]
+			);
+		}
+
+		$permission_error = $this->check_create_permission();
+
+		if ( $permission_error ) {
+			return $permission_error;
+		}
+
+		return $has_conditions ? $this->conditions_writer->validate( $raw_conditions ) : null;
 	}
 
 	private function handle_update( int $index, array $operation, Bulk_Operations_Result $results ): void {
@@ -296,12 +349,24 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 			$has_updatable_field = true;
 		}
 
+		if ( array_key_exists( 'display_settings', $operation ) ) {
+			$display_settings = $this->display_settings_writer->write( $document, $operation['display_settings'] );
+
+			if ( is_wp_error( $display_settings ) ) {
+				$results->add_error( $index, self::ACTION_UPDATE, $display_settings->get_error_code(), $display_settings->get_error_message() );
+				return;
+			}
+
+			$extra['display_settings'] = $display_settings;
+			$has_updatable_field = true;
+		}
+
 		if ( ! $has_updatable_field ) {
 			$results->add_error(
 				$index,
 				self::ACTION_UPDATE,
 				'no_updatable_fields',
-				__( 'update requires at least one mutable field (currently: conditions).', 'elementor-pro' )
+				__( 'update requires at least one mutable field (conditions, display_settings).', 'elementor-pro' )
 			);
 			return;
 		}
@@ -349,6 +414,15 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 		] );
 	}
 
+	private function get_display_settings_properties_schema(): array {
+		$properties = $this->display_settings_schema->get_input_schema();
+
+		$properties['triggers']['description'] = 'Triggers: what opens the popup. Example: { "page_load": "yes", "page_load_delay": 3 }. "click" counts clicks anywhere on the page; to open from one specific element, use the popup dynamic tag on that element link or the popup "open_selector" setting via update-page-settings instead.';
+		$properties['timing']['description'] = 'Advanced Rules: who may see the popup and when. Example: { "devices": "yes", "devices_devices": [ "desktop" ] }.';
+
+		return $properties;
+	}
+
 	private function get_supported_types(): array {
 		$types_config = ThemeBuilderModule::instance()->get_types_manager()->get_types_config();
 
@@ -356,6 +430,14 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 	}
 
 	private function check_create_permission(): ?\WP_Error {
+		if ( ! current_user_can( Theme_Builder_Menu_Item::get_user_capability() ) ) {
+			return new \WP_Error(
+				'cannot_create_theme_template',
+				__( 'You do not have permission to create theme templates.', 'elementor-pro' ),
+				[ 'status' => \WP_Http::FORBIDDEN ]
+			);
+		}
+
 		$post_type_object = get_post_type_object( self::TEMPLATE_LIBRARY_CPT );
 
 		if ( ! $post_type_object || ! current_user_can( $post_type_object->cap->create_posts ) ) {

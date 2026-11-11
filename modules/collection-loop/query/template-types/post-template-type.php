@@ -3,6 +3,7 @@
 namespace ElementorPro\Modules\CollectionLoop\Query\TemplateTypes;
 
 use Elementor\Modules\AtomicWidgets\Controls\Types\Date_Time_Control;
+use Elementor\Modules\AtomicWidgets\Controls\Types\Number_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Query_Chips_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Query_Filter_Repeater_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Select_Control;
@@ -10,12 +11,14 @@ use Elementor\Modules\AtomicWidgets\Controls\Types\Switch_Control;
 use Elementor\Modules\AtomicWidgets\PropDependencies\Manager as Dependency_Manager;
 use Elementor\Modules\AtomicWidgets\PropTypes\Date_Time_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Primitives\Boolean_Prop_Type;
+use Elementor\Modules\AtomicWidgets\PropTypes\Primitives\Number_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Primitives\String_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Query_Array_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Query_Filter_Array_Prop_Type;
 use ElementorPro\Core\Utils;
 use ElementorPro\Modules\CollectionLoop\Elements\Collection_Loop\Query_Filters;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query;
+use ElementorPro\Modules\CollectionLoop\Query\Post\Post_Avoid_List;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -134,6 +137,12 @@ class Post_Template_Type extends Template_Type_Base {
 			'exclude_filters'     => Query_Filter_Array_Prop_Type::make()
 				->default( [] )
 				->set_dependencies( $post_like_dependencies ),
+			'avoid_duplicates'    => Boolean_Prop_Type::make()
+				->default( false )
+				->set_dependencies( $post_like_dependencies ),
+			'offset'              => Number_Prop_Type::make()
+				->default( 0 )
+				->set_dependencies( $post_like_dependencies ),
 			'select_date'         => String_Prop_Type::make()
 				->enum( Loop_Query::SELECT_DATE_OPTIONS )
 				->default( Loop_Query::SELECT_DATE_ANYTIME )
@@ -187,6 +196,15 @@ class Post_Template_Type extends Template_Type_Base {
 			->set_allowed_keys( self::EXCLUDE_FILTER_TYPES )
 			->set_key_config( $shared_key_config )
 			->set_meta( [ 'layout' => 'full' ] );
+
+		$avoid_duplicates_control = Switch_Control::bind_to( 'avoid_duplicates' )
+			->set_label( __( 'Avoid duplicates', 'elementor-pro' ) )
+			->set_description( __( 'Prevents duplicate posts from appearing across multiple loops on the same page. Applies to the frontend only.', 'elementor-pro' ) );
+
+		$offset_control = Number_Control::bind_to( 'offset' )
+			->set_label( __( 'Skip items', 'elementor-pro' ) )
+			->set_description( __( 'Number of items to skip before the grid starts.', 'elementor-pro' ) )
+			->set_min( 0 );
 
 		$select_date_control = Select_Control::bind_to( 'select_date' )
 			->set_label( __( 'Date', 'elementor-pro' ) )
@@ -265,6 +283,8 @@ class Post_Template_Type extends Template_Type_Base {
 			$selection_control,
 			$include_control,
 			$exclude_control,
+			$avoid_duplicates_control,
+			$offset_control,
 			$select_date_control,
 			$date_before_control,
 			$date_after_control,
@@ -317,7 +337,25 @@ class Post_Template_Type extends Template_Type_Base {
 		$args = Query_Filters::apply( $args, $include_filters, Query_Filters::MODE_INCLUDE );
 		$args = Query_Filters::apply( $args, $exclude_filters, Query_Filters::MODE_EXCLUDE );
 
-		return $args;
+		return $this->apply_avoid_duplicates( $args, $query_settings );
+	}
+
+	protected function get_skipped_items( array $query_settings ): int {
+		$source = $this->setting( $query_settings, 'source' ) ?? self::SOURCE_POST;
+
+		if ( in_array( $source, self::NON_POST_TYPE_SOURCES, true ) ) {
+			return 0;
+		}
+
+		return max( 0, (int) $this->setting( $query_settings, 'offset' ) );
+	}
+
+	private function apply_avoid_duplicates( array $args, array $query_settings ): array {
+		if ( ! $this->setting( $query_settings, 'avoid_duplicates' ) ) {
+			return $args;
+		}
+
+		return Query_Filters::merge_post_not_in( $args, Post_Avoid_List::get() );
 	}
 
 	private function source_in_post_like_dependency_clause( array $post_like_sources ): array {

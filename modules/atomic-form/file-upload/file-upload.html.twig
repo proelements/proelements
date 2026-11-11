@@ -2,6 +2,7 @@
 {%- set id_attribute = settings._cssid is not empty ? 'id=' ~ settings._cssid | e('html_attr') : '' %}
 {%- set interactions_attribute = interactions is not empty ? 'data-interactions=' ~ interactions | json_encode | e('html_attr') : '' %}
 {%- set required_attribute = settings.required ? 'required' : '' %}
+{%- set webmcp_param_attribute = settings['webmcp-param-description'] is not empty ? 'toolparamdescription="' ~ settings['webmcp-param-description'] | e('html_attr') ~ '"' : '' %}
 {%- set multiple_attribute = settings.multiple ? 'multiple' : '' %}
 {%- set accept_attribute = settings['file-types'] is not empty ? 'accept=' ~ settings['file-types'] | e('html_attr') : '' %}
 {%- set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
@@ -19,5 +20,6 @@
 	{{ interactions_attribute }}
 	{{ accept_attribute | raw }}
 	{{ required_attribute }}
+	{{ webmcp_param_attribute | raw }}
 	{{ multiple_attribute }}
 />

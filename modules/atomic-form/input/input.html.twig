@@ -4,6 +4,7 @@
 {%- set placeholder_attribute = settings.placeholder is not empty ? 'placeholder=' ~ settings.placeholder | e('html_attr') : '' %}
 {%- set value_attribute = settings.value is not empty ? 'value=' ~ settings.value | e('html_attr') : '' %}
 {%- set required_attribute = settings.required ? 'required' : '' %}
+{%- set webmcp_param_attribute = settings['webmcp-param-description'] is not empty ? 'toolparamdescription="' ~ settings['webmcp-param-description'] | e('html_attr') ~ '"' : '' %}
 {%- set readonly_attribute = settings.readonly ? 'readonly' : '' %}
 {%- set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
 {%- set name_attribute = 'name=' ~ name | e('html_attr') %}
@@ -21,6 +22,7 @@
 	{{ placeholder_attribute | raw }}
 	{{ value_attribute | raw }}
 	{{ required_attribute }}
+	{{ webmcp_param_attribute | raw }}
 	{{ readonly_attribute }}
 	{{ autocomplete_attribute }}
 />

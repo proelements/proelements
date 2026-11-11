@@ -1,0 +1,12 @@
+{%- set classes = settings.classes | merge( [ 'e-form-recaptcha-score-base' ] ) | join(' ') | trim %}
+<div
+	data-id="{{ id }}"
+	data-e-type="{{ type }}"
+	{% if settings._cssid is not empty %}id="{{ settings._cssid | e('html_attr') }}"{% endif %}
+	class="{{ classes }}"
+	data-sitekey="{{ site_key | default('') | e('html_attr') }}"
+	data-badge="{{ settings.position | default('bottomright') | e('html_attr') }}"
+	data-action="{{ recaptcha_action | default('') | e('html_attr') }}"
+	data-token-field="{{ token_field | default('') | e('html_attr') }}"
+	{{ settings.attributes | raw }}
+></div>

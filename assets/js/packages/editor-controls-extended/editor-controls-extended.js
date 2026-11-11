@@ -1,6 +1,6 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 this.elementorV2 = this.elementorV2 || {};
-(function(exports, _elementor_license_api, _elementor_editor_controls, react, _wordpress_i18n, _elementor_icons, _elementor_ui, _elementor_editor_props, _elementor_schema, _elementor_editor_ui) {
+(function(exports, _elementor_license_api, _elementor_editor_controls, _elementor_http_client, _elementor_query, react, _wordpress_i18n, _elementor_icons, _elementor_ui, _elementor_editor_props, _elementor_schema, _elementor_editor_ui) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;
@@ -28,6 +28,7 @@ this.elementorV2 = this.elementorV2 || {};
 		enumerable: true
 	}) : target, mod));
 	//#endregion
+	_elementor_editor_controls = __toESM(_elementor_editor_controls);
 	let react$1 = __toESM(react, 1);
 	react = __toESM(react);
 	//#region packages/packages/pro/editor-controls-extended/src/extend-transition-properties.ts
@@ -72,6 +73,803 @@ this.elementorV2 = this.elementorV2 || {};
 		};
 	}
 	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
+	function _typeof(o) {
+		"@babel/helpers - typeof";
+		return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+			return typeof o;
+		} : function(o) {
+			return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+		}, _typeof(o);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
+	function toPrimitive(t, r) {
+		if ("object" != _typeof(t) || !t) return t;
+		var e = t[Symbol.toPrimitive];
+		if (void 0 !== e) {
+			var i = e.call(t, r || "default");
+			if ("object" != _typeof(i)) return i;
+			throw new TypeError("@@toPrimitive must return a primitive value.");
+		}
+		return ("string" === r ? String : Number)(t);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
+	function toPropertyKey(t) {
+		var i = toPrimitive(t, "string");
+		return "symbol" == _typeof(i) ? i : i + "";
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
+	function _defineProperty$2(e, r, t) {
+		return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+			value: t,
+			enumerable: !0,
+			configurable: !0,
+			writable: !0
+		}) : e[r] = t, e;
+	}
+	__name(_defineProperty$2, "_defineProperty");
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+	function ownKeys$2(e, r) {
+		var t = Object.keys(e);
+		if (Object.getOwnPropertySymbols) {
+			var o = Object.getOwnPropertySymbols(e);
+			r && (o = o.filter(function(r2) {
+				return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+			})), t.push.apply(t, o);
+		}
+		return t;
+	}
+	__name(ownKeys$2, "ownKeys");
+	function _objectSpread2$2(e) {
+		for (var r = 1; r < arguments.length; r++) {
+			var t = null != arguments[r] ? arguments[r] : {};
+			r % 2 ? ownKeys$2(Object(t), true).forEach(function(r2) {
+				_defineProperty$2(e, r2, t[r2]);
+			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function(r2) {
+				Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+			});
+		}
+		return e;
+	}
+	__name(_objectSpread2$2, "_objectSpread2");
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/icon-libraries/atomic-custom-icons.ts
+	var NATIVE_TAB_NAMES = /* @__PURE__ */ new Set([
+		"all",
+		"recommended",
+		"GoPro"
+	]);
+	var SUPPORTED_CUSTOM_ICON_TYPES = /* @__PURE__ */ new Set([
+		"fontello",
+		"icomoon",
+		"fontastic"
+	]);
+	var DEFAULT_ICON_SIZE$1 = 512;
+	var CUSTOM_ICON_LIBRARIES_QUERY_KEY = ["atomic-custom-icons"];
+	var CUSTOM_ICON_SVG_URL = "elementor-pro/v1/custom-icon-svg";
+	var PAGE_SIZE = 250;
+	var MAX_PAGES = 100;
+	var FAILURE_RETRY_MS = 3e4;
+	var iconMaps = /* @__PURE__ */ new Map();
+	var singleIcons = /* @__PURE__ */ new Map();
+	function useCustomIconLibraries(enabled) {
+		return (0, _elementor_query.useQuery)({
+			queryKey: CUSTOM_ICON_LIBRARIES_QUERY_KEY,
+			queryFn: () => loadCustomIconLibraries(),
+			enabled: enabled && areCustomIconLibrariesEnabled(),
+			staleTime: Infinity
+		});
+	}
+	function loadCustomIconLibraries() {
+		return _loadCustomIconLibraries.apply(this, arguments);
+	}
+	function _loadCustomIconLibraries() {
+		_loadCustomIconLibraries = _asyncToGenerator(function* () {
+			return (yield Promise.all(getCustomIconLibraryConfigs().map((library) => loadCustomLibrary(library)))).flat();
+		});
+		return _loadCustomIconLibraries.apply(this, arguments);
+	}
+	function resolveCustomIconSvg(_x, _x2) {
+		return _resolveCustomIconSvg.apply(this, arguments);
+	}
+	function _resolveCustomIconSvg() {
+		_resolveCustomIconSvg = _asyncToGenerator(function* (library, iconValue) {
+			const config = getRenderableIconLibraryConfigs().find((item) => item.name === String(library));
+			if (!config) {
+				iconMaps.delete(String(library));
+				return null;
+			}
+			if (!areCustomIconLibrariesEnabled()) return resolveSingleIconSvg(config.name, iconValue);
+			const markup = (yield loadIconMap(config.name))[iconValue];
+			return typeof markup === "string" && markup !== "" ? markup : null;
+		});
+		return _resolveCustomIconSvg.apply(this, arguments);
+	}
+	function resolveSingleIconSvg(library, iconValue) {
+		const key = `${library}\0${iconValue}`;
+		const cached = singleIcons.get(key);
+		if (cached && (null === cached.failedAt || Date.now() - cached.failedAt < FAILURE_RETRY_MS)) return cached.request;
+		const entry = {
+			request: Promise.resolve(null),
+			failedAt: null
+		};
+		entry.request = fetchSingleIconSvg(library, iconValue, () => {
+			entry.failedAt = Date.now();
+		});
+		singleIcons.set(key, entry);
+		return entry.request;
+	}
+	function fetchSingleIconSvg(_x3, _x4, _x5) {
+		return _fetchSingleIconSvg.apply(this, arguments);
+	}
+	function _fetchSingleIconSvg() {
+		_fetchSingleIconSvg = _asyncToGenerator(function* (library, iconValue, onFailure) {
+			try {
+				return extractHtml(yield (0, _elementor_http_client.httpService)().get(CUSTOM_ICON_SVG_URL, { params: {
+					library,
+					value: iconValue
+				} }));
+			} catch (_unused) {
+				onFailure();
+				return null;
+			}
+		});
+		return _fetchSingleIconSvg.apply(this, arguments);
+	}
+	function extractHtml(payload) {
+		let current = payload;
+		for (let depth = 0; depth < 4; depth++) {
+			if (!current || typeof current !== "object") return null;
+			const record = current;
+			if (typeof record.html === "string") return record.html !== "" ? record.html : null;
+			current = "data" in record ? record.data : void 0;
+		}
+		return null;
+	}
+	function loadCustomLibrary(_x6) {
+		return _loadCustomLibrary.apply(this, arguments);
+	}
+	function _loadCustomLibrary() {
+		_loadCustomLibrary = _asyncToGenerator(function* (library) {
+			const iconMap = yield loadIconMap(library.name);
+			return Object.entries(iconMap).map(([value, svgMarkup]) => {
+				const name = getIconName(library, value);
+				return {
+					id: `${library.name}:${name}`,
+					name,
+					label: name.replace(/-/g, " "),
+					library: library.name,
+					value,
+					aliases: [],
+					width: DEFAULT_ICON_SIZE$1,
+					height: DEFAULT_ICON_SIZE$1,
+					paths: [],
+					glyphClass: value,
+					svgMarkup
+				};
+			});
+		});
+		return _loadCustomLibrary.apply(this, arguments);
+	}
+	function loadIconMap(library) {
+		const cached = iconMaps.get(library);
+		if (cached && (null === cached.failedAt || Date.now() - cached.failedAt < FAILURE_RETRY_MS)) return cached.request;
+		const entry = {
+			request: Promise.resolve({}),
+			failedAt: null
+		};
+		entry.request = fetchIconMap(library, () => {
+			entry.failedAt = Date.now();
+		});
+		iconMaps.set(library, entry);
+		return entry.request;
+	}
+	function fetchIconMap(_x7, _x8) {
+		return _fetchIconMap.apply(this, arguments);
+	}
+	function _fetchIconMap() {
+		_fetchIconMap = _asyncToGenerator(function* (library, onFailure) {
+			const icons = {};
+			try {
+				for (let page = 0; page < MAX_PAGES; page++) {
+					const result = yield fetchLibraryPage(library, page * PAGE_SIZE);
+					Object.assign(icons, result.icons);
+					if (!result.truncated) break;
+				}
+			} catch (_unused2) {
+				onFailure();
+			}
+			return icons;
+		});
+		return _fetchIconMap.apply(this, arguments);
+	}
+	function fetchLibraryPage(_x9, _x10) {
+		return _fetchLibraryPage.apply(this, arguments);
+	}
+	function _fetchLibraryPage() {
+		_fetchLibraryPage = _asyncToGenerator(function* (library, offset) {
+			return normalizePage(yield (0, _elementor_http_client.httpService)().get(CUSTOM_ICON_SVG_URL, { params: {
+				library,
+				offset,
+				limit: PAGE_SIZE
+			} }));
+		});
+		return _fetchLibraryPage.apply(this, arguments);
+	}
+	function normalizePage(payload) {
+		const empty = {
+			icons: {},
+			truncated: false,
+			total: 0
+		};
+		let current = payload;
+		for (let depth = 0; depth < 4; depth++) {
+			if (!current || typeof current !== "object") return empty;
+			const record = current;
+			if (record.icons && typeof record.icons === "object" && !Array.isArray(record.icons)) {
+				const icons = {};
+				Object.entries(record.icons).forEach(([key, value]) => {
+					if (typeof value === "string" && value !== "") icons[key] = value;
+				});
+				return {
+					icons,
+					truncated: true === record.truncated,
+					total: typeof record.total === "number" ? record.total : 0
+				};
+			}
+			current = "data" in record ? record.data : void 0;
+		}
+		return empty;
+	}
+	function getIconName(library, value) {
+		var _value$trim$split$pop;
+		const className = (_value$trim$split$pop = value.trim().split(/\s+/).pop()) !== null && _value$trim$split$pop !== void 0 ? _value$trim$split$pop : value;
+		return className.startsWith(library.prefix) ? className.slice(library.prefix.length) : className;
+	}
+	function getFontAwesomeConfig() {
+		var _common$config;
+		const common = window.elementorCommon;
+		return common === null || common === void 0 || (_common$config = common.config) === null || _common$config === void 0 || (_common$config = _common$config.fontAwesome) === null || _common$config === void 0 ? void 0 : _common$config.v7;
+	}
+	function areCustomIconLibrariesEnabled() {
+		var _getFontAwesomeConfig;
+		return true === ((_getFontAwesomeConfig = getFontAwesomeConfig()) === null || _getFontAwesomeConfig === void 0 ? void 0 : _getFontAwesomeConfig.customIconLibrariesEnabled);
+	}
+	function areCustomIconsRenderable() {
+		var _getFontAwesomeConfig2;
+		return areCustomIconLibrariesEnabled() || true === ((_getFontAwesomeConfig2 = getFontAwesomeConfig()) === null || _getFontAwesomeConfig2 === void 0 ? void 0 : _getFontAwesomeConfig2.customIconRenderingEnabled);
+	}
+	function getCustomIconLibrariesUploadUrl() {
+		var _getFontAwesomeConfig3;
+		var _getFontAwesomeConfig4;
+		return (_getFontAwesomeConfig3 = (_getFontAwesomeConfig4 = getFontAwesomeConfig()) === null || _getFontAwesomeConfig4 === void 0 ? void 0 : _getFontAwesomeConfig4.customIconLibrariesUploadUrl) !== null && _getFontAwesomeConfig3 !== void 0 ? _getFontAwesomeConfig3 : "";
+	}
+	function getCustomIconLibraryConfigs() {
+		return areCustomIconLibrariesEnabled() ? readLibraryConfigs() : [];
+	}
+	function getRenderableIconLibraryConfigs() {
+		return areCustomIconsRenderable() ? readLibraryConfigs() : [];
+	}
+	function readLibraryConfigs() {
+		var _window$elementor;
+		var _libraries$icons;
+		const libraries = (_window$elementor = window.elementor) === null || _window$elementor === void 0 ? void 0 : _window$elementor.config;
+		return (Array.isArray(libraries === null || libraries === void 0 || (_libraries$icons = libraries.icons) === null || _libraries$icons === void 0 ? void 0 : _libraries$icons.libraries) ? libraries.icons.libraries : []).flatMap((value) => {
+			const library = normalizeCustomIconLibraryConfig(value);
+			return library ? [library] : [];
+		});
+	}
+	function normalizeCustomIconLibraryConfig(value) {
+		if (!value || typeof value !== "object") return null;
+		const library = value;
+		const name = coerceLibraryName(library.name);
+		if (name === "" || NATIVE_TAB_NAMES.has(name) || library.native === true || name.startsWith("fa-")) return null;
+		if (typeof library.prefix !== "string") return null;
+		const type = typeof library.custom_icon_type === "string" ? library.custom_icon_type.toLowerCase() : "";
+		if (!SUPPORTED_CUSTOM_ICON_TYPES.has(type)) return null;
+		return _objectSpread2$2(_objectSpread2$2({}, library), {}, {
+			name,
+			prefix: library.prefix
+		});
+	}
+	function coerceLibraryName(value) {
+		if (typeof value === "string") return value;
+		if (typeof value === "number" && Number.isFinite(value)) return String(value);
+		return "";
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/icon-libraries/atomic-font-awesome-pro.ts
+	var PRO_LIBRARIES = [
+		{
+			file: "solid",
+			library: "fa-solid",
+			prefix: "fas"
+		},
+		{
+			file: "regular",
+			library: "fa-regular",
+			prefix: "far"
+		},
+		{
+			file: "light",
+			library: "fa-light",
+			prefix: "fal"
+		},
+		{
+			file: "brands",
+			library: "fa-brands",
+			prefix: "fab"
+		}
+	];
+	var FONT_AWESOME_PRO_QUERY_KEY = ["atomic-font-awesome-pro"];
+	var FONT_AWESOME_PRO_ICON_URL = "elementor-pro/v1/font-awesome-pro-icon";
+	var SVG_KIT_METHOD = "js";
+	var DEFAULT_ICON_SIZE = 512;
+	var KIT_MISS_TTL_MS = 6e4;
+	var UNRESOLVED_TTL_MS = 5 * 6e4;
+	var STORE_RETRY_MS = 5 * 6e4;
+	var kitRequests = /* @__PURE__ */ new Map();
+	var namesRequest = null;
+	var persistedIcons = /* @__PURE__ */ new Set();
+	var storedRequests = /* @__PURE__ */ new Map();
+	var pendingTimers = /* @__PURE__ */ new Set();
+	var kitMisses = /* @__PURE__ */ new Map();
+	var aliasGroups = /* @__PURE__ */ new Map();
+	var unresolvedIcons = /* @__PURE__ */ new Set();
+	var unresolvedListeners = /* @__PURE__ */ new Set();
+	var unresolvedVersion = 0;
+	var MIN_KIT_ICONS = 500;
+	var KIT_RULE_PATTERN = /((?:\.fa-[a-z0-9-]+,?)+)\{--fa:"(\\[0-9a-f]+|[^"\\])"\}/g;
+	var KIT_RESOURCE_PATTERN = /^(https:\/\/[^/]+)\/releases\/v(\d[\w.-]*)\/.*[?&]token=([\w]+)/;
+	function isFontAwesomeProEnabled() {
+		var _getConfig;
+		return true === ((_getConfig = getConfig()) === null || _getConfig === void 0 ? void 0 : _getConfig.enabled) && isSvgKit() && getKitConfig() !== void 0;
+	}
+	function useFontAwesomeProIcons(enabled) {
+		const query = (0, _elementor_query.useQuery)({
+			queryKey: FONT_AWESOME_PRO_QUERY_KEY,
+			queryFn: loadNonEmptyIcons,
+			enabled: enabled && isFontAwesomeProEnabled(),
+			staleTime: Infinity,
+			retry: false
+		});
+		const version = (0, react.useSyncExternalStore)(subscribeToUnresolved, getUnresolvedVersion);
+		const data = (0, react.useMemo)(() => withoutUnresolved(query.data, version), [query.data, version]);
+		return _objectSpread2$2(_objectSpread2$2({}, query), {}, { data });
+	}
+	function loadNonEmptyIcons() {
+		return _loadNonEmptyIcons.apply(this, arguments);
+	}
+	function _loadNonEmptyIcons() {
+		_loadNonEmptyIcons = _asyncToGenerator(function* () {
+			const icons = yield loadFontAwesomeProIcons();
+			if (icons.length === 0) throw new Error("Font Awesome Pro icons are unavailable");
+			return icons;
+		});
+		return _loadNonEmptyIcons.apply(this, arguments);
+	}
+	function withoutUnresolved(icons, version) {
+		return version >= 0 ? icons === null || icons === void 0 ? void 0 : icons.filter((icon) => !unresolvedIcons.has(icon.id)) : icons;
+	}
+	function subscribeToUnresolved(listener) {
+		unresolvedListeners.add(listener);
+		return () => {
+			unresolvedListeners.delete(listener);
+		};
+	}
+	function getUnresolvedVersion() {
+		return unresolvedVersion;
+	}
+	function markUnresolved(library, name) {
+		const id = `${library}:${name}`;
+		if (unresolvedIcons.has(id)) return;
+		unresolvedIcons.add(id);
+		notifyUnresolvedChange();
+		schedule(() => {
+			if (unresolvedIcons.delete(id)) notifyUnresolvedChange();
+		}, UNRESOLVED_TTL_MS);
+	}
+	function schedule(callback, delay) {
+		const timer = setTimeout(() => {
+			pendingTimers.delete(timer);
+			callback();
+		}, delay);
+		pendingTimers.add(timer);
+	}
+	function notifyUnresolvedChange() {
+		unresolvedVersion++;
+		unresolvedListeners.forEach((listener) => listener());
+	}
+	function loadFontAwesomeProIcons() {
+		var _getConfig2;
+		const namesUrl = (_getConfig2 = getConfig()) === null || _getConfig2 === void 0 ? void 0 : _getConfig2.namesUrl;
+		if (!isFontAwesomeProEnabled() || typeof namesUrl !== "string" || namesUrl === "") return Promise.resolve([]);
+		if (!namesRequest) namesRequest = loadIconNames(namesUrl).then((icons) => {
+			if (icons.length === 0) namesRequest = null;
+			return icons;
+		});
+		return namesRequest;
+	}
+	function resolveFontAwesomeProPreviewSvg(_x, _x2, _x3) {
+		return _resolveFontAwesomeProPreviewSvg.apply(this, arguments);
+	}
+	function _resolveFontAwesomeProPreviewSvg() {
+		_resolveFontAwesomeProPreviewSvg = _asyncToGenerator(function* (library, iconValue, signal) {
+			const owned = getOwnedIcon(library, iconValue);
+			if (!owned) return null;
+			if (!isBrowsingLicensed() || !isSvgKit()) return getConfig() ? loadStoredMarkup(library, iconValue) : null;
+			const definition = yield findKitDefinition(owned, signal);
+			if (definition === null) markUnresolved(owned.library, owned.name);
+			return definition ? buildSvg(definition) : null;
+		});
+		return _resolveFontAwesomeProPreviewSvg.apply(this, arguments);
+	}
+	function resolveFontAwesomeProSvg(_x4, _x5, _x6) {
+		return _resolveFontAwesomeProSvg.apply(this, arguments);
+	}
+	function _resolveFontAwesomeProSvg() {
+		_resolveFontAwesomeProSvg = _asyncToGenerator(function* (library, iconValue, signal) {
+			const owned = getOwnedIcon(library, iconValue);
+			if (!owned) return null;
+			if (!isBrowsingLicensed() || !isSvgKit()) return getConfig() ? loadStoredMarkup(library, iconValue) : null;
+			const definition = yield findKitDefinition(owned, signal);
+			if (!definition) return definition === void 0 ? loadStoredMarkup(library, iconValue) : null;
+			persistIcon(library, iconValue, definition);
+			return buildSvg(definition);
+		});
+		return _resolveFontAwesomeProSvg.apply(this, arguments);
+	}
+	function loadIconNames(_x7) {
+		return _loadIconNames.apply(this, arguments);
+	}
+	function _loadIconNames() {
+		_loadIconNames = _asyncToGenerator(function* (namesUrl) {
+			const fromKit = yield loadKitIcons(namesUrl);
+			if (fromKit.length > 0) return fromKit;
+			return (yield Promise.all(PRO_LIBRARIES.map((library) => loadLibraryNames(namesUrl, library)))).flat();
+		});
+		return _loadIconNames.apply(this, arguments);
+	}
+	function loadKitIcons(_x8) {
+		return _loadKitIcons.apply(this, arguments);
+	}
+	function _loadKitIcons() {
+		_loadKitIcons = _asyncToGenerator(function* (namesUrl) {
+			const kit = getKitConfig();
+			if (!kit) return [];
+			try {
+				const brandsLibrary = PRO_LIBRARIES.find((item) => item.file === "brands");
+				const url = `${kit.baseUrl}/releases/v${kit.version}/css/pro.min.css?token=${kit.token}`;
+				const [response, brands, coreBrands] = yield Promise.all([
+					fetch(url),
+					loadLibraryNames(namesUrl, brandsLibrary),
+					loadCoreBrandNames()
+				]);
+				if (!response.ok) return [];
+				const groups = parseKitGroups(yield response.text());
+				if (groups.length < MIN_KIT_ICONS) return [];
+				return buildKitIcons(groups, /* @__PURE__ */ new Set([...brands.map((icon) => icon.name), ...coreBrands]));
+			} catch (_unused) {
+				return [];
+			}
+		});
+		return _loadKitIcons.apply(this, arguments);
+	}
+	function loadCoreBrandNames() {
+		return _loadCoreBrandNames.apply(this, arguments);
+	}
+	function _loadCoreBrandNames() {
+		_loadCoreBrandNames = _asyncToGenerator(function* () {
+			var _common$config;
+			var _v7$jsonFiles;
+			const common = window.elementorCommon;
+			const v7 = common === null || common === void 0 || (_common$config = common.config) === null || _common$config === void 0 || (_common$config = _common$config.fontAwesome) === null || _common$config === void 0 ? void 0 : _common$config.v7;
+			if (typeof (v7 === null || v7 === void 0 ? void 0 : v7.jsonBaseUrl) !== "string" || !((_v7$jsonFiles = v7.jsonFiles) === null || _v7$jsonFiles === void 0 ? void 0 : _v7$jsonFiles.includes("brands"))) return [];
+			try {
+				var _data$icons;
+				const response = yield fetch(`${v7.jsonBaseUrl}brands.json`);
+				if (!response.ok) return [];
+				const data = yield response.json();
+				return Object.keys((_data$icons = data.icons) !== null && _data$icons !== void 0 ? _data$icons : {});
+			} catch (_unused2) {
+				return [];
+			}
+		});
+		return _loadCoreBrandNames.apply(this, arguments);
+	}
+	function parseKitGroups(css) {
+		const byCodepoint = /* @__PURE__ */ new Map();
+		for (const [, selectors, codepoint] of css.matchAll(KIT_RULE_PATTERN)) {
+			var _byCodepoint$get;
+			const names = (_byCodepoint$get = byCodepoint.get(codepoint)) !== null && _byCodepoint$get !== void 0 ? _byCodepoint$get : /* @__PURE__ */ new Set();
+			selectors.split(",").forEach((selector) => selector && names.add(selector.slice(4)));
+			byCodepoint.set(codepoint, names);
+		}
+		return [...byCodepoint.values()].map((names) => [...names].sort((a, b) => a.length - b.length || a.localeCompare(b)));
+	}
+	function buildKitIcons(groups, brandNames) {
+		const classicLibraries = PRO_LIBRARIES.filter((item) => item.file !== "brands");
+		const brandsLibrary = PRO_LIBRARIES.find((item) => item.file === "brands");
+		const icons = [];
+		groups.forEach((names) => {
+			names.forEach((name) => aliasGroups.set(name, names));
+			const brandName = names.find((name) => brandNames.has(name));
+			const name = brandName !== null && brandName !== void 0 ? brandName : names[0];
+			(brandName ? [brandsLibrary] : classicLibraries).forEach(({ library }) => icons.push(createLazyIcon(library, name, names)));
+		});
+		return icons;
+	}
+	function createLazyIcon(library, name, names = [name]) {
+		return {
+			id: `${library}:${name}`,
+			name,
+			label: name.replace(/-/g, " "),
+			library,
+			value: `${library} fa-${name}`,
+			aliases: names.filter((alias) => alias !== name),
+			width: DEFAULT_ICON_SIZE,
+			height: DEFAULT_ICON_SIZE,
+			paths: [],
+			lazySvg: true
+		};
+	}
+	function loadLibraryNames(_x9, _x10) {
+		return _loadLibraryNames.apply(this, arguments);
+	}
+	function _loadLibraryNames() {
+		_loadLibraryNames = _asyncToGenerator(function* (namesUrl, { file, library }) {
+			try {
+				const response = yield fetch(`${namesUrl}${file}.js`);
+				if (!response.ok) return [];
+				const data = yield response.json();
+				return (Array.isArray(data.icons) ? data.icons : []).filter((name) => typeof name === "string" && name !== "").map((name) => createLazyIcon(library, name));
+			} catch (_unused3) {
+				return [];
+			}
+		});
+		return _loadLibraryNames.apply(this, arguments);
+	}
+	function getOwnedIcon(library, iconValue) {
+		var _iconValue$trim$split;
+		const match = PRO_LIBRARIES.find((item) => item.library === library);
+		const className = (_iconValue$trim$split = iconValue.trim().split(/\s+/).pop()) !== null && _iconValue$trim$split !== void 0 ? _iconValue$trim$split : "";
+		const name = className.slice(3);
+		if (!match || !className.startsWith("fa-") || !/^[a-z0-9-]+$/.test(name)) return null;
+		return _objectSpread2$2(_objectSpread2$2({}, match), {}, { name });
+	}
+	function findKitDefinition(_x11, _x12) {
+		return _findKitDefinition.apply(this, arguments);
+	}
+	function _findKitDefinition() {
+		_findKitDefinition = _asyncToGenerator(function* (owned, signal) {
+			var _aliasGroups$get$leng;
+			var _aliasGroups$get2;
+			const lookup = () => {
+				var _aliasGroups$get;
+				return getKitDefinition(owned, (_aliasGroups$get = aliasGroups.get(owned.name)) !== null && _aliasGroups$get !== void 0 ? _aliasGroups$get : [owned.name], signal);
+			};
+			const definition = yield lookup();
+			if (definition || aliasGroups.size > 0) return definition;
+			yield loadFontAwesomeProIcons().catch(() => []);
+			return ((_aliasGroups$get$leng = (_aliasGroups$get2 = aliasGroups.get(owned.name)) === null || _aliasGroups$get2 === void 0 ? void 0 : _aliasGroups$get2.length) !== null && _aliasGroups$get$leng !== void 0 ? _aliasGroups$get$leng : 0) > 1 ? lookup() : definition;
+		});
+		return _findKitDefinition.apply(this, arguments);
+	}
+	function getKitDefinition(_x13, _x14, _x15) {
+		return _getKitDefinition.apply(this, arguments);
+	}
+	function _getKitDefinition() {
+		_getKitDefinition = _asyncToGenerator(function* ({ file, prefix }, names, signal) {
+			for (const name of names) {
+				var _getKit;
+				var _getKit$findIconDefin;
+				const loaded = (_getKit = getKit()) === null || _getKit === void 0 || (_getKit$findIconDefin = _getKit.findIconDefinition) === null || _getKit$findIconDefin === void 0 || (_getKit$findIconDefin = _getKit$findIconDefin.call(_getKit, {
+					prefix,
+					iconName: name
+				})) === null || _getKit$findIconDefin === void 0 ? void 0 : _getKit$findIconDefin.icon;
+				if (loaded) return loaded;
+			}
+			const key = `${file}:${names.join("|")}`;
+			const missedAt = kitMisses.get(key);
+			if (missedAt && Date.now() - missedAt < KIT_MISS_TTL_MS) return null;
+			let request = kitRequests.get(key);
+			if (!request) {
+				request = fetchKitDefinition(file, names).finally(() => kitRequests.delete(key));
+				kitRequests.set(key, request);
+			}
+			const definition = yield request;
+			if (signal === null || signal === void 0 ? void 0 : signal.aborted) throw new DOMException("Aborted", "AbortError");
+			if (definition === null) kitMisses.set(key, Date.now());
+			return definition;
+		});
+		return _getKitDefinition.apply(this, arguments);
+	}
+	function fetchKitDefinition(_x16, _x17) {
+		return _fetchKitDefinition.apply(this, arguments);
+	}
+	function _fetchKitDefinition() {
+		_fetchKitDefinition = _asyncToGenerator(function* (file, names) {
+			const kit = getKitConfig();
+			if (!kit) return;
+			let unreachable = false;
+			for (const name of names) try {
+				const response = yield fetch(`${kit.baseUrl}/releases/v${kit.version}/svgs/${file}/${name}.svg?token=${kit.token}`);
+				if (!response.ok) {
+					unreachable = unreachable || response.status !== 404;
+					continue;
+				}
+				const definition = parseKitSvg(yield response.text());
+				if (definition) return definition;
+			} catch (_unused4) {
+				unreachable = unreachable || false === navigator.onLine;
+			}
+			return unreachable ? void 0 : null;
+		});
+		return _fetchKitDefinition.apply(this, arguments);
+	}
+	function parseKitSvg(markup) {
+		const viewBox = markup.match(/viewBox\s*=\s*"\s*([-\d.]+)[\s,]+([-\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)\s*"/);
+		const paths = [...markup.matchAll(/<path\b[^>]*?\sd\s*=\s*"([^"]+)"/g)].map((match) => match[1]);
+		if (!viewBox || Number(viewBox[1]) !== 0 || Number(viewBox[2]) !== 0 || paths.length === 0) return null;
+		return [
+			Math.round(Number(viewBox[3])),
+			Math.round(Number(viewBox[4])),
+			[],
+			"",
+			paths
+		];
+	}
+	function buildSvg(icon) {
+		const [width, height, , , pathData] = icon;
+		const paths = getPaths(pathData);
+		if (paths.length === 0) return null;
+		const pathMarkup = paths.map((path) => `<path d="${escapeAttribute(path)}"></path>`).join("");
+		return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${Number(width)} ${Number(height)}">${pathMarkup}</svg>`;
+	}
+	function persistIcon(library, iconValue, icon) {
+		const key = `${library}:${iconValue}`;
+		if (persistedIcons.has(key)) return;
+		persistedIcons.add(key);
+		const [width, height, , , pathData] = icon;
+		const paths = getPaths(pathData);
+		Promise.resolve((0, _elementor_http_client.httpService)().post(FONT_AWESOME_PRO_ICON_URL, {
+			library,
+			value: iconValue,
+			width,
+			height,
+			paths
+		})).catch((error) => {
+			var _error$response$statu;
+			var _error$response;
+			const status = (_error$response$statu = error === null || error === void 0 || (_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) !== null && _error$response$statu !== void 0 ? _error$response$statu : 0;
+			if (status < 400 || status >= 500) persistedIcons.delete(key);
+			else if (status === 400) schedule(() => persistedIcons.delete(key), STORE_RETRY_MS);
+		});
+	}
+	function getPaths(pathData) {
+		return (Array.isArray(pathData) ? pathData : [pathData]).filter((path) => typeof path === "string" && path !== "");
+	}
+	function isBrowsingLicensed() {
+		var _getConfig3;
+		return true === ((_getConfig3 = getConfig()) === null || _getConfig3 === void 0 ? void 0 : _getConfig3.enabled);
+	}
+	function loadStoredMarkup(library, iconValue) {
+		const key = `${library}:${iconValue}`;
+		let request = storedRequests.get(key);
+		if (!request) {
+			request = fetchStoredMarkup(library, iconValue);
+			storedRequests.set(key, request);
+		}
+		return request;
+	}
+	function fetchStoredMarkup(_x18, _x19) {
+		return _fetchStoredMarkup.apply(this, arguments);
+	}
+	function _fetchStoredMarkup() {
+		_fetchStoredMarkup = _asyncToGenerator(function* (library, iconValue) {
+			try {
+				var _response$data;
+				const response = yield (0, _elementor_http_client.httpService)().get(FONT_AWESOME_PRO_ICON_URL, { params: {
+					library,
+					value: iconValue
+				} });
+				const html = response === null || response === void 0 || (_response$data = response.data) === null || _response$data === void 0 || (_response$data = _response$data.data) === null || _response$data === void 0 ? void 0 : _response$data.html;
+				return typeof html === "string" && html !== "" ? html : null;
+			} catch (_unused5) {
+				storedRequests.delete(`${library}:${iconValue}`);
+				return null;
+			}
+		});
+		return _fetchStoredMarkup.apply(this, arguments);
+	}
+	function escapeAttribute(value) {
+		return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	}
+	function getConfig() {
+		var _common$config2;
+		const common = window.elementorCommon;
+		return common === null || common === void 0 || (_common$config2 = common.config) === null || _common$config2 === void 0 || (_common$config2 = _common$config2.fontAwesome) === null || _common$config2 === void 0 || (_common$config2 = _common$config2.v7) === null || _common$config2 === void 0 ? void 0 : _common$config2.fontAwesomePro;
+	}
+	function getKitConfig() {
+		const config = window.FontAwesomeKitConfig;
+		if ((config === null || config === void 0 ? void 0 : config.version) && config.token && config.baseUrl) return {
+			version: config.version,
+			token: config.token,
+			baseUrl: config.baseUrl
+		};
+		if (typeof performance === "undefined" || typeof performance.getEntriesByType !== "function") return;
+		for (const entry of performance.getEntriesByType("resource")) {
+			const match = KIT_RESOURCE_PATTERN.exec(entry.name);
+			if (match) {
+				var _config$baseUrl;
+				var _config$version;
+				var _config$token;
+				return {
+					baseUrl: (_config$baseUrl = config === null || config === void 0 ? void 0 : config.baseUrl) !== null && _config$baseUrl !== void 0 ? _config$baseUrl : match[1],
+					version: (_config$version = config === null || config === void 0 ? void 0 : config.version) !== null && _config$version !== void 0 ? _config$version : match[2],
+					token: (_config$token = config === null || config === void 0 ? void 0 : config.token) !== null && _config$token !== void 0 ? _config$token : match[3]
+				};
+			}
+		}
+	}
+	function getKit() {
+		return window.FontAwesome;
+	}
+	function isSvgKit() {
+		const config = window.FontAwesomeKitConfig;
+		return (config === null || config === void 0 ? void 0 : config.method) === SVG_KIT_METHOD;
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/icon-libraries/register-atomic-custom-icons.ts
+	var CUSTOM_ICON_LIBRARIES_PROVIDER_ID = "custom-icon-libraries";
+	var FONT_AWESOME_PRO_PROVIDER_ID = "font-awesome-pro";
+	function registerCustomIconLibraries() {
+		const core = _elementor_editor_controls;
+		const register = core.registerIconLibraryProvider;
+		if (typeof register !== "function") return;
+		register({
+			id: CUSTOM_ICON_LIBRARIES_PROVIDER_ID,
+			useIcons: useCustomIconLibraries,
+			resolveSvg: resolveCustomIconSvg
+		});
+		if (typeof core.resolveProviderIconPreviewSvg !== "function") return;
+		register({
+			id: FONT_AWESOME_PRO_PROVIDER_ID,
+			useIcons: useFontAwesomeProIcons,
+			resolveSvg: resolveFontAwesomeProSvg,
+			resolvePreviewSvg: resolveFontAwesomeProPreviewSvg
+		});
+	}
+	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/icon-libraries/register-custom-icons-upload-action.tsx
+	var CUSTOM_ICONS_UPLOAD_ACTION_ID = "pro-custom-icons-upload-action";
+	var CUSTOM_ICONS_UPLOAD_RENEW_URL = "https://go.elementor.com/renew-license-svg-library-upload";
+	function registerCustomIconsUploadAction(isExpired) {
+		const { injectIntoIconLibraryUploadAction: inject, IconLibraryUploadPromotion: Promotion, IconLibraryUploadButton: UploadButton } = _elementor_editor_controls;
+		if (typeof inject !== "function" || !Promotion || !UploadButton) return;
+		inject({
+			id: CUSTOM_ICONS_UPLOAD_ACTION_ID,
+			component: () => /* @__PURE__ */ react.createElement(CustomIconsUploadAction, {
+				isExpired,
+				Promotion,
+				UploadButton
+			})
+		});
+	}
+	function CustomIconsUploadAction({ isExpired, Promotion, UploadButton }) {
+		if (!areCustomIconLibrariesEnabled()) return isExpired ? /* @__PURE__ */ react.createElement(Promotion, {
+			ctaUrl: CUSTOM_ICONS_UPLOAD_RENEW_URL,
+			ctaText: (0, _wordpress_i18n.__)("Renew now", "elementor-pro")
+		}) : /* @__PURE__ */ react.createElement(Promotion, null);
+		const uploadUrl = getCustomIconLibrariesUploadUrl();
+		if (!uploadUrl) return null;
+		return /* @__PURE__ */ react.createElement(UploadButton, { onClick: () => window.open(uploadUrl, "_blank", "noopener") });
+	}
+	//#endregion
 	//#region packages/packages/pro/editor-controls-extended/src/init.ts
 	function init$1() {
 		return _init.apply(this, arguments);
@@ -79,7 +877,9 @@ this.elementorV2 = this.elementorV2 || {};
 	__name(init$1, "init");
 	function _init() {
 		_init = _asyncToGenerator(function* () {
+			registerCustomIconLibraries();
 			const [isExpired, features] = yield Promise.all([(0, _elementor_license_api.fetchLicenseStatus)().catch(() => false), (0, _elementor_license_api.fetchTierFeatures)().catch(() => [])]);
+			registerCustomIconsUploadAction(isExpired);
 			if (features.includes("transitions")) extendTransitionProperties(isExpired);
 		});
 		return _init.apply(this, arguments);
@@ -229,7 +1029,7 @@ this.elementorV2 = this.elementorV2 || {};
 	function _arrayWithHoles(r) {
 		if (Array.isArray(r)) return r;
 	}
-	function _defineProperty$2(e, r, t) {
+	function _defineProperty$1(e, r, t) {
 		return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
 			value: t,
 			enumerable: true,
@@ -237,7 +1037,7 @@ this.elementorV2 = this.elementorV2 || {};
 			writable: true
 		}) : e[r] = t, e;
 	}
-	__name(_defineProperty$2, "_defineProperty");
+	__name(_defineProperty$1, "_defineProperty");
 	function _iterableToArrayLimit(r, l) {
 		var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
 		if (null != t) {
@@ -266,7 +1066,7 @@ this.elementorV2 = this.elementorV2 || {};
 	function _nonIterableRest() {
 		throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 	}
-	function ownKeys$2(e, r) {
+	function ownKeys$1(e, r) {
 		var t = Object.keys(e);
 		if (Object.getOwnPropertySymbols) {
 			var o = Object.getOwnPropertySymbols(e);
@@ -276,19 +1076,19 @@ this.elementorV2 = this.elementorV2 || {};
 		}
 		return t;
 	}
-	__name(ownKeys$2, "ownKeys");
-	function _objectSpread2$2(e) {
+	__name(ownKeys$1, "ownKeys");
+	function _objectSpread2$1(e) {
 		for (var r = 1; r < arguments.length; r++) {
 			var t = null != arguments[r] ? arguments[r] : {};
-			r % 2 ? ownKeys$2(Object(t), true).forEach(function(r) {
-				_defineProperty$2(e, r, t[r]);
-			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function(r) {
+			r % 2 ? ownKeys$1(Object(t), true).forEach(function(r) {
+				_defineProperty$1(e, r, t[r]);
+			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function(r) {
 				Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
 			});
 		}
 		return e;
 	}
-	__name(_objectSpread2$2, "_objectSpread2");
+	__name(_objectSpread2$1, "_objectSpread2");
 	function _objectWithoutProperties(e, t) {
 		if (null == e) return {};
 		var o;
@@ -335,7 +1135,7 @@ this.elementorV2 = this.elementorV2 || {};
 	}
 	//#endregion
 	//#region node_modules/state-local/lib/es/state-local.js
-	function _defineProperty$1(obj, key, value) {
+	function _defineProperty(obj, key, value) {
 		if (key in obj) Object.defineProperty(obj, key, {
 			value,
 			enumerable: true,
@@ -345,8 +1145,7 @@ this.elementorV2 = this.elementorV2 || {};
 		else obj[key] = value;
 		return obj;
 	}
-	__name(_defineProperty$1, "_defineProperty");
-	function ownKeys$1(object, enumerableOnly) {
+	function ownKeys(object, enumerableOnly) {
 		var keys = Object.keys(object);
 		if (Object.getOwnPropertySymbols) {
 			var symbols = Object.getOwnPropertySymbols(object);
@@ -357,21 +1156,19 @@ this.elementorV2 = this.elementorV2 || {};
 		}
 		return keys;
 	}
-	__name(ownKeys$1, "ownKeys");
-	function _objectSpread2$1(target) {
+	function _objectSpread2(target) {
 		for (var i = 1; i < arguments.length; i++) {
 			var source = arguments[i] != null ? arguments[i] : {};
-			if (i % 2) ownKeys$1(Object(source), true).forEach(function(key) {
-				_defineProperty$1(target, key, source[key]);
+			if (i % 2) ownKeys(Object(source), true).forEach(function(key) {
+				_defineProperty(target, key, source[key]);
 			});
 			else if (Object.getOwnPropertyDescriptors) Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-			else ownKeys$1(Object(source)).forEach(function(key) {
+			else ownKeys(Object(source)).forEach(function(key) {
 				Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
 			});
 		}
 		return target;
 	}
-	__name(_objectSpread2$1, "_objectSpread2");
 	function compose$1() {
 		for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) fns[_key] = arguments[_key];
 		return function(x) {
@@ -472,7 +1269,7 @@ this.elementorV2 = this.elementorV2 || {};
 		return isFunction(causedChanges) ? causedChanges(state.current) : causedChanges;
 	}
 	function updateState(state, changes) {
-		state.current = _objectSpread2$1(_objectSpread2$1({}, state.current), changes);
+		state.current = _objectSpread2(_objectSpread2({}, state.current), changes);
 		return changes;
 	}
 	function didStateUpdate(state, handler, changes) {
@@ -554,7 +1351,7 @@ this.elementorV2 = this.elementorV2 || {};
 				if (target[key]) Object.assign(source[key], merge(target[key], source[key]));
 			}
 		});
-		return _objectSpread2$2(_objectSpread2$2({}, target), source);
+		return _objectSpread2$1(_objectSpread2$1({}, target), source);
 	}
 	//#endregion
 	//#region node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js
@@ -713,67 +1510,6 @@ this.elementorV2 = this.elementorV2 || {};
 		__getMonacoInstance
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
-	function _typeof(o) {
-		"@babel/helpers - typeof";
-		return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-			return typeof o;
-		} : function(o) {
-			return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-		}, _typeof(o);
-	}
-	//#endregion
-	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
-	function toPrimitive(t, r) {
-		if ("object" != _typeof(t) || !t) return t;
-		var e = t[Symbol.toPrimitive];
-		if (void 0 !== e) {
-			var i = e.call(t, r || "default");
-			if ("object" != _typeof(i)) return i;
-			throw new TypeError("@@toPrimitive must return a primitive value.");
-		}
-		return ("string" === r ? String : Number)(t);
-	}
-	//#endregion
-	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
-	function toPropertyKey(t) {
-		var i = toPrimitive(t, "string");
-		return "symbol" == _typeof(i) ? i : i + "";
-	}
-	//#endregion
-	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
-	function _defineProperty(e, r, t) {
-		return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-			value: t,
-			enumerable: !0,
-			configurable: !0,
-			writable: !0
-		}) : e[r] = t, e;
-	}
-	//#endregion
-	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
-	function ownKeys(e, r) {
-		var t = Object.keys(e);
-		if (Object.getOwnPropertySymbols) {
-			var o = Object.getOwnPropertySymbols(e);
-			r && (o = o.filter(function(r2) {
-				return Object.getOwnPropertyDescriptor(e, r2).enumerable;
-			})), t.push.apply(t, o);
-		}
-		return t;
-	}
-	function _objectSpread2(e) {
-		for (var r = 1; r < arguments.length; r++) {
-			var t = null != arguments[r] ? arguments[r] : {};
-			r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
-				_defineProperty(e, r2, t[r2]);
-			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
-				Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
-			});
-		}
-		return e;
-	}
-	//#endregion
 	//#region node_modules/@monaco-editor/react/dist/index.mjs
 	var v = {
 		wrapper: {
@@ -796,12 +1532,12 @@ this.elementorV2 = this.elementorV2 || {};
 	}
 	var $ = Me;
 	function Ee({ width: e, height: r, isEditorReady: n, loading: t, _ref: a, className: m, wrapperProps: E }) {
-		return react$1.default.createElement("section", _objectSpread2({ style: _objectSpread2(_objectSpread2({}, v.wrapper), {}, {
+		return react$1.default.createElement("section", _objectSpread2$2({ style: _objectSpread2$2(_objectSpread2$2({}, v.wrapper), {}, {
 			width: e,
 			height: r
 		}) }, E), !n && react$1.default.createElement($, null, t), react$1.default.createElement("div", {
 			ref: a,
-			style: _objectSpread2(_objectSpread2({}, v.fullWidth), !n && v.hide),
+			style: _objectSpread2$2(_objectSpread2$2({}, v.fullWidth), !n && v.hide),
 			className: m
 		}));
 	}
@@ -892,7 +1628,7 @@ this.elementorV2 = this.elementorV2 || {};
 		]);
 		let U = (0, react$1.useCallback)(() => {
 			var _c$current2;
-			!b.current && w.current && (u.current = c.current.editor.createDiffEditor(w.current, _objectSpread2({ automaticLayout: !0 }, y)), L(), (_c$current2 = c.current) === null || _c$current2 === void 0 || _c$current2.editor.setTheme(x), O(!0), b.current = !0);
+			!b.current && w.current && (u.current = c.current.editor.createDiffEditor(w.current, _objectSpread2$2({ automaticLayout: !0 }, y)), L(), (_c$current2 = c.current) === null || _c$current2 === void 0 || _c$current2.editor.setTheme(x), O(!0), b.current = !0);
 		}, [
 			y,
 			x,
@@ -973,7 +1709,7 @@ this.elementorV2 = this.elementorV2 || {};
 				U.current(d.current);
 				let p = m || n;
 				let R = h(d.current, t || e || "", r || a || "", p || "");
-				o.current = (_d$current3 = d.current) === null || _d$current3 === void 0 ? void 0 : _d$current3.editor.create(b.current, _objectSpread2({
+				o.current = (_d$current3 = d.current) === null || _d$current3 === void 0 ? void 0 : _d$current3.editor.create(b.current, _objectSpread2$2({
 					model: R,
 					automaticLayout: !0
 				}, x), P), y && o.current.restoreViewState(_.get(p)), d.current.editor.setTheme(E), g !== void 0 && o.current.revealLine(g), u(!0), Q.current = !0;
@@ -1056,7 +1792,7 @@ this.elementorV2 = this.elementorV2 || {};
 		};
 	}
 	function getCssEditorMonacoOptions(readOnly) {
-		return _objectSpread2(_objectSpread2({}, getCssEditorAutocompleteOptions()), {}, {
+		return _objectSpread2$2(_objectSpread2$2({}, getCssEditorAutocompleteOptions()), {}, {
 			lineNumbers: "on",
 			lineNumbersMinChars: 3,
 			folding: true,
@@ -1294,7 +2030,7 @@ this.elementorV2 = this.elementorV2 || {};
 			const modelRange = model.getFullModelRange();
 			const filteredOperations = editOperations.map((operation) => {
 				if (!isFullContentReplacement(operation.range, modelRange) || operation.text === null || hasVisualContent(operation.text) || !isPlainUserCssForFullReplace(operation.text)) return operation;
-				return _objectSpread2(_objectSpread2({}, operation), {}, { text: setVisualContent(operation.text.trim()) });
+				return _objectSpread2$2(_objectSpread2$2({}, operation), {}, { text: setVisualContent(operation.text.trim()) });
 			}).filter((operation) => {
 				const range = operation.range;
 				const affectsProtectedLine = range.startLineNumber === 1 || range.endLineNumber === 1 || range.startLineNumber === totalLines || range.endLineNumber === totalLines;
@@ -1601,6 +2337,6 @@ this.elementorV2 = this.elementorV2 || {};
 	exports.OptionsControl = OptionsControl;
 	exports.conditionGroupPropTypeUtil = conditionGroupPropTypeUtil;
 	exports.displayConditionsPropTypeUtil = displayConditionsPropTypeUtil;
-})(this.elementorV2.editorControlsExtended = this.elementorV2.editorControlsExtended || {}, elementorV2.licenseApi, elementorV2.editorControls, React, wp.i18n, elementorV2.icons, elementorV2.ui, elementorV2.editorProps, elementorV2.schema, elementorV2.editorUi);
+})(this.elementorV2.editorControlsExtended = this.elementorV2.editorControlsExtended || {}, elementorV2.licenseApi, elementorV2.editorControls, elementorV2.httpClient, elementorV2.query, React, wp.i18n, elementorV2.icons, elementorV2.ui, elementorV2.editorProps, elementorV2.schema, elementorV2.editorUi);
 
 window.elementorV2.editorControlsExtended?.init?.();

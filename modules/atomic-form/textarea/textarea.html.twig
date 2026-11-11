@@ -3,6 +3,7 @@
 {% set interactions_attribute = interactions is not empty ? 'data-interactions=' ~ interactions | json_encode | e('html_attr') : '' %}
 {% set placeholder_attribute = settings.placeholder is not empty ? 'placeholder=' ~ settings.placeholder | e('html_attr') : '' %}
 {% set required_attribute = settings.required ? 'required' : '' %}
+{% set webmcp_param_attribute = settings['webmcp-param-description'] is not empty ? 'toolparamdescription="' ~ settings['webmcp-param-description'] | e('html_attr') ~ '"' : '' %}
 {% set readonly_attribute = settings.readonly ? 'readonly' : '' %}
 {% set rows_attribute = settings.rows is not empty ? 'rows=' ~ settings.rows | e('html_attr') : '' %}
 {% set min_value = settings.length.min is defined and settings.length.min is not empty ? settings.length.min : settings.minlength %}
@@ -21,6 +22,7 @@
 	{{ interactions_attribute }}
 	{{ placeholder_attribute | raw }}
 	{{ required_attribute }}
+	{{ webmcp_param_attribute | raw }}
 	{{ readonly_attribute }}
 	{{ rows_attribute }}
 	{{ minlength_attribute }}

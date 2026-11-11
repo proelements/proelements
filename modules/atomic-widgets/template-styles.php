@@ -115,6 +115,10 @@ class Template_Styles {
 			$candidates[] = $settings['template_id'];
 		}
 
+		if ( $this->has_valid_template_id( [ 'template_id' => $settings['additional_template_select'] ?? null ] ) ) {
+			$candidates[] = $settings['additional_template_select'];
+		}
+
 		foreach ( $settings['alternate_templates'] ?? [] as $item ) {
 			if ( $this->has_valid_template_id( $item ) ) {
 				$candidates[] = $item['template_id'];

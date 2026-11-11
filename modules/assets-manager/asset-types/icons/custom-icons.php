@@ -308,6 +308,11 @@ class Custom_Icons extends  Assets_Base {
 		if ( is_wp_error( $results ) ) {
 			return $results;
 		}
+
+		return $this->handle_extracted_icon_set( $results );
+	}
+
+	private function handle_extracted_icon_set( $results ) {
 		$supported_icon_sets = self::get_supported_icon_sets();
 		foreach ( $supported_icon_sets as $key => $handler ) {
 			/**
@@ -320,6 +325,14 @@ class Custom_Icons extends  Assets_Base {
 			}
 			if ( ! $icon_set_handler->is_valid() ) {
 				continue;
+			}
+
+			$name_validation = $icon_set_handler->validate_name();
+
+			if ( is_wp_error( $name_validation ) ) {
+				self::get_wp_filesystem()->rmdir( $results['extracted_to'], true );
+
+				return $name_validation;
 			}
 			$icon_set_handler->handle_new_icon_set();
 			$icon_set_handler->move_files( $this->current_post_id );

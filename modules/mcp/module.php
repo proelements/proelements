@@ -6,8 +6,13 @@ use Elementor\Modules\Mcp\Module as Core_Mcp_Module;
 use Elementor\Modules\Mcp\Registry\Ability_Registry;
 use Elementor\Plugin as CorePlugin;
 use ElementorPro\Base\Module_Base;
+use ElementorPro\Modules\Mcp\Abilities\List_Form_Submissions_Ability;
 use ElementorPro\Modules\Mcp\Abilities\List_Site_Parts_Ability;
+use ElementorPro\Modules\Mcp\Abilities\Manage_Form_Submissions_Ability;
 use ElementorPro\Modules\Mcp\Abilities\Manage_Site_Parts_Ability;
+use ElementorPro\Modules\Mcp\Abilities\Manage_Woocommerce_Settings_Ability;
+use ElementorPro\Modules\Mcp\Abilities\Woocommerce_Best_Practices_Ability;
+use ElementorPro\Modules\Mcp\Preview\Theme_Template_Preview;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -26,6 +31,8 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		( new Theme_Template_Preview() )->register();
+
 		$registry = $this->get_core_registry();
 
 		if ( $registry ) {
@@ -40,11 +47,18 @@ class Module extends Module_Base {
 	public function register_abilities_legacy(): void {
 		( new Manage_Site_Parts_Ability() )->register();
 		( new List_Site_Parts_Ability() )->register();
+		( new List_Form_Submissions_Ability() )->register();
+		( new Manage_Form_Submissions_Ability() )->register();
+		( new Manage_Woocommerce_Settings_Ability() )->register();
+		( new Woocommerce_Best_Practices_Ability() )->register();
 	}
 
 	public function register_tool_slugs( array $tools ): array {
 		$tools[] = 'elementor/manage-site-parts';
 		$tools[] = 'elementor/list-site-parts';
+		$tools[] = 'elementor/list-form-submissions';
+		$tools[] = 'elementor/manage-form-submissions';
+		$tools[] = 'elementor/manage-woocommerce-settings';
 
 		return $tools;
 	}
@@ -52,6 +66,10 @@ class Module extends Module_Base {
 	private function register_with_registry( Ability_Registry $registry ): void {
 		$registry->add( new Manage_Site_Parts_Ability() );
 		$registry->add( new List_Site_Parts_Ability() );
+		$registry->add( new List_Form_Submissions_Ability() );
+		$registry->add( new Manage_Form_Submissions_Ability() );
+		$registry->add( new Manage_Woocommerce_Settings_Ability() );
+		$registry->add( new Woocommerce_Best_Practices_Ability() );
 	}
 
 	private function get_core_registry(): ?Ability_Registry {

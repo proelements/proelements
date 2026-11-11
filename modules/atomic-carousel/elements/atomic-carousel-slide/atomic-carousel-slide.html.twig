@@ -1,0 +1,8 @@
+{% import 'elementor/macros' as m %}
+{% set i18n = carousel_i18n | default({}) %}
+<div class="{{ m.render_base_classes(id, base_styles, settings, ['e-carousel__slide'], 'div') }} {{ editor_classes | default('') }}"
+	{{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+	{{- ' ' }}{{ m.render_interactions(interactions) }}
+	{#- aria-label is "N of M", which only the handler can know, so it is added at runtime. #}
+	{{- ' ' }}role="group" aria-roledescription="{{ i18n.slide_roledescription | default('slide') | e }}"
+	{{- m.render_custom_attributes(settings, editor_attributes) }}><!-- elementor-children-placeholder --></div>

@@ -12,26 +12,16 @@ import { UpgradeVersionBanner } from './upgrade-version-banner';
 import { isHighTier } from '../hooks/use-tier';
 import { useClassesVariablesLimits } from '../hooks/use-classes-variables-limits';
 import { transformValueForAnalytics } from '../utils/analytics-transformer';
-
-function isExperimentActive( experimentName ) {
-	return !! elementorCommon?.config?.experimentalFeatures?.[ experimentName ];
-}
-
-function isClassesFeatureActive() {
-	return isExperimentActive( 'e_atomic_elements' );
-}
-
-function isVariablesFeatureActive() {
-	return isExperimentActive( 'e_atomic_elements' );
-}
-
-function isClassesExported( data ) {
-	return !! data?.uploadedData?.manifest?.[ 'site-settings' ]?.classes;
-}
-
-function isVariablesExported( data ) {
-	return !! data?.uploadedData?.manifest?.[ 'site-settings' ]?.variables;
-}
+import {
+	getImportedClassesCount,
+	getImportedVariablesCount,
+	isAtomicElementsFeatureActive,
+	isClassesExported,
+	isDefaultStylesExported,
+	isVariablesExported,
+	getSiteSettingsManifest,
+	getManifestItem,
+} from '../utils';
 
 const transformAnalyticsData = ( payload ) => {
 	const transformed = {};
@@ -73,12 +63,11 @@ export function KitSettingsCustomizationDialog( {
 	isOldExport,
 	isOldElementorVersion,
 } ) {
-	const showClassesSection = useMemo( () => isClassesFeatureActive(), [] );
-	const showVariablesSection = useMemo( () => isVariablesFeatureActive(), [] );
-	const showClassesVariablesSection = showClassesSection || showVariablesSection;
+	const showClassesVariablesSection = useMemo( isAtomicElementsFeatureActive, [] );
 
-	const classesExportedInManifest = !! data?.uploadedData?.manifest?.[ 'site-settings' ]?.classes;
-	const variablesExportedInManifest = !! data?.uploadedData?.manifest?.[ 'site-settings' ]?.variables;
+	const classesExportedInManifest = isClassesExported( data );
+	const variablesExportedInManifest = isVariablesExported( data );
+	const defaultStylesExportedInManifest = isDefaultStylesExported( data );
 
 	const {
 		existingClassesCount,
@@ -88,8 +77,9 @@ export function KitSettingsCustomizationDialog( {
 		calculateLimitInfo,
 	} = useClassesVariablesLimits( { open, isImport } );
 
-	const importedClassesCount = data?.uploadedData?.manifest?.[ 'site-settings' ]?.classesCount ?? 0;
-	const importedVariablesCount = data?.uploadedData?.manifest?.[ 'site-settings' ]?.variablesCount ?? 0;
+	const importedClassesCount = getImportedClassesCount( data );
+	const importedVariablesCount = getImportedVariablesCount( data );
+	const siteSettingsManifest = getSiteSettingsManifest( data );
 
 	const classesLimitInfo = useMemo(
 		() => calculateLimitInfo( existingClassesCount, importedClassesCount, classesLimit ),
@@ -108,10 +98,11 @@ export function KitSettingsCustomizationDialog( {
 		return {
 			classes: ! isImport || classesExportedInManifest,
 			variables: ! isImport || variablesExportedInManifest,
+			defaultStyles: ! isImport || defaultStylesExportedInManifest,
 			classesOverrideAll: false,
 			variablesOverrideAll: false,
 		};
-	}, [ showClassesVariablesSection, isImport, classesExportedInManifest, variablesExportedInManifest ] );
+	}, [ showClassesVariablesSection, isImport, classesExportedInManifest, variablesExportedInManifest, defaultStylesExportedInManifest ] );
 
 	const getState = useCallback( ( initialState ) => {
 		if ( ! data.includes.includes( 'settings' ) ) {
@@ -130,11 +121,11 @@ export function KitSettingsCustomizationDialog( {
 		}
 
 		if ( isImport ) {
-			const manifestData = data?.uploadedData?.manifest?.[ 'site-settings' ];
+			const manifestData = getSiteSettingsManifest( data );
 
 			let themeState = false;
 			if ( isOldExport ) {
-				themeState = ! initialState ? false : data?.uploadedData?.manifest?.theme;
+				themeState = ! initialState ? false : getManifestItem( data, 'theme' );
 			} else {
 				themeState = manifestData?.theme ?? initialState;
 			}
@@ -170,22 +161,18 @@ export function KitSettingsCustomizationDialog( {
 
 	const initialState = data.includes.includes( 'settings' );
 
-	const [ settings, setSettings ] = useState( () => {
-		if ( data.customization.settings ) {
-			return data.customization.settings;
-		}
+	const getInitialSettings = useCallback( () => ( {
+		...getState( initialState ),
+		...( data.customization.settings || {} ),
+	} ), [ data.customization.settings, getState, initialState ] );
 
-		return getState( initialState );
+	const [ settings, setSettings ] = useState( () => {
+		return getInitialSettings();
 	} );
 
 	useEffect( () => {
 		if ( open ) {
-			if ( data.customization.settings ) {
-				setSettings( data.customization.settings );
-			} else {
-				const state = getState( initialState );
-				setSettings( state );
-			}
+			setSettings( getInitialSettings() );
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ open ] );
@@ -232,9 +219,10 @@ export function KitSettingsCustomizationDialog( {
 		handleReviewClick( 'variables-manager' );
 	}, [ handleReviewClick ] );
 
-	const classesNotExported = isImport && ! isClassesExported( data );
-	const variablesNotExported = isImport && ! isVariablesExported( data );
-	const classesVariablesNotExported = classesNotExported && variablesNotExported;
+	const classesNotExported = isImport && ! classesExportedInManifest;
+	const defaultStylesNotExported = isImport && ! defaultStylesExportedInManifest;
+	const variablesNotExported = isImport && ! variablesExportedInManifest;
+	const classesVariablesNotExported = classesNotExported && variablesNotExported && defaultStylesNotExported;
 
 	const classesLimitExceeded = isImport && classesLimitInfo.isExceeded;
 	const variablesLimitExceeded = isImport && variablesLimitInfo.isExceeded;
@@ -247,7 +235,7 @@ export function KitSettingsCustomizationDialog( {
 	} );
 
 	const performSave = useCallback( () => {
-		const hasEnabledCustomization = settings.theme || settings.globalColors || settings.globalFonts || settings.themeStyleSettings || settings.generalSettings || settings.experiments || settings.customFonts || settings.customIcons || settings.customCode || settings.classes || settings.variables;
+		const hasEnabledCustomization = settings.theme || settings.globalColors || settings.globalFonts || settings.themeStyleSettings || settings.generalSettings || settings.experiments || settings.customFonts || settings.customIcons || settings.customCode || settings.classes || settings.variables || settings.defaultStyles;
 		const transformedAnalytics = transformAnalyticsData( settings );
 		handleSaveChanges( 'settings', settings, hasEnabledCustomization, transformedAnalytics );
 		handleClose();
@@ -303,21 +291,23 @@ export function KitSettingsCustomizationDialog( {
 							description={ __( 'Only public WordPress themes are supported', 'elementor' ) }
 							settingKey="theme"
 							onSettingChange={ handleToggleChange }
-							notExported={ isImport && ! data?.uploadedData?.manifest.theme }
+							notExported={ isImport && ! getManifestItem( data, 'theme' ) }
 						/>
 
 						{ showClassesVariablesSection && (
 							<ClassesVariablesSection
 								settings={ {
 									classes: settings.classes ?? false,
+									defaultStyles: settings.defaultStyles ?? false,
 									variables: settings.variables ?? false,
 									classesOverrideAll: settings.classesOverrideAll ?? false,
 									variablesOverrideAll: settings.variablesOverrideAll ?? false,
 								} }
 								onSettingChange={ handleClassesVariablesChange }
 								isImport={ isImport }
-								classesExported={ ! classesNotExported && showClassesSection }
-								variablesExported={ ! variablesNotExported && showVariablesSection }
+								classesExported={ ! classesNotExported }
+								defaultStylesExported={ ! defaultStylesNotExported }
+								variablesExported={ ! variablesNotExported }
 								classesLimitExceeded={ classesLimitExceeded }
 								variablesLimitExceeded={ variablesLimitExceeded }
 								classesOverLimitCount={ classesOverLimitCount }
@@ -340,7 +330,7 @@ export function KitSettingsCustomizationDialog( {
 											settingKey="globalColors"
 											onSettingChange={ handleToggleChange }
 											checked={ settings.globalColors }
-											disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'site-settings' ]?.globalColors ) || ! isHighTier() }
+											disabled={ ( isImport && ! siteSettingsManifest?.globalColors ) || ! isHighTier() }
 											tooltip={ ! isHighTier() }
 										/>
 										<SubSetting
@@ -348,7 +338,7 @@ export function KitSettingsCustomizationDialog( {
 											settingKey="globalFonts"
 											onSettingChange={ handleToggleChange }
 											checked={ settings.globalFonts }
-											disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'site-settings' ]?.globalFonts ) || ! isHighTier() }
+											disabled={ ( isImport && ! siteSettingsManifest?.globalFonts ) || ! isHighTier() }
 											tooltip={ ! isHighTier() }
 										/>
 										<SubSetting
@@ -356,7 +346,7 @@ export function KitSettingsCustomizationDialog( {
 											settingKey="themeStyleSettings"
 											onSettingChange={ handleToggleChange }
 											checked={ settings.themeStyleSettings }
-											disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'site-settings' ]?.themeStyleSettings ) || ! isHighTier() }
+											disabled={ ( isImport && ! siteSettingsManifest?.themeStyleSettings ) || ! isHighTier() }
 											tooltip={ ! isHighTier() }
 										/>
 									</Stack>
@@ -368,7 +358,7 @@ export function KitSettingsCustomizationDialog( {
 									description={ __( 'Include site identity, background, layout, Lightbox, page transitions, and custom CSS', 'elementor' ) }
 									settingKey="generalSettings"
 									onSettingChange={ handleToggleChange }
-									disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'site-settings' ]?.generalSettings ) || ! isHighTier() }
+									disabled={ ( isImport && ! siteSettingsManifest?.generalSettings ) || ! isHighTier() }
 									tooltip={ ! isHighTier() }
 								/>
 
@@ -378,7 +368,7 @@ export function KitSettingsCustomizationDialog( {
 									description={ __( 'This will apply all experiments that are still active during import', 'elementor' ) }
 									settingKey="experiments"
 									onSettingChange={ handleToggleChange }
-									disabled={ ( isImport && ! data?.uploadedData?.manifest?.experiments ) || ! isHighTier() }
+									disabled={ ( isImport && ! getManifestItem( data, 'experiments' ) ) || ! isHighTier() }
 									tooltip={ ! isHighTier() }
 								/>
 
@@ -392,27 +382,27 @@ export function KitSettingsCustomizationDialog( {
 											settingKey="customFonts"
 											onSettingChange={ handleToggleChange }
 											checked={ settings.customFonts }
-											disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'custom-fonts' ] ) || ! isHighTier() }
+											disabled={ ( isImport && ! getManifestItem( data, 'custom-fonts' ) ) || ! isHighTier() }
 											tooltip={ ! isHighTier() }
-											notExported={ isImport && ! data?.uploadedData?.manifest?.[ 'custom-fonts' ] }
+											notExported={ isImport && ! getManifestItem( data, 'custom-fonts' ) }
 										/>
 										<SubSetting
 											label={ __( 'Custom icons', 'elementor' ) }
 											settingKey="customIcons"
 											onSettingChange={ handleToggleChange }
 											checked={ settings.customIcons }
-											disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'custom-icons' ] ) || ! isHighTier() }
+											disabled={ ( isImport && ! getManifestItem( data, 'custom-icons' ) ) || ! isHighTier() }
 											tooltip={ ! isHighTier() }
-											notExported={ isImport && ! data?.uploadedData?.manifest?.[ 'custom-icons' ] }
+											notExported={ isImport && ! getManifestItem( data, 'custom-icons' ) }
 										/>
 										<SubSetting
 											label={ __( 'Custom code', 'elementor' ) }
 											settingKey="customCode"
 											onSettingChange={ handleToggleChange }
 											checked={ settings.customCode }
-											disabled={ ( isImport && ! data?.uploadedData?.manifest?.[ 'custom-code' ] ) || ! isHighTier() }
+											disabled={ ( isImport && ! getManifestItem( data, 'custom-code' ) ) || ! isHighTier() }
 											tooltip={ ! isHighTier() }
-											notExported={ isImport && ! data?.uploadedData?.manifest?.[ 'custom-code' ] }
+											notExported={ isImport && ! getManifestItem( data, 'custom-code' ) }
 										/>
 									</Stack>
 								</SettingSection>

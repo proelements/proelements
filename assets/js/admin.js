@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 (function(_wordpress_i18n) {
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;
@@ -126,6 +126,142 @@
 					});
 				});
 			});
+		}
+	};
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
+	function _typeof(o) {
+		"@babel/helpers - typeof";
+		return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+			return typeof o;
+		} : function(o) {
+			return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+		}, _typeof(o);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
+	function toPrimitive(t, r) {
+		if ("object" != _typeof(t) || !t) return t;
+		var e = t[Symbol.toPrimitive];
+		if (void 0 !== e) {
+			var i = e.call(t, r || "default");
+			if ("object" != _typeof(i)) return i;
+			throw new TypeError("@@toPrimitive must return a primitive value.");
+		}
+		return ("string" === r ? String : Number)(t);
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
+	function toPropertyKey(t) {
+		var i = toPrimitive(t, "string");
+		return "symbol" == _typeof(i) ? i : i + "";
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
+	function _defineProperty(e, r, t) {
+		return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+			value: t,
+			enumerable: !0,
+			configurable: !0,
+			writable: !0
+		}) : e[r] = t, e;
+	}
+	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+	function ownKeys(e, r) {
+		var t = Object.keys(e);
+		if (Object.getOwnPropertySymbols) {
+			var o = Object.getOwnPropertySymbols(e);
+			r && (o = o.filter(function(r2) {
+				return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+			})), t.push.apply(t, o);
+		}
+		return t;
+	}
+	function _objectSpread2(e) {
+		for (var r = 1; r < arguments.length; r++) {
+			var t = null != arguments[r] ? arguments[r] : {};
+			r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
+				_defineProperty(e, r2, t[r2]);
+			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
+				Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+			});
+		}
+		return e;
+	}
+	//#endregion
+	//#region modules/atomic-form/assets/js/admin/recaptcha-score-validation.js
+	var BUTTON_SELECTOR = "#elementor_pro_recaptcha_score_validate_button";
+	var MESSAGE_SELECTOR = ".elementor-pro-recaptcha-score-validation-message";
+	var STATES = [
+		"loading",
+		"success",
+		"error"
+	];
+	var CREDENTIAL_FIELDS = {
+		site_key: "#elementor_pro_recaptcha_score_site_key",
+		project_id: "#elementor_pro_recaptcha_score_project_id",
+		api_key: "#elementor_pro_recaptcha_score_api_key"
+	};
+	var RecaptchaScoreValidation = class {
+		constructor() {
+			this.$button = jQuery(BUTTON_SELECTOR);
+			if (!this.$button.length) return;
+			this.$message = jQuery(MESSAGE_SELECTOR);
+			this.bindEvents();
+			this.scrollToSectionWhenRequested();
+		}
+		scrollToSectionWhenRequested() {
+			const { sectionQueryArg, sectionId, sectionAnchor } = this.$button.data();
+			const params = new URLSearchParams(window.location.search);
+			if (!sectionQueryArg || params.get(sectionQueryArg) !== sectionId) return;
+			const scroll = () => {
+				var _anchor$previousEleme;
+				const anchor = document.getElementById(sectionAnchor);
+				const title = (anchor === null || anchor === void 0 || (_anchor$previousEleme = anchor.previousElementSibling) === null || _anchor$previousEleme === void 0 ? void 0 : _anchor$previousEleme.matches("h2")) ? anchor.previousElementSibling : anchor;
+				title === null || title === void 0 || title.scrollIntoView({ block: "start" });
+			};
+			if ("complete" === document.readyState) setTimeout(scroll);
+			else window.addEventListener("load", () => setTimeout(scroll), { once: true });
+		}
+		bindEvents() {
+			this.$button.on("click", (event) => {
+				event.preventDefault();
+				this.validate();
+			});
+			Object.values(CREDENTIAL_FIELDS).forEach((selector) => {
+				jQuery(selector).on("input change", () => this.reset());
+			});
+		}
+		getCredentials() {
+			return Object.fromEntries(Object.entries(CREDENTIAL_FIELDS).map(([key, selector]) => {
+				var _jQuery$val;
+				return [key, String((_jQuery$val = jQuery(selector).val()) !== null && _jQuery$val !== void 0 ? _jQuery$val : "").trim()];
+			}));
+		}
+		validate() {
+			const credentials = this.getCredentials();
+			if (Object.values(credentials).some((value) => "" === value)) {
+				this.setState("error");
+				return;
+			}
+			this.setState("loading");
+			jQuery.post(ajaxurl, _objectSpread2({
+				action: this.$button.data("action"),
+				_nonce: this.$button.data("nonce")
+			}, credentials)).done((response) => this.setState((response === null || response === void 0 ? void 0 : response.success) ? "success" : "error")).fail(() => this.setState("error"));
+		}
+		reset() {
+			this.setState(null);
+		}
+		setState(state) {
+			STATES.forEach((className) => this.$button.toggleClass(className, className === state));
+			const message = {
+				success: this.$button.data("success-message"),
+				error: this.$button.data("error-message")
+			}[state];
+			this.$message.removeClass("success error").toggleClass("hidden", !message).text(message !== null && message !== void 0 ? message : "");
+			if (message) this.$message.addClass(state);
 		}
 	};
 	//#endregion
@@ -1318,7 +1454,8 @@
 		themeBuilder: new modules.ThemeBuilder(),
 		StripeIntegration: new modules.StripeIntegration(),
 		popup: new admin_default(),
-		license: new modules.License()
+		license: new modules.License(),
+		recaptchaScoreValidation: new RecaptchaScoreValidation()
 	};
 	jQuery(function() {
 		elementorProAdmin.roleManager.advancedRoleManager.init();

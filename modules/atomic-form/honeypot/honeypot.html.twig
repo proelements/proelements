@@ -1,0 +1,20 @@
+{%- set classes = settings.classes %}
+{%- if settings._hidden_class %}
+	{%- set classes = classes | merge( [ settings._hidden_class ] ) %}
+{%- endif %}
+{%- set classes = classes | join(' ') | trim %}
+{%- set name = settings._cssid is not empty ? settings._cssid : id %}
+<input type="text"
+	{% if settings._cssid is not empty %}id="{{ settings._cssid | e('html_attr') }}"{% endif %}
+	name="{{ name | e('html_attr') }}"
+	{% if classes is not empty %}class="{{ classes }}"{% endif %}
+	{% if settings._detached_form_id %}form="{{ settings._detached_form_id | e('html_attr') }}"{% endif %}
+	{% if not settings._hidden_class %}style="display:none !important;"{% endif %}
+	data-interaction-id="{{ interaction_id | default(id) }}"
+	value=""
+	size="1"
+	tabindex="-1"
+	aria-hidden="true"
+	autocomplete="off"
+	{{ settings.attributes | raw }}
+/>

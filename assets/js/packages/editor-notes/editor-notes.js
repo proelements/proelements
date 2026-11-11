@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_editor_app_bar, _elementor_editor_v1_adapters, _elementor_icons, _wordpress_i18n) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });

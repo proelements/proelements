@@ -57,15 +57,22 @@ class Fontastic extends Icon_Set_Base {
 		return $set_prefix;
 	}
 
+	const DEFAULT_NAME = 'fontastic';
+
 	public function get_name() {
 		static $set_name = null;
 		if ( null === $set_name ) {
+			// The name is validated before prepare() loads the stylesheet.
+			if ( '' === $this->data ) {
+				$this->data = Utils::_unstable_file_get_contents( $this->directory . $this->stylesheet_file );
+			}
+
 			$pattern = '/font-family: "(.*)"/';
 			preg_match_all( $pattern, $this->data, $name );
 			if ( ! isset( $name[1][0] ) ) {
 				return false; //  missing name
 			}
-			$set_name = $name[1][0];
+			$set_name = '' === trim( $name[1][0] ) ? self::DEFAULT_NAME : $name[1][0];
 		}
 		return $set_name;
 	}

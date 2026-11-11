@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Icomoon extends Icon_Set_Base {
 
+	const DEFAULT_NAME = 'icomoon';
+
 	protected $data_file = 'selection.json';
 	protected $stylesheet_file = 'style.css';
 	protected $allowed_zipped_files = [ 'selection.json', 'demo.html', 'Read Mw.txt', 'demo-files/', 'fonts/' ];
@@ -67,7 +69,9 @@ class Icomoon extends Icon_Set_Base {
 		if ( ! isset( $config->metadata->name ) ) {
 			return false; //  missing name
 		}
-		return $config->metadata->name;
+		$name = is_string( $config->metadata->name ) ? $config->metadata->name : '';
+		// A default icomoon.io export has an empty name and names its font files "icomoon".
+		return '' === trim( $name ) ? self::DEFAULT_NAME : $name;
 	}
 
 	protected function get_stylesheet() {

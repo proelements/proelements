@@ -6,8 +6,11 @@ use Elementor\Modules\AtomicWidgets\DynamicTags\Dynamic_Prop_Type;
 use Elementor\Modules\AtomicWidgets\Elements\Base\Atomic_Widget_Base;
 use Elementor\Utils as ElementorUtils;
 use ElementorPro\Modules\AtomicForm\Actions\Action_Runner;
+use ElementorPro\Modules\AtomicForm\Actions\Action_Type;
 use ElementorPro\Modules\AtomicForm\File_Upload\File_Upload_Handler;
+use ElementorPro\Modules\AtomicForm\Honeypot\Honeypot_Handler;
 use ElementorPro\Modules\AtomicForm\Module as Atomic_Form_Module;
+use ElementorPro\Modules\AtomicForm\Recaptcha_Score\Recaptcha_Score_Handler;
 use ElementorPro\Modules\AtomicWidgets\Settings_Resolver;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Plugin;
@@ -34,10 +37,10 @@ class Atomic_Form_Controller {
 			'_nonce' => ElementorUtils::get_super_global_value( $_POST, '_nonce' ),
 			'post_id' => ElementorUtils::get_super_global_value( $_POST, 'post_id' ),
 			'form_id' => ElementorUtils::get_super_global_value( $_POST, 'form_id' ),
-			'form_name' => ElementorUtils::get_super_global_value( $_POST, 'form_name' ),
-			'form_fields' => ElementorUtils::get_super_global_value( $_POST, 'form_fields' ) ?? [],
-			'referer_title' => ElementorUtils::get_super_global_value( $_POST, 'referer_title' ),
-			'referrer' => ElementorUtils::get_super_global_value( $_POST, 'referrer' ),
+			'form_name' => $this->get_unslashed_post_value( 'form_name' ),
+			'form_fields' => $this->get_unslashed_post_value( 'form_fields' ) ?? [],
+			'referer_title' => $this->get_unslashed_post_value( 'referer_title' ),
+			'referrer' => $this->get_unslashed_post_value( 'referrer' ),
 		];
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -47,19 +50,11 @@ class Atomic_Form_Controller {
 
 		$post_id = absint( $post_data['post_id'] ?? 0 );
 		$form_id = sanitize_text_field( $post_data['form_id'] ?? '' );
-		$form_fields = $post_data['form_fields'] ?? [];
+		$form_fields = is_array( $post_data['form_fields'] ) ? $post_data['form_fields'] : [];
 
 		if ( ! $post_id || ! $form_id || empty( $form_fields ) ) {
 			$this->send_invalid_form_response();
 		}
-
-		$form_data = $this->convert_form_fields_to_data( $form_fields );
-
-		if ( empty( $form_data ) ) {
-			$this->send_invalid_form_response();
-		}
-
-		$field_metadata = $this->extract_field_metadata( $form_fields );
 
 		$form_element = $this->find_form_element( $post_id, $form_id );
 
@@ -67,8 +62,28 @@ class Atomic_Form_Controller {
 			$this->send_error_response( $form_element->get_error_message() );
 		}
 
-		$widget_settings = $this->resolve_widget_settings( $form_element, $post_id );
 		$cssid_map = $this->build_cssid_map( $form_element, $post_id );
+		$honeypot_handler = new Honeypot_Handler( $form_element, $cssid_map );
+
+		if ( $honeypot_handler->is_triggered( $form_fields ) ) {
+			$this->send_error_response();
+		}
+
+		$form_fields = $honeypot_handler->remove_honeypot_fields( $form_fields );
+		$form_data = $this->convert_form_fields_to_data( $form_fields );
+
+		if ( empty( $form_data ) ) {
+			$this->send_invalid_form_response();
+		}
+
+		// Network call to Google, so it runs after the cheap checks and before any file upload.
+		if ( ( new Recaptcha_Score_Handler( $form_element ) )->is_rejected( $this->get_recaptcha_score_token() ) ) {
+			$this->send_error_response();
+		}
+
+		$field_metadata = $this->extract_field_metadata( $form_fields );
+
+		$widget_settings = $this->resolve_widget_settings( $form_element, $post_id );
 
 		$file_upload_result = ( new File_Upload_Handler() )->process( $form_element, $form_fields );
 
@@ -83,12 +98,22 @@ class Atomic_Form_Controller {
 		$posted_form_name = sanitize_text_field( $post_data['form_name'] ?? '' );
 		$form_name = $this->resolve_form_name( $posted_form_name, $form_id );
 
+		/**
+		 * Filter whether an atomic form submission is spam.
+		 *
+		 * @param bool  $is_spam         Whether the submission is spam.
+		 * @param array $form_fields     Raw submitted fields (unslashed, NOT sanitized). Sanitize before logging or rendering.
+		 * @param array $widget_settings Widget settings.
+		 * @param int   $post_id         Post ID.
+		 * @param array $form_data       Sanitized field values keyed by field ID.
+		 */
 		$spam_check = apply_filters(
 			'elementor_pro/atomic_forms/spam_check',
 			false,
 			$form_fields,
 			$widget_settings,
-			$post_id
+			$post_id,
+			$form_data
 		);
 
 		if ( $spam_check ) {
@@ -103,11 +128,15 @@ class Atomic_Form_Controller {
 			$this->send_error_response( __( 'No actions configured for this form', 'elementor-pro' ) );
 		}
 
+		$field_group_members = in_array( Action_Type::MAILCHIMP, $actions, true )
+			? $this->build_field_group_members( $form_element, $post_id )
+			: [];
+
 		$referer_title = $post_data['referer_title'] ?? '';
-		$referer_title = is_string( $referer_title ) ? sanitize_text_field( wp_unslash( $referer_title ) ) : '';
+		$referer_title = is_string( $referer_title ) ? sanitize_text_field( $referer_title ) : '';
 
 		$referrer = $post_data['referrer'] ?? '';
-		$referrer = is_string( $referrer ) ? esc_url_raw( wp_unslash( $referrer ) ) : '';
+		$referrer = is_string( $referrer ) ? esc_url_raw( $referrer ) : '';
 
 		$results = Action_Runner::execute_actions(
 			$actions,
@@ -121,6 +150,7 @@ class Atomic_Form_Controller {
 				'referer_title' => $referer_title,
 				'referrer' => $referrer,
 				'cssid_map' => $cssid_map,
+				'field_group_members' => $field_group_members,
 				'files' => $context_files,
 				'file_field_settings' => $file_field_settings,
 			]
@@ -131,6 +161,24 @@ class Atomic_Form_Controller {
 			$results['allActionsSucceeded'],
 			$results['failedActions']
 		);
+	}
+
+	/**
+	 * Read a submitted value without `wp_kses_post`, which encodes a bare "&" as "&amp;".
+	 * Callers must sanitize the result for its own context.
+	 *
+	 * @param string $key
+	 * @return mixed|null
+	 */
+	private function get_unslashed_post_value( string $key ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce is validated in ajax_send_form; values are sanitized per field.
+		return isset( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : null;
+	}
+
+	private function get_recaptcha_score_token(): string {
+		$token = ElementorUtils::get_super_global_value( $_POST, Recaptcha_Score_Handler::TOKEN_FIELD ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is validated in ajax_send_form.
+
+		return is_string( $token ) ? $token : '';
 	}
 
 	private function is_nonce_valid( array $post_data ): bool {
@@ -197,11 +245,33 @@ class Atomic_Form_Controller {
 			$metadata[ $id ] = [
 				'label' => sanitize_text_field( $field['label'] ?? '' ),
 				'type' => sanitize_text_field( $field['type'] ?? '' ),
-				'options' => is_array( $options ) ? $options : null,
+				'options' => is_array( $options ) ? $this->sanitize_field_options( $options ) : null,
 			];
 		}
 
 		return $metadata;
+	}
+
+	private function sanitize_field_options( array $options ): array {
+		$sanitized = [];
+
+		foreach ( $options as $option ) {
+			if ( is_string( $option ) ) {
+				$sanitized[] = sanitize_text_field( $option );
+				continue;
+			}
+
+			if ( ! is_array( $option ) ) {
+				continue;
+			}
+
+			$sanitized[] = [
+				'value' => is_scalar( $option['value'] ?? null ) ? sanitize_text_field( (string) $option['value'] ) : '',
+				'label' => is_scalar( $option['label'] ?? null ) ? sanitize_text_field( (string) $option['label'] ) : '',
+			];
+		}
+
+		return $sanitized;
 	}
 
 	private function find_form_element( int $post_id, string $form_id ) {
@@ -301,6 +371,78 @@ class Atomic_Form_Controller {
 		$this->collect_cssid_mappings( $form_element['elements'] ?? [], $map, $post_id );
 
 		return $map;
+	}
+
+	private function build_field_group_members( array $form_element, int $post_id ): array {
+		$groups_by_name = [];
+		$this->collect_field_group_members( $form_element['elements'] ?? [], $groups_by_name, $post_id );
+
+		$members_by_element = [];
+
+		foreach ( $groups_by_name as $member_ids ) {
+			$member_ids = array_values( array_unique( $member_ids ) );
+
+			foreach ( $member_ids as $member_id ) {
+				$members_by_element[ $member_id ] = $member_ids;
+			}
+		}
+
+		return $members_by_element;
+	}
+
+	private function collect_field_group_members( array $elements, array &$groups_by_name, int $post_id ): void {
+		foreach ( $elements as $element ) {
+			if ( ! empty( $element['elements'] ) ) {
+				$this->collect_field_group_members( $element['elements'], $groups_by_name, $post_id );
+			}
+
+			if ( ! $this->is_grouped_form_field_element( $element ) ) {
+				continue;
+			}
+
+			$element_id = $element['id'] ?? '';
+
+			if ( ! $element_id ) {
+				continue;
+			}
+
+			$widget_instance = Core_Plugin::$instance->elements_manager->create_element_instance( $element );
+			$group_name = $this->get_field_group_name( $element, $post_id, $widget_instance );
+
+			if ( '' === $group_name ) {
+				continue;
+			}
+
+			$groups_by_name[ $group_name ] ??= [];
+			$groups_by_name[ $group_name ][] = $element_id;
+		}
+	}
+
+	private function is_grouped_form_field_element( array $element ): bool {
+		if ( ! $this->is_atomic_form_field_element( $element ) ) {
+			return false;
+		}
+
+		$widget_type = $element['widgetType'] ?? '';
+
+		return in_array( $widget_type, [ 'e-form-radio-button', 'e-form-checkbox' ], true );
+	}
+
+	private function get_field_group_name( array $element, int $post_id, ?Element_Base $widget_instance ): string {
+		$settings = $this->resolve_element_settings( $element, $post_id, $widget_instance );
+		$name = $settings['name'] ?? '';
+
+		if ( is_string( $name ) && '' !== $name ) {
+			return $name;
+		}
+
+		$cssid = $settings['_cssid'] ?? '';
+
+		if ( is_string( $cssid ) && '' !== $cssid ) {
+			return $cssid;
+		}
+
+		return sanitize_text_field( $element['id'] ?? '' );
 	}
 
 	private function collect_cssid_mappings( array $elements, array &$map, int $post_id ): void {

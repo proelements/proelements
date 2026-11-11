@@ -1,0 +1,45 @@
+{% import 'elementor/macros' as m %}
+{% set i18n = carousel_i18n | default({}) %}
+{% set spv_map = settings.slides_per_view %}
+{#- Twing (editor canvas) reports a plain JS object as not iterable, so detect the breakpoint map by its key. #}
+{% set spv_is_map = spv_map is iterable or spv_map.desktop is defined %}
+{% set desktop_spv = 3 %}
+{% if spv_is_map %}
+	{% set desktop_spv = spv_map.desktop is defined and spv_map.desktop is not null ? spv_map.desktop : 3 %}
+{% elseif spv_map is not null %}
+	{% set desktop_spv = spv_map %}
+{% endif %}
+{% set slides_per_view = 'fade' == settings.transition_type ? 1 : desktop_spv %}
+{% set slide_align = settings.equal_height ? 'stretch' : 'flex-start' %}
+{% set aria_label = settings.carousel_name | trim | default(i18n.carousel_name | default('Carousel')) %}
+{% set js_labels = {
+	slide_roledescription: i18n.slide_roledescription | default('slide'),
+	slide_position: i18n.slide_position | default('%1$d of %2$d'),
+	go_to_slide: i18n.go_to_slide | default('Go to slide %d')
+} %}
+{% set style_vars = ['--e-carousel-slides-per-view: ' ~ slides_per_view] %}
+{% if 'fade' == settings.transition_type %}
+	{#- Breakpoint slide widths fall back through `--e-carousel-spv-*` to desktop, so pin that to one. #}
+	{% set style_vars = style_vars | merge(['--e-carousel-spv-desktop: 1']) %}
+{% elseif spv_is_map %}
+	{% for key, val in spv_map %}
+		{% if val is not null %}
+			{% set style_vars = style_vars | merge(['--e-carousel-spv-' ~ key ~ ': ' ~ val]) %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+{% set style_vars = style_vars | merge(['--e-carousel-slide-align: ' ~ slide_align]) %}
+{% set root_classes = ['e-carousel'] %}
+{% if settings.autoplay and settings.show_autoplay_button %}
+	{#- PHP passes `autoplay_initial_state` on the published page only; the canvas shows the design-time state. #}
+	{% set autoplay_state = autoplay_initial_state | default(settings.autoplay_state) %}
+	{% set root_classes = root_classes | merge(['e-carousel--autoplay-' ~ ('paused' == autoplay_state ? 'paused' : 'playing')]) %}
+{% endif %}
+<div class="{{ m.render_base_classes(id, base_styles, settings, root_classes, 'div') }} {{ editor_classes | default('') }}"
+	{{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+	{{- ' ' }}{{ m.render_interactions(interactions) }}
+	{{- ' ' }}data-e-settings="{{ settings | json_encode | e('html_attr') }}"
+	{{- ' ' }}data-e-carousel-labels="{{ js_labels | json_encode | e('html_attr') }}"
+	{{- ' ' }}style="{{ style_vars | join('; ') }}"
+	{{- ' ' }}role="region" aria-roledescription="{{ i18n.carousel_roledescription | default('carousel') | e }}" aria-label="{{ aria_label | e }}"
+	{{- m.render_custom_attributes(settings, editor_attributes) }}><!-- elementor-children-placeholder --></div>

@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_store, _elementor_editor_app_bar, _elementor_editor_v1_adapters, _wordpress_i18n, react, _elementor_ui, _elementor_editor_documents, _elementor_icons, _elementor_license_api) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
@@ -235,7 +235,10 @@ this.elementorV2 = this.elementorV2 || {};
 		"e-form-date-picker",
 		"e-form-time-picker",
 		"e-form-select",
-		"e-form-file-upload"
+		"e-form-file-upload",
+		"e-form-hidden",
+		"e-form-honeypot",
+		"e-form-recaptcha-score"
 	]);
 	function getArgsElementType(args) {
 		var _args$model;

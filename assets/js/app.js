@@ -1,45 +1,45 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 (function(react, _wordpress_i18n, _elementor_app_ui, _elementor_site_editor, react_dom, _elementor_hooks, _elementor_router, _elementor_ui, _elementor_icons) {
 	var __vite_style__ = document.createElement("style");
 	__vite_style__.textContent = "/*$vite$:1*/";
 	document.head.appendChild(__vite_style__);
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;
-	var __defProp$16 = Object.defineProperty;
-	var __name = (target, value) => __defProp$16(target, "name", {
+	var __defProp$17 = Object.defineProperty;
+	var __name = (target, value) => __defProp$17(target, "name", {
 		value,
 		configurable: true
 	});
 	var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 	var __getOwnPropNames = Object.getOwnPropertyNames;
 	var __getProtoOf = Object.getPrototypeOf;
-	var __hasOwnProp$16 = Object.prototype.hasOwnProperty;
+	var __hasOwnProp$17 = Object.prototype.hasOwnProperty;
 	var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
 	var __exportAll = (all, no_symbols) => {
 		let target = {};
-		for (var name in all) __defProp$16(target, name, {
+		for (var name in all) __defProp$17(target, name, {
 			get: all[name],
 			enumerable: true
 		});
-		if (!no_symbols) __defProp$16(target, Symbol.toStringTag, { value: "Module" });
+		if (!no_symbols) __defProp$17(target, Symbol.toStringTag, { value: "Module" });
 		return target;
 	};
 	var __copyProps = (to, from, except, desc) => {
 		if (from && typeof from === "object" || typeof from === "function") for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
 			key = keys[i];
-			if (!__hasOwnProp$16.call(to, key) && key !== except) __defProp$16(to, key, {
+			if (!__hasOwnProp$17.call(to, key) && key !== except) __defProp$17(to, key, {
 				get: ((k) => from[k]).bind(null, key),
 				enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
 			});
 		}
 		return to;
 	};
-	var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp$16(target, "default", {
+	var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp$17(target, "default", {
 		value: mod,
 		enumerable: true
 	}) : target, mod));
 	//#endregion
-	react = __toESM(react);
+	react = __toESM(react, 1);
 	_elementor_router = __toESM(_elementor_router);
 	//#region node_modules/prop-types/lib/ReactPropTypesSecret.js
 	/**
@@ -1129,33 +1129,33 @@
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/context/templates.js
 	var import_prop_types = /* @__PURE__ */ __toESM(require_prop_types());
-	var __defProp$15 = Object.defineProperty;
-	var __defProps$9 = Object.defineProperties;
-	var __getOwnPropDescs$9 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$15 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$15 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$15 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$15 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$15(obj, key, {
+	var __defProp$16 = Object.defineProperty;
+	var __defProps$10 = Object.defineProperties;
+	var __getOwnPropDescs$10 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$16 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$16 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$16 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$16 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$16(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$15 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$15.call(b, prop)) __defNormalProp$15(a, prop, b[prop]);
-		if (__getOwnPropSymbols$15) {
-			for (var prop of __getOwnPropSymbols$15(b)) if (__propIsEnum$15.call(b, prop)) __defNormalProp$15(a, prop, b[prop]);
+	var __spreadValues$16 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$16.call(b, prop)) __defNormalProp$16(a, prop, b[prop]);
+		if (__getOwnPropSymbols$16) {
+			for (var prop of __getOwnPropSymbols$16(b)) if (__propIsEnum$16.call(b, prop)) __defNormalProp$16(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$9 = /* @__PURE__ */ __name((a, b) => __defProps$9(a, __getOwnPropDescs$9(b)), "__spreadProps");
-	var __publicField$2 = /* @__PURE__ */ __name((obj, key, value) => __defNormalProp$15(obj, typeof key !== "symbol" ? key + "" : key, value), "__publicField");
+	var __spreadProps$10 = /* @__PURE__ */ __name((a, b) => __defProps$10(a, __getOwnPropDescs$10(b)), "__spreadProps");
+	var __publicField$2 = /* @__PURE__ */ __name((obj, key, value) => __defNormalProp$16(obj, typeof key !== "symbol" ? key + "" : key, value), "__publicField");
 	var Context$1 = react.default.createContext();
 	var _TemplatesProvider = class _TemplatesProvider extends BaseContext {
 		constructor(props) {
 			super(props);
-			this.state = __spreadProps$9(__spreadValues$15({}, this.state), {
-				action: __spreadProps$9(__spreadValues$15({}, this.state.action), {
+			this.state = __spreadProps$10(__spreadValues$16({}, this.state), {
+				action: __spreadProps$10(__spreadValues$16({}, this.state.action), {
 					current: _TemplatesProvider.actions.FETCH,
 					loading: true
 				}),
@@ -1176,9 +1176,9 @@
 				fileName,
 				fileData
 			})).then((response) => {
-				this.updateTemplatesState((prev) => __spreadValues$15(__spreadValues$15({}, prev), Object.values(response.data).reduce((current, template) => {
+				this.updateTemplatesState((prev) => __spreadValues$16(__spreadValues$16({}, prev), Object.values(response.data).reduce((current, template) => {
 					if (!template.supportsSiteEditor) return current;
-					return __spreadProps$9(__spreadValues$15({}, current), { [template.id]: template });
+					return __spreadProps$10(__spreadValues$16({}, current), { [template.id]: template });
 				}, {})));
 				return response;
 			});
@@ -1186,7 +1186,7 @@
 		deleteTemplate(id) {
 			return this.executeAction(_TemplatesProvider.actions.DELETE, () => $e.data.delete(Templates$1.signature, { id })).then(() => {
 				this.updateTemplatesState((prev) => {
-					const newTemplates = __spreadValues$15({}, prev);
+					const newTemplates = __spreadValues$16({}, prev);
 					delete newTemplates[id];
 					return newTemplates;
 				});
@@ -1199,13 +1199,13 @@
 		}
 		fetchTemplates() {
 			return this.executeAction(_TemplatesProvider.actions.FETCH, () => $e.data.get(Templates$1.signature, {}, { refresh: true })).then((response) => {
-				this.updateTemplatesState(() => Object.values(response.data).reduce((current, template) => __spreadProps$9(__spreadValues$15({}, current), { [template.id]: template }), {}), false);
+				this.updateTemplatesState(() => Object.values(response.data).reduce((current, template) => __spreadProps$10(__spreadValues$16({}, current), { [template.id]: template }), {}), false);
 			});
 		}
 		updateTemplateItemState(id, args) {
 			return this.updateTemplatesState((prev) => {
-				const template = __spreadValues$15(__spreadValues$15({}, prev[id]), args);
-				return __spreadProps$9(__spreadValues$15({}, prev), { [id]: template });
+				const template = __spreadValues$16(__spreadValues$16({}, prev[id]), args);
+				return __spreadProps$10(__spreadValues$16({}, prev), { [id]: template });
 			});
 		}
 		updateTemplatesState(callback, clearCache = true) {
@@ -1353,20 +1353,20 @@
 	Indicator.propTypes = { active: import_prop_types.default.bool };
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/molecules/site-template-header.js
-	var __defProp$14 = Object.defineProperty;
-	var __getOwnPropSymbols$14 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$14 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$14 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$14 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$14(obj, key, {
+	var __defProp$15 = Object.defineProperty;
+	var __getOwnPropSymbols$15 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$15 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$15 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$15 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$15(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$14 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$14.call(b, prop)) __defNormalProp$14(a, prop, b[prop]);
-		if (__getOwnPropSymbols$14) {
-			for (var prop of __getOwnPropSymbols$14(b)) if (__propIsEnum$14.call(b, prop)) __defNormalProp$14(a, prop, b[prop]);
+	var __spreadValues$15 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$15.call(b, prop)) __defNormalProp$15(a, prop, b[prop]);
+		if (__getOwnPropSymbols$15) {
+			for (var prop of __getOwnPropSymbols$15(b)) if (__propIsEnum$15.call(b, prop)) __defNormalProp$15(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
@@ -1379,7 +1379,7 @@
 			className: "e-site-template__edit-btn",
 			size: "sm",
 			url: props.editURL
-		}), /* @__PURE__ */ react.default.createElement(PartActionsButtons, __spreadValues$14({}, props)));
+		}), /* @__PURE__ */ react.default.createElement(PartActionsButtons, __spreadValues$15({}, props)));
 		const MetaDataIcon = (innerProps) => /* @__PURE__ */ react.default.createElement(_elementor_app_ui.Text, {
 			tag: "span",
 			className: "e-site-template__meta-data"
@@ -1503,20 +1503,20 @@
 	};
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/molecules/site-template.js
-	var __defProp$13 = Object.defineProperty;
-	var __getOwnPropSymbols$13 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$13 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$13 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$13 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$13(obj, key, {
+	var __defProp$14 = Object.defineProperty;
+	var __getOwnPropSymbols$14 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$14 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$14 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$14 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$14(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$13 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$13.call(b, prop)) __defNormalProp$13(a, prop, b[prop]);
-		if (__getOwnPropSymbols$13) {
-			for (var prop of __getOwnPropSymbols$13(b)) if (__propIsEnum$13.call(b, prop)) __defNormalProp$13(a, prop, b[prop]);
+	var __spreadValues$14 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$14.call(b, prop)) __defNormalProp$14(a, prop, b[prop]);
+		if (__getOwnPropSymbols$14) {
+			for (var prop of __getOwnPropSymbols$14(b)) if (__propIsEnum$14.call(b, prop)) __defNormalProp$14(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
@@ -1533,11 +1533,11 @@
 		}, [props.isSelected]);
 		if (props.extended) classes.push(`${baseClassName}--extended`);
 		if (props.aspectRatio) classes.push(`${baseClassName}--${props.aspectRatio}`);
-		const CardFooter = props.extended && props.showInstances ? /* @__PURE__ */ react.default.createElement(SiteTemplateFooter, __spreadValues$13({}, props)) : "";
+		const CardFooter = props.extended && props.showInstances ? /* @__PURE__ */ react.default.createElement(SiteTemplateFooter, __spreadValues$14({}, props)) : "";
 		return /* @__PURE__ */ react.default.createElement(_elementor_app_ui.Card, {
 			className: classes.join(" "),
 			ref
-		}, /* @__PURE__ */ react.default.createElement(SiteTemplateHeader, __spreadValues$13({}, props)), /* @__PURE__ */ react.default.createElement(SiteTemplateBody, __spreadValues$13({}, props)), CardFooter);
+		}, /* @__PURE__ */ react.default.createElement(SiteTemplateHeader, __spreadValues$14({}, props)), /* @__PURE__ */ react.default.createElement(SiteTemplateBody, __spreadValues$14({}, props)), CardFooter);
 	}
 	SiteTemplate.propTypes = {
 		aspectRatio: import_prop_types.default.string,
@@ -1555,7 +1555,7 @@
 	SiteTemplate.defaultProps = { isSelected: false };
 	//#endregion
 	//#region modules/screenshots/app/assets/js/hooks/use-screenshot.js
-	var { useState: useState$11, useEffect: useEffect$11, useMemo: useMemo$7, useCallback: useCallback$5 } = react.default;
+	var { useState: useState$12, useEffect: useEffect$13, useMemo: useMemo$8, useCallback: useCallback$6 } = react.default;
 	var SCREENSHOT_STATUS_QUEUE = "queue";
 	var SCREENSHOT_STATUS_IN_PROGRESS = "in-progress";
 	var SCREENSHOT_STATUS_SUCCEED = "succeed";
@@ -1627,7 +1627,7 @@
 	* @param {Function} setPosts
 	*/
 	function useIFrameMessageListener(inProgressPosts, setPosts) {
-		return useCallback$5((message) => {
+		return useCallback$6((message) => {
 			const { data } = message;
 			if (!data.name || data.name !== "capture-screenshot-done") return;
 			const post = inProgressPosts.find((item) => item.id === parseInt(data.id));
@@ -1647,24 +1647,24 @@
 	* @return {{inProgress: Array, succeed: Array, failed: Array, posts: Array, queue: Array}} An array of posts, queue, inProgress, succeed, failed
 	*/
 	function useScreenshot(initialPosts, { numberOfScreenshotInParallel } = defaultOptions) {
-		const [posts, setPosts] = useState$11([]);
-		const queue = useMemo$7(() => filterPostByStatus(posts, SCREENSHOT_STATUS_QUEUE), [posts]);
-		const inProgress = useMemo$7(() => filterPostByStatus(posts, SCREENSHOT_STATUS_IN_PROGRESS), [posts]);
-		const succeed = useMemo$7(() => filterPostByStatus(posts, SCREENSHOT_STATUS_SUCCEED), [posts]);
-		const failed = useMemo$7(() => filterPostByStatus(posts, SCREENSHOT_STATUS_FAILED), [posts]);
-		useEffect$11(() => {
+		const [posts, setPosts] = useState$12([]);
+		const queue = useMemo$8(() => filterPostByStatus(posts, SCREENSHOT_STATUS_QUEUE), [posts]);
+		const inProgress = useMemo$8(() => filterPostByStatus(posts, SCREENSHOT_STATUS_IN_PROGRESS), [posts]);
+		const succeed = useMemo$8(() => filterPostByStatus(posts, SCREENSHOT_STATUS_SUCCEED), [posts]);
+		const failed = useMemo$8(() => filterPostByStatus(posts, SCREENSHOT_STATUS_FAILED), [posts]);
+		useEffect$13(() => {
 			const postsDiff = initialPosts.filter((initialPost) => !posts.find((statePost) => statePost.id === initialPost.id));
 			if (!postsDiff.length) return;
 			setPosts((prev) => [...prev, ...normalizeInitialPosts(postsDiff)]);
 		}, [initialPosts]);
 		const iframeMessageListener = useIFrameMessageListener(inProgress, setPosts);
-		useEffect$11(() => {
+		useEffect$13(() => {
 			window.addEventListener("message", iframeMessageListener, false);
 			return () => {
 				window.removeEventListener("message", iframeMessageListener);
 			};
 		}, [iframeMessageListener]);
-		useEffect$11(() => {
+		useEffect$13(() => {
 			if (0 === queue.length || inProgress.length >= numberOfScreenshotInParallel) return;
 			const [nextPost] = queue;
 			const iframe = createScreenshotIframe(nextPost);
@@ -1714,26 +1714,26 @@
 	}
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/organisms/site-templates.js
-	var __defProp$12 = Object.defineProperty;
-	var __defProps$8 = Object.defineProperties;
-	var __getOwnPropDescs$8 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$12 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$12 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$12 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$12 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$12(obj, key, {
+	var __defProp$13 = Object.defineProperty;
+	var __defProps$9 = Object.defineProperties;
+	var __getOwnPropDescs$9 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$13 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$13 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$13 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$13 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$13(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$12 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$12.call(b, prop)) __defNormalProp$12(a, prop, b[prop]);
-		if (__getOwnPropSymbols$12) {
-			for (var prop of __getOwnPropSymbols$12(b)) if (__propIsEnum$12.call(b, prop)) __defNormalProp$12(a, prop, b[prop]);
+	var __spreadValues$13 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$13.call(b, prop)) __defNormalProp$13(a, prop, b[prop]);
+		if (__getOwnPropSymbols$13) {
+			for (var prop of __getOwnPropSymbols$13(b)) if (__propIsEnum$13.call(b, prop)) __defNormalProp$13(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$8 = /* @__PURE__ */ __name((a, b) => __defProps$8(a, __getOwnPropDescs$8(b)), "__spreadProps");
+	var __spreadProps$9 = /* @__PURE__ */ __name((a, b) => __defProps$9(a, __getOwnPropDescs$9(b)), "__spreadProps");
 	function SiteTemplates(props) {
 		const { templates: contextTemplates, action, resetActionState } = react.default.useContext(Context$1);
 		let gridColumns;
@@ -1776,7 +1776,7 @@
 			columns: gridColumns,
 			spacing: 24,
 			colMinWidth: 200
-		}, templates.map((item) => /* @__PURE__ */ react.default.createElement(SiteTemplate, __spreadProps$8(__spreadValues$12(__spreadValues$12({ key: item.id }, item), siteTemplateConfig), { isSelected: parseInt(props.id) === item.id })))));
+		}, templates.map((item) => /* @__PURE__ */ react.default.createElement(SiteTemplate, __spreadProps$9(__spreadValues$13(__spreadValues$13({ key: item.id }, item), siteTemplateConfig), { isSelected: parseInt(props.id) === item.id })))));
 	}
 	SiteTemplates.propTypes = {
 		type: import_prop_types.default.string,
@@ -1803,26 +1803,26 @@
 	};
 	//#endregion
 	//#region core/app/assets/js/ui/connect-button.js
-	var __defProp$11 = Object.defineProperty;
-	var __defProps$7 = Object.defineProperties;
-	var __getOwnPropDescs$7 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$11 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$11 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$11 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$11 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$11(obj, key, {
+	var __defProp$12 = Object.defineProperty;
+	var __defProps$8 = Object.defineProperties;
+	var __getOwnPropDescs$8 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$12 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$12 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$12 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$12 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$12(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$11 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$11.call(b, prop)) __defNormalProp$11(a, prop, b[prop]);
-		if (__getOwnPropSymbols$11) {
-			for (var prop of __getOwnPropSymbols$11(b)) if (__propIsEnum$11.call(b, prop)) __defNormalProp$11(a, prop, b[prop]);
+	var __spreadValues$12 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$12.call(b, prop)) __defNormalProp$12(a, prop, b[prop]);
+		if (__getOwnPropSymbols$12) {
+			for (var prop of __getOwnPropSymbols$12(b)) if (__propIsEnum$12.call(b, prop)) __defNormalProp$12(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$7 = /* @__PURE__ */ __name((a, b) => __defProps$7(a, __getOwnPropDescs$7(b)), "__spreadProps");
+	var __spreadProps$8 = /* @__PURE__ */ __name((a, b) => __defProps$8(a, __getOwnPropDescs$8(b)), "__spreadProps");
 	var ConnectButton = (props) => {
 		const className = arrayToClassName(["e-app-connect-button", props.className]);
 		const buttonRef = (0, react.useRef)(null);
@@ -1830,12 +1830,12 @@
 			if (!buttonRef.current) return;
 			jQuery(buttonRef.current).elementorConnect();
 		}, []);
-		return /* @__PURE__ */ react.createElement(_elementor_app_ui.Button, __spreadProps$7(__spreadValues$11({}, props), {
+		return /* @__PURE__ */ react.createElement(_elementor_app_ui.Button, __spreadProps$8(__spreadValues$12({}, props), {
 			elRef: buttonRef,
 			className
 		}));
 	};
-	ConnectButton.propTypes = __spreadProps$7(__spreadValues$11({}, _elementor_app_ui.Button.propTypes), {
+	ConnectButton.propTypes = __spreadProps$8(__spreadValues$12({}, _elementor_app_ui.Button.propTypes), {
 		text: import_prop_types.default.string.isRequired,
 		url: import_prop_types.default.string.isRequired,
 		className: import_prop_types.default.string
@@ -2004,27 +2004,27 @@
 	};
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/context/services/conditions-config.js
-	var __defProp$10 = Object.defineProperty;
-	var __defProps$6 = Object.defineProperties;
-	var __getOwnPropDescs$6 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$10 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$10 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$10 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$10 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$10(obj, key, {
+	var __defProp$11 = Object.defineProperty;
+	var __defProps$7 = Object.defineProperties;
+	var __getOwnPropDescs$7 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$11 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$11 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$11 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$11 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$11(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$10 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$10.call(b, prop)) __defNormalProp$10(a, prop, b[prop]);
-		if (__getOwnPropSymbols$10) {
-			for (var prop of __getOwnPropSymbols$10(b)) if (__propIsEnum$10.call(b, prop)) __defNormalProp$10(a, prop, b[prop]);
+	var __spreadValues$11 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$11.call(b, prop)) __defNormalProp$11(a, prop, b[prop]);
+		if (__getOwnPropSymbols$11) {
+			for (var prop of __getOwnPropSymbols$11(b)) if (__propIsEnum$11.call(b, prop)) __defNormalProp$11(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$6 = /* @__PURE__ */ __name((a, b) => __defProps$6(a, __getOwnPropDescs$6(b)), "__spreadProps");
-	var __publicField$1 = /* @__PURE__ */ __name((obj, key, value) => __defNormalProp$10(obj, typeof key !== "symbol" ? key + "" : key, value), "__publicField");
+	var __spreadProps$7 = /* @__PURE__ */ __name((a, b) => __defProps$7(a, __getOwnPropDescs$7(b)), "__spreadProps");
+	var __publicField$1 = /* @__PURE__ */ __name((obj, key, value) => __defNormalProp$11(obj, typeof key !== "symbol" ? key + "" : key, value), "__publicField");
 	var _ConditionsConfig = class _ConditionsConfig {
 		constructor(config) {
 			__publicField$1(this, "config", null);
@@ -2102,7 +2102,7 @@
 				const config = this.config[key];
 				if (!config) return current;
 				const instanceLabel = condition.subId ? `${config.label} #${condition.subId}` : config.all_label;
-				return __spreadProps$6(__spreadValues$10({}, current), { [key]: instanceLabel });
+				return __spreadProps$7(__spreadValues$11({}, current), { [key]: instanceLabel });
 			}, {});
 			if (0 === Object.keys(instances).length) instances = [(0, _wordpress_i18n.__)("No instances", "elementor-pro")];
 			return instances;
@@ -2112,27 +2112,27 @@
 	var ConditionsConfig = _ConditionsConfig;
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/context/conditions.js
-	var __defProp$9 = Object.defineProperty;
-	var __defProps$5 = Object.defineProperties;
-	var __getOwnPropDescs$5 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$9 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$9 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$9 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$9(obj, key, {
+	var __defProp$10 = Object.defineProperty;
+	var __defProps$6 = Object.defineProperties;
+	var __getOwnPropDescs$6 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$10 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$10 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$10 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$10 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$10(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$9 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$9.call(b, prop)) __defNormalProp$9(a, prop, b[prop]);
-		if (__getOwnPropSymbols$9) {
-			for (var prop of __getOwnPropSymbols$9(b)) if (__propIsEnum$9.call(b, prop)) __defNormalProp$9(a, prop, b[prop]);
+	var __spreadValues$10 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$10.call(b, prop)) __defNormalProp$10(a, prop, b[prop]);
+		if (__getOwnPropSymbols$10) {
+			for (var prop of __getOwnPropSymbols$10(b)) if (__propIsEnum$10.call(b, prop)) __defNormalProp$10(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$5 = /* @__PURE__ */ __name((a, b) => __defProps$5(a, __getOwnPropDescs$5(b)), "__spreadProps");
-	var __publicField = (obj, key, value) => __defNormalProp$9(obj, typeof key !== "symbol" ? key + "" : key, value);
+	var __spreadProps$6 = /* @__PURE__ */ __name((a, b) => __defProps$6(a, __getOwnPropDescs$6(b)), "__spreadProps");
+	var __publicField = (obj, key, value) => __defNormalProp$10(obj, typeof key !== "symbol" ? key + "" : key, value);
 	var Context = react.default.createContext();
 	var _ConditionsProvider = class _ConditionsProvider extends BaseContext {
 		/**
@@ -2148,7 +2148,7 @@
 			* @type {ConditionsConfig}
 			*/
 			__publicField(this, "conditionsConfig", null);
-			this.state = __spreadProps$5(__spreadValues$9({}, this.state), {
+			this.state = __spreadProps$6(__spreadValues$10({}, this.state), {
 				conditionsFetched: false,
 				conditions: {},
 				updateConditionItemState: this.updateConditionItemState.bind(this),
@@ -2227,7 +2227,7 @@
 		normalizeConditionsState() {
 			this.updateConditionsState(() => {
 				return this.props.currentTemplate.conditions.reduce((current, condition) => {
-					const conditionObj = new Condition(__spreadProps$5(__spreadValues$9({}, condition), {
+					const conditionObj = new Condition(__spreadProps$6(__spreadValues$10({}, condition), {
 						default: this.props.currentTemplate.defaultCondition,
 						options: this.conditionsConfig.getOptions(),
 						subOptions: this.conditionsConfig.getSubOptions(condition.name),
@@ -2237,7 +2237,7 @@
 							label: ""
 						}] : []
 					}));
-					return __spreadProps$5(__spreadValues$9({}, current), { [conditionObj.id]: conditionObj });
+					return __spreadProps$6(__spreadValues$10({}, current), { [conditionObj.id]: conditionObj });
 				}, {});
 			}).then(() => {
 				Object.values(this.state.conditions).forEach((condition) => this.checkConflicts(condition));
@@ -2271,7 +2271,7 @@
 			}
 			this.updateConditionsState((prev) => {
 				const condition = prev[id];
-				return __spreadProps$5(__spreadValues$9({}, prev), { [id]: condition.clone().set(args) });
+				return __spreadProps$6(__spreadValues$10({}, prev), { [id]: condition.clone().set(args) });
 			}).then(() => {
 				if (shouldCheckConflicts) this.checkConflicts(this.findConditionItemInState(id));
 			});
@@ -2283,7 +2283,7 @@
 		*/
 		removeConditionItemInState(id) {
 			this.updateConditionsState((prev) => {
-				const newConditions = __spreadValues$9({}, prev);
+				const newConditions = __spreadValues$10({}, prev);
 				delete newConditions[id];
 				return newConditions;
 			});
@@ -2302,7 +2302,7 @@
 				subOptions: this.conditionsConfig.getSubOptions(defaultCondition),
 				subIdAutocomplete: this.conditionsConfig.getSubIdAutocomplete("")
 			});
-			this.updateConditionsState((prev) => __spreadProps$5(__spreadValues$9({}, prev), { [newCondition.id]: newCondition })).then(() => {
+			this.updateConditionsState((prev) => __spreadProps$6(__spreadValues$10({}, prev), { [newCondition.id]: newCondition })).then(() => {
 				if (shouldCheckConflicts) this.checkConflicts(newCondition);
 			});
 		}
@@ -2515,29 +2515,29 @@
 	ConditionButtonPortal.propTypes = { children: import_prop_types.oneOfType([import_prop_types.node, import_prop_types.string]) };
 	//#endregion
 	//#region core/app/modules/site-editor/assets/js/pages/conditions/conditions-rows.js
-	var __defProp$8 = Object.defineProperty;
-	var __defProps$4 = Object.defineProperties;
-	var __getOwnPropDescs$4 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$8 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$8 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$8 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$8 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$8(obj, key, {
+	var __defProp$9 = Object.defineProperty;
+	var __defProps$5 = Object.defineProperties;
+	var __getOwnPropDescs$5 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$9 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$9 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$9 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$9(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$8 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$8.call(b, prop)) __defNormalProp$8(a, prop, b[prop]);
-		if (__getOwnPropSymbols$8) {
-			for (var prop of __getOwnPropSymbols$8(b)) if (__propIsEnum$8.call(b, prop)) __defNormalProp$8(a, prop, b[prop]);
+	var __spreadValues$9 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$9.call(b, prop)) __defNormalProp$9(a, prop, b[prop]);
+		if (__getOwnPropSymbols$9) {
+			for (var prop of __getOwnPropSymbols$9(b)) if (__propIsEnum$9.call(b, prop)) __defNormalProp$9(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$4 = /* @__PURE__ */ __name((a, b) => __defProps$4(a, __getOwnPropDescs$4(b)), "__spreadProps");
+	var __spreadProps$5 = /* @__PURE__ */ __name((a, b) => __defProps$5(a, __getOwnPropDescs$5(b)), "__spreadProps");
 	function ConditionsRows(props) {
 		const { conditions, createConditionItemInState: create, updateConditionItemState: update, removeConditionItemInState: remove, saveConditions: save, action, resetActionState } = react.default.useContext(Context);
-		const rows = Object.values(conditions).map((condition) => /* @__PURE__ */ react.default.createElement("div", { key: condition.id }, /* @__PURE__ */ react.default.createElement("div", { className: "e-site-editor-conditions__row" }, /* @__PURE__ */ react.default.createElement("div", { className: `e-site-editor-conditions__row-controls ${condition.conflictErrors.length && "e-site-editor-conditions__row-controls--error"}` }, /* @__PURE__ */ react.default.createElement(ConditionType, __spreadProps$4(__spreadValues$8({}, condition), { updateConditions: update })), /* @__PURE__ */ react.default.createElement("div", { className: "e-site-editor-conditions__row-controls-inner" }, /* @__PURE__ */ react.default.createElement(ConditionName, __spreadProps$4(__spreadValues$8({}, condition), { updateConditions: update })), /* @__PURE__ */ react.default.createElement(ConditionSub, __spreadProps$4(__spreadValues$8({}, condition), { updateConditions: update })), /* @__PURE__ */ react.default.createElement(ConditionSubId, __spreadProps$4(__spreadValues$8({}, condition), { updateConditions: update })))), /* @__PURE__ */ react.default.createElement(_elementor_app_ui.Button, {
+		const rows = Object.values(conditions).map((condition) => /* @__PURE__ */ react.default.createElement("div", { key: condition.id }, /* @__PURE__ */ react.default.createElement("div", { className: "e-site-editor-conditions__row" }, /* @__PURE__ */ react.default.createElement("div", { className: `e-site-editor-conditions__row-controls ${condition.conflictErrors.length && "e-site-editor-conditions__row-controls--error"}` }, /* @__PURE__ */ react.default.createElement(ConditionType, __spreadProps$5(__spreadValues$9({}, condition), { updateConditions: update })), /* @__PURE__ */ react.default.createElement("div", { className: "e-site-editor-conditions__row-controls-inner" }, /* @__PURE__ */ react.default.createElement(ConditionName, __spreadProps$5(__spreadValues$9({}, condition), { updateConditions: update })), /* @__PURE__ */ react.default.createElement(ConditionSub, __spreadProps$5(__spreadValues$9({}, condition), { updateConditions: update })), /* @__PURE__ */ react.default.createElement(ConditionSubId, __spreadProps$5(__spreadValues$9({}, condition), { updateConditions: update })))), /* @__PURE__ */ react.default.createElement(_elementor_app_ui.Button, {
 			className: "e-site-editor-conditions__remove-condition",
 			text: (0, _wordpress_i18n.__)("Delete", "elementor-pro"),
 			icon: "eicon-close",
@@ -2775,28 +2775,28 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/upgrade-tooltip.js
-	var __defProp$7 = Object.defineProperty;
-	var __getOwnPropSymbols$7 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$7 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$7 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$7 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$7(obj, key, {
+	var __defProp$8 = Object.defineProperty;
+	var __getOwnPropSymbols$8 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$8 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$8 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$8 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$8(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$7 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$7.call(b, prop)) __defNormalProp$7(a, prop, b[prop]);
-		if (__getOwnPropSymbols$7) {
-			for (var prop of __getOwnPropSymbols$7(b)) if (__propIsEnum$7.call(b, prop)) __defNormalProp$7(a, prop, b[prop]);
+	var __spreadValues$8 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$8.call(b, prop)) __defNormalProp$8(a, prop, b[prop]);
+		if (__getOwnPropSymbols$8) {
+			for (var prop of __getOwnPropSymbols$8(b)) if (__propIsEnum$8.call(b, prop)) __defNormalProp$8(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
 	var __objRest = (source, exclude) => {
 		var target = {};
-		for (var prop in source) if (__hasOwnProp$7.call(source, prop) && exclude.indexOf(prop) < 0) target[prop] = source[prop];
-		if (source != null && __getOwnPropSymbols$7) {
-			for (var prop of __getOwnPropSymbols$7(source)) if (exclude.indexOf(prop) < 0 && __propIsEnum$7.call(source, prop)) target[prop] = source[prop];
+		for (var prop in source) if (__hasOwnProp$8.call(source, prop) && exclude.indexOf(prop) < 0) target[prop] = source[prop];
+		if (source != null && __getOwnPropSymbols$8) {
+			for (var prop of __getOwnPropSymbols$8(source)) if (exclude.indexOf(prop) < 0 && __propIsEnum$8.call(source, prop)) target[prop] = source[prop];
 		}
 		return target;
 	};
@@ -2806,7 +2806,7 @@
 			"disabled",
 			"tooltip"
 		]);
-		if (disabled && tooltip) return /* @__PURE__ */ react.default.createElement(_elementor_ui.Tooltip, __spreadValues$7({
+		if (disabled && tooltip) return /* @__PURE__ */ react.default.createElement(_elementor_ui.Tooltip, __spreadValues$8({
 			title: (0, _wordpress_i18n.__)("Upgrade your plan to choose which elements to adjust.", "elementor"),
 			placement: "top",
 			arrow: true,
@@ -2839,20 +2839,20 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/customization-list-setting-section.js
-	var __defProp$6 = Object.defineProperty;
-	var __getOwnPropSymbols$6 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$6 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$6 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$6 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$6(obj, key, {
+	var __defProp$7 = Object.defineProperty;
+	var __getOwnPropSymbols$7 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$7 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$7 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$7 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$7(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$6 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$6.call(b, prop)) __defNormalProp$6(a, prop, b[prop]);
-		if (__getOwnPropSymbols$6) {
-			for (var prop of __getOwnPropSymbols$6(b)) if (__propIsEnum$6.call(b, prop)) __defNormalProp$6(a, prop, b[prop]);
+	var __spreadValues$7 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$7.call(b, prop)) __defNormalProp$7(a, prop, b[prop]);
+		if (__getOwnPropSymbols$7) {
+			for (var prop of __getOwnPropSymbols$7(b)) if (__propIsEnum$7.call(b, prop)) __defNormalProp$7(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
@@ -2891,7 +2891,7 @@
 		}, /* @__PURE__ */ react.default.createElement(UpgradeTooltip, {
 			disabled: disabled && settings.length === items.length,
 			tooltip
-		}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: __spreadValues$6({ pointerEvents: "auto" }, settings.length === items.length && disabled && { cursor: "pointer" }) }, /* @__PURE__ */ react.default.createElement(_elementor_ui.FormControlLabel, {
+		}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: __spreadValues$7({ pointerEvents: "auto" }, settings.length === items.length && disabled && { cursor: "pointer" }) }, /* @__PURE__ */ react.default.createElement(_elementor_ui.FormControlLabel, {
 			control: /* @__PURE__ */ react.default.createElement(_elementor_ui.Checkbox, {
 				color: "info",
 				checked: settings.length === items.length,
@@ -2903,8 +2903,8 @@
 				sx: { p: 0 },
 				disabled
 			}),
-			sx: __spreadValues$6({ gap: 1 }, settings.length === items.length && disabled && { cursor: "pointer" }),
-			slotProps: { typography: { sx: __spreadValues$6({ fontWeight: 500 }, settings.length === items.length && disabled && { cursor: "pointer" }) } },
+			sx: __spreadValues$7({ gap: 1 }, settings.length === items.length && disabled && { cursor: "pointer" }),
+			slotProps: { typography: { sx: __spreadValues$7({ fontWeight: 500 }, settings.length === items.length && disabled && { cursor: "pointer" }) } },
 			label: `${(0, _wordpress_i18n.__)("All", "elementor-pro")} ${title.toLowerCase()}`
 		})))), (showMore ? items : items.slice(0, DEFAULT_VISIBLE_ITEMS_COUNT)).map((item) => {
 			return /* @__PURE__ */ react.default.createElement(_elementor_ui.Grid, {
@@ -2918,7 +2918,7 @@
 			}, /* @__PURE__ */ react.default.createElement(UpgradeTooltip, {
 				disabled: disabled && settings.includes(item.value),
 				tooltip
-			}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: __spreadValues$6({ pointerEvents: "auto" }, settings.includes(item.value) && disabled && { cursor: "pointer" }) }, /* @__PURE__ */ react.default.createElement(_elementor_ui.FormControlLabel, {
+			}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: __spreadValues$7({ pointerEvents: "auto" }, settings.includes(item.value) && disabled && { cursor: "pointer" }) }, /* @__PURE__ */ react.default.createElement(_elementor_ui.FormControlLabel, {
 				control: /* @__PURE__ */ react.default.createElement(_elementor_ui.Checkbox, {
 					color: "info",
 					checked: settings.includes(item.value),
@@ -2926,14 +2926,14 @@
 						if (checked) onSettingChange([...settings, item.value]);
 						else onSettingChange(settings.filter((setting) => setting !== item.value));
 					},
-					sx: __spreadValues$6({ p: 0 }, settings.includes(item.value) && disabled && { cursor: "pointer" }),
+					sx: __spreadValues$7({ p: 0 }, settings.includes(item.value) && disabled && { cursor: "pointer" }),
 					disabled
 				}),
-				sx: __spreadValues$6({
+				sx: __spreadValues$7({
 					maxWidth: "100%",
 					gap: 1
 				}, settings.includes(item.value) && disabled && { cursor: "pointer" }),
-				slotProps: { typography: { sx: __spreadValues$6({
+				slotProps: { typography: { sx: __spreadValues$7({
 					fontWeight: 400,
 					maxWidth: "100%",
 					overflow: "hidden",
@@ -2965,20 +2965,20 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/customization-setting-section.js
-	var __defProp$5 = Object.defineProperty;
-	var __getOwnPropSymbols$5 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$5 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$5 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$5 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$5(obj, key, {
+	var __defProp$6 = Object.defineProperty;
+	var __getOwnPropSymbols$6 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$6 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$6 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$6 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$6(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$5 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$5.call(b, prop)) __defNormalProp$5(a, prop, b[prop]);
-		if (__getOwnPropSymbols$5) {
-			for (var prop of __getOwnPropSymbols$5(b)) if (__propIsEnum$5.call(b, prop)) __defNormalProp$5(a, prop, b[prop]);
+	var __spreadValues$6 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$6.call(b, prop)) __defNormalProp$6(a, prop, b[prop]);
+		if (__getOwnPropSymbols$6) {
+			for (var prop of __getOwnPropSymbols$6(b)) if (__propIsEnum$6.call(b, prop)) __defNormalProp$6(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
@@ -2996,7 +2996,7 @@
 				onChange: (_, isChecked) => onSettingChange && onSettingChange(settingKey, isChecked),
 				color: "info",
 				size: "medium",
-				sx: __spreadValues$5({ alignSelf: "center" }, disabled && tooltip && { cursor: "pointer" }),
+				sx: __spreadValues$6({ alignSelf: "center" }, disabled && tooltip && { cursor: "pointer" }),
 				disabled
 			});
 			return /* @__PURE__ */ react.default.createElement(UpgradeTooltip, {
@@ -3037,20 +3037,20 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/customization-sub-setting.js
-	var __defProp$4 = Object.defineProperty;
-	var __getOwnPropSymbols$4 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$4 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$4 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$4 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$4(obj, key, {
+	var __defProp$5 = Object.defineProperty;
+	var __getOwnPropSymbols$5 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$5 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$5 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$5 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$5(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$4 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$4.call(b, prop)) __defNormalProp$4(a, prop, b[prop]);
-		if (__getOwnPropSymbols$4) {
-			for (var prop of __getOwnPropSymbols$4(b)) if (__propIsEnum$4.call(b, prop)) __defNormalProp$4(a, prop, b[prop]);
+	var __spreadValues$5 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$5.call(b, prop)) __defNormalProp$5(a, prop, b[prop]);
+		if (__getOwnPropSymbols$5) {
+			for (var prop of __getOwnPropSymbols$5(b)) if (__propIsEnum$5.call(b, prop)) __defNormalProp$5(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
@@ -3072,7 +3072,7 @@
 				onChange: (_, isChecked) => onSettingChange && onSettingChange(settingKey, isChecked),
 				color: "info",
 				size: "medium",
-				sx: __spreadValues$4({ alignSelf: "center" }, disabled && tooltip && { cursor: "pointer" })
+				sx: __spreadValues$5({ alignSelf: "center" }, disabled && tooltip && { cursor: "pointer" })
 			});
 			return /* @__PURE__ */ react.default.createElement(UpgradeTooltip, {
 				disabled,
@@ -3242,6 +3242,98 @@
 		};
 	}
 	//#endregion
+	//#region node_modules/@elementor/utils/dist/index.mjs
+	var compareVersions = (a, b) => {
+		const aParts = String(a || "0.0.0").split(".").map(Number);
+		const bParts = String(b || "0.0.0").split(".").map(Number);
+		for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+			const aVal = aParts[i] || 0;
+			const bVal = bParts[i] || 0;
+			if (aVal !== bVal) return aVal - bVal;
+		}
+		return 0;
+	};
+	var isVersionGreaterOrEqual = (a, b) => {
+		return compareVersions(a, b) >= 0;
+	};
+	//#endregion
+	//#region core/app/modules/import-export-customization/assets/js/utils.js
+	function isExperimentActive(experimentName) {
+		var _globalThis$elementor;
+		return !!((_globalThis$elementor = globalThis.elementorCommon) === null || _globalThis$elementor === void 0 || (_globalThis$elementor = _globalThis$elementor.config) === null || _globalThis$elementor === void 0 || (_globalThis$elementor = _globalThis$elementor.experimentalFeatures) === null || _globalThis$elementor === void 0 ? void 0 : _globalThis$elementor[experimentName]);
+	}
+	function isAtomicElementsFeatureActive() {
+		return isExperimentActive("e_atomic_elements");
+	}
+	var COMPONENT_OVERRIDES_MIN_CORE_VERSION = "4.4";
+	var SITE_SETTINGS_MANIFEST_KEY = "site-settings";
+	var WP_CONTENT_MANIFEST_KEY = "wp-content";
+	var REGISTRY_STATE_KEY = "__elementorImportExportCustomization";
+	function getCoreVersion() {
+		var _globalThis$elementor2;
+		var _globalThis$elementor3;
+		return (_globalThis$elementor2 = (_globalThis$elementor3 = globalThis.elementorCommon) === null || _globalThis$elementor3 === void 0 || (_globalThis$elementor3 = _globalThis$elementor3.config) === null || _globalThis$elementor3 === void 0 ? void 0 : _globalThis$elementor3.version) !== null && _globalThis$elementor2 !== void 0 ? _globalThis$elementor2 : null;
+	}
+	function getCustomizationDialogsRegistry() {
+		var _globalThis$elementor4;
+		var _globalThis$elementor5;
+		return (_globalThis$elementor4 = (_globalThis$elementor5 = globalThis.elementorModules) === null || _globalThis$elementor5 === void 0 || (_globalThis$elementor5 = _globalThis$elementor5.importExport) === null || _globalThis$elementor5 === void 0 ? void 0 : _globalThis$elementor5.customizationDialogsRegistry) !== null && _globalThis$elementor4 !== void 0 ? _globalThis$elementor4 : null;
+	}
+	function isCustomizationDialogsUiRegistered() {
+		var _registry$REGISTRY_ST;
+		const registry = getCustomizationDialogsRegistry();
+		return !!(registry === null || registry === void 0 || (_registry$REGISTRY_ST = registry[REGISTRY_STATE_KEY]) === null || _registry$REGISTRY_ST === void 0 ? void 0 : _registry$REGISTRY_ST.hasRegisteredUi);
+	}
+	function supportsCustomizationDialogOverrides() {
+		return isVersionGreaterOrEqual(getCoreVersion(), COMPONENT_OVERRIDES_MIN_CORE_VERSION);
+	}
+	function getImportManifest(data) {
+		var _data$uploadedData$ma;
+		var _data$uploadedData;
+		return (_data$uploadedData$ma = data === null || data === void 0 || (_data$uploadedData = data.uploadedData) === null || _data$uploadedData === void 0 ? void 0 : _data$uploadedData.manifest) !== null && _data$uploadedData$ma !== void 0 ? _data$uploadedData$ma : null;
+	}
+	function getManifestItem(data, manifestKey) {
+		var _getImportManifest;
+		return (_getImportManifest = getImportManifest(data)) === null || _getImportManifest === void 0 ? void 0 : _getImportManifest[manifestKey];
+	}
+	function hasExportedPages(data) {
+		var _getManifestItem;
+		var _getManifestItem2;
+		const contentPages = ((_getManifestItem = getManifestItem(data, "content")) === null || _getManifestItem === void 0 ? void 0 : _getManifestItem.page) || {};
+		const wpContentPages = ((_getManifestItem2 = getManifestItem(data, WP_CONTENT_MANIFEST_KEY)) === null || _getManifestItem2 === void 0 ? void 0 : _getManifestItem2.page) || {};
+		return Object.keys(contentPages).length > 0 || Object.keys(wpContentPages).length > 0;
+	}
+	function hasExportedMenuItems(data) {
+		var _getManifestItem3;
+		return Object.keys(((_getManifestItem3 = getManifestItem(data, WP_CONTENT_MANIFEST_KEY)) === null || _getManifestItem3 === void 0 ? void 0 : _getManifestItem3.nav_menu_item) || {}).length > 0;
+	}
+	function getSiteSettingsManifest(data) {
+		return getManifestItem(data, SITE_SETTINGS_MANIFEST_KEY);
+	}
+	function isSiteSettingExported(data, settingKey) {
+		var _getSiteSettingsManif;
+		return !!((_getSiteSettingsManif = getSiteSettingsManifest(data)) === null || _getSiteSettingsManif === void 0 ? void 0 : _getSiteSettingsManif[settingKey]);
+	}
+	function isClassesExported(data) {
+		return isSiteSettingExported(data, "classes");
+	}
+	function isVariablesExported(data) {
+		return isSiteSettingExported(data, "variables");
+	}
+	function isDefaultStylesExported(data) {
+		return isSiteSettingExported(data, "defaultStyles");
+	}
+	function getImportedClassesCount(data) {
+		var _getSiteSettingsManif2;
+		var _getSiteSettingsManif3;
+		return (_getSiteSettingsManif2 = (_getSiteSettingsManif3 = getSiteSettingsManifest(data)) === null || _getSiteSettingsManif3 === void 0 ? void 0 : _getSiteSettingsManif3.classesCount) !== null && _getSiteSettingsManif2 !== void 0 ? _getSiteSettingsManif2 : 0;
+	}
+	function getImportedVariablesCount(data) {
+		var _getSiteSettingsManif4;
+		var _getSiteSettingsManif5;
+		return (_getSiteSettingsManif4 = (_getSiteSettingsManif5 = getSiteSettingsManifest(data)) === null || _getSiteSettingsManif5 === void 0 ? void 0 : _getSiteSettingsManif5.variablesCount) !== null && _getSiteSettingsManif4 !== void 0 ? _getSiteSettingsManif4 : 0;
+	}
+	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/hooks/use-kit-customization-pages.js
 	function useKitCustomizationPages({ data, open }) {
 		const isImport = data === null || data === void 0 ? void 0 : data.hasOwnProperty("uploadedData");
@@ -3249,16 +3341,16 @@
 		return {
 			isLoading,
 			pageOptions: (0, react.useMemo)(() => {
-				var _data$uploadedData;
-				var _data$uploadedData2;
+				var _getManifestItem;
+				var _getManifestItem2;
 				if (!isImport) return loadedPagesOptions;
-				const elementorPages = Object.entries((data === null || data === void 0 || (_data$uploadedData = data.uploadedData) === null || _data$uploadedData === void 0 || (_data$uploadedData = _data$uploadedData.manifest) === null || _data$uploadedData === void 0 || (_data$uploadedData = _data$uploadedData.content) === null || _data$uploadedData === void 0 ? void 0 : _data$uploadedData.page) || {}).map(([id, page]) => {
+				const elementorPages = Object.entries(((_getManifestItem = getManifestItem(data, "content")) === null || _getManifestItem === void 0 ? void 0 : _getManifestItem.page) || {}).map(([id, page]) => {
 					return {
 						value: id,
 						label: page.title
 					};
 				});
-				const wpPages = Object.entries((data === null || data === void 0 || (_data$uploadedData2 = data.uploadedData) === null || _data$uploadedData2 === void 0 || (_data$uploadedData2 = _data$uploadedData2.manifest) === null || _data$uploadedData2 === void 0 || (_data$uploadedData2 = _data$uploadedData2["wp-content"]) === null || _data$uploadedData2 === void 0 ? void 0 : _data$uploadedData2.page) || {}).map(([id, page]) => {
+				const wpPages = Object.entries(((_getManifestItem2 = getManifestItem(data, "wp-content")) === null || _getManifestItem2 === void 0 ? void 0 : _getManifestItem2.page) || {}).map(([id, page]) => {
 					return {
 						value: id,
 						label: page.title
@@ -3374,10 +3466,9 @@
 		});
 		return {
 			taxonomyOptions: (0, react.useMemo)(() => {
-				var _data$uploadedData;
 				if (!isImport) return loadedTaxonomyOptions;
 				const taxonomiesMap = {};
-				Object.values((data === null || data === void 0 || (_data$uploadedData = data.uploadedData) === null || _data$uploadedData === void 0 || (_data$uploadedData = _data$uploadedData.manifest) === null || _data$uploadedData === void 0 ? void 0 : _data$uploadedData.taxonomies) || {}).forEach((taxonomiesListForPostType) => {
+				Object.values(getManifestItem(data, "taxonomies") || {}).forEach((taxonomiesListForPostType) => {
 					taxonomiesListForPostType.forEach((taxonomy) => {
 						const taxonomyObj = "string" === typeof taxonomy ? {
 							name: taxonomy,
@@ -3425,11 +3516,8 @@
 		const isImport = data === null || data === void 0 ? void 0 : data.hasOwnProperty("uploadedData");
 		const { customPostTypes: builtInCustomPostTypes } = useCustomPostTypes({ include: ["post"] });
 		return { customPostTypes: (0, react.useMemo)(() => {
-			var _data$uploadedData;
-			var _data$uploadedData2;
-			var _data$uploadedData3;
 			if (!isImport) return builtInCustomPostTypes;
-			const customPostTypesTitles = Object.values((data === null || data === void 0 || (_data$uploadedData = data.uploadedData) === null || _data$uploadedData === void 0 || (_data$uploadedData = _data$uploadedData.manifest) === null || _data$uploadedData === void 0 ? void 0 : _data$uploadedData["custom-post-type-title"]) || {}).map((postType) => {
+			const customPostTypesTitles = Object.values(getManifestItem(data, "custom-post-type-title") || {}).map((postType) => {
 				return {
 					value: postType.name,
 					label: postType.label
@@ -3439,8 +3527,8 @@
 				value: "post",
 				label: "Post"
 			});
-			const wpContent = (data === null || data === void 0 || (_data$uploadedData2 = data.uploadedData) === null || _data$uploadedData2 === void 0 || (_data$uploadedData2 = _data$uploadedData2.manifest) === null || _data$uploadedData2 === void 0 ? void 0 : _data$uploadedData2["wp-content"]) || {};
-			const content = (data === null || data === void 0 || (_data$uploadedData3 = data.uploadedData) === null || _data$uploadedData3 === void 0 || (_data$uploadedData3 = _data$uploadedData3.manifest) === null || _data$uploadedData3 === void 0 ? void 0 : _data$uploadedData3.content) || {};
+			const wpContent = getManifestItem(data, "wp-content") || {};
+			const content = getManifestItem(data, "content") || {};
 			return customPostTypesTitles.filter((postType) => {
 				const postTypeValue = postType.value;
 				const wpContentObject = wpContent[postTypeValue];
@@ -3451,7 +3539,7 @@
 			});
 		}, [
 			isImport,
-			data === null || data === void 0 ? void 0 : data.uploadedData,
+			data,
 			builtInCustomPostTypes
 		]) };
 	}
@@ -3524,26 +3612,26 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/kit-content-customization-dialog.js
-	var __defProp$3 = Object.defineProperty;
-	var __defProps$3 = Object.defineProperties;
-	var __getOwnPropDescs$3 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$3 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$3 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$3 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$3 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$3(obj, key, {
+	var __defProp$4 = Object.defineProperty;
+	var __defProps$4 = Object.defineProperties;
+	var __getOwnPropDescs$4 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$4 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$4 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$4 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$4 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$4(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$3 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$3.call(b, prop)) __defNormalProp$3(a, prop, b[prop]);
-		if (__getOwnPropSymbols$3) {
-			for (var prop of __getOwnPropSymbols$3(b)) if (__propIsEnum$3.call(b, prop)) __defNormalProp$3(a, prop, b[prop]);
+	var __spreadValues$4 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$4.call(b, prop)) __defNormalProp$4(a, prop, b[prop]);
+		if (__getOwnPropSymbols$4) {
+			for (var prop of __getOwnPropSymbols$4(b)) if (__propIsEnum$4.call(b, prop)) __defNormalProp$4(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$3 = /* @__PURE__ */ __name((a, b) => __defProps$3(a, __getOwnPropDescs$3(b)), "__spreadProps");
+	var __spreadProps$4 = /* @__PURE__ */ __name((a, b) => __defProps$4(a, __getOwnPropDescs$4(b)), "__spreadProps");
 	var MEDIA_FORMAT_OPTIONS = {
 		LINK: "link",
 		CLOUD: "cloud"
@@ -3583,7 +3671,6 @@
 		var _d;
 		var _e;
 		var _f;
-		var _g;
 		const initialState = data.includes.includes("content");
 		const { isLoading: isPagesLoading, pageOptions, isLoaded: isPagesLoaded } = useKitCustomizationPages({
 			open,
@@ -3620,7 +3707,7 @@
 			if (!open || !data.includes.includes("content")) return;
 			setSettings((prevSettings) => {
 				var _a2;
-				return __spreadProps$3(__spreadValues$3({}, prevSettings), { pages: isPagesLoaded || isImport ? ((_a2 = data.customization.content) == null ? void 0 : _a2.pages) || pageOptions.map(({ value }) => value) : prevSettings.pages });
+				return __spreadProps$4(__spreadValues$4({}, prevSettings), { pages: isPagesLoaded || isImport ? ((_a2 = data.customization.content) == null ? void 0 : _a2.pages) || pageOptions.map(({ value }) => value) : prevSettings.pages });
 			});
 		}, [
 			open,
@@ -3634,7 +3721,7 @@
 			if (!open || !data.includes.includes("content")) return;
 			setSettings((prevSettings) => {
 				var _a2;
-				return __spreadProps$3(__spreadValues$3({}, prevSettings), { taxonomies: isTaxonomiesLoaded || isImport ? ((_a2 = data.customization.content) == null ? void 0 : _a2.taxonomies) || taxonomyOptions.map(({ value }) => value) : prevSettings.taxonomies });
+				return __spreadProps$4(__spreadValues$4({}, prevSettings), { taxonomies: isTaxonomiesLoaded || isImport ? ((_a2 = data.customization.content) == null ? void 0 : _a2.taxonomies) || taxonomyOptions.map(({ value }) => value) : prevSettings.taxonomies });
 			});
 		}, [
 			open,
@@ -3648,7 +3735,7 @@
 			if (!open || !data.includes.includes("content")) return;
 			setSettings((prevSettings) => {
 				var _a2;
-				return __spreadProps$3(__spreadValues$3({}, prevSettings), { customPostTypes: customPostTypes ? ((_a2 = data.customization.content) == null ? void 0 : _a2.customPostTypes) || customPostTypes.map(({ value }) => value) : prevSettings.customPostTypes });
+				return __spreadProps$4(__spreadValues$4({}, prevSettings), { customPostTypes: customPostTypes ? ((_a2 = data.customization.content) == null ? void 0 : _a2.customPostTypes) || customPostTypes.map(({ value }) => value) : prevSettings.customPostTypes });
 			});
 		}, [
 			open,
@@ -3662,9 +3749,7 @@
 				var _a2;
 				var _b2;
 				var _c2;
-				var _d2;
-				var _e2;
-				return __spreadProps$3(__spreadValues$3({}, prevSettings), { menus: isImport ? ((_a2 = data.customization.content) == null ? void 0 : _a2.menus) || Object.keys(((_c2 = (_b2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _b2.manifest["wp-content"]) == null ? void 0 : _c2.nav_menu_item) || {}).length > 0 : (_e2 = (_d2 = data.customization.content) == null ? void 0 : _d2.menus) != null ? _e2 : initialState });
+				return __spreadProps$4(__spreadValues$4({}, prevSettings), { menus: isImport ? ((_a2 = data.customization.content) == null ? void 0 : _a2.menus) || hasExportedMenuItems(data) : (_c2 = (_b2 = data.customization.content) == null ? void 0 : _b2.menus) != null ? _c2 : initialState });
 			});
 		}, [
 			open,
@@ -3677,7 +3762,7 @@
 			if (!open || !data.includes.includes("content")) return;
 			setSettings((prevSettings) => {
 				var _a2;
-				return __spreadProps$3(__spreadValues$3({}, prevSettings), { mediaFormat: ((_a2 = data.customization.content) == null ? void 0 : _a2.mediaFormat) || MEDIA_FORMAT_OPTIONS.LINK });
+				return __spreadProps$4(__spreadValues$4({}, prevSettings), { mediaFormat: ((_a2 = data.customization.content) == null ? void 0 : _a2.mediaFormat) || MEDIA_FORMAT_OPTIONS.LINK });
 			});
 		}, [
 			open,
@@ -3700,29 +3785,14 @@
 			});
 		}, [showMediaFormatValidation]);
 		const handleSettingsChange = (settingKey, payload) => {
-			setSettings((prev) => __spreadProps$3(__spreadValues$3({}, prev), { [settingKey]: payload }));
+			setSettings((prev) => __spreadProps$4(__spreadValues$4({}, prev), { [settingKey]: payload }));
 		};
 		const isTaxonomiesExported = () => {
 			return isImport && (taxonomyOptions == null ? void 0 : taxonomyOptions.length) > 0;
 		};
-		const isPagesExported = () => {
-			var _a2;
-			var _b2;
-			var _c2;
-			var _d2;
-			var _e2;
-			var _f2;
-			const content = (_b2 = (_a2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a2.manifest) == null ? void 0 : _b2.content;
-			const wpContent = (_d2 = (_c2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _c2.manifest) == null ? void 0 : _d2["wp-content"];
-			const isSomeContentExported = (_e2 = Object.keys((content == null ? void 0 : content.page) || {})) == null ? void 0 : _e2.length;
-			const isSomeWPContentExported = (_f2 = Object.keys((wpContent == null ? void 0 : wpContent.page) || {})) == null ? void 0 : _f2.length;
-			return Boolean(isSomeContentExported || isSomeWPContentExported);
-		};
+		const isPagesExported = () => hasExportedPages(data);
 		const isMenusExported = () => {
-			var _a2;
-			var _b2;
-			var _c2;
-			return Object.keys(((_c2 = (_b2 = (_a2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a2.manifest) == null ? void 0 : _b2["wp-content"]) == null ? void 0 : _c2.nav_menu_item) || {}).length > 0 || (customPostTypes == null ? void 0 : customPostTypes.find((cpt) => cpt.value.includes("nav_menu")));
+			return hasExportedMenuItems(data) || (customPostTypes == null ? void 0 : customPostTypes.find((cpt) => cpt.value.includes("nav_menu")));
 		};
 		const isCustomPostTypesExported = () => {
 			return isImport && (customPostTypes == null ? void 0 : customPostTypes.length) > 0;
@@ -3886,7 +3956,7 @@
 					onSettingChange: (key, isChecked) => {
 						setSettings((prevState) => {
 							const selectedTaxonomies = isChecked ? [...prevState.taxonomies, taxonomy.value] : prevState.taxonomies.filter((value) => value !== taxonomy.value);
-							return __spreadProps$3(__spreadValues$3({}, prevState), { taxonomies: selectedTaxonomies });
+							return __spreadProps$4(__spreadValues$4({}, prevState), { taxonomies: selectedTaxonomies });
 						});
 					}
 				});
@@ -3917,7 +3987,7 @@
 			},
 			settings: settings.customPostTypes,
 			items: customPostTypes,
-			disabled: isImport && void 0 === ((_g = data == null ? void 0 : data.uploadedData) == null ? void 0 : _g.manifest["custom-post-type-title"]) || !isHighTier(),
+			disabled: isImport && void 0 === getManifestItem(data, "custom-post-type-title") || !isHighTier(),
 			tooltip: !isHighTier()
 		}), renderMediaFormatSection(), renderMenusSection(), renderTaxonomiesSection()), /* @__PURE__ */ react.default.createElement(UpgradeNoticeBanner, null)));
 	}
@@ -3934,26 +4004,26 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/theme-builder-customization.js
-	var __defProp$2 = Object.defineProperty;
-	var __defProps$2 = Object.defineProperties;
-	var __getOwnPropDescs$2 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$2 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$2 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$2 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$2 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$2(obj, key, {
+	var __defProp$3 = Object.defineProperty;
+	var __defProps$3 = Object.defineProperties;
+	var __getOwnPropDescs$3 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$3 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$3 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$3 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$3 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$3(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$2 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$2.call(b, prop)) __defNormalProp$2(a, prop, b[prop]);
-		if (__getOwnPropSymbols$2) {
-			for (var prop of __getOwnPropSymbols$2(b)) if (__propIsEnum$2.call(b, prop)) __defNormalProp$2(a, prop, b[prop]);
+	var __spreadValues$3 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$3.call(b, prop)) __defNormalProp$3(a, prop, b[prop]);
+		if (__getOwnPropSymbols$3) {
+			for (var prop of __getOwnPropSymbols$3(b)) if (__propIsEnum$3.call(b, prop)) __defNormalProp$3(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$2 = /* @__PURE__ */ __name((a, b) => __defProps$2(a, __getOwnPropDescs$2(b)), "__spreadProps");
+	var __spreadProps$3 = /* @__PURE__ */ __name((a, b) => __defProps$3(a, __getOwnPropDescs$3(b)), "__spreadProps");
 	var __async$1 = /* @__PURE__ */ __name((__this, __arguments, generator) => {
 		return new Promise((resolve, reject) => {
 			var fulfilled = (value) => {
@@ -3995,9 +4065,7 @@
 			try {
 				const formattedConflicts = (((_a = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a.conflicts) ? Object.entries(data.uploadedData.conflicts) : []).map(([importedTemplateId, conflictsList]) => {
 					var _a2;
-					var _b;
-					var _c;
-					const importedTemplate = (_c = (_b = (_a2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a2.manifest) == null ? void 0 : _b.templates) == null ? void 0 : _c[importedTemplateId];
+					const importedTemplate = (_a2 = getManifestItem(data, "templates")) == null ? void 0 : _a2[importedTemplateId];
 					const firstConflict = conflictsList[0];
 					return {
 						template_id: firstConflict.template_id,
@@ -4012,7 +4080,7 @@
 				setConflicts(formattedConflicts);
 				if (!(state == null ? void 0 : state.overrideConditions) || 0 === state.overrideConditions.length) {
 					const defaultOverrides = formattedConflicts.map((conflict) => conflict.imported_template_id);
-					onStateChange(settingKey, __spreadProps$2(__spreadValues$2({}, state), { overrideConditions: defaultOverrides }));
+					onStateChange(settingKey, __spreadProps$3(__spreadValues$3({}, state), { overrideConditions: defaultOverrides }));
 				}
 			} catch (error) {
 				setConflicts([]);
@@ -4025,12 +4093,10 @@
 			var _b;
 			var _c;
 			var _d;
-			var _e;
-			var _f;
-			const template = (_c = (_b = (_a = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a.manifest) == null ? void 0 : _b.templates) == null ? void 0 : _c[templateId];
+			const template = (_a = getManifestItem(data, "templates")) == null ? void 0 : _a[templateId];
 			if (!template) return "Unknown Template";
 			const templateType = template.doc_type;
-			const summaryTitle = (_f = (_e = (_d = elementorAppConfig == null ? void 0 : elementorAppConfig["import-export-customization"]) == null ? void 0 : _d.summaryTitles) == null ? void 0 : _e.templates) == null ? void 0 : _f[templateType];
+			const summaryTitle = (_d = (_c = (_b = elementorAppConfig == null ? void 0 : elementorAppConfig["import-export-customization"]) == null ? void 0 : _b.summaryTitles) == null ? void 0 : _c.templates) == null ? void 0 : _d[templateType];
 			return (summaryTitle == null ? void 0 : summaryTitle.single) || templateType;
 		};
 		const handleToggleEnabled = () => {
@@ -4044,7 +4110,7 @@
 			if ("imported" === choice) if (!currentOverrides.includes(importedTemplateId)) newOverrides = [...currentOverrides, importedTemplateId];
 			else newOverrides = currentOverrides;
 			else newOverrides = currentOverrides.filter((templateId) => templateId !== importedTemplateId);
-			onStateChange(settingKey, __spreadProps$2(__spreadValues$2({}, state), { overrideConditions: newOverrides }));
+			onStateChange(settingKey, __spreadProps$3(__spreadValues$3({}, state), { overrideConditions: newOverrides }));
 		};
 		const getConflictChoice = (importedTemplateId) => {
 			return ((state == null ? void 0 : state.overrideConditions) || []).includes(importedTemplateId) ? "imported" : "current";
@@ -4112,7 +4178,7 @@
 			onChange: handleToggleEnabled,
 			color: "info",
 			size: "medium",
-			sx: __spreadValues$2({ alignSelf: "center" }, disabled && tooltip && { cursor: "pointer" })
+			sx: __spreadValues$3({ alignSelf: "center" }, disabled && tooltip && { cursor: "pointer" })
 		}))), (state == null ? void 0 : state.enabled) && isImport && 0 < conflicts.length && /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: { mt: 1 } }, renderConflictTable()));
 	}
 	ThemeBuilderCustomization.propTypes = {
@@ -4125,26 +4191,26 @@
 	};
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/kit-templates-customization-dialog.js
-	var __defProp$1 = Object.defineProperty;
-	var __defProps$1 = Object.defineProperties;
-	var __getOwnPropDescs$1 = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols$1 = Object.getOwnPropertySymbols;
-	var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
-	var __propIsEnum$1 = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp$1 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$1(obj, key, {
+	var __defProp$2 = Object.defineProperty;
+	var __defProps$2 = Object.defineProperties;
+	var __getOwnPropDescs$2 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$2 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$2 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$2 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$2 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$2(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
 	}) : obj[key] = value, "__defNormalProp");
-	var __spreadValues$1 = /* @__PURE__ */ __name((a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp$1.call(b, prop)) __defNormalProp$1(a, prop, b[prop]);
-		if (__getOwnPropSymbols$1) {
-			for (var prop of __getOwnPropSymbols$1(b)) if (__propIsEnum$1.call(b, prop)) __defNormalProp$1(a, prop, b[prop]);
+	var __spreadValues$2 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$2.call(b, prop)) __defNormalProp$2(a, prop, b[prop]);
+		if (__getOwnPropSymbols$2) {
+			for (var prop of __getOwnPropSymbols$2(b)) if (__propIsEnum$2.call(b, prop)) __defNormalProp$2(a, prop, b[prop]);
 		}
 		return a;
 	}, "__spreadValues");
-	var __spreadProps$1 = /* @__PURE__ */ __name((a, b) => __defProps$1(a, __getOwnPropDescs$1(b)), "__spreadProps");
+	var __spreadProps$2 = /* @__PURE__ */ __name((a, b) => __defProps$2(a, __getOwnPropDescs$2(b)), "__spreadProps");
 	var transformAnalyticsData$1 = /* @__PURE__ */ __name((payload) => {
 		const transformed = {};
 		for (const [key, value] of Object.entries(payload)) transformed[key] = transformValueForAnalytics(key, value, []);
@@ -4164,18 +4230,15 @@
 		var _b;
 		var _c;
 		var _d;
-		var _e;
-		var _f;
-		var _g;
 		const initialState = data.includes.includes("templates");
 		const getState = (0, react.useCallback)((parentInitialState) => {
 			var _a2;
 			var _b2;
 			var _c2;
 			var _d2;
-			var _e2;
-			var _f2;
-			var _g2;
+			var _e;
+			var _f;
+			var _g;
 			var _h;
 			var _i;
 			var _j;
@@ -4184,23 +4247,20 @@
 			var _m;
 			var _n;
 			var _o;
-			var _p;
-			var _q;
-			var _r;
 			if (!data.includes.includes("templates")) return {
 				siteTemplates: { enabled: parentInitialState },
 				themeBuilder: { enabled: parentInitialState },
 				globalWidgets: { enabled: parentInitialState }
 			};
 			if (isImport) return {
-				siteTemplates: { enabled: isImport && isOldExport ? true : (_b2 = hasTemplatesForExportGroup("site-templates", (_a2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a2.manifest)) != null ? _b2 : parentInitialState },
-				themeBuilder: { enabled: isImport && isOldExport ? true : (_d2 = hasTemplatesForExportGroup("theme-builder", (_c2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _c2.manifest)) != null ? _d2 : parentInitialState },
-				globalWidgets: { enabled: isImport && isOldExport ? true : (_f2 = hasTemplatesForExportGroup("global-widget", (_e2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _e2.manifest)) != null ? _f2 : parentInitialState }
+				siteTemplates: { enabled: isImport && isOldExport ? true : (_a2 = hasTemplatesForExportGroup("site-templates", getImportManifest(data))) != null ? _a2 : parentInitialState },
+				themeBuilder: { enabled: isImport && isOldExport ? true : (_b2 = hasTemplatesForExportGroup("theme-builder", getImportManifest(data))) != null ? _b2 : parentInitialState },
+				globalWidgets: { enabled: isImport && isOldExport ? true : (_c2 = hasTemplatesForExportGroup("global-widget", getImportManifest(data))) != null ? _c2 : parentInitialState }
 			};
 			return {
-				siteTemplates: { enabled: (_j = (_i = (_h = (_g2 = data == null ? void 0 : data.customization) == null ? void 0 : _g2.templates) == null ? void 0 : _h.siteTemplates) == null ? void 0 : _i.enabled) != null ? _j : parentInitialState },
-				themeBuilder: { enabled: (_n = (_m = (_l = (_k = data == null ? void 0 : data.customization) == null ? void 0 : _k.templates) == null ? void 0 : _l.themeBuilder) == null ? void 0 : _m.enabled) != null ? _n : parentInitialState },
-				globalWidgets: { enabled: (_r = (_q = (_p = (_o = data == null ? void 0 : data.customization) == null ? void 0 : _o.templates) == null ? void 0 : _p.globalWidgets) == null ? void 0 : _q.enabled) != null ? _r : parentInitialState }
+				siteTemplates: { enabled: (_g = (_f = (_e = (_d2 = data == null ? void 0 : data.customization) == null ? void 0 : _d2.templates) == null ? void 0 : _e.siteTemplates) == null ? void 0 : _f.enabled) != null ? _g : parentInitialState },
+				themeBuilder: { enabled: (_k = (_j = (_i = (_h = data == null ? void 0 : data.customization) == null ? void 0 : _h.templates) == null ? void 0 : _i.themeBuilder) == null ? void 0 : _j.enabled) != null ? _k : parentInitialState },
+				globalWidgets: { enabled: (_o = (_n = (_m = (_l = data == null ? void 0 : data.customization) == null ? void 0 : _l.templates) == null ? void 0 : _m.globalWidgets) == null ? void 0 : _n.enabled) != null ? _o : parentInitialState }
 			};
 		}, [
 			data.includes,
@@ -4229,7 +4289,7 @@
 			if (open) (_b2 = (_a2 = elementorModules == null ? void 0 : elementorModules.appsEventTracking) == null ? void 0 : _a2.AppsEventTracking) == null || _b2.sendPageViewsWebsiteTemplates(elementorCommon.eventsManager.config.secondaryLocations.kitLibrary.kitExportCustomizationEdit);
 		}, [open]);
 		const handleToggleChange = (settingKey, isChecked) => {
-			setTemplates((prev) => __spreadProps$1(__spreadValues$1({}, prev), { [settingKey]: __spreadProps$1(__spreadValues$1({}, prev[settingKey]), { enabled: isChecked }) }));
+			setTemplates((prev) => __spreadProps$2(__spreadValues$2({}, prev), { [settingKey]: __spreadProps$2(__spreadValues$2({}, prev[settingKey]), { enabled: isChecked }) }));
 		};
 		return /* @__PURE__ */ react.default.createElement(KitCustomizationDialog, {
 			open,
@@ -4253,26 +4313,26 @@
 			title: (0, _wordpress_i18n.__)("Site Templates", "elementor"),
 			settingKey: "siteTemplates",
 			onSettingChange: handleToggleChange,
-			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("site-templates", (_d = data == null ? void 0 : data.uploadedData) == null ? void 0 : _d.manifest),
+			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("site-templates", getImportManifest(data)),
 			tooltip: !isHighTier()
 		}), /* @__PURE__ */ react.default.createElement(ThemeBuilderCustomization, {
 			state: templates.themeBuilder,
 			settingKey: "themeBuilder",
 			onStateChange: (key, newState, mergeMode = false) => {
 				setTemplates((prev) => {
-					if (mergeMode) return __spreadProps$1(__spreadValues$1({}, prev), { [key]: __spreadValues$1(__spreadValues$1({}, prev[key]), newState) });
-					return __spreadProps$1(__spreadValues$1({}, prev), { [key]: newState });
+					if (mergeMode) return __spreadProps$2(__spreadValues$2({}, prev), { [key]: __spreadValues$2(__spreadValues$2({}, prev[key]), newState) });
+					return __spreadProps$2(__spreadValues$2({}, prev), { [key]: newState });
 				});
 			},
 			data,
-			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("theme-builder", (_e = data == null ? void 0 : data.uploadedData) == null ? void 0 : _e.manifest),
+			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("theme-builder", getImportManifest(data)),
 			tooltip: !isHighTier()
 		}), !isOldExport && /* @__PURE__ */ react.default.createElement(SettingSection, {
-			checked: ((_f = templates.globalWidgets) == null ? void 0 : _f.enabled) || false,
+			checked: ((_d = templates.globalWidgets) == null ? void 0 : _d.enabled) || false,
 			title: "Global Widgets",
 			settingKey: "globalWidgets",
 			onSettingChange: handleToggleChange,
-			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("global-widget", (_g = data == null ? void 0 : data.uploadedData) == null ? void 0 : _g.manifest),
+			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("global-widget", getImportManifest(data)),
 			tooltip: !isHighTier()
 		})), /* @__PURE__ */ react.default.createElement(UpgradeNoticeBanner, null)));
 	}
@@ -4288,6 +4348,7 @@
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/classes-variables-section.js
 	var SubSettingRow = ({ label, checked, onChange, disabled = false, limitExceeded = false, overLimitCount = 0, onReviewClick, overrideAll = false, onOverrideAllChange, showOverrideOption = false, notExported = false }) => {
+		const switchId = (0, react.useId)();
 		if (notExported) return /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: {
 			display: "flex",
 			justifyContent: "space-between",
@@ -4312,7 +4373,9 @@
 			sx: { flex: 1 }
 		}, /* @__PURE__ */ react.default.createElement(_elementor_ui.Typography, {
 			variant: "body1",
-			color: "text.primary"
+			color: "text.primary",
+			component: "label",
+			htmlFor: switchId
 		}, label), limitExceeded && overLimitCount > 0 && /* @__PURE__ */ react.default.createElement(_elementor_ui.Chip, {
 			label: `${overLimitCount} ${(0, _wordpress_i18n.__)("over limit", "elementor")}`,
 			size: "tiny",
@@ -4374,7 +4437,8 @@
 			onChange: (e, isChecked) => onChange == null ? void 0 : onChange(isChecked),
 			color: "info",
 			size: "medium",
-			disabled: disabled || limitExceeded && !overrideAll
+			disabled: disabled || limitExceeded && !overrideAll,
+			inputProps: { id: switchId }
 		})));
 	};
 	SubSettingRow.propTypes = {
@@ -4390,15 +4454,17 @@
 		showOverrideOption: import_prop_types.bool,
 		notExported: import_prop_types.bool
 	};
-	function ClassesVariablesSection({ settings, onSettingChange, isImport = false, classesExported = true, variablesExported = true, classesLimitExceeded = false, variablesLimitExceeded = false, classesOverLimitCount = 0, variablesOverLimitCount = 0, onClassesReviewClick, onVariablesReviewClick, disabled = false, notExported = false }) {
+	function ClassesVariablesSection({ settings, onSettingChange, isImport = false, classesExported = true, defaultStylesExported = true, variablesExported = true, classesLimitExceeded = false, variablesLimitExceeded = false, classesOverLimitCount = 0, variablesOverLimitCount = 0, onClassesReviewClick, onVariablesReviewClick, disabled = false, notExported = false }) {
 		var _a;
 		var _b;
 		var _c;
 		var _d;
+		var _e;
 		const [classesOverrideAll, setClassesOverrideAll] = (0, react.useState)((_a = settings.classesOverrideAll) != null ? _a : false);
 		const [variablesOverrideAll, setVariablesOverrideAll] = (0, react.useState)((_b = settings.variablesOverrideAll) != null ? _b : false);
 		const hasLimitWarning = isImport && (classesLimitExceeded || variablesLimitExceeded);
 		const classesNotExported = isImport && !classesExported;
+		const defaultStylesNotExported = isImport && !defaultStylesExported;
 		const variablesNotExported = isImport && !variablesExported;
 		return /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: {
 			mb: 3,
@@ -4410,7 +4476,7 @@
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center"
-		} }, /* @__PURE__ */ react.default.createElement(_elementor_ui.Typography, { variant: "h6" }, (0, _wordpress_i18n.__)("Classes & variables", "elementor"))), hasLimitWarning && !notExported && /* @__PURE__ */ react.default.createElement(_elementor_ui.Alert, {
+		} }, /* @__PURE__ */ react.default.createElement(_elementor_ui.Typography, { variant: "h6" }, (0, _wordpress_i18n.__)("Classes, variables & default styles", "elementor"))), hasLimitWarning && !notExported && /* @__PURE__ */ react.default.createElement(_elementor_ui.Alert, {
 			severity: "warning",
 			icon: /* @__PURE__ */ react.default.createElement(_elementor_icons.AlertTriangleFilledIcon, { sx: { color: "warning.main" } }),
 			sx: {
@@ -4461,11 +4527,18 @@
 			},
 			showOverrideOption: isImport && !variablesNotExported,
 			notExported: variablesNotExported
+		}), /* @__PURE__ */ react.default.createElement(SubSettingRow, {
+			label: (0, _wordpress_i18n.__)("Default Styles", "elementor"),
+			checked: (_e = settings.defaultStyles) != null ? _e : false,
+			onChange: (isChecked) => onSettingChange("defaultStyles", isChecked),
+			disabled,
+			notExported: defaultStylesNotExported
 		}))));
 	}
 	ClassesVariablesSection.propTypes = {
 		settings: import_prop_types.shape({
 			classes: import_prop_types.bool,
+			defaultStyles: import_prop_types.bool,
 			variables: import_prop_types.bool,
 			classesOverrideAll: import_prop_types.bool,
 			variablesOverrideAll: import_prop_types.bool
@@ -4473,6 +4546,7 @@
 		onSettingChange: import_prop_types.func.isRequired,
 		isImport: import_prop_types.bool,
 		classesExported: import_prop_types.bool,
+		defaultStylesExported: import_prop_types.bool,
 		variablesExported: import_prop_types.bool,
 		classesLimitExceeded: import_prop_types.bool,
 		variablesLimitExceeded: import_prop_types.bool,
@@ -4651,26 +4725,26 @@
 	}
 	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/components/kit-settings-customization-dialog.js
-	var __defProp = Object.defineProperty;
-	var __defProps = Object.defineProperties;
-	var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
-	var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-	var __hasOwnProp = Object.prototype.hasOwnProperty;
-	var __propIsEnum = Object.prototype.propertyIsEnumerable;
-	var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
+	var __defProp$1 = Object.defineProperty;
+	var __defProps$1 = Object.defineProperties;
+	var __getOwnPropDescs$1 = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols$1 = Object.getOwnPropertySymbols;
+	var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
+	var __propIsEnum$1 = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp$1 = /* @__PURE__ */ __name((obj, key, value) => key in obj ? __defProp$1(obj, key, {
 		enumerable: true,
 		configurable: true,
 		writable: true,
 		value
-	}) : obj[key] = value;
-	var __spreadValues = (a, b) => {
-		for (var prop in b || (b = {})) if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop]);
-		if (__getOwnPropSymbols) {
-			for (var prop of __getOwnPropSymbols(b)) if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+	}) : obj[key] = value, "__defNormalProp");
+	var __spreadValues$1 = /* @__PURE__ */ __name((a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp$1.call(b, prop)) __defNormalProp$1(a, prop, b[prop]);
+		if (__getOwnPropSymbols$1) {
+			for (var prop of __getOwnPropSymbols$1(b)) if (__propIsEnum$1.call(b, prop)) __defNormalProp$1(a, prop, b[prop]);
 		}
 		return a;
-	};
-	var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+	}, "__spreadValues");
+	var __spreadProps$1 = /* @__PURE__ */ __name((a, b) => __defProps$1(a, __getOwnPropDescs$1(b)), "__spreadProps");
 	var __async = (__this, __arguments, generator) => {
 		return new Promise((resolve, reject) => {
 			var fulfilled = (value) => {
@@ -4691,29 +4765,6 @@
 			step((generator = generator.apply(__this, __arguments)).next());
 		});
 	};
-	function isExperimentActive(experimentName) {
-		var _a;
-		var _b;
-		return !!((_b = (_a = elementorCommon == null ? void 0 : elementorCommon.config) == null ? void 0 : _a.experimentalFeatures) == null ? void 0 : _b[experimentName]);
-	}
-	function isClassesFeatureActive() {
-		return isExperimentActive("e_atomic_elements");
-	}
-	function isVariablesFeatureActive() {
-		return isExperimentActive("e_atomic_elements");
-	}
-	function isClassesExported(data) {
-		var _a;
-		var _b;
-		var _c;
-		return !!((_c = (_b = (_a = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a.manifest) == null ? void 0 : _b["site-settings"]) == null ? void 0 : _c.classes);
-	}
-	function isVariablesExported(data) {
-		var _a;
-		var _b;
-		var _c;
-		return !!((_c = (_b = (_a = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a.manifest) == null ? void 0 : _b["site-settings"]) == null ? void 0 : _c.variables);
-	}
 	var transformAnalyticsData = (payload) => {
 		const transformed = {};
 		for (const [key, value] of Object.entries(payload)) transformed[key] = transformValueForAnalytics(key, value, []);
@@ -4740,57 +4791,17 @@
 		var _e;
 		var _f;
 		var _g;
-		var _h;
-		var _i;
-		var _j;
-		var _k;
-		var _l;
-		var _m;
-		var _n;
-		var _o;
-		var _p;
-		var _q;
-		var _r;
-		var _s;
-		var _t;
-		var _u;
-		var _v;
-		var _w;
-		var _x;
-		var _y;
-		var _z;
-		var _A;
-		var _B;
-		var _C;
-		var _D;
-		var _E;
-		var _F;
-		var _G;
-		var _H;
-		var _I;
-		var _J;
-		var _K;
-		var _L;
-		var _M;
-		var _N;
-		var _O;
-		var _P;
-		var _Q;
-		var _R;
-		var _S;
-		var _T;
-		var _U;
-		const showClassesSection = (0, react.useMemo)(() => isClassesFeatureActive(), []);
-		const showVariablesSection = (0, react.useMemo)(() => isVariablesFeatureActive(), []);
-		const showClassesVariablesSection = showClassesSection || showVariablesSection;
-		const classesExportedInManifest = !!((_c = (_b = (_a = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a.manifest) == null ? void 0 : _b["site-settings"]) == null ? void 0 : _c.classes);
-		const variablesExportedInManifest = !!((_f = (_e = (_d = data == null ? void 0 : data.uploadedData) == null ? void 0 : _d.manifest) == null ? void 0 : _e["site-settings"]) == null ? void 0 : _f.variables);
+		const showClassesVariablesSection = (0, react.useMemo)(isAtomicElementsFeatureActive, []);
+		const classesExportedInManifest = isClassesExported(data);
+		const variablesExportedInManifest = isVariablesExported(data);
+		const defaultStylesExportedInManifest = isDefaultStylesExported(data);
 		const { existingClassesCount, existingVariablesCount, classesLimit, variablesLimit, calculateLimitInfo } = useClassesVariablesLimits({
 			open,
 			isImport
 		});
-		const importedClassesCount = (_j = (_i = (_h = (_g = data == null ? void 0 : data.uploadedData) == null ? void 0 : _g.manifest) == null ? void 0 : _h["site-settings"]) == null ? void 0 : _i.classesCount) != null ? _j : 0;
-		const importedVariablesCount = (_n = (_m = (_l = (_k = data == null ? void 0 : data.uploadedData) == null ? void 0 : _k.manifest) == null ? void 0 : _l["site-settings"]) == null ? void 0 : _m.variablesCount) != null ? _n : 0;
+		const importedClassesCount = getImportedClassesCount(data);
+		const importedVariablesCount = getImportedVariablesCount(data);
+		const siteSettingsManifest = getSiteSettingsManifest(data);
 		const classesLimitInfo = (0, react.useMemo)(() => calculateLimitInfo(existingClassesCount, importedClassesCount, classesLimit), [
 			existingClassesCount,
 			importedClassesCount,
@@ -4808,6 +4819,7 @@
 			return {
 				classes: !isImport || classesExportedInManifest,
 				variables: !isImport || variablesExportedInManifest,
+				defaultStyles: !isImport || defaultStylesExportedInManifest,
 				classesOverrideAll: false,
 				variablesOverrideAll: false
 			};
@@ -4815,7 +4827,8 @@
 			showClassesVariablesSection,
 			isImport,
 			classesExportedInManifest,
-			variablesExportedInManifest
+			variablesExportedInManifest,
+			defaultStylesExportedInManifest
 		]);
 		const getState = (0, react.useCallback)((initialState2) => {
 			var _a2;
@@ -4825,23 +4838,19 @@
 			var _e2;
 			var _f2;
 			var _g2;
-			var _h2;
-			var _i2;
-			var _j2;
-			var _k2;
-			var _l2;
-			var _m2;
-			var _n2;
-			var _o2;
-			var _p2;
-			var _q2;
-			var _r2;
-			var _s2;
-			var _t2;
-			var _u2;
-			var _v2;
-			var _w2;
-			if (!data.includes.includes("settings")) return __spreadValues({
+			var _h;
+			var _i;
+			var _j;
+			var _k;
+			var _l;
+			var _m;
+			var _n;
+			var _o;
+			var _p;
+			var _q;
+			var _r;
+			var _s;
+			if (!data.includes.includes("settings")) return __spreadValues$1({
 				theme: initialState2,
 				globalColors: initialState2,
 				globalFonts: initialState2,
@@ -4853,54 +4862,54 @@
 				customCode: initialState2
 			}, showClassesVariablesSection ? classesVariablesInitialState : {});
 			if (isImport) {
-				const manifestData = (_b2 = (_a2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a2.manifest) == null ? void 0 : _b2["site-settings"];
+				const manifestData = getSiteSettingsManifest(data);
 				let themeState = false;
-				if (isOldExport) themeState = !initialState2 ? false : (_d2 = (_c2 = data == null ? void 0 : data.uploadedData) == null ? void 0 : _c2.manifest) == null ? void 0 : _d2.theme;
-				else themeState = (_e2 = manifestData == null ? void 0 : manifestData.theme) != null ? _e2 : initialState2;
-				return __spreadValues({
+				if (isOldExport) themeState = !initialState2 ? false : getManifestItem(data, "theme");
+				else themeState = (_a2 = manifestData == null ? void 0 : manifestData.theme) != null ? _a2 : initialState2;
+				return __spreadValues$1({
 					theme: themeState,
-					globalColors: isOldExport ? true : (_f2 = manifestData == null ? void 0 : manifestData.globalColors) != null ? _f2 : initialState2,
-					globalFonts: isOldExport ? true : (_g2 = manifestData == null ? void 0 : manifestData.globalFonts) != null ? _g2 : initialState2,
-					themeStyleSettings: isOldExport ? true : (_h2 = manifestData == null ? void 0 : manifestData.themeStyleSettings) != null ? _h2 : initialState2,
-					generalSettings: isOldExport ? true : (_i2 = manifestData == null ? void 0 : manifestData.generalSettings) != null ? _i2 : initialState2,
-					experiments: isOldExport ? true : (_j2 = manifestData == null ? void 0 : manifestData.experiments) != null ? _j2 : initialState2,
-					customFonts: isOldExport ? true : (_k2 = manifestData == null ? void 0 : manifestData.customFonts) != null ? _k2 : initialState2,
-					customIcons: isOldExport ? true : (_l2 = manifestData == null ? void 0 : manifestData.customIcons) != null ? _l2 : initialState2,
-					customCode: isOldExport ? true : (_m2 = manifestData == null ? void 0 : manifestData.customCode) != null ? _m2 : initialState2
+					globalColors: isOldExport ? true : (_b2 = manifestData == null ? void 0 : manifestData.globalColors) != null ? _b2 : initialState2,
+					globalFonts: isOldExport ? true : (_c2 = manifestData == null ? void 0 : manifestData.globalFonts) != null ? _c2 : initialState2,
+					themeStyleSettings: isOldExport ? true : (_d2 = manifestData == null ? void 0 : manifestData.themeStyleSettings) != null ? _d2 : initialState2,
+					generalSettings: isOldExport ? true : (_e2 = manifestData == null ? void 0 : manifestData.generalSettings) != null ? _e2 : initialState2,
+					experiments: isOldExport ? true : (_f2 = manifestData == null ? void 0 : manifestData.experiments) != null ? _f2 : initialState2,
+					customFonts: isOldExport ? true : (_g2 = manifestData == null ? void 0 : manifestData.customFonts) != null ? _g2 : initialState2,
+					customIcons: isOldExport ? true : (_h = manifestData == null ? void 0 : manifestData.customIcons) != null ? _h : initialState2,
+					customCode: isOldExport ? true : (_i = manifestData == null ? void 0 : manifestData.customCode) != null ? _i : initialState2
 				}, showClassesVariablesSection ? classesVariablesInitialState : {});
 			}
-			const customization = (_n2 = data == null ? void 0 : data.customization) == null ? void 0 : _n2.settings;
-			return __spreadValues({
-				theme: (_o2 = customization == null ? void 0 : customization.theme) != null ? _o2 : initialState2,
-				globalColors: (_p2 = customization == null ? void 0 : customization.globalColors) != null ? _p2 : initialState2,
-				globalFonts: (_q2 = customization == null ? void 0 : customization.globalFonts) != null ? _q2 : initialState2,
-				themeStyleSettings: (_r2 = customization == null ? void 0 : customization.themeStyleSettings) != null ? _r2 : initialState2,
-				generalSettings: (_s2 = customization == null ? void 0 : customization.generalSettings) != null ? _s2 : initialState2,
-				experiments: (_t2 = customization == null ? void 0 : customization.experiments) != null ? _t2 : initialState2,
-				customFonts: (_u2 = customization == null ? void 0 : customization.customFonts) != null ? _u2 : initialState2,
-				customIcons: (_v2 = customization == null ? void 0 : customization.customIcons) != null ? _v2 : initialState2,
-				customCode: (_w2 = customization == null ? void 0 : customization.customCode) != null ? _w2 : initialState2
+			const customization = (_j = data == null ? void 0 : data.customization) == null ? void 0 : _j.settings;
+			return __spreadValues$1({
+				theme: (_k = customization == null ? void 0 : customization.theme) != null ? _k : initialState2,
+				globalColors: (_l = customization == null ? void 0 : customization.globalColors) != null ? _l : initialState2,
+				globalFonts: (_m = customization == null ? void 0 : customization.globalFonts) != null ? _m : initialState2,
+				themeStyleSettings: (_n = customization == null ? void 0 : customization.themeStyleSettings) != null ? _n : initialState2,
+				generalSettings: (_o = customization == null ? void 0 : customization.generalSettings) != null ? _o : initialState2,
+				experiments: (_p = customization == null ? void 0 : customization.experiments) != null ? _p : initialState2,
+				customFonts: (_q = customization == null ? void 0 : customization.customFonts) != null ? _q : initialState2,
+				customIcons: (_r = customization == null ? void 0 : customization.customIcons) != null ? _r : initialState2,
+				customCode: (_s = customization == null ? void 0 : customization.customCode) != null ? _s : initialState2
 			}, showClassesVariablesSection ? classesVariablesInitialState : {});
 		}, [
 			data.includes,
-			(_o = data == null ? void 0 : data.uploadedData) == null ? void 0 : _o.manifest,
-			(_p = data == null ? void 0 : data.customization) == null ? void 0 : _p.settings,
+			(_a = data == null ? void 0 : data.uploadedData) == null ? void 0 : _a.manifest,
+			(_b = data == null ? void 0 : data.customization) == null ? void 0 : _b.settings,
 			isImport,
 			isOldExport,
 			showClassesVariablesSection,
 			classesVariablesInitialState
 		]);
 		const initialState = data.includes.includes("settings");
+		const getInitialSettings = (0, react.useCallback)(() => __spreadValues$1(__spreadValues$1({}, getState(initialState)), data.customization.settings || {}), [
+			data.customization.settings,
+			getState,
+			initialState
+		]);
 		const [settings, setSettings] = (0, react.useState)(() => {
-			if (data.customization.settings) return data.customization.settings;
-			return getState(initialState);
+			return getInitialSettings();
 		});
 		(0, react.useEffect)(() => {
-			if (open) if (data.customization.settings) setSettings(data.customization.settings);
-			else {
-				const state = getState(initialState);
-				setSettings(state);
-			}
+			if (open) setSettings(getInitialSettings());
 		}, [open]);
 		(0, react.useEffect)(() => {
 			var _a2;
@@ -4909,10 +4918,10 @@
 			if (open) (_c2 = (_b2 = (_a2 = window.elementorModules) == null ? void 0 : _a2.appsEventTracking) == null ? void 0 : _b2.AppsEventTracking) == null || _c2.sendPageViewsWebsiteTemplates(elementorCommon.eventsManager.config.secondaryLocations.kitLibrary.kitExportCustomizationEdit);
 		}, [open]);
 		const handleToggleChange = (settingKey) => {
-			setSettings((prev) => __spreadProps(__spreadValues({}, prev), { [settingKey]: !prev[settingKey] }));
+			setSettings((prev) => __spreadProps$1(__spreadValues$1({}, prev), { [settingKey]: !prev[settingKey] }));
 		};
 		const handleClassesVariablesChange = (settingKey, value) => {
-			setSettings((prev) => __spreadProps(__spreadValues({}, prev), { [settingKey]: value }));
+			setSettings((prev) => __spreadProps$1(__spreadValues$1({}, prev), { [settingKey]: value }));
 		};
 		const handleReviewClick = (0, react.useCallback)((panelId) => __async(null, null, function* () {
 			const transformedAnalytics = transformAnalyticsData(settings);
@@ -4935,9 +4944,10 @@
 		const handleVariablesReviewClick = (0, react.useCallback)(() => {
 			handleReviewClick("variables-manager");
 		}, [handleReviewClick]);
-		const classesNotExported = isImport && !isClassesExported(data);
-		const variablesNotExported = isImport && !isVariablesExported(data);
-		const classesVariablesNotExported = classesNotExported && variablesNotExported;
+		const classesNotExported = isImport && !classesExportedInManifest;
+		const defaultStylesNotExported = isImport && !defaultStylesExportedInManifest;
+		const variablesNotExported = isImport && !variablesExportedInManifest;
+		const classesVariablesNotExported = classesNotExported && variablesNotExported && defaultStylesNotExported;
 		const classesLimitExceeded = isImport && classesLimitInfo.isExceeded;
 		const variablesLimitExceeded = isImport && variablesLimitInfo.isExceeded;
 		const classesOverLimitCount = classesLimitInfo.overLimitCount;
@@ -4947,7 +4957,7 @@
 			type: "classes"
 		});
 		const performSave = (0, react.useCallback)(() => {
-			const hasEnabledCustomization = settings.theme || settings.globalColors || settings.globalFonts || settings.themeStyleSettings || settings.generalSettings || settings.experiments || settings.customFonts || settings.customIcons || settings.customCode || settings.classes || settings.variables;
+			const hasEnabledCustomization = settings.theme || settings.globalColors || settings.globalFonts || settings.themeStyleSettings || settings.generalSettings || settings.experiments || settings.customFonts || settings.customIcons || settings.customCode || settings.classes || settings.variables || settings.defaultStyles;
 			const transformedAnalytics = transformAnalyticsData(settings);
 			handleSaveChanges("settings", settings, hasEnabledCustomization, transformedAnalytics);
 			handleClose();
@@ -5009,18 +5019,20 @@
 			description: (0, _wordpress_i18n.__)("Only public WordPress themes are supported", "elementor"),
 			settingKey: "theme",
 			onSettingChange: handleToggleChange,
-			notExported: isImport && !((_q = data == null ? void 0 : data.uploadedData) == null ? void 0 : _q.manifest.theme)
+			notExported: isImport && !getManifestItem(data, "theme")
 		}), showClassesVariablesSection && /* @__PURE__ */ react.default.createElement(ClassesVariablesSection, {
 			settings: {
-				classes: (_r = settings.classes) != null ? _r : false,
-				variables: (_s = settings.variables) != null ? _s : false,
-				classesOverrideAll: (_t = settings.classesOverrideAll) != null ? _t : false,
-				variablesOverrideAll: (_u = settings.variablesOverrideAll) != null ? _u : false
+				classes: (_c = settings.classes) != null ? _c : false,
+				defaultStyles: (_d = settings.defaultStyles) != null ? _d : false,
+				variables: (_e = settings.variables) != null ? _e : false,
+				classesOverrideAll: (_f = settings.classesOverrideAll) != null ? _f : false,
+				variablesOverrideAll: (_g = settings.variablesOverrideAll) != null ? _g : false
 			},
 			onSettingChange: handleClassesVariablesChange,
 			isImport,
-			classesExported: !classesNotExported && showClassesSection,
-			variablesExported: !variablesNotExported && showVariablesSection,
+			classesExported: !classesNotExported,
+			defaultStylesExported: !defaultStylesNotExported,
+			variablesExported: !variablesNotExported,
 			classesLimitExceeded,
 			variablesLimitExceeded,
 			classesOverLimitCount,
@@ -5036,21 +5048,21 @@
 			settingKey: "globalColors",
 			onSettingChange: handleToggleChange,
 			checked: settings.globalColors,
-			disabled: isImport && !((_x = (_w = (_v = data == null ? void 0 : data.uploadedData) == null ? void 0 : _v.manifest) == null ? void 0 : _w["site-settings"]) == null ? void 0 : _x.globalColors) || !isHighTier(),
+			disabled: isImport && !(siteSettingsManifest == null ? void 0 : siteSettingsManifest.globalColors) || !isHighTier(),
 			tooltip: !isHighTier()
 		}), /* @__PURE__ */ react.default.createElement(SubSetting, {
 			label: (0, _wordpress_i18n.__)("Global fonts", "elementor"),
 			settingKey: "globalFonts",
 			onSettingChange: handleToggleChange,
 			checked: settings.globalFonts,
-			disabled: isImport && !((_A = (_z = (_y = data == null ? void 0 : data.uploadedData) == null ? void 0 : _y.manifest) == null ? void 0 : _z["site-settings"]) == null ? void 0 : _A.globalFonts) || !isHighTier(),
+			disabled: isImport && !(siteSettingsManifest == null ? void 0 : siteSettingsManifest.globalFonts) || !isHighTier(),
 			tooltip: !isHighTier()
 		}), /* @__PURE__ */ react.default.createElement(SubSetting, {
 			label: (0, _wordpress_i18n.__)("Theme style settings", "elementor"),
 			settingKey: "themeStyleSettings",
 			onSettingChange: handleToggleChange,
 			checked: settings.themeStyleSettings,
-			disabled: isImport && !((_D = (_C = (_B = data == null ? void 0 : data.uploadedData) == null ? void 0 : _B.manifest) == null ? void 0 : _C["site-settings"]) == null ? void 0 : _D.themeStyleSettings) || !isHighTier(),
+			disabled: isImport && !(siteSettingsManifest == null ? void 0 : siteSettingsManifest.themeStyleSettings) || !isHighTier(),
 			tooltip: !isHighTier()
 		}))), /* @__PURE__ */ react.default.createElement(SettingSection, {
 			checked: settings.generalSettings,
@@ -5058,7 +5070,7 @@
 			description: (0, _wordpress_i18n.__)("Include site identity, background, layout, Lightbox, page transitions, and custom CSS", "elementor"),
 			settingKey: "generalSettings",
 			onSettingChange: handleToggleChange,
-			disabled: isImport && !((_G = (_F = (_E = data == null ? void 0 : data.uploadedData) == null ? void 0 : _E.manifest) == null ? void 0 : _F["site-settings"]) == null ? void 0 : _G.generalSettings) || !isHighTier(),
+			disabled: isImport && !(siteSettingsManifest == null ? void 0 : siteSettingsManifest.generalSettings) || !isHighTier(),
 			tooltip: !isHighTier()
 		}), /* @__PURE__ */ react.default.createElement(SettingSection, {
 			checked: settings.experiments,
@@ -5066,7 +5078,7 @@
 			description: (0, _wordpress_i18n.__)("This will apply all experiments that are still active during import", "elementor"),
 			settingKey: "experiments",
 			onSettingChange: handleToggleChange,
-			disabled: isImport && !((_I = (_H = data == null ? void 0 : data.uploadedData) == null ? void 0 : _H.manifest) == null ? void 0 : _I.experiments) || !isHighTier(),
+			disabled: isImport && !getManifestItem(data, "experiments") || !isHighTier(),
 			tooltip: !isHighTier()
 		}), /* @__PURE__ */ react.default.createElement(SettingSection, {
 			title: (0, _wordpress_i18n.__)("Custom files", "elementor"),
@@ -5076,25 +5088,25 @@
 			settingKey: "customFonts",
 			onSettingChange: handleToggleChange,
 			checked: settings.customFonts,
-			disabled: isImport && !((_K = (_J = data == null ? void 0 : data.uploadedData) == null ? void 0 : _J.manifest) == null ? void 0 : _K["custom-fonts"]) || !isHighTier(),
+			disabled: isImport && !getManifestItem(data, "custom-fonts") || !isHighTier(),
 			tooltip: !isHighTier(),
-			notExported: isImport && !((_M = (_L = data == null ? void 0 : data.uploadedData) == null ? void 0 : _L.manifest) == null ? void 0 : _M["custom-fonts"])
+			notExported: isImport && !getManifestItem(data, "custom-fonts")
 		}), /* @__PURE__ */ react.default.createElement(SubSetting, {
 			label: (0, _wordpress_i18n.__)("Custom icons", "elementor"),
 			settingKey: "customIcons",
 			onSettingChange: handleToggleChange,
 			checked: settings.customIcons,
-			disabled: isImport && !((_O = (_N = data == null ? void 0 : data.uploadedData) == null ? void 0 : _N.manifest) == null ? void 0 : _O["custom-icons"]) || !isHighTier(),
+			disabled: isImport && !getManifestItem(data, "custom-icons") || !isHighTier(),
 			tooltip: !isHighTier(),
-			notExported: isImport && !((_Q = (_P = data == null ? void 0 : data.uploadedData) == null ? void 0 : _P.manifest) == null ? void 0 : _Q["custom-icons"])
+			notExported: isImport && !getManifestItem(data, "custom-icons")
 		}), /* @__PURE__ */ react.default.createElement(SubSetting, {
 			label: (0, _wordpress_i18n.__)("Custom code", "elementor"),
 			settingKey: "customCode",
 			onSettingChange: handleToggleChange,
 			checked: settings.customCode,
-			disabled: isImport && !((_S = (_R = data == null ? void 0 : data.uploadedData) == null ? void 0 : _R.manifest) == null ? void 0 : _S["custom-code"]) || !isHighTier(),
+			disabled: isImport && !getManifestItem(data, "custom-code") || !isHighTier(),
 			tooltip: !isHighTier(),
-			notExported: isImport && !((_U = (_T = data == null ? void 0 : data.uploadedData) == null ? void 0 : _T.manifest) == null ? void 0 : _U["custom-code"])
+			notExported: isImport && !getManifestItem(data, "custom-code")
 		}))))), /* @__PURE__ */ react.default.createElement(UpgradeNoticeBanner, null))), /* @__PURE__ */ react.default.createElement(OverrideConfirmationDialog, {
 			open: confirmationDialog.open,
 			onClose: handleConfirmationClose,
@@ -5112,32 +5124,575 @@
 		data: import_prop_types.object.isRequired
 	};
 	//#endregion
+	//#region core/app/modules/import-export-customization/assets/js/components/content-overrides.js
+	function SitePagesSection({ data, isImport, isOldExport, onSettingChange, open, settings }) {
+		var _a;
+		var _b;
+		const { isLoading, pageOptions, isLoaded } = useKitCustomizationPages({
+			open,
+			data
+		});
+		const initialPages = (_a = data.customization.content) == null ? void 0 : _a.pages;
+		const shouldSeedPages = open && data.includes.includes("content") && void 0 === settings.pages && (isLoaded || isImport);
+		(0, react.useEffect)(() => {
+			if (shouldSeedPages) onSettingChange("pages", initialPages || pageOptions.map(({ value }) => value));
+		}, [
+			initialPages,
+			pageOptions,
+			shouldSeedPages
+		]);
+		if (isImport && isOldExport) return null;
+		return isImport && !hasExportedPages(data) ? /* @__PURE__ */ react.default.createElement(SettingSection, {
+			title: (0, _wordpress_i18n.__)("Site pages", "elementor-pro"),
+			settingKey: "pages",
+			notExported: true
+		}) : /* @__PURE__ */ react.default.createElement(ListSettingSection, {
+			settingKey: "pages",
+			title: (0, _wordpress_i18n.__)("Site pages", "elementor-pro"),
+			onSettingChange: (selectedPages) => onSettingChange("pages", selectedPages),
+			settings: (_b = settings.pages) != null ? _b : isLoaded ? pageOptions.map(({ value }) => value) : [],
+			items: pageOptions,
+			loading: isLoading,
+			disabled: !isHighTier(),
+			tooltip: !isHighTier()
+		});
+	}
+	SitePagesSection.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		isOldExport: import_prop_types.default.bool,
+		onSettingChange: import_prop_types.default.func.isRequired,
+		open: import_prop_types.default.bool,
+		settings: import_prop_types.default.object.isRequired
+	};
+	function MenusSection({ data, isImport, isOldExport, onSettingChange, settings }) {
+		var _a;
+		var _b;
+		var _c;
+		var _d;
+		const { customPostTypes } = useKitCustomizationCustomPostTypes({ data });
+		const initialMenus = isImport ? ((_a = data.customization.content) == null ? void 0 : _a.menus) || hasExportedMenuItems(data) : (_c = (_b = data.customization.content) == null ? void 0 : _b.menus) != null ? _c : true;
+		const shouldSeedMenus = data.includes.includes("content") && void 0 === settings.menus;
+		(0, react.useEffect)(() => {
+			if (shouldSeedMenus) onSettingChange("menus", initialMenus);
+		}, [initialMenus, shouldSeedMenus]);
+		if (isImport && isOldExport) return null;
+		const isMenusExported = () => {
+			return hasExportedMenuItems(data) || (customPostTypes == null ? void 0 : customPostTypes.find((cpt) => cpt.value.includes("nav_menu")));
+		};
+		return /* @__PURE__ */ react.default.createElement(SettingSection, {
+			checked: (_d = settings.menus) != null ? _d : false,
+			disabled: isImport && !isMenusExported() || !isHighTier(),
+			title: (0, _wordpress_i18n.__)("Menus", "elementor-pro"),
+			settingKey: "menus",
+			tooltip: !isHighTier(),
+			onSettingChange
+		});
+	}
+	MenusSection.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		isOldExport: import_prop_types.default.bool,
+		onSettingChange: import_prop_types.default.func.isRequired,
+		settings: import_prop_types.default.object.isRequired
+	};
+	function TaxonomiesSection({ data, isImport, isOldExport, onSettingChange, open, settings }) {
+		var _a;
+		const { isLoading, taxonomyOptions, isLoaded } = useKitCustomizationTaxonomies({
+			open,
+			data
+		});
+		const initialTaxonomies = (_a = data.customization.content) == null ? void 0 : _a.taxonomies;
+		const shouldSeedTaxonomies = open && data.includes.includes("content") && void 0 === settings.taxonomies && (isLoaded || isImport);
+		(0, react.useEffect)(() => {
+			if (shouldSeedTaxonomies) onSettingChange("taxonomies", initialTaxonomies || taxonomyOptions.map(({ value }) => value));
+		}, [
+			initialTaxonomies,
+			shouldSeedTaxonomies,
+			taxonomyOptions
+		]);
+		if (isImport && isOldExport) return null;
+		return /* @__PURE__ */ react.default.createElement(SettingSection, {
+			description: (0, _wordpress_i18n.__)("Group your content by type, topic, or any structure you choose.", "elementor-pro"),
+			title: (0, _wordpress_i18n.__)("Taxonomies", "elementor-pro"),
+			settingKey: "taxonomies",
+			notExported: isImport && 0 === taxonomyOptions.length,
+			hasToggle: false
+		}, isLoading ? /* @__PURE__ */ react.default.createElement(_elementor_ui.Box, { sx: {
+			p: 1,
+			alignItems: "center",
+			textAlign: "center"
+		} }, /* @__PURE__ */ react.default.createElement(_elementor_ui.CircularProgress, { size: 30 })) : taxonomyOptions.map((taxonomy) => {
+			var _a2;
+			return /* @__PURE__ */ react.default.createElement(SubSetting, {
+				key: taxonomy.value,
+				label: taxonomy.label,
+				settingKey: `taxonomies_${taxonomy.value}`,
+				checked: ((_a2 = settings.taxonomies) != null ? _a2 : []).includes(taxonomy.value),
+				disabled: !isHighTier(),
+				tooltip: !isHighTier(),
+				onSettingChange: (key, isChecked) => {
+					var _a3;
+					var _b;
+					onSettingChange("taxonomies", isChecked ? [...(_a3 = settings.taxonomies) != null ? _a3 : [], taxonomy.value] : ((_b = settings.taxonomies) != null ? _b : []).filter((value) => value !== taxonomy.value));
+				}
+			});
+		}));
+	}
+	TaxonomiesSection.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		isOldExport: import_prop_types.default.bool,
+		onSettingChange: import_prop_types.default.func.isRequired,
+		open: import_prop_types.default.bool,
+		settings: import_prop_types.default.object.isRequired
+	};
+	//#endregion
+	//#region core/app/modules/import-export-customization/assets/js/components/settings-overrides.js
+	var __defProp = Object.defineProperty;
+	var __defProps = Object.defineProperties;
+	var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+	var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+	var __hasOwnProp = Object.prototype.hasOwnProperty;
+	var __propIsEnum = Object.prototype.propertyIsEnumerable;
+	var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
+		enumerable: true,
+		configurable: true,
+		writable: true,
+		value
+	}) : obj[key] = value;
+	var __spreadValues = (a, b) => {
+		for (var prop in b || (b = {})) if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+		if (__getOwnPropSymbols) {
+			for (var prop of __getOwnPropSymbols(b)) if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+		}
+		return a;
+	};
+	var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+	function renderGroupedSetting({ data, isImport, label, manifestKey, onSettingChange, settingKey, settings }) {
+		var _a;
+		var _b;
+		var _c;
+		return /* @__PURE__ */ react.default.createElement(SubSetting, {
+			label,
+			settingKey,
+			onSettingChange,
+			checked: (_a = settings[settingKey]) != null ? _a : false,
+			disabled: isImport && !((_b = getSiteSettingsManifest(data)) == null ? void 0 : _b[manifestKey]) || !isHighTier(),
+			tooltip: !isHighTier(),
+			notExported: isImport && !((_c = getSiteSettingsManifest(data)) == null ? void 0 : _c[manifestKey])
+		});
+	}
+	function GlobalColorsSettingsRow(props) {
+		return renderGroupedSetting(__spreadProps(__spreadValues({}, props), {
+			label: (0, _wordpress_i18n.__)("Global colors", "elementor-pro"),
+			manifestKey: "globalColors",
+			settingKey: "globalColors"
+		}));
+	}
+	function GlobalFontsSettingsRow(props) {
+		return renderGroupedSetting(__spreadProps(__spreadValues({}, props), {
+			label: (0, _wordpress_i18n.__)("Global fonts", "elementor-pro"),
+			manifestKey: "globalFonts",
+			settingKey: "globalFonts"
+		}));
+	}
+	function ThemeStyleSettingsRow(props) {
+		return renderGroupedSetting(__spreadProps(__spreadValues({}, props), {
+			label: (0, _wordpress_i18n.__)("Theme style settings", "elementor-pro"),
+			manifestKey: "themeStyleSettings",
+			settingKey: "themeStyleSettings"
+		}));
+	}
+	function renderCustomFileSetting({ data, isImport, label, manifestKey, onSettingChange, settingKey, settings }) {
+		var _a;
+		return /* @__PURE__ */ react.default.createElement(SubSetting, {
+			label,
+			settingKey,
+			onSettingChange,
+			checked: (_a = settings[settingKey]) != null ? _a : false,
+			disabled: isImport && !getManifestItem(data, manifestKey) || !isHighTier(),
+			tooltip: !isHighTier(),
+			notExported: isImport && !getManifestItem(data, manifestKey)
+		});
+	}
+	function CustomFontsSettingsRow(props) {
+		return renderCustomFileSetting(__spreadProps(__spreadValues({}, props), {
+			label: (0, _wordpress_i18n.__)("Custom fonts", "elementor-pro"),
+			manifestKey: "custom-fonts",
+			settingKey: "customFonts"
+		}));
+	}
+	function CustomIconsSettingsRow(props) {
+		return renderCustomFileSetting(__spreadProps(__spreadValues({}, props), {
+			label: (0, _wordpress_i18n.__)("Custom icons", "elementor-pro"),
+			manifestKey: "custom-icons",
+			settingKey: "customIcons"
+		}));
+	}
+	function CustomCodeSettingsRow(props) {
+		return renderCustomFileSetting(__spreadProps(__spreadValues({}, props), {
+			label: (0, _wordpress_i18n.__)("Custom code", "elementor-pro"),
+			manifestKey: "custom-code",
+			settingKey: "customCode"
+		}));
+	}
+	function GeneralSettingsRow({ data, isImport, onSettingChange, settings }) {
+		var _a;
+		var _b;
+		return /* @__PURE__ */ react.default.createElement(SettingSection, {
+			checked: (_a = settings.generalSettings) != null ? _a : false,
+			title: (0, _wordpress_i18n.__)("Settings", "elementor"),
+			description: (0, _wordpress_i18n.__)("Include site identity, background, layout, Lightbox, page transitions, and custom CSS", "elementor"),
+			settingKey: "generalSettings",
+			onSettingChange,
+			disabled: isImport && !((_b = getSiteSettingsManifest(data)) == null ? void 0 : _b.generalSettings) || !isHighTier(),
+			tooltip: !isHighTier()
+		});
+	}
+	GeneralSettingsRow.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		onSettingChange: import_prop_types.default.func.isRequired,
+		settings: import_prop_types.default.object.isRequired
+	};
+	function ExperimentsSettingsRow({ data, isImport, onSettingChange, settings }) {
+		var _a;
+		return /* @__PURE__ */ react.default.createElement(SettingSection, {
+			checked: (_a = settings.experiments) != null ? _a : false,
+			title: (0, _wordpress_i18n.__)("Experiments", "elementor"),
+			description: (0, _wordpress_i18n.__)("This will apply all experiments that are still active during import", "elementor"),
+			settingKey: "experiments",
+			onSettingChange,
+			disabled: isImport && !getManifestItem(data, "experiments") || !isHighTier(),
+			tooltip: !isHighTier()
+		});
+	}
+	ExperimentsSettingsRow.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		onSettingChange: import_prop_types.default.func.isRequired,
+		settings: import_prop_types.default.object.isRequired
+	};
+	var groupedSettingsRowPropTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		onSettingChange: import_prop_types.default.func.isRequired,
+		settings: import_prop_types.default.object.isRequired
+	};
+	GlobalColorsSettingsRow.propTypes = groupedSettingsRowPropTypes;
+	GlobalFontsSettingsRow.propTypes = groupedSettingsRowPropTypes;
+	ThemeStyleSettingsRow.propTypes = groupedSettingsRowPropTypes;
+	CustomFontsSettingsRow.propTypes = groupedSettingsRowPropTypes;
+	CustomIconsSettingsRow.propTypes = groupedSettingsRowPropTypes;
+	CustomCodeSettingsRow.propTypes = groupedSettingsRowPropTypes;
+	//#endregion
+	//#region core/app/modules/import-export-customization/assets/js/components/template-overrides.js
+	function SiteTemplatesSection({ data, isImport, isOldExport, onSectionStateChange, templates }) {
+		var _a;
+		if (isOldExport) return null;
+		return /* @__PURE__ */ react.default.createElement(SettingSection, {
+			checked: ((_a = templates.siteTemplates) == null ? void 0 : _a.enabled) || false,
+			title: (0, _wordpress_i18n.__)("Site Templates", "elementor"),
+			settingKey: "siteTemplates",
+			onSettingChange: (key, isChecked) => onSectionStateChange(key, { enabled: isChecked }),
+			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("site-templates", getImportManifest(data)),
+			tooltip: !isHighTier()
+		});
+	}
+	SiteTemplatesSection.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		isOldExport: import_prop_types.default.bool,
+		onSectionStateChange: import_prop_types.default.func.isRequired,
+		templates: import_prop_types.default.object.isRequired
+	};
+	function ThemeBuilderSection({ data, isImport, onSectionStateChange, templates }) {
+		var _a;
+		return /* @__PURE__ */ react.default.createElement(ThemeBuilderCustomization, {
+			state: (_a = templates.themeBuilder) != null ? _a : { enabled: false },
+			settingKey: "themeBuilder",
+			onStateChange: onSectionStateChange,
+			data,
+			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("theme-builder", getImportManifest(data)),
+			tooltip: !isHighTier()
+		});
+	}
+	ThemeBuilderSection.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		onSectionStateChange: import_prop_types.default.func.isRequired,
+		templates: import_prop_types.default.object.isRequired
+	};
+	function GlobalWidgetsSection({ data, isImport, isOldExport, onSectionStateChange, templates }) {
+		var _a;
+		if (isOldExport) return null;
+		return /* @__PURE__ */ react.default.createElement(SettingSection, {
+			checked: ((_a = templates.globalWidgets) == null ? void 0 : _a.enabled) || false,
+			title: (0, _wordpress_i18n.__)("Global Widgets", "elementor"),
+			settingKey: "globalWidgets",
+			onSettingChange: (key, isChecked) => onSectionStateChange(key, { enabled: isChecked }),
+			disabled: !isHighTier() || isImport && !hasTemplatesForExportGroup("global-widget", getImportManifest(data)),
+			tooltip: !isHighTier()
+		});
+	}
+	GlobalWidgetsSection.propTypes = {
+		data: import_prop_types.default.object.isRequired,
+		isImport: import_prop_types.default.bool,
+		isOldExport: import_prop_types.default.bool,
+		onSectionStateChange: import_prop_types.default.func.isRequired,
+		templates: import_prop_types.default.object.isRequired
+	};
+	//#endregion
+	//#region core/app/modules/import-export-customization/assets/js/constants.js
+	var KIT_SECTIONS = Object.freeze({
+		CONTENT: "content",
+		TEMPLATES: "templates",
+		SETTINGS: "settings"
+	});
+	var KIT_SECTION_ITEMS = Object.freeze({
+		CONTENT_SITE_PAGES: "content/site-pages",
+		CONTENT_MENUS: "content/menus",
+		CONTENT_TAXONOMIES: "content/taxonomies",
+		TEMPLATES_SITE_TEMPLATES: "templates/site-templates",
+		TEMPLATES_THEME_BUILDER: "templates/theme-builder",
+		TEMPLATES_GLOBAL_WIDGETS: "templates/global-widgets",
+		SETTINGS_DESIGN_SYSTEM: "settings/design-system",
+		SETTINGS_THEME: "settings/theme",
+		SETTINGS_GLOBAL_CLASSES: "settings/design-system/global-classes",
+		SETTINGS_GLOBAL_VARIABLES: "settings/design-system/global-variables",
+		SETTINGS_DEFAULT_STYLES: "settings/design-system/default-styles",
+		SETTINGS_GLOBAL_COLORS: "settings/global-colors",
+		SETTINGS_GLOBAL_FONTS: "settings/global-fonts",
+		SETTINGS_THEME_STYLE_SETTINGS: "settings/theme-style-settings",
+		SETTINGS_GENERAL_SETTINGS: "settings/general-settings",
+		SETTINGS_EXPERIMENTS: "settings/experiments",
+		SETTINGS_CUSTOM_FONTS: "settings/custom-fonts",
+		SETTINGS_CUSTOM_ICONS: "settings/custom-icons",
+		SETTINGS_CUSTOM_CODE: "settings/custom-code"
+	});
+	//#endregion
 	//#region core/app/modules/import-export-customization/assets/js/module.js
+	var CUSTOMIZATION_DIALOGS_READY_EVENT = "elementor/import-export-customization/ready";
+	function createBooleanSettingInitialStateResolver(manifestKey) {
+		return ({ contextData, includesSettings, isImport }) => {
+			var _getSiteSettingsManif;
+			if (!isImport) return includesSettings;
+			return includesSettings && !!((_getSiteSettingsManif = getSiteSettingsManifest(contextData === null || contextData === void 0 ? void 0 : contextData.data)) === null || _getSiteSettingsManif === void 0 ? void 0 : _getSiteSettingsManif[manifestKey]);
+		};
+	}
+	function createCustomFileInitialStateResolver(manifestKey) {
+		return ({ contextData, includesSettings, isImport }) => {
+			if (!isImport) return includesSettings;
+			return includesSettings && !!getManifestItem(contextData === null || contextData === void 0 ? void 0 : contextData.data, manifestKey);
+		};
+	}
+	function createTemplateInitialStateResolver(exportGroup) {
+		return ({ contextData, includesTemplates, isImport }) => {
+			var _elementorAppConfig;
+			if (!isImport) return { enabled: includesTemplates };
+			if (contextData === null || contextData === void 0 ? void 0 : contextData.isOldExport) return { enabled: true };
+			const manifest = getImportManifest(contextData === null || contextData === void 0 ? void 0 : contextData.data);
+			const exportGroups = ((_elementorAppConfig = elementorAppConfig) === null || _elementorAppConfig === void 0 || (_elementorAppConfig = _elementorAppConfig["import-export-customization"]) === null || _elementorAppConfig === void 0 ? void 0 : _elementorAppConfig.exportGroups) || {};
+			return { enabled: Object.values((manifest === null || manifest === void 0 ? void 0 : manifest.templates) || {}).some((template) => exportGroups[template === null || template === void 0 ? void 0 : template.doc_type] === exportGroup) };
+		};
+	}
 	var Module = class {
 		constructor() {
-			this.registerCustomizationDialogs();
+			this.hasRegisteredCustomizationDialogs = false;
+			this.handleCustomizationDialogsReady = this.handleCustomizationDialogsReady.bind(this);
+			if (!this.isCustomizationDialogsEnabled()) return;
+			if (!supportsCustomizationDialogOverrides()) {
+				this.registerSections();
+				return;
+			}
+			if (isCustomizationDialogsUiRegistered() && this.tryRegisterCustomizationDialogs()) return;
+			globalThis.addEventListener(CUSTOMIZATION_DIALOGS_READY_EVENT, this.handleCustomizationDialogsReady, { once: true });
 		}
-		registerCustomizationDialogs() {
-			var _elementorCommon;
-			var _window$elementorModu;
-			if (!((_elementorCommon = elementorCommon) === null || _elementorCommon === void 0 || (_elementorCommon = _elementorCommon.config) === null || _elementorCommon === void 0 || (_elementorCommon = _elementorCommon.experimentalFeatures) === null || _elementorCommon === void 0 ? void 0 : _elementorCommon["import-export-customization"])) return;
-			const registry = (_window$elementorModu = window.elementorModules) === null || _window$elementorModu === void 0 || (_window$elementorModu = _window$elementorModu.importExport) === null || _window$elementorModu === void 0 ? void 0 : _window$elementorModu.customizationDialogsRegistry;
-			if (!registry) return;
-			registry.register({
-				key: "content",
-				title: "Content Dialog",
-				component: KitContentCustomizationDialog
+		isCustomizationDialogsEnabled() {
+			return isExperimentActive("import-export-customization");
+		}
+		handleCustomizationDialogsReady() {
+			this.tryRegisterCustomizationDialogs();
+		}
+		supportsComponentOverrides() {
+			return supportsCustomizationDialogOverrides();
+		}
+		registerContentOverrides() {
+			[
+				{
+					key: KIT_SECTION_ITEMS.CONTENT_SITE_PAGES,
+					parentKey: KIT_SECTIONS.CONTENT,
+					title: "Site pages",
+					order: 10,
+					component: SitePagesSection
+				},
+				{
+					key: KIT_SECTION_ITEMS.CONTENT_MENUS,
+					parentKey: KIT_SECTIONS.CONTENT,
+					title: "Menus",
+					order: 40,
+					component: MenusSection
+				},
+				{
+					key: KIT_SECTION_ITEMS.CONTENT_TAXONOMIES,
+					parentKey: KIT_SECTIONS.CONTENT,
+					title: "Taxonomies",
+					order: 50,
+					component: TaxonomiesSection
+				}
+			].forEach((registration) => {
+				var _getCustomizationDial;
+				return (_getCustomizationDial = getCustomizationDialogsRegistry()) === null || _getCustomizationDial === void 0 ? void 0 : _getCustomizationDial.register(registration);
 			});
-			registry.register({
-				key: "templates",
-				title: "Templates Dialog",
-				component: KitTemplatesCustomizationDialog
+		}
+		registerTemplateOverrides() {
+			[
+				{
+					key: KIT_SECTION_ITEMS.TEMPLATES_SITE_TEMPLATES,
+					parentKey: KIT_SECTIONS.TEMPLATES,
+					title: "Site templates",
+					order: 10,
+					component: SiteTemplatesSection,
+					settingKey: "siteTemplates",
+					getInitialState: createTemplateInitialStateResolver("site-templates")
+				},
+				{
+					key: KIT_SECTION_ITEMS.TEMPLATES_THEME_BUILDER,
+					parentKey: KIT_SECTIONS.TEMPLATES,
+					title: "Theme builder",
+					order: 20,
+					component: ThemeBuilderSection,
+					settingKey: "themeBuilder",
+					getInitialState: createTemplateInitialStateResolver("theme-builder")
+				},
+				{
+					key: KIT_SECTION_ITEMS.TEMPLATES_GLOBAL_WIDGETS,
+					parentKey: KIT_SECTIONS.TEMPLATES,
+					title: "Global widgets",
+					order: 30,
+					component: GlobalWidgetsSection,
+					settingKey: "globalWidgets",
+					getInitialState: createTemplateInitialStateResolver("global-widget")
+				}
+			].forEach((registration) => {
+				var _getCustomizationDial2;
+				return (_getCustomizationDial2 = getCustomizationDialogsRegistry()) === null || _getCustomizationDial2 === void 0 ? void 0 : _getCustomizationDial2.register(registration);
 			});
-			registry.register({
-				key: "settings",
-				title: "Settings Dialog",
-				component: KitSettingsCustomizationDialog
+		}
+		registerSettingsOverrides() {
+			[
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_DESIGN_SYSTEM,
+					title: "Classes, variables & default styles",
+					component: ClassesVariablesSection
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_GLOBAL_COLORS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Global colors",
+					order: 50,
+					component: GlobalColorsSettingsRow,
+					settingKey: "globalColors",
+					getInitialState: createBooleanSettingInitialStateResolver("globalColors")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_GLOBAL_FONTS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Global fonts",
+					order: 60,
+					component: GlobalFontsSettingsRow,
+					settingKey: "globalFonts",
+					getInitialState: createBooleanSettingInitialStateResolver("globalFonts")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_THEME_STYLE_SETTINGS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Theme style settings",
+					order: 70,
+					component: ThemeStyleSettingsRow,
+					settingKey: "themeStyleSettings",
+					getInitialState: createBooleanSettingInitialStateResolver("themeStyleSettings")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_GENERAL_SETTINGS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Settings",
+					order: 80,
+					component: GeneralSettingsRow,
+					settingKey: "generalSettings",
+					getInitialState: createBooleanSettingInitialStateResolver("generalSettings")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_EXPERIMENTS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Experiments",
+					order: 90,
+					component: ExperimentsSettingsRow,
+					settingKey: "experiments",
+					getInitialState: createCustomFileInitialStateResolver("experiments")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_CUSTOM_FONTS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Custom fonts",
+					order: 100,
+					component: CustomFontsSettingsRow,
+					settingKey: "customFonts",
+					getInitialState: createCustomFileInitialStateResolver("custom-fonts")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_CUSTOM_ICONS,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Custom icons",
+					order: 110,
+					component: CustomIconsSettingsRow,
+					settingKey: "customIcons",
+					getInitialState: createCustomFileInitialStateResolver("custom-icons")
+				},
+				{
+					key: KIT_SECTION_ITEMS.SETTINGS_CUSTOM_CODE,
+					parentKey: KIT_SECTIONS.SETTINGS,
+					title: "Custom code",
+					order: 120,
+					component: CustomCodeSettingsRow,
+					settingKey: "customCode",
+					getInitialState: createCustomFileInitialStateResolver("custom-code")
+				}
+			].forEach((registration) => {
+				var _getCustomizationDial3;
+				return (_getCustomizationDial3 = getCustomizationDialogsRegistry()) === null || _getCustomizationDial3 === void 0 ? void 0 : _getCustomizationDial3.register(registration);
 			});
+		}
+		registerSections() {
+			const registry = getCustomizationDialogsRegistry();
+			[
+				{
+					key: KIT_SECTIONS.CONTENT,
+					title: "Content Dialog",
+					component: KitContentCustomizationDialog
+				},
+				{
+					key: KIT_SECTIONS.TEMPLATES,
+					title: "Templates Dialog",
+					component: KitTemplatesCustomizationDialog
+				},
+				{
+					key: KIT_SECTIONS.SETTINGS,
+					title: "Settings Dialog",
+					component: KitSettingsCustomizationDialog
+				}
+			].forEach((registration) => registry === null || registry === void 0 ? void 0 : registry.register(registration));
+		}
+		tryRegisterCustomizationDialogs() {
+			if (this.hasRegisteredCustomizationDialogs || !getCustomizationDialogsRegistry()) return this.hasRegisteredCustomizationDialogs;
+			if (this.supportsComponentOverrides()) {
+				this.registerContentOverrides();
+				this.registerTemplateOverrides();
+				this.registerSettingsOverrides();
+			} else this.registerSections();
+			this.hasRegisteredCustomizationDialogs = true;
+			return true;
 		}
 	};
 	//#endregion

@@ -1,6 +1,6 @@
 <?php
 
-namespace ElementorPro\Modules\CoreUpgradeRecommendation\Classes;
+namespace ElementorPro\Modules\AdminNotices\Classes;
 
 use Elementor\Utils;
 

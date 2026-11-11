@@ -13,6 +13,7 @@ use Elementor\Modules\AtomicWidgets\PropTypes\Dimensions_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Html_V3_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Primitives\String_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Size_Prop_Type;
+use Elementor\Modules\AtomicWidgets\Styles\Size_Constants;
 use Elementor\Modules\AtomicWidgets\Styles\Style_Definition;
 use Elementor\Modules\AtomicWidgets\Styles\Style_States;
 use Elementor\Modules\AtomicWidgets\Styles\Style_Variant;
@@ -102,6 +103,10 @@ abstract class Collection_Loop_Pagination_Button extends Atomic_Element_Base {
 				->add_variant(
 					Style_Variant::make()
 						->add_prop( 'display', String_Prop_Type::generate( 'inline-flex' ) )
+						->add_prop( 'width', Size_Prop_Type::generate( [
+							'size' => '',
+							'unit' => Size_Constants::UNIT_AUTO,
+						] ) )
 						->add_prop( 'align-items', String_Prop_Type::generate( 'center' ) )
 						->add_prop( 'gap', Size_Prop_Type::generate( [
 							'size' => 8,

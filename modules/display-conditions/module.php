@@ -109,6 +109,7 @@ class Module extends Module_Base {
 				'elementor-editor-modules',
 				'elementor-editor-document',
 				'elementor-v2-ui',
+				'elementor-v2-editor-ui',
 				'elementor-v2-icons',
 			],
 			ELEMENTOR_PRO_VERSION,

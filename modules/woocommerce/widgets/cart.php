@@ -2647,7 +2647,7 @@ class Cart extends Base_Widget {
 		$this->add_render_hooks();
 
 		// Display our Widget.
-		if ( $this->has_empty_cart_template() && WC()->cart->get_cart_contents_count() === 0 ) {
+		if ( $this->has_empty_cart_template() && WC()->cart && WC()->cart->get_cart_contents_count() === 0 ) {
 			$template_id = intval( $this->get_settings_for_display( 'additional_template_select' ) );
 			echo do_shortcode( '[elementor-template id="' . $template_id . '"]' );
 		} else {

@@ -2,6 +2,7 @@
 {%- set id_attribute = settings._cssid is not empty ? 'id=' ~ settings._cssid | e('html_attr') : '' %}
 {%- set interactions_attribute = interactions is not empty ? 'data-interactions=' ~ interactions | json_encode | e('html_attr') : '' %}
 {%- set required_attribute = settings.required ? 'required' : '' %}
+{%- set webmcp_param_attribute = settings['webmcp-param-description'] is not empty ? 'toolparamdescription="' ~ settings['webmcp-param-description'] | e('html_attr') ~ '"' : '' %}
 {%- set checked_attribute = settings.checked ? 'checked' : '' %}
 {%- set name = settings.name is not empty ? settings.name : settings._cssid is not empty ? settings._cssid : id %}
 {%- set name_attribute = 'name=' ~ name | e('html_attr') %}
@@ -16,5 +17,6 @@
 	{{ settings.attributes | raw }} 
 	{{ interactions_attribute }}
 	{{ required_attribute }}
+	{{ webmcp_param_attribute | raw }}
 	{{ checked_attribute }}
 />

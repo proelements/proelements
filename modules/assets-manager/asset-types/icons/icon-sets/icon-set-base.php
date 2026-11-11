@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 abstract class Icon_Set_Base {
 
+	const RESERVED_NAME_PREFIX = 'fa-';
+
 	protected $dir_name = '';
 	protected $directory = '';
 	protected $data_file = '';
@@ -178,6 +180,40 @@ abstract class Icon_Set_Base {
 		];
 		$id = wp_insert_attachment( $attachment );
 		return $id;
+	}
+
+	/**
+	 * Names that start with "fa-" are routed to the Font Awesome resolver, so a pack with such a name never renders.
+	 *
+	 * @return true|\WP_Error
+	 */
+	public function validate_name() {
+		$name = $this->get_name();
+
+		if ( ! is_string( $name ) ) {
+			return true;
+		}
+
+		if ( preg_match( '#[/\\\\\0]|\.\.#', $name ) ) {
+			return new \WP_Error(
+				'invalid_pack_name',
+				esc_html__( 'The icon set name contains characters that are not allowed. Rename the pack and upload it again.', 'elementor-pro' )
+			);
+		}
+
+		if ( str_starts_with( strtolower( trim( $name ) ), self::RESERVED_NAME_PREFIX ) ) {
+			return new \WP_Error(
+				'reserved_pack_name',
+				sprintf(
+					/* translators: 1: Icon set name, 2: Reserved prefix. */
+					esc_html__( 'The icon set name "%1$s" starts with "%2$s", which is reserved for Font Awesome. Rename the pack and upload it again.', 'elementor-pro' ),
+					esc_html( $name ),
+					self::RESERVED_NAME_PREFIX
+				)
+			);
+		}
+
+		return true;
 	}
 
 	public function get_unique_name() {

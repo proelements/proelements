@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 (function() {
 	//#region \0rolldown/runtime.js
 	var __defProp = Object.defineProperty;
@@ -14,6 +14,7 @@
 	//#endregion
 	//#region modules/atomic-form/assets/js/editor/utils/regenerate-cssid.js
 	var LABEL_WIDGET_TYPE = "e-form-label";
+	var HONEYPOT_WIDGET_TYPE = "e-form-honeypot";
 	var NON_FIELD_FORM_WIDGETS = /* @__PURE__ */ new Set([
 		"e-form",
 		LABEL_WIDGET_TYPE,
@@ -60,19 +61,22 @@
 		}
 		(_model$get3 = model.get("settings")) === null || _model$get3 === void 0 || _model$get3.set(settings);
 	}
-	function regenerateInputCssId(model) {
+	function regenerateInputCssId(model, { keepHoneypotIds }) {
 		var _getSettingsJson$_css;
 		const oldCssId = (_getSettingsJson$_css = getSettingsJson(model)._cssid) === null || _getSettingsJson$_css === void 0 ? void 0 : _getSettingsJson$_css.value;
-		if (!oldCssId) return null;
+		if (HONEYPOT_WIDGET_TYPE === model.get("widgetType")) {
+			if (oldCssId && !keepHoneypotIds) updateSettings(model, { _cssid: null });
+			return null;
+		}
 		const newCssId = `${model.get("widgetType")}-${elementorCommon.helpers.getUniqueId()}`;
 		updateSettings(model, { _cssid: {
 			$$type: "string",
 			value: newCssId
 		} });
-		return {
+		return oldCssId ? {
 			oldCssId,
 			newCssId
-		};
+		} : null;
 	}
 	function relinkLabel(model, idMap) {
 		var _getSettingsJson$inpu;
@@ -83,11 +87,11 @@
 			value: idMap.get(currentInputId)
 		} });
 	}
-	function regenerateCssIds(container, { recursive = true } = {}) {
+	function regenerateCssIds(container, { recursive = true, keepHoneypotIds = false } = {}) {
 		const models = recursive ? getElementChildren(container.model) : [container.model];
 		const idMap = /* @__PURE__ */ new Map();
 		models.filter(isAtomicFormInput).forEach((model) => {
-			const result = regenerateInputCssId(model);
+			const result = regenerateInputCssId(model, { keepHoneypotIds });
 			if (result) idMap.set(result.oldCssId, result.newCssId);
 		});
 		if (idMap.size) models.filter(isLabel).forEach((model) => relinkLabel(model, idMap));
@@ -102,7 +106,10 @@
 			return "regenerate-cssid--document/elements/create";
 		}
 		apply(args, result) {
-			(Array.isArray(result) ? result : [result]).filter(Boolean).forEach((container) => regenerateCssIds(container, { recursive: false }));
+			(Array.isArray(result) ? result : [result]).filter(Boolean).forEach((container) => regenerateCssIds(container, {
+				recursive: false,
+				keepHoneypotIds: true
+			}));
 		}
 	};
 	//#endregion

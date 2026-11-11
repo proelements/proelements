@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Fontello extends Icon_Set_Base {
 
+	const DEFAULT_NAME = 'fontello';
+
 	protected $data_file = 'config.json';
 	protected $stylesheet_file = '';
 	protected $allowed_zipped_files = [ 'config.json', 'demo.html', 'README.txt', 'LICENSE.txt', 'css/', 'font/' ];
@@ -63,10 +65,15 @@ class Fontello extends Icon_Set_Base {
 
 	public function get_name() {
 		$config = $this->get_json();
+
 		if ( ! isset( $config->name ) ) {
 			return false; //  missing name
 		}
-		return $config->name;
+
+		$name = is_string( $config->name ) ? $config->name : '';
+
+		// A default fontello.com export has an empty name and names its css and font files "fontello".
+		return '' === trim( $name ) ? self::DEFAULT_NAME : $name;
 	}
 
 	protected function get_stylesheet() {

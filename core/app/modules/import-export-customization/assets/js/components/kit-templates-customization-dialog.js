@@ -9,6 +9,7 @@ import { isHighTier } from '../hooks/use-tier';
 import { ThemeBuilderCustomization } from './theme-builder-customization';
 import { UpgradeVersionBanner } from './upgrade-version-banner';
 import { transformValueForAnalytics } from '../utils/analytics-transformer';
+import { getImportManifest } from '../utils';
 
 const transformAnalyticsData = ( payload ) => {
 	const transformed = {};
@@ -65,13 +66,13 @@ export function KitTemplatesCustomizationDialog( {
 		if ( isImport ) {
 			return {
 				siteTemplates: {
-					enabled: isImport && isOldExport ? true : hasTemplatesForExportGroup( 'site-templates', data?.uploadedData?.manifest ) ?? parentInitialState,
+					enabled: isImport && isOldExport ? true : hasTemplatesForExportGroup( 'site-templates', getImportManifest( data ) ) ?? parentInitialState,
 				},
 				themeBuilder: {
-					enabled: isImport && isOldExport ? true : hasTemplatesForExportGroup( 'theme-builder', data?.uploadedData?.manifest ) ?? parentInitialState,
+					enabled: isImport && isOldExport ? true : hasTemplatesForExportGroup( 'theme-builder', getImportManifest( data ) ) ?? parentInitialState,
 				},
 				globalWidgets: {
-					enabled: isImport && isOldExport ? true : hasTemplatesForExportGroup( 'global-widget', data?.uploadedData?.manifest ) ?? parentInitialState,
+					enabled: isImport && isOldExport ? true : hasTemplatesForExportGroup( 'global-widget', getImportManifest( data ) ) ?? parentInitialState,
 				},
 			};
 		}
@@ -142,7 +143,7 @@ export function KitTemplatesCustomizationDialog( {
 							title={ __( 'Site Templates', 'elementor' ) }
 							settingKey="siteTemplates"
 							onSettingChange={ handleToggleChange }
-							disabled={ ! isHighTier() || ( isImport && ! hasTemplatesForExportGroup( 'site-templates', data?.uploadedData?.manifest ) ) }
+							disabled={ ! isHighTier() || ( isImport && ! hasTemplatesForExportGroup( 'site-templates', getImportManifest( data ) ) ) }
 							tooltip={ ! isHighTier() }
 						/>
 					) }
@@ -165,7 +166,7 @@ export function KitTemplatesCustomizationDialog( {
 							} );
 						} }
 						data={ data }
-						disabled={ ! isHighTier() || ( isImport && ! hasTemplatesForExportGroup( 'theme-builder', data?.uploadedData?.manifest ) ) }
+						disabled={ ! isHighTier() || ( isImport && ! hasTemplatesForExportGroup( 'theme-builder', getImportManifest( data ) ) ) }
 						tooltip={ ! isHighTier() }
 					/>
 
@@ -175,7 +176,7 @@ export function KitTemplatesCustomizationDialog( {
 							title="Global Widgets"
 							settingKey="globalWidgets"
 							onSettingChange={ handleToggleChange }
-							disabled={ ! isHighTier() || ( isImport && ! hasTemplatesForExportGroup( 'global-widget', data?.uploadedData?.manifest ) ) }
+							disabled={ ! isHighTier() || ( isImport && ! hasTemplatesForExportGroup( 'global-widget', getImportManifest( data ) ) ) }
 							tooltip={ ! isHighTier() }
 						/>
 					) }

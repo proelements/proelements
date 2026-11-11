@@ -21,6 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Settings_Woocommerce extends Tab_Base {
 
+	const PAGE_OPTION_NAMES_BY_KIT_KEY = [
+		'woocommerce_cart_page_id' => 'woocommerce_cart_page_id',
+		'woocommerce_checkout_page_id' => 'woocommerce_checkout_page_id',
+		'woocommerce_myaccount_page_id' => 'woocommerce_myaccount_page_id',
+		'woocommerce_terms_page_id' => 'woocommerce_terms_page_id',
+		'woocommerce_purchase_summary_page_id' => 'elementor_woocommerce_purchase_summary_page_id',
+		'woocommerce_shop_page_id' => 'woocommerce_shop_page_id',
+	];
+
 	public function get_id() {
 		return 'settings-woocommerce';
 	}
@@ -688,15 +697,7 @@ class Settings_Woocommerce extends Tab_Base {
 			return;
 		}
 
-		$ec_wc_key_mapping = [
-			'woocommerce_cart_page_id' => 'woocommerce_cart_page_id',
-			'woocommerce_checkout_page_id' => 'woocommerce_checkout_page_id',
-			'woocommerce_myaccount_page_id' => 'woocommerce_myaccount_page_id',
-			'woocommerce_terms_page_id' => 'woocommerce_terms_page_id',
-			'woocommerce_purchase_summary_page_id' => 'elementor_woocommerce_purchase_summary_page_id',
-			'woocommerce_shop_page_id' => 'woocommerce_shop_page_id',
-		];
-		foreach ( $ec_wc_key_mapping as $ec_key => $wc_key ) {
+		foreach ( self::PAGE_OPTION_NAMES_BY_KIT_KEY as $ec_key => $wc_key ) {
 			if ( array_key_exists( $ec_key, $data['settings'] ) ) {
 				$value = $data['settings'][ $ec_key ] ? $data['settings'][ $ec_key ] : '';
 				update_option( $wc_key, $value );

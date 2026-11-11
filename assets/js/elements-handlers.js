@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 (function(_wordpress_i18n) {
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;
@@ -3583,6 +3583,33 @@
 		}
 	};
 	//#endregion
+	//#region modules/popup/assets/js/frontend/handlers/atomic-forms-action.js
+	var ATOMIC_FORM_SUBMIT_SUCCESS_EVENT = "elementor/atomic-form/submit-success";
+	var CLOSE_POPUP_DELAY_MS = 1e3;
+	function getPopupSettings(response) {
+		var _response$data$data$a;
+		var _response$data;
+		var _actionResults$find$p;
+		var _actionResults$find;
+		return (_actionResults$find$p = (_actionResults$find = ((_response$data$data$a = response === null || response === void 0 || (_response$data = response.data) === null || _response$data === void 0 || (_response$data = _response$data.data) === null || _response$data === void 0 ? void 0 : _response$data.actionResults) !== null && _response$data$data$a !== void 0 ? _response$data$data$a : []).find((result) => "popup" === result.type && "success" === result.status)) === null || _actionResults$find === void 0 ? void 0 : _actionResults$find.popup) !== null && _actionResults$find$p !== void 0 ? _actionResults$find$p : null;
+	}
+	function handleAtomicFormSubmitSuccess(event) {
+		var _event$detail;
+		var _event$detail2;
+		if ((_event$detail = event.detail) === null || _event$detail === void 0 ? void 0 : _event$detail.agentInvoked) return;
+		const popupSettings = getPopupSettings((_event$detail2 = event.detail) === null || _event$detail2 === void 0 ? void 0 : _event$detail2.response);
+		if (!popupSettings) return;
+		const popupModule = elementorProFrontend.modules.popup;
+		if ("open" === popupSettings.action) {
+			popupModule.showPopup(popupSettings);
+			return;
+		}
+		setTimeout(() => popupModule.closePopup(popupSettings, event), CLOSE_POPUP_DELAY_MS);
+	}
+	function registerAtomicFormsAction() {
+		document.addEventListener(ATOMIC_FORM_SUBMIT_SUCCESS_EVENT, handleAtomicFormSubmitSuccess);
+	}
+	//#endregion
 	//#region modules/popup/assets/js/frontend/handlers/forms-action.js
 	var forms_action_exports = /* @__PURE__ */ __exportAll({ default: () => forms_action_default });
 	var forms_action_default;
@@ -3620,6 +3647,7 @@
 			super();
 			elementorFrontend.hooks.addAction("elementor/frontend/documents-manager/init-classes", this.addDocumentClass);
 			elementorFrontend.elementsHandler.attachHandler("form", () => __vitePreload(() => Promise.resolve().then(() => (init_forms_action(), forms_action_exports)), void 0));
+			registerAtomicFormsAction();
 			elementorFrontend.on("components:init", () => this.onFrontendComponentsInit());
 			if (this.shouldSetViewsAndSessions()) this.setViewsAndSessions();
 		}

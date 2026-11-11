@@ -1,5 +1,34 @@
 # PRO Elements - by PROElements.org
 
+#### 4.4.0 - 2026-11-09
+
+* New: Introducing the Carousel element with flexible nested content, customizable navigation, and pagination styling
+* Tweak: Extended Elementor MCP support to additional Pro widgets, including Countdown, Progress Tracker, Gallery, and WooCommerce widgets
+* Tweak: Extended Elementor MCP support to style the Error, Message, and Info sections of the WooCommerce Notices
+* Tweak: Added support for managing Popup Triggers and Advanced Rules through Elementor MCP
+* Tweak: Added support for viewing and managing form submissions through Elementor MCP
+* Tweak: Added Font Awesome 7 Pro icons and support for custom icon libraries in the SVG Icon Library
+* Tweak: Added Redirect After Submit action to Atomic Forms, allowing visitors to be redirected to a specified URL after successful submission
+* Tweak: Added Popup After Submit action to Atomic Forms, allowing a selected popup to appear automatically after successful submission
+* Tweak: Added Honeypot spam protection to Atomic Forms to help block automated spam submissions without affecting the visitor experience
+* Tweak: Added Hidden Field support to Atomic Forms for capturing static or dynamic data without displaying it to visitors
+* Tweak: Added score-based reCAPTCHA spam protection to Atomic Forms to help block automated submissions without requiring visitor interaction
+* Tweak: Added Mailchimp integration to the Actions After Submit options in the Form element
+* Tweak: Added options to avoid duplicate posts and skip items in the Loop template
+* Tweak: Improved Custom CSS validation and sanitization ([#35195](https://github.com/elementor/elementor/issues/35195))
+* Fix: Form field values are not correctly replaced in email subject and sender name ([#37312](https://github.com/elementor/elementor/issues/37312), [#35893](https://github.com/elementor/elementor/issues/35893))
+* Fix: Pressing ESC in the Custom CSS field unexpectedly opens the Widgets panel
+* Fix: Incorrect positioning of the Atomic Loop element handle when pagination is enabled
+* Fix: Elementor Core update notice appears before the newer version is available for download
+* Fix: Dragging and repositioning elements inside Atomic Forms may cause layout issues
+* Fix: Special characters are displayed incorrectly in Form submissions
+
+#### 4.3.3 - 2026-11-02
+
+* Fix: Display Conditions are sometimes removed from Theme Builder templates after editing a Loop Item template
+* Fix: Theme Builder opens in the Editor instead of WordPress Admin when the experiment is disabled
+* Fix: The Edit Template button in the Template widget opens an invalid document instead of the selected template
+
 #### 4.3.2 - 2026-10-13
 
 * Fix: Improved code security enforcement in Form handling

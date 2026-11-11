@@ -105,7 +105,7 @@ class Query_Filters {
 		return $args;
 	}
 
-	private static function merge_post_not_in( array $args, array $ids ): array {
+	public static function merge_post_not_in( array $args, array $ids ): array {
 		if ( empty( $ids ) ) {
 			return $args;
 		}

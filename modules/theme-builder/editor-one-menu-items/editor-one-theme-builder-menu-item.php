@@ -49,14 +49,21 @@ class Editor_One_Theme_Builder_Menu_Item implements Menu_Item_Third_Level_Interf
 	}
 
 	public function get_menu_url(): string {
+		$url = Plugin::instance()->app->get_settings( 'menu_url' );
+		$hash_position = strpos( $url, '#' );
+
+		if ( false === $hash_position ) {
+			return $url;
+		}
+
 		$return_to = esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
 
 		return add_query_arg(
 			[
 				'return_to' => urlencode( $return_to ),
 			],
-			Plugin::instance()->app->get_base_url()
-		) . '#/site-editor';
+			substr( $url, 0, $hash_position )
+		) . substr( $url, $hash_position );
 	}
 
 	public function get_page_title(): string {

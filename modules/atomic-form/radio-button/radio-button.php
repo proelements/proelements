@@ -21,6 +21,9 @@ use Elementor\Modules\AtomicWidgets\PropTypes\Selection_Size_Prop_Type;
 use Elementor\Modules\AtomicWidgets\PropTypes\Key_Value_Prop_Type;
 use Elementor\Modules\Components\PropTypes\Overridable_Prop_Type;
 use ElementorPro\Modules\AtomicForm\Default_Id_Provider;
+use ElementorPro\Modules\AtomicForm\Has_Default_Field_Id;
+use ElementorPro\Modules\AtomicForm\Webmcp_Field_Props;
+use ElementorPro\Modules\AtomicWidgets\Traits\Has_Webmcp_Field_Exposure;
 use ElementorPro\Modules\AtomicForm\Default_Value_Provider;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -28,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Radio_Button extends Atomic_Widget_Base {
 	use Has_Template;
+	use Has_Default_Field_Id;
 
 	public static function get_computed_html_tag( array $settings ): string {
 		return 'input';
@@ -57,7 +61,7 @@ class Radio_Button extends Atomic_Widget_Base {
 	}
 
 	protected static function define_props_schema(): array {
-		return [
+		return array_merge( [
 			'classes' => Classes_Prop_Type::make()
 				->default( [] ),
 			'name' => String_Prop_Type::make()
@@ -72,7 +76,7 @@ class Radio_Button extends Atomic_Widget_Base {
 				->set_dependencies( Default_Value_Provider::get_dependencies() ),
 			'attributes' => Attributes_Prop_Type::make()->meta( Overridable_Prop_Type::ignore() ),
 			'_cssid' => Default_Id_Provider::get_default_id_prop( self::get_element_type() ),
-		];
+		], Webmcp_Field_Props::get_props() );
 	}
 
 	protected function define_atomic_controls(): array {
@@ -103,6 +107,7 @@ class Radio_Button extends Atomic_Widget_Base {
 				->set_label( __( 'Settings', 'elementor-pro' ) )
 				->set_id( 'settings' )
 				->set_items( $this->get_settings_controls() ),
+			...Webmcp_Field_Props::get_controls(),
 		];
 	}
 

@@ -13,6 +13,7 @@ import { useKitCustomizationCustomPostTypes } from '../hooks/use-kit-customizati
 import { isHighTier } from '../hooks/use-tier';
 import { UpgradeVersionBanner } from './upgrade-version-banner';
 import { transformValueForAnalytics } from '../utils/analytics-transformer';
+import { getManifestItem, hasExportedMenuItems, hasExportedPages } from '../utils';
 
 const MEDIA_FORMAT_OPTIONS = {
 	LINK: 'link',
@@ -161,7 +162,7 @@ export function KitContentCustomizationDialog( {
 		setSettings( ( prevSettings ) => ( {
 			...prevSettings,
 			menus: isImport
-				? ( data.customization.content?.menus || Object.keys( data?.uploadedData?.manifest[ 'wp-content' ]?.nav_menu_item || {} ).length > 0 )
+				? ( data.customization.content?.menus || hasExportedMenuItems( data ) )
 				: ( data.customization.content?.menus ?? initialState ),
 		} ) );
 	}, [
@@ -215,17 +216,10 @@ export function KitContentCustomizationDialog( {
 		return isImport && taxonomyOptions?.length > 0;
 	};
 
-	const isPagesExported = () => {
-		const content = data?.uploadedData?.manifest?.content;
-		const wpContent = data?.uploadedData?.manifest?.[ 'wp-content' ];
+	const isPagesExported = () => hasExportedPages( data );
 
-		const isSomeContentExported = Object.keys( content?.page || {} )?.length;
-		const isSomeWPContentExported = Object.keys( wpContent?.page || {} )?.length;
-
-		return Boolean( isSomeContentExported || isSomeWPContentExported );
-	};
 	const isMenusExported = () => {
-		return Object.keys( data?.uploadedData?.manifest?.[ 'wp-content' ]?.nav_menu_item || {} ).length > 0 ||
+		return hasExportedMenuItems( data ) ||
 			customPostTypes?.find( ( cpt ) => cpt.value.includes( 'nav_menu' ) );
 	};
 
@@ -471,7 +465,7 @@ export function KitContentCustomizationDialog( {
 								} }
 								settings={ settings.customPostTypes }
 								items={ customPostTypes }
-								disabled={ ( isImport && undefined === data?.uploadedData?.manifest[ 'custom-post-type-title' ] ) || ! isHighTier() }
+								disabled={ ( isImport && undefined === getManifestItem( data, 'custom-post-type-title' ) ) || ! isHighTier() }
 								tooltip={ ! isHighTier() }
 							/>
 						)

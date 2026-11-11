@@ -72,7 +72,10 @@ class Collection_Loop extends Atomic_Element_Base {
 		self::PAGINATION_LOAD_AJAX,
 	];
 	const EMPTY_STATE_PROP = 'empty_state';
-	public static $widget_description = 'Repeats a content template for each item in a collection (posts, terms, etc.).';
+	public static $widget_description = 'Repeats a content template for each item in a collection (posts, terms, etc.). '
+		. 'query.posts_per_page defaults to ' . Loop_Query::DEFAULT_POSTS_PER_PAGE . '; set it to the number of items the design needs. '
+		. 'Pagination is off by default; when enabled, pagination_load_type defaults to ' . self::PAGINATION_LOAD_PAGE_RELOAD . ' (full page reload). '
+		. 'Set it to ' . self::PAGINATION_LOAD_AJAX . ' to load pages in place without reloading.';
 
 	public function __construct( $data = [], $args = null ) {
 		parent::__construct( $data, $args );

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { usePages } from './use-pages';
+import { getManifestItem } from '../utils';
 
 export function useKitCustomizationPages( { data, open } ) {
 	const isImport = data?.hasOwnProperty( 'uploadedData' );
@@ -11,11 +12,11 @@ export function useKitCustomizationPages( { data, open } ) {
 			return loadedPagesOptions;
 		}
 
-		const elementorPages = Object.entries( data?.uploadedData?.manifest?.content?.page || {} ).map( ( [ id, page ] ) => {
+		const elementorPages = Object.entries( getManifestItem( data, 'content' )?.page || {} ).map( ( [ id, page ] ) => {
 			return { value: id, label: page.title };
 		} );
 
-		const wpPages = Object.entries( data?.uploadedData?.manifest?.[ 'wp-content' ]?.page || {} ).map( ( [ id, page ] ) => {
+		const wpPages = Object.entries( getManifestItem( data, 'wp-content' )?.page || {} ).map( ( [ id, page ] ) => {
 			return { value: id, label: page.title };
 		} );
 

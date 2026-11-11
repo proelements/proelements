@@ -20,9 +20,7 @@ class Email_Action extends Action_Base {
 		$settings_key = $context['action_type'] ?? Action_Type::EMAIL;
 		$email_settings = new Email_Settings( $widget_settings, $settings_key );
 
-		$from = $email_settings->from();
-		$from_name = $email_settings->from_name();
-		$subject = $email_settings->subject();
+		$from = $this->single_line( $email_settings->from() );
 		$content_type = $email_settings->content_type();
 
 		$field_metadata = $context['field_metadata'] ?? [];
@@ -30,11 +28,14 @@ class Email_Action extends Action_Base {
 		$is_html = 'html' === $content_type;
 
 		$shortcode_resolver = new Shortcode_Resolver( $form_data, $is_html, $field_metadata, $cssid_map );
+		$header_shortcode_resolver = new Shortcode_Resolver( $form_data, false, $field_metadata, $cssid_map );
+		$from_name = $this->single_line( $header_shortcode_resolver->resolve( $email_settings->from_name() ) );
+		$subject = $this->single_line( $header_shortcode_resolver->resolve( $email_settings->subject() ) );
 
-		$to = $this->resolve_recipients( $shortcode_resolver, $email_settings->to() );
-		$cc = $this->resolve_recipients( $shortcode_resolver, $email_settings->cc() );
-		$bcc = $this->resolve_recipients( $shortcode_resolver, $email_settings->bcc() );
-		$reply_to = $shortcode_resolver->resolve( $email_settings->reply_to() );
+		$to = $this->resolve_recipients( $header_shortcode_resolver, $email_settings->to() );
+		$cc = $this->resolve_recipients( $header_shortcode_resolver, $email_settings->cc() );
+		$bcc = $this->resolve_recipients( $header_shortcode_resolver, $email_settings->bcc() );
+		$reply_to = $header_shortcode_resolver->resolve( $email_settings->reply_to() );
 
 		$validation = $this->validate_recipient( $to );
 
@@ -109,6 +110,13 @@ class Email_Action extends Action_Base {
 		}
 
 		return $attachments;
+	}
+
+	private function single_line( string $value ): string {
+		$value = str_replace( [ "\u{2028}", "\u{2029}" ], "\n", $value );
+		$single_line = preg_replace( '/[\x00-\x1F\x7F]+/', ' ', $value );
+
+		return trim( is_string( $single_line ) ? $single_line : $value );
 	}
 
 	private function resolve_recipients( Shortcode_Resolver $shortcode_resolver, string $recipients ): string {

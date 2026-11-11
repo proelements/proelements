@@ -8,10 +8,19 @@ use Elementor\Widgets_Manager;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\License\API;
 use ElementorPro\Modules\AtomicForm\Actions\Action_Runner;
+use ElementorPro\Modules\AtomicForm\Actions\Mailchimp_Action;
+use ElementorPro\Modules\AtomicForm\Actions\Popup_Action;
 use ElementorPro\Modules\AtomicForm\Classes\Akismet;
 use ElementorPro\Modules\AtomicForm\Classes\Atomic_Form_Panel_Promotion;
+use ElementorPro\Modules\AtomicForm\Classes\Mailchimp_Export_Sanitizer;
+use ElementorPro\Modules\AtomicForm\Classes\Mailchimp_Form_Action;
+use ElementorPro\Modules\AtomicForm\Classes\Popup_Form_Action;
+use ElementorPro\Modules\AtomicForm\Hidden\Hidden;
+use ElementorPro\Modules\AtomicForm\Honeypot\Honeypot;
 use ElementorPro\Modules\AtomicForm\Input\Input;
 use ElementorPro\Modules\AtomicForm\Label\Label;
+use ElementorPro\Modules\AtomicForm\Recaptcha_Score\Recaptcha_Score;
+use ElementorPro\Modules\AtomicForm\Recaptcha_Score\Recaptcha_Score_Admin;
 use ElementorPro\Modules\AtomicForm\Textarea\Textarea;
 use ElementorPro\Modules\AtomicForm\Submit_Button\Submit_Button;
 use ElementorPro\Modules\AtomicForm\Checkbox\Checkbox;
@@ -30,8 +39,14 @@ class Module extends Module_Base {
 	const MODULE_NAME = 'e-atomic-form';
 	const EXPERIMENT_NAME = 'e_pro_atomic_form';
 	const AKISMET_LICENSE_FEATURE_NAME = 'akismet';
+	const POPUP_ACTION_LICENSE_FEATURE_NAME = 'atomic-form-action-popup';
+	const MAILCHIMP_ACTION_LICENSE_FEATURE_NAME = 'atomic-form-mailchimp';
+	const MAILCHIMP_MIN_ELEMENTOR_VERSION = '4.4';
 	const EMAIL_ACTION_COUNT = 2;
 	const FORM_ELEMENT_TYPE = 'e-form';
+	const EXPORT_ELEMENTS_FILTER = 'elementor/template_library/sources/local/export/elements';
+	// Score-based reCAPTCHA needs Notice_Control and the before-submit form event, both shipped in Core 4.4.
+	const RECAPTCHA_SCORE_MIN_ELEMENTOR_VERSION = '4.4';
 
 	public function get_name() {
 		return self::MODULE_NAME;
@@ -54,7 +69,13 @@ class Module extends Module_Base {
 				Time_Picker::get_element_type(),
 				Select::get_element_type(),
 				File_Upload::get_element_type(),
+				Hidden::get_element_type(),
+				Honeypot::get_element_type(),
 			] );
+		}
+
+		if ( self::is_recaptcha_score_supported() ) {
+			$widget_types[] = Recaptcha_Score::get_element_type();
 		}
 
 		return $widget_types;
@@ -65,7 +86,12 @@ class Module extends Module_Base {
 			self::FORM_ELEMENT_TYPE,
 			Label::get_element_type(),
 			Submit_Button::get_element_type(),
+			Recaptcha_Score::get_element_type(),
 		] ) );
+	}
+
+	public static function is_recaptcha_score_supported(): bool {
+		return version_compare( ELEMENTOR_VERSION, self::RECAPTCHA_SCORE_MIN_ELEMENTOR_VERSION, '>=' );
 	}
 
 	public static function get_experimental_data(): array {
@@ -82,6 +108,11 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		// Registered regardless of the license, so a form saved under another license never exports its Mailchimp secrets.
+		if ( self::is_mailchimp_action_available() ) {
+			add_filter( self::EXPORT_ELEMENTS_FILTER, [ Mailchimp_Export_Sanitizer::class, 'sanitize_elements' ] );
+		}
+
 		if ( ! $this->is_experiment_active() ) {
 			return;
 		}
@@ -90,7 +121,22 @@ class Module extends Module_Base {
 			$this->add_component( 'akismet', new Akismet() );
 		}
 
+		if ( API::is_licence_has_feature( static::POPUP_ACTION_LICENSE_FEATURE_NAME ) ) {
+			$this->add_component( 'popup_form_action', new Popup_Form_Action() );
+		}
+
+		if ( self::is_mailchimp_action_available() ) {
+			$this->add_component(
+				'mailchimp_form_action',
+				new Mailchimp_Form_Action( API::is_licence_has_feature( static::MAILCHIMP_ACTION_LICENSE_FEATURE_NAME ) )
+			);
+		}
+
 		( new Atomic_Form_Panel_Promotion() )->register();
+
+		if ( self::is_recaptcha_score_supported() ) {
+			$this->add_component( 'recaptcha_score_admin', new Recaptcha_Score_Admin() );
+		}
 
 		add_filter(
 			'elementor/widgets/register',
@@ -109,12 +155,26 @@ class Module extends Module_Base {
 
 		add_action( 'elementor/editor/before_enqueue_scripts', fn() => $this->enqueue_editor_scripts() );
 
+		add_action( 'elementor_pro/atomic_forms/actions/register', fn() => Action_Runner::register_action( new Popup_Action() ) );
+		if ( self::is_mailchimp_action_available() ) {
+			add_action( 'elementor_pro/atomic_forms/actions/register', fn() => Action_Runner::register_action( new Mailchimp_Action() ) );
+		}
 		add_action( 'init', fn() => Action_Runner::init() );
 		if ( Atomic_Form_Controller::is_form_submitted() ) {
 			$this->add_component( 'atomic_ajax_handler', new Atomic_Form_Controller() );
 
 			do_action( 'elementor_pro/atomic_forms/form_submitted', $this );
 		}
+	}
+
+	/**
+	 * Mailchimp keeps its API key in the form settings, so it needs Core's Prop_Sensitivity to keep the key
+	 * out of exports, cloud templates and agents. Without it the action is not registered at all.
+	 */
+	public static function is_mailchimp_action_available(): bool {
+		return defined( 'ELEMENTOR_VERSION' )
+			&& version_compare( ELEMENTOR_VERSION, self::MAILCHIMP_MIN_ELEMENTOR_VERSION, '>=' )
+			&& class_exists( \Elementor\Modules\AtomicWidgets\PropTypes\Prop_Sensitivity::class );
 	}
 
 	private function is_experiment_active(): bool {
@@ -136,6 +196,12 @@ class Module extends Module_Base {
 			$widgets_manager->register( new Time_Picker() );
 			$widgets_manager->register( new Select() );
 			$widgets_manager->register( new File_Upload() );
+			$widgets_manager->register( new Hidden() );
+			$widgets_manager->register( new Honeypot() );
+		}
+
+		if ( self::is_recaptcha_score_supported() ) {
+			$widgets_manager->register( new Recaptcha_Score() );
 		}
 	}
 
@@ -155,7 +221,13 @@ class Module extends Module_Base {
 		$inline_styles = [
 			Textarea::get_inline_styles(),
 			Submit_Button::get_inline_styles(),
+			Honeypot::get_inline_styles(),
 		];
+
+		if ( self::is_recaptcha_score_supported() ) {
+			$inline_styles[] = Recaptcha_Score::get_inline_styles();
+		}
+
 		wp_add_inline_style( 'elementor-frontend', implode( ' ', $inline_styles ) );
 	}
 

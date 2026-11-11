@@ -3,6 +3,7 @@ namespace ElementorPro\Modules\AssetsManager\AssetTypes\Icons;
 
 use ElementorPro\Modules\AssetsManager\Classes\Assets_Base;
 use Elementor\Settings;
+use ElementorPro\Modules\AtomicCustomIcons\Module as Atomic_Custom_Icons_Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -20,6 +21,10 @@ class Font_Awesome_Pro extends  Assets_Base {
 
 	public function get_type() {
 		return 'font-awesome-pro';
+	}
+
+	public static function has_kit_id(): bool {
+		return '' !== trim( (string) get_option( 'elementor_' . self::FA_KIT_ID_OPTION_NAME, '' ) );
 	}
 
 	private function get_kit_id() {
@@ -101,7 +106,11 @@ class Font_Awesome_Pro extends  Assets_Base {
 		$settings->add_section( Settings::TAB_INTEGRATIONS, 'font_awesome_pro', [
 			'callback' => function() {
 				echo '<hr><h2>' . esc_html__( 'Font Awesome Pro', 'elementor-pro' ) . '</h2>';
-				echo esc_html__( 'Font Awesome, the web\'s most popular icon set and toolkit, Pro Integration', 'elementor-pro' );
+				if ( Atomic_Custom_Icons_Module::is_licensed() && Atomic_Custom_Icons_Module::is_core_font_awesome_pro_supported() ) {
+					echo esc_html__( 'Font Awesome, the web\'s most popular icon set and toolkit, Pro Integration. For Atomic SVG elements, the Font Awesome Pro Kit must be configured to use SVG.', 'elementor-pro' );
+				} else {
+					echo esc_html__( 'Font Awesome, the web\'s most popular icon set and toolkit, Pro Integration', 'elementor-pro' );
+				}
 			},
 			'fields' => [
 				self::FA_KIT_ID_OPTION_NAME => [

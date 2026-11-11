@@ -752,7 +752,7 @@ class Query extends Base_Object {
 
 		$this->handle_and_for_where_query( $target_where_query );
 
-		list( $post_id, $form_id ) = explode( '_', $filters['form']['value'] );
+		list( $post_id, $form_id ) = explode( '_', $filters['form']['value'], 2 );
 
 		$target_where_query .= $this->wpdb->prepare(
 			'post_id = %d AND element_id = %s',

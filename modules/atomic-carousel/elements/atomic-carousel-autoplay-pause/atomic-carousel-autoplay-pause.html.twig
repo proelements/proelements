@@ -1,0 +1,9 @@
+{% import 'elementor/macros' as m %}
+{% set i18n = carousel_i18n | default({}) %}
+<button class="{{ m.render_base_classes(id, base_styles, settings, ['e-carousel__autoplay-pause'], 'button') }} {{ editor_classes | default('') }}"
+	{{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+	{{- ' ' }}{{ m.render_interactions(interactions) }}
+	{{- ' ' }}type="button"
+	{#- An aria-label from Attributes wins: the browser keeps the first of two, so only one is printed. #}
+	{%- if not ( settings.attributes is defined and settings.attributes is not empty and 'aria-label=' in settings.attributes ) %} aria-label="{{ i18n.autoplay_aria_playing | default('Pause carousel') | e }}" data-e-carousel-default-label{% endif %}
+	{{- m.render_custom_attributes(settings, editor_attributes) }}><!-- elementor-children-placeholder --></button>

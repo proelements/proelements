@@ -20,14 +20,17 @@ class Bulk_Operations_Result {
 		);
 	}
 
-	public function add_error( int $index, string $action, string $code, string $message ): void {
-		$this->rows[ $index ] = [
-			'index' => $index,
-			'action' => $action,
-			'status' => 'error',
-			'code' => $code,
-			'message' => $message,
-		];
+	public function add_error( int $index, string $action, string $code, string $message, array $extra = [] ): void {
+		$this->rows[ $index ] = array_merge(
+			$extra,
+			[
+				'index' => $index,
+				'action' => $action,
+				'status' => 'error',
+				'code' => $code,
+				'message' => $message,
+			]
+		);
 	}
 
 	public function has( int $index ): bool {

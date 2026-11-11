@@ -1,0 +1,7 @@
+{% import 'elementor/macros' as m %}
+{% set i18n = carousel_i18n | default({}) %}
+<button class="{{ m.render_base_classes(id, base_styles, settings, ['e-carousel__arrow', 'e-carousel__arrow--prev'], 'button') }} {{ editor_classes | default('') }}"
+	{{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+	{{- ' ' }}{{ m.render_interactions(interactions) }}
+	{{- ' ' }}type="button" aria-label="{{ i18n.arrow_prev_aria_label | default('Previous slide') | e }}"
+	{{- m.render_custom_attributes(settings, editor_attributes) }}><!-- elementor-children-placeholder --></button>

@@ -20,11 +20,18 @@ class Email_Settings {
 	}
 
 	public function from() {
-		return $this->email_settings['from'] ?? 'email@' . Utils::get_site_domain();
+		$from = $this->filled_string( $this->email_settings['from'] ?? null );
+
+		if ( null === $from || ! is_email( $from ) ) {
+			return 'email@' . Utils::get_site_domain();
+		}
+
+		return $from;
 	}
 
 	public function from_name() {
-		return $this->email_settings['from-name'] ?? get_bloginfo( 'name' );
+		return $this->filled_string( $this->email_settings['from-name'] ?? null )
+			?? get_bloginfo( 'name' );
 	}
 
 	public function subject() {
@@ -59,6 +66,16 @@ class Email_Settings {
 		$value = $this->email_settings['meta-data'] ?? [];
 
 		return is_array( $value ) ? $value : [];
+	}
+
+	private function filled_string( $value ) {
+		if ( ! is_string( $value ) ) {
+			return null;
+		}
+
+		$value = trim( $value );
+
+		return '' === $value ? null : $value;
 	}
 
 	private function normalize_address_list( $value ) {

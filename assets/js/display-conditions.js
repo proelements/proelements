@@ -1,5 +1,5 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
-(function(_wordpress_i18n, react, _elementor_ui, _elementor_icons) {
+/*! pro-elements - v4.4.0 - 09-11-2026 */
+(function(_wordpress_i18n, react, _elementor_editor_ui, _elementor_ui, _elementor_icons) {
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;
 	var __defProp$14 = Object.defineProperty;
@@ -681,6 +681,7 @@
 			}
 		}, /* @__PURE__ */ react.createElement(_elementor_ui.Button, {
 			variant: "contained",
+			color: "accent",
 			className: "save-and-close-button",
 			disabled: !isButtonDisabled,
 			onClick: onClickSaveButton
@@ -2125,7 +2126,7 @@
 		const handleCloseDialog = () => {
 			setDialogOpen(false);
 		};
-		return /* @__PURE__ */ react.default.createElement(_elementor_ui.DirectionProvider, { rtl: props.isRTL }, /* @__PURE__ */ react.default.createElement(_elementor_ui.LocalizationProvider, null, /* @__PURE__ */ react.default.createElement(_elementor_ui.ThemeProvider, { colorScheme: props.colorScheme }, /* @__PURE__ */ react.default.createElement(_elementor_ui.Dialog, {
+		return /* @__PURE__ */ react.default.createElement(_elementor_ui.DirectionProvider, { rtl: props.isRTL }, /* @__PURE__ */ react.default.createElement(_elementor_ui.LocalizationProvider, null, /* @__PURE__ */ react.default.createElement(_elementor_editor_ui.ThemeProvider, { colorScheme: props.colorScheme }, /* @__PURE__ */ react.default.createElement(_elementor_ui.Dialog, {
 			open: dialogOpen,
 			fullWidth: true,
 			maxWidth: "lg",
@@ -2322,6 +2323,6 @@
 	new Module();
 	setupModal();
 	//#endregion
-})(wp.i18n, React, elementorV2.ui, elementorV2.icons);
+})(wp.i18n, React, elementorV2.editorUi, elementorV2.ui, elementorV2.icons);
 
 //# sourceMappingURL=display-conditions.js.map

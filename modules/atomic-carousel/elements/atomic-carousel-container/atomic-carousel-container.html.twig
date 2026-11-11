@@ -1,0 +1,8 @@
+{% import 'elementor/macros' as m %}
+<div class="{{ m.render_base_classes(id, base_styles, settings, ['e-carousel__container'], 'div') }} {{ editor_classes | default('') }}"
+	{{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+	{{- ' ' }}{{ m.render_interactions(interactions) }}
+	{#- Autoplay moves slides without the visitor asking, so the track must not be announced as a
+	    live region. Slide labels carry the position instead. #}
+	{{- ' ' }}aria-live="off"
+	{{- m.render_custom_attributes(settings, editor_attributes) }}><!-- elementor-children-placeholder --></div>

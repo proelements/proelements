@@ -9,6 +9,7 @@ use ElementorPro\Modules\CollectionLoop\Query\ItemProviders\Post_Loop_Item_Provi
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Args_Builder;
 use ElementorPro\Modules\CollectionLoop\Query\Loop_Query_Runner;
+use ElementorPro\Modules\CollectionLoop\Query\Post\Post_Avoid_List;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -66,10 +67,13 @@ abstract class Template_Type_Base {
 		$query_id = Loop_Query_Args_Builder::extract_query_id( $query_settings );
 		$page     = Loop_Query_Args_Builder::extract_page( $query_settings );
 		$offset   = Loop_Query_Args_Builder::extract_offset( $query_settings );
+		$skipped  = $this->get_skipped_items( $query_settings );
 
 		// The offset is the slot-aware form of pagination, so it wins over `paged`
 		// (WP_Query ignores `paged` once `offset` is set anyway).
-		if ( $offset > 0 ) {
+		if ( $skipped > 0 ) {
+			$args['offset'] = $skipped + ( $offset > 0 ? $offset : $this->items_before_page( $args, $page ) );
+		} elseif ( $offset > 0 ) {
 			$args['offset'] = $offset;
 		} elseif ( $page > 1 ) {
 			$args['paged'] = $page;
@@ -77,7 +81,51 @@ abstract class Template_Type_Base {
 
 		$query = ( new Loop_Query_Runner( $args, $query_id ) )->run( $element );
 
+		$this->discount_skipped_items( $query, $skipped );
+		$this->register_displayed_items( $query );
+
 		return new Post_Loop_Item_Provider( $query );
+	}
+
+	/**
+	 * Items the user asked to skip before the loop starts. Template types that
+	 * expose a "Skip items" control override this.
+	 */
+	protected function get_skipped_items( array $query_settings ): int {
+		return 0;
+	}
+
+	private function items_before_page( array $args, int $page ): int {
+		return max( 0, $page - 1 ) * (int) ( $args['posts_per_page'] ?? 0 );
+	}
+
+	/**
+	 * WP_Query counts `found_posts` ignoring `offset`, so skipped items would
+	 * otherwise add phantom pages. Mirrors v3 `Elementor_Post_Query::fix_query_found_posts`.
+	 */
+	private function discount_skipped_items( \WP_Query $query, int $skipped ): void {
+		if ( $skipped <= 0 ) {
+			return;
+		}
+
+		$per_page = (int) $query->get( 'posts_per_page' );
+
+		$query->found_posts = max( 0, (int) $query->found_posts - $skipped );
+
+		if ( $per_page > 0 ) {
+			$query->max_num_pages = (int) ceil( $query->found_posts / $per_page );
+		}
+	}
+
+	/**
+	 * `elementor/query/{$query_id}` listeners may switch the query to `fields => 'ids'`,
+	 * so posts can be plain IDs rather than WP_Post objects.
+	 */
+	private function register_displayed_items( \WP_Query $query ): void {
+		Post_Avoid_List::add( array_map(
+			static fn( $post ) => is_object( $post ) ? (int) $post->ID : (int) $post,
+			(array) $query->posts
+		) );
 	}
 
 	protected function setting( array $query_settings, string $key ) {

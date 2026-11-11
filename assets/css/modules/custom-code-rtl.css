@@ -313,6 +313,13 @@ input[type=search].select2-search__field {
   margin-block-end: 10px;
 }
 
+.elementor-pro-recaptcha-score-validation-message.success {
+  color: #00a32a;
+}
+.elementor-pro-recaptcha-score-validation-message.error {
+  color: #d63638;
+}
+
 span.font-variations-count {
   display: inline-block;
   vertical-align: top;

@@ -1,0 +1,6 @@
+{% import 'elementor/macros' as m %}
+<button class="{{ m.render_base_classes(id, base_styles, settings, ['e-carousel__dot'], 'button') }} {{ editor_classes | default('') }}"
+	{{- ' ' }}{{ m.render_data_attributes(id, type, interaction_id) }}
+	{{- ' ' }}{{ m.render_interactions(interactions) }}
+	{{- ' ' }}type="button"
+	{{- m.render_custom_attributes(settings, editor_attributes) }}></button>

@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 (function(_wordpress_i18n, react) {
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;
@@ -1335,6 +1335,30 @@
 		}
 	};
 	//#endregion
+	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+	init_defineProperty();
+	function ownKeys(e, r) {
+		var t = Object.keys(e);
+		if (Object.getOwnPropertySymbols) {
+			var o = Object.getOwnPropertySymbols(e);
+			r && (o = o.filter(function(r2) {
+				return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+			})), t.push.apply(t, o);
+		}
+		return t;
+	}
+	function _objectSpread2(e) {
+		for (var r = 1; r < arguments.length; r++) {
+			var t = null != arguments[r] ? arguments[r] : {};
+			r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
+				_defineProperty(e, r2, t[r2]);
+			}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
+				Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+			});
+		}
+		return e;
+	}
+	//#endregion
 	//#region modules/theme-builder/assets/js/editor/hooks/data/document/save/save-conditions.js
 	var ThemeBuilderSaveConditions = class extends $e.modules.hookData.After {
 		getCommand() {
@@ -1343,16 +1367,21 @@
 		getId() {
 			return "elementor-pro-theme-builder-save-conditions";
 		}
-		getConditions() {
-			return !!elementor.config.document.theme_builder;
+		getConditions(args) {
+			const document = args.document || elementor.documents.getCurrent();
+			return document.config.theme_builder && "loop-item" !== document.config.type;
 		}
-		apply() {
+		apply(args) {
 			const { conditionsModel } = elementorPro.modules.themeBuilder;
-			elementorPro.ajax.addRequest("theme_builder_save_conditions", {
-				data: conditionsModel.toJSON({ remove: ["default"] }),
+			const document = args.document || elementor.documents.getCurrent();
+			const deferred = elementorPro.ajax.addRequest("theme_builder_save_conditions", {
+				data: _objectSpread2(_objectSpread2({}, conditionsModel.toJSON({ remove: ["default"] })), {}, { conditions_template_id: document.id }),
 				success: () => {
-					elementor.config.document.theme_builder.settings.conditions = conditionsModel.get("conditions");
+					document.config.theme_builder.settings.conditions = conditionsModel.get("conditions");
 				}
+			});
+			return new Promise((resolve) => {
+				deferred.done(resolve).fail(resolve);
 			});
 		}
 	};
@@ -1657,17 +1686,18 @@
 			if (result.statusChanged) this.onPageStatusChange(status);
 		}
 		onPageStatusChange(newStatus) {
+			var _a;
 			if ("publish" !== newStatus) return;
 			const options = {
 				classes: "e-theme-builder-save-toaster",
 				message: elementor.config.document.panel.messages.publish_notification,
-				buttons: [{
+				buttons: [...((_a = elementorCommon.config.allExperimentalFeatures) == null ? void 0 : _a.theme_builder_v2) ? [{
 					name: "open_site_editor",
 					text: "<i class=\"eicon-external-link-square\"></i><span class=\"e-theme-builder-toaster-button-text\">" + (0, _wordpress_i18n.__)("Open Site Editor", "elementor-pro") + "</span>",
 					callback() {
 						$e.run("app/open");
 					}
-				}, {
+				}] : [], {
 					name: "view_live_site",
 					text: "<i class=\"eicon-preview-medium\"></i><span class=\"e-theme-builder-toaster-button-text\">" + (0, _wordpress_i18n.__)("View Live Site", "elementor-pro") + "</span>",
 					callback() {
@@ -1750,6 +1780,27 @@
 		}
 	};
 	//#endregion
+	//#region modules/theme-builder/assets/js/editor/hooks/data/app/open-redirect.js
+	var ThemeBuilderAppOpenRedirect = class extends $e.modules.hookData.Dependency {
+		getCommand() {
+			return "open";
+		}
+		getId() {
+			return "elementor-pro-theme-builder-app-open-redirect";
+		}
+		getConditions(args) {
+			var _elementorCommon$conf;
+			if ((_elementorCommon$conf = elementorCommon.config.allExperimentalFeatures) === null || _elementorCommon$conf === void 0 ? void 0 : _elementorCommon$conf.theme_builder_v2) return false;
+			const url = args.url;
+			if (!url) return true;
+			return url.includes("page=elementor-app") && url.includes("site-editor");
+		}
+		apply() {
+			window.top.location.href = elementorAppConfig.menu_url;
+			return false;
+		}
+	};
+	//#endregion
 	//#region modules/theme-builder/assets/js/editor/module.js
 	init_defineProperty();
 	init_asyncToGenerator();
@@ -1790,6 +1841,7 @@
 		}
 		onElementorLoaded() {
 			this.component = $e.components.register(new Component$4({ manager: this }));
+			$e.components.get("app").registerHook(new ThemeBuilderAppOpenRedirect());
 			elementor.on("document:loaded", this.onDocumentLoaded.bind(this));
 			elementor.on("document:unload", this.onDocumentUnloaded.bind(this));
 			this.onApplyPreview = this.onApplyPreview.bind(this);
@@ -4803,7 +4855,7 @@
 					$editButton.remove();
 					return;
 				}
-				var editUrl = ElementorConfig.home_url + "?p=" + templateID + "&elementor";
+				var editUrl = elementor.config.admin_url + "post.php?post=" + templateID + "&action=elementor";
 				if ($editButton.length) $editButton.prop("href", editUrl);
 				else {
 					$editButton = jQuery("<a />", {

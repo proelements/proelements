@@ -1,4 +1,4 @@
-/*! pro-elements - v4.3.0 - 13-10-2026 */
+/*! pro-elements - v4.4.0 - 09-11-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_editor, _elementor_editor_embedded_documents_manager, _elementor_editor_styles_repository, _elementor_editor_v1_adapters, _elementor_store, _elementor_utils, _elementor_editor_documents, _elementor_editor_global_classes, _elementor_core_adapter_utils, react) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
@@ -143,17 +143,21 @@ this.elementorV2 = this.elementorV2 || {};
 		const fromDom = getTemplateIdsFromDomElements(iframeDocument);
 		return [.../* @__PURE__ */ new Set([...fromDom, ...fromConfig])];
 	}
-	function parseTemplateId({ template_id: templateId }) {
+	function parseTemplateId(templateId) {
 		if (!templateId) return null;
 		const id = Number(templateId);
 		return isNaN(id) ? null : id;
 	}
 	function getTemplateIdsFromSettings(settings) {
 		if (!settings) return [];
-		const { alternate_templates: alternateTemplates = [] } = settings;
-		const fromTemplateId = [settings, ...alternateTemplates].map(parseTemplateId).filter((id) => id !== null);
+		const { template_id: templateId, additional_template_select: emptyCartTemplateId, alternate_templates: alternateTemplates = [] } = settings;
+		const fromTemplateSettings = [
+			templateId,
+			emptyCartTemplateId,
+			...alternateTemplates.map(({ template_id: alternateTemplateId }) => alternateTemplateId)
+		].map(parseTemplateId).filter((id) => id !== null);
 		const fromShortcodes = extractTemplateIdsFromSettingsValues(settings);
-		return [.../* @__PURE__ */ new Set([...fromTemplateId, ...fromShortcodes])];
+		return [.../* @__PURE__ */ new Set([...fromTemplateSettings, ...fromShortcodes])];
 	}
 	function getTemplateIdsFromElements(elements) {
 		const flattenElements = (els) => {
