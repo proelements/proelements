@@ -2080,7 +2080,7 @@ this.elementorV2 = this.elementorV2 || {};
 				size: 18,
 				color: "inherit"
 			}) : void 0
-		}, installState === "installing" ? (0, _wordpress_i18n.__)("InstallingвЂ¦", "elementor-pro") : (0, _wordpress_i18n.__)("Install Angie", "elementor-pro")))))));
+		}, installState === "installing" ? (0, _wordpress_i18n.__)("Installing…", "elementor-pro") : (0, _wordpress_i18n.__)("Install Angie", "elementor-pro")))))));
 	}
 	//#endregion
 	//#region packages/packages/pro/editor-components-extended/src/components/angie-intro/angie-intro-popover.tsx
@@ -4001,7 +4001,7 @@ Use "get" to inspect an existing component if you need to understand its structu
 Skip ONLY if the user explicitly requests no customizable properties.
 
 1. **Identify Child Elements** via [${_elementor_editor_canvas.DOCUMENT_STRUCTURE_URI}]
-2. **Find Available Properties** via [${_elementor_editor_canvas.WIDGET_SCHEMA_URI}] в†’ atomic_props_schema
+2. **Find Available Properties** via [${_elementor_editor_canvas.WIDGET_SCHEMA_URI}] → atomic_props_schema
    - Use only top-level props (e.g., "text", "url", "tag", "size")
 3. **Build the overridable_props object** with unique, user-friendly labels
 
@@ -4009,8 +4009,8 @@ Skip ONLY if the user explicitly requests no customizable properties.
 Call with element_id, component_name, and optionally overridable_props and groups.
 
 # CONSTRAINTS
-- NEVER try to override properties of the parent element itself вЂ” ONLY child elements
-- NEVER use invalid propKeys вЂ” always verify against atomic_props_schema in [${_elementor_editor_canvas.WIDGET_SCHEMA_URI}]
+- NEVER try to override properties of the parent element itself — ONLY child elements
+- NEVER use invalid propKeys — always verify against atomic_props_schema in [${_elementor_editor_canvas.WIDGET_SCHEMA_URI}]
 - Element IDs must exist within the target element's children
 - The element being saved must not be inside another component
 `);

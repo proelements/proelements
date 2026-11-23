@@ -42,7 +42,7 @@ this.elementorV2 = this.elementorV2 || {};
 	* Subscribes to every V1 element-mutation command (settings, create, delete, move) and calls
 	* `onChange` when any id on the affected element's ancestor chain satisfies `shouldNotify`.
 	*
-	* One composable primitive instead of N per-source listeners вЂ” the caller decides what
+	* One composable primitive instead of N per-source listeners — the caller decides what
 	* "affected" means (e.g. `( id ) => id === subtreeRootId` for "notify on subtree change").
 	*
 	* Ancestors are read off the command's own `container.parent` rather than re-resolved by id,

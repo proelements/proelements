@@ -5106,9 +5106,9 @@
 		* _neutralizeRoot
 		*
 		* Fail-closed teardown of an in-place root after the sanitize walk aborts
-		* (campaign-3 F2). An internal throw mid-walk вЂ” e.g. a page-registered
+		* (campaign-3 F2). An internal throw mid-walk — e.g. a page-registered
 		* custom element's reaction detaches a node so `_forceRemove`'s deliberate
-		* parentless guard throws, or any other re-entrant engine mutation вЂ” would
+		* parentless guard throws, or any other re-entrant engine mutation — would
 		* otherwise leave the caller's *live* tree half-sanitized, with everything
 		* after the abort point still carrying its handlers. There is no safe way
 		* to resume the walk (the tree mutated under us), so we strip the root bare:
@@ -5199,13 +5199,13 @@
 		* handler-bearing original among them (an `<img onerror>`/`<video>` that was
 		* loading) keeps its queued resource event, which fires in page scope after
 		* sanitize returns. This walks a removed subtree and strips every attribute
-		* the active configuration does not allow вЂ” so `on*` handlers are cancelled
+		* the active configuration does not allow — so `on*` handlers are cancelled
 		* through the SAME allowlist that governs kept nodes, not a separate `/^on/`
 		* blocklist. Run synchronously before sanitize returns, i.e. before any
 		* queued event can fire. Hook-free by design: these nodes leave the output,
 		* so firing attribute hooks for them would be surprising. Clobber-safe reads;
 		* a doomed clobbered node may shadow `removeAttribute` (its own attributes are
-		* irrelevant вЂ” it is discarded вЂ” while its non-clobbered descendants, e.g.
+		* irrelevant — it is discarded — while its non-clobbered descendants, e.g.
 		* the `<img>`, are reached and scrubbed).
 		*
 		* @param root the root of a removed subtree to neutralise
@@ -5282,7 +5282,7 @@
 		* Walks text/comment/CDATA/processing-instruction nodes and mutates `.data`
 		* in place rather than round-tripping through innerHTML. This preserves
 		* descendant node references (important for IN_PLACE callers), avoids a
-		* serialize/reparse cycle, and reads literal character data вЂ” which means
+		* serialize/reparse cycle, and reads literal character data — which means
 		* `<%...%>` in text content matches the ERB regex against its real bytes
 		* instead of the HTML-entity-escaped form innerHTML would produce.
 		*
@@ -5650,7 +5650,7 @@
 		*
 		* This pass runs once, up front, so the main iteration loop (and the
 		* existing _sanitizeShadowDOM template-content recursion) stay
-		* untouched вЂ” string-input paths are not affected.
+		* untouched — string-input paths are not affected.
 		*
 		* @param root the subtree root to walk for attached shadow roots
 		*/

@@ -6009,7 +6009,7 @@ while (n === a[++i] && n === a[++i] && n === a[++i] && n === a[++i] && n === a[+
 	function transformFormResultIntoBlob(formResult, currentDate) {
 		return {
 			filename: EXPORT_FILE_NAME_FORMAT.replace("{FORM_LABEL}", formResult.form_label).replace("{DATE}", currentDate).concat(`.${formResult.extension}`),
-			blob: new Blob(["п»ї", formResult.content], { type: formResult.mimetype })
+			blob: new Blob(["﻿", formResult.content], { type: formResult.mimetype })
 		};
 	}
 	//#endregion
@@ -6131,10 +6131,10 @@ while (n === a[++i] && n === a[++i] && n === a[++i] && n === a[++i] && n === a[+
 		return /* @__PURE__ */ react.default.createElement("div", { className: `tablenav-pages ${props.lastPage <= 1 && "one-page"}` }, /* @__PURE__ */ react.default.createElement("span", { className: "displaying-num" }, props.total, " ", (0, _wordpress_i18n.__)("items", "elementor-pro")), 1 < props.lastPage && /* @__PURE__ */ react.default.createElement("span", { className: "pagination-links" }, /* @__PURE__ */ react.default.createElement(NavigateBackElement, {
 			className: `tablenav-pages-navspan button ${!canNavigateBack && "disabled"}`,
 			onClick: (e) => navigate(e, canNavigateBack, 1)
-		}, "В«"), "\xA0", /* @__PURE__ */ react.default.createElement(NavigateBackElement, {
+		}, "«"), "\xA0", /* @__PURE__ */ react.default.createElement(NavigateBackElement, {
 			className: `tablenav-pages-navspan button ${!canNavigateBack && "disabled"}`,
 			onClick: (e) => navigate(e, canNavigateBack, props.currentPage - 1)
-		}, "вЂ№"), /* @__PURE__ */ react.default.createElement("span", { className: "paging-input" }, /* @__PURE__ */ react.default.createElement("span", { className: "screen-reader-text" }, (0, _wordpress_i18n.__)("Current Page", "elementor-pro")), /* @__PURE__ */ react.default.createElement("span", {
+		}, "‹"), /* @__PURE__ */ react.default.createElement("span", { className: "paging-input" }, /* @__PURE__ */ react.default.createElement("span", { className: "screen-reader-text" }, (0, _wordpress_i18n.__)("Current Page", "elementor-pro")), /* @__PURE__ */ react.default.createElement("span", {
 			className: "paging-input",
 			style: { margin: "0 6px" }
 		}, /* @__PURE__ */ react.default.createElement("span", { className: "tablenav-paging-text" }, props.currentPage, " ", (0, _wordpress_i18n.__)("of", "elementor-pro"), /* @__PURE__ */ react.default.createElement("span", {
@@ -6143,10 +6143,10 @@ while (n === a[++i] && n === a[++i] && n === a[++i] && n === a[++i] && n === a[+
 		}, " ", props.lastPage)))), /* @__PURE__ */ react.default.createElement(NavigateNextElement, {
 			className: `tablenav-pages-navspan button ${!canNavigateNext && "disabled"}`,
 			onClick: (e) => navigate(e, canNavigateNext, props.currentPage + 1)
-		}, "вЂє"), "\xA0", /* @__PURE__ */ react.default.createElement(NavigateNextElement, {
+		}, "›"), "\xA0", /* @__PURE__ */ react.default.createElement(NavigateNextElement, {
 			className: `tablenav-pages-navspan button ${!canNavigateNext && "disabled"}`,
 			onClick: (e) => navigate(e, canNavigateNext, props.lastPage)
-		}, "В»")));
+		}, "»")));
 	}
 	Pagination.propTypes = {
 		currentPage: import_prop_types.default.number,

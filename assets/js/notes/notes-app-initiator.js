@@ -2209,7 +2209,7 @@
 	* @example
 	* const Component = React.forwardRef((props, ref) => {
 	*   const ownRef = useRef();
-	*   const domRef = useMergeRefs([ref, ownRef]); // рџ‘€ merge together
+	*   const domRef = useMergeRefs([ref, ownRef]); // 👈 merge together
 	*   return <div ref={domRef}>...</div>
 	* }
 	*/
@@ -6299,7 +6299,7 @@
 		init_defineProperty();
 		Wow = class extends BaseToken {
 			static getPattern() {
-				return /(?:(?:\b(?:yay|wow)\b)|рџЋ‰)/;
+				return /(?:(?:\b(?:yay|wow)\b)|🎉)/;
 			}
 		};
 		_defineProperty(Wow, "type", "Wow");

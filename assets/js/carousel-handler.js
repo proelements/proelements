@@ -33,7 +33,7 @@
 	* @param {*}        value     Responsive map, or a plain value.
 	* @param {Window}   win
 	* @param {Function} toOptions Maps a breakpoint's value to engine options.
-	* @return {Object} Media query в†’ options.
+	* @return {Object} Media query → options.
 	*/
 	function breakpointMediaOptions(value, win, toOptions) {
 		var _win$elementorFronten;
@@ -2361,7 +2361,7 @@
 	* @param {HTMLElement} config.root              Carousel root, used to scope pointer and focus.
 	* @param {boolean}     config.loop
 	* @param {number}      config.slidesToScroll    Desktop value.
-	* @param {Object}      config.breakpoints       Media query в†’ options, applied by the engine.
+	* @param {Object}      config.breakpoints       Media query → options, applied by the engine.
 	* @param {number}      config.transitionSpeedMs
 	* @param {string}      config.transition        `slide` or `fade`.
 	* @param {string}      config.direction         `ltr` or `rtl`.
