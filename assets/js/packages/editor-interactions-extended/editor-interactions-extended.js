@@ -1617,7 +1617,7 @@ this.elementorV2 = this.elementorV2 || {};
 		return portalNode;
 	}
 	/**
-	* Portals the floating element into a given container element вЂ” by default,
+	* Portals the floating element into a given container element — by default,
 	* outside of the app root and into the body.
 	* This is necessary to ensure the floating element can appear outside any
 	* potential parent containers that cause clipping (such as `overflow: hidden`),
