@@ -218,7 +218,7 @@ ${[
 	* Dot clicks with a document prototype select that element immediately and set pending for the
 	* pagination race (the clone has no `data-id`, so the editor may still select pagination).
 	* Redirect pagination to the prototype only inside PENDING_DOT_REDIRECT_MS so a later
-	* Structure в†’ Pagination select is not hijacked. Navigator or structure races in between
+	* Structure → Pagination select is not hijacked. Navigator or structure races in between
 	* must not drop pending while the window is open.
 	*
 	* @param {?{prototypeId: string, paginationId: string, setAt: number}} pending

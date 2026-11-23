@@ -4206,7 +4206,7 @@
 			const notesActionItem = {
 				name: "open_notes",
 				title: (0, _wordpress_i18n.__)("Notes", "elementor-pro"),
-				shortcut: "в‡§+C",
+				shortcut: "⇧+C",
 				isEnabled: () => true,
 				callback: () => $e.route("notes")
 			};
