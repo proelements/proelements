@@ -53,7 +53,7 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 			sprintf(
 				/* translators: %s: comma-separated list of supported theme document type slugs. */
 				__(
-					'Manage Elementor site parts (Theme Builder documents: %s). Bulk operations (1-50) with three actions: "create" makes a new site part as a draft (optionally assigning display conditions in the same call), "update" mutates an existing site part (mutable fields are "conditions" and, for popups only, "display_settings"; body/settings edits go via manage-elements / build-composition / update-page-settings), and "delete" removes a site part. Conditions are slash-separated strings like "include/general" (site-wide), "include/singular/post", "exclude/singular/post/42". Popup "display_settings" holds the Triggers (what opens the popup) and Advanced Rules ("timing": who/when it may show) from the editor Publish Settings dialog; triggers only fire on the front end when the popup has display conditions AND is published. Site parts are NOT published by this tool — they stay drafts and must be published separately (matches the editor UX). For repeating-layout patterns (one single template driven by dynamic data instead of N duplicated pages, include-all + exclude-exceptions condition scoping, Post Content placement), read the elementor://wordpress/best-practices resource before creating singles.',
+					'Manage Elementor site parts (Theme Builder documents: %s). Bulk operations (1-50) with three actions: "create" makes a new site part as a draft (optionally assigning display conditions in the same call), "update" mutates an existing site part (mutable fields are "conditions" and, for popups only, "display_settings"; body/settings edits go via manage-elements / build-composition / update-page-settings), and "delete" moves a site part to the Trash (it stops rendering on the site and can be restored from Templates > Saved Templates > Trash; the result returns "in_trash"). Conditions are slash-separated strings like "include/general" (site-wide), "include/singular/post", "exclude/singular/post/42". Popup "display_settings" holds the Triggers (what opens the popup) and Advanced Rules ("timing": who/when it may show) from the editor Publish Settings dialog; triggers only fire on the front end when the popup has display conditions AND is published. Site parts are NOT published by this tool — they stay drafts and must be published separately (matches the editor UX). For repeating-layout patterns (one single template driven by dynamic data instead of N duplicated pages, include-all + exclude-exceptions condition scoping, Post Content placement), read the elementor://wordpress/best-practices resource before creating singles.',
 					'elementor-pro'
 				),
 				implode( ', ', $supported_types )
@@ -399,7 +399,7 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 
 		$type = ThemeBuilderModule::instance()->get_template_type( $post_id );
 
-		$deleted = wp_delete_post( $post_id, true );
+		$deleted = wp_trash_post( $post_id );
 
 		if ( ! $deleted ) {
 			$results->add_error( $index, self::ACTION_DELETE, 'delete_failed', __( 'Failed to delete the site part.', 'elementor-pro' ) );
@@ -409,8 +409,9 @@ class Manage_Site_Parts_Ability extends Abstract_Ability {
 		ThemeBuilderModule::instance()->get_conditions_manager()->clear_location_cache();
 
 		$results->add_success( $index, self::ACTION_DELETE, [
-			'post_id' => $post_id,
-			'type'    => $type,
+			'post_id'  => $post_id,
+			'type'     => $type,
+			'in_trash' => true,
 		] );
 	}
 

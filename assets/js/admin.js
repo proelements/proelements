@@ -1,4 +1,4 @@
-/*! pro-elements - v4.4.0 - 09-11-2026 */
+/*! pro-elements - v4.4.0 - 24-11-2026 */
 (function(_wordpress_i18n) {
 	//#region \0rolldown/runtime.js
 	var __create = Object.create;

@@ -10,7 +10,7 @@
 <input 
 	{{ id_attribute }}
 	{{ name_attribute }}
-	{{ value_attribute }}
+	{{ value_attribute | raw }}
 	class="{{ classes }}"
 	type="radio"
 	data-interaction-id="{{ interaction_id | default(id) }}"

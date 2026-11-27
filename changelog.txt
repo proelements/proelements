@@ -1,5 +1,15 @@
 # PRO Elements - by PROElements.org
 
+#### 4.4.2 - 2026-11-24
+
+* Fix: Radio and Checkbox fields in Atomic Forms may submit incorrect values when containing spaces ([#37853](https://github.com/elementor/elementor/issues/37853))
+
+#### 4.4.1 - 2026-11-16
+
+* Tweak: Updated WordPress compatibility to version 7.2
+* Fix: Improved code security enforcement in attributes handling
+* Fix: PHP warning in the Posts widget when accessing missing post data ([#25836](https://github.com/elementor/elementor/issues/25836))
+
 #### 4.4.0 - 2026-11-09
 
 * New: Introducing the Carousel element with flexible nested content, customizable navigation, and pagination styling

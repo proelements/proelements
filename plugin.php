@@ -204,6 +204,11 @@ class Plugin {
 	public function enqueue_styles(): void {}
 
 	public function enqueue_frontend_scripts() {
+		if ( ! $this->should_enqueue_v3_frontend_scripts() ) {
+			$this->boot_atomic_frontend_without_v3();
+			return;
+		}
+
 		$suffix = $this->get_assets_suffix();
 
 		wp_enqueue_script(
@@ -359,6 +364,28 @@ class Plugin {
 		$document->update_meta( '_elementor_pro_version', ELEMENTOR_PRO_VERSION );
 	}
 
+	private function should_enqueue_v3_frontend_scripts(): bool {
+		if ( self::elementor()->preview->is_preview_mode() ) {
+			return true;
+		}
+
+		return wp_script_is( 'elementor-frontend', 'enqueued' );
+	}
+
+	private function boot_atomic_frontend_without_v3(): void {
+		$needs_atomic_runtime = wp_script_is( 'elementor-v2-frontend-handlers', 'enqueued' )
+			|| wp_script_is( 'elementor-v2-form-handlers', 'enqueued' )
+			|| wp_script_is( 'elementor-v2-action-link-handlers', 'enqueued' );
+
+		if ( ! $needs_atomic_runtime ) {
+			return;
+		}
+
+		// Core already attached `elementorFrontendConfig` to this handle in `print_config()`.
+		// Atomic forms read `urls.ajaxurl` and `nonces.atomicFormsSendForm` from it.
+		wp_enqueue_script( 'elementor-frontend' );
+	}
+
 	private function get_frontend_depends() {
 		$frontend_depends = [
 			'elementor-frontend-modules',
@@ -400,7 +427,7 @@ class Plugin {
 		add_action( 'elementor/frontend/before_register_scripts', [ $this, 'register_frontend_scripts' ] );
 		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'register_preview_scripts' ] );
 
-		add_action( 'elementor/frontend/before_enqueue_scripts', [ $this, 'enqueue_frontend_scripts' ] );
+		add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'enqueue_frontend_scripts' ] );
 
 		add_filter( 'elementor/core/breakpoints/get_stylesheet_template', [ $this, 'get_responsive_stylesheet_templates' ] );
 		add_action( 'elementor/document/save_version', [ $this, 'on_document_save_version' ] );

@@ -44,6 +44,7 @@ class Submissions_Menu_Item implements Admin_Menu_Item_With_Page {
 		?>
 		<div class="wrap">
 			<h1 class="wp-heading-inline"><?php echo esc_html__( 'Submissions', 'elementor-pro' ); ?></h1>
+			<a href="<?php echo esc_url( add_query_arg( [ 'wpSite' => rawurlencode( home_url() ) ], 'https://stkl.it/EL_FS' ) ); ?>" class="page-title-action" target="_blank" rel="noopener"><?php echo esc_html__( 'Build a lead dashboard ↗', 'elementor-pro' ); ?></a>
 			<hr class="wp-header-end">
 			<div id="e-form-submissions"></div>
 		</div>

@@ -223,6 +223,10 @@ trait Skin_Content_Base {
 
 		$post = get_post();
 
+		if ( ! $post ) {
+			return;
+		}
+
 		if ( post_password_required( $post->ID ) ) {
 			// PHPCS - `get_the_password_form`. is safe.
 			echo get_the_password_form( $post->ID ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -1,4 +1,4 @@
-/*! pro-elements - v4.4.0 - 09-11-2026 */
+/*! pro-elements - v4.4.0 - 24-11-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(_elementor_editor_canvas, _elementor_editor_controls_extended, _elementor_editor_editing_panel, _elementor_editor_props, _elementor_license_api, react, _wordpress_i18n, _elementor_editor_controls, _elementor_ui, _elementor_query, _elementor_editor_ui, _elementor_editor_documents, _elementor_editor_elements, _elementor_editor_v1_adapters) {
 	//#region \0rolldown/runtime.js
@@ -748,8 +748,84 @@ this.elementorV2 = this.elementorV2 || {};
 	}
 	//#endregion
 	//#region packages/packages/pro/editor-editing-panel-extended/src/transformers/settings/attributes-transformer.ts
+	var CUSTOM_ATTRIBUTE_NAME_PATTERN = /^[a-zA-Z0-9_-]+$/;
+	var EVENT_HANDLER_ATTRIBUTE_NAME_PATTERN = /^on[a-z]*$/i;
+	var BLOCKED_CUSTOM_ATTRIBUTE_NAME_PREFIXES = ["x-"];
+	var URL_CUSTOM_ATTRIBUTE_NAMES = [
+		"action",
+		"formaction",
+		"href",
+		"src"
+	];
+	var HTML_CUSTOM_ATTRIBUTE_NAMES = ["srcdoc"];
+	var ALLOWED_URL_PROTOCOLS = [
+		"http",
+		"https",
+		"ftp",
+		"ftps",
+		"mailto",
+		"news",
+		"irc",
+		"irc6",
+		"ircs",
+		"gopher",
+		"nntp",
+		"feed",
+		"telnet",
+		"mms",
+		"rtsp",
+		"sms",
+		"svn",
+		"tel",
+		"fax",
+		"xmpp",
+		"webcal",
+		"urn"
+	];
+	var URL_SCHEME_PATTERN = /^([^:/?#]*):/;
+	var SPACE_CHAR_CODE = 32;
+	var NAMED_ENTITIES = {
+		"&amp;": "&",
+		"&lt;": "<",
+		"&gt;": ">",
+		"&quot;": "\"",
+		"&#039;": "'",
+		"&#39;": "'"
+	};
+	var isAllowedCustomAttributeName = (name) => {
+		if (!CUSTOM_ATTRIBUTE_NAME_PATTERN.test(name) || EVENT_HANDLER_ATTRIBUTE_NAME_PATTERN.test(name)) return false;
+		const normalizedName = name.toLowerCase();
+		return !BLOCKED_CUSTOM_ATTRIBUTE_NAME_PREFIXES.some((prefix) => normalizedName.startsWith(prefix));
+	};
+	var decodeHtmlEntities = (value) => value.replace(/&(?:amp|lt|gt|quot|#0?39);/g, (entity) => {
+		var _NAMED_ENTITIES$entit;
+		return (_NAMED_ENTITIES$entit = NAMED_ENTITIES[entity]) !== null && _NAMED_ENTITIES$entit !== void 0 ? _NAMED_ENTITIES$entit : entity;
+	});
+	var escapeHtmlAttr = (value) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+	var removeSpacesAndControlCharacters = (value) => Array.from(value).filter((character) => character.charCodeAt(0) > SPACE_CHAR_CODE).join("");
+	var isAllowedUrlScheme = (scheme) => ALLOWED_URL_PROTOCOLS.includes(removeSpacesAndControlCharacters(scheme).toLowerCase());
+	var removeUnsupportedUrlSchemes = (url) => {
+		let result = url;
+		let match = result.match(URL_SCHEME_PATTERN);
+		while (match && !isAllowedUrlScheme(match[1])) {
+			result = result.slice(match[0].length);
+			match = result.match(URL_SCHEME_PATTERN);
+		}
+		return result;
+	};
+	var sanitizeCustomAttributeValue = (name, value) => {
+		const normalizedName = name.toLowerCase();
+		if (URL_CUSTOM_ATTRIBUTE_NAMES.includes(normalizedName)) return removeUnsupportedUrlSchemes(value);
+		if (HTML_CUSTOM_ATTRIBUTE_NAMES.includes(normalizedName)) return "";
+		return value;
+	};
 	var proAttributesTransformer = (0, _elementor_editor_canvas.createTransformer)((values) => {
-		return values.map((value) => value.key && value.value ? `${value.key}="${value.value}"` : "").join(" ");
+		return values.map((value) => {
+			if (!value.key || !value.value || !isAllowedCustomAttributeName(value.key)) return "";
+			const sanitizedValue = sanitizeCustomAttributeValue(value.key, decodeHtmlEntities(value.value));
+			if (!sanitizedValue) return "";
+			return `${value.key}="${escapeHtmlAttr(sanitizedValue)}"`;
+		}).filter(Boolean).join(" ");
 	});
 	//#endregion
 	//#region \0@oxc-project+runtime@0.140.0/helpers/esm/asyncToGenerator.js

@@ -7,6 +7,7 @@ use ElementorPro\Modules\Attributes\Controls\Repeatable_Attributes_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Section;
 use Elementor\Modules\AtomicWidgets\PropTypes\Attributes_Prop_Type;
 use ElementorPro\Modules\Attributes\PropsResolver\Transformers\Settings\Pro_Attributes_Transformer;
+use ElementorPro\Modules\Attributes\Utils\Custom_Attributes_Compat;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -28,6 +29,8 @@ class Module extends Module_Base {
 
 	public function __construct() {
 		parent::__construct();
+
+		Custom_Attributes_Compat::register_hooks();
 
 		if ( $this->is_attributes_active() || $this->is_license_expired() ) {
 			add_action(

@@ -3,7 +3,7 @@
  * Plugin Name: PRO Elements
  * Description: Adds professional features for sites using the Elementor page builder.
  * Plugin URI: https://proelements.org/
- * Version: 4.4.0
+ * Version: 4.4.2
  * Author: PROElements.org
  * Author URI: https://proelements.org/
  * Requires PHP: 7.4
@@ -28,7 +28,7 @@ function pro_elements_plugin_load_plugin() {
 		return;
 	}
 
-	define( 'ELEMENTOR_PRO_VERSION', '4.4.0' );
+	define( 'ELEMENTOR_PRO_VERSION', '4.4.2' );
 
 	/**
 	 * All versions should be `major.minor`, without patch, in order to compare them properly.

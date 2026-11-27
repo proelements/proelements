@@ -131,6 +131,7 @@ class API {
 			'atomic-components',
 			'theme-builder',
 			'form-submissions',
+			'form',
 			'akismet',
 			'activity-log',
 			'cf7db',

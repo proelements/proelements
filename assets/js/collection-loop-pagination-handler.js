@@ -1,4 +1,4 @@
-/*! pro-elements - v4.4.0 - 09-11-2026 */
+/*! pro-elements - v4.4.0 - 24-11-2026 */
 (function(_elementor_frontend_handlers) {
 	//#endregion
 	//#region node_modules/dompurify/dist/purify.es.mjs

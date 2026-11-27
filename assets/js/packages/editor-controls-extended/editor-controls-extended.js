@@ -1,4 +1,4 @@
-/*! pro-elements - v4.4.0 - 09-11-2026 */
+/*! pro-elements - v4.4.0 - 24-11-2026 */
 this.elementorV2 = this.elementorV2 || {};
 (function(exports, _elementor_license_api, _elementor_editor_controls, _elementor_http_client, _elementor_query, react, _wordpress_i18n, _elementor_icons, _elementor_ui, _elementor_editor_props, _elementor_schema, _elementor_editor_ui) {
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
@@ -885,8 +885,28 @@ this.elementorV2 = this.elementorV2 || {};
 		return _init.apply(this, arguments);
 	}
 	//#endregion
+	//#region packages/packages/pro/editor-controls-extended/src/utils/attribute-name-regex.ts
+	var BLOCKED_PREFIXES = ["x-"];
+	var BLOCKED_NAMES = ["srcdoc"];
+	var EVENT_HANDLER_PREFIX = "on";
+	var toCaseInsensitivePattern = (word) => word.replace(/[a-z]/gi, (letter) => `[${letter.toLowerCase()}${letter.toUpperCase()}]`);
+	var blockedPatterns = [
+		`${toCaseInsensitivePattern(EVENT_HANDLER_PREFIX)}[a-zA-Z]*$`,
+		...BLOCKED_PREFIXES.map(toCaseInsensitivePattern),
+		...BLOCKED_NAMES.map((name) => `${toCaseInsensitivePattern(name)}$`)
+	].join("|");
+	var UNFILTERED_ATTRIBUTE_NAME_REGEX = "^[a-zA-Z0-9_-]+$";
+	var ATTRIBUTE_NAME_REGEX = `^(?!(?:${blockedPatterns}))[a-zA-Z0-9_-]+$`;
+	var canSaveUnfilteredHtml = () => {
+		var _window$elementor;
+		return !!((_window$elementor = window.elementor) === null || _window$elementor === void 0 || (_window$elementor = _window$elementor.config) === null || _window$elementor === void 0 || (_window$elementor = _window$elementor.user) === null || _window$elementor === void 0 ? void 0 : _window$elementor.can_save_unfiltered_html);
+	};
+	var getAttributeNameRegex = () => canSaveUnfilteredHtml() ? UNFILTERED_ATTRIBUTE_NAME_REGEX : ATTRIBUTE_NAME_REGEX;
+	//#endregion
 	//#region packages/packages/pro/editor-controls-extended/src/controls/attributes-control.tsx
+	var getValidationErrorMessage = (regexKey) => regexKey === ATTRIBUTE_NAME_REGEX ? (0, _wordpress_i18n.__)("Use one name made of letters, numbers, dashes (-) and underscores (_). Event names such as \"onclick\", names that start with \"x-\", and \"srcdoc\" are not supported.", "elementor-pro") : (0, _wordpress_i18n.__)("Use one name made of letters, numbers, dashes (-) and underscores (_).", "elementor-pro");
 	var AttributesControl = (0, _elementor_editor_controls.createControl)(() => {
+		const regexKey = getAttributeNameRegex();
 		const getHelperText = (key, value) => {
 			if (value && !key) return { keyHelper: (0, _wordpress_i18n.__)("Empty attribute names aren't valid and won't render on the page.", "elementor-pro") };
 			return {};
@@ -894,8 +914,8 @@ this.elementorV2 = this.elementorV2 || {};
 		return /* @__PURE__ */ react.createElement(_elementor_editor_controls.KeyValueControl, {
 			keyName: (0, _wordpress_i18n.__)("Name", "elementor-pro"),
 			valueName: (0, _wordpress_i18n.__)("Value", "elementor-pro"),
-			regexKey: "^[a-zA-Z0-9_-]*$",
-			validationErrorMessage: (0, _wordpress_i18n.__)("Names can only use letters, numbers, dashes (-) and underscores (_).", "elementor-pro"),
+			regexKey,
+			validationErrorMessage: getValidationErrorMessage(regexKey),
 			getHelperText
 		});
 	});
